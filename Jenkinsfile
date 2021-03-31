@@ -1,8 +1,8 @@
-/**************************************************************************
- * DO NOT CHANGE THIS FILE                                                *
- * DO NOT USE JENKINS BLUE OCEAN EDITOR TO EDIT THE PIPELINE              *
- * RDM - www.rogerssportsandmedia.com - AWS CodeDeploy Version (Golang)   *
- **************************************************************************/
+/************************************************************************************
+ * DO NOT CHANGE THIS FILE                                                          *
+ * DO NOT USE JENKINS BLUE OCEAN EDITOR TO EDIT THE PIPELINE                        *
+ * RDM - Rogersdigitalmedia - www.rogerssportsandmedia.com - AWS CodeDeploy Version *
+ ************************************************************************************/
 
 pipeline {
 
@@ -37,7 +37,7 @@ pipeline {
     RDMI_CONFIG_FILE_APP_GLOBAL = "${RDMI_CONFIG_FILE_APP_ROOT}/global.groovy"
     RDMI_CONFIG_FILE_APP_BRANCH = "${RDMI_CONFIG_FILE_APP_ROOT}/${BRANCH_NAME}.groovy"
     // Other
-    RDMI_TEAMS_WEBHOOKS = credentials('RDMI_TEAMS_WEBHOOKS_CLOUDOPS')
+    RDMI_TEAMS_WEBHOOKS = credentials('RDMI_TEAMS_WEBHOOKS_DTC')
   }
 
   stages {
@@ -89,14 +89,6 @@ pipeline {
             office365ConnectorSend(webhookUrl: env.RDMI_TEAMS_WEBHOOKS, color: '#FF0000', factDefinitions: facts, message: "$generalMessage")
           }
         }
-      }
-    }
-
-    stage('Build') {
-      steps {
-        // Build revision
-        awsBuildGoLangCodeDeployRevision()
-
       }
     }
 
