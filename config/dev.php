@@ -7,8 +7,7 @@ define('DB_PASSWORD', getenv('RDM_RDS_PASSWORD'));
 define('DB_HOST', getenv('RDM_RDS_URL'));
 define('DB_CHARSET', 'utf8');
 define('DB_COLLATE', '');
-define('COOKIE_DOMAIN', $_SERVER['HTTP_HOST']);
-
+// define('COOKIE_DOMAIN', $_SERVER['HTTP_HOST']);
 define('WP_DEBUG', false);
 define('WP_DEBUG_DISPLAY', false);
 define('WP_CACHE', true);
