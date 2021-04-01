@@ -1,42 +1,33 @@
 <?php
 /**
- * The base configuration for WordPress
+ * The base configurations of the WordPress.
  *
- * The wp-config.php creation script uses this file during the
- * installation. You don't have to use the web site, you can
- * copy this file to "wp-config.php" and fill in the values.
+ * This file has the following configurations: MySQL settings, Table Prefix,
+ * Secret Keys, WordPress Language, and ABSPATH. You can find more information
+ * by visiting {@link http://codex.wordpress.org/Editing_wp-config.php Editing
+ * wp-config.php} Codex page. You can get the MySQL settings from your web host.
  *
- * This file contains the following configurations:
- *
- * * MySQL settings
- * * Secret keys
- * * Database table prefix
- * * ABSPATH
- *
- * @link https://wordpress.org/support/article/editing-wp-config-php/
+ * This file is used by the wp-config.php creation script during the
+ * installation. You don't have to use the web site, you can just copy this file
+ * to "wp-config.php" and fill in the values.
  *
  * @package WordPress
  */
-
-// ** MySQL settings - You can get this info from your web host ** //
-/** The name of the database for WordPress */
-define( 'DB_NAME', 'rogerssportsandmedia' );
-
-/** MySQL database username */
-define( 'DB_USER', 'root' );
-
-/** MySQL database password */
-define( 'DB_PASSWORD', 'root' );
-
-/** MySQL hostname */
-define( 'DB_HOST', 'localhost' );
-
-/** Database Charset to use in creating database tables. */
-define( 'DB_CHARSET', 'utf8mb4' );
-
-/** The Database Collate type. Don't change this if in doubt. */
-define( 'DB_COLLATE', '' );
-
+/*
+ The customized section below allows for easy switching between multiple server
+ * environments. The file ../config/active-env contains a string indicating which
+ * file to read database and other site configuration options from.
+ */
+$file_active_env = realpath(dirname(__FILE__) . '/../config/active-env');
+if (! file_exists($file_active_env)) {
+    die('<html><head><title>Cannot find active-env</title></head><body><h1>Cannot find active-env</h1></body></html>');
+}
+$str_active_env   = trim(file_get_contents($file_active_env));
+$file_current_env = realpath(dirname(__FILE__) . '/../config/' . $str_active_env . '.php');
+if (! file_exists($file_active_env)) {
+    die('<html><head><title>Cannot use environment ' . $str_active_env . '</title></head><body><h1>Cannot use environment ' . $str_active_env . '</h1></body></html>');
+}
+require_once $file_current_env;
 /**#@+
  * Authentication Unique Keys and Salts.
  *
@@ -46,45 +37,11 @@ define( 'DB_COLLATE', '' );
  *
  * @since 2.6.0
  */
-define( 'AUTH_KEY',         'a.VQr7I>)4os<,k%b%#0W%_XE065Au<x{Y/J^*`t&f_&YJku$#@fA%JJP4g1Z>a~' );
-define( 'SECURE_AUTH_KEY',  'qe5CW$?oADnh&< KX fo|9qKj>HpnxnMZ)/VnpZu8SY@y=}V^Y$oRovb<2|f]&ht' );
-define( 'LOGGED_IN_KEY',    '1?#smh{pO::FsXOMKkzR]7Aj 41O~s=/[GyLkZp.z3c{9ziYpi/hdGTE MHzJyO.' );
-define( 'NONCE_KEY',        'VgQ.~L+2[WqUuGxL4`L6B2Uhs]8*q}%Sk(g$x$@l8CRjw2kO,f+%(ir B@3(z@DL' );
-define( 'AUTH_SALT',        'G9eF>,E1;1&qDp+nHVv<,bW(5hE^u.@IaF]n/NcaOXM`n c8C}Cj86tZX^Ju7I,|' );
-define( 'SECURE_AUTH_SALT', 'g2x0Pnz+Y&py@sE!zce;@X>v*O2M{@R~_IW1mD.)fq,%<:upL<M+n8b5$P-SgX7N' );
-define( 'LOGGED_IN_SALT',   '?o>7m }D|Z?#gBQ&S%ta//cd7Jb56inoz2rTGYknxYmRQ~+dVz/8UWF/3Dok#QP/' );
-define( 'NONCE_SALT',       '2 #F&S&7_E`iM0G`3HM*bz?:u6C7[+y||YY/^z},!p=-Bm$~H/-&DAO|;^hK_5j#' );
-
+require_once realpath(dirname(__FILE__) . '/../config/defaults.php');
 /**#@-*/
-
-/**
- * WordPress Database Table prefix.
- *
- * You can have multiple installations in one database if you give each
- * a unique prefix. Only numbers, letters, and underscores please!
- */
-$table_prefix = 'rsm_wp_';
-
-/**
- * For developers: WordPress debugging mode.
- *
- * Change this to true to enable the display of notices during development.
- * It is strongly recommended that plugin and theme developers use WP_DEBUG
- * in their development environments.
- *
- * For information on other constants that can be used for debugging,
- * visit the documentation.
- *
- * @link https://wordpress.org/support/article/debugging-in-wordpress/
- */
-define( 'WP_DEBUG', false );
-
-/* That's all, stop editing! Happy publishing. */
-
 /** Absolute path to the WordPress directory. */
-if ( ! defined( 'ABSPATH' ) ) {
-	define( 'ABSPATH', __DIR__ . '/' );
+if (! defined('ABSPATH')) {
+        define('ABSPATH', dirname(__FILE__) . '/');
 }
-
 /** Sets up WordPress vars and included files. */
 require_once ABSPATH . 'wp-settings.php';
