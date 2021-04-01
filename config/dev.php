@@ -20,7 +20,7 @@ define('WP_HOME', 'http://' . DOMAIN_CURRENT_SITE);
 define('DISABLE_WP_CRON', true);
 
 define('WP_REDIS_HOST', getenv('REDIS_HOST'));
-define('WP_REDIS_PORT', etengv('RDM_REDIS_PORT'));
+define('WP_REDIS_PORT', getenv('RDM_REDIS_PORT'));
 define('WP_REDIS_DATABASE', getenv('RDM_REDIS_DATABASE'));
 define('WP_CACHE_KEY_SALT', 'RSM');
 
