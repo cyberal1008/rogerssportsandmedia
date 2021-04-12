@@ -1,18 +1,72 @@
 header {
-	min-width: 320px;
-	top: 0;
-	transition: top 0.2s ease-in-out;
-	width: 100%;
-	z-index: 999999999;
-	background-color: #ffffff;
-	//border-bottom: 5px solid #1AAAB4;
-	min-height: 75px;
+    min-width: 320px;
+    top: 0;
+    transition: top 0.2s ease-in-out;
+    width: 100%;
+    z-index: 999999999;
+    min-height: 75px;
 }
 
-.navigation {
-    margin-right: 0!important;
-    margin-left: 0!important;
+.nav-bg {
+    margin: 10px;
+    opacity: 88%;
+    background-color: #fff!important;
 }
-body{
-	background-color:#999;
+
+.dropdown-menu {
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    top: 100% !important;
+}
+.dropdown:hover>.dropdown-toggle::after {
+    //transform:rotate(180deg);
+    border-top: 0px !important;
+    border-bottom: 3px solid !important;
+}
+
+.dropdown:hover>.dropdown-menu {
+  display: block;
+}
+
+.navbar-nav > li{
+  padding-left:22px;
+  padding-right:22px;
+}
+
+.navbar-toggler:focus,
+.navbar-toggler:active {
+    outline: 0;
+}
+
+.navbar-toggler.collapsed .close-icon {
+    display: none;
+}
+
+.navbar-toggler:not(.collapsed) .navbar-toggler-icon {
+    display: inline;
+}
+
+.navbar-light .navbar-nav .nav-link, .menu-item a span{
+
+	font-family: "Ted Next";
+	color: #333333!important;
+	font-size: 14px!important;
+}
+@media (max-width: 768px) {
+    .dropdown-toggle {
+        display: none;
+    }
+
+    .dropdown-menu {
+        display: block;
+        position: relative;
+        border-width: 0;
+        padding: 0;
+        margin: 0;
+    }
+
+    .dropdown-item {
+        padding: .5rem 0rem;
+        color: rgba(0,0,0,.5);
+    }
 }

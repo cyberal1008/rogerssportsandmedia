@@ -54,18 +54,18 @@
 </head>
 <body <?php body_class(); ?>>
 <header class="nav-down header-container">
-		<div class="">
-			<nav class="navbar navbar-expand-md navbar-light bg-light" role="navigation">
-			  <div class="container navigation">
-				<!-- Brand and toggle get grouped for better mobile display -->
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-controls="bs-example-navbar-collapse-1" aria-expanded="false" aria-label="<?php esc_attr_e( 'Toggle navigation', 'your-theme-slug' ); ?>">
-					<span class="navbar-toggler-icon"></span>
-				</button>
+			<nav class="navbar navbar-expand-md navbar-light fixed-top nav-bg" role="navigation">
 				<div class="nav-logo d-flex justify-content-center align-content-center align-items-center"
 					 itemscope itemtype="https://schema.org/Organization">
-					<a class="site-title" href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_url( bloginfo( 'name' ) ); ?></a>
+					 <a class="navbar-brand" href="<?php echo esc_url( home_url( '/' ) ); ?>">
+						<img src="<?php echo dirname( get_bloginfo( 'stylesheet_url' ) ); ?>/assets/images/Logo-RSM.svg" width="80"  alt="<?php esc_url( bloginfo( 'name' ) ); ?>">
+					  </a>
 				</div>
-				<div class="main-nav d-flex w-75 align-items-center ">
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-controls="bs-example-navbar-collapse-1" aria-expanded="false" aria-label="<?php esc_attr_e( 'Toggle navigation', 'your-theme-slug' ); ?>">
+					<span class="navbar-toggler-icon"></span>
+					<div class="close-icon">✖</div>
+				</button>
+				<div class="main-nav d-flex w-75 align-items-center justify-content-center">
 					<div class="navbar-main">
 						<?php
 							wp_nav_menu(
@@ -83,8 +83,8 @@
 							?>
 					</div>
 				</div>
-				</div>
+
 			</nav>
-		</div>
-	</header>
+	</header> 
+
 <div class="wrapper">
