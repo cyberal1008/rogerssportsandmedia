@@ -1,9 +1,8 @@
-window.onload = function() {
-    if (window.jQuery) {
-        // jQuery is loaded  
-        console.log("Yeah jQuery works!");
-    } else {
-        // jQuery is not loaded
-        alert("Doh, jQuery doesn't Work");
+$(window).on("load resize",function(e){
+    if($(window).width() < 767){
+        $( ".dropdown").find('.dropdown-menu').removeClass('dropdown-menu').addClass('dropdown-mob');
+    }else{
+        $( ".dropdown").find('.dropdown-mob').removeClass('dropdown-mob').addClass('dropdown-menu');
     }
-}
+})
+
