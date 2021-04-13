@@ -47,7 +47,7 @@
 	<link rel="pingback" href="<?php echo get_option( 'siteurl' ) . '/xmlrpc.php'; ?>" />
 	<link rel="shortcut icon" href="<?php echo dirname( get_bloginfo( 'stylesheet_url' ) ); ?>/assets/images/favicon.ico">
 	<script type="text/javascript" src="/wp-content/themes/node_modules/jquery/dist/jquery.min.js"></script>
-
+	<link rel="stylesheet" href="https://use.typekit.net/aws7pih.css">
 
 	<?php wp_head(); ?>
 
@@ -61,11 +61,10 @@
 						<img src="<?php echo dirname( get_bloginfo( 'stylesheet_url' ) ); ?>/assets/images/Logo-RSM.svg" width="80"  alt="<?php esc_url( bloginfo( 'name' ) ); ?>">
 					  </a>
 				</div>
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-controls="bs-example-navbar-collapse-1" aria-expanded="false" aria-label="<?php esc_attr_e( 'Toggle navigation', 'your-theme-slug' ); ?>">
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="<?php esc_attr_e( 'Toggle navigation', 'RSM' ); ?>">
 					<span class="navbar-toggler-icon"></span>
-					<div class="close-icon">✖</div>
 				</button>
-				<div class="main-nav d-flex w-75 align-items-center justify-content-center">
+				<div class="main-nav d-flex gb-w align-items-center justify-content-center">
 					<div class="navbar-main">
 						<?php
 							wp_nav_menu(
@@ -74,7 +73,7 @@
 									'depth'           => 2,
 									'container'       => 'div',
 									'container_class' => 'collapse navbar-collapse',
-									'container_id'    => 'bs-example-navbar-collapse-1',
+									'container_id'    => 'navbarSupportedContent',
 									'menu_class'      => 'nav navbar-nav',
 									'fallback_cb'     => 'WP_Bootstrap_Navwalker::fallback',
 									'walker'          => new WP_Bootstrap_Navwalker(),
@@ -86,5 +85,6 @@
 
 			</nav>
 	</header> 
+
 
 <div class="wrapper">
