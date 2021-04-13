@@ -1,8 +1,11 @@
 @font-face {
- font-family: Ted Next;
- src: url(ted-next-font/TedNext-Semibold.eot);
- font-weight: normal;
+    font-family: 'Ted Next';
+    src: url('ted-next-font/TedNext-Semibold.eot'); /* IE9 Compat Modes */
+    src:url('ted-next-font/TedNext-Semibold.woff2') format('woff2'), /* Super Modern Browsers */
+        url('ted-next-font/TedNext-Semibold.woff') format('woff'), /* Pretty Modern Browsers */
+        url('ted-next-font/TedNext-Semibold.svg') format('svg'); /* Legacy iOS */
  }
+
 @import "header", "footer", "home";
 body {
 
