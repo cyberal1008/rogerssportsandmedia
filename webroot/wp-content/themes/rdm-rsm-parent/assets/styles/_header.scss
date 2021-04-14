@@ -1,11 +1,8 @@
-@font-face {
-	font-family: 'Ted Next';
-	src: url('styles/ted-next-font/TedNext-Semibold.eot'), /* IE9 Compat Modes */
-		 url('styles/ted-next-font/TedNext-Semibold.eot') format('embedded-opentype'), /* IE6-IE8 */
-		 url('styles/ted-next-font/TedNext-Semibold.woff2') format('woff2'),  Super Modern Browsers 
-		 url('styles/ted-next-font/TedNext-Semibold.woff') format('woff'), /* Pretty Modern Browsers */
-		 url('styles/ted-next-font/TedNext-Semibold.svg') format('svg'); /* Legacy iOS */
- }
+ @font-face {
+  font-family: 'Ted Next';
+  src: url("styles/ted-next-font/TedNext-Semibold.eot");
+  src: url("styles/ted-next-font/TedNext-Semibold.eot") format("embedded-opentype"), url("styles/ted-next-font/TedNext-Semibold.woff2") format("woff2"), url("styles/ted-next-font/TedNext-Semibold.woff") format("woff"), url("styles/ted-next-font/TedNext-Semibold.svg") format("svg");
+}
 header {
     min-width: 320px;
     top: 0;
@@ -13,6 +10,10 @@ header {
     width: 100%;
     z-index: 999999999;
     min-height: 75px;
+}
+.active>a {
+	font-weight: 800;
+	text-decoration: underline;
 }
 
 .navbar-light .navbar-nav .nav-link, .menu-item a span{
@@ -114,7 +115,7 @@ header {
 	}
 	.bg-mob{
 		padding-bottom: 500px;
-		margin-right: 100px;
+		//margin-right: 100px;
     	margin-top: 30px;
 	}
 	.dropdown-toggle::after {
@@ -127,15 +128,12 @@ header {
 	.dropdown-mob li a span{
 		color: #666!important;
 	}
-	.navbar-light .navbar-nav .nav-link:hover, .menu-item a span:hover {
-		
-		//background-color:#f8f9fa!important;
-	}
-	.dropdown-item:hover {
-		//background-color:#f8f9fa!important;
-	}
 }
 @media (min-width: 768px) { 
+	// .active, .active>a {
+	// 	font-weight: 800;
+	// 	text-decoration: underline;
+	// }
 	.nav-bg:not(li) {
 	    margin: 10px;
 	    background: rgba(255, 255, 255, 0.8)!important;
