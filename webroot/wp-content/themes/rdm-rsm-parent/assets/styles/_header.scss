@@ -7,11 +7,6 @@ header {
     min-height: 75px;
 }
 
-.navbar-nav > li{
-  padding-left:22px;
-  padding-right:22px;
-}
-
 .navbar-light .navbar-nav .nav-link, .menu-item a span{
 
 	font-family: "Ted Next";
@@ -66,20 +61,34 @@ header {
 .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 	border-color: transparent;
 }
-
-@media (max-width: 767px) { 
+@media (min-width: 1024px) { 
+	.gb-w{
+		width: 75%;
+	}
+	.navbar-nav > li{
+	  padding-left:20px;
+	  padding-right:20px;
+	}
+}
+@media (max-width: 1024px) { 
 	.gb-w{
 		width: 100%;
 	}
+	
+}
+@media screen and (min-width: 767px) and (max-width: 1024px) {
+	.navbar-nav > li{
+	  padding-left:12px;
+	  padding-right:12px;
+	}
+}
+@media (max-width: 767px) { 
 	.nav-bg {
 	    //margin: 10px;
 	    background-color: #fff!important;
 	}
 }
 @media (min-width: 768px) { 
-	.gb-w{
-		width: 75%;
-	}
 	.nav-bg {
 	    margin: 10px;
 	    opacity: 88%;
