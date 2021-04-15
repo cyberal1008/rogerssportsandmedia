@@ -1,13 +1,4 @@
- @font-face {
-  font-family: 'Ted Next';
-  src: url("styles/ted-next-font/TedNext-Semibold.eot");
-  src: url("styles/ted-next-font/TedNext-Semibold.eot") format("embedded-opentype"), url("styles/ted-next-font/TedNext-Semibold.woff2") format("woff2"), url("styles/ted-next-font/TedNext-Semibold.woff") format("woff"), url("styles/ted-next-font/TedNext-Semibold.svg") format("svg");
-}
- @font-face {
-  font-family: 'Ted Next Bold';
-  src: url("styles/ted-next-font/TedNext-Bold.eot");
-  src: url("styles/ted-next-font/TedNext-Bold.eot") format("embedded-opentype"), url("styles/ted-next-font/TedNext-Bold.woff2") format("woff2"), url("styles/ted-next-font/TedNext-Bold") format("woff"), url("styles/ted-next-font/TedNext-Bold.svg") format("svg");
-}
+
 header {
     min-width: 320px;
     top: 0;
@@ -17,18 +8,18 @@ header {
     min-height: 75px;
 }
 .active>a, .active>a>span {
-	font-family: "Ted Next Bold"!important;
+	font-family: $ted-next-sb!important;
 	font-weight: 800;
 	text-decoration: underline;
 }
 
 .navbar-light .navbar-nav .nav-link, .menu-item a span{
-	font-family: "Ted Next";
+	font-family: $ted-next;
 	color: #333333!important;
 	font-size: 14px!important;
 }
 .navbar-light .navbar-nav .nav-link:hover, .menu-item a span:hover{
-	font-family: "Ted Next Bold";
+	font-family: $ted-next-sb;
 	font-weight: 800;
 	text-decoration: underline;
 }
@@ -115,9 +106,13 @@ header {
 	}
 }
 @media (max-width: 767px) { 
-	.nav-bg {
+	.nav-bg-active {
 	    //margin: 10px;
 	    background: rgba(255, 255, 255, 1)!important;
+	}
+	.nav-bg {
+	    margin: 10px;
+	    background: rgba(255, 255, 255, 0.8)!important;
 	}
 	.bg-mob{
 		padding-bottom: 500px;
@@ -128,7 +123,7 @@ header {
 		display: none!important;
 	}
 	.navbar-light .navbar-nav .nav-link, .menu-item a span{
-		font-family: "Ted Next Bold";
+		font-family: $ted-next-sb;
 		font-size: 24px!important;
 		font-weight: 800;
 	}
@@ -164,4 +159,14 @@ header {
 .dropdown-mob{
 	list-style: none;
 	padding-inline-start: 0px;
+}
+
+.fullscreen-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100%; 
+  min-height: 100%;
+  overflow: hidden;
+  z-index: -1;
 }

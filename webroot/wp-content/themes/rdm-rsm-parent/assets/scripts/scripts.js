@@ -6,3 +6,8 @@ $(window).on("load resize",function(e){
     }
 })
 
+$(".navbar-toggler").click(function() {
+    if ( $('.navbar').hasClass('nav-bg') ) {
+        $('.navbar').toggleClass("nav-bg nav-bg-active");
+    }
+});
