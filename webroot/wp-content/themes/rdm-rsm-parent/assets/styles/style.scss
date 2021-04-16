@@ -23,3 +23,6 @@ body {
         overflow-x: hidden;
     }
 }
+#update-nag, .update-nag, .plugins .plugin-update-tr .plugin-update {
+    display:none!important;
+}
