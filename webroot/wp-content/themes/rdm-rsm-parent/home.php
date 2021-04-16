@@ -11,10 +11,10 @@
 
 <div class="container">
 
-	<header class="jumbotron my-4 paral paralsec">
-		<h1 class="display-3">A Warm Welcome!</h1>
-		<p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, ipsam, eligendi, in quo sunt possimus non incidunt odit vero aliquid similique quaerat nam nobis illo aspernatur vitae fugiat numquam repellat.</p>
-		<a href="#" class="btn btn-primary btn-lg">Call to action!</a>
+	<header class="jumbotron my-4 paral paralsec j-main">
+		<h1 class="display-3 j-title"><?php echo get_theme_mod( 'desktop_vid_link_vid_title' ); ?></h1>
+		<p class="lead j-desc"><?php echo get_theme_mod( 'desktop_vid_link_vid_desc' ); ?></p>
+		<a href="<?php echo get_theme_mod( 'desktop_vid_link_button_url' ); ?>" class="btn btn-primary btn-lg j-button"><?php echo get_theme_mod( 'desktop_vid_link_button_text' ); ?></a>
 	</header>
 	<div class="row justify-content-between">
 		<?php $the_query = new WP_Query( array( 'post_type' => 'post' ) ); ?>
@@ -36,11 +36,11 @@
 				</div>
 			<?php endwhile; ?>
 			<?php wp_reset_postdata(); ?>
-			<?php else : ?>
+		<?php else : ?>
 				<p>
 					<?php esc_html_e( 'Sorry, no posts matched your criteria.' ); ?>
 				</p>
-			<?php endif; ?>
+		<?php endif; ?>
 		</div>
 	</div>
 

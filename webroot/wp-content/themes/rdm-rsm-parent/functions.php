@@ -12,6 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 $parent_includes = array(
 	'/enqueue.php',                         // Enqueue parent theme scripts and styles.
 	'/class-wp-bootstrap-navwalker.php',    // Load custom WordPress nav walker.
+	'/class-rsm-customizer-settings.php',
 );
 
 foreach ( $parent_includes as $file ) {
