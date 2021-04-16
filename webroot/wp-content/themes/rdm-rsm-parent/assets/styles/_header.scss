@@ -170,3 +170,36 @@ header {
   overflow: hidden;
   z-index: -1;
 }
+
+.j-title{
+	font-family: 'urw-din-condensed';
+	font-size: 84px;
+	font-weight: 800 ;
+	letter-spacing: -3.36px;
+	color:#fff;
+}
+.j-desc{
+	font-size: 21px!important;
+	color:#fff;
+}
+.j-button{
+	font-family: $ted-next-b!important;
+	color: #333333!important;
+	padding: 0.8rem 1rem!important;
+	width: 164px;
+	height: 45px;
+	font-size: 14px!important;
+	background: #FFBF3F!important;
+	border: 0px solid transparent!important;
+	-webkit-border-radius: 0 !important;
+    -moz-border-radius: 0 !important;
+    border-radius: 0 !important;
+
+}
+.j-main{
+	width: 500px;
+	background-color:transparent!important;
+}
+.j-button:hover{
+	text-decoration: underline!important;
+}

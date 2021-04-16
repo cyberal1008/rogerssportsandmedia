@@ -1,0 +1,19 @@
+ @font-face {
+  font-family: 'Ted Next SemiB';
+  src: url("styles/ted-next-font/TedNext-Semibold.eot");
+  src: url("styles/ted-next-font/TedNext-Semibold.eot") format("embedded-opentype"), url("styles/ted-next-font/TedNext-Semibold.woff2") format("woff2"), url("styles/ted-next-font/TedNext-Semibold.woff") format("woff"), url("styles/ted-next-font/TedNext-Semibold.svg") format("svg");
+}
+ @font-face {
+  font-family: 'Ted Next Bold';
+  src: url("styles/ted-next-font/TedNext-Bold.eot");
+  src: url("styles/ted-next-font/TedNext-Bold.eot") format("embedded-opentype"), url("styles/ted-next-font/TedNext-Bold.woff2") format("woff2"), url("styles/ted-next-font/TedNext-Bold.woff") format("woff"), url("styles/ted-next-font/TedNext-Bold.svg") format("svg");
+}
+ @font-face {
+  font-family: 'Ted Next';
+  src: url("styles/ted-next-font/TedNext-Regular.eot");
+  src: url("styles/ted-next-font/TedNext-Regular.eot") format("embedded-opentype"), url("styles/ted-next-font/TedNext-Regular.woff2") format("woff2"), url("styles/ted-next-font/TedNext-Regular.woff") format("woff"), url("styles/ted-next-font/TedNext-Regular.svg") format("svg");
+}
+
+$ted-next: 'Ted Next';
+$ted-next-b: 'Ted Next Bold';
+$ted-next-sb: 'Ted Next SemiB';
