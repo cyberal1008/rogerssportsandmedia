@@ -155,12 +155,16 @@ header {
 .fullscreen-video {
     position: absolute;
     top: 0;
-    left: 0;
+    //left: 0;
     min-width: 100%;
     min-height: 100%;
     overflow: hidden;
     z-index: -1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
 .j-title {
     font-family: 'urw-din-condensed';
     font-size: 84px;
