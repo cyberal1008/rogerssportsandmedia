@@ -38,8 +38,7 @@ if ( ! class_exists( 'RSM_Customizer_Settings' ) ) {
 			// Video Section
 			$extra_links = array(
 				[ 'Desktop', 'desktop_vid_link' ],
-				[ 'Mobile', 'mob_vid_link' ],
-
+				// [ 'Mobile', 'mob_vid_link' ],
 			);
 			foreach ( $extra_links as $link ) {
 				// Section title.
