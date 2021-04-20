@@ -110,8 +110,17 @@ header {
         background: rgba(255, 255, 255, 0.8)!important;
     }
     .bg-mob {
-        padding-bottom: 500px; //margin-right: 100px;
-        margin-top: 30px;
+        //padding-bottom: 500px; //margin-right: 100px;
+        //margin-top: 30px;
+    }
+    #menu-primary{
+    	position: absolute;
+	    top: 0px;
+	    left: 0px;
+	    right: 0px;
+	    z-index: 1;
+	    background-color: rgb(255, 255, 255);
+	    padding: 50px 35% 50px;
     }
     .dropdown-toggle::after {
         display: none!important;
@@ -166,7 +175,7 @@ header {
 }
 
 .j-title {
-    font-family: 'urw-din-condensed';
+    font-family: urw-din-condensed;
     font-size: 84px;
     font-weight: 800;
     letter-spacing: -3.36px;
