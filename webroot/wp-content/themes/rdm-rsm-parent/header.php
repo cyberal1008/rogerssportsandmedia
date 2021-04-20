@@ -48,6 +48,7 @@
 	<link rel="shortcut icon" href="<?php echo dirname( get_bloginfo( 'stylesheet_url' ) ); ?>/assets/images/favicon.ico">
 	<script type="text/javascript" src="/wp-content/themes/node_modules/jquery/dist/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://use.typekit.net/aws7pih.css">
+	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 
 	<?php wp_head(); ?>
 
