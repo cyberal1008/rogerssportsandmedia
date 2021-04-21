@@ -12,14 +12,6 @@ footer{
         line-height: 48px;
         //white-space: nowrap;
     }
-    // a::before {
-    //     display: block;
-    //     content: attr(title);
-    //     font-weight: bold;
-    //     height: 0;
-    //     overflow: hidden;
-    //     visibility: hidden;
-    // }
 
     .footer-logo{
         margin-bottom: 40px;
@@ -33,7 +25,7 @@ footer{
     .social-icons li{
         display: inline-block;
         padding-right:8px;
-        margin-bottom: 15px;
+        //margin-bottom: 15px;
     }
     .social-icons {
         padding-inline-start: 0px!important;
@@ -42,7 +34,7 @@ footer{
         padding-inline-start: 0px;
     }
     .site-info-links .widget-3, .site-info-links .widget-4{
-        padding-bottom: 55px;
+        padding-bottom: 50px;
     }
     .widget-text{
         font-size: 14px;
