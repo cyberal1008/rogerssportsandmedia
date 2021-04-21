@@ -12,6 +12,14 @@ footer{
         line-height: 48px;
         //white-space: nowrap;
     }
+    // a::before {
+    //     display: block;
+    //     content: attr(title);
+    //     font-weight: bold;
+    //     height: 0;
+    //     overflow: hidden;
+    //     visibility: hidden;
+    // }
 
     .footer-logo{
         margin-bottom: 40px;
