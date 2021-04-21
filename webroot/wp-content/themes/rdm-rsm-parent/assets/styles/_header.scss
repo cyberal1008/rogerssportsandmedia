@@ -76,7 +76,7 @@ header {
 }
 @media (min-width: 1024px) {
     .gb-w {
-        width: 75%;
+        width: 85%;
     }
     .navbar-nav>li {
         padding-left: 20px;
@@ -147,6 +147,9 @@ header {
         left: 50% !important;
         transform: translateX(-50%) !important;
         top: 100% !important;
+    }
+    .dropdown-menu li{
+    	width: 182px;
     }
     .dropdown:hover>.dropdown-toggle::after {
         //transform:rotate(180deg);
