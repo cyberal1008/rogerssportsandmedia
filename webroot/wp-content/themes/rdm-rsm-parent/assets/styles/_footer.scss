@@ -1,61 +1,88 @@
-.footer{
-  background: #ffffff;
-  color:#333333;
-  .footer-container{
-    width: 100%;
-    padding-right: 10px;
-    padding-left: 10px;
-    margin-right: auto;
-    margin-left: auto;
-  }
-  .site-info{
-    margin-left: 15px;
-    a{
-        color: #333;
+footer{
+    background: #ffffff;
+    color:#333333;
+    a, a:hover{
+       color: #333;
     }
-  }
-  .site-info-links{
-    padding-left: 15px;
-    
-  }
-  .widget-title{
-    font-size: 16px;
-    text-decoration: underline;
-  }
-  aside div ul{
-        padding-inline-start: 0;
-  }
-  aside div ul li{
-        font-family: $ted-next-b!important;
-        font-size: 14px!important;
+    a:hover{
+        font-family: $ted-next-sb;
+    }
+    ul, li {
+        list-style:none;
         line-height: 48px;
-  }
-  .menu-privacy-container ul li{
-        display: inline-block!important;
-        margin-right: 12px;
-        line-height: 24px;
     }
-  .links, .widget-1{
-    ul {list-style-type: none;}
-    li a{
-      color: #333333;
-      transition: color .2s;
-      &:hover{
-        text-decoration:underline;
+
+    .footer-logo{
+        margin-bottom: 40px;
+    }
+    .footer-nav-title, .menu .menu-item-has-children{
+        text-decoration: underline;
+        font-size: 16px;
+        line-height: 48px;
+    }
+
+    .social-icons li{
+        display: inline-block;
+        padding-right:8px;
+        margin-bottom: 15px;
+    }
+    .social-icons {
+        padding-inline-start: 0px!important;
+    }
+    .widget-3 div ul, .widget-4 div ul, .widget-5 div ul{
+        padding-inline-start: 0px;
+    }
+    .site-info-links .widget-3, .site-info-links .widget-4{
+        padding-bottom: 55px;
+    }
+    .widget-text{
+        font-size: 14px;
+        line-height: 18px;
+    }
+    .site-info-links .widget-5{
+        padding-bottom:20px;
+    }
+    .sub-menu {
+        padding-inline-start: 0px;
+    }
+    .sub-menu li{
+        display: inline-block;
+        font-family: $ted-next-b;
+        font-size:14px;
+        padding-right:112px;
+        &:last-child{
+            padding-right:0px;
         }
     }
-  }  
-  .about-company{
-    //i{font-size: 25px;}
-    padding-left: 60px;
-    a{
-      color:#333333;
-      h3{
-      line-height: 48px;
-  }
-      &:hover{color:#4180CB}
+    .widget-6 .sub-menu li{
+        display: block;
     }
-  } 
-
-  .copyright p{border-top:1px solid rgba(255,255,255,.1);} 
+    @media (max-width: 768px) {
+        .sub-menu li{
+            display: block;
+        }
+        .menu{
+            padding-inline-start: 0px;
+        }
+        .site-info-links{
+            .widget-1, .widget-3, .widget-4, .widget-5{
+                padding-bottom:30px;
+            }
+        }
+    }
+    .sub-menu li a:hover {
+        text-decoration: underline;
+        font-family: $ted-next-b;
+    }
+    .site-info{
+        font-family: $ted-next;
+    }
+    .site-info a:hover{
+        text-decoration: none;
+        font-family: $ted-next;
+    }
+    .footer-copyright{
+        margin-bottom: 25px;
+        padding-left: 15px;
+    }
 }
