@@ -10,12 +10,13 @@ footer{
     ul, li {
         list-style:none;
         line-height: 48px;
+        white-space: nowrap;
     }
 
     .footer-logo{
         margin-bottom: 40px;
     }
-    .footer-nav-title, .menu .menu-item-has-children{
+    .footer-nav-title, .menu .menu-item-has-children>a{
         text-decoration: underline;
         font-size: 16px;
         line-height: 48px;
@@ -49,7 +50,8 @@ footer{
         display: inline-block;
         font-family: $ted-next-b;
         font-size:14px;
-        padding-right:112px;
+        min-width: 226px;
+        text-decoration: none;
         &:last-child{
             padding-right:0px;
         }
