@@ -100,3 +100,39 @@ register_sidebar(
 		'after_title'   => '</h3>',
 	)
 );
+
+register_sidebar(
+	array(
+		'name'          => 'Footer Area 5',
+		'id'            => 'footer-5',
+		'description'   => 'Appears in the footer area',
+		'before_widget' => '<aside id="%1$s" class="widget-5 %2$s">',
+		'after_widget'  => '</aside>',
+		'before_title'  => '<h3 class="widget-title">',
+		'after_title'   => '</h3>',
+	)
+);
+
+register_sidebar(
+	array(
+		'name'          => 'Footer Area 6',
+		'id'            => 'footer-6',
+		'description'   => 'Appears in the footer area',
+		'before_widget' => '<aside id="%1$s" class="widget-6 %2$s">',
+		'after_widget'  => '</aside>',
+		'before_title'  => '<h3 class="widget-title">',
+		'after_title'   => '</h3>',
+	)
+);
+
+function page_tagcat_settings() {
+	register_taxonomy_for_object_type( 'category', 'page' );
+}
+add_action( 'init', 'page_tagcat_settings' );
+
+function page_tagcat_support_query( $wp_query ) {
+	if ( $wp_query->get( 'category_name' ) ) {
+		$wp_query->set( 'post_type', 'any' );
+	}
+}
+add_action( 'pre_get_posts', 'page_tagcat_support_query' );
