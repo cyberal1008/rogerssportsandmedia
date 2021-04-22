@@ -1,3 +1,4 @@
+
 header {
     min-width: 320px;
     top: 0;
@@ -183,7 +184,22 @@ header {
 		width: auto;
 	}
 }
+.element {
+	position: absolute;
+	left: 0;
+	top: 0;
+	background-repeat:no-repeat;
+	z-index: 1;
+}
 @media (min-width: 768px) {
+
+	.element {
+		width:450px;
+		height:453px;
+		background:
+		linear-gradient(to bottom right, #DA291C 50%,transparent 50%) 0 0/450px 453px,
+		transparent;
+	}
 	.j-title {
 		font-size: 84px!important;
 	    letter-spacing: -3px!important;
@@ -198,6 +214,13 @@ header {
 	}
 }
 @media (max-width: 768px) {
+	.element {
+		width:250px;
+		height:250px;
+		background:
+		linear-gradient(to bottom right, #DA291C 50%,transparent 50%) 0 0/250px 250px,
+		transparent;
+	}
 	.j-title {
 		font-size: 52px!important;
 	    letter-spacing: -1px!important;
