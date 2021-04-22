@@ -135,10 +135,6 @@ header {
     }
 }
 @media (min-width: 768px) {
-    // .active, .active>a {
-    // 	font-weight: 800;
-    // 	text-decoration: underline;
-    // }
     .nav-bg:not(li) {
         margin: 10px;
         background: rgba(255, 255, 255, 0.8)!important;
@@ -187,15 +183,43 @@ header {
 		width: auto;
 	}
 }
+@media (min-width: 768px) {
+	.j-title {
+		font-size: 84px!important;
+	    letter-spacing: -3px!important;
+	    line-height: 80px;
+	}
+	.j-desc {
+	    font-size: 24px!important;
+	    line-height: 36px;
+	}
+	.j-main {
+		padding: 2rem 2rem 6rem!important;
+	}
+}
+@media (max-width: 768px) {
+	.j-title {
+		font-size: 52px!important;
+	    letter-spacing: -1px!important;
+	    line-height: 50px;
+	    max-width: 410px;
+	}
+	.j-desc {
+	    font-size: 18px!important;
+	    line-height: 27px;
+	}
+	.j-main {
+		padding: 4rem 2rem 6rem!important;
+		margin-bottom: 4rem!important;
+	}
+}
 .j-title {
     font-family: urw-din-condensed;
-    font-size: 84px;
-    font-weight: 800;
-    letter-spacing: -3.36px;
+   	font-weight: 600!important;
     color: #fff;
 }
 .j-desc {
-    font-size: 21px!important;
+    letter-spacing: -1px!important;
     color: #fff;
 }
 .j-button {
@@ -212,8 +236,7 @@ header {
     border-radius: 0 !important;
 }
 .j-main {
-	margin-top: 0.5rem!important;
-    max-width: 500px;
+    max-width: 552px;
     background-color: transparent!important;
 }
 .j-button:hover {
