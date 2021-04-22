@@ -1,0 +1,3 @@
+webroot/.htaccess
+webroot/wp-content/themes/node_modules
+webroot/wp-content/themes/package-lock.json
