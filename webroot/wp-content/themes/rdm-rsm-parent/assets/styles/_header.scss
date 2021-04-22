@@ -167,16 +167,26 @@ header {
 .fullscreen-video {
     position: absolute;
     top: 0;
-    //left: 0;
     min-width: 100%;
-    min-height: 100%;
+    //min-height: 100%;
+    width: 100%;
+    height: 652px;
     overflow: hidden;
     z-index: -1;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
+@media (min-width: 1024px) {
+	#video{
+		width: 100%;
+	}
+}
+@media (max-width: 1024px) {
+	#video{
+		width: auto;
+	}
+}
 .j-title {
     font-family: urw-din-condensed;
     font-size: 84px;
@@ -202,7 +212,8 @@ header {
     border-radius: 0 !important;
 }
 .j-main {
-    width: 500px;
+	margin-top: 0.5rem!important;
+    max-width: 500px;
     background-color: transparent!important;
 }
 .j-button:hover {
