@@ -56,7 +56,7 @@
 <body <?php body_class(); ?>>
 		<?php if ( is_home() ) { ?>
 		<div class="fullscreen-video">
-			<video id="video" autoplay="true" muted="true" loop="true" poster="<?php echo get_theme_mod( 'desktop_vid_link_image_url' ); ?>" class=""><source id="mp4" src="<?php echo get_theme_mod( 'desktop_vid_link_video_url' ); ?>" type="video/mp4">
+			<video id="video" muted playsinline autoplay="true" muted="true" loop="true" poster="<?php echo get_theme_mod( 'desktop_vid_link_image_url' ); ?>" class=""><source id="mp4" src="<?php echo get_theme_mod( 'desktop_vid_link_video_url' ); ?>" type="video/mp4">
 			<p>Your user agent does not support the HTML5 Video element.</p>
 			</video>
 		</div>
