@@ -59,6 +59,9 @@ footer{
     .widget-6 .sub-menu li{
         display: block;
     }
+    .widget-1 li{
+        text-decoration: underline;
+    }
     @media (max-width: 768px) {
         .sub-menu li{
             display: block;
