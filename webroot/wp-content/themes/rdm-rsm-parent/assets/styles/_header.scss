@@ -82,6 +82,8 @@ header {
     .navbar-nav>li {
         padding-left: 20px;
         padding-right: 20px;
+        width: 14vw;
+    	white-space: nowrap;
     }
 }
 @media (max-width: 1024px) {
