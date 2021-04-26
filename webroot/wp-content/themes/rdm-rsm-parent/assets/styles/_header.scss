@@ -16,10 +16,11 @@ header {
     font-family: $ted-next;
     color: #333333!important;
     font-size: 14px!important;
+    font-weight: 400;
 }
 .navbar-light .navbar-nav .nav-link:hover, .menu-item a span:hover {
     font-family: $ted-next-sb;
-    font-weight: 800;
+    //font-weight: 800;
     text-decoration: underline;
 }
 .dropdown-menu {
@@ -148,7 +149,7 @@ header {
         top: 100% !important;
     }
     .dropdown-menu li{
-    	width: 182px;
+    	width: 190px;
     }
     .dropdown:hover>.dropdown-toggle::after {
         //transform:rotate(180deg);
