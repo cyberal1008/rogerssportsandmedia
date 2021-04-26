@@ -83,7 +83,7 @@ header {
     .navbar-nav>li {
         padding-left: 20px;
         padding-right: 20px;
-        width: 14vw;
+        width: 120px;
     	white-space: nowrap;
     }
 }
@@ -95,9 +95,9 @@ header {
 @media screen and (min-width: 940px) and (max-width: 1024px) {
     .navbar-nav>li {
         margin-left: 20px;
-    	margin-right: 10px;
-    	width: 12vw;
-        white-space: nowrap;
+	    margin-right: 10px;
+	    width: 11vw;
+	    white-space: nowrap;
     }
 }
 @media screen and (min-width: 767px) and (max-width: 940px) {
@@ -139,6 +139,9 @@ header {
     }
 }
 @media (min-width: 768px) {
+	#menu-primary{
+		max-width: 769px;
+	}
     .nav-bg:not(li) {
         margin: 10px;
         background: rgba(255, 255, 255, 0.8)!important;
