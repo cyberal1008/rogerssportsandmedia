@@ -1,6 +1,6 @@
 <?php
 
-namespace RSM\TV;
+namespace RSM\Broadcast;
 
 /**
  * Define the internationalization functionality.

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace RSM\TV\PostType;
+namespace RSM\Broadcast\PostType;
 
 class Shows {
 
@@ -61,13 +61,13 @@ class Shows {
 		$fields = array(
 			array(
 				'id'     => "video",
-				'title'  => __( 'Video Metadata', RSM_TV_LOCALE ),
+				'title'  => __( 'Video Metadata', RSM_BROADCAST_LOCALE ),
 				'fields' => array(
 					array(
 						'id'          => 'id',
 						'type'        => 'text',
-						'label'       => __( 'Brighcove ID', RSM_TV_LOCALE ),
-						'description' => __( "", RSM_TV_LOCALE ),
+						'label'       => __( 'Brighcove ID', RSM_BROADCAST_LOCALE ),
+						'description' => __( "", RSM_BROADCAST_LOCALE ),
 					),
 
 				),
@@ -82,8 +82,8 @@ class Shows {
 		//
 		add_meta_box(
 			strtolower( __CLASS__ ),
-			__( 'Custom Metadata', RSM_TV_LOCALE ),
-			[ 'RSM\TV\Util', 'render_meta_box' ],
+			__( 'Custom Metadata', RSM_BROADCAST_LOCALE ),
+			[ 'RSM\Broadcast\Util', 'render_meta_box' ],
 			self::SLUG,
 			'normal',
 			'low',
@@ -96,8 +96,8 @@ class Shows {
 		// Tile featured image
 		add_meta_box(
 			'rsmtileimg',
-			__( 'Tile Image', RSM_TV_LOCALE ),
-			[ 'RSM\TV\Util', 'render_image_box' ],
+			__( 'Tile Image', RSM_BROADCAST_LOCALE ),
+			[ 'RSM\Broadcast\Util', 'render_image_box' ],
 			self::SLUG,
 			'side',
 			'low',

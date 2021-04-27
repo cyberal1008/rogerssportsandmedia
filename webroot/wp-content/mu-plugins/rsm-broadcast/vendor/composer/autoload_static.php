@@ -9,7 +9,7 @@ class ComposerStaticInita3daff47ba67e50e3d184b5729048ed6
     public static $prefixLengthsPsr4 = array (
         'R' => 
         array (
-            'RSM\\TV\\' => 7,
+            'RSM\\Broadcast\\' => 7,
         ),
         'C' => 
         array (
@@ -18,7 +18,7 @@ class ComposerStaticInita3daff47ba67e50e3d184b5729048ed6
     );
 
     public static $prefixDirsPsr4 = array (
-        'RSM\\TV\\' => 
+        'RSM\\Broadcast\\' => 
         array (
             0 => __DIR__ . '/../..' . '/lib',
         ),

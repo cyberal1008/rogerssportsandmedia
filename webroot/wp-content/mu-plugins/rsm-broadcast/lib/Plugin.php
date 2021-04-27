@@ -1,12 +1,15 @@
 <?php
 
-namespace RSM\TV;
+namespace RSM\Broadcast;
 
 
-use RSM\TV\PostType\Shows;
-use RSM\TV\Taxonomy\Days;
-use RSM\TV\Taxonomy\Networks;
-use RSM\TV\Taxonomy\ShowCategory;
+use RSM\Broadcast\PostType\Shows;
+use RSM\Broadcast\PostType\Radio;
+use RSM\Broadcast\Taxonomy\Days;
+use RSM\Broadcast\Taxonomy\Networks;
+use RSM\Broadcast\Taxonomy\ShowCategory;
+use RSM\Broadcast\Taxonomy\Region;
+use RSM\Broadcast\Taxonomy\RadioCategory;
 
 /**
  * The core plugin class.
@@ -28,7 +31,7 @@ class Plugin {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      \RSM\TV\Loader $loader Maintains and registers all hooks for the plugin.
+	 * @var      \RSM\Broadcast\Loader $loader Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
 
@@ -39,7 +42,7 @@ class Plugin {
 	 * @access   protected
 	 * @var      string $RDMContent The string used to uniquely identify this plugin.
 	 */
-	protected $pluginname = 'rsm-tv';
+	protected $pluginname = 'rsm-broadcast';
 
 	/**
 	 * The current version of the plugin.
@@ -74,7 +77,7 @@ class Plugin {
 	private function set_locale() {
 
 		$plugin_i18n = new I18n();
-		$plugin_i18n->set_domain( RSM_TV_LOCALE );
+		$plugin_i18n->set_domain( RSM_BROADCAST_LOCALE );
 		$plugin_i18n->load_plugin_textdomain();
 
 	}
@@ -115,7 +118,7 @@ class Plugin {
 
 		\wp_enqueue_script(
 			$this->get_plugin_name(),
-			\plugin_dir_url( dirname( __FILE__ ) ) . 'dist/scripts/rsm-tv-admin.js',
+			\plugin_dir_url( dirname( __FILE__ ) ) . 'dist/scripts/rsm-Broadcast-admin.js',
 			array( 'jquery' ),
 			$this->get_version(),
 			false );
@@ -131,9 +134,12 @@ class Plugin {
 	private function define_admin_hooks() {
 
 		$show_post_type           = new Shows();
+		$radio_post_type 		  = new Radio();
 		$networks_taxonomy        = new Networks();
 		$days_taxonomy            = new Days();
 		$show_categories_taxonomy = new ShowCategory();
+		$region_taxonomy          = new Region();
+		$radio_catetory_taxonomy  = new RadioCategory();
 		$this->loader->add_action( 'init', $show_post_type, 'register_post_type' );
 		$this->loader->add_action( 'init', $networks_taxonomy, 'register_taxonomy' );
 		$this->loader->add_action( 'init', $show_categories_taxonomy, 'register_taxonomy' );
@@ -157,7 +163,8 @@ class Plugin {
 		$this->loader->run();
 
 		// enqueue scripts
-		$this->enqueue_scripts();
+		add_action( 'wp_enqueue_scripts', array($this, 'enqueue_scripts') );
+		//$this->enqueue_scripts();
 	}
 
 	/**
@@ -174,7 +181,7 @@ class Plugin {
 	/**
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
-	 * @return    \RSM\TV\Loader    Orchestrates the hooks of the plugin.
+	 * @return    \RSM\Broadcast\Loader    Orchestrates the hooks of the plugin.
 	 * @since     1.0.0
 	 */
 	public function get_loader() {
