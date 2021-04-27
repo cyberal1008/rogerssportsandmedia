@@ -1,0 +1,26 @@
+{
+  "name": "rsm/tv",
+  "description": "Custom Post types taxonomies for RSM TV",
+  "type": "wordpress-muplugin",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "vineet.phillips",
+      "email": "vineet.phillips@rci.rogers.com"
+    }
+  ],
+  "support": {
+    "issues": "https://support.rogersdigitalmedia.com/",
+    "source": "https://support.rogersdigitalmedia.com/"
+  },
+  "autoload": {
+    "psr-4": {
+      "RSM\\TV\\": "lib/"
+    }
+  },
+  "require": {
+    "php": ">=7.0.0",
+    "composer/installers": "~1.0"
+  }
+}
