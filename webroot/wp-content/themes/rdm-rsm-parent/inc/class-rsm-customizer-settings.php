@@ -49,7 +49,7 @@ if ( ! class_exists( 'RSM_Customizer_Settings' ) ) {
 			$wp_customize->add_setting(
 				'post_ids',
 				array(
-					'default'    => '1,2,3',
+					'default'    => '1, 2, 3',
 					'type'       => 'theme_mod',
 					'capability' => 'edit_theme_options',
 					'transport'  => 'refresh',
@@ -59,7 +59,6 @@ if ( ! class_exists( 'RSM_Customizer_Settings' ) ) {
 			$wp_customize->add_control(
 				'post_ids',
 				array(
-					'type'     => 'radio',
 					'label'    => __( 'Change Post IDs below.', 'rsm_parent' ),
 					'section'  => 'rsm_featured_posts',
 					'type'     => 'text',
