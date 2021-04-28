@@ -1,3 +1,4 @@
+
 header {
     min-width: 320px;
     top: 0;
@@ -15,10 +16,11 @@ header {
     font-family: $ted-next;
     color: #333333!important;
     font-size: 14px!important;
+    font-weight: 400;
 }
 .navbar-light .navbar-nav .nav-link:hover, .menu-item a span:hover {
     font-family: $ted-next-sb;
-    font-weight: 800;
+    //font-weight: 800;
     text-decoration: underline;
 }
 .dropdown-menu {
@@ -74,13 +76,18 @@ header {
 .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
     border-color: transparent;
 }
+.navbar-nav>li {
+    white-space: nowrap;
+    text-align: center;
+}
 @media (min-width: 1024px) {
     .gb-w {
         width: 85%;
     }
     .navbar-nav>li {
-        padding-left: 20px;
-        padding-right: 20px;
+		margin-left: 20px;
+		margin-right: 10px;
+		width: 120px;
     }
 }
 @media (max-width: 1024px) {
@@ -90,14 +97,16 @@ header {
 }
 @media screen and (min-width: 940px) and (max-width: 1024px) {
     .navbar-nav>li {
-        padding-left: 12px;
-        padding-right: 12px;
+        margin-left: 20px;
+	    margin-right: 10px;
+	    width: 11vw;
     }
 }
 @media screen and (min-width: 767px) and (max-width: 940px) {
     .navbar-nav>li {
-        padding-left: 8px;
-        padding-right: 8px;
+        margin-left: 11px;
+	    margin-right: 12px;
+	    width: 13vw;
     }
 }
 @media (max-width: 767px) {
@@ -109,10 +118,6 @@ header {
         margin: 10px;
         background: rgba(255, 255, 255, 0.8)!important;
     }
-    .bg-mob {
-        //padding-bottom: 500px; //margin-right: 100px;
-        //margin-top: 30px;
-    }
     #menu-primary{
     	position: absolute;
 	    top: 0px;
@@ -120,7 +125,7 @@ header {
 	    right: 0px;
 	    z-index: 1;
 	    background-color: rgb(255, 255, 255);
-	    padding: 50px 35% 50px;
+	    padding: 50px 20%;
     }
     .dropdown-toggle::after {
         display: none!important;
@@ -135,10 +140,9 @@ header {
     }
 }
 @media (min-width: 768px) {
-    // .active, .active>a {
-    // 	font-weight: 800;
-    // 	text-decoration: underline;
-    // }
+	#menu-primary{
+		max-width: 769px;
+	}
     .nav-bg:not(li) {
         margin: 10px;
         background: rgba(255, 255, 255, 0.8)!important;
@@ -149,7 +153,7 @@ header {
         top: 100% !important;
     }
     .dropdown-menu li{
-    	width: 182px;
+    	width: 190px;
     }
     .dropdown:hover>.dropdown-toggle::after {
         //transform:rotate(180deg);
@@ -187,15 +191,65 @@ header {
 		width: auto;
 	}
 }
+.element {
+	position: absolute;
+	left: 0;
+	top: 0;
+	background-repeat:no-repeat;
+	z-index: 1;
+}
+@media (min-width: 768px) {
+
+	.element {
+		width:450px;
+		height:453px;
+		background:
+		linear-gradient(to bottom right, #DA291C 50%,transparent 50%) 0 0/450px 453px,
+		transparent;
+	}
+	.j-title {
+		font-size: 84px!important;
+	    letter-spacing: -3px!important;
+	    line-height: 80px;
+	}
+	.j-desc {
+	    font-size: 24px!important;
+	    line-height: 36px;
+	}
+	.j-main {
+		padding: 2rem 2rem 6rem!important;
+	}
+}
+@media (max-width: 768px) {
+	.element {
+		width:250px;
+		height:250px;
+		background:
+		linear-gradient(to bottom right, #DA291C 50%,transparent 50%) 0 0/250px 250px,
+		transparent;
+	}
+	.j-title {
+		font-size: 52px!important;
+	    letter-spacing: -1px!important;
+	    line-height: 50px;
+	    max-width: 410px;
+	}
+	.j-desc {
+	    font-size: 18px!important;
+	    line-height: 27px;
+	}
+	.j-main {
+		padding: 4rem 2rem 6rem!important;
+		margin-bottom: 4rem!important;
+	}
+}
 .j-title {
     font-family: urw-din-condensed;
-    font-size: 84px;
-    font-weight: 800;
-    letter-spacing: -3.36px;
+   	font-weight: 600!important;
     color: #fff;
 }
 .j-desc {
-    font-size: 21px!important;
+    letter-spacing: -1px!important;
     color: #fff;
 }
 .j-button {
@@ -212,8 +266,7 @@ header {
     border-radius: 0 !important;
 }
 .j-main {
-	margin-top: 0.5rem!important;
-    max-width: 500px;
+    max-width: 552px;
     background-color: transparent!important;
 }
 .j-button:hover {
