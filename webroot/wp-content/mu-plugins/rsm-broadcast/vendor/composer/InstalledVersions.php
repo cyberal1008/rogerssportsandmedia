@@ -30,7 +30,7 @@ private static $installed = array (
     array (
     ),
     'reference' => '859907dc9a6f34e99efe592ca5b9c75edfc63adf',
-    'name' => 'rsm/tv',
+    'name' => 'rsm/Broadcast',
   ),
   'versions' => 
   array (
@@ -50,7 +50,7 @@ private static $installed = array (
         0 => '*',
       ),
     ),
-    'rsm/tv' => 
+    'rsm/Broadcast' => 
     array (
       'pretty_version' => 'dev-master',
       'version' => 'dev-master',
