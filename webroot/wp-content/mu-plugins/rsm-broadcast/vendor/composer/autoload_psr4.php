@@ -6,6 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'RSM\\TV\\' => array($baseDir . '/lib'),
+    'RSM\\Broadcast\\' => array($baseDir . '/lib'),
     'Composer\\Installers\\' => array($vendorDir . '/composer/installers/src/Composer/Installers'),
 );
