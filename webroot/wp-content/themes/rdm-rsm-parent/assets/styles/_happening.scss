@@ -6,21 +6,22 @@
 .page-header-desc{
   font-size: 21px;
   line-height: 36px;
-}
-.second:nth-last-child(1) {
-  margin-top: 100px;
+}  
+@media (min-width:768px){
+  .second:nth-last-child(1) {
+    margin-top: 100px;
 
-  .card-gb {
-    margin-left: auto;
-    margin-right: 0;
-    max-width: 450px;
+      .card-gb {
+        margin-left: auto;
+        margin-right: 0;
+        max-width: 450px;
+      }
+   
+    .card-rectangle:before {
+      background-color: #333333!important;
+    }
   }
-
-  .card-rectangle:before {
-    background-color: #333333;
-  }
 }
-
 .card-gb {
   border: none !important;
 }
@@ -85,30 +86,30 @@
   color:#333!important;
 }
 
-.card-img-next {
-  max-width: 450px;
-  width: 450px;
-  position: inherit;
-}
-
 .card-body {
   text-align: left;
 }
+@media (min-width:768px){
+  .card-img-next {
+    max-width: 450px;
+    width: 450px;
+    position: inherit;
+  }
+  .card-rectangle:before {
+    content: "";
+    position: absolute;
+    height: 258px;
+    width: 48px;
+    right: -16px;
+    top: 16px;
+    background-color: #00A0B7;
+    z-index: 0;
+  }
 
-.card-rectangle:before {
-  content: "";
-  position: absolute;
-  height: 258px;
-  width: 48px;
-  right: -16px;
-  top: 16px;
-  background-color: #00A0B7;
-  z-index: 0;
-}
-
-.img-shadow {
-  position: relative;
-  width: 450px;
+  .img-shadow {
+    position: relative;
+    width: 450px;
+  }
 }
 @media (max-width: 767px) {
   .tri{
@@ -130,4 +131,58 @@
   background:
   linear-gradient(to top right, #00A0B7 50%,transparent 50%) 0 0/72px 72px,
   transparent;
+}
+@media (min-width:767px){
+  .small-img, .show-on-mobile{
+    display: none;
+  }
+}
+@media (max-width:768px){
+  .large-img, .card-rectangle-one{
+    display: none;
+  }
+  .card-img-next{
+    width: 107px;
+  }
+  .card-title-next{
+    width: 70%;
+  }
+  .card-body{
+    padding-bottom: 50px!important;
+  }
+  .cat-date-next>.cat-date {
+    line-height: 0;
+  }
+  .justify-content-between{
+    padding-top: 50px!important;
+  }
+}
+@media screen and (min-width: 767px) and (max-width: 991px) {
+  .card-rectangle-one{
+    height: 208px;
+    width: 36px;
+    right: 2px;
+    top: -7px;
+  }
+}
+@media screen and (min-width: 992px) and (max-width: 1200px) {
+  .card-rectangle-one{
+    height: 285px;
+    width: 48px;
+    right: -7px;
+    top: -7px;
+  }
+}
+
+
+
+@media (max-width:768px){
+  .img-shadow{
+    right: 0px;
+    position: absolute;
+  }
+  .card-gb{
+    width: 90%;
+    min-width: 350px;
+  }
 }
