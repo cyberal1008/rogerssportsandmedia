@@ -57,12 +57,15 @@ if ( ! class_exists( 'RSM_Customizer_Settings' ) ) {
 			);
 
 			$wp_customize->add_control(
-				'post_ids',
-				array(
-					'label'    => __( 'Change Post IDs below.', 'rsm_parent' ),
-					'section'  => 'rsm_featured_posts',
-					'type'     => 'text',
-					'priority' => 5,
+				new WP_Customize_Control(
+					$wp_customize,
+					'post_ids',
+					array(
+						'label'    => __( 'Change Post IDs below.', 'rsm_parent' ),
+						'section'  => 'rsm_featured_posts',
+						'type'     => 'text',
+						'priority' => 5,
+					)
 				)
 			);
 
