@@ -1,10 +1,10 @@
 <?php
 
 
-namespace RSM\TV\Taxonomy;
+namespace RSM\Broadcast\Taxonomy;
 
 
-use RSM\TV\PostType\Shows;
+use RSM\Broadcast\PostType\Shows;
 
 class Networks {
 

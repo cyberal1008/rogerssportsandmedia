@@ -1,6 +1,6 @@
 <?php
 
-namespace RSM\TV;
+namespace RSM\Broadcast;
 
 /**
  * Register all actions and filters for the plugin.
