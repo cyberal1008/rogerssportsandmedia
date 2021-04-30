@@ -16,15 +16,8 @@
 	</div>
 	<div class="row justify-content-between">
 		<?php
-		$the_query = new WP_Query(
-			array(
-				'post_type'      => 'post',
-				'posts_per_page' => 3,
-				'post_status'    => 'publish',
-				'post__in'       => $args['ids_array'],
-				'orderby'        => 'post__in',
-			)
-		);
+		global $args_array;
+		$the_query = new WP_Query( $args_array );
 		?>
 		<?php if ( $the_query->have_posts() ) : ?>
 			<?php
