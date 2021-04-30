@@ -30,7 +30,8 @@
 			<?php
 			while ( $the_query->have_posts() ) :
 				$the_query->the_post();
-				$featured_img_url   = get_the_post_thumbnail_url( get_the_ID(), 'medium' );
+				$featured_img_url   = get_the_post_thumbnail_url( get_the_ID(), 'wide-577' );
+				$featured_img_url_m = get_the_post_thumbnail_url( get_the_ID(), 'square-375' );
 				$categories         = get_the_category();
 				$call_to_action     = get_post_meta( get_the_ID(), 'call-to-action', true );
 				$call_to_action_url = get_post_meta( get_the_ID(), 'call-to-action_url', true );
@@ -39,7 +40,7 @@
 					?>
 					<div class="container mb-5">
 						<div class="row">
-							<div class="col-sm">
+							<div class="col-md order-md-1">
 								<div class="card-body">
 									<p class="cat-date"><?php echo get_the_date( get_option( 'date_format' ) ); ?>
 										<?php
@@ -55,7 +56,7 @@
 									<?php } ?>
 								</div>
 							</div>
-							<div class="col-sm">
+							<div class="col-md order-first order-md-2">
 								<div class="img-square-wrapper">
 									<div class="card-rectangle-one"></div>
 									<img class="card-img-one" src="<?php echo $featured_img_url; ?>" alt="">
@@ -75,8 +76,9 @@
 								</p>
 							</div>
 							<div class="img-shadow">
-								<div class="card-rectangle"></div>
-								<img class="card-img-next" src="<?php echo $featured_img_url; ?>" alt="">
+								<div class="card-rectangle"></div>							
+								<img class="card-img-next small-img" src="<?php echo $featured_img_url_m; ?>">
+								<img class="card-img-next large-img" src="<?php echo $featured_img_url; ?>">
 							</div>
 							<div class="card-body">
 								<h4 class="card-title-next"><a href="<?php echo get_permalink( $post->id ); ?>"><?php the_title(); ?></a></h4>
@@ -88,6 +90,32 @@
 							</div>
 						</div>
 					</div>
+
+					<!-- <div class="container mb-5 show-on-mobile">
+						<div class="row">
+							<div class="col-sm">
+								<div class="card-body">
+									<p class="cat-date"><?php echo get_the_date( get_option( 'date_format' ) ); ?>
+										<?php
+										if ( ! empty( $categories ) ) {
+											echo ' / ' . esc_html( $categories[0]->name ); }
+										?>
+									</p>
+									<h4 class="card-title-gb"><a href="<?php echo get_permalink( $post->id ); ?>"><?php the_title(); ?></a></h4>
+									<?php
+									if ( ! empty( $call_to_action ) ) {
+										?>
+										<a href="<?php echo $call_to_action_url; ?>" class="card-button"><?php echo $call_to_action; ?></a>
+									<?php } ?>
+								</div>
+							</div>
+							<div class="col-sm ">
+								<div class="img-square-wrapper">
+									<img class="card-img-one" src="<?php echo $featured_img_url_m; ?>" alt="">
+								</div>
+							</div>
+						</div>
+					</div> -->
 				<?php } endwhile; ?>
 			<?php wp_reset_postdata(); ?>
 		<?php else : ?>
