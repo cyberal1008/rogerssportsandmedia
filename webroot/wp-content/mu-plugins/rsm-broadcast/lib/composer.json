@@ -1,6 +1,6 @@
 {
-  "name": "rsm/tv",
-  "description": "Custom Post types taxonomies for RSM TV",
+  "name": "rsm/broadcast",
+  "description": "Custom Post types taxonomies for RSM BROADCAST",
   "type": "wordpress-muplugin",
   "minimum-stability": "stable",
   "license": "proprietary",
@@ -8,6 +8,10 @@
     {
       "name": "vineet.phillips",
       "email": "vineet.phillips@rci.rogers.com"
+    },
+    {
+        "name": "leon.qi",
+        "email": "leon.qi@rci.rogers.com"
     }
   ],
   "support": {
@@ -16,7 +20,7 @@
   },
   "autoload": {
     "psr-4": {
-      "RSM\\TV\\": "lib/"
+      "RSM\\BROADCAST\\": "lib/"
     }
   },
   "require": {

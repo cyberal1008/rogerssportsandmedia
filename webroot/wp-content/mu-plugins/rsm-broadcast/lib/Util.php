@@ -1,7 +1,7 @@
 <?php
 
 
-namespace RSM\TV;
+namespace RSM\Broadcast;
 
 
 class Util {
@@ -53,7 +53,7 @@ class Util {
 			if ( ! empty( $thumbnail_html ) ) {
 				$content = $thumbnail_html;
 				$content .= '<p class="hide-if-no-js">
-                                <a href="javascript:;" data-action="remove" class="rsm_action_button" >' . esc_html__( 'Remove tile image', RSM_TV_LOCALE ) . '</a>
+                                <a href="javascript:;" data-action="remove" class="rsm_action_button" >' . esc_html__( 'Remove tile image', RSM_BROADCAST_LOCALE ) . '</a>
                                 <input type="hidden" id="'.$id.'" class="rsm_show_img_hidden" name="' . $name . '" value="' . esc_attr( $image_id ) . '" />
                              </p>';
 			}
@@ -61,7 +61,7 @@ class Util {
 		} else {
 			$content = '<img src="" style="width:' . esc_attr( $content_width ) . 'px;height:auto;border:0;display:none;" />';
 			$content .= '<p class="hide-if-no-js">
-                            <a href="javascript:;" class="rsm_action_button" data-action="set">' . esc_html__( 'Set tile image', RSM_TV_LOCALE ) . '</a>
+                            <a href="javascript:;" class="rsm_action_button" data-action="set">' . esc_html__( 'Set tile image', RSM_BROADCAST_LOCALE ) . '</a>
                             <input type="hidden" id="'.$id.'" class="rsm_show_img_hidden" name="' . $name . '" value="" />
                          </p>';
 		}
