@@ -8,6 +8,8 @@
  * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
  */
 
+$lang = 'en';
+
 ?><!DOCTYPE html>
 <html lang="<?php echo $lang; ?>">
 <head>

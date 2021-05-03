@@ -1,39 +1,33 @@
 (function ($) {
     'use strict';
 
-    /**
-     * Image uploder for show edit page
-     *
-     **/
-    
     $(document).ready(function () {
         var tile_image_text_set = 'Set tile image',
             tile_image_text_remove = 'Remove tile image',
             image_div_id = "rsmtileimg",
             // parent_img_selector = $( "#" + image_div_id),
-            image_selector = $( "#" + image_div_id +" img"),
+            image_selector = $("#" + image_div_id + " img"),
             button_selector = $(".rsm_action_button"),
             file_frame;
-            
-            
-        var toggle_state = function(new_state, attachment){
-            if(new_state === 'set'){
+
+
+        var toggle_state = function (new_state, attachment) {
+            if (new_state === 'set') {
                 button_selector.siblings('.rsm_show_img_hidden').val("");
                 image_selector.attr('src', '');
                 image_selector.hide();
                 button_selector.data('action', 'set');
                 button_selector.text(tile_image_text_set);
-            }
-            else{
+            } else {
                 button_selector.siblings('.rsm_show_img_hidden').val(attachment.id);
                 image_selector.attr('src', attachment.url);
                 image_selector.show();
                 button_selector.data("action", "remove");
                 button_selector.text(tile_image_text_remove);
-               
+
             }
         }
-        
+
         $.fn.upload_tile_image = function () {
 
             if (file_frame) {
@@ -48,7 +42,7 @@
                 },
                 multiple: false
             });
-            
+
             file_frame.on('select', function () {
                 var attachment = file_frame.state().get('selection').first().toJSON();
                 toggle_state('remove', attachment);
@@ -59,15 +53,35 @@
 
         button_selector.on('click', function (event) {
             event.preventDefault();
-            var action= $(this).data('action');
-            
-            if(action === 'set'){
+            var action = $(this).data('action');
+
+            if (action === 'set') {
                 $.fn.upload_tile_image($(this));
-            }
-            else{
+            } else {
                 toggle_state('set', null);
             }
         });
+
+        var uploadInputID;
+        $(document).on('click', '.rsm_upload_button', function (e) {
+            uploadInputID = $(this).prev('input');
+            tb_show('', 'media-upload.php?type=file&amp;TB_iframe=true');
+            return false;
+        });
+
+        window.send_to_editor = function (html) {
+            if (typeof uploadInputID !== 'undefined') {
+                var node = $(html),
+                    mediaurl;
+                if (node.prop('nodeName') === 'A') {
+                    mediaurl = node.attr("href");
+                } else {
+                    mediaurl = node.attr("src");
+                }
+                uploadInputID.val(mediaurl);
+                tb_remove();
+            }
+        }
     });
 
 })(jQuery);
