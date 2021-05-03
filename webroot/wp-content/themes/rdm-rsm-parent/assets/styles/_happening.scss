@@ -157,6 +157,12 @@
     padding-top: 50px!important;
   }
 }
+@media (max-width:400px){
+  .card-img-next{
+    width: 80px;
+    padding-top: 12px;
+  }
+}   
 @media screen and (min-width: 767px) and (max-width: 991px) {
   .card-rectangle-one{
     height: 208px;
@@ -173,9 +179,6 @@
     top: -7px;
   }
 }
-
-
-
 @media (max-width:768px){
   .img-shadow{
     right: 0px;
