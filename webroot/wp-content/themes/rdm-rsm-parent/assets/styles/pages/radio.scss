@@ -1,0 +1,18 @@
+@import "../mixins";
+.page {
+  .page-program-grid {
+    .grid-filters {
+      display: flex;
+      justify-content: left;
+      align-items: left;
+      flex-wrap: wrap;
+      padding: 0;
+      margin: 0;
+      font-family: sans-serif;
+      color: #6e6e6e;
+      .select {
+        @include filter-dropdown;
+      }
+    }
+  }
+}
