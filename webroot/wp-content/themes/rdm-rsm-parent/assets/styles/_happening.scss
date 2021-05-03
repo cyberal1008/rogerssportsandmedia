@@ -44,7 +44,7 @@
 }
 
 .cat-date-next {
-  padding-left: 1.25rem;
+  padding-left: 1rem;
 }
 
 .card-img-one {
@@ -158,16 +158,13 @@
     width: 70%;
   }
   .card-body{
-    padding-bottom: 15px!important;
+    padding:  10px 16px 15px 16px!important;
   }
   .cat-date-next>.cat-date {
     line-height: 0;
   }
   .cat-date {
     line-height: 30px;
-  }
-  .card-body{
-    padding-top: 10px!important;
   }
   .justify-content-between{
     padding-top: 50px!important;
@@ -192,7 +189,7 @@
 }
 @media (max-width:767px){
   .img-shadow{
-    right: -25px;
+    right: -20px;
     position: absolute;
   }
   .card-gb{
