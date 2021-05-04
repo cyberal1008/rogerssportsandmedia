@@ -1,0 +1,69 @@
+@import "../mixins";
+.portfolio-page {
+  .television-header {
+    margin-bottom: 62px;
+    h2 {
+      font-family: urw-din-condensed, serif;
+      font-size: 56px;
+      text-transform: uppercase;
+    }
+
+    .download-link {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1.4px;
+      font-weight: bold;
+      padding: 5px;
+      border-bottom: 3px solid #ffbf3f;
+      text-decoration: none;
+      color: #000;
+    }
+
+    .program-grid-filter {
+      margin-top: 2em;
+      #grid-filter-head {
+        margin-bottom: 1em;
+        #grid-filter-head-accent {
+          font-weight: 900;
+        }
+      }
+
+      .grid-filters {
+        display: flex;
+        justify-content: left;
+        align-items: left;
+        flex-wrap: wrap;
+        padding: 0;
+        margin: 0;
+        color: #6e6e6e;
+        margin-bottom: 2em;
+
+        .filter-wrap {
+          padding: 0;
+          border-left: 0;
+          border-right: 0;
+          .select {
+            @include filter-dropdown;
+          }
+        }
+      }
+    }
+  }
+
+  .television-grid {
+    .card {
+      border: none;
+      border-radius: unset;
+
+      .card-body {
+        padding: 16px;
+
+        .card-title {
+          font-family: "Ted Next Bold";
+          font-size: 16px;
+          color: #333333;
+        }
+      }
+    }
+  }
+}
