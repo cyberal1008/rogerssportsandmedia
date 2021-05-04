@@ -38,6 +38,26 @@
 	}
 		get_template_part( 'template-parts/content', 'happening', $args_array );
 	?>
+
+	<div class="join-our-team my-5">    
+		<div class="container">
+			<div class="row">
+				<div class="col-md-5 my-auto">
+					<div class="jumbotron jot-main">
+						<h1 class="display-3 jot-title">BE PART OF SOMETHING BIG</h1>
+						<p class="lead jot-desc">Win with Rogers Sports & Media, let’s connect</p>
+						<a href="https://jobs.rogers.com/go/Sports-and-Media/386638/?sortColumn=sort_shifttype&sortDirection=desc" target="_blank" class="btn btn-primary btn-lg jot-button">VIEW OPEN POSITIONS</a>
+					</div>
+				</div>
+				<div class="col-md-7">
+					<div class="jot-img-wrapper">
+						<div class="jot-card-rectangle"></div>
+						<img class="jot-card-img" src="<?php bloginfo( 'template_directory' ); ?>/assets/images/join-our-team-577x433.jpeg" alt="">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <?php
