@@ -48,7 +48,9 @@ $lang = 'en';
 	<link rel="profile" href="//gmpg.org/xfn/11" />
 	<link rel="pingback" href="<?php echo get_option( 'siteurl' ) . '/xmlrpc.php'; ?>" />
 	<link rel="shortcut icon" href="<?php echo dirname( get_bloginfo( 'stylesheet_url' ) ); ?>/assets/images/favicon.ico">
-	<script type="text/javascript" src="/wp-content/themes/node_modules/jquery/dist/jquery.min.js"></script>
+	<!-- <script type="text/javascript" src="/wp-content/themes/node_modules/jquery/dist/jquery.min.js"></script> -->
+	<script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/assets/scripts/popper.min.js"></script> 
+
 	<link rel="stylesheet" href="https://use.typekit.net/aws7pih.css">
 	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 

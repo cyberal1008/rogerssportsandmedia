@@ -16,15 +16,8 @@
 	</div>
 	<div class="row justify-content-between">
 		<?php
-		$the_query = new WP_Query(
-			array(
-				'post_type'      => 'post',
-				'posts_per_page' => 3,
-				'post_status'    => 'publish',
-				'post__in'       => $args['ids_array'],
-				'orderby'        => 'post__in',
-			)
-		);
+		global $args_array;
+		$the_query = new WP_Query( $args_array );
 		?>
 		<?php if ( $the_query->have_posts() ) : ?>
 			<?php
@@ -45,7 +38,8 @@
 									<p class="cat-date"><?php echo get_the_date( get_option( 'date_format' ) ); ?>
 										<?php
 										if ( ! empty( $categories ) ) {
-											echo ' / ' . esc_html( $categories[0]->name ); }
+											echo ' / ' . esc_html( $categories[0]->name );
+										}
 										?>
 									</p>
 									<h4 class="card-title-gb"><a href="<?php echo get_permalink( $post->id ); ?>"><?php the_title(); ?></a></h4>
@@ -64,19 +58,20 @@
 							</div>
 						</div>
 					</div>
-					<?php } else { ?>	
+				<?php } else { ?>   
 					<div class="col-lg-6 col-md-12 mb-4 second">
-						<div class="card mb-2 card-gb">
+						<div class="card mb-5 card-gb">
 							<div class="cat-date-next">
 								<p class="cat-date"><?php echo get_the_date( get_option( 'date_format' ) ); ?>
 									<?php
 									if ( ! empty( $categories ) ) {
-										echo ' / ' . esc_html( $categories[0]->name ); }
+										echo ' / ' . esc_html( $categories[0]->name );
+									}
 									?>
 								</p>
 							</div>
 							<div class="img-shadow">
-								<div class="card-rectangle"></div>							
+								<div class="card-rectangle"></div>                          
 								<img class="card-img-next small-img" src="<?php echo $featured_img_url_m; ?>">
 								<img class="card-img-next large-img" src="<?php echo $featured_img_url; ?>">
 							</div>
@@ -98,7 +93,8 @@
 									<p class="cat-date"><?php echo get_the_date( get_option( 'date_format' ) ); ?>
 										<?php
 										if ( ! empty( $categories ) ) {
-											echo ' / ' . esc_html( $categories[0]->name ); }
+											echo ' / ' . esc_html( $categories[0]->name );
+										}
 										?>
 									</p>
 									<h4 class="card-title-gb"><a href="<?php echo get_permalink( $post->id ); ?>"><?php the_title(); ?></a></h4>
@@ -116,7 +112,10 @@
 							</div>
 						</div>
 					</div> -->
-				<?php } endwhile; ?>
+					<?php
+				}
+			endwhile;
+			?>
 			<?php wp_reset_postdata(); ?>
 		<?php else : ?>
 				<p>
