@@ -1,7 +1,7 @@
-@import "fonts", "header", "footer", "home", "happening", "portfolio";
+@import "fonts", "header", "footer", "home", "happening";
 
-// Radio page
-@import "pages/radio";
+// Pages
+@import "pages/portfolio";
 
 body {
   .wrapper {

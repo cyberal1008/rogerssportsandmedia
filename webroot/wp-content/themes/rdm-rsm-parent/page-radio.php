@@ -23,7 +23,7 @@ get_header(); ?>
 			<div class="col-sm-12 col-md-12 col-lg-12 page-program-grid">
 			<?php
 				get_template_part( 
-					'template-parts/program', 
+					'template-parts/portforlio', 
 					'filter', 
 					array(
 						'total' => 104,
