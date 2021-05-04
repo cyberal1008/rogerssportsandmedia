@@ -20,11 +20,21 @@
  * Text Domain:       rdm-Broadcast
  */
 
-use RSM\Broadcast\Plugin;
+namespace RSM\Broadcast;
 
-if ( file_exists( dirname( __FILE__ ) . '/vendor/autoload.php' ) ) {
-	require_once dirname( __FILE__ ) . '/vendor/autoload.php';
-}
+
+set_include_path( __DIR__ . '/models' );
+
+spl_autoload_register( function ( $class_name ) {
+	if ( false !== strpos( $class_name, __NAMESPACE__ ) ) {
+		$classes_dir = realpath( plugin_dir_path( __FILE__ ) ) . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR;
+		// remove default namespace from the path
+		$class_file = str_replace( __NAMESPACE__ . "\\", '', $class_name );
+		$class_file = str_replace( '\\', DIRECTORY_SEPARATOR, $class_file ) . '.php';
+		// echo $class_file;
+		require_once $classes_dir . $class_file;
+	}
+} );
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {

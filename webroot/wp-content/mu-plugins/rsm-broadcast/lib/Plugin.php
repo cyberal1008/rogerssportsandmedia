@@ -115,15 +115,15 @@ class Plugin {
 	 * @since    1.0.0
 	 */
 	public function enqueue_scripts() {
-
+		
 		\wp_enqueue_script(
 			$this->get_plugin_name(),
-			\plugin_dir_url( dirname( __FILE__ ) ) . 'dist/scripts/rsm-Broadcast-admin.js',
+			\plugin_dir_url( dirname( __FILE__ ) ) . 'dist/scripts/rsm-broadcast-admin.js',
 			array( 'jquery' ),
 			$this->get_version(),
 			false );
 	}
-
+	
 	/**
 	 * Register all of the hooks related to the dashboard functionality
 	 * of the plugin.
@@ -140,12 +140,23 @@ class Plugin {
 		$show_categories_taxonomy = new ShowCategory();
 		$region_taxonomy          = new Region();
 		$radio_catetory_taxonomy  = new RadioCategory();
+		
+		$page_meta = new PageMeta();
+		
+		$this->loader->add_action( 'admin_enqueue_scripts', $this, 'enqueue_scripts' );
 		$this->loader->add_action( 'init', $show_post_type, 'register_post_type' );
+		$this->loader->add_action( 'init', $radio_post_type, 'register' );
 		$this->loader->add_action( 'init', $networks_taxonomy, 'register_taxonomy' );
 		$this->loader->add_action( 'init', $show_categories_taxonomy, 'register_taxonomy' );
+		$this->loader->add_action( 'init', $radio_catetory_taxonomy, 'register' );
+		$this->loader->add_action( 'init', $region_taxonomy, 'register' );
 		$this->loader->add_action( 'init', $days_taxonomy, 'register_taxonomy' );
 		$this->loader->add_action( 'add_meta_boxes', $show_post_type, 'add_meta_box' );
 		$this->loader->add_action( 'save_post', $show_post_type, 'save_meta' );
+
+		$this->loader->add_action( 'add_meta_boxes', $page_meta, 'add_meta_box' );
+		$this->loader->add_action( 'save_post', $page_meta, 'save_meta' );
+		
 
 	}
 
@@ -161,10 +172,6 @@ class Plugin {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->loader->run();
-
-		// enqueue scripts
-		add_action( 'wp_enqueue_scripts', array($this, 'enqueue_scripts') );
-		//$this->enqueue_scripts();
 	}
 
 	/**

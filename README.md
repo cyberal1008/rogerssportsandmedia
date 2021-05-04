@@ -38,7 +38,14 @@ npm install
 #### Run the Gulp Watch to monitor and generate required css files
 
 ```
-gulp watch
+gulp
+
+```
+
+#### Run release task before deploying to staging or production
+
+```
+gulp release
 
 ```
 

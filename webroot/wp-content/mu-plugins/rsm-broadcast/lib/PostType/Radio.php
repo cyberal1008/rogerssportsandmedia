@@ -185,18 +185,18 @@ class Radio {
         }
     }
 
-    /**
-     * Radio constructor.
-     *
-     * When class is instantiated
-     */
-    public function __construct() {
-
-        // Register the post type
-        add_action('init', array($this, 'register'));
-
-        // Admin Add metaboxes
-        $this->init_metaboxes();
-
-    }
+//    /**
+//     * Radio constructor.
+//     *
+//     * When class is instantiated
+//     */
+//    public function __construct() {
+//
+//        // Register the post type
+//        add_action('init', array($this, 'register'));
+//
+//        // Admin Add metaboxes
+//        $this->init_metaboxes();
+//
+//    }
 }

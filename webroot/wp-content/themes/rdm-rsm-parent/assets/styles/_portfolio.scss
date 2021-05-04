@@ -1,0 +1,40 @@
+.portfolio-page {
+  .television-header {
+    margin-bottom: 62px;
+    h2 {
+      font-family: urw-din-condensed, serif;
+      font-size: 56px;
+      text-transform: uppercase;
+    }
+    
+    .download-link {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1.4px;
+      font-weight: bold;
+      padding: 5px;
+      border-bottom: 3px solid #FFBF3F;
+      text-decoration: none;
+      color: #000;
+    }
+  }
+
+  .television-grid {
+
+    .card {
+      border: none;
+      border-radius: unset;
+
+      .card-body {
+        padding: 16px;
+
+        .card-title {
+          font-family: "Ted Next Bold";
+          font-size: 16px;
+          color: #333333;
+        }
+      }
+    }
+
+  }
+}
