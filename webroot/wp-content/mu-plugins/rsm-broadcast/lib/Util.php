@@ -45,16 +45,16 @@ class Util {
 		$image_id = self::get_meta_value( $post_meta, $section, $field );
 
 		if ( $image_id && get_post( $image_id ) ) {
-			if ( ! isset( $_wp_additional_image_sizes['post-thumbnail'] ) ) {
+			if ( ! isset( $_wp_additional_image_sizes['portrait'] ) ) {
 				$thumbnail_html = wp_get_attachment_image( $image_id, array( $content_width, $content_width ) );
 			} else {
-				$thumbnail_html = wp_get_attachment_image( $image_id, 'post-thumbnail' );
+				$thumbnail_html = wp_get_attachment_image( $image_id, 'portrait' );
 			}
 			if ( ! empty( $thumbnail_html ) ) {
 				$content = $thumbnail_html;
 				$content .= '<p class="hide-if-no-js">
                                 <a href="javascript:;" data-action="remove" class="rsm_action_button" >' . esc_html__( 'Remove tile image', RSM_BROADCAST_LOCALE ) . '</a>
-                                <input type="hidden" id="'.$id.'" class="rsm_show_img_hidden" name="' . $name . '" value="' . esc_attr( $image_id ) . '" />
+                                <input type="hidden" id="' . $id . '" class="rsm_show_img_hidden" name="' . $name . '" value="' . esc_attr( $image_id ) . '" />
                              </p>';
 			}
 			$content_width = $old_content_width;
@@ -62,7 +62,7 @@ class Util {
 			$content = '<img src="" style="width:' . esc_attr( $content_width ) . 'px;height:auto;border:0;display:none;" />';
 			$content .= '<p class="hide-if-no-js">
                             <a href="javascript:;" class="rsm_action_button" data-action="set">' . esc_html__( 'Set tile image', RSM_BROADCAST_LOCALE ) . '</a>
-                            <input type="hidden" id="'.$id.'" class="rsm_show_img_hidden" name="' . $name . '" value="" />
+                            <input type="hidden" id="' . $id . '" class="rsm_show_img_hidden" name="' . $name . '" value="" />
                          </p>';
 		}
 		echo $content;
@@ -127,12 +127,17 @@ class Util {
 										esc_attr( $value )
 									);
 									?>
-								<?php elseif ( 'upload_image' === $field['type'] ) : ?>
-									<?php printf(
-										'<p><input type="url" id="%s" name="%s" value="%s" class="image_url" /><button type="button" class="rsm_upload_button" value="Upload Image">Upload Image</button></p>',
+								<?php elseif ( 'upload' === $field['type'] ) : ?>
+									<?php
+									$mediatype = isset( $field['mediatype'] ) ? $field['mediatype'] : 'image';
+
+									printf(
+										'<p><input type="url" id="%s" name="%s" value="%s" size="60" /><button type="button" class="rsm_upload_button" value="Upload %s">Upload %s</button></p>',
 										esc_attr( $id ),
 										esc_attr( $name ),
-										esc_attr( $value )
+										esc_attr( $value ),
+										esc_html( ucwords( $mediatype ) ),
+										esc_html( ucwords( $mediatype ) )
 									) ?>
 								<?php elseif ( 'dropdown' === $field['type'] ) : ?>
 									<?php
@@ -289,17 +294,6 @@ class Util {
 										?>
                                         <button class="button button-secondary rdm-option-add-button">Add</button>
                                     </div>
-								<?php elseif ( "upload" === $field['type'] ) : ?>
-									<?php
-									printf( '<input type="file" id="%s" name="%s" class="upload-fieldset remove-field" data-fieldid="%s" accept="%s"/><br/><input type="text" id="%s" name="%s" value="%s" class="regular-text" />',
-										esc_attr( uniqid() ),
-										esc_attr( uniqid() ),
-										esc_attr( $id ),
-										esc_attr( $field['allowed_filetypes'] ),
-										esc_attr( $id ),
-										esc_attr( $name ),
-										esc_attr( $value )
-									) ?>
 								<?php else : ?>
 									<?php
 									printf(
