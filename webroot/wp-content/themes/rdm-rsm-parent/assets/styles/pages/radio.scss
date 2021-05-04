@@ -1,6 +1,13 @@
 @import "../mixins";
 .page {
   .page-program-grid {
+    #grid-filter-head {
+      margin-bottom: 1em;
+      #grid-filter-head-accent {
+        font-weight: 900;
+      }
+    }
+
     .grid-filters {
       display: flex;
       justify-content: left;
@@ -8,10 +15,17 @@
       flex-wrap: wrap;
       padding: 0;
       margin: 0;
-      font-family: sans-serif;
       color: #6e6e6e;
-      .select {
-        @include filter-dropdown;
+      margin-bottom: 2em;
+
+      .filter-wrap {
+        padding: 0;
+        margin-right: 1em;
+        border-left: 0;
+        border-right: 0;
+        .select {
+          @include filter-dropdown;
+        }
       }
     }
   }
