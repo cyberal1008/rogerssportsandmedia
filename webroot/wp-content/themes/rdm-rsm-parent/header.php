@@ -58,15 +58,36 @@ $lang = 'en';
 
 </head>
 <body <?php body_class(); ?>>
-		<?php if ( is_home() ) { ?>
-		<div class="fullscreen-video ">
-			<div class=" element"></div>
-			<video id="video" muted playsinline autoplay="true" muted="true" loop="true" poster="<?php echo get_theme_mod( 'desktop_vid_link_image_url' ); ?>" class=""><source id="mp4" src="<?php echo get_theme_mod( 'desktop_vid_link_video_url' ); ?>" type="video/mp4">
-			<p>Your user agent does not support the HTML5 Video element.</p>
-			</video>
-		</div>
-		<?php } ?>
-		
+<?php
+if ( is_home() ) {
+	get_template_part(
+		'template-parts/header',
+		'media',
+		array(
+			'image_url' => get_theme_mod( 'desktop_vid_link_image_url' ),
+			'video_url' => get_theme_mod( 'desktop_vid_link_video_url' ),
+		) );
+} elseif ( is_page() ) {
+	$page_meta = get_post_meta( get_the_ID(), RSM\Broadcast\PageMeta::METADATA_SLUG, true );
+	$image_uri = '';
+	$video_uri = '';
+	if ( isset( $page_meta['broadcast'] ) ) {
+		if ( isset( $page_meta['broadcast']['image_uri'] ) ) {
+			$image_uri = $page_meta['broadcast']['image_uri'];
+		}
+		if ( isset( $page_meta['broadcast']['image_uri'] ) ) {
+			$video_uri = $page_meta['broadcast']['video_uri'];
+		}
+	}
+	get_template_part(
+		'template-parts/header',
+		'media',
+		array(
+			'image_url' => $image_uri,
+			'video_url' => $video_uri,
+		) );
+}
+?>
 <header class="nav-down header-container ">
 			<nav class="navbar navbar-expand-md navbar-light fixed-top nav-bg" role="navigation">
 				<div class="nav-logo d-flex justify-content-center align-content-center align-items-center"
