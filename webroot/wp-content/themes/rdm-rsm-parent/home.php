@@ -16,6 +16,29 @@
 		<a href="<?php echo get_theme_mod( 'desktop_vid_link_button_url' ); ?>" class="btn btn-primary btn-lg j-button"><?php echo get_theme_mod( 'desktop_vid_link_button_text' ); ?></a>
 	</header>
 
+	<div class="who-we-are mt-5">
+		<div class="container">
+			<div class="wwa-elements">
+				<div class="wwa-element-one"></div>
+				<div class="wwa-element-two"></div>
+			</div>
+			<div class="row py-5">
+				<div class="col-md-6 my-auto">
+					<div class="jumbotron wwa-main">
+						<h1 class="display-3 wwa-title">WHO WE ARE</h1>
+						<p class="lead wwa-desc">We’re reimaging the future of sports and media by innovating at the intersection of data, tech, and sports.</p>
+						<a href="./who-we-are/" class="card-button">Read more</a>
+					</div>
+				</div>
+				<div class="col-md-6 my-auto">
+					<div class="wwa-img-wrapper">
+						<img class="wwa-card-img" src="<?php bloginfo( 'template_directory' ); ?>/assets/images/wwa-logos-577x433.png" alt="">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<?php
 		$string = get_theme_mod( 'post_ids' );
 	if ( $string ) {
