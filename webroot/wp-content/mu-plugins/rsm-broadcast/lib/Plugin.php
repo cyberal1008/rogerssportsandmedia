@@ -157,6 +157,7 @@ class Plugin {
 		$this->loader->add_action( 'add_meta_boxes', $page_meta, 'add_meta_box' );
 		$this->loader->add_action( 'save_post', $page_meta, 'save_meta' );
 		
+		$radio_post_type->init_metaboxes();
 
 	}
 

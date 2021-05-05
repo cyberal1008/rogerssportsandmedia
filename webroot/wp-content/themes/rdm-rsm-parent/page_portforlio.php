@@ -18,7 +18,17 @@ get_header(); ?>
 					'page_id' => get_the_ID(),
 				));
 		} ?>
-    </div>
+
+		<?php
+		if ( get_post_field( 'post_name' ) === 'radio-podcasts' ) {
+			get_template_part( 
+				'template-parts/portforlio', 
+				'radio', 
+				array(
+					'page_id' => get_the_ID(),
+				));
+		} ?>
+    	</div>
 
 <?php
 get_footer();
