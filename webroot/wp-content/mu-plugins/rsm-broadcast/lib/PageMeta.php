@@ -23,14 +23,14 @@ class PageMeta {
 						'id'                => 'image_uri',
 						'type'              => 'upload',
 						'mediatype'         => 'image',
-						'label'             => __( "Header Image URL", RSM_BROADCAST_LOCALE ),
+						'label'             => __( "Header Image URL (1280 x 720)", RSM_BROADCAST_LOCALE ),
 						'description'       => __( "", RSM_BROADCAST_LOCALE )
 					),
 					array(
 						'id'                => 'video_uri',
 						'type'              => 'upload',
 						'mediatype'         => 'video',
-						'label'             => __( "Header Video URL", RSM_BROADCAST_LOCALE ),
+						'label'             => __( "Header Video URL (1280 x 720)", RSM_BROADCAST_LOCALE ),
 						'description'       => __( "", RSM_BROADCAST_LOCALE ),
 					),
 				),
