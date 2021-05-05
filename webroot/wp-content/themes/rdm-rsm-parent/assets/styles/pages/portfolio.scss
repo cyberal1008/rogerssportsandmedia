@@ -1,4 +1,10 @@
 @import "../mixins";
+.portfolio-header{
+  &.j-main {
+    max-width: 100%;
+  }
+}
+
 .portfolio-page {
   .television-header {
     margin-bottom: 62px;

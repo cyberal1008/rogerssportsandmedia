@@ -61,10 +61,29 @@ $lang = 'en';
 		<?php if ( is_home() ) { ?>
 		<div class="fullscreen-video ">
 			<div class=" element"></div>
-			<video id="video" muted playsinline autoplay="true" muted="true" loop="true" poster="<?php echo get_theme_mod( 'desktop_vid_link_image_url' ); ?>" class=""><source id="mp4" src="<?php echo get_theme_mod( 'desktop_vid_link_video_url' ); ?>" type="video/mp4">
+			<video id="video" muted playsinline autoplay loop poster="<?php echo get_theme_mod( 'desktop_vid_link_image_url' ); ?>" class=""><source id="mp4" src="<?php echo get_theme_mod( 'desktop_vid_link_video_url' ); ?>" type="video/mp4">
 			<p>Your user agent does not support the HTML5 Video element.</p>
 			</video>
 		</div>
+		<?php } elseif ( is_page() ) {
+			$page_meta = get_post_meta( get_the_ID(), RSM\Broadcast\PageMeta::METADATA_SLUG, true );
+			$image_uri = '';
+			$video_uri = '';
+			if ( isset( $page_meta['broadcast'] ) ) {
+			    if( isset( $page_meta['broadcast']['image_uri'] ) ) {
+				    $image_uri = $page_meta['broadcast']['image_uri'];
+			    }
+			    if( isset( $page_meta['broadcast']['image_uri'] ) ){
+				    $video_uri = $page_meta['broadcast']['video_uri'];
+                }
+			}
+		    ?>
+            <div class="fullscreen-video ">
+                <div class=" element"></div>
+                <video id="video" muted playsinline autoplay loop poster="<?php echo $image_uri; ?>" class=""><source id="mp4" src="<?php echo $video_uri; ?>" type="video/mp4">
+                    <p>Your user agent does not support the HTML5 Video element.</p>
+                </video>
+            </div>
 		<?php } ?>
 		
 <header class="nav-down header-container ">
