@@ -173,11 +173,3 @@ function custom_image_sizes( $sizes ) {
 		'square'    => __( 'Square' ),
 	) );
 }
-
-
-// wp enqueue scripts
-add_action( 'wp_enqueue_scripts', function () {
-	if ( is_page() && get_the_title() === 'Television' ) {
-		wp_enqueue_script( 'television-js', get_template_directory_uri() . "/assets/scripts/television.js", "parent-scripts", '', true );
-	}
-} );
