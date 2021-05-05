@@ -27,3 +27,10 @@ if ( ! function_exists( 'parent_scripts' ) ) {
 } // endif function_exists( 'parent_scripts' ).
 
 add_action( 'wp_enqueue_scripts', 'parent_scripts' );
+
+// wp enqueue scripts for television
+add_action( 'wp_enqueue_scripts', function () {
+	if ( is_page() && get_the_title() === 'Television' ) {
+		wp_enqueue_script( 'television-js', get_template_directory_uri() . "/assets/scripts/television.js", "parent-scripts", '', true );
+	}
+} );

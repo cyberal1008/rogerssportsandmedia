@@ -19,7 +19,7 @@ if(isset($args['filters']) ) :
         $count = 0;
         foreach($options as $v=>$t) : 
         ?>
-            <input class="selectopt" name="<?php echo $id ?>" type="radio" id="<?php echo $id.'-'.$v ?>" <?php echo ($count === 0 ? " checked" : "") ?>>
+            <input class="selectopt" name="<?php echo $id ?>" type="radio" value="<?php echo $v ?>" id="<?php echo $id.'-'.$v ?>" <?php echo ($count === 0 ? " checked" : "") ?>>
             <label for="<?php echo $id.'-'.$v ?>" class="option"><?php echo $t; ?></label>
         <?php
         $count++;

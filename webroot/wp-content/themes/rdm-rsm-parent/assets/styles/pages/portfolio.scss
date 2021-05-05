@@ -17,6 +17,7 @@
       border-bottom: 3px solid #ffbf3f;
       text-decoration: none;
       color: #000;
+      text-align: center;
     }
 
     .program-grid-filter {
@@ -31,7 +32,7 @@
       .grid-filters {
         display: flex;
         justify-content: left;
-        align-items: left;
+        align-items: flex-start;
         flex-wrap: wrap;
         padding: 0;
         margin: 0;
@@ -42,8 +43,10 @@
           padding: 0;
           border-left: 0;
           border-right: 0;
+          
           .select {
             @include filter-dropdown;
+            width: 90%;
           }
         }
       }
@@ -52,18 +55,27 @@
 
   .television-grid {
     .card {
+      transition: transform 0.5s ease;
       border: none;
       border-radius: unset;
-
+      cursor: pointer;
       .card-body {
         padding: 16px;
 
         .card-title {
-          font-family: "Ted Next Bold";
+          font-family: "Ted Next Bold", serif;
           font-size: 16px;
           color: #333333;
         }
       }
+      &:hover{
+        transform: scale(1.15);
+      }
     }
+  }
+  .programming-none{
+    display: none;
+    min-height: 200px;
+    font-size: 22px;
   }
 }
