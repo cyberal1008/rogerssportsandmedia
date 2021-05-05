@@ -607,6 +607,13 @@ footer {
     width: 90%;
     min-width: 350px; } }
 
+.portfolio-header.j-main {
+  max-width: 100%; }
+
+.portfolio-header .parent-url a {
+  color: #FFF;
+  text-decoration: underline; }
+
 .portfolio-page .television-header {
   margin-bottom: 62px; }
   .portfolio-page .television-header.radio-header {
@@ -623,7 +630,8 @@ footer {
     padding: 5px;
     border-bottom: 3px solid #ffbf3f;
     text-decoration: none;
-    color: #000; }
+    color: #000;
+    text-align: center; }
   .portfolio-page .television-header .program-grid-filter {
     margin-top: 2em; }
     .portfolio-page .television-header .program-grid-filter #grid-filter-head {
@@ -637,9 +645,9 @@ footer {
       -webkit-box-pack: left;
           -ms-flex-pack: left;
               justify-content: left;
-      -webkit-box-align: left;
-          -ms-flex-align: left;
-              align-items: left;
+      -webkit-box-align: start;
+          -ms-flex-align: start;
+              align-items: flex-start;
       -ms-flex-wrap: wrap;
           flex-wrap: wrap;
       padding: 0;
@@ -665,7 +673,8 @@ footer {
           min-width: 60%;
           border-top: 1px solid #d6d6d6;
           border-bottom: 1px solid #d6d6d6;
-          height: 40px; }
+          height: 40px;
+          width: 90%; }
           .portfolio-page .television-header .program-grid-filter .grid-filters .filter-wrap .select .option {
             padding: 0 30px 0 10px;
             min-height: 38px;
@@ -725,14 +734,24 @@ footer {
               right: 1em; }
 
 .portfolio-page .television-grid .card {
+  -webkit-transition: -webkit-transform 0.5s ease;
+  transition: -webkit-transform 0.5s ease;
+  -o-transition: transform 0.5s ease;
+  transition: transform 0.5s ease;
+  transition: transform 0.5s ease, -webkit-transform 0.5s ease;
   border: none;
-  border-radius: unset; }
+  border-radius: unset;
+  cursor: pointer; }
   .portfolio-page .television-grid .card .card-body {
     padding: 16px; }
     .portfolio-page .television-grid .card .card-body .card-title {
-      font-family: "Ted Next Bold";
+      font-family: "Ted Next Bold", serif;
       font-size: 16px;
       color: #333333; }
+  .portfolio-page .television-grid .card:hover {
+    -webkit-transform: scale(1.15);
+        -ms-transform: scale(1.15);
+            transform: scale(1.15); }
 
 .portfolio-page .television-grid.radio-grid {
   padding-left: 8px; }
@@ -744,6 +763,11 @@ footer {
       padding: 0; }
       .portfolio-page .television-grid.radio-grid .radio-card-col .radio-card .card-body .card-title {
         font-size: 1em; }
+
+.portfolio-page .programming-none {
+  display: none;
+  min-height: 200px;
+  font-size: 22px; }
 
 body .wrapper {
   max-width: 1366px;
