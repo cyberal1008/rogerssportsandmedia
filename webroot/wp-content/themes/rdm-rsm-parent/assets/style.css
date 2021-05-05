@@ -610,6 +610,10 @@ footer {
 .portfolio-header.j-main {
   max-width: 100%; }
 
+.portfolio-header .parent-url a {
+  color: #FFF;
+  text-decoration: underline; }
+
 .portfolio-page .television-header {
   margin-bottom: 62px; }
   .portfolio-page .television-header h2 {
