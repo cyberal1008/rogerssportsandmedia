@@ -21,7 +21,7 @@ $days_terms   = get_terms( array(
 	'taxonomy'   => Days::TAXONOMY,
 	'hide_empty' => false,
 ) );
-$new_days     = array_merge( array( 'all' => 'All Days' ), wp_list_pluck( $days_terms, 'name', 'slug' ) );
+$new_days     = wp_list_pluck( $days_terms, 'name', 'slug' );
 $template_arr = array( 'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday' );
 $days         = array();
 foreach ( $template_arr as $v ) {
@@ -29,6 +29,8 @@ foreach ( $template_arr as $v ) {
 		$days[ $v ] = $new_days[ $v ];
 	}
 }
+
+$days = array_merge( array( 'all' => 'All Days' ), $days );
 
 $shows_terms = get_terms( array(
 	'taxonomy'   => ShowCategory::TAXONOMY,
