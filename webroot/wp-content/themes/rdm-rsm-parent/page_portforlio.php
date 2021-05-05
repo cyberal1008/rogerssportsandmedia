@@ -12,7 +12,7 @@ get_header(); ?>
 		<?php
 		if ( get_the_title() === 'Television' ) {
 			get_template_part( 
-				'template-parts/portforlio', 
+				'template-parts/portfolio', 
 				'television', 
 				array(
 					'page_id' => get_the_ID(),

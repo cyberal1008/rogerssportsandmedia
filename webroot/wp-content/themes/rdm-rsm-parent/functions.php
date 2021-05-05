@@ -38,16 +38,19 @@ function special_nav_class( $classes, $item ) {
 	if ( in_array( 'current-menu-item', $classes ) ) {
 		$classes[] = 'active ';
 	}
+
 	return $classes;
 }
 
 function remove_core_updates() {
 	global $wp_version;
+
 	return (object) array(
 		'last_checked'    => time(),
 		'version_checked' => $wp_version,
 	);
 }
+
 add_filter( 'pre_site_transient_update_core', 'remove_core_updates' );
 add_filter( 'pre_site_transient_update_plugins', 'remove_core_updates' );
 add_filter( 'pre_site_transient_update_themes', 'remove_core_updates' );
@@ -128,6 +131,7 @@ register_sidebar(
 function page_tagcat_settings() {
 	register_taxonomy_for_object_type( 'category', 'page' );
 }
+
 add_action( 'init', 'page_tagcat_settings' );
 
 function page_tagcat_support_query( $wp_query ) {
@@ -135,36 +139,45 @@ function page_tagcat_support_query( $wp_query ) {
 		$wp_query->set( 'post_type', 'any' );
 	}
 }
+
 add_action( 'pre_get_posts', 'page_tagcat_support_query' );
 
-add_image_size('hero', 1920, 1005, true);
-add_image_size('hero-1366', 1366, 715, true);
-add_image_size('hero-768', 768, 402, true);
-add_image_size('hero-375', 375, 196, true);
+add_image_size( 'hero', 1920, 1005, true );
+add_image_size( 'hero-1366', 1366, 715, true );
+add_image_size( 'hero-768', 768, 402, true );
+add_image_size( 'hero-375', 375, 196, true );
 
-add_image_size('portrait', 475, 720, true);
-add_image_size('portrait-320', 320, 485, true);
-add_image_size('portrait-80', 80, 121, true);
+add_image_size( 'portrait', 475, 720, true );
+add_image_size( 'portrait-320', 320, 485, true );
+add_image_size( 'portrait-80', 80, 121, true );
 
-add_image_size('landscape', 810, 608, true);
-add_image_size('landscape-577', 577, 433, true);
-add_image_size('landscape-375', 375, 281, true);
+add_image_size( 'landscape', 810, 608, true );
+add_image_size( 'landscape-577', 577, 433, true );
+add_image_size( 'landscape-375', 375, 281, true );
 
-add_image_size('wide', 810, 456, true);
-add_image_size('wide-577', 577, 324, true);
-add_image_size('wide-375', 375, 210, true);
+add_image_size( 'wide', 810, 456, true );
+add_image_size( 'wide-577', 577, 324, true );
+add_image_size( 'wide-375', 375, 210, true );
 
-add_image_size('square', 810, 810, true);
-add_image_size('square-577', 577, 577, true);
-add_image_size('square-375', 375, 375, true);
+add_image_size( 'square', 810, 810, true );
+add_image_size( 'square-577', 577, 577, true );
+add_image_size( 'square-375', 375, 375, true );
 
 add_filter( 'image_size_names_choose', 'custom_image_sizes' );
 function custom_image_sizes( $sizes ) {
-    return array_merge( $sizes, array(
-        'hero' => __('Hero'),
-        'portrait' => __('Portrait'),
-        'landscape' => __('Landscape'),
-		'wide' => __('Wide'),
-		'square' => __('Square'),
-    ) );
+	return array_merge( $sizes, array(
+		'hero'      => __( 'Hero' ),
+		'portrait'  => __( 'Portrait' ),
+		'landscape' => __( 'Landscape' ),
+		'wide'      => __( 'Wide' ),
+		'square'    => __( 'Square' ),
+	) );
 }
+
+
+// wp enqueue scripts
+add_action( 'wp_enqueue_scripts', function () {
+	if ( is_page() && get_the_title() === 'Television' ) {
+		wp_enqueue_script( 'television-js', get_template_directory_uri() . "/assets/scripts/television.js", "parent-scripts", '', true );
+	}
+} );
