@@ -61,7 +61,7 @@ class Radio {
         register_post_type( self::TYPE, $args );
     }
 
-    private function init_metaboxes(){
+    public function init_metaboxes(){
         add_action( 'add_meta_boxes', array( $this, 'add_metaboxes'));
         add_action( 'save_post', array( $this, 'save_metabox_data' ), 10, 2 );
     }
@@ -95,7 +95,7 @@ class Radio {
 
     public function render_logo_meta_box($post){
         $image_id = get_post_meta($post->ID, '_rsm_radio_logo_id', true);
-        if( $image = wp_get_attachment_image_src( $image_id ) ) {
+        if( $image = wp_get_attachment_image_src( $image_id, 'square-375') ) {
             echo '<a href="#" class="radio-logo-upl"><img src="' . $image[0] . '" style="max-width:10%;"/></a>
                   <a href="#" class="radio-logo-rmv" style="display:block">Remove Logo</a>
                   <input type="hidden" name="rsm-radio-logo" value="' . $image_id . '">';

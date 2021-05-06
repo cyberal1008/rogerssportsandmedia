@@ -33,4 +33,7 @@ add_action( 'wp_enqueue_scripts', function () {
 	if ( is_page() && stripos( get_the_title(), 'television' ) !== false ) {
 		wp_enqueue_script( 'television-js', get_template_directory_uri() . "/assets/scripts/television.js", "parent-scripts", '', true );
 	}
+	if ( is_page() && get_post_field( 'post_name' ) === 'radio-podcasts' ) {
+		wp_enqueue_script( 'television-js', get_template_directory_uri() . "/assets/scripts/radio.js", "parent-scripts", '', true );
+	}
 } );

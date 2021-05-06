@@ -34,7 +34,17 @@ $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, tr
 					array(
 						'page_meta' => $page_meta,
 					) );
-			} ?>
+			}
+			if ( stripos( get_the_title(), 'radio' ) !== false ) {
+				get_template_part(
+					'template-parts/portfolio',
+					'radio',
+					array(
+						'page_id' => get_the_ID(),
+					) );
+			}
+			?>
+
         </div>
 		<?php
 		if ( function_exists( 'z_get_posts_in_zone' )
@@ -66,7 +76,6 @@ $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, tr
 						<?php
 					}
 					?>
-
                 </div>
 				<?php
 			}

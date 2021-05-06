@@ -53,12 +53,6 @@ $tv_posts = new WP_Query( array(
 	'posts_per_page' => - 1
 ) );
 
-function get_data_items( $post_id, $taxonomy ) {
-	$post_terms = get_the_terms( $post_id, $taxonomy );
-
-	return implode( "|", wp_list_pluck( $post_terms, 'slug' ) );
-}
-
 ?>
 <div class="row television-header justify-content-md-between">
     <div class="col-12 col-md-3">

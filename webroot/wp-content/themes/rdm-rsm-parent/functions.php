@@ -174,35 +174,12 @@ function custom_image_sizes( $sizes ) {
 	) );
 }
 
-/**
- * Zoninator filters and actions
- */
-
-function add_zoninator_post_types() {
-
-	if ( class_exists( 'RSM\Broadcast\PostType\Highlights' ) ) {
-		$available_post_types = array(
-			\RSM\Broadcast\PostType\Highlights::SLUG,
-		);
-		foreach ( $available_post_types as $post_type ) {
-			add_post_type_support( $post_type, 'zoninator_zones' );
-		}
+function get_data_items( $post_id, $taxonomy ) {
+	$post_terms = get_the_terms( $post_id, $taxonomy );
+	$return_val = "";
+	if($post_terms){
+		$return_val = implode( "|", wp_list_pluck( $post_terms, 'slug' ) );
 	}
+
+	return $return_val;
 }
-
-add_action( 'zoninator_pre_init', 'add_zoninator_post_types' );
-
-
-function update_zoninator_search_args( $args ) {
-	if ( isset( $args['orderby'] ) ) {
-		$args['orderby'] = 'relevance';
-	}
-
-	if ( isset( $args['posts_per_page'] ) ) {
-		$args['posts_per_page'] = (int) $args['posts_per_page'] + 10;
-	}
-
-	return $args;
-}
-
-add_filter( 'zoninator_search_args', 'update_zoninator_search_args' );

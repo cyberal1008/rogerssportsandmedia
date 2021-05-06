@@ -121,3 +121,81 @@
 	background-size: 14px 14px;
 	z-index: 0;
 }
+
+.who-we-are{
+	margin-bottom: 150px;
+	.wwa-main {
+	    background-color: transparent!important;
+	}
+
+	.wwa-title {
+	    font-family: urw-din-condensed;
+	   	font-weight: 800!important;
+	   	font-size: 56px;
+		line-height: 64px;
+		letter-spacing: -1.12px;
+	}
+
+	.jot-desc {
+	    font-size: 21px!important;
+	    line-height: 36px;
+	}
+	.wwa-elements{
+		left: calc(-50vw + 50%);
+		width: 100vw;
+		z-index: 1;
+		position:absolute;
+	}
+
+	.wwa-element-one {
+		background-image: radial-gradient(#000 10%, transparent 10%), radial-gradient(#000 10%, transparent 10%);
+		background-position: 0 0, 7px 7px;
+		background-size: 14px 14px;
+		z-index: 0;
+	}
+
+	.wwa-element-two {
+	    background-color: #fff;
+	    border-top-left-radius: 180px;
+	    border-top-right-radius: 180px;
+	    border: 35px solid #00A955;
+	    border-bottom: 0;
+	}
+	.wwa-card-img{
+		width: 100%;
+	}
+	@media screen and (min-width: 768px) {
+		.wwa-element-one {
+			width:50px;
+			height:460px;
+		}
+
+		.wwa-element-two {
+			width: 255px;
+		    height: 142px;
+		    margin-left: -119px;
+		    margin-top: -20px;
+		}
+	}
+	@media screen and (max-width: 768px) {
+		.wwa-elements{
+			margin-top: 210px;
+		}
+		.wwa-element-one {
+			width:20px;
+			height:555px;
+		}
+
+		.wwa-element-two {
+			width: 255px;
+		    height: 142px;
+		    margin-left: -119px;
+		    margin-top: -20px;
+		}
+	}
+	@media screen and (max-width: 577px) {
+		.wwa-element-one {
+			height:455px;
+		}
+	}
+}
