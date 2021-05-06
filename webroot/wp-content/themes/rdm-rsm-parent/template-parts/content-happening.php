@@ -16,8 +16,18 @@
 	</div>
 	<div class="row justify-content-between">
 		<?php
-		global $args_array;
-		$the_query = new WP_Query( $args_array );
+		global $zone;
+		if ( function_exists( 'z_get_posts_in_zone' ) && ! empty( $zone ) ) {
+			$the_query = z_get_zone_query( $zone );
+		} else {
+			$the_query = new WP_Query(
+				array(
+					'post_type'      => 'post',
+					'posts_per_page' => 3,
+					'post_status'    => 'publish',
+				)
+			);
+		}
 		?>
 		<?php if ( $the_query->have_posts() ) : ?>
 			<?php

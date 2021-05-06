@@ -40,26 +40,9 @@
 	</div>
 
 	<?php
-		$string = get_theme_mod( 'post_ids' );
-	if ( $string ) {
-		$ids_array = explode( ', ', $string );
-		$args      = array( 'ids_array' => $ids_array );
 
-		$args_array = array(
-			'post_type'      => 'post',
-			'posts_per_page' => 3,
-			'post_status'    => 'publish',
-			'post__in'       => $args['ids_array'],
-			'orderby'        => 'post__in',
-		);
-	} else {
-		$args_array = array(
-			'post_type'      => 'post',
-			'posts_per_page' => 3,
-			'post_status'    => 'publish',
-		);
-	}
-		get_template_part( 'template-parts/content', 'happening', $args_array );
+		$zone = z_get_zone( 'homepage' ) ? 'homepage' : '';
+		get_template_part( 'template-parts/content', 'happening', $zone );
 		get_template_part( 'template-parts/content', 'join-our-team' );
 	?>
 </div>
