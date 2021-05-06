@@ -173,3 +173,13 @@ function custom_image_sizes( $sizes ) {
 		'square'    => __( 'Square' ),
 	) );
 }
+
+function get_data_items( $post_id, $taxonomy ) {
+	$post_terms = get_the_terms( $post_id, $taxonomy );
+	$return_val = "";
+	if($post_terms){
+		$return_val = implode( "|", wp_list_pluck( $post_terms, 'slug' ) );
+	}
+
+	return $return_val;
+}

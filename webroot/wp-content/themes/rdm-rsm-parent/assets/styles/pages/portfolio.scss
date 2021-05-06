@@ -1,11 +1,11 @@
 @import "../mixins";
-.portfolio-header{
+.portfolio-header {
   &.j-main {
     max-width: 100%;
   }
-  .parent-url{
+  .parent-url {
     a {
-      color: #FFF;
+      color: #fff;
       text-decoration: underline;
     }
   }
@@ -55,10 +55,22 @@
           padding: 0;
           border-left: 0;
           border-right: 0;
-          
+
           .select {
             @include filter-dropdown;
             width: 90%;
+          }
+        }
+      }
+    }
+    &.radio-header {
+      margin-bottom: 0;
+      .program-grid-filter {
+        .grid-filters {
+          .filter-wrap {
+            .select {
+              width: 95%;
+            }
           }
         }
       }
@@ -80,12 +92,28 @@
           color: #333333;
         }
       }
-      &:hover{
+      &:hover {
         transform: scale(1.15);
       }
     }
+    &.radio-grid {
+      padding-left: 8px;
+      .radio-card-col {
+        padding: 0 7px;
+        margin-bottom: 0.75em;
+        .radio-card {
+          .card-body {
+            margin-top: 0.75em;
+            padding: 0;
+            .card-title {
+              font-size: 1em;
+            }
+          }
+        }
+      }
+    }
   }
-  .programming-none{
+  .programming-none {
     display: none;
     min-height: 200px;
     font-size: 22px;

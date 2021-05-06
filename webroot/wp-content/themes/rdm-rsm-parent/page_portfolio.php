@@ -25,6 +25,7 @@ get_header();
     </div>
     <div class="container portfolio-page" id="main">
 		<?php
+		print_r(get_page_template_slug(get_the_title()));
 		if ( stripos( get_the_title(), 'television' ) !== false ) {
 			get_template_part(
 				'template-parts/portfolio',
@@ -33,7 +34,17 @@ get_header();
 					'page_id' => get_the_ID(),
 				) );
 		} ?>
-    </div>
+
+		<?php
+		if ( get_post_field( 'post_name' ) === 'radio-podcasts' ) {
+			get_template_part( 
+				'template-parts/portfolio', 
+				'radio', 
+				array(
+					'page_id' => get_the_ID(),
+				));
+		} ?>
+    	</div>
 
 <?php
 get_footer();

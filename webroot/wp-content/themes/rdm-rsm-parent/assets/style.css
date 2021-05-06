@@ -667,7 +667,7 @@ footer {
   max-width: 100%; }
 
 .portfolio-header .parent-url a {
-  color: #FFF;
+  color: #fff;
   text-decoration: underline; }
 
 .portfolio-page .television-header {
@@ -786,6 +786,10 @@ footer {
               box-sizing: border-box;
               position: absolute;
               right: 1em; }
+  .portfolio-page .television-header.radio-header {
+    margin-bottom: 0; }
+    .portfolio-page .television-header.radio-header .program-grid-filter .grid-filters .filter-wrap .select {
+      width: 95%; }
 
 .portfolio-page .television-grid .card {
   -webkit-transition: -webkit-transform 0.5s ease;
@@ -806,6 +810,17 @@ footer {
     -webkit-transform: scale(1.15);
         -ms-transform: scale(1.15);
             transform: scale(1.15); }
+
+.portfolio-page .television-grid.radio-grid {
+  padding-left: 8px; }
+  .portfolio-page .television-grid.radio-grid .radio-card-col {
+    padding: 0 7px;
+    margin-bottom: 0.75em; }
+    .portfolio-page .television-grid.radio-grid .radio-card-col .radio-card .card-body {
+      margin-top: 0.75em;
+      padding: 0; }
+      .portfolio-page .television-grid.radio-grid .radio-card-col .radio-card .card-body .card-title {
+        font-size: 1em; }
 
 .portfolio-page .programming-none {
   display: none;
