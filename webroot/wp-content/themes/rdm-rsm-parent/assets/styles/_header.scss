@@ -125,7 +125,10 @@
     	    right: 0px;
     	    z-index: 1;
     	    background-color: rgb(255, 255, 255);
-    	    padding: 50px 20%;
+    	    padding: 50px 30px;
+            .dropdown-item{
+              white-space: normal;
+            }
         }
         .dropdown-toggle::after {
             display: none!important;

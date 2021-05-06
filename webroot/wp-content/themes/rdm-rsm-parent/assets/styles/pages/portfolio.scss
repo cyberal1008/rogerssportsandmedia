@@ -1,121 +1,157 @@
-@import "../mixins";
-.portfolio-header {
-  &.j-main {
-    max-width: 100%;
+.portfolio-main {
+  
+  h2{
+    @include heading-style;
+    font-size: 56px;
   }
-  .parent-url {
-    a {
-      color: #fff;
-      text-decoration: underline;
-    }
+
+  h3{
+    @include heading-style;
+    font-size: 36px;
   }
-}
 
-.portfolio-page {
-  .television-header {
-    margin-bottom: 62px;
-    h2 {
-      font-family: urw-din-condensed, serif;
-      font-size: 56px;
-      text-transform: uppercase;
+  .portfolio-header {
+    &.j-main {
+      max-width: 100%;
     }
 
-    .download-link {
-      font-size: 14px;
-      text-transform: uppercase;
-      letter-spacing: 1.4px;
-      font-weight: bold;
-      padding: 5px;
-      border-bottom: 3px solid #ffbf3f;
-      text-decoration: none;
-      color: #000;
-      text-align: center;
-    }
-
-    .program-grid-filter {
-      margin-top: 2em;
-      #grid-filter-head {
-        margin-bottom: 1em;
-        #grid-filter-head-accent {
-          font-weight: 900;
-        }
-      }
-
-      .grid-filters {
-        display: flex;
-        justify-content: left;
-        align-items: flex-start;
-        flex-wrap: wrap;
-        padding: 0;
-        margin: 0;
-        color: #6e6e6e;
-        margin-bottom: 2em;
-
-        .filter-wrap {
-          padding: 0;
-          border-left: 0;
-          border-right: 0;
-
-          .select {
-            @include filter-dropdown;
-            width: 90%;
-          }
-        }
+    .parent-url {
+      a {
+        color: #fff;
+        text-decoration: underline;
       }
     }
-    &.radio-header {
-      margin-bottom: 0;
+  }
+
+  .portfolio-page {
+    .television-header {
+      margin-bottom: 62px;
+
+      .download-link {
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 1.4px;
+        font-weight: bold;
+        padding: 5px;
+        border-bottom: 3px solid #ffbf3f;
+        text-decoration: none;
+        color: #000;
+        text-align: center;
+      }
+
       .program-grid-filter {
+        margin-top: 2em;
+
+        #grid-filter-head {
+          margin-bottom: 1em;
+
+          #grid-filter-head-accent {
+            font-weight: 900;
+          }
+        }
+
         .grid-filters {
+          display: flex;
+          justify-content: left;
+          align-items: flex-start;
+          flex-wrap: wrap;
+          padding: 0;
+          margin: 0;
+          color: #6e6e6e;
+          margin-bottom: 2em;
+
           .filter-wrap {
-            .select {
-              width: 95%;
-            }
-          }
-        }
-      }
-    }
-  }
-
-  .television-grid {
-    .card {
-      transition: transform 0.5s ease;
-      border: none;
-      border-radius: unset;
-      cursor: pointer;
-      .card-body {
-        padding: 16px;
-
-        .card-title {
-          font-family: "Ted Next Bold", serif;
-          font-size: 16px;
-          color: #333333;
-        }
-      }
-      &:hover {
-        transform: scale(1.15);
-      }
-    }
-    &.radio-grid {
-      padding-left: 8px;
-      .radio-card-col {
-        padding: 0 7px;
-        margin-bottom: 0.75em;
-        .radio-card {
-          .card-body {
-            margin-top: 0.75em;
             padding: 0;
-            .card-title {
-              font-size: 1em;
+            border-left: 0;
+            border-right: 0;
+
+            .select {
+              @include filter-dropdown;
+              width: 90%;
+            }
+          }
+        }
+      }
+
+      &.radio-header {
+        margin-bottom: 0;
+
+        .program-grid-filter {
+          .grid-filters {
+            .filter-wrap {
+              .select {
+                width: 95%;
+              }
             }
           }
         }
       }
     }
+
+    .television-grid {
+      .card {
+        transition: transform 0.5s ease;
+        border: none;
+        border-radius: unset;
+        cursor: pointer;
+
+        .card-body {
+          padding: 16px;
+
+          .card-title {
+            font-family: "Ted Next Bold", serif;
+            font-size: 16px;
+            color: #333333;
+          }
+        }
+
+        &:hover {
+          transform: scale(1.15);
+        }
+      }
+
+      &.radio-grid {
+        padding-left: 8px;
+
+        .radio-card-col {
+          padding: 0 7px;
+          margin-bottom: 0.75em;
+
+          .radio-card {
+            .card-body {
+              margin-top: 0.75em;
+              padding: 0;
+
+              .card-title {
+                font-size: 1em;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .programming-none {
+      display: none;
+      min-height: 200px;
+      font-size: 22px;
+    }
   }
-  .programming-none {
-    display: none;
-    min-height: 200px;
-    font-size: 22px;
+
+  .portfolio-highlights {
+    position: relative;
+
+    .row {
+      &:nth-child(even), &:nth-child(1) {
+        position: relative;
+        @include grey-mode-bg;
+      }
+    }
+
+    &-item {
+      img {
+        width: 100%;
+      }
+    }
   }
 }
