@@ -61,10 +61,10 @@ class Radio {
         register_post_type( self::TYPE, $args );
     }
 
-    public function init_metaboxes(){
-        add_action( 'add_meta_boxes', array( $this, 'add_metaboxes'));
-        add_action( 'save_post', array( $this, 'save_metabox_data' ), 10, 2 );
-    }
+//    public function init_metaboxes(){
+//        add_action( 'add_meta_boxes', array( $this, 'add_metaboxes'));
+//        add_action( 'save_post', array( $this, 'save_metabox_data' ), 10, 2 );
+//    }
 
     public function add_metaboxes(){
         add_meta_box(
