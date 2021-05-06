@@ -75,7 +75,7 @@ $regions = array_merge( array( 'all' => 'All Regions' ), wp_list_pluck( $region_
                 </div>
             </div>
         </div>
-    <?
+    <?php 
     }
     ?>
 </div>
