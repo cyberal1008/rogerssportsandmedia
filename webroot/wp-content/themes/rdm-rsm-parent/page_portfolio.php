@@ -25,6 +25,43 @@ $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, tr
                 <h1 class="display-3 j-title text-center"><?php echo esc_html( get_the_title() ); ?></h1>
             </div>
         </div>
+		<div class="container portfolio-anchors">
+			<?php
+			if ( stripos( get_the_title(), 'television' ) !== false ) {
+				get_template_part(
+					'template-parts/portfolio',
+					'anchors',
+					array(
+						'portfolio-about' => "About",
+						'portfolio-grid-anchor' => "Programming",
+						'portfolio-hightlights-anchor' => "Highlights",
+						'portfolio-news-anchor' => "News and updates",
+					) );
+			}
+			elseif ( stripos( get_the_title(), 'radio' ) !== false ) {
+				get_template_part(
+					'template-parts/portfolio',
+					'anchors',
+					array(
+						'portfolio-about' => "About",
+						'portfolio-grid-anchor' => "Stations and Podcasts",
+						'portfolio-hightlights-anchor' => "Highlights",
+						'portfolio-news-anchor' => "News and updates",
+					) );
+			}
+			else{
+				get_template_part(
+					'template-parts/portfolio',
+					'anchors',
+					array(
+						'portfolio-about' => "About",
+						'portfolio-grid-anchor' => "Solutions",
+						'portfolio-hightlights-anchor' => "Highlights",
+						'portfolio-news-anchor' => "News and updates",
+					) );
+			}
+			?>
+		</div>
         <div class="container portfolio-page">
 			<?php
 			if ( stripos( get_the_title(), 'television' ) !== false ) {
@@ -56,7 +93,7 @@ $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, tr
                 <div class="container portfolio-highlights">
                     <div class="row portfolio-highlights-header pt-5">
                         <div class="col-12">
-                            <h2>Highlights</h2>
+                            <h2 id="portfolio-hightlights-anchor">Highlights</h2>
                         </div>
                     </div>
 					<?php

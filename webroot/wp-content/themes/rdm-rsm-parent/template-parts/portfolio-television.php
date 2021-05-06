@@ -56,7 +56,7 @@ $tv_posts = new WP_Query( array(
 ?>
 <div class="row television-header justify-content-md-between">
     <div class="col-12 col-md-3">
-        <h2>Programming</h2>
+        <h2 id="portfolio-grid-anchor">Programming</h2>
     </div>
     <div class="col-12 col-md-3 d-flex align-items-center justify-content-md-center">
         <a href="<?php echo $pdf_url; ?>" target="_blank" class="download-link">Download TV schedule</a>
