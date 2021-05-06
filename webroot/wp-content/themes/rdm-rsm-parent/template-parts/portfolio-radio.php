@@ -62,7 +62,7 @@ $regions = array_merge( array( 'all' => 'All Regions' ), wp_list_pluck( $region_
         $post_subtitle = isset($post_region) && !empty($post_region) ? $post_region[0]->name : $post_subtitle;
         $post_subtitle = ucfirst($post_subtitle);
     ?>
-        <div class="col-6 col-sm-4 col-md-2 col-lg-1 radio-card-col radio-item"
+        <div class="col-4 col-sm-4 col-md-2 col-lg-1 radio-card-col radio-item"
             data-catetory="<?php echo get_data_items( $post->ID, RSM\Broadcast\Taxonomy\RadioCategory::SLUG ) ?>"
             data-region="<?php echo get_data_items( $post->ID, RSM\Broadcast\Taxonomy\Region::SLUG ) ?>"
         >
