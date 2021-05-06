@@ -1,6 +1,6 @@
 $(document).ready(function () {
     
-    if($('.television-grid .radio-item').length > 0) {
+    if($('.radio-grid .radio-item').length > 0) {
         
         $("input.selectopt").change(function () {
 
@@ -10,7 +10,7 @@ $(document).ready(function () {
             console.log(category_term);
             console.log(region_term);
 
-            var television_grid = $('.television-grid')
+            var radio_grid = $('.radio-grid')
                 .find('.radio-item')
                 .hide()
                 .filter(function () {
@@ -26,10 +26,10 @@ $(document).ready(function () {
 
                     return category && region;
                 });
-            $('#grid-filter-head-total').text(television_grid.length);
-            if (television_grid.length > 0) {
+            $('#grid-filter-head-total').text(radio_grid.length);
+            if (radio_grid.length > 0) {
                 $('.programming-none').hide();
-                television_grid.fadeIn();
+                radio_grid.fadeIn();
             } else {
                 $('.programming-none').show();
             }
