@@ -7,13 +7,6 @@
 if ( ! class_exists( 'RSM_Customizer_Settings' ) ) {
 	class RSM_Customizer_Settings {
 
-
-
-
-
-
-
-
 		/**
 		 * register.
 		 * hooks into "customizer_register"
