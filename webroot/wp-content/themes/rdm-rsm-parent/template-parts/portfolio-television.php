@@ -5,12 +5,11 @@ use RSM\Broadcast\Taxonomy\Networks;
 use RSM\Broadcast\Taxonomy\ShowCategory;
 use RSM\Broadcast\PostType\Shows;
 
-if ( ! isset( $args ) || ! isset( $args['page_id'] ) ) {
+if ( ! isset( $args ) || ! isset( $args['page_meta'] ) ) {
 	return '';
 }
-
-$page_meta = get_post_meta( $args['page_id'], RSM\Broadcast\PageMeta::METADATA_SLUG, true );
-$pdf_url   = "";
+$page_meta = $args['page_meta'];
+$pdf_url = "";
 if ( isset( $page_meta['broadcast'] ) && isset( $page_meta['broadcast']['schedule_uri'] ) ) {
 	$pdf_url = $page_meta['broadcast']['schedule_uri'];
 }

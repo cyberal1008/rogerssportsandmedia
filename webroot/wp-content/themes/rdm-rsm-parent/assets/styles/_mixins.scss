@@ -74,3 +74,27 @@
     }
   }
 }
+
+@mixin overload-bg {
+  display: block;
+  content: "";
+  width: 100vw;
+  height: 100%;
+  margin-left: -50vw;
+  position: absolute;
+  top: 0;
+  left: 50%;
+}
+
+@mixin grey-mode-bg {
+  &:before,
+  &::before {
+    @include overload-bg;
+    background: $grey-mode-bg-color;
+  }
+}
+
+@mixin heading-style{
+  font-family: urw-din-condensed, serif;
+  text-transform: uppercase;
+}
