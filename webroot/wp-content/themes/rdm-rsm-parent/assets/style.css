@@ -695,6 +695,28 @@ footer {
   color: #fff;
   text-decoration: underline; }
 
+.portfolio-main .portfolio-anchors {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 100%;
+  margin-bottom: 2em; }
+  .portfolio-main .portfolio-anchors .portfolio-anchor {
+    width: 15%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center; }
+    .portfolio-main .portfolio-anchors .portfolio-anchor a {
+      color: #333333;
+      font-size: 14px;
+      font-weight: 400; }
+
 .portfolio-main .portfolio-page .television-header {
   margin-bottom: 62px; }
   .portfolio-main .portfolio-page .television-header .download-link {

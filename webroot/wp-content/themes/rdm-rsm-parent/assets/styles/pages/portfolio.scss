@@ -1,16 +1,16 @@
 .portfolio-main {
-  
-  .about{
+
+  .about {
     position: relative;
     @include grey-mode-bg;
   }
-  
-  h2{
+
+  h2 {
     @include heading-style;
     font-size: 56px;
   }
 
-  h3{
+  h3 {
     @include heading-style;
     font-size: 36px;
   }
@@ -24,6 +24,25 @@
       a {
         color: #fff;
         text-decoration: underline;
+      }
+    }
+  }
+
+  .portfolio-anchors {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 2em;
+
+    .portfolio-anchor {
+      width: 15%;
+      display: flex;
+      justify-content: center;
+
+      a {
+        color: #333333;
+        font-size: 14px;
+        font-weight: 400;
       }
     }
   }
@@ -147,7 +166,8 @@
     position: relative;
 
     .row {
-      &:nth-child(even), &:nth-child(1) {
+      &:nth-child(even),
+      &:nth-child(1) {
         position: relative;
         @include grey-mode-bg;
       }
