@@ -1,5 +1,10 @@
 .portfolio-main {
   
+  .about{
+    position: relative;
+    @include grey-mode-bg;
+  }
+  
   h2{
     @include heading-style;
     font-size: 56px;
