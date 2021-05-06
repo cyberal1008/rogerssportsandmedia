@@ -7,7 +7,6 @@
 if ( ! class_exists( 'RSM_Customizer_Settings' ) ) {
 	class RSM_Customizer_Settings {
 
-
 		/**
 		 * register.
 		 * hooks into "customizer_register"
@@ -63,6 +62,63 @@ if ( ! class_exists( 'RSM_Customizer_Settings' ) ) {
 					array(
 						'label'    => __( 'Change Post IDs below.', 'rsm_parent' ),
 						'section'  => 'rsm_featured_posts',
+						'type'     => 'text',
+						'priority' => 5,
+					)
+				)
+			);
+
+			$wp_customize->add_section(
+				'rsm_images_home',
+				array(
+					'title'       => __( 'Join and About section', 'rsm_parent' ),
+					'priority'    => 50,
+					'capability'  => 'edit_theme_options',
+					'description' => __( 'Add images for Join and About sections.', 'rsm_parent' ),
+					'panel'       => 'header_settings',
+				)
+			);
+
+			$wp_customize->add_setting(
+				'image_url_join',
+				array(
+					'default'    => 'Join our Team image url 577x433',
+					'type'       => 'theme_mod',
+					'capability' => 'edit_theme_options',
+					'transport'  => 'refresh',
+				)
+			);
+
+			$wp_customize->add_control(
+				new WP_Customize_Control(
+					$wp_customize,
+					'image_url_join',
+					array(
+						'label'    => __( 'Add images for Join our Team section.', 'rsm_parent' ),
+						'section'  => 'rsm_images_home',
+						'type'     => 'text',
+						'priority' => 5,
+					)
+				)
+			);
+
+			$wp_customize->add_setting(
+				'image_url_logos',
+				array(
+					'default'    => 'Logos image url 577x433',
+					'type'       => 'theme_mod',
+					'capability' => 'edit_theme_options',
+					'transport'  => 'refresh',
+				)
+			);
+
+			$wp_customize->add_control(
+				new WP_Customize_Control(
+					$wp_customize,
+					'image_url_logos',
+					array(
+						'label'    => __( 'Add images for Who We Are section.', 'rsm_parent' ),
+						'section'  => 'rsm_images_home',
 						'type'     => 'text',
 						'priority' => 5,
 					)

@@ -26,13 +26,13 @@
 				<div class="col-md-6 my-auto">
 					<div class="jumbotron wwa-main">
 						<h1 class="display-3 wwa-title">WHO WE ARE</h1>
-						<p class="lead wwa-desc">We’re reimaging the future of sports and media by innovating at the intersection of data, tech, and sports.</p>
-						<a href="./who-we-are/" class="card-button">Read more</a>
+						<p class="lead wwa-desc">We’re reimaging the future of sports and media by innovating at the intersection of data, technology,  sports, and entertainment.</p>
+						<a href="./who-we-are/" class="card-button">Discover RSM</a>
 					</div>
 				</div>
 				<div class="col-md-6 my-auto">
 					<div class="wwa-img-wrapper">
-						<img class="wwa-card-img" src="<?php bloginfo( 'template_directory' ); ?>/assets/images/wwa-logos-577x433.png" alt="">
+						<img class="wwa-card-img" src="<?php echo get_theme_mod( 'image_url_logos' ); ?>" alt="">
 					</div>
 				</div>
 			</div>
@@ -60,27 +60,8 @@
 		);
 	}
 		get_template_part( 'template-parts/content', 'happening', $args_array );
+		get_template_part( 'template-parts/content', 'join-our-team' );
 	?>
-
-	<div class="join-our-team my-5">    
-		<div class="container">
-			<div class="row">
-				<div class="col-md-5 my-auto">
-					<div class="jumbotron jot-main">
-						<h1 class="display-3 jot-title">BE PART OF SOMETHING BIG</h1>
-						<p class="lead jot-desc">Win with Rogers Sports & Media, let’s connect</p>
-						<a href="https://jobs.rogers.com/go/Sports-and-Media/386638/?sortColumn=sort_shifttype&sortDirection=desc" target="_blank" class="btn btn-primary btn-lg jot-button">VIEW OPEN POSITIONS</a>
-					</div>
-				</div>
-				<div class="col-md-7">
-					<div class="jot-img-wrapper">
-						<div class="jot-card-rectangle"></div>
-						<img class="jot-card-img" src="<?php bloginfo( 'template_directory' ); ?>/assets/images/join-our-team-577x433.jpeg" alt="">
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
 </div>
 
 <?php
