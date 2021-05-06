@@ -14,17 +14,17 @@ $(document).ready(function () {
                 .filter(function () {
                     var network = true;
                     if (network_term !== 'all') {
-                        network = network_term.indexOf($(this).data('networks')) > -1;
+                        network = $(this).data('networks').indexOf(network_term) > -1;
                     }
 
                     var day = true;
                     if (day_term !== 'all') {
-                        day = day_term.indexOf($(this).data('day')) > -1;
+                        day = $(this).data('day').indexOf(day_term) > -1;
                     }
 
                     var show = true;
                     if (show_term !== 'all') {
-                        show = show_term.indexOf($(this).data('show')) > -1;
+                        show = $(this).data('show').indexOf(show_term) > -1;
                     }
 
                     return network && day && show;
