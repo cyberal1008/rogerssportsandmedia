@@ -611,13 +611,11 @@ footer {
   max-width: 100%; }
 
 .portfolio-header .parent-url a {
-  color: #FFF;
+  color: #fff;
   text-decoration: underline; }
 
 .portfolio-page .television-header {
   margin-bottom: 62px; }
-  .portfolio-page .television-header.radio-header {
-    margin-bottom: 0; }
   .portfolio-page .television-header h2 {
     font-family: urw-din-condensed, serif;
     font-size: 56px;
@@ -732,6 +730,10 @@ footer {
               box-sizing: border-box;
               position: absolute;
               right: 1em; }
+  .portfolio-page .television-header.radio-header {
+    margin-bottom: 0; }
+    .portfolio-page .television-header.radio-header .program-grid-filter .grid-filters .filter-wrap .select {
+      width: 95%; }
 
 .portfolio-page .television-grid .card {
   -webkit-transition: -webkit-transform 0.5s ease;

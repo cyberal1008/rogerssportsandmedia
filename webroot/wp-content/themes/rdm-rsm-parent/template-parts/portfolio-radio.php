@@ -15,7 +15,7 @@ $radio_posts = new WP_Query( array(
     <div class="col-sm-12 col-md-12 col-lg-12 program-grid-filter">
     <?php
         get_template_part( 
-            'template-parts/portforlio', 
+            'template-parts/portfolio', 
             'filter', 
             array(
                 'total' => 104,

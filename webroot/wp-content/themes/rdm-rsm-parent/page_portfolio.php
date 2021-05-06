@@ -37,7 +37,7 @@ get_header();
 		<?php
 		if ( get_post_field( 'post_name' ) === 'radio-podcasts' ) {
 			get_template_part( 
-				'template-parts/portforlio', 
+				'template-parts/portfolio', 
 				'radio', 
 				array(
 					'page_id' => get_the_ID(),
