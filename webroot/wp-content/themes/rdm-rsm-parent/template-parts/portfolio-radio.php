@@ -25,7 +25,7 @@ $regions = array_merge( array( 'all' => 'All Regions' ), wp_list_pluck( $region_
 ?>
 <div class="row television-header radio-header justify-content-md-between">
     <div class="col-12 col-lg-12 col-md-3">
-        <h2>Our Stations & Podcasts</h2>
+        <h2 id="portfolio-grid-anchor">Our Stations & Podcasts</h2>
     </div>
     <div class="col-sm-12 col-md-12 col-lg-12 program-grid-filter">
     <?php
