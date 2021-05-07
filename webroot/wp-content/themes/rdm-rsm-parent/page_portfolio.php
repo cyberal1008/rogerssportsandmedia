@@ -29,6 +29,7 @@ $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, tr
 		<div class="container portfolio-anchors">
 			<?php
 			if ( stripos( get_the_title(), 'television' ) !== false ) {
+				$zone = 'happening-tv';
 				get_template_part(
 					'template-parts/portfolio',
 					'anchors',
@@ -40,6 +41,7 @@ $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, tr
 					)
 				);
 			} elseif ( stripos( get_the_title(), 'radio' ) !== false ) {
+				$zone = 'happening-radio';
 				get_template_part(
 					'template-parts/portfolio',
 					'anchors',
@@ -122,7 +124,7 @@ $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, tr
 			}
 		}
 
-		$zone = z_get_zone( 'television' ) ? 'television' : '';
+		$zone = ( function_exists( 'z_get_zone' ) && z_get_zone( $zone ) ) ? $zone : '';
 		get_template_part( 'template-parts/content', 'happening', $zone );
 		?>
 	</div>
