@@ -7,6 +7,7 @@
 if ( ! class_exists( 'RSM_Customizer_Settings' ) ) {
 	class RSM_Customizer_Settings {
 
+
 		/**
 		 * register.
 		 * hooks into "customizer_register"
@@ -31,40 +32,6 @@ if ( ! class_exists( 'RSM_Customizer_Settings' ) ) {
 					'capability'  => 'edit_theme_options',
 					'description' => __( 'Edit looping Video in the header.', 'rsm_parent' ),
 					'panel'       => 'header_settings',
-				)
-			);
-
-			$wp_customize->add_section(
-				'rsm_featured_posts',
-				array(
-					'title'       => __( 'What\'s Happening section', 'rsm_parent' ),
-					'priority'    => 50,
-					'capability'  => 'edit_theme_options',
-					'description' => __( 'Edit the three featured posts.', 'rsm_parent' ),
-					'panel'       => 'header_settings',
-				)
-			);
-
-			$wp_customize->add_setting(
-				'post_ids',
-				array(
-					'default'    => '1, 2, 3',
-					'type'       => 'theme_mod',
-					'capability' => 'edit_theme_options',
-					'transport'  => 'refresh',
-				)
-			);
-
-			$wp_customize->add_control(
-				new WP_Customize_Control(
-					$wp_customize,
-					'post_ids',
-					array(
-						'label'    => __( 'Change Post IDs below.', 'rsm_parent' ),
-						'section'  => 'rsm_featured_posts',
-						'type'     => 'text',
-						'priority' => 5,
-					)
 				)
 			);
 
