@@ -1,0 +1,31 @@
+.cat-page-title, .cat-page-desc {
+    color: #fff;
+}
+.cat-page-title {
+    font-family: $ted-next-sb;
+    font-size: 16px;
+    line-height: 80px;
+}
+.cat-page-desc {
+    font-family: urw-din-condensed;
+    font-size: 84px;
+    line-height: 80px;
+    text-transform: uppercase;
+    padding-bottom: 150px;
+    margin-top: -30px;
+}
+@media (max-width: 768px) {
+    .cat-page-desc {
+        font-size: 52px;
+        line-height: 50px;
+        margin-top: -40px;
+        max-width: 270px;
+        padding-bottom: 50px;
+    }
+    .cat-header {
+        text-align: -webkit-center;
+    }
+    .cat-page-title {
+        margin-top: -10px;
+    }
+}
