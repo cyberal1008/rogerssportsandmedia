@@ -9,6 +9,14 @@
 
 get_header();
 ?>
-Category page
+<div class="cat-header">
+	<p class="cat-page-title text-center"><?php html_entity_decode( single_cat_title() ); ?></p>
+	<?php if ( category_description() ) : ?>
+		<div class="cat-page-desc text-center"><?php echo category_description(); ?></div>
+	<?php endif; ?>
+</div>
+<div class="container">
+	
+</div>
 <?php
 get_footer();

@@ -66,7 +66,8 @@ if ( is_home() ) {
 		array(
 			'image_url' => get_theme_mod( 'desktop_vid_link_image_url' ),
 			'video_url' => get_theme_mod( 'desktop_vid_link_video_url' ),
-		) );
+		)
+	);
 } elseif ( is_page() ) {
 	$page_meta = get_post_meta( get_the_ID(), RSM\Broadcast\PageMeta::METADATA_SLUG, true );
 	$image_uri = '';
@@ -85,7 +86,10 @@ if ( is_home() ) {
 		array(
 			'image_url' => $image_uri,
 			'video_url' => $video_uri,
-		) );
+		)
+	);
+} elseif ( is_category() ) {
+	get_template_part( 'template-parts/header', 'nomedia' );
 }
 ?>
 <header class="nav-down header-container ">
