@@ -6,9 +6,7 @@ $(document).ready(function () {
 
             var category_term = $('input[name="radio-category"]:checked').val();
             var region_term = $('input[name="region"]:checked').val();
-
-            console.log(category_term);
-            console.log(region_term);
+            $('.grid-filters .select').blur();
 
             var radio_grid = $('.radio-grid')
                 .find('.radio-item')
@@ -38,4 +36,8 @@ $(document).ready(function () {
     else{
         $('.programming-none').show();
     }
+    $('.grid-filters .select').click(function(){
+        $('.select').not(this).css('z-index', 1);
+        $(this).css('z-index', 99);
+    })
 });

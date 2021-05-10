@@ -7,6 +7,7 @@ $(document).ready(function () {
             var network_term = $('input[name="networks-category"]:checked').val();
             var day_term = $('input[name="days-category"]:checked').val();
             var show_term = $('input[name="shows-category"]:checked').val();
+            $('.grid-filters .select').blur();
 
             var television_grid = $('.television-grid')
                 .find('.programming-item')
@@ -41,4 +42,8 @@ $(document).ready(function () {
     else{
         $('.programming-none').show();
     }
+    $('.grid-filters .select').click(function(){
+        $('.select').not(this).css('z-index', 1);
+        $(this).css('z-index', 99);
+    })
 });
