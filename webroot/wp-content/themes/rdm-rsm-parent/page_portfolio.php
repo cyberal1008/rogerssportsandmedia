@@ -26,7 +26,7 @@ $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, tr
                 <h1 class="display-3 j-title text-center"><?php echo esc_html( get_the_title() ); ?></h1>
             </div>
         </div>
-        <div class="container portfolio-anchors">
+        <div class="portfolio-anchors">
 			<?php
 			if ( stripos( get_the_title(), 'television' ) !== false ) {
 				$zone = 'happening-tv';

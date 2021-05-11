@@ -763,9 +763,9 @@ footer {
 
 .portfolio-main .about .circle-container .circle .cut {
   background-color: unset;
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(50%, #F5F5F5), color-stop(50%, #FFFFFF));
-  background: -o-linear-gradient(top, #F5F5F5 50%, #FFFFFF 50%);
-  background: linear-gradient(180deg, #F5F5F5 50%, #FFFFFF 50%); }
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(50%, #F5F5F5), color-stop(50%, #ffffff));
+  background: -o-linear-gradient(top, #F5F5F5 50%, #ffffff 50%);
+  background: linear-gradient(180deg, #F5F5F5 50%, #ffffff 50%); }
 
 .portfolio-main h2 {
   font-family: urw-din-condensed, serif;
@@ -805,6 +805,17 @@ footer {
       color: #333333;
       font-size: 14px;
       font-weight: 400; }
+  @media (max-width: 991.98px) {
+    .portfolio-main .portfolio-anchors {
+      width: 990px;
+      -ms-flex-wrap: nowrap;
+          flex-wrap: nowrap;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch; }
+      .portfolio-main .portfolio-anchors .portfolio-anchor {
+        -webkit-box-flex: 0;
+            -ms-flex: 0 0 auto;
+                flex: 0 0 auto; } }
 
 .portfolio-main .portfolio-page .television-header {
   margin-bottom: 62px; }

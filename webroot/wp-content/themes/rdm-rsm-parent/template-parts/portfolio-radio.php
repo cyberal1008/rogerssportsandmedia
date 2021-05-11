@@ -66,7 +66,7 @@ $regions = array_merge( array( 'all' => 'All Regions' ), wp_list_pluck( $region_
             data-catetory="<?php echo get_data_items( $post->ID, RSM\Broadcast\Taxonomy\RadioCategory::SLUG ) ?>"
             data-region="<?php echo get_data_items( $post->ID, RSM\Broadcast\Taxonomy\Region::SLUG ) ?>"
         >
-            <div class="card radio-card">
+            <div class="card radio-card" data-toggle="modal" data-target="#radio-modal">
                 <img class="card-img-top" src="<?php echo $img_src; ?>" srcset="<?php echo $img_srcset; ?>"
                         alt="<?php echo esc_attr( $post->post_title ); ?>">
                 <div class="card-body">
@@ -81,4 +81,21 @@ $regions = array_merge( array( 'all' => 'All Regions' ), wp_list_pluck( $region_
 </div>
 <div class="col-12 programming-none">
     <h3>No programs found.</h3>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="radio-modal" tabindex="-1" role="dialog" aria-labelledby="radio-modal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Radio Modal</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+    </div>
+  </div>
 </div>
