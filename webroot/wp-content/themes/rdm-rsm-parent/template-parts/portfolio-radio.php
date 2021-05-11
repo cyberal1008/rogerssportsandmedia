@@ -33,7 +33,7 @@ $regions = array_merge( array( 'all' => 'All Regions' ), wp_list_pluck( $region_
             'template-parts/portfolio', 
             'filter', 
             array(
-                'total' => 104,
+                'total' => $radio_posts->found_posts,
                 'unit-text' => 'stations and podcasts',
                 'filters' => array(
                     'radio-category' => $radio_category,

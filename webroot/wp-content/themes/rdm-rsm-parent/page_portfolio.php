@@ -15,7 +15,8 @@ $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, tr
         <div class="portfolio-header jumbotron j-main d-flex justify-content-center align-items-center">
             <div>
 				<?php
-				if ( $post->post_parent ) { ?>
+				if ( $post->post_parent ) {
+					?>
                     <div class="text-center parent-url">
                         <a href="<?php echo get_permalink( $post->post_parent ); ?>">
 							<?php echo get_the_title( $post->post_parent ); ?>
@@ -25,53 +26,56 @@ $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, tr
                 <h1 class="display-3 j-title text-center"><?php echo esc_html( get_the_title() ); ?></h1>
             </div>
         </div>
-		<div class="container portfolio-anchors">
+        <div class="container portfolio-anchors">
 			<?php
 			if ( stripos( get_the_title(), 'television' ) !== false ) {
+				$zone = 'happening-tv';
 				get_template_part(
 					'template-parts/portfolio',
 					'anchors',
 					array(
-						'portfolio-about' => "About",
-						'portfolio-grid-anchor' => "Programming",
-						'portfolio-hightlights-anchor' => "Highlights",
-						'portfolio-news-anchor' => "News and updates",
-					) );
-			}
-			elseif ( stripos( get_the_title(), 'radio' ) !== false ) {
+						'portfolio-about'              => 'About',
+						'portfolio-grid-anchor'        => 'Programming',
+						'portfolio-hightlights-anchor' => 'Highlights',
+						'portfolio-news-anchor'        => 'News and updates',
+					)
+				);
+			} elseif ( stripos( get_the_title(), 'radio' ) !== false ) {
+				$zone = 'happening-radio';
 				get_template_part(
 					'template-parts/portfolio',
 					'anchors',
 					array(
-						'portfolio-about' => "About",
-						'portfolio-grid-anchor' => "Stations and Podcasts",
-						'portfolio-hightlights-anchor' => "Highlights",
-						'portfolio-news-anchor' => "News and updates",
-					) );
-			}
-			else{
+						'portfolio-about'              => 'About',
+						'portfolio-grid-anchor'        => 'Stations and Podcasts',
+						'portfolio-hightlights-anchor' => 'Highlights',
+						'portfolio-news-anchor'        => 'News and updates',
+					)
+				);
+			} else {
 				get_template_part(
 					'template-parts/portfolio',
 					'anchors',
 					array(
-						'portfolio-about' => "About",
-						'portfolio-grid-anchor' => "Solutions",
-						'portfolio-hightlights-anchor' => "Highlights",
-						'portfolio-news-anchor' => "News and updates",
-					) );
+						'portfolio-about'              => 'About',
+						'portfolio-grid-anchor'        => 'Solutions',
+						'portfolio-hightlights-anchor' => 'Highlights',
+						'portfolio-news-anchor'        => 'News and updates',
+					)
+				);
 			}
 			?>
-		</div>
-	    <?php
-	    get_template_part(
-		    'template-parts/content',
-		    'about',
-		    array(
-			    'title' => 'About',
-			    'description' => get_the_content(),
-			    'image_url' => $page_meta['broadcast']['about_image_uri']
-		    ) );
-	    ?>
+        </div>
+		<?php
+		get_template_part(
+			'template-parts/content',
+			'about',
+			array(
+				'title'       => 'About',
+				'description' => get_the_content(),
+				'image_url'   => $page_meta['broadcast']['about_image_uri']
+			) );
+		?>
         <div class="container portfolio-page">
 			<?php
 			if ( stripos( get_the_title(), 'television' ) !== false ) {
@@ -80,7 +84,8 @@ $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, tr
 					'television',
 					array(
 						'page_meta' => $page_meta,
-					) );
+					)
+				);
 			}
 			if ( stripos( get_the_title(), 'radio' ) !== false ) {
 				get_template_part(
@@ -88,14 +93,15 @@ $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, tr
 					'radio',
 					array(
 						'page_id' => get_the_ID(),
-					) );
+					)
+				);
 			}
 			?>
 
         </div>
 		<?php
 		if ( function_exists( 'z_get_posts_in_zone' )
-		     && ! empty ( $page_meta['zones'] )
+		     && ! empty( $page_meta['zones'] )
 		     && ! empty( $page_meta['zones']['highlights'] ) ) {
 			$highlights = z_get_posts_in_zone( $page_meta['zones']['highlights'] );
 			if ( count( $highlights ) > 2 ) {
@@ -127,6 +133,9 @@ $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, tr
 				<?php
 			}
 		}
+
+		$zone = ( function_exists( 'z_get_zone' ) && z_get_zone( $zone ) ) ? $zone : '';
+		get_template_part( 'template-parts/content', 'happening', $zone );
 		?>
     </div>
 <?php
