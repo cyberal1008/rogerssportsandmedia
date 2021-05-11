@@ -5,15 +5,16 @@ use RSM\Broadcast\Taxonomy\Networks;
 use RSM\Broadcast\Taxonomy\ShowCategory;
 use RSM\Broadcast\PostType\Shows;
 
+$default_image = get_template_directory_uri() . "assets/images/missing-image-portrait.png";
+
 if ( ! isset( $args ) || ! isset( $args['page_meta'] ) ) {
 	return '';
 }
 $page_meta = $args['page_meta'];
-$pdf_url = "";
+$pdf_url   = "";
 if ( isset( $page_meta['broadcast'] ) && isset( $page_meta['broadcast']['schedule_uri'] ) ) {
 	$pdf_url = $page_meta['broadcast']['schedule_uri'];
 }
-$default_image = get_template_directory_uri() . "assets/images/missing-image-portrait.png";
 
 // get all the taxonomies for filters
 $days_terms   = get_terms( array(
@@ -84,12 +85,10 @@ $tv_posts = new WP_Query( array(
 	foreach ( $tv_posts->posts as $post ) {
 		$post_meta = get_post_meta( $post->ID, Shows::METADATA_SLUG, true );
 		if ( isset( $post_meta['image'] ) && isset( $post_meta['image']['tile'] ) ) {
-			$img_srcset = wp_get_attachment_image_srcset( $post_meta['image']['tile'], 'portrait' );
-			$img_src    = wp_get_attachment_image_src( $post_meta['image']['tile'], 'portrait' )[0];
+			$img_tag = wp_get_attachment_image($post_meta['image']['tile'], 'portrait', '', array( 'class' => 'card-img-top') );
 
 		} else {
-			$img_srcset = '';
-			$img_src    = $default_image;
+			$img_tag = '<img alt="'.esc_attr( $post->post_title ).'" src="'.esc_attr( $default_image ).'" height="720" width="450" />';
 		}
 
 		?>
@@ -98,8 +97,7 @@ $tv_posts = new WP_Query( array(
              data-show="<?php echo get_data_items( $post->ID, ShowCategory::TAXONOMY ) ?>"
              data-networks="<?php echo get_data_items( $post->ID, Networks::TAXONOMY ) ?>">
             <div class="card">
-                <img class="card-img-top" src="<?php echo $img_src; ?>" srcset="<?php echo $img_srcset; ?>"
-                     alt="<?php echo esc_attr( $post->post_title ); ?>">
+                <?php echo $img_tag ?>
                 <div class="card-body">
                     <h5 class="card-title"><?php echo esc_html( $post->post_title ); ?></h5>
                 </div>
@@ -111,4 +109,20 @@ $tv_posts = new WP_Query( array(
 </div>
 <div class="col-12 programming-none">
     <h3>No shows found.</h3>
+</div>
+<!-- TV Modal -->
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="televisionShowModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-8">
+                            <img src="" alt="Show Name"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
