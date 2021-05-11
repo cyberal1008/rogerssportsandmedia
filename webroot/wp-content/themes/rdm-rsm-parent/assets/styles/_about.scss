@@ -1,0 +1,86 @@
+.about{
+  position: relative;
+  margin-bottom: 150px;
+  
+  &-container {
+    position: relative;
+    &::before {
+      background-image: radial-gradient(#000 10%, transparent 10%), radial-gradient(#000 10%, transparent 10%);
+      background-position: 0 0, 7px 7px;
+      background-size: 14px 14px;
+      @include overload-bg;
+      z-index: 0;
+      width: 50px;
+      @media (max-width: 1199.98px) {
+        width: 30px;
+      }
+      @media (max-width: 767.98px) {
+        width: 20px;
+      }
+    }
+
+    &-main {
+      background-color: transparent !important;
+    }
+
+    &-title {
+      font-family: urw-din-condensed, serif;
+      font-weight: 800 !important;
+      font-size: 56px;
+      line-height: 64px;
+      letter-spacing: -1.12px;
+    }
+
+    .jot-desc {
+      font-size: 21px !important;
+      line-height: 36px;
+    }
+
+    &-elements {
+      left: calc(-50vw + 50%);
+      width: 100vw;
+      z-index: 0;
+      position: absolute;
+    }
+
+
+    &-card-img {
+      width: 100%;
+    }
+  }
+  .circle-container {
+    position: relative;
+    height: 150px;
+    
+    .circle {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 300px;
+      height: 300px;
+      margin-left: calc(-50vw - 150px);
+
+      .quarter {
+        position: absolute;
+        width: 50%;
+        height: 50%;
+        background-color: #00A955;
+        top: 0;
+        right: 0;
+        border-radius: 0 100% 0 0;
+      }
+
+      .cut {
+        position: absolute;
+        top: 10%;
+        left: 10%;
+        width: 80%;
+        height: 80%;
+        background-color: #FFFFFF;
+        border-radius: 50%;
+        pointer-events: none;
+      }
+    }
+  }
+}
+

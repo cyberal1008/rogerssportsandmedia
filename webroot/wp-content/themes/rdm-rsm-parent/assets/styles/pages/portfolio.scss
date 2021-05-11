@@ -1,4 +1,17 @@
 .portfolio-main {
+
+  .about {
+    @include grey-mode-bg;
+    .circle-container{
+      .circle{
+        .cut{
+          background-color: unset;
+          background: linear-gradient(180deg, $grey-mode-bg-color 50%, #FFFFFF 50%);
+        }
+      }
+    }
+  }
+
   h2 {
     @include heading-style;
     font-size: 56px;
@@ -21,6 +34,7 @@
       }
     }
   }
+
   .portfolio-anchors {
     display: flex;
     justify-content: center;
@@ -111,7 +125,9 @@
         border: none;
         border-radius: unset;
         cursor: pointer;
-
+        img{
+          height: auto;
+        }
         .card-body {
           padding: 16px;
 
@@ -169,6 +185,7 @@
     &-item {
       img {
         width: 100%;
+        height: auto;
       }
     }
   }

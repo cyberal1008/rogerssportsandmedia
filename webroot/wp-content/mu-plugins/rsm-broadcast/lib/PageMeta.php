@@ -10,7 +10,7 @@ class PageMeta {
 		return array(
 			array(
 				'id'     => "broadcast",
-				'title'  => __( 'Hero and Schedule Metadata', RSM_BROADCAST_LOCALE ),
+				'title'  => __( 'Header, About and Schedule', RSM_BROADCAST_LOCALE ),
 				'fields' => array(
 					array(
 						'id'                => 'schedule_uri',
@@ -32,6 +32,13 @@ class PageMeta {
 						'mediatype'         => 'video',
 						'label'             => __( "Header Video URL (1280 x 720)", RSM_BROADCAST_LOCALE ),
 						'description'       => __( "", RSM_BROADCAST_LOCALE ),
+					),
+					array(
+						'id'                => 'about_image_uri',
+						'type'              => 'upload',
+						'mediatype'         => 'image',
+						'label'             => __( "About Image URL (577 x 433)", RSM_BROADCAST_LOCALE ),
+						'description'       => __( "", RSM_BROADCAST_LOCALE )
 					),
 				),
 			),
