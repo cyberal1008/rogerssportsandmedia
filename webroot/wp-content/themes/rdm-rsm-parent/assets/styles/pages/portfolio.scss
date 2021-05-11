@@ -28,6 +28,7 @@
   .portfolio-header {
     &.j-main {
       max-width: 100%;
+      margin-bottom: 2em !important;
     }
 
     .parent-url {
@@ -56,11 +57,16 @@
       }
     }
     @media (max-width: 991.98px) {
-      width: 990px;
       flex-wrap: nowrap;
       overflow-x: auto;
+      justify-content: start;
       -webkit-overflow-scrolling: touch;
+      height: 24px;
+      &::-webkit-scrollbar {
+        display: none;
+      }
       .portfolio-anchor {
+        width: 150px;
         flex: 0 0 auto;
       }
     }

@@ -778,7 +778,8 @@ footer {
   font-size: 36px; }
 
 .portfolio-main .portfolio-header.j-main {
-  max-width: 100%; }
+  max-width: 100%;
+  margin-bottom: 2em !important; }
 
 .portfolio-main .portfolio-header .parent-url a {
   color: #fff;
@@ -807,12 +808,18 @@ footer {
       font-weight: 400; }
   @media (max-width: 991.98px) {
     .portfolio-main .portfolio-anchors {
-      width: 990px;
       -ms-flex-wrap: nowrap;
           flex-wrap: nowrap;
       overflow-x: auto;
-      -webkit-overflow-scrolling: touch; }
+      -webkit-box-pack: start;
+          -ms-flex-pack: start;
+              justify-content: start;
+      -webkit-overflow-scrolling: touch;
+      height: 24px; }
+      .portfolio-main .portfolio-anchors::-webkit-scrollbar {
+        display: none; }
       .portfolio-main .portfolio-anchors .portfolio-anchor {
+        width: 150px;
         -webkit-box-flex: 0;
             -ms-flex: 0 0 auto;
                 flex: 0 0 auto; } }
