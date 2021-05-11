@@ -1,12 +1,15 @@
 .portfolio-main {
-
   .about {
     @include grey-mode-bg;
-    .circle-container{
-      .circle{
-        .cut{
+    .circle-container {
+      .circle {
+        .cut {
           background-color: unset;
-          background: linear-gradient(180deg, $grey-mode-bg-color 50%, #FFFFFF 50%);
+          background: linear-gradient(
+            180deg,
+            $grey-mode-bg-color 50%,
+            #ffffff 50%
+          );
         }
       }
     }
@@ -50,6 +53,15 @@
         color: #333333;
         font-size: 14px;
         font-weight: 400;
+      }
+    }
+    @media (max-width: 991.98px) {
+      width: 990px;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      .portfolio-anchor {
+        flex: 0 0 auto;
       }
     }
   }
@@ -125,7 +137,7 @@
         border: none;
         border-radius: unset;
         cursor: pointer;
-        img{
+        img {
           height: auto;
         }
         .card-body {
