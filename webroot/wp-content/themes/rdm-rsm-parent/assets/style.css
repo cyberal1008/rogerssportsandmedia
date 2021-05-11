@@ -647,7 +647,37 @@ footer {
     width: 90%;
     min-width: 350px; } }
 
-<<<<<<< HEAD
+.cat-page-title, .cat-page-desc {
+  color: #fff; }
+
+.cat-page-title {
+  font-family: "Ted Next SemiB";
+  font-size: 16px;
+  line-height: 80px; }
+
+.cat-page-desc {
+  font-family: urw-din-condensed;
+  font-size: 84px;
+  line-height: 80px;
+  text-transform: uppercase;
+  padding-bottom: 150px;
+  margin-top: -30px; }
+
+.cat-header {
+  min-height: 312px; }
+
+@media (max-width: 768px) {
+  .cat-page-desc {
+    font-size: 52px;
+    line-height: 50px;
+    margin-top: -40px;
+    max-width: 270px;
+    padding-bottom: 50px; }
+  .cat-header {
+    text-align: -webkit-center; }
+  .cat-page-title {
+    margin-top: -10px; } }
+
 .about {
   position: relative;
   margin-bottom: 150px; }
@@ -736,38 +766,6 @@ footer {
   background: -webkit-gradient(linear, left top, left bottom, color-stop(50%, #F5F5F5), color-stop(50%, #FFFFFF));
   background: -o-linear-gradient(top, #F5F5F5 50%, #FFFFFF 50%);
   background: linear-gradient(180deg, #F5F5F5 50%, #FFFFFF 50%); }
-=======
-.cat-page-title, .cat-page-desc {
-  color: #fff; }
-
-.cat-page-title {
-  font-family: "Ted Next SemiB";
-  font-size: 16px;
-  line-height: 80px; }
-
-.cat-page-desc {
-  font-family: urw-din-condensed;
-  font-size: 84px;
-  line-height: 80px;
-  text-transform: uppercase;
-  padding-bottom: 150px;
-  margin-top: -30px; }
-
-.cat-header {
-  min-height: 312px; }
-
-@media (max-width: 768px) {
-  .cat-page-desc {
-    font-size: 52px;
-    line-height: 50px;
-    margin-top: -40px;
-    max-width: 270px;
-    padding-bottom: 50px; }
-  .cat-header {
-    text-align: -webkit-center; }
-  .cat-page-title {
-    margin-top: -10px; } }
->>>>>>> integration
 
 .portfolio-main h2 {
   font-family: urw-din-condensed, serif;
