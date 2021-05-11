@@ -62,6 +62,16 @@ $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, tr
 			}
 			?>
 		</div>
+	    <?php
+	    get_template_part(
+		    'template-parts/content',
+		    'about',
+		    array(
+			    'title' => 'About',
+			    'description' => get_the_content(),
+			    'image_url' => $page_meta['broadcast']['about_image_uri']
+		    ) );
+	    ?>
         <div class="container portfolio-page">
 			<?php
 			if ( stripos( get_the_title(), 'television' ) !== false ) {
@@ -100,8 +110,8 @@ $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, tr
 					foreach ( $highlights as $key => $highlight ) {
 						?>
                         <div class="row portfolio-highlights-item justify-content-md-between flex-r py-5 mb-5<?php echo ( ( $key + 1 ) % 2 !== 0 ) ? ' flex-md-row-reverse' : '' ?>">
-                            <div class="col-12 col-md-6 col-lg-4 mb-3 mb-md-auto">
-								<?php echo wp_get_attachment_image( get_post_thumbnail_id( $highlight->ID ), 'portrait-320' ); ?>
+                            <div class="col-8 col-md-6 col-lg-4 mb-3 mb-md-auto mx-auto mx-md-0">
+								<?php echo wp_get_attachment_image( get_post_thumbnail_id( $highlight->ID ), 'portrait' ); ?>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6 d-flex align-items-md-center">
                                 <div>

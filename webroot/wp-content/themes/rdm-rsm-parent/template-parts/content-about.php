@@ -8,16 +8,12 @@ if ( empty ( $args['title'] ) ||
 ?>
 
 <div class="about">
-    <div class="container">
-        <div class="about-elements">
-            <div class="about-element-one"></div>
-            <div class="about-element-two"></div>
-        </div>
-        <div class="row py-5">
-            <div class="col-md-6 my-auto">
-                <div class="jumbotron about-main">
-                    <h1 class="display-3 about-title"><?php echo esc_html( $args['title'] ); ?></h1>
-                    <p class="lead about-desc"><?php echo esc_html( $args['description'] ); ?></p>
+    <div class="container about-container pt-5">
+        <div class="row">
+            <div class="col-md-6 mb-5 my-md-auto">
+                <div class="about-container-main">
+                    <h1 class="about-container-title"><?php echo esc_html( $args['title'] ); ?></h1>
+                    <p class="lead about-container-desc"><?php echo esc_html( $args['description'] ); ?></p>
 					<?php
 					if ( ! empty ( $args['more'] ) && ! empty ( $args['more']['url'] ) && ! empty ( $args['more']['text'] ) ) {
 						?>
@@ -32,8 +28,8 @@ if ( empty ( $args['title'] ) ||
 			if ( ! empty ( $args['image_url'] ) ) {
 				?>
                 <div class="col-md-6 my-auto">
-                    <div class="about-img-wrapper">
-                        <img class="about-card-img" src="<?php echo esc_attr( $args['image_url'] ); ?>" alt="">
+                    <div class="about-container-img-wrapper">
+                        <img class="about-container-card-img" src="<?php echo esc_attr( $args['image_url'] ); ?>" alt="">
                     </div>
                 </div>
 				<?php
@@ -41,5 +37,12 @@ if ( empty ( $args['title'] ) ||
 
         </div>
     </div>
+    <div class="circle-container">
+        <div class="circle">
+            <div class="quarter"></div>
+            <div class="cut"></div>
+        </div>
+    </div>
 </div>
+
 
