@@ -73,7 +73,6 @@ $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, tr
 			array(
 				'title'       => 'About',
 				'description' => get_the_content(),
-				'image_url'   => $page_meta['broadcast']['about_image_uri']
 			) );
 		?>
         <div class="container portfolio-page">

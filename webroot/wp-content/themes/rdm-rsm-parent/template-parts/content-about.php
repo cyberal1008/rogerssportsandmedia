@@ -9,8 +9,8 @@ if ( empty ( $args['title'] ) ||
 
 <div class="about">
     <div class="container about-container pt-5">
-        <div class="row">
-            <div class="col-md-6 mb-5 my-md-auto">
+        <div class="row ml-2 ml-md-0<?php echo empty ( $args['image_url'] ) ? ' justify-content-sm-center': '' ?>">
+            <div class="col-md-6 mb-5 my-md-auto<?php echo empty ( $args['image_url'] ) ? ' text-center': '' ?>">
                 <div class="about-container-main">
                     <h1 class="about-container-title"><?php echo esc_html( $args['title'] ); ?></h1>
                     <p class="lead about-container-desc"><?php echo esc_html( $args['description'] ); ?></p>

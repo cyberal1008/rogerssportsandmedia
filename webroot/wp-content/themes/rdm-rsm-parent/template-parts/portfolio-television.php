@@ -110,3 +110,19 @@ $tv_posts = new WP_Query( array(
 <div class="col-12 programming-none">
     <h3>No shows found.</h3>
 </div>
+<!-- TV Modal -->
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="televisionShowModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-8">
+                            <img src="" alt="Show Name"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
