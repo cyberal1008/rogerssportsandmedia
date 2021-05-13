@@ -29,7 +29,6 @@
   .portfolio-header {
     &.j-main {
       max-width: 100%;
-      margin-bottom: 2em !important;
     }
 
     .parent-url {
@@ -45,6 +44,7 @@
     justify-content: center;
     width: 100%;
     margin-bottom: 2em;
+    padding-top: 2em;
 
     .portfolio-anchor {
       width: 15%;
@@ -64,6 +64,7 @@
       justify-content: start;
       -webkit-overflow-scrolling: touch;
       height: 24px;
+      padding-top: 0;
       &::-webkit-scrollbar {
         display: none;
       }

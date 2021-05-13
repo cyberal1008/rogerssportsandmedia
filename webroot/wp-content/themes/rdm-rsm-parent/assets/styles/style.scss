@@ -2,9 +2,10 @@
 
 @import "../../../node_modules/bootstrap/scss/bootstrap";
 
-@import "mixins", "fonts", "header", "footer", "home", "happening", "category", "about";
+@import "mixins", "fonts", "header", "footer", "home", "happening", "category",
+  "about";
 // Pages
-@import "pages/portfolio";
+@import "pages/portfolio", "pages/legal";
 
 body {
   .wrapper {
@@ -35,5 +36,4 @@ body {
       }
     }
   }
-
 }
