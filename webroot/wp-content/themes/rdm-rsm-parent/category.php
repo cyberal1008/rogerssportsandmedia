@@ -80,7 +80,7 @@ get_header();
 					'orderby'        => 'date',
 					'post_date'      => 'DESC',
 					'post_status'    => 'publish',
-					'posts_per_page' => 4,
+					'posts_per_page' => 10,
 					'paged'          => $paged,
 					'cat'            => '' . $category[0]->cat_ID . '',
 				)
