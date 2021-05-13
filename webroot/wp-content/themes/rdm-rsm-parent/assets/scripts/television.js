@@ -39,8 +39,8 @@ $(document).ready(function () {
                     // load video player, once the modal is shown
                     brightcovePlayerLoader({
                         refNode: $('.television-modal .modal-video-player')[0],
-                        accountId: '2226196965001',
-                        playerId: 'jDWgkhq9Ii',
+                        accountId: video_settings['account'],
+                        playerId: video_settings['player'],
                         videoId: tv_shows[show_id]['video_id'],
                         embedOptions: {
                             responsive: true
