@@ -3,6 +3,7 @@
 namespace RSM\Broadcast;
 
 
+use RSM\Broadcast\PostType\Highlights;
 use RSM\Broadcast\PostType\Shows;
 use RSM\Broadcast\PostType\Radio;
 use RSM\Broadcast\Taxonomy\Days;
@@ -118,7 +119,7 @@ class Plugin {
 
 		\wp_enqueue_script(
 			$this->get_plugin_name(),
-			\plugin_dir_url( dirname( __FILE__ ) ) . 'dist/scripts/rsm-Broadcast-admin.js',
+			\plugin_dir_url( dirname( __FILE__ ) ) . 'dist/scripts/rsm-broadcast-admin.js',
 			array( 'jquery' ),
 			$this->get_version(),
 			false );
@@ -134,18 +135,38 @@ class Plugin {
 	private function define_admin_hooks() {
 
 		$show_post_type           = new Shows();
-		$radio_post_type 		  = new Radio();
+		$radio_post_type          = new Radio();
+		$highlights_post_type     = new Highlights();
 		$networks_taxonomy        = new Networks();
 		$days_taxonomy            = new Days();
 		$show_categories_taxonomy = new ShowCategory();
 		$region_taxonomy          = new Region();
 		$radio_catetory_taxonomy  = new RadioCategory();
+
+		$page_meta = new PageMeta();
+		
+		$video_settings = new VideoSettings();
+
+		$this->loader->add_action( 'admin_enqueue_scripts', $this, 'enqueue_scripts' );
+		$this->loader->add_action( 'admin_menu', $video_settings, 'add_admin_menu' );
+		$this->loader->add_action( 'admin_init', $video_settings, 'register_settings' );
 		$this->loader->add_action( 'init', $show_post_type, 'register_post_type' );
+		$this->loader->add_action( 'init', $radio_post_type, 'register' );
+		$this->loader->add_action( 'init', $highlights_post_type, 'register_post_type' );
 		$this->loader->add_action( 'init', $networks_taxonomy, 'register_taxonomy' );
 		$this->loader->add_action( 'init', $show_categories_taxonomy, 'register_taxonomy' );
+		$this->loader->add_action( 'init', $radio_catetory_taxonomy, 'register' );
+		$this->loader->add_action( 'init', $region_taxonomy, 'register' );
 		$this->loader->add_action( 'init', $days_taxonomy, 'register_taxonomy' );
 		$this->loader->add_action( 'add_meta_boxes', $show_post_type, 'add_meta_box' );
 		$this->loader->add_action( 'save_post', $show_post_type, 'save_meta' );
+		
+		// Radio Meta boxes
+		$this->loader->add_action( 'add_meta_boxes', $radio_post_type, 'add_metaboxes' );
+		$this->loader->add_action( 'save_post', $radio_post_type, 'save_metabox_data', 10, 2 );
+
+		$this->loader->add_action( 'add_meta_boxes', $page_meta, 'add_meta_box' );
+		$this->loader->add_action( 'save_post', $page_meta, 'save_meta' );
 
 	}
 
@@ -161,10 +182,6 @@ class Plugin {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->loader->run();
-
-		// enqueue scripts
-		add_action( 'wp_enqueue_scripts', array($this, 'enqueue_scripts') );
-		//$this->enqueue_scripts();
 	}
 
 	/**

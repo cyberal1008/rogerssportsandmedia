@@ -60,14 +60,27 @@ class Shows {
 	public static function get_schema() {
 		$fields = array(
 			array(
-				'id'     => "video",
+				'id'     => 'general',
+				'title'  => __( 'General Metadata', RSM_BROADCAST_LOCALE ),
+				'fields' => array(
+					array(
+						'id'          => 'airing_text',
+						'type'        => 'text',
+						'label'       => __( 'Airing time (please include timezone)', RSM_BROADCAST_LOCALE ),
+						'description' => __( '', RSM_BROADCAST_LOCALE ),
+					),
+
+				),
+			),
+			array(
+				'id'     => 'video',
 				'title'  => __( 'Video Metadata', RSM_BROADCAST_LOCALE ),
 				'fields' => array(
 					array(
 						'id'          => 'id',
 						'type'        => 'text',
 						'label'       => __( 'Brighcove ID', RSM_BROADCAST_LOCALE ),
-						'description' => __( "", RSM_BROADCAST_LOCALE ),
+						'description' => __( '', RSM_BROADCAST_LOCALE ),
 					),
 
 				),

@@ -44,7 +44,7 @@
 }
 
 .cat-date-next {
-  padding-left: 1.25rem;
+  padding-left: 1rem;
 }
 
 .card-img-one {
@@ -67,8 +67,7 @@
 }
 
 .card-button,
-.card-button a,
-.card-button a:hover {
+.card-button a {
   font-size: 16px;
   font-family: $ted-next-b;
   border-bottom: 4px #FFBF3F solid;
@@ -76,8 +75,19 @@
   text-transform: capitalize;
   line-height: 16px;
   padding-bottom: 6px;
+  position: relative;
+  z-index: 2;
+  &:hover {
+    border-bottom: 4px #FFBF3F solid;
+    text-decoration: none;
+    opacity: 75%;
+  }
 }
 
+.card-button a:hover {
+  border-bottom: 4px #666 solid;
+  text-decoration: none;
+}
 .card-title-next, .card-title-next a {
   font-size: 21px;
   line-height: 27px;
@@ -103,7 +113,6 @@
     right: -16px;
     top: 16px;
     background-color: #00A0B7;
-    z-index: 0;
   }
 
   .img-shadow {
@@ -124,6 +133,7 @@
 .tri{
   left: calc(-50vw + 50%);
   width: 100vw;
+  z-index: 1;
 }
 .tri-element {
   width:72px;
@@ -132,12 +142,12 @@
   linear-gradient(to top right, #00A0B7 50%,transparent 50%) 0 0/72px 72px,
   transparent;
 }
-@media (min-width:767px){
+@media (min-width:768px){
   .small-img, .show-on-mobile{
     display: none;
   }
 }
-@media (max-width:768px){
+@media (max-width:767px){
   .large-img, .card-rectangle-one{
     display: none;
   }
@@ -148,15 +158,19 @@
     width: 70%;
   }
   .card-body{
-    padding-bottom: 50px!important;
+    padding:  10px 16px 15px 16px!important;
   }
   .cat-date-next>.cat-date {
     line-height: 0;
+  }
+  .cat-date {
+    line-height: 30px;
   }
   .justify-content-between{
     padding-top: 50px!important;
   }
 }
+  
 @media screen and (min-width: 767px) and (max-width: 991px) {
   .card-rectangle-one{
     height: 208px;
@@ -173,12 +187,9 @@
     top: -7px;
   }
 }
-
-
-
-@media (max-width:768px){
+@media (max-width:767px){
   .img-shadow{
-    right: 0px;
+    right: -20px;
     position: absolute;
   }
   .card-gb{

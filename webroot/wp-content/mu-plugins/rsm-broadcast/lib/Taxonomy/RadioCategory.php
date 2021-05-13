@@ -37,10 +37,10 @@ class RadioCategory {
 		register_taxonomy( self::SLUG, Radio::TYPE, $args );
 	}
 
-    public function __construct() {
-
-        // Register the taxonomy
-        add_action('init', array($this, 'register'));
-
-    }
+//    public function __construct() {
+//
+//        // Register the taxonomy
+//        add_action('init', array($this, 'register'));
+//
+//    }
 }
