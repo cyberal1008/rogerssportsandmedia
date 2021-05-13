@@ -8,6 +8,8 @@
  * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
  */
 
+$lang = 'en';
+
 ?><!DOCTYPE html>
 <html lang="<?php echo $lang; ?>">
 <head>
@@ -46,23 +48,54 @@
 	<link rel="profile" href="//gmpg.org/xfn/11" />
 	<link rel="pingback" href="<?php echo get_option( 'siteurl' ) . '/xmlrpc.php'; ?>" />
 	<link rel="shortcut icon" href="<?php echo dirname( get_bloginfo( 'stylesheet_url' ) ); ?>/assets/images/favicon.ico">
-	<script type="text/javascript" src="/wp-content/themes/node_modules/jquery/dist/jquery.min.js"></script>
+	<!-- <script type="text/javascript" src="/wp-content/themes/node_modules/jquery/dist/jquery.min.js"></script> -->
+	<script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/assets/scripts/popper.min.js"></script> 
+
 	<link rel="stylesheet" href="https://use.typekit.net/aws7pih.css">
 	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 
 	<?php wp_head(); ?>
 
+	<?php include_once('views/portfolio-modal.html'); ?>
 </head>
 <body <?php body_class(); ?>>
-		<?php if ( is_home() ) { ?>
-		<div class="fullscreen-video ">
-			<div class=" element"></div>
-			<video id="video" muted playsinline autoplay="true" muted="true" loop="true" poster="<?php echo get_theme_mod( 'desktop_vid_link_image_url' ); ?>" class=""><source id="mp4" src="<?php echo get_theme_mod( 'desktop_vid_link_video_url' ); ?>" type="video/mp4">
-			<p>Your user agent does not support the HTML5 Video element.</p>
-			</video>
-		</div>
-		<?php } ?>
-		
+
+<?php
+if ( is_home() ) {
+	get_template_part(
+		'template-parts/header',
+		'media',
+		array(
+			'image_url' => get_theme_mod( 'desktop_vid_link_image_url' ),
+			'video_url' => get_theme_mod( 'desktop_vid_link_video_url' ),
+		)
+	);
+} elseif ( is_page() && is_page_template( 'page_portfolio.php' )) {
+	$page_meta = get_post_meta( get_the_ID(), RSM\Broadcast\PageMeta::METADATA_SLUG, true );
+	$image_uri = '';
+	$video_uri = '';
+	if ( isset( $page_meta['broadcast'] ) ) {
+		if ( isset( $page_meta['broadcast']['image_uri'] ) ) {
+			$image_uri = $page_meta['broadcast']['image_uri'];
+		}
+		if ( isset( $page_meta['broadcast']['image_uri'] ) ) {
+			$video_uri = $page_meta['broadcast']['video_uri'];
+		}
+	}
+	get_template_part(
+		'template-parts/header',
+		'media',
+		array(
+			'image_url' => $image_uri,
+			'video_url' => $video_uri,
+		)
+	);
+} elseif ( is_category() ) {
+	get_template_part( 'template-parts/header', 'nomedia' );
+} elseif ( is_page() && is_page_template( 'page-legal.php' )){
+	get_template_part( 'template-parts/header', 'nomedia', array('format'=>'legal') );
+}
+?>
 <header class="nav-down header-container ">
 			<nav class="navbar navbar-expand-md navbar-light fixed-top nav-bg" role="navigation">
 				<div class="nav-logo d-flex justify-content-center align-content-center align-items-center"

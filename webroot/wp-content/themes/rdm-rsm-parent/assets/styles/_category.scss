@@ -1,0 +1,53 @@
+.cat-page-title, .cat-page-desc {
+    color: #fff;
+}
+.cat-page-title {
+    font-family: $ted-next-sb;
+    font-size: 16px;
+    line-height: 80px;
+}
+.cat-page-desc {
+    font-family: urw-din-condensed;
+    font-size: 84px;
+    line-height: 80px;
+    text-transform: uppercase;
+    padding-bottom: 150px;
+    margin-top: -30px;
+}
+
+.cat-header {
+    min-height: 312px;
+}
+
+@media (min-width: 768px) {
+    .box-post:nth-child(even)>div {
+        float:right;
+    }
+    .box-post:nth-of-type(even){
+        margin-top: 100px;
+    }
+    .cat-card-rectangle:before {
+        content: "";
+        position: absolute;
+        height: 258px;
+        width: 48px;
+        right: -16px;
+        top: 16px;
+        background-color: #333333;
+    }
+}
+@media (max-width: 768px) {
+    .cat-page-desc {
+        font-size: 52px;
+        line-height: 50px;
+        margin-top: -40px;
+        max-width: 270px;
+        padding-bottom: 50px;
+    }
+    .cat-header {
+        text-align: -webkit-center;
+    }
+    .cat-page-title {
+        margin-top: -10px;
+    }
+}
