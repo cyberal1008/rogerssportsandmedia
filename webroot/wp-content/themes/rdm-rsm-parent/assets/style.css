@@ -9074,8 +9074,7 @@ footer {
     margin-top: -10px; } }
 
 .about {
-  position: relative;
-  margin-bottom: 150px; }
+  position: relative; }
   .about-container {
     position: relative; }
     .about-container::before {
@@ -9392,6 +9391,23 @@ footer {
   .portfolio-main .portfolio-highlights-item img {
     width: 100%;
     height: auto; }
+
+.portfolio-main .portfolio-video {
+  min-height: 75vh;
+  position: relative; }
+  @media (max-width: 1199.98px) {
+    .portfolio-main .portfolio-video {
+      min-height: 50vh; } }
+  .portfolio-main .portfolio-video:before, .portfolio-main .portfolio-video::before {
+    display: block;
+    content: "";
+    width: 100vw;
+    height: 100%;
+    margin-left: -50vw;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    background: #333333; }
 
 .television-modal .portfolio-modal .modal-dialog .modal-content {
   background-color: #000; }
