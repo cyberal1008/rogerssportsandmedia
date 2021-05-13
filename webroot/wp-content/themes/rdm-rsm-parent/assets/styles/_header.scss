@@ -297,6 +297,9 @@ header {
   justify-content: center;
   align-items: center;
 }
+.no-media-header {
+  background-color: #333;
+}
 .no-media-header-red {
   background-color: rgb(226, 78, 67);
   z-index: 0;
