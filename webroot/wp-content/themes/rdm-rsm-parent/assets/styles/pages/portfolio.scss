@@ -1,14 +1,15 @@
 .portfolio-main {
   .about {
     @include grey-mode-bg;
+
     .circle-container {
       .circle {
         .cut {
           background-color: unset;
           background: linear-gradient(
-            180deg,
-            $grey-mode-bg-color 50%,
-            #ffffff 50%
+                          180deg,
+                          $grey-mode-bg-color 50%,
+                          #ffffff 50%
           );
         }
       }
@@ -56,6 +57,7 @@
         font-weight: 400;
       }
     }
+
     @media (max-width: 991.98px) {
       flex-wrap: nowrap;
       overflow-x: auto;
@@ -143,9 +145,11 @@
         border: none;
         border-radius: unset;
         cursor: pointer;
+
         img {
           height: auto;
         }
+
         .card-body {
           padding: 16px;
 
@@ -206,5 +210,66 @@
         height: auto;
       }
     }
+  }
+}
+
+.television-modal {
+  
+  .portfolio-modal {
+    .modal-dialog {
+      .modal-content {
+        background-color: #000;
+
+        .modal-body {
+
+          img {
+            width: 100%;
+            height: auto;
+          }
+
+          .back {
+            a {
+              color: $white;
+              text-decoration: underline;
+            }
+          }
+          
+          .loading-wrapper{
+            width: 100%;
+            padding-top: 56.25%; 
+            position: relative;
+            .spinner-border{
+              position: absolute;
+              left: 50%;
+              top: 50%;
+              margin-left: -1rem;
+              margin-top: -1rem;
+            }
+          }
+          
+          .grid-item {
+            &-content {
+              color: $white;
+            }
+
+            &-title {
+              @include ted-next-bold-font;
+              font-size: 54px;
+            }
+
+            &-subtitle, &-subsubtitle {
+              @include ted-next-font;
+              font-size: 18px;
+            }
+
+            &-description {
+              @include ted-next-font;
+              font-size: 16px;
+            }
+          }
+        }
+      }
+    }
+
   }
 }

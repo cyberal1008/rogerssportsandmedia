@@ -56,8 +56,10 @@ $lang = 'en';
 
 	<?php wp_head(); ?>
 
+	<?php include_once('views/portfolio-modal.html'); ?>
 </head>
 <body <?php body_class(); ?>>
+
 <?php
 if ( is_home() ) {
 	get_template_part(
