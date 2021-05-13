@@ -2,7 +2,6 @@
 
 namespace RSM\Broadcast;
 
-
 use RSM\Broadcast\PostType\Highlights;
 use RSM\Broadcast\PostType\Shows;
 use RSM\Broadcast\PostType\Radio;
@@ -122,7 +121,8 @@ class Plugin {
 			\plugin_dir_url( dirname( __FILE__ ) ) . 'dist/scripts/rsm-broadcast-admin.js',
 			array( 'jquery' ),
 			$this->get_version(),
-			false );
+			false
+		);
 	}
 
 	/**
@@ -144,7 +144,8 @@ class Plugin {
 		$radio_catetory_taxonomy  = new RadioCategory();
 
 		$page_meta = new PageMeta();
-		
+		$post_meta = new PostMeta();
+
 		$video_settings = new VideoSettings();
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $this, 'enqueue_scripts' );
@@ -160,7 +161,7 @@ class Plugin {
 		$this->loader->add_action( 'init', $days_taxonomy, 'register_taxonomy' );
 		$this->loader->add_action( 'add_meta_boxes', $show_post_type, 'add_meta_box' );
 		$this->loader->add_action( 'save_post', $show_post_type, 'save_meta' );
-		
+
 		// Radio Meta boxes
 		$this->loader->add_action( 'add_meta_boxes', $radio_post_type, 'add_metaboxes' );
 		$this->loader->add_action( 'save_post', $radio_post_type, 'save_metabox_data', 10, 2 );
@@ -168,6 +169,8 @@ class Plugin {
 		$this->loader->add_action( 'add_meta_boxes', $page_meta, 'add_meta_box' );
 		$this->loader->add_action( 'save_post', $page_meta, 'save_meta' );
 
+		$this->loader->add_action( 'add_meta_boxes', $post_meta, 'add_meta_box' );
+		$this->loader->add_action( 'save_post', $post_meta, 'save_meta' );
 	}
 
 	/**
