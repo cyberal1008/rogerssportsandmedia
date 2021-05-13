@@ -666,6 +666,20 @@ footer {
 .cat-header {
   min-height: 312px; }
 
+@media (min-width: 768px) {
+  .box-post:nth-child(even) > div {
+    float: right; }
+  .box-post:nth-of-type(even) {
+    margin-top: 100px; }
+  .cat-card-rectangle:before {
+    content: "";
+    position: absolute;
+    height: 258px;
+    width: 48px;
+    right: -16px;
+    top: 16px;
+    background-color: #333333; } }
+
 @media (max-width: 768px) {
   .cat-page-desc {
     font-size: 52px;

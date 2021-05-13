@@ -95,33 +95,6 @@
 							</div>
 						</div>
 					</div>
-
-					<!-- <div class="container mb-5 show-on-mobile">
-						<div class="row">
-							<div class="col-sm">
-								<div class="card-body">
-									<p class="cat-date"><?php echo get_the_date( get_option( 'date_format' ) ); ?>
-										<?php
-										if ( ! empty( $categories ) ) {
-											echo ' / ' . esc_html( $categories[0]->name );
-										}
-										?>
-									</p>
-									<h4 class="card-title-gb"><a href="<?php echo get_permalink( $post->id ); ?>"><?php the_title(); ?></a></h4>
-									<?php
-									if ( ! empty( $call_to_action ) ) {
-										?>
-										<a href="<?php echo $call_to_action_url; ?>" class="card-button"><?php echo $call_to_action; ?></a>
-									<?php } ?>
-								</div>
-							</div>
-							<div class="col-sm ">
-								<div class="img-square-wrapper">
-									<img class="card-img-one" src="<?php echo $featured_img_url_m; ?>" alt="">
-								</div>
-							</div>
-						</div>
-					</div> -->
 					<?php
 				}
 			endwhile;
