@@ -322,4 +322,12 @@ header {
     background: url("../assets/images/header-element-red.svg") center center
       no-repeat;
   }
+  .no-media-header-red {
+    height: 540px;
+  }
+}
+@media (max-width: 575.98px) {
+  .no-media-header-red {
+    height: 600px;
+  }
 }
