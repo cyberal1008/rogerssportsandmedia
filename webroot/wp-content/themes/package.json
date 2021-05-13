@@ -9,11 +9,13 @@
   "author": "GB",
   "license": "ISC",
   "dependencies": {
+    "@brightcove/player-loader": "~1.8.0",
     "bootstrap": "^4.6.0",
     "browserslist": "^4.16.3",
     "caniuse-lite": "^1.0.30001204",
     "gulp-notify": "^3.2.0",
     "jquery": "^3.6.0",
+    "mustache": "~4.2.0",
     "popper.js": "^1.14.7"
   },
   "devDependencies": {

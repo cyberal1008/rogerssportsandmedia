@@ -23,6 +23,10 @@ if ( ! function_exists( 'parent_scripts' ) ) {
 		wp_enqueue_style( 'bootstrap4', get_template_directory_uri() . '/assets/bootstrap.css', array(), $css_version );
 		$js_version = $theme_version . '.' . filemtime( get_template_directory() . '/assets/parent.min.js' );
 		wp_enqueue_script( 'parent-scripts', get_template_directory_uri() . '/assets/parent.min.js', array(), $js_version, true );
+		wp_localize_script( 'parent-scripts', 'video_settings', array(
+			'account' => get_option( 'brightcove_account_id' ),
+			'player'  => get_option( 'brightcove_player_id' )
+		) );
 	}
 } // endif function_exists( 'parent_scripts' ).
 

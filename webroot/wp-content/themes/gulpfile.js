@@ -13,7 +13,6 @@ var gulp = require('gulp'),
 
 gulp.task('styles', function () {
     return gulp.src([
-        './node_modules/bootstrap/scss/bootstrap.scss',
         './rdm-rsm-parent/assets/styles/style.scss'
     ])
         .pipe(plumber({
@@ -30,7 +29,6 @@ gulp.task('styles', function () {
 
 gulp.task('styles-dev', function () {
     return gulp.src([
-        './node_modules/bootstrap/scss/bootstrap.scss',
         './rdm-rsm-parent/assets/styles/style.scss'
     ])
         .pipe(plumber({
@@ -50,6 +48,8 @@ gulp.task('scripts', function () {
     return gulp.src([
         './node_modules/jquery/dist/jquery.min.js',
         //'./node_modules/popper.js/dist/popper.min.js',
+        './node_modules/mustache/mustache.js',
+        './node_modules/@brightcove/player-loader/dist/brightcove-player-loader.js',
         './node_modules/bootstrap/dist/js/bootstrap.min.js',
         './rdm-rsm-parent/assets/scripts/scripts.js',
         './rdm-rsm-parent/assets/scripts/lib/*.js'
@@ -66,6 +66,8 @@ gulp.task('scripts-dev', function () {
     return gulp.src([
         './node_modules/jquery/dist/jquery.min.js',
         //'./node_modules/popper.js/dist/popper.min.js',
+        './node_modules/mustache/mustache.js',
+        './node_modules/@brightcove/player-loader/dist/brightcove-player-loader.js',
         './node_modules/bootstrap/dist/js/bootstrap.min.js',
         './rdm-rsm-parent/assets/scripts/scripts.js',
         './rdm-rsm-parent/assets/scripts/lib/*.js'

@@ -1,6 +1,9 @@
-@import "variables", "mixins", "fonts", "header", "footer", "home", "happening",
-  "category", "about";
+@import "variables";
 
+@import "../../../node_modules/bootstrap/scss/bootstrap";
+
+@import "mixins", "fonts", "header", "footer", "home", "happening", "category",
+  "about";
 // Pages
 @import "pages/portfolio", "pages/legal";
 
@@ -16,10 +19,21 @@ body {
       padding-top: 0;
     }
   }
+
   &.home,
   &.category,
   &.page,
   &.single {
     overflow-x: hidden;
+  }
+
+  @each $breakpoint in map-keys($grid-breakpoints) {
+    @include media-breakpoint-down($breakpoint) {
+      $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+      .modal-fullscreen#{$infix} {
+        @include modal-fullscreen();
+      }
+    }
   }
 }
