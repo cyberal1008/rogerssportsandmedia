@@ -144,8 +144,12 @@ class Plugin {
 		$radio_catetory_taxonomy  = new RadioCategory();
 
 		$page_meta = new PageMeta();
+		
+		$video_settings = new VideoSettings();
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $this, 'enqueue_scripts' );
+		$this->loader->add_action( 'admin_menu', $video_settings, 'add_admin_menu' );
+		$this->loader->add_action( 'admin_init', $video_settings, 'register_settings' );
 		$this->loader->add_action( 'init', $show_post_type, 'register_post_type' );
 		$this->loader->add_action( 'init', $radio_post_type, 'register' );
 		$this->loader->add_action( 'init', $highlights_post_type, 'register_post_type' );
