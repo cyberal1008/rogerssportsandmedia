@@ -9073,6 +9073,20 @@ footer {
   .cat-page-title {
     margin-top: -10px; } }
 
+.pagination {
+  margin: 0 auto;
+  padding-bottom: 100px; }
+
+.pagination a {
+  color: #707070; }
+
+.current {
+  color: #000000;
+  font-family: "Ted Next Bold"; }
+
+.page-numbers {
+  margin: 10px; }
+
 .about {
   position: relative;
   margin-bottom: 150px; }
