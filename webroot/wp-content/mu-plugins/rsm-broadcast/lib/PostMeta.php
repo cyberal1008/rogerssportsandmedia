@@ -30,6 +30,7 @@ class PostMeta {
 						'type'        => 'text',
 						'label'       => __( 'Zone slug for whats happening', RSM_BROADCAST_LOCALE ),
 						'description' => __( '', RSM_BROADCAST_LOCALE ),
+						'default'     => 'blog-zone',
 					),
 				),
 			),
