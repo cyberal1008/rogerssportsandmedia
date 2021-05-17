@@ -57,6 +57,7 @@ $lang = 'en';
 	<?php wp_head(); ?>
 
 	<?php include_once('views/portfolio-modal.html'); ?>
+	<?php include_once('views/portfolio-chapters.html'); ?>
 </head>
 <body <?php body_class(); ?>>
 

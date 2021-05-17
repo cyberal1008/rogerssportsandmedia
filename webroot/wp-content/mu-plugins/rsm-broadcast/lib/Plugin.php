@@ -109,13 +109,19 @@ class Plugin {
 		 * 'all' );
 		 */
 	}
-
+	
 	/**
 	 * Register the JavaScript for the dashboard.
 	 *
 	 * @since    1.0.0
 	 */
 	public function enqueue_scripts() {
+		
+		// loading thickbox for gutenberg editor
+
+		wp_enqueue_style('thickbox');
+		wp_enqueue_script('media-upload');
+		wp_enqueue_script('thickbox');
 
 		\wp_enqueue_script(
 			$this->get_plugin_name(),
@@ -123,6 +129,7 @@ class Plugin {
 			array( 'jquery' ),
 			$this->get_version(),
 			false );
+		
 	}
 
 	/**
