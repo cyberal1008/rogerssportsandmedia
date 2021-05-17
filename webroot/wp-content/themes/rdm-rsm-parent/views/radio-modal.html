@@ -1,0 +1,41 @@
+<script type="text/html" id="tmplRadioModal">
+    <div class="modal fade portfolio-modal modal-fullscreen-xl" tabindex="-1" role="dialog"
+         aria-labelledby="portfolioModal"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-12 back pb-3">
+                                <a href="#" data-dismiss="modal" aria-label="Close">&lsaquo;&nbsp;Back</a>
+                            </div>
+                            {{#logo}}
+                            <div class="col-10">
+                                <img src="{{logo.src}}" srcset="{{logo.srcset}}" class="radio-modal-logo"
+                                     alt="{{title}}"/>
+                            </div>
+                            {{/logo}}
+                            {{#featured_image}}
+                            <div class="col-10">
+                                <img class="radio-modal-image" src="{{featured_image.src}}" srcset="{{featured_image.srcset}}" sizes="{{featured_image.sizes}}"
+                                     alt="{{title}}"/>
+                            </div>
+                            {{/featured_image}}
+                            <div class="col-8 text-center grid-item-content">
+                                <div class="grid-item-title">{{title}}</div>
+                                {{#format}}
+                                <div class="grid-item-subtitle radio-subtitle">{{format}}</div>
+                                {{/format}}
+                                {{#location}}
+                                <div class="grid-item-subtitle radio-subtitle">{{location}}</div>
+                                {{/location}}
+                                <p class="grid-item-description py-3">{{description}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>

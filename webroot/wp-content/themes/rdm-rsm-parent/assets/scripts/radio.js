@@ -1,6 +1,31 @@
 $(document).ready(function () {
+    var programming_item = $('.radio-grid .radio-item');
     
-    if($('.radio-grid .radio-item').length > 0) {
+    if(programming_item.length > 0) {
+
+        programming_item.click(function () {
+
+            var modal_wrapper = $('.radio-modal'),
+                template = $('#tmplRadioModal').html(),
+                program_id = $(this).data('program-id');
+
+            // get the information for show, from the js vars
+            // if no information exists, nothing happens
+            if (radio_programs[program_id]) {
+
+                // empty television modal
+                var rendered = Mustache.render(template, radio_programs[program_id]);
+                $(rendered).appendTo(modal_wrapper);
+                var modal_ = $('.portfolio-modal');
+                modal_.modal('show');
+                modal_.on('hidden.bs.modal', function (e) {
+                    // we will be creating new modal everytime
+                    $(this).modal('dispose');
+                    modal_wrapper.empty();
+
+                });
+            }
+        });
         
         $("input.selectopt").change(function () {
 

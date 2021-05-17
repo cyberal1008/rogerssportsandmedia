@@ -9398,6 +9398,10 @@ footer {
   .television-modal .portfolio-modal .modal-dialog .modal-content .modal-body img {
     width: 100%;
     height: auto; }
+    .television-modal .portfolio-modal .modal-dialog .modal-content .modal-body img.radio-modal-logo {
+      max-width: 150px;
+      display: block;
+      margin: 0 auto; }
   .television-modal .portfolio-modal .modal-dialog .modal-content .modal-body .back a {
     color: #fff;
     text-decoration: underline; }
@@ -9419,6 +9423,8 @@ footer {
   .television-modal .portfolio-modal .modal-dialog .modal-content .modal-body .grid-item-subtitle, .television-modal .portfolio-modal .modal-dialog .modal-content .modal-body .grid-item-subsubtitle {
     font-family: "Ted Next", serif;
     font-size: 18px; }
+    .television-modal .portfolio-modal .modal-dialog .modal-content .modal-body .grid-item-subtitle.radio-subtitle, .television-modal .portfolio-modal .modal-dialog .modal-content .modal-body .grid-item-subsubtitle.radio-subtitle {
+      text-transform: capitalize; }
   .television-modal .portfolio-modal .modal-dialog .modal-content .modal-body .grid-item-description {
     font-family: "Ted Next", serif;
     font-size: 16px; }
