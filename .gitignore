@@ -2,3 +2,4 @@ webroot/.htaccess
 webroot/wp-content/themes/node_modules
 webroot/wp-content/uploads
 webroot/wp-content/themes/package-lock.json
+webroot/wp-content/mu-plugins/rsm-broadcast/node_modules

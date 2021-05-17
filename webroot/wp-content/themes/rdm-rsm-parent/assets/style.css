@@ -9088,8 +9088,7 @@ footer {
   margin: 10px; }
 
 .about {
-  position: relative;
-  margin-bottom: 150px; }
+  position: relative; }
   .about-container {
     position: relative; }
     .about-container::before {
@@ -9407,6 +9406,60 @@ footer {
     width: 100%;
     height: auto; }
 
+.portfolio-main .portfolio-video {
+  min-height: 75vh;
+  width: 100vw;
+  position: relative;
+  margin-left: -50vw;
+  left: 50%;
+  background-color: #333333; }
+  @media (max-width: 1199.98px) {
+    .portfolio-main .portfolio-video {
+      min-height: 50vh; } }
+
+.portfolio-main .portfolio-video-chapters {
+  color: #fff;
+  background-color: #272727; }
+  .portfolio-main .portfolio-video-chapters .chapters-wrapper {
+    width: 100%; }
+    .portfolio-main .portfolio-video-chapters .chapters-wrapper .video-title {
+      color: #DCDDDF;
+      font-size: 21px;
+      font-family: "Ted Next", serif;
+      margin-bottom: 35px;
+      margin-top: 15px; }
+    .portfolio-main .portfolio-video-chapters .chapters-wrapper .video-chapters {
+      position: relative;
+      overflow-x: scroll;
+      max-height: 60vh;
+      width: 100%; }
+      .portfolio-main .portfolio-video-chapters .chapters-wrapper .video-chapters .video-chapter {
+        position: relative;
+        cursor: pointer;
+        margin-bottom: 35px;
+        padding-left: 20px; }
+        .portfolio-main .portfolio-video-chapters .chapters-wrapper .video-chapters .video-chapter .chapter-title {
+          font-size: 16px;
+          font-family: "Ted Next", serif; }
+        .portfolio-main .portfolio-video-chapters .chapters-wrapper .video-chapters .video-chapter .chapter-time {
+          font-size: 12px;
+          font-family: "Ted Next", serif; }
+        .portfolio-main .portfolio-video-chapters .chapters-wrapper .video-chapters .video-chapter.active {
+          border-left: 3px solid; }
+          .portfolio-main .portfolio-video-chapters .chapters-wrapper .video-chapters .video-chapter.active .chapter-title {
+            font-family: "Ted Next Bold", serif; }
+
+.loading-wrapper {
+  width: 100%;
+  padding-top: 56.25%;
+  position: relative; }
+  .loading-wrapper .spinner-border {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -1rem;
+    margin-top: -1rem; }
+
 .portfolio-modal-wrapper .portfolio-modal .modal-dialog .modal-content {
   background-color: #000; }
   .portfolio-modal-wrapper .portfolio-modal .modal-dialog .modal-content .modal-body img {
@@ -9419,16 +9472,6 @@ footer {
   .portfolio-modal-wrapper .portfolio-modal .modal-dialog .modal-content .modal-body .back a {
     color: #fff;
     text-decoration: underline; }
-  .portfolio-modal-wrapper .portfolio-modal .modal-dialog .modal-content .modal-body .loading-wrapper {
-    width: 100%;
-    padding-top: 56.25%;
-    position: relative; }
-    .portfolio-modal-wrapper .portfolio-modal .modal-dialog .modal-content .modal-body .loading-wrapper .spinner-border {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      margin-left: -1rem;
-      margin-top: -1rem; }
   .portfolio-modal-wrapper .portfolio-modal .modal-dialog .modal-content .modal-body .grid-item-content {
     color: #fff; }
   .portfolio-modal-wrapper .portfolio-modal .modal-dialog .modal-content .modal-body .grid-item-title {

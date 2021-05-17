@@ -24,8 +24,8 @@ if ( ! function_exists( 'parent_scripts' ) ) {
 		$js_version = $theme_version . '.' . filemtime( get_template_directory() . '/assets/parent.min.js' );
 		wp_enqueue_script( 'parent-scripts', get_template_directory_uri() . '/assets/parent.min.js', array(), $js_version, true );
 		wp_localize_script( 'parent-scripts', 'video_settings', array(
-			'account' => get_option( 'brightcove_account_id' ),
-			'player'  => get_option( 'brightcove_player_id' )
+			'account' => sanitize_text_field ( get_option( 'brightcove_account_id' ) ),
+			'player'  => sanitize_text_field ( get_option( 'brightcove_player_id' ) )
 		) );
 	}
 } // endif function_exists( 'parent_scripts' ).
@@ -34,6 +34,9 @@ add_action( 'wp_enqueue_scripts', 'parent_scripts' );
 
 // wp enqueue scripts for portfolio page
 add_action( 'wp_enqueue_scripts', function () {
+	if ( is_page() && stripos( get_page_template_slug(), 'portfolio' ) !== false ) {
+		wp_enqueue_script( 'portfolio-js', get_template_directory_uri() . "/assets/scripts/portfolio.js", "parent-scripts", '', true );
+	}
 	if ( is_page() && stripos( get_the_title(), 'television' ) !== false ) {
 		wp_enqueue_script( 'television-js', get_template_directory_uri() . "/assets/scripts/television.js", "parent-scripts", '', true );
 	}

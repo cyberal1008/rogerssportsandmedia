@@ -75,7 +75,19 @@ $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, tr
 				'description' => get_the_content(),
 				'image_url'   => $page_meta['broadcast']['about_image_uri']
 			) );
+		
+		if( $page_meta['broadcast'] && $page_meta['broadcast']['about_video_id'] ){
+			get_template_part(
+				'template-parts/content',
+				'video',
+				array(
+					'video_id'       => $page_meta['broadcast']['about_video_id'],
+				) );
+
+		}
+		
 		?>
+        <div class="w-100 p-5"></div>
         <div class="container portfolio-page">
 			<?php
 			if ( stripos( get_the_title(), 'television' ) !== false ) {

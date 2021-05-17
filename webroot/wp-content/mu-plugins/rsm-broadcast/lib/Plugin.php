@@ -116,6 +116,12 @@ class Plugin {
 	 */
 	public function enqueue_scripts() {
 
+		// loading thickbox for gutenberg editor
+
+		wp_enqueue_style( 'thickbox' );
+		wp_enqueue_script( 'media-upload' );
+		wp_enqueue_script( 'thickbox' );
+
 		\wp_enqueue_script(
 			$this->get_plugin_name(),
 			\plugin_dir_url( dirname( __FILE__ ) ) . 'dist/scripts/rsm-broadcast-admin.js',
