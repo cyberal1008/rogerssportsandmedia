@@ -55,9 +55,16 @@ $lang = 'en';
 	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 
 	<?php wp_head(); ?>
-
-	<?php include_once('views/portfolio-modal.html'); ?>
+    
 	<?php include_once('views/portfolio-chapters.html'); ?>
+
+	<?php 
+	if ( is_page() && stripos( get_the_title(), 'television' ) !== false ) {
+		include_once('views/television-modal.html'); 
+	}elseif(is_page() && get_post_field( 'post_name' ) === 'radio-podcasts'){
+		include_once('views/radio-modal.html'); 
+	}
+	?>
 </head>
 <body <?php body_class(); ?>>
 

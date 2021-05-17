@@ -7,9 +7,9 @@
         .cut {
           background-color: unset;
           background: linear-gradient(
-                          180deg,
-                          $grey-mode-bg-color 50%,
-                          #ffffff 50%
+            180deg,
+            $grey-mode-bg-color 50%,
+            #ffffff 50%
           );
         }
       }
@@ -289,18 +289,22 @@
   }
 }
 
-.television-modal {
-  
+.portfolio-modal-wrapper {
   .portfolio-modal {
     .modal-dialog {
       .modal-content {
         background-color: #000;
 
         .modal-body {
-
           img {
             width: 100%;
             height: auto;
+
+            &.radio-modal-logo {
+              max-width: 150px;
+              display: block;
+              margin: 0 auto;
+            }
           }
 
           .back {
@@ -320,9 +324,14 @@
               font-size: 54px;
             }
 
-            &-subtitle, &-subsubtitle {
+            &-subtitle,
+            &-subsubtitle {
               @include ted-next-font;
               font-size: 18px;
+
+              &.radio-subtitle {
+                text-transform: capitalize;
+              }
             }
 
             &-description {
@@ -333,6 +342,5 @@
         }
       }
     }
-
   }
 }

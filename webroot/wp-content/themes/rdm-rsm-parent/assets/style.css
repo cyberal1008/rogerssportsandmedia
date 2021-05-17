@@ -9073,6 +9073,20 @@ footer {
   .cat-page-title {
     margin-top: -10px; } }
 
+.pagination {
+  margin: 0 auto;
+  padding-bottom: 100px; }
+
+.pagination a {
+  color: #707070; }
+
+.current {
+  color: #000000;
+  font-family: "Ted Next Bold"; }
+
+.page-numbers {
+  margin: 10px; }
+
 .about {
   position: relative; }
   .about-container {
@@ -9446,23 +9460,29 @@ footer {
     margin-left: -1rem;
     margin-top: -1rem; }
 
-.television-modal .portfolio-modal .modal-dialog .modal-content {
+.portfolio-modal-wrapper .portfolio-modal .modal-dialog .modal-content {
   background-color: #000; }
-  .television-modal .portfolio-modal .modal-dialog .modal-content .modal-body img {
+  .portfolio-modal-wrapper .portfolio-modal .modal-dialog .modal-content .modal-body img {
     width: 100%;
     height: auto; }
-  .television-modal .portfolio-modal .modal-dialog .modal-content .modal-body .back a {
+    .portfolio-modal-wrapper .portfolio-modal .modal-dialog .modal-content .modal-body img.radio-modal-logo {
+      max-width: 150px;
+      display: block;
+      margin: 0 auto; }
+  .portfolio-modal-wrapper .portfolio-modal .modal-dialog .modal-content .modal-body .back a {
     color: #fff;
     text-decoration: underline; }
-  .television-modal .portfolio-modal .modal-dialog .modal-content .modal-body .grid-item-content {
+  .portfolio-modal-wrapper .portfolio-modal .modal-dialog .modal-content .modal-body .grid-item-content {
     color: #fff; }
-  .television-modal .portfolio-modal .modal-dialog .modal-content .modal-body .grid-item-title {
+  .portfolio-modal-wrapper .portfolio-modal .modal-dialog .modal-content .modal-body .grid-item-title {
     font-family: "Ted Next Bold", serif;
     font-size: 54px; }
-  .television-modal .portfolio-modal .modal-dialog .modal-content .modal-body .grid-item-subtitle, .television-modal .portfolio-modal .modal-dialog .modal-content .modal-body .grid-item-subsubtitle {
+  .portfolio-modal-wrapper .portfolio-modal .modal-dialog .modal-content .modal-body .grid-item-subtitle, .portfolio-modal-wrapper .portfolio-modal .modal-dialog .modal-content .modal-body .grid-item-subsubtitle {
     font-family: "Ted Next", serif;
     font-size: 18px; }
-  .television-modal .portfolio-modal .modal-dialog .modal-content .modal-body .grid-item-description {
+    .portfolio-modal-wrapper .portfolio-modal .modal-dialog .modal-content .modal-body .grid-item-subtitle.radio-subtitle, .portfolio-modal-wrapper .portfolio-modal .modal-dialog .modal-content .modal-body .grid-item-subsubtitle.radio-subtitle {
+      text-transform: capitalize; }
+  .portfolio-modal-wrapper .portfolio-modal .modal-dialog .modal-content .modal-body .grid-item-description {
     font-family: "Ted Next", serif;
     font-size: 16px; }
 
