@@ -13,7 +13,7 @@ $(document).ready(function () {
             // if no information exists, nothing happens
             if (radio_programs[program_id]) {
 
-                // empty television modal
+                // empty radio modal
                 var rendered = Mustache.render(template, radio_programs[program_id]);
                 $(rendered).appendTo(modal_wrapper);
                 var modal_ = $('.portfolio-modal');

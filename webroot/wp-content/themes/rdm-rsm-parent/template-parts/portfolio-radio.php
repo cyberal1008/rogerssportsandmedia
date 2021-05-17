@@ -118,4 +118,4 @@ $regions = array_merge( array( 'all' => 'All Regions' ), wp_list_pluck( $region_
 </div>
 
 <!-- Modal -->
-<div class="television-modal radio-modal"></div>
+<div class="portfolio-modal-wrapper radio-modal"></div>
