@@ -46,10 +46,19 @@ $regions = array_merge( array( 'all' => 'All Regions' ), wp_list_pluck( $region_
 
 <div class="row television-grid radio-grid">
     <?php
+    //js var for programming grid modal
+	$jsvar = array();
     foreach ( $radio_posts->posts as $post ) {
         $post_meta = get_post_meta( $post->ID, '', true );
         $post_radio_category = get_the_terms( $post->ID, RSM\Broadcast\Taxonomy\RadioCategory::SLUG);
         $post_region = get_the_terms( $post->ID, RSM\Broadcast\Taxonomy\Region::SLUG);
+
+        $tmpjsvar = array(
+			"title"       => $post->post_title,
+			"description" => strip_tags( $post->post_content ),
+			"format"      => isset($post_meta['_rsm_radio_format']) && !empty($post_meta['_rsm_radio_format'][0]) ? $post_meta['_rsm_radio_format'][0] : "",
+			"location"    => isset($post_region) && !empty($post_region) ? $post_region[0]->name : "",
+		);
         if ( isset( $post_meta['_rsm_radio_logo_id'] ) ) {
             $img_srcset = wp_get_attachment_image_srcset( $post_meta['_rsm_radio_logo_id'][0], 'square' );
             $img_src    = wp_get_attachment_image_src( $post_meta['_rsm_radio_logo_id'][0], 'square' )[0];
@@ -58,11 +67,34 @@ $regions = array_merge( array( 'all' => 'All Regions' ), wp_list_pluck( $region_
             $img_srcset = '';
             $img_src    = $default_image;
         }
+
+        if(!empty($img_srcset)){
+            $tmpjsvar['logo'] = array(
+				'src'    => $img_src,
+				'srcset' => $img_srcset,
+			);
+        }
+
+        // featured image
+		$featured_image_id = get_post_thumbnail_id( $post->ID );
+		if ( ! empty ( $featured_image_id ) ) {
+			$size              = "large";
+			$tmpjsvar['featured_image'] = array(
+				'src'    => wp_get_attachment_image_src( $featured_image_id, $size ),
+				'srcset' => wp_get_attachment_image_srcset( $featured_image_id, $size ),
+				'sizes'  => wp_get_attachment_image_sizes( $featured_image_id, $size )
+			);
+		}
+
+        $jsvar[ $post->ID ] = $tmpjsvar;
+
         $post_subtitle = isset($post_meta['_rsm_radio_format']) && !empty($post_meta['_rsm_radio_format'][0]) ? $post_meta['_rsm_radio_format'][0] : "";
         $post_subtitle = isset($post_region) && !empty($post_region) ? $post_region[0]->name : $post_subtitle;
         $post_subtitle = ucfirst($post_subtitle);
+        
     ?>
-        <div class="col-4 col-sm-4 col-md-2 col-lg-1 radio-card-col radio-item"
+        <div class="col-4 col-sm-4 col-md-2 col-lg-1 radio-card-col radio-item" 
+            data-program-id="<?php echo $post->ID ?>"
             data-catetory="<?php echo get_data_items( $post->ID, RSM\Broadcast\Taxonomy\RadioCategory::SLUG ) ?>"
             data-region="<?php echo get_data_items( $post->ID, RSM\Broadcast\Taxonomy\Region::SLUG ) ?>"
         >
@@ -77,6 +109,8 @@ $regions = array_merge( array( 'all' => 'All Regions' ), wp_list_pluck( $region_
         </div>
     <?php 
     }
+    //programming grids info
+	wp_localize_script( 'radio-js', 'radio_programs', $jsvar );
     ?>
 </div>
 <div class="col-12 programming-none">
@@ -84,18 +118,4 @@ $regions = array_merge( array( 'all' => 'All Regions' ), wp_list_pluck( $region_
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="radio-modal" tabindex="-1" role="dialog" aria-labelledby="radio-modal" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Radio Modal</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-    </div>
-  </div>
-</div>
+<div class="portfolio-modal-wrapper radio-modal"></div>

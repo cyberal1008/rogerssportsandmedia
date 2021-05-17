@@ -150,4 +150,4 @@ $tv_posts = new WP_Query( array(
 <div class="col-12 programming-none">
     <h3>No shows found.</h3>
 </div>
-<div class="television-modal"></div>
+<div class="portfolio-modal-wrapper television-modal"></div>
