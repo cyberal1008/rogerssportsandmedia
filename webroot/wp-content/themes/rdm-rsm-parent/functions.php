@@ -220,20 +220,17 @@ function update_zoninator_search_args( $args ) {
 
 add_filter( 'zoninator_search_args', 'update_zoninator_search_args' );
 
-function wpse311858_fix_category_pagination( $query_string = array() ) {
+function fix_category_pagination( $query_string = array() ) {
 	if ( isset( $query_string['category_name'] )
 			&& isset( $query_string['name'] ) && $query_string['name'] === 'page'
 			&& isset( $query_string['page'] ) ) {
 		$paged = trim( $query_string['page'], '/' );
 		if ( is_numeric( $paged ) ) {
-			// we are not allowing 'page' as a page or post slug
 			unset( $query_string['name'] );
 			unset( $query_string['page'] );
-
-			// for a category archive, proper pagination query string  is 'paged'
 			$query_string['paged'] = (int) $paged;
 		}
 	}
 	return $query_string;
 }
-add_filter( 'request', 'wpse311858_fix_category_pagination' );
+add_filter( 'request', 'fix_category_pagination' );
