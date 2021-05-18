@@ -57,6 +57,7 @@ $lang = 'en';
 	<?php wp_head(); ?>
     
 	<?php include_once('views/portfolio-chapters.html'); ?>
+	<?php include_once('views/solutions-modal.html'); ?>
 
 	<?php 
 	if ( is_page() && stripos( get_the_title(), 'television' ) !== false ) {

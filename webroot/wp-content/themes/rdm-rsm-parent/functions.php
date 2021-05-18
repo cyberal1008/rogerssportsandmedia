@@ -193,6 +193,7 @@ function add_zoninator_post_types() {
 	if ( class_exists( 'RSM\Broadcast\PostType\Highlights' )  ) {
 		$available_post_types = array(
 			\RSM\Broadcast\PostType\Highlights::SLUG,
+			\RSM\Broadcast\PostType\Solutions::SLUG,
 		);
 		foreach ( $available_post_types as $post_type ) {
 			add_post_type_support( $post_type, 'zoninator_zones' );

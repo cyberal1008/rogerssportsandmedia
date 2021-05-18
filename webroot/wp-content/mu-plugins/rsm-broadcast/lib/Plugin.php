@@ -5,6 +5,7 @@ namespace RSM\Broadcast;
 use RSM\Broadcast\PostType\Highlights;
 use RSM\Broadcast\PostType\Shows;
 use RSM\Broadcast\PostType\Radio;
+use RSM\Broadcast\PostType\Solutions;
 use RSM\Broadcast\Taxonomy\Days;
 use RSM\Broadcast\Taxonomy\Networks;
 use RSM\Broadcast\Taxonomy\ShowCategory;
@@ -142,6 +143,7 @@ class Plugin {
 
 		$show_post_type           = new Shows();
 		$radio_post_type          = new Radio();
+		$solution_post_type       = new Solutions();
 		$highlights_post_type     = new Highlights();
 		$networks_taxonomy        = new Networks();
 		$days_taxonomy            = new Days();
@@ -159,6 +161,7 @@ class Plugin {
 		$this->loader->add_action( 'admin_init', $video_settings, 'register_settings' );
 		$this->loader->add_action( 'init', $show_post_type, 'register_post_type' );
 		$this->loader->add_action( 'init', $radio_post_type, 'register' );
+		$this->loader->add_action( 'init', $solution_post_type, 'register_post_type' );
 		$this->loader->add_action( 'init', $highlights_post_type, 'register_post_type' );
 		$this->loader->add_action( 'init', $networks_taxonomy, 'register_taxonomy' );
 		$this->loader->add_action( 'init', $show_categories_taxonomy, 'register_taxonomy' );
@@ -177,6 +180,9 @@ class Plugin {
 
 		$this->loader->add_action( 'add_meta_boxes', $post_meta, 'add_meta_box' );
 		$this->loader->add_action( 'save_post', $post_meta, 'save_meta' );
+
+		$this->loader->add_action( 'add_meta_boxes', $solution_post_type, 'add_meta_box' );
+		$this->loader->add_action( 'save_post', $solution_post_type, 'save_meta' );
 	}
 
 	/**

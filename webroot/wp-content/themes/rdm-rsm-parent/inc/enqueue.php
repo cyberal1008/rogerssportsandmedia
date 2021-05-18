@@ -35,6 +35,7 @@ add_action( 'wp_enqueue_scripts', 'parent_scripts' );
 // wp enqueue scripts for portfolio page
 add_action( 'wp_enqueue_scripts', function () {
 	if ( is_page() && stripos( get_page_template_slug(), 'portfolio' ) !== false ) {
+		wp_enqueue_script( 'solutions-js', get_template_directory_uri() .  "/assets/scripts/solutions.js", "parent-scripts", '', true );
 		wp_enqueue_script( 'portfolio-js', get_template_directory_uri() . "/assets/scripts/portfolio.js", "parent-scripts", '', true );
 	}
 	if ( is_page() && stripos( get_the_title(), 'television' ) !== false ) {
