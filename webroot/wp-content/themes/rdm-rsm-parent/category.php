@@ -17,6 +17,7 @@ get_header();
 </div>
 <div class="container">
 	<?php
+	global $post;
 	$category  = get_the_category();
 	$the_query = new WP_Query(
 		array(
@@ -32,16 +33,15 @@ get_header();
 			<?php
 			while ( $the_query->have_posts() ) :
 				$the_query->the_post();
-				$featured_img_url   = get_the_post_thumbnail_url( get_the_ID(), 'wide-577' );
-				$categories         = get_the_category();
-				$call_to_action     = get_post_meta( get_the_ID(), 'call-to-action', true );
-				$call_to_action_url = get_post_meta( get_the_ID(), 'call-to-action-url', true );
+				$featured_img_url = get_the_post_thumbnail_url( get_the_ID(), 'wide-577' );
+				$categories       = get_the_category();
+				$post_meta        = get_post_meta( get_the_ID(), 'blog', true );
 				?>
 					<div class="container mb-5">
 						<div class="row">
 							<div class="col-md order-md-1">
 								<div class="card-body">
-									<p class="cat-date"><?php echo get_the_date( get_option( 'date_format' ) ); ?>
+									<p class="cat-date date-mobile"><?php echo get_the_date( get_option( 'date_format' ) ); ?>
 										<?php
 										if ( ! empty( $categories ) ) {
 											echo ' / ' . esc_html( $categories[0]->name );
@@ -50,9 +50,9 @@ get_header();
 									</p>
 									<h4 class="card-title-gb"><a href="<?php echo get_permalink( $post->id ); ?>"><?php the_title(); ?></a></h4>
 									<?php
-									if ( ! empty( $call_to_action ) ) {
+									if ( ! empty( $post_meta['blog_meta']['buttontext'] ) ) {
 										?>
-										<a href="<?php echo $call_to_action_url; ?>" class="card-button"><?php echo $call_to_action; ?></a>
+										<a href="<?php echo $post_meta['blog_meta']['buttonurl']; ?>" class="card-button"><?php echo $post_meta['blog_meta']['buttontext']; ?></a>
 									<?php } ?>
 								</div>
 							</div>
@@ -93,13 +93,12 @@ get_header();
 				$featured_img_url   = get_the_post_thumbnail_url( get_the_ID(), 'wide-577' );
 				$featured_img_url_m = get_the_post_thumbnail_url( get_the_ID(), 'square-375' );
 				$categories         = get_the_category();
-				$call_to_action     = get_post_meta( get_the_ID(), 'call-to-action', true );
-				$call_to_action_url = get_post_meta( get_the_ID(), 'call-to-action_url', true );
+				$post_meta          = get_post_meta( get_the_ID(), 'blog', true );
 				?>
 					<div class="col-lg-6 col-md-12 mb-4 box-post">
 						<div class="card mb-5 card-gb ">
 							<div class="cat-date-next">
-								<p class="cat-date"><?php echo get_the_date( get_option( 'date_format' ) ); ?>
+								<p class="cat-date date-mobile"><?php echo get_the_date( get_option( 'date_format' ) ); ?>
 									<?php
 									if ( ! empty( $categories ) ) {
 										echo ' / ' . esc_html( $categories[0]->name );
@@ -115,9 +114,9 @@ get_header();
 							<div class="card-body">
 								<h4 class="card-title-next"><a href="<?php echo get_permalink( $post->id ); ?>"><?php the_title(); ?></a></h4>
 								<?php
-								if ( ! empty( $call_to_action ) ) {
+								if ( ! empty( $post_meta['blog_meta']['buttontext'] ) ) {
 									?>
-									<a href="<?php echo $call_to_action_url; ?>" class="card-button"><?php echo $call_to_action; ?></a>
+									<a href="<?php echo $post_meta['blog_meta']['buttonurl']; ?>" class="card-button"><?php echo $post_meta['blog_meta']['buttontext']; ?></a>
 								<?php } ?>
 							</div>
 						</div>

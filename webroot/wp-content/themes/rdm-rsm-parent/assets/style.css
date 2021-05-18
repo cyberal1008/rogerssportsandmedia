@@ -9071,7 +9071,9 @@ footer {
   .cat-header {
     text-align: -webkit-center; }
   .cat-page-title {
-    margin-top: -10px; } }
+    margin-top: -10px; }
+  .date-mobile {
+    line-height: 24px !important; } }
 
 .pagination {
   margin: 0 auto;
