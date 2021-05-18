@@ -1,19 +1,26 @@
-<div class="container">
+	<div class="container">
+		<?php if ( is_single() ) { ?>
+			<div class="page-header single-header">
+				<h1>SIMILAR READS</h1>      
+			</div>
+		<?php } else { ?>
 		<div class="tri">
 			<div class="tri-element"></div>
 			<div class="tri-element"></div>
 		</div>
 		<div class="page-header">
 			<h1>WHAT’S HAPPENING</h1>      
-		  </div>
+		</div>
 		<p class="page-header-desc">Get the latest news from Rogers Sports & Media. </p>
-		<?php
+			<?php
 			$category_id   = get_cat_ID( 'What\'s Happening' );
 			$category_link = get_category_link( $category_id );
-		?>
+			?>
 		   
-		<p><a href="<?php echo esc_url( $category_link ); ?>" class="card-button">Read More</a></p>      
+		<p><a href="<?php echo esc_url( $category_link ); ?>" class="card-button">Read More</a></p>
+		<?php } ?>   
 	</div>
+
 	<div class="row justify-content-between">
 		<?php
 		global $zone;
@@ -36,8 +43,7 @@
 				$featured_img_url   = get_the_post_thumbnail_url( get_the_ID(), 'wide-577' );
 				$featured_img_url_m = get_the_post_thumbnail_url( get_the_ID(), 'square-375' );
 				$categories         = get_the_category();
-				$call_to_action     = get_post_meta( get_the_ID(), 'call-to-action', true );
-				$call_to_action_url = get_post_meta( get_the_ID(), 'call-to-action_url', true );
+				$post_meta          = get_post_meta( get_the_ID(), 'blog', true );
 
 				if ( $the_query->current_post == 0 ) {
 					?>
@@ -45,7 +51,7 @@
 						<div class="row">
 							<div class="col-md order-md-1">
 								<div class="card-body">
-									<p class="cat-date"><?php echo get_the_date( get_option( 'date_format' ) ); ?>
+									<p class="cat-date date-mobile"><?php echo get_the_date( get_option( 'date_format' ) ); ?>
 										<?php
 										if ( ! empty( $categories ) ) {
 											echo ' / ' . esc_html( $categories[0]->name );
@@ -54,10 +60,10 @@
 									</p>
 									<h4 class="card-title-gb"><a href="<?php echo get_permalink( $post->id ); ?>"><?php the_title(); ?></a></h4>
 									<?php
-									if ( ! empty( $call_to_action ) ) {
+									if ( ! empty( $post_meta['blog_meta']['buttontext'] ) ) {
 										?>
-										<a href="<?php echo $call_to_action_url; ?>" class="card-button"><?php echo $call_to_action; ?></a>
-									<?php } ?>
+									<a href="<?php echo $post_meta['blog_meta']['buttonurl']; ?>" class="card-button"><?php echo $post_meta['blog_meta']['buttontext']; ?></a>
+								<?php } ?>
 								</div>
 							</div>
 							<div class="col-md order-first order-md-2">
@@ -72,7 +78,7 @@
 					<div class="col-lg-6 col-md-12 mb-4 second">
 						<div class="card mb-5 card-gb">
 							<div class="cat-date-next">
-								<p class="cat-date"><?php echo get_the_date( get_option( 'date_format' ) ); ?>
+								<p class="cat-date date-mobile"><?php echo get_the_date( get_option( 'date_format' ) ); ?>
 									<?php
 									if ( ! empty( $categories ) ) {
 										echo ' / ' . esc_html( $categories[0]->name );
@@ -88,9 +94,9 @@
 							<div class="card-body">
 								<h4 class="card-title-next"><a href="<?php echo get_permalink( $post->id ); ?>"><?php the_title(); ?></a></h4>
 								<?php
-								if ( ! empty( $call_to_action ) ) {
+								if ( ! empty( $post_meta['blog_meta']['buttontext'] ) ) {
 									?>
-									<a href="<?php echo $call_to_action_url; ?>" class="card-button"><?php echo $call_to_action; ?></a>
+									<a href="<?php echo $post_meta['blog_meta']['buttonurl']; ?>" class="card-button"><?php echo $post_meta['blog_meta']['buttontext']; ?></a>
 								<?php } ?>
 							</div>
 						</div>
