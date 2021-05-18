@@ -9350,7 +9350,8 @@ footer {
     .portfolio-main .portfolio-page .television-header.radio-header .program-grid-filter .grid-filters .filter-wrap .select {
       width: 95%; }
 
-.portfolio-main .portfolio-page .television-grid .card {
+.portfolio-main .portfolio-page .television-grid .card,
+.portfolio-main .portfolio-page .solutions-grid .card {
   -webkit-transition: -webkit-transform 0.5s ease;
   transition: -webkit-transform 0.5s ease;
   -o-transition: transform 0.5s ease;
@@ -9359,28 +9360,36 @@ footer {
   border: none;
   border-radius: unset;
   cursor: pointer; }
-  .portfolio-main .portfolio-page .television-grid .card img {
+  .portfolio-main .portfolio-page .television-grid .card img,
+  .portfolio-main .portfolio-page .solutions-grid .card img {
     height: auto; }
-  .portfolio-main .portfolio-page .television-grid .card .card-body {
+  .portfolio-main .portfolio-page .television-grid .card .card-body,
+  .portfolio-main .portfolio-page .solutions-grid .card .card-body {
     padding: 16px; }
-    .portfolio-main .portfolio-page .television-grid .card .card-body .card-title {
+    .portfolio-main .portfolio-page .television-grid .card .card-body .card-title,
+    .portfolio-main .portfolio-page .solutions-grid .card .card-body .card-title {
       font-family: "Ted Next Bold", serif;
       font-size: 16px;
       color: #333333; }
-  .portfolio-main .portfolio-page .television-grid .card:hover {
+  .portfolio-main .portfolio-page .television-grid .card:hover,
+  .portfolio-main .portfolio-page .solutions-grid .card:hover {
     -webkit-transform: scale(1.15);
         -ms-transform: scale(1.15);
             transform: scale(1.15); }
 
-.portfolio-main .portfolio-page .television-grid.radio-grid {
+.portfolio-main .portfolio-page .television-grid.radio-grid,
+.portfolio-main .portfolio-page .solutions-grid.radio-grid {
   padding-left: 8px; }
-  .portfolio-main .portfolio-page .television-grid.radio-grid .radio-card-col {
+  .portfolio-main .portfolio-page .television-grid.radio-grid .radio-card-col,
+  .portfolio-main .portfolio-page .solutions-grid.radio-grid .radio-card-col {
     padding: 0 7px;
     margin-bottom: 0.75em; }
-    .portfolio-main .portfolio-page .television-grid.radio-grid .radio-card-col .radio-card .card-body {
+    .portfolio-main .portfolio-page .television-grid.radio-grid .radio-card-col .radio-card .card-body,
+    .portfolio-main .portfolio-page .solutions-grid.radio-grid .radio-card-col .radio-card .card-body {
       margin-top: 0.75em;
       padding: 0; }
-      .portfolio-main .portfolio-page .television-grid.radio-grid .radio-card-col .radio-card .card-body .card-title {
+      .portfolio-main .portfolio-page .television-grid.radio-grid .radio-card-col .radio-card .card-body .card-title,
+      .portfolio-main .portfolio-page .solutions-grid.radio-grid .radio-card-col .radio-card .card-body .card-title {
         font-size: 1em; }
 
 .portfolio-main .portfolio-page .programming-none {
