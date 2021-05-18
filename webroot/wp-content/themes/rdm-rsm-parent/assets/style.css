@@ -9077,7 +9077,8 @@ footer {
 
 .pagination {
   margin: 0 auto;
-  padding-bottom: 100px; }
+  padding-bottom: 100px;
+  width: 100%; }
 
 .pagination a {
   color: #707070; }
@@ -9088,6 +9089,9 @@ footer {
 
 .page-numbers {
   margin: 10px; }
+
+.wrap {
+  margin: 0 auto; }
 
 .about {
   position: relative; }

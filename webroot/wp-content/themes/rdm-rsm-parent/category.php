@@ -125,6 +125,7 @@ get_header();
 			endwhile;
 			?>
 			<div class="pagination">
+				<div class="wrap">
 			<?php
 			echo paginate_links(
 				array(
@@ -144,6 +145,7 @@ get_header();
 				)
 			);
 			?>
+				</div>
 			</div>
 			<?php
 			wp_reset_postdata();

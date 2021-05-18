@@ -165,20 +165,23 @@ add_image_size( 'square-375', 375, 375, true );
 
 add_filter( 'image_size_names_choose', 'custom_image_sizes' );
 function custom_image_sizes( $sizes ) {
-	return array_merge( $sizes, array(
-		'hero'      => __( 'Hero' ),
-		'portrait'  => __( 'Portrait' ),
-		'landscape' => __( 'Landscape' ),
-		'wide'      => __( 'Wide' ),
-		'square'    => __( 'Square' ),
-	) );
+	return array_merge(
+		$sizes,
+		array(
+			'hero'      => __( 'Hero' ),
+			'portrait'  => __( 'Portrait' ),
+			'landscape' => __( 'Landscape' ),
+			'wide'      => __( 'Wide' ),
+			'square'    => __( 'Square' ),
+		)
+	);
 }
 
 function get_data_items( $post_id, $taxonomy ) {
 	$post_terms = get_the_terms( $post_id, $taxonomy );
-	$return_val = "";
-	if($post_terms){
-		$return_val = implode( "|", wp_list_pluck( $post_terms, 'slug' ) );
+	$return_val = '';
+	if ( $post_terms ) {
+		$return_val = implode( '|', wp_list_pluck( $post_terms, 'slug' ) );
 	}
 
 	return $return_val;
@@ -190,7 +193,7 @@ function get_data_items( $post_id, $taxonomy ) {
 
 function add_zoninator_post_types() {
 
-	if ( class_exists( 'RSM\Broadcast\PostType\Highlights' )  ) {
+	if ( class_exists( 'RSM\Broadcast\PostType\Highlights' ) ) {
 		$available_post_types = array(
 			\RSM\Broadcast\PostType\Highlights::SLUG,
 			\RSM\Broadcast\PostType\Solutions::SLUG,
@@ -198,7 +201,6 @@ function add_zoninator_post_types() {
 		foreach ( $available_post_types as $post_type ) {
 			add_post_type_support( $post_type, 'zoninator_zones' );
 		}
-
 	}
 }
 
@@ -218,3 +220,18 @@ function update_zoninator_search_args( $args ) {
 }
 
 add_filter( 'zoninator_search_args', 'update_zoninator_search_args' );
+
+function fix_category_pagination( $query_string = array() ) {
+	if ( isset( $query_string['category_name'] )
+			&& isset( $query_string['name'] ) && $query_string['name'] === 'page'
+			&& isset( $query_string['page'] ) ) {
+		$paged = trim( $query_string['page'], '/' );
+		if ( is_numeric( $paged ) ) {
+			unset( $query_string['name'] );
+			unset( $query_string['page'] );
+			$query_string['paged'] = (int) $paged;
+		}
+	}
+	return $query_string;
+}
+add_filter( 'request', 'fix_category_pagination' );
