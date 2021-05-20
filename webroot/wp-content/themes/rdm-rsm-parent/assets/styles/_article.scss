@@ -9,17 +9,21 @@ article {
     }
     .entry-title{
     	line-height: 80px;
+        text-transform: uppercase;
+        font-size: 84px;
+        letter-spacing: -3.36px;
     }
     .entry-header, .entry-content{
     	padding-left: 10px;
     	padding-right: 10px;
-        padding-top: 47px;
+        //padding-top: 47px;
     }
     .article-cat-date{
     	font-size: 14px;
     	line-height: 42px;
     	letter-spacing: 0.28px;
     	text-align: center;
+        margin-top: 20px;
     }
 }
 #main{
@@ -44,5 +48,9 @@ article {
     	margin-bottom: 50px;
     }
 @media (max-width: 768px) {
-    
+    article .entry-title{
+        font-size: 52px;
+        letter-spacing: -2px;
+        line-height: 56px;
+    }
 }
