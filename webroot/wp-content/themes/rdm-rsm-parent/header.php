@@ -99,10 +99,8 @@ if ( is_home() ) {
 			'video_url' => $video_uri,
 		)
 	);
-} elseif ( is_category() || ( is_page() && is_page_template( 'page-contactus.php' ) ) ) {
+} elseif ( is_category() || ( is_page() && is_page_template( 'page-contactus.php' ) ) || ( is_page() && is_page_template( 'page-legal.php' ))  ) {
 	get_template_part( 'template-parts/header', 'nomedia' );
-} elseif ( is_page() && is_page_template( 'page-legal.php' ) ) {
-	get_template_part( 'template-parts/header', 'nomedia', array( 'format' => 'legal' ) );
 } elseif ( is_single() ) {
 	get_template_part( 'template-parts/header', 'nomedia-blog' );
 }

@@ -9555,12 +9555,14 @@ article {
     font-family: "Ted Next", serif;
     font-size: 16px; }
 
+.page-template-page-legal .no-media-header {
+  height: 360px; }
+
 .legal-main {
-  padding-top: 3em; }
-  .legal-main .legal-header {
+  /* .legal-header {
     color: #fff;
-    margin-bottom: 15em; }
-    .legal-main .legal-header h1 {
+    margin-bottom: 15em;
+    h1 {
       text-transform: uppercase;
       letter-spacing: 0.15em;
       font-weight: 600;
@@ -9569,13 +9571,16 @@ article {
       margin: 1em 0;
       text-align: left;
       border-bottom: 1px solid #fff;
-      font-size: 3em; }
+      font-size: 3em;
       @media (max-width: 768px) {
-        .legal-main .legal-header h1 {
-          font-size: 2.5em; } }
+        font-size: 2.5em;
+      }
+    }
+  } */ }
   .legal-main .page {
     color: #757779;
-    counter-reset: section; }
+    counter-reset: section;
+    max-width: 100%; }
     .legal-main .page h2,
     .legal-main .page h3,
     .legal-main .page h4,

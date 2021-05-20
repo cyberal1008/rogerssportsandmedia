@@ -1,7 +1,10 @@
+.page-template-page-legal {
+  .no-media-header {
+    height: 360px;
+  }
+}
 .legal-main {
-  padding-top: 3em;
-
-  .legal-header {
+  /* .legal-header {
     color: #fff;
     margin-bottom: 15em;
     h1 {
@@ -18,10 +21,11 @@
         font-size: 2.5em;
       }
     }
-  }
+  } */
   .page {
     color: #757779;
     counter-reset: section;
+    max-width: 100%;
     h2,
     h3,
     h4,
