@@ -9173,7 +9173,9 @@ article {
   padding-bottom: 80px; }
   article .post-thumbnail img {
     max-width: 700px;
-    padding-top: 20px; }
+    padding-top: 20px;
+    width: 100%;
+    height: auto; }
   article .entry-title {
     line-height: 80px;
     text-transform: uppercase;
