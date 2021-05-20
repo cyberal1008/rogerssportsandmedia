@@ -49,7 +49,7 @@ $lang = 'en';
 	<link rel="pingback" href="<?php echo get_option( 'siteurl' ) . '/xmlrpc.php'; ?>" />
 	<link rel="shortcut icon" href="<?php echo dirname( get_bloginfo( 'stylesheet_url' ) ); ?>/assets/images/favicon.ico">
 	<!-- <script type="text/javascript" src="/wp-content/themes/node_modules/jquery/dist/jquery.min.js"></script> -->
-	<script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/assets/scripts/popper.min.js"></script> 
+	<script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/assets/scripts/popper.min.js"></script>
 
 	<link rel="stylesheet" href="https://use.typekit.net/aws7pih.css">
 	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
@@ -90,7 +90,7 @@ if ( is_home() ) {
 			'video_url' => $video_uri,
 		)
 	);
-} elseif ( is_category() ) {
+} elseif ( is_category() || ( is_page() && is_page_template( 'page-contactus.php' ) ) ) {
 	get_template_part( 'template-parts/header', 'nomedia' );
 } elseif ( is_page() && is_page_template( 'page-legal.php' )){
 	get_template_part( 'template-parts/header', 'nomedia', array('format'=>'legal') );
@@ -127,6 +127,6 @@ if ( is_home() ) {
 				</div>
 
 			</nav>
-	</header> 
+	</header>
 
 <div class="wrapper ">
