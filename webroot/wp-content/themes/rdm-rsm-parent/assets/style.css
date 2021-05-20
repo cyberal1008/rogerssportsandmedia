@@ -9579,7 +9579,8 @@ article {
   } */ }
   .legal-main .page {
     color: #757779;
-    counter-reset: section; }
+    counter-reset: section;
+    max-width: 100%; }
     .legal-main .page h2,
     .legal-main .page h3,
     .legal-main .page h4,
