@@ -8857,6 +8857,9 @@ footer {
   background-size: 14px 14px;
   z-index: 0; }
 
+.page-header {
+  position: relative; }
+
 .page-header h1 {
   font-size: 56px;
   font-family: urw-din-condensed;
@@ -9071,11 +9074,14 @@ footer {
   .cat-header {
     text-align: -webkit-center; }
   .cat-page-title {
-    margin-top: -10px; } }
+    margin-top: -10px; }
+  .date-mobile {
+    line-height: 24px !important; } }
 
 .pagination {
   margin: 0 auto;
-  padding-bottom: 100px; }
+  padding-bottom: 100px;
+  width: 100%; }
 
 .pagination a {
   color: #707070; }
@@ -9086,6 +9092,9 @@ footer {
 
 .page-numbers {
   margin: 10px; }
+
+.wrap {
+  margin: 0 auto; }
 
 .about {
   position: relative; }
@@ -9157,6 +9166,59 @@ footer {
         background-color: #FFFFFF;
         border-radius: 50%;
         pointer-events: none; }
+
+article {
+  max-width: 700px;
+  margin: 0 auto;
+  padding-bottom: 80px; }
+  article .post-thumbnail img {
+    max-width: 700px;
+    padding-top: 20px;
+    width: 100%;
+    height: auto; }
+  article .entry-title {
+    line-height: 80px;
+    text-transform: uppercase;
+    font-size: 84px;
+    letter-spacing: -3.36px; }
+  article .entry-header, article .entry-content {
+    padding-left: 10px;
+    padding-right: 10px; }
+  article .entry-content {
+    padding-top: 47px; }
+  article .article-cat-date {
+    font-size: 14px;
+    line-height: 42px;
+    letter-spacing: 0.28px;
+    text-align: center;
+    margin-top: 20px; }
+
+#main {
+  background-color: #ffffff; }
+
+.el-blog {
+  z-index: 0; }
+
+.back-cat {
+  font-size: 14px;
+  margin-top: -30px;
+  position: absolute; }
+
+.back-cat a {
+  color: #ffffff; }
+
+.back-cat a:hover {
+  color: #ffffff; }
+
+.single-header {
+  margin-top: 50px;
+  margin-bottom: 50px; }
+
+@media (max-width: 768px) {
+  article .entry-title {
+    font-size: 52px;
+    letter-spacing: -2px;
+    line-height: 56px; } }
 
 .portfolio-main .about:before, .portfolio-main .about::before {
   display: block;
@@ -9495,12 +9557,14 @@ footer {
     font-family: "Ted Next", serif;
     font-size: 16px; }
 
+.page-template-page-legal .no-media-header {
+  height: 360px; }
+
 .legal-main {
-  padding-top: 3em; }
-  .legal-main .legal-header {
+  /* .legal-header {
     color: #fff;
-    margin-bottom: 15em; }
-    .legal-main .legal-header h1 {
+    margin-bottom: 15em;
+    h1 {
       text-transform: uppercase;
       letter-spacing: 0.15em;
       font-weight: 600;
@@ -9509,13 +9573,16 @@ footer {
       margin: 1em 0;
       text-align: left;
       border-bottom: 1px solid #fff;
-      font-size: 3em; }
+      font-size: 3em;
       @media (max-width: 768px) {
-        .legal-main .legal-header h1 {
-          font-size: 2.5em; } }
+        font-size: 2.5em;
+      }
+    }
+  } */ }
   .legal-main .page {
     color: #757779;
-    counter-reset: section; }
+    counter-reset: section;
+    max-width: 100%; }
     .legal-main .page h2,
     .legal-main .page h3,
     .legal-main .page h4,
@@ -9566,6 +9633,19 @@ footer {
       .legal-main .page ol ol li::before {
         content: counter(subsection, lower-alpha) ". ";
         counter-increment: subsection; }
+
+.contactus-main iframe {
+  border: none;
+  width: 100%;
+  height: 700px; }
+
+.contactus-main .single-article-sidebar {
+  font-size: 18px;
+  line-height: 32px; }
+
+@media (max-width: 991.98px) {
+  .contactus-main iframe {
+    height: 1000px; } }
 
 body .wrapper {
   max-width: 1366px;
@@ -9654,3 +9734,32 @@ body .modal-fullscreen-xl {
     border-radius: 0; }
   body .modal-fullscreen-xl .modal-body {
     overflow-y: auto; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: urw-din-condensed; }
+
+@media screen and (max-width: 768px) {
+  h1 {
+    font-size: 52px;
+    line-height: 50px;
+    letter-spacing: -3px; }
+  h2 {
+    font-size: 32px;
+    line-height: 30px;
+    letter-spacing: -1px; }
+  h3 {
+    font-size: 27px;
+    line-height: 24px;
+    letter-spacing: -1px; }
+  h4 {
+    font-size: 24px;
+    line-height: 21px;
+    letter-spacing: -1px; }
+  h5 {
+    font-size: 21px;
+    line-height: 18px;
+    letter-spacing: -1px; }
+  h6 {
+    font-size: 18px;
+    line-height: 18px;
+    letter-spacing: -1px; } }

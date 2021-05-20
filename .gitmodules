@@ -6,3 +6,7 @@
 	path = webroot/wp-content/plugins/brightcove-video-connect
 	url = git@github.com:digitalmedia/brightcove-video-connect.git
 	branch = master
+[submodule "webroot/wp-content/plugins/rdm-dynamic-tag-management"]
+	path = webroot/wp-content/plugins/rdm-dynamic-tag-management
+	url = git@github.com:digitalmedia/platform_wordpress_plugins.git
+	branch = rdm-dynamic-tag-management
