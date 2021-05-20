@@ -40,6 +40,12 @@ class PageMeta {
 						'label'             => __( "About Image URL (577 x 433)", RSM_BROADCAST_LOCALE ),
 						'description'       => __( "", RSM_BROADCAST_LOCALE )
 					),
+					array(
+						'id'                => 'about_video_id',
+						'type'              => 'text',
+						'label'             => __( "About Section Brightcove Video ID", RSM_BROADCAST_LOCALE ),
+						'description'       => __( "", RSM_BROADCAST_LOCALE )
+					),
 				),
 			),
 			array(
@@ -56,6 +62,12 @@ class PageMeta {
 						'id'                => 'whats_happening',
 						'type'              => 'text',
 						'label'             => __( "Zone slug for whats happening", RSM_BROADCAST_LOCALE ),
+						'description'       => __( "", RSM_BROADCAST_LOCALE )
+					),
+					array(
+						'id'                => 'solutions',
+						'type'              => 'text',
+						'label'             => __( "Zone slug for Solutions", RSM_BROADCAST_LOCALE ),
 						'description'       => __( "", RSM_BROADCAST_LOCALE )
 					),
 				),

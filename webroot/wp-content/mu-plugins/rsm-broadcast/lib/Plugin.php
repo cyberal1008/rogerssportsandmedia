@@ -2,10 +2,10 @@
 
 namespace RSM\Broadcast;
 
-
 use RSM\Broadcast\PostType\Highlights;
 use RSM\Broadcast\PostType\Shows;
 use RSM\Broadcast\PostType\Radio;
+use RSM\Broadcast\PostType\Solutions;
 use RSM\Broadcast\Taxonomy\Days;
 use RSM\Broadcast\Taxonomy\Networks;
 use RSM\Broadcast\Taxonomy\ShowCategory;
@@ -117,12 +117,19 @@ class Plugin {
 	 */
 	public function enqueue_scripts() {
 
+		// loading thickbox for gutenberg editor
+
+		wp_enqueue_style( 'thickbox' );
+		wp_enqueue_script( 'media-upload' );
+		wp_enqueue_script( 'thickbox' );
+
 		\wp_enqueue_script(
 			$this->get_plugin_name(),
 			\plugin_dir_url( dirname( __FILE__ ) ) . 'dist/scripts/rsm-broadcast-admin.js',
 			array( 'jquery' ),
 			$this->get_version(),
-			false );
+			false
+		);
 	}
 
 	/**
@@ -136,6 +143,7 @@ class Plugin {
 
 		$show_post_type           = new Shows();
 		$radio_post_type          = new Radio();
+		$solution_post_type       = new Solutions();
 		$highlights_post_type     = new Highlights();
 		$networks_taxonomy        = new Networks();
 		$days_taxonomy            = new Days();
@@ -144,7 +152,8 @@ class Plugin {
 		$radio_catetory_taxonomy  = new RadioCategory();
 
 		$page_meta = new PageMeta();
-		
+		$post_meta = new PostMeta();
+
 		$video_settings = new VideoSettings();
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $this, 'enqueue_scripts' );
@@ -152,6 +161,7 @@ class Plugin {
 		$this->loader->add_action( 'admin_init', $video_settings, 'register_settings' );
 		$this->loader->add_action( 'init', $show_post_type, 'register_post_type' );
 		$this->loader->add_action( 'init', $radio_post_type, 'register' );
+		$this->loader->add_action( 'init', $solution_post_type, 'register_post_type' );
 		$this->loader->add_action( 'init', $highlights_post_type, 'register_post_type' );
 		$this->loader->add_action( 'init', $networks_taxonomy, 'register_taxonomy' );
 		$this->loader->add_action( 'init', $show_categories_taxonomy, 'register_taxonomy' );
@@ -160,7 +170,7 @@ class Plugin {
 		$this->loader->add_action( 'init', $days_taxonomy, 'register_taxonomy' );
 		$this->loader->add_action( 'add_meta_boxes', $show_post_type, 'add_meta_box' );
 		$this->loader->add_action( 'save_post', $show_post_type, 'save_meta' );
-		
+
 		// Radio Meta boxes
 		$this->loader->add_action( 'add_meta_boxes', $radio_post_type, 'add_metaboxes' );
 		$this->loader->add_action( 'save_post', $radio_post_type, 'save_metabox_data', 10, 2 );
@@ -168,6 +178,11 @@ class Plugin {
 		$this->loader->add_action( 'add_meta_boxes', $page_meta, 'add_meta_box' );
 		$this->loader->add_action( 'save_post', $page_meta, 'save_meta' );
 
+		$this->loader->add_action( 'add_meta_boxes', $post_meta, 'add_meta_box' );
+		$this->loader->add_action( 'save_post', $post_meta, 'save_meta' );
+
+		$this->loader->add_action( 'add_meta_boxes', $solution_post_type, 'add_meta_box' );
+		$this->loader->add_action( 'save_post', $solution_post_type, 'save_meta' );
 	}
 
 	/**

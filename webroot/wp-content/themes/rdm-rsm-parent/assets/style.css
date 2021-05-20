@@ -9071,11 +9071,30 @@ footer {
   .cat-header {
     text-align: -webkit-center; }
   .cat-page-title {
-    margin-top: -10px; } }
+    margin-top: -10px; }
+  .date-mobile {
+    line-height: 24px !important; } }
+
+.pagination {
+  margin: 0 auto;
+  padding-bottom: 100px;
+  width: 100%; }
+
+.pagination a {
+  color: #707070; }
+
+.current {
+  color: #000000;
+  font-family: "Ted Next Bold"; }
+
+.page-numbers {
+  margin: 10px; }
+
+.wrap {
+  margin: 0 auto; }
 
 .about {
-  position: relative;
-  margin-bottom: 150px; }
+  position: relative; }
   .about-container {
     position: relative; }
     .about-container::before {
@@ -9337,7 +9356,8 @@ footer {
     .portfolio-main .portfolio-page .television-header.radio-header .program-grid-filter .grid-filters .filter-wrap .select {
       width: 95%; }
 
-.portfolio-main .portfolio-page .television-grid .card {
+.portfolio-main .portfolio-page .television-grid .card,
+.portfolio-main .portfolio-page .solutions-grid .card {
   -webkit-transition: -webkit-transform 0.5s ease;
   transition: -webkit-transform 0.5s ease;
   -o-transition: transform 0.5s ease;
@@ -9346,28 +9366,36 @@ footer {
   border: none;
   border-radius: unset;
   cursor: pointer; }
-  .portfolio-main .portfolio-page .television-grid .card img {
+  .portfolio-main .portfolio-page .television-grid .card img,
+  .portfolio-main .portfolio-page .solutions-grid .card img {
     height: auto; }
-  .portfolio-main .portfolio-page .television-grid .card .card-body {
+  .portfolio-main .portfolio-page .television-grid .card .card-body,
+  .portfolio-main .portfolio-page .solutions-grid .card .card-body {
     padding: 16px; }
-    .portfolio-main .portfolio-page .television-grid .card .card-body .card-title {
+    .portfolio-main .portfolio-page .television-grid .card .card-body .card-title,
+    .portfolio-main .portfolio-page .solutions-grid .card .card-body .card-title {
       font-family: "Ted Next Bold", serif;
       font-size: 16px;
       color: #333333; }
-  .portfolio-main .portfolio-page .television-grid .card:hover {
+  .portfolio-main .portfolio-page .television-grid .card:hover,
+  .portfolio-main .portfolio-page .solutions-grid .card:hover {
     -webkit-transform: scale(1.15);
         -ms-transform: scale(1.15);
             transform: scale(1.15); }
 
-.portfolio-main .portfolio-page .television-grid.radio-grid {
+.portfolio-main .portfolio-page .television-grid.radio-grid,
+.portfolio-main .portfolio-page .solutions-grid.radio-grid {
   padding-left: 8px; }
-  .portfolio-main .portfolio-page .television-grid.radio-grid .radio-card-col {
+  .portfolio-main .portfolio-page .television-grid.radio-grid .radio-card-col,
+  .portfolio-main .portfolio-page .solutions-grid.radio-grid .radio-card-col {
     padding: 0 7px;
     margin-bottom: 0.75em; }
-    .portfolio-main .portfolio-page .television-grid.radio-grid .radio-card-col .radio-card .card-body {
+    .portfolio-main .portfolio-page .television-grid.radio-grid .radio-card-col .radio-card .card-body,
+    .portfolio-main .portfolio-page .solutions-grid.radio-grid .radio-card-col .radio-card .card-body {
       margin-top: 0.75em;
       padding: 0; }
-      .portfolio-main .portfolio-page .television-grid.radio-grid .radio-card-col .radio-card .card-body .card-title {
+      .portfolio-main .portfolio-page .television-grid.radio-grid .radio-card-col .radio-card .card-body .card-title,
+      .portfolio-main .portfolio-page .solutions-grid.radio-grid .radio-card-col .radio-card .card-body .card-title {
         font-size: 1em; }
 
 .portfolio-main .portfolio-page .programming-none {
@@ -9393,33 +9421,83 @@ footer {
     width: 100%;
     height: auto; }
 
-.television-modal .portfolio-modal .modal-dialog .modal-content {
+.portfolio-main .portfolio-video {
+  min-height: 75vh;
+  width: 100vw;
+  position: relative;
+  margin-left: -50vw;
+  left: 50%;
+  background-color: #333333; }
+  @media (max-width: 1199.98px) {
+    .portfolio-main .portfolio-video {
+      min-height: 50vh; } }
+
+.portfolio-main .portfolio-video-chapters {
+  color: #fff;
+  background-color: #272727; }
+  .portfolio-main .portfolio-video-chapters .chapters-wrapper {
+    width: 100%; }
+    .portfolio-main .portfolio-video-chapters .chapters-wrapper .video-title {
+      color: #DCDDDF;
+      font-size: 21px;
+      font-family: "Ted Next", serif;
+      margin-bottom: 35px;
+      margin-top: 15px; }
+    .portfolio-main .portfolio-video-chapters .chapters-wrapper .video-chapters {
+      position: relative;
+      overflow-x: scroll;
+      max-height: 60vh;
+      width: 100%; }
+      .portfolio-main .portfolio-video-chapters .chapters-wrapper .video-chapters .video-chapter {
+        position: relative;
+        cursor: pointer;
+        margin-bottom: 35px;
+        padding-left: 20px; }
+        .portfolio-main .portfolio-video-chapters .chapters-wrapper .video-chapters .video-chapter .chapter-title {
+          font-size: 16px;
+          font-family: "Ted Next", serif; }
+        .portfolio-main .portfolio-video-chapters .chapters-wrapper .video-chapters .video-chapter .chapter-time {
+          font-size: 12px;
+          font-family: "Ted Next", serif; }
+        .portfolio-main .portfolio-video-chapters .chapters-wrapper .video-chapters .video-chapter.active {
+          border-left: 3px solid; }
+          .portfolio-main .portfolio-video-chapters .chapters-wrapper .video-chapters .video-chapter.active .chapter-title {
+            font-family: "Ted Next Bold", serif; }
+
+.loading-wrapper {
+  width: 100%;
+  padding-top: 56.25%;
+  position: relative; }
+  .loading-wrapper .spinner-border {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -1rem;
+    margin-top: -1rem; }
+
+.portfolio-modal-wrapper .portfolio-modal .modal-dialog .modal-content {
   background-color: #000; }
-  .television-modal .portfolio-modal .modal-dialog .modal-content .modal-body img {
+  .portfolio-modal-wrapper .portfolio-modal .modal-dialog .modal-content .modal-body img {
     width: 100%;
     height: auto; }
-  .television-modal .portfolio-modal .modal-dialog .modal-content .modal-body .back a {
+    .portfolio-modal-wrapper .portfolio-modal .modal-dialog .modal-content .modal-body img.radio-modal-logo {
+      max-width: 150px;
+      display: block;
+      margin: 0 auto; }
+  .portfolio-modal-wrapper .portfolio-modal .modal-dialog .modal-content .modal-body .back a {
     color: #fff;
     text-decoration: underline; }
-  .television-modal .portfolio-modal .modal-dialog .modal-content .modal-body .loading-wrapper {
-    width: 100%;
-    padding-top: 56.25%;
-    position: relative; }
-    .television-modal .portfolio-modal .modal-dialog .modal-content .modal-body .loading-wrapper .spinner-border {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      margin-left: -1rem;
-      margin-top: -1rem; }
-  .television-modal .portfolio-modal .modal-dialog .modal-content .modal-body .grid-item-content {
+  .portfolio-modal-wrapper .portfolio-modal .modal-dialog .modal-content .modal-body .grid-item-content {
     color: #fff; }
-  .television-modal .portfolio-modal .modal-dialog .modal-content .modal-body .grid-item-title {
+  .portfolio-modal-wrapper .portfolio-modal .modal-dialog .modal-content .modal-body .grid-item-title {
     font-family: "Ted Next Bold", serif;
     font-size: 54px; }
-  .television-modal .portfolio-modal .modal-dialog .modal-content .modal-body .grid-item-subtitle, .television-modal .portfolio-modal .modal-dialog .modal-content .modal-body .grid-item-subsubtitle {
+  .portfolio-modal-wrapper .portfolio-modal .modal-dialog .modal-content .modal-body .grid-item-subtitle, .portfolio-modal-wrapper .portfolio-modal .modal-dialog .modal-content .modal-body .grid-item-subsubtitle {
     font-family: "Ted Next", serif;
     font-size: 18px; }
-  .television-modal .portfolio-modal .modal-dialog .modal-content .modal-body .grid-item-description {
+    .portfolio-modal-wrapper .portfolio-modal .modal-dialog .modal-content .modal-body .grid-item-subtitle.radio-subtitle, .portfolio-modal-wrapper .portfolio-modal .modal-dialog .modal-content .modal-body .grid-item-subsubtitle.radio-subtitle {
+      text-transform: capitalize; }
+  .portfolio-modal-wrapper .portfolio-modal .modal-dialog .modal-content .modal-body .grid-item-description {
     font-family: "Ted Next", serif;
     font-size: 16px; }
 

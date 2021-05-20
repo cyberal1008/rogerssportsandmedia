@@ -29,7 +29,6 @@ $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, tr
         <div class="portfolio-anchors">
 			<?php
 			if ( stripos( get_the_title(), 'television' ) !== false ) {
-				$zone = 'happening-tv';
 				get_template_part(
 					'template-parts/portfolio',
 					'anchors',
@@ -41,7 +40,6 @@ $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, tr
 					)
 				);
 			} elseif ( stripos( get_the_title(), 'radio' ) !== false ) {
-				$zone = 'happening-radio';
 				get_template_part(
 					'template-parts/portfolio',
 					'anchors',
@@ -75,7 +73,19 @@ $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, tr
 				'description' => get_the_content(),
 				'image_url'   => $page_meta['broadcast']['about_image_uri']
 			) );
+
+		if ( $page_meta['broadcast'] && $page_meta['broadcast']['about_video_id'] ) {
+			get_template_part(
+				'template-parts/content',
+				'video',
+				array(
+					'video_id' => $page_meta['broadcast']['about_video_id'],
+				) );
+
+		}
+
 		?>
+        <div class="w-100 p-5"></div>
         <div class="container portfolio-page">
 			<?php
 			if ( stripos( get_the_title(), 'television' ) !== false ) {
@@ -86,8 +96,7 @@ $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, tr
 						'page_meta' => $page_meta,
 					)
 				);
-			}
-			if ( stripos( get_the_title(), 'radio' ) !== false ) {
+			} else if ( stripos( get_the_title(), 'radio' ) !== false ) {
 				get_template_part(
 					'template-parts/portfolio',
 					'radio',
@@ -95,47 +104,65 @@ $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, tr
 						'page_id' => get_the_ID(),
 					)
 				);
+			} else {
+				if ( ! empty( $page_meta['zones'] ) && ! empty( $page_meta['zones']['solutions'] ) ) {
+					get_template_part(
+						'template-parts/portfolio',
+						'solutions',
+						array(
+							'zone'      => $page_meta['zones']['solutions'],
+							'page_meta' => $page_meta,
+						)
+					);
+				}
 			}
 			?>
 
         </div>
 		<?php
 		if ( function_exists( 'z_get_posts_in_zone' )
-		     && ! empty( $page_meta['zones'] )
-		     && ! empty( $page_meta['zones']['highlights'] ) ) {
-			$highlights = z_get_posts_in_zone( $page_meta['zones']['highlights'] );
-			if ( count( $highlights ) > 2 ) {
-				?>
-                <div class="container portfolio-highlights">
-                    <div class="row portfolio-highlights-header pt-5">
-                        <div class="col-12">
-                            <h2 id="portfolio-hightlights-anchor">Highlights</h2>
-                        </div>
-                    </div>
-					<?php
-					foreach ( $highlights as $key => $highlight ) {
-						?>
-                        <div class="row portfolio-highlights-item justify-content-md-between flex-r py-5 mb-5<?php echo ( ( $key + 1 ) % 2 !== 0 ) ? ' flex-md-row-reverse' : '' ?>">
-                            <div class="col-8 col-md-6 col-lg-4 mb-3 mb-md-auto mx-auto mx-md-0">
-								<?php echo wp_get_attachment_image( get_post_thumbnail_id( $highlight->ID ), 'portrait' ); ?>
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-6 d-flex align-items-md-center">
-                                <div>
-                                    <h3><?php echo esc_html( $highlight->post_title ); ?></h3>
-                                    <p><?php echo esc_html( $highlight->post_content ); ?></p>
-                                </div>
+		     && ! empty( $page_meta['zones'] ) ) {
+
+			if ( ! empty( $page_meta['zones']['highlights'] ) ) {
+				$highlights = z_get_posts_in_zone( $page_meta['zones']['highlights'] );
+				if ( count( $highlights ) > 2 ) {
+					?>
+                    <div class="container portfolio-highlights">
+                        <div class="row portfolio-highlights-header pt-5">
+                            <div class="col-12">
+                                <h2 id="portfolio-hightlights-anchor">Highlights</h2>
                             </div>
                         </div>
 						<?php
-					}
-					?>
-                </div>
-				<?php
+						foreach ( $highlights as $key => $highlight ) {
+							?>
+                            <div class="row portfolio-highlights-item justify-content-md-between flex-r py-5 mb-5<?php echo ( ( $key + 1 ) % 2 !== 0 ) ? ' flex-md-row-reverse' : '' ?>">
+                                <div class="col-8 col-md-6 col-lg-4 mb-3 mb-md-auto mx-auto mx-md-0">
+									<?php echo wp_get_attachment_image( get_post_thumbnail_id( $highlight->ID ), 'portrait' ); ?>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6 d-flex align-items-md-center">
+                                    <div>
+                                        <h3><?php echo esc_html( $highlight->post_title ); ?></h3>
+                                        <p><?php echo esc_html( $highlight->post_content ); ?></p>
+                                    </div>
+                                </div>
+                            </div>
+							<?php
+						}
+						?>
+                    </div>
+					<?php
+				}
+
+
+			}
+
+			if ( ! empty( $page_meta['zones']['whats_happening'] ) ) {
+				$zone = $page_meta['zones']['whats_happening'];
+				$zone = ( function_exists( 'z_get_zone' ) && z_get_zone( $zone ) ) ? $zone : '';
+				get_template_part( 'template-parts/content', 'happening', $zone );
 			}
 		}
-
-		$zone = ( function_exists( 'z_get_zone' ) && z_get_zone( $zone ) ) ? $zone : '';
-		get_template_part( 'template-parts/content', 'happening', $zone );
 		?>
     </div>
 <?php

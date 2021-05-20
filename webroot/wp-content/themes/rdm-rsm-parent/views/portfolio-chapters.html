@@ -1,0 +1,13 @@
+<script type="text/html" id="tmplTvChapters">
+    <div class="chapters-wrapper px-2">
+        <div class="video-title">{{title}}</div>
+            <div class="video-chapters">
+                {{#chapters}}
+                <div class="video-chapter" data-start="{{startTime}}">
+                    <div class="chapter-title">{{title}}</div>
+                    <div class="chapter-time">{{time}}</div>
+                </div>
+                {{/chapters}}
+            </div>
+    </div>
+</script>

@@ -94,6 +94,14 @@
   }
 }
 
+@mixin dark-grey-mode-bg {
+  &:before,
+  &::before {
+    @include overload-bg;
+    background: $dark-grey-mode-bg-color;
+  }
+}
+
 @mixin heading-style {
   font-family: urw-din-condensed, serif;
   text-transform: uppercase;
