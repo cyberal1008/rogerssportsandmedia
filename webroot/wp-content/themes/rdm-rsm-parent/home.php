@@ -21,7 +21,7 @@
 		'about',
 		array(
 			'title'       => 'WHO WE ARE',
-			'description' => 'We&quot;re reimaging the future of sports and media by innovating at the intersection of data, technology,  sports, and entertainment.',
+			'description' => 'We&rsquo;re reimaging the future of sports and media by innovating at the intersection of data, technology, and audience engagement.',
 			'more'        => array(
 				'url'  => get_home_url( null, './who-we-are' ), // @todo replace with blog id when available
 				'text' => 'Discover RSM',
@@ -32,7 +32,6 @@
 	?>
 
 	<?php
-
 		$zone = get_theme_mod( 'post_zone' );// 'happening-home';
 		$zone = ( function_exists( 'z_get_zone' ) && z_get_zone( $zone ) ) ? $zone : '';
 		get_template_part( 'template-parts/content', 'happening', $zone );
