@@ -49,21 +49,21 @@ $lang = 'en';
 	<link rel="pingback" href="<?php echo get_option( 'siteurl' ) . '/xmlrpc.php'; ?>" />
 	<link rel="shortcut icon" href="<?php echo dirname( get_bloginfo( 'stylesheet_url' ) ); ?>/assets/images/favicon.ico">
 	<!-- <script type="text/javascript" src="/wp-content/themes/node_modules/jquery/dist/jquery.min.js"></script> -->
-	<script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/assets/scripts/popper.min.js"></script> 
+	<script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/assets/scripts/popper.min.js"></script>
 
 	<link rel="stylesheet" href="https://use.typekit.net/aws7pih.css">
 	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 
 	<?php wp_head(); ?>
-    
-	<?php include_once('views/portfolio-chapters.html'); ?>
-	<?php include_once('views/solutions-modal.html'); ?>
+	
+	<?php require_once 'views/portfolio-chapters.html'; ?>
+	<?php require_once 'views/solutions-modal.html'; ?>
 
-	<?php 
+	<?php
 	if ( is_page() && stripos( get_the_title(), 'television' ) !== false ) {
-		include_once('views/television-modal.html'); 
-	}elseif(is_page() && get_post_field( 'post_name' ) === 'radio-podcasts'){
-		include_once('views/radio-modal.html'); 
+		include_once 'views/television-modal.html';
+	} elseif ( is_page() && get_post_field( 'post_name' ) === 'radio-podcasts' ) {
+		include_once 'views/radio-modal.html';
 	}
 	?>
 </head>
@@ -79,7 +79,7 @@ if ( is_home() ) {
 			'video_url' => get_theme_mod( 'desktop_vid_link_video_url' ),
 		)
 	);
-} elseif ( is_page() && is_page_template( 'page_portfolio.php' )) {
+} elseif ( is_page() && is_page_template( 'page_portfolio.php' ) ) {
 	$page_meta = get_post_meta( get_the_ID(), RSM\Broadcast\PageMeta::METADATA_SLUG, true );
 	$image_uri = '';
 	$video_uri = '';
@@ -99,10 +99,10 @@ if ( is_home() ) {
 			'video_url' => $video_uri,
 		)
 	);
-} elseif ( is_category() ) {
+} elseif ( is_category() || ( is_page() && is_page_template( 'page-contactus.php' ) ) || ( is_page() && is_page_template( 'page-legal.php' ))  ) {
 	get_template_part( 'template-parts/header', 'nomedia' );
-} elseif ( is_page() && is_page_template( 'page-legal.php' )){
-	get_template_part( 'template-parts/header', 'nomedia', array('format'=>'legal') );
+} elseif ( is_single() ) {
+	get_template_part( 'template-parts/header', 'nomedia-blog' );
 }
 ?>
 <header class="nav-down header-container ">
@@ -137,5 +137,8 @@ if ( is_home() ) {
 
 			</nav>
 	</header> 
-
+<?php if ( is_single() ) { ?>
+	<div class="wrapper pt-5">
+<?php } else { ?>
 <div class="wrapper ">
+<?php } ?>
