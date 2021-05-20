@@ -99,11 +99,9 @@ if ( is_home() ) {
 			'video_url' => $video_uri,
 		)
 	);
-} elseif ( is_category() ) {
+} elseif ( is_category() || ( is_page() && is_page_template( 'page-legal.php' )) ) {
 	get_template_part( 'template-parts/header', 'nomedia' );
-} elseif ( is_page() && is_page_template( 'page-legal.php' )){
-	get_template_part( 'template-parts/header', 'nomedia', array('format'=>'legal') );
-}
+} 
 ?>
 <header class="nav-down header-container ">
 			<nav class="navbar navbar-expand-md navbar-light fixed-top nav-bg" role="navigation">
