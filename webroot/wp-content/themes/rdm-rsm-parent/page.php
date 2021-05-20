@@ -19,10 +19,7 @@ get_header(); ?>
 
 				endwhile;
 			?>
-			</div> 
-			<div class="col-sm-12 col-md-12 col-lg-4 single-article-sidebar">
-				<?php get_sidebar(); ?>
-			</div> 
+			</div>
 		</div>
 	</div>
 

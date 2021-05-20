@@ -130,7 +130,62 @@ class Plugin {
 			$this->get_version(),
 			false
 		);
+
 	}
+
+	public function enqueue_block_scripts() {
+
+		$asset_file = include( plugin_dir_path( dirname( __FILE__ ) ) . 'build/index.asset.php' );
+
+		wp_register_script(
+			'rsm-product-block',
+			plugin_dir_url( dirname( __FILE__ ) ) . 'build/index.js',
+			$asset_file['dependencies'],
+			$asset_file['version']
+		);
+
+		wp_register_style(
+			'rsm-product-blocks-editor',
+			plugin_dir_url( dirname( __FILE__ ) ) . 'css/editor.css',
+			array( 'wp-edit-blocks' ),
+			filemtime( plugin_dir_path( dirname( __FILE__ ) ) . 'css/editor.css' )
+		);
+
+		wp_register_style(
+			'rsm-product-blocks-style',
+			plugin_dir_url( dirname( __FILE__ ) ) . 'css/style.css',
+			array(),
+			filemtime( plugin_dir_path( dirname( __FILE__ ) ) . 'css/style.css' )
+		);
+
+		wp_register_style(
+			'rsm-bootstrap4-editor-style',
+			plugin_dir_url( dirname( __FILE__ ) ) . 'css/bootstrap-grid.min.css',
+			array(),
+			filemtime( plugin_dir_path( dirname( __FILE__ ) ) . 'css/bootstrap-grid.min.css' )
+		);
+
+		register_block_type( 'rsm/products-block', array(
+			'api_version'   => 2,
+			'style'         => 'rsm-product-blocks-style',
+			'editor_style'  => 'rsm-product-blocks-editor',
+			'editor_script' => 'rsm-product-block',
+		) );
+
+		register_block_style(
+			'rsm/products-block', array(
+			'name'         => 'bootstrap-grid',
+			'label'        => 'Bootstrap Grid',
+			'style_handle' => 'rsm-bootstrap4-editor-style',
+			)
+		);
+		
+	}
+
+//	public function rsm_add_editor_styles() {
+//		
+//	}
+
 
 	/**
 	 * Register all of the hooks related to the dashboard functionality
@@ -156,7 +211,9 @@ class Plugin {
 
 		$video_settings = new VideoSettings();
 
+		// $this->loader->add_action( 'after_theme_setup', $this, 'rsm_add_editor_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $this, 'enqueue_scripts' );
+		$this->loader->add_action( 'init', $this, 'enqueue_block_scripts' );
 		$this->loader->add_action( 'admin_menu', $video_settings, 'add_admin_menu' );
 		$this->loader->add_action( 'admin_init', $video_settings, 'register_settings' );
 		$this->loader->add_action( 'init', $show_post_type, 'register_post_type' );
@@ -183,6 +240,8 @@ class Plugin {
 
 		$this->loader->add_action( 'add_meta_boxes', $solution_post_type, 'add_meta_box' );
 		$this->loader->add_action( 'save_post', $solution_post_type, 'save_meta' );
+
+
 	}
 
 	/**
@@ -228,7 +287,7 @@ class Plugin {
 	 */
 	public function get_version( $major = false ) {
 		if ( $major ) {
-			return strtok( $this->version, '.' );
+			return strtok( $this->version, ' . ' );
 		}
 
 		return $this->version;
