@@ -9182,6 +9182,8 @@ article {
   article .entry-header, article .entry-content {
     padding-left: 10px;
     padding-right: 10px; }
+  article .entry-content {
+    padding-top: 47px; }
   article .article-cat-date {
     font-size: 14px;
     line-height: 42px;
