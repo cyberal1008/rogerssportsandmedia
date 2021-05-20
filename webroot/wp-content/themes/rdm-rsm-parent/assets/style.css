@@ -8857,6 +8857,9 @@ footer {
   background-size: 14px 14px;
   z-index: 0; }
 
+.page-header {
+  position: relative; }
+
 .page-header h1 {
   font-size: 56px;
   font-family: urw-din-condensed;
