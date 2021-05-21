@@ -2,7 +2,10 @@ import {registerBlockType} from '@wordpress/blocks';
 import {useBlockProps, RichText, URLInputButton, MediaUpload, MediaUploadCheck} from '@wordpress/block-editor';
 import {Button} from '@wordpress/components';
 
-const block_classes = {className: 'row justify-content-between'};
+const block_classes = {className: 'row justify-content-between flex-column-reverse flex-md-row'};
+const img_col_classes = "col-8 mx-auto mb-3 col-md-6 mb-md-auto mx-md-0 col-lg-4";
+const text_col_classes = "col-12 col-md-6 col-lg-6";
+
 registerBlockType('rsm/products-block', {
     apiVersion: 2,
     title: 'Products',
@@ -73,7 +76,7 @@ registerBlockType('rsm/products-block', {
         const blockProps = useBlockProps(block_classes);
         return (
             <div {...blockProps}>
-                <div className="col-6">
+                <div className={text_col_classes}>
                     <RichText tagName="h2"
                               placeholder='Enter Title' onChange={title => setAttributes({title})}
                               className="product-title"
@@ -85,14 +88,14 @@ registerBlockType('rsm/products-block', {
                         <URLInputButton
                             url={url}
                             onChange={url => setAttributes({url})}
-                            className="product-url-link"
+                            className="product-url-link card-button"
                         />
                         <RichText placeholder='Enter Label' tagName="span"
                                   onChange={urltext => setAttributes({urltext})}
                                   className="product-url-text" value={urltext}/>
                     </div>
                 </div>
-                <div className="col-4">
+                <div className={img_col_classes}>
                     <MediaUploadCheck>
                         <MediaUpload
                             onSelect={media => {
@@ -143,18 +146,18 @@ registerBlockType('rsm/products-block', {
         const blockProps = useBlockProps.save(block_classes);
         return (
             <div {...blockProps}>
-                <div className="col-6">
-                    <RichText.Content placeholder='Enter Title' tagName="h2" className="product-title"
+                <div className={text_col_classes}>
+                    <RichText.Content tagName="h2" className="product-title"
                                       value={attributes.title}/>
-                    <RichText.Content placeholder='Enter Description' tagName="p" className="product-description"
+                    <RichText.Content tagName="p" className="product-description"
                                       value={attributes.content}/>
                     <div className="product-url">
-                        <a href={attributes.url} className="product-url-link">
+                        <a href={attributes.url} className="product-url-link card-button">
                             <RichText.Content tagName="span" className="product-url-text" value={attributes.urltext}/>
                         </a>
                     </div>
                 </div>
-                <div className="col-4">
+                <div className={img_col_classes}>
                     <img className="product-image" data-id={attributes.mediaid} src={attributes.imagesrc}
                          srcSet={attributes.imagesrcset}
                          sizes={attributes.imagesizes}

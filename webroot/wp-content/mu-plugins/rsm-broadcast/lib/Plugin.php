@@ -151,12 +151,12 @@ class Plugin {
 			filemtime( plugin_dir_path( dirname( __FILE__ ) ) . 'css/editor.css' )
 		);
 
-		wp_register_style(
-			'rsm-product-blocks-style',
-			plugin_dir_url( dirname( __FILE__ ) ) . 'css/style.css',
-			array(),
-			filemtime( plugin_dir_path( dirname( __FILE__ ) ) . 'css/style.css' )
-		);
+//		wp_register_style(
+//			'rsm-product-blocks-style',
+//			plugin_dir_url( dirname( __FILE__ ) ) . 'css/style.css',
+//			array(),
+//			filemtime( plugin_dir_path( dirname( __FILE__ ) ) . 'css/style.css' )
+//		);
 
 		wp_register_style(
 			'rsm-bootstrap4-editor-style',
@@ -167,7 +167,7 @@ class Plugin {
 
 		register_block_type( 'rsm/products-block', array(
 			'api_version'   => 2,
-			'style'         => 'rsm-product-blocks-style',
+//			'style'         => 'rsm-product-blocks-style',
 			'editor_style'  => 'rsm-product-blocks-editor',
 			'editor_script' => 'rsm-product-block',
 		) );
@@ -213,7 +213,7 @@ class Plugin {
 
 		// $this->loader->add_action( 'after_theme_setup', $this, 'rsm_add_editor_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $this, 'enqueue_scripts' );
-		$this->loader->add_action( 'init', $this, 'enqueue_block_scripts' );
+		$this->loader->add_action( 'admin_init', $this, 'enqueue_block_scripts' );
 		$this->loader->add_action( 'admin_menu', $video_settings, 'add_admin_menu' );
 		$this->loader->add_action( 'admin_init', $video_settings, 'register_settings' );
 		$this->loader->add_action( 'init', $show_post_type, 'register_post_type' );
