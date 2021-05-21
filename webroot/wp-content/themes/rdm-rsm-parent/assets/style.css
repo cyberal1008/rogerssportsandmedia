@@ -9597,9 +9597,10 @@ article {
       margin-top: 15px; }
     .portfolio-main .portfolio-video-chapters .chapters-wrapper .video-chapters {
       position: relative;
-      overflow-x: scroll;
       max-height: 60vh;
-      width: 100%; }
+      width: 100%;
+      overflow-y: scroll;
+      overflow-x: hidden; }
       .portfolio-main .portfolio-video-chapters .chapters-wrapper .video-chapters .video-chapter {
         position: relative;
         cursor: pointer;
