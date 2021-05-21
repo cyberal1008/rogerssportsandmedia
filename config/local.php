@@ -24,4 +24,6 @@ define( 'WP_REDIS_PORT', '6379' );
 define( 'WP_REDIS_DATABASE', '2' );
 define( 'WP_CACHE_KEY_SALT', 'RSM' );
 
+define('SCRIPT_DEBUG', true);
+
 $table_prefix = 'rsm_wp_';

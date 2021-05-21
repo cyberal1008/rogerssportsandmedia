@@ -9,11 +9,15 @@
 
 get_header();
 global $post;
+get_template_part(
+	'template-parts/content',
+	'header',
+	array(
+		'title' => 'Legal',
+		'subtitle' => get_the_title(),
+	) );
+
 ?>
-<div class="cat-header">
-	<p class="cat-page-title text-center">Legal</p>
-	<div class="cat-page-desc text-center"><?php echo esc_html( get_the_title() ); ?></div>
-</div>
 <div class="container legal-main">
 <!--     <div class="legal-header">
         <h1><?php echo esc_html( get_the_title() ); ?></h1>
