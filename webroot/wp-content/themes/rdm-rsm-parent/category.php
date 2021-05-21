@@ -77,10 +77,9 @@ get_template_part(
 
 		<div class="row">
 			<?php
-			$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
-			$term  = get_queried_object();
-			$term->slug;
-			$the_query = new WP_Query(
+			$paged          = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
+			$current_cat_id = get_query_var( 'cat' );
+			$the_query      = new WP_Query(
 				array(
 					'post__not_in'   => get_option( 'sticky_posts' ),
 					'post_type'      => 'post',
@@ -89,7 +88,7 @@ get_template_part(
 					'post_status'    => 'publish',
 					'posts_per_page' => 10,
 					'paged'          => $paged,
-					'cat'            => $term->slug,
+					'category__in'   => $current_cat_id,
 				)
 			);
 			?>
