@@ -1,0 +1,75 @@
+.rsm-product-block {
+  position: relative;
+
+  .wp-block-rsm-products-block {
+    @include ted-next-font;
+    padding: 4em 0;
+
+    &.row {
+      align-items: center;
+    }
+
+    .product-title {
+      text-transform: uppercase;
+      padding-bottom: 16px;
+      font-size: 32px;
+      line-height: 30px;
+      @include media-breakpoint-up(sm) {
+        font-size: 52px;
+        line-height: 50px;
+      }
+      
+    }
+
+    .product-url {
+      a {
+        span {
+          text-transform: uppercase;
+        }
+      }
+    }
+
+    .product-image {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  &:nth-child(even) {
+    @include grey-mode-bg;
+  }
+
+  &:last-child {
+    margin-bottom: 10em;
+  }
+
+  @include circle-container-quarter(#00A955, #FFFFFF);
+  @include circle-container-half(#00A955, #FFFFFF);
+
+  .circle-container-quarter, .circle-container-half {
+
+    &.blue {
+      .circle {
+        .quarter {
+          background-color: #115cb9;
+        }
+      }
+    }
+
+    &.red {
+      .circle {
+        .quarter {
+          background-color: #da291b;
+        }
+      }
+    }
+
+    &.yellow {
+      .circle {
+        .quarter {
+          background-color: #FFBF3F;
+        }
+      }
+    }
+  }
+}

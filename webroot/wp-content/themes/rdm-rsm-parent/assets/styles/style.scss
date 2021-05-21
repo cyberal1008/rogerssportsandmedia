@@ -5,7 +5,7 @@
 @import "mixins", "fonts", "header", "footer", "home", "happening", "category", "about", "article";
 
 // Pages
-@import "pages/portfolio", "pages/legal", "pages/contactus";
+@import "pages/rsm-products-block", "pages/portfolio", "pages/legal", "pages/contactus";
 
 body {
   .wrapper {
@@ -37,40 +37,42 @@ body {
     }
   }
 }
+
 h1, h2, h3, h4, h5, h6 {
-  font-family: urw-din-condensed; 
+  font-family: urw-din-condensed, serif;
 }
-@media screen and (max-width: 768px) {
-  h1{
+
+@include media-breakpoint-down(sm) {
+  h1 {
     font-size: 52px;
     line-height: 50px;
     letter-spacing: -3px;
   }
-  h2{
+  h2 {
     font-size: 32px;
     line-height: 30px;
     letter-spacing: -1px;
   }
 
-  h3{
+  h3 {
     font-size: 27px;
     line-height: 24px;
     letter-spacing: -1px;
   }
 
-  h4{
+  h4 {
     font-size: 24px;
     line-height: 21px;
     letter-spacing: -1px;
   }
 
-  h5{
+  h5 {
     font-size: 21px;
     line-height: 18px;
     letter-spacing: -1px;
   }
 
-  h6{
+  h6 {
     font-size: 18px;
     line-height: 18px;
     letter-spacing: -1px;
