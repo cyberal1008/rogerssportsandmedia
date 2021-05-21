@@ -235,3 +235,14 @@ function fix_category_pagination( $query_string = array() ) {
 	return $query_string;
 }
 add_filter( 'request', 'fix_category_pagination' );
+
+function image_metadata_js( $response, $attachment ) {
+	foreach ( $response['sizes'] as $size => $datas ) {
+		$response['sizes'][ $size ]['srcset'] = wp_get_attachment_image_srcset( $attachment->ID, $size );
+		$response['sizes'][ $size ]['sizes']  = wp_get_attachment_image_sizes( $attachment->ID, $size );
+	}
+
+	return $response;
+}
+
+add_filter( 'wp_prepare_attachment_for_js', 'image_metadata_js', 10, 2 );

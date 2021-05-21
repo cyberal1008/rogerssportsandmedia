@@ -9139,17 +9139,17 @@ footer {
       position: absolute; }
     .about-container-card-img {
       width: 100%; }
-  .about .circle-container {
+  .about .circle-container-quarter {
     position: relative;
     height: 150px; }
-    .about .circle-container .circle {
+    .about .circle-container-quarter .circle {
       position: absolute;
       top: 0;
       left: 50%;
       width: 300px;
       height: 300px;
       margin-left: calc(-50vw - 150px); }
-      .about .circle-container .circle .quarter {
+      .about .circle-container-quarter .circle .quarter {
         position: absolute;
         width: 50%;
         height: 50%;
@@ -9157,7 +9157,7 @@ footer {
         top: 0;
         right: 0;
         border-radius: 0 100% 0 0; }
-      .about .circle-container .circle .cut {
+      .about .circle-container-quarter .circle .cut {
         position: absolute;
         top: 10%;
         left: 10%;
@@ -9220,6 +9220,102 @@ article {
     letter-spacing: -2px;
     line-height: 56px; } }
 
+.rsm-product-block {
+  position: relative; }
+  .rsm-product-block .wp-block-rsm-products-block {
+    font-family: "Ted Next", serif;
+    padding: 4em 0; }
+    .rsm-product-block .wp-block-rsm-products-block.row {
+      -webkit-box-align: center;
+          -ms-flex-align: center;
+              align-items: center; }
+    .rsm-product-block .wp-block-rsm-products-block .product-title {
+      text-transform: uppercase;
+      padding-bottom: 16px;
+      font-size: 32px;
+      line-height: 30px; }
+      @media (min-width: 576px) {
+        .rsm-product-block .wp-block-rsm-products-block .product-title {
+          font-size: 52px;
+          line-height: 50px; } }
+    .rsm-product-block .wp-block-rsm-products-block .product-url a span {
+      text-transform: uppercase; }
+    .rsm-product-block .wp-block-rsm-products-block .product-image {
+      width: 100%;
+      height: auto; }
+  .rsm-product-block:nth-child(even):before, .rsm-product-block:nth-child(even)::before {
+    display: block;
+    content: "";
+    width: 100vw;
+    height: 100%;
+    margin-left: -50vw;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    background: #F5F5F5; }
+  .rsm-product-block:last-child {
+    margin-bottom: 10em; }
+  .rsm-product-block .circle-container-quarter {
+    position: relative;
+    height: 150px; }
+    .rsm-product-block .circle-container-quarter .circle {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 300px;
+      height: 300px;
+      margin-left: calc(-50vw - 150px); }
+      .rsm-product-block .circle-container-quarter .circle .quarter {
+        position: absolute;
+        width: 50%;
+        height: 50%;
+        background-color: #00A955;
+        top: 0;
+        right: 0;
+        border-radius: 0 100% 0 0; }
+      .rsm-product-block .circle-container-quarter .circle .cut {
+        position: absolute;
+        top: 10%;
+        left: 10%;
+        width: 80%;
+        height: 80%;
+        background-color: #FFFFFF;
+        border-radius: 50%;
+        pointer-events: none; }
+  .rsm-product-block .circle-container-half {
+    position: relative;
+    height: 300px; }
+    .rsm-product-block .circle-container-half .circle {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 300px;
+      height: 300px;
+      margin-left: calc(-50vw - 150px); }
+      .rsm-product-block .circle-container-half .circle .half {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: #00A955;
+        top: 0;
+        right: 0;
+        border-radius: 0 100% 100% 0; }
+      .rsm-product-block .circle-container-half .circle .cut {
+        position: absolute;
+        top: 10%;
+        left: 10%;
+        width: 80%;
+        height: 80%;
+        background-color: #FFFFFF;
+        border-radius: 50%;
+        pointer-events: none; }
+  .rsm-product-block .circle-container-quarter.blue .circle .quarter, .rsm-product-block .circle-container-half.blue .circle .quarter {
+    background-color: #115cb9; }
+  .rsm-product-block .circle-container-quarter.red .circle .quarter, .rsm-product-block .circle-container-half.red .circle .quarter {
+    background-color: #da291b; }
+  .rsm-product-block .circle-container-quarter.yellow .circle .quarter, .rsm-product-block .circle-container-half.yellow .circle .quarter {
+    background-color: #FFBF3F; }
+
 .portfolio-main .about:before, .portfolio-main .about::before {
   display: block;
   content: "";
@@ -9231,7 +9327,7 @@ article {
   left: 50%;
   background: #F5F5F5; }
 
-.portfolio-main .about .circle-container .circle .cut {
+.portfolio-main .about .circle-container-quarter .circle .cut {
   background-color: unset;
   background: -webkit-gradient(linear, left top, left bottom, color-stop(50%, #F5F5F5), color-stop(50%, #ffffff));
   background: -o-linear-gradient(top, #F5F5F5 50%, #ffffff 50%);
@@ -9736,9 +9832,9 @@ body .modal-fullscreen-xl {
     overflow-y: auto; }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: urw-din-condensed; }
+  font-family: urw-din-condensed, serif; }
 
-@media screen and (max-width: 768px) {
+@media (max-width: 767.98px) {
   h1 {
     font-size: 52px;
     line-height: 50px;
