@@ -13,7 +13,7 @@ get_template_part(
     'template-parts/content',
     'header',
     array(
-        'title' => single_cat_title(),
+        'title' => single_cat_title('',  false),
         'subtitle' => category_description(),
     ) );
 
