@@ -6,7 +6,8 @@
   "about", "products", "article";
 
 // Pages
-@import "pages/portfolio", "pages/legal", "pages/contactus";
+@import "pages/rsm-products-block", "pages/portfolio", "pages/legal",
+  "pages/contactus";
 
 body {
   .wrapper {
@@ -38,15 +39,17 @@ body {
     }
   }
 }
+
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-  font-family: urw-din-condensed;
+  font-family: urw-din-condensed, serif;
 }
-@media screen and (max-width: 768px) {
+
+@include media-breakpoint-down(sm) {
   h1 {
     font-size: 52px;
     line-height: 50px;

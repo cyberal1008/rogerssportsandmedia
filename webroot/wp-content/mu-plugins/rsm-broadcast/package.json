@@ -1,0 +1,28 @@
+{
+  "name": "rsm-broadcast",
+  "version": "1.0.0",
+  "description": "Custom Post type and Post meta plugin",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "wp-scripts start",
+    "build": "wp-scripts build"
+  },
+  "author": "vineet.phillips@rci.rogers.com",
+  "license": "ISC",
+  "devDependencies": {
+    "@wordpress/scripts": "16.0.0"
+  },
+  "dependencies": {
+    "@wordpress/block-editor": "^6.0.0",
+    "@wordpress/blocks": "^9.0.0",
+    "@wordpress/components": "^14.0.0",
+    "@wordpress/data": "^5.1.0",
+    "@wordpress/edit-post": "^4.0.0",
+    "@wordpress/i18n": "^4.0.0",
+    "@wordpress/plugins": "^3.0.0"
+  }
+}

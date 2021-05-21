@@ -136,8 +136,8 @@ $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, tr
 						<?php
 						foreach ( $highlights as $key => $highlight ) {
 							?>
-                            <div class="row portfolio-highlights-item justify-content-md-between flex-r py-5 mb-5<?php echo ( ( $key + 1 ) % 2 !== 0 ) ? ' flex-md-row-reverse' : '' ?>">
-                                <div class="col-8 col-md-6 col-lg-4 mb-3 mb-md-auto mx-auto mx-md-0">
+                            <div class="row portfolio-highlights-item justify-content-md-between py-5 mb-5<?php echo ( ( $key + 1 ) % 2 !== 0 ) ? ' flex-md-row-reverse' : '' ?>">
+                                <div class="col-8 mx-auto mb-3 col-md-6 mb-md-auto mx-md-0 col-lg-4">
 									<?php echo wp_get_attachment_image( get_post_thumbnail_id( $highlight->ID ), 'portrait' ); ?>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 d-flex align-items-md-center">
