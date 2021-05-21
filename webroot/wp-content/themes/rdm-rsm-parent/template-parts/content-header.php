@@ -5,7 +5,7 @@
 		<?php
 	}
 	if ( ! empty( $args['subtitle'] ) ) { ?>
-        <div class="cat-page-desc text-center"><?php echo esc_html( $args['subtitle'] ) ?></div>
+        <div class="cat-page-desc text-center"><?php echo esc_html( strip_tags(  $args['subtitle'] ) )  ?></div>
 		<?php
 	}
 	?>
