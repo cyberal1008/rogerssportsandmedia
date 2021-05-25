@@ -32,6 +32,7 @@
 					'post_type'      => 'post',
 					'posts_per_page' => 3,
 					'post_status'    => 'publish',
+					'post__not_in'   => array( get_the_ID() ),
 				)
 			);
 		}

@@ -8,9 +8,9 @@
  */
 
 ?>
-</div> 
+</div>
 <footer class="page-footer">
-	
+
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
@@ -29,7 +29,7 @@
 			<ul class="social-icons">
 				<li><a class="footer-social" target="_blank" href="https://twitter.com/rsmcanada?lang=en"><img src="<?php bloginfo( 'template_directory' ); ?>/assets/images/icon-twitter.svg" width="30"  alt=""></a></li>
 				<li><a class="footer-social" target="_blank" href="https://ca.linkedin.com/company/rogers-sports-and-media"><img src="<?php bloginfo( 'template_directory' ); ?>/assets/images/icon-linkedin.svg" width="30"  alt=""></a></li>
-				<li><a class="footer-social" target="_blank" href="https://www.instagram.com/rogersmediapr/?hl=e"><img src="<?php bloginfo( 'template_directory' ); ?>/assets/images/icon-instagram.svg" width="30"  alt=""></a></li>           
+				<li><a class="footer-social" target="_blank" href="https://www.instagram.com/rogersmediapr/?hl=e"><img src="<?php bloginfo( 'template_directory' ); ?>/assets/images/icon-instagram.svg" width="30"  alt=""></a></li>
 			</ul>
 		</div>
 		<div class="col-md-4">
@@ -85,13 +85,13 @@
 					dynamic_sidebar( 'footer-6' );
 				}
 				?>
-			</div>  
-		</div>  
+			</div>
+		</div>
 	</div>
 	<div class="row">
 		<div class="footer-copyright d-flex ">
 			<div class="site-info">
-				&copy; <?php echo date( 'Y' ); ?> <?php echo '<a href="' . home_url() . '">' . get_bloginfo( 'name' ) . '</a>'; ?>. All rights resurved.
+				&copy; <?php echo date( 'Y' ); ?> <?php echo '<a href="' . home_url() . '">' . get_bloginfo( 'name' ) . '</a>'; ?>. All rights reserved.
 			</div >
 		</div>
 	</div>
