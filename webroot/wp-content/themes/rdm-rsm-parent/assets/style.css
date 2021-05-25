@@ -9276,7 +9276,7 @@ footer {
   margin-bottom: 5em; }
   .products-container {
     position: relative;
-    padding-bottom: 5em; }
+    padding-bottom: 15em; }
     .products-container::before {
       display: block;
       content: "";
@@ -9288,6 +9288,19 @@ footer {
       left: 50%;
       z-index: 0;
       background-color: #f5f5f5; }
+    .products-container::after {
+      width: 100px;
+      height: 100px;
+      background-repeat: no-repeat;
+      background-image: url(../assets/images/circle-yellow.svg);
+      background-size: 200px 200px;
+      background-position: left bottom;
+      position: absolute;
+      right: 0;
+      bottom: 8.75em;
+      z-index: 1;
+      content: "";
+      display: inline-block; }
     .products-container-main {
       background-color: transparent !important; }
     .products-container-title {
