@@ -30,6 +30,20 @@
 		)
 	);
 	?>
+	<?php
+	get_template_part(
+		'template-parts/content',
+		'products',
+		array(
+			'title'       => 'WHAT WE DO',
+			'description' => 'With an extensive collection of media assets, we use our launch pad to help amplify your brand. Rogers Sports & Media reaches 96% of Canadians through our various platforms. We are deeply committed to using our media megaphone to give back and help make a positive difference in communities across the country. We are proud to help ensure diverse voices are heard.',
+			'more'        => array(
+				'url'  => get_home_url( null, './what-we-do' ), // @todo replace with blog id when available
+				'text' => 'Our products',
+			),
+		)
+	);
+	?>
 
 	<?php
 		$zone = get_theme_mod( 'post_zone' );// 'happening-home';

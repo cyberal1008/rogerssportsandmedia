@@ -1,11 +1,15 @@
 @import "variables";
 
+@import "../../../node_modules/slick-carousel/slick/slick.scss";
+
 @import "../../../node_modules/bootstrap/scss/bootstrap";
 
-@import "mixins", "fonts", "header", "footer", "home", "happening", "category", "about", "article";
+@import "mixins", "fonts", "header", "footer", "home", "happening", "category",
+  "about", "products", "article";
 
 // Pages
-@import "pages/rsm-products-block", "pages/portfolio", "pages/legal", "pages/contactus";
+@import "pages/rsm-products-block", "pages/portfolio", "pages/legal",
+  "pages/contactus";
 
 body {
   .wrapper {
@@ -38,7 +42,12 @@ body {
   }
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: urw-din-condensed, serif;
 }
 

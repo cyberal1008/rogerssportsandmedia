@@ -55,3 +55,10 @@ add_action( 'wp_enqueue_scripts', function () {
 		wp_enqueue_script( 'portfolio-js', get_template_directory_uri() . "/assets/scripts/scroll-animation.js", "parent-scripts", '', true );
 	}
 } );
+
+//wp enqueue script for homepage
+add_action( 'wp_enqueue_scripts', function () {
+	if (is_home()){
+		wp_enqueue_script( 'home-js', get_template_directory_uri() . "/assets/scripts/home.js", "parent-scripts", '', true );
+	}
+} );
