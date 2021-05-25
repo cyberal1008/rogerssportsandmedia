@@ -9244,6 +9244,11 @@ article {
     text-align: center;
     margin-top: 20px; }
 
+.error-header h1 {
+  font-size: 56px;
+  font-family: urw-din-condensed;
+  font-weight: 800 !important; }
+
 #main {
   background-color: #ffffff; }
 
