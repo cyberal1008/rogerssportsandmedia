@@ -8694,6 +8694,35 @@ header {
   .no-media-header-red {
     height: 600px; } }
 
+.advertise-callout {
+  width: 375px;
+  height: 50px;
+  line-height: 50px;
+  position: fixed;
+  bottom: 14px;
+  right: 14px;
+  background-color: #FFBF3F;
+  text-align: center;
+  vertical-align: middle;
+  z-index: 10000; }
+  .advertise-callout a {
+    color: black;
+    display: block;
+    height: 100%;
+    width: 100%;
+    font-size: 14px;
+    font-weight: 700; }
+    .advertise-callout a:hover {
+      color: black; }
+    .advertise-callout a img {
+      padding-left: 13px;
+      padding-bottom: 4px; }
+
+@media (max-width: 575.98px) {
+  .advertise-callout {
+    width: 100%;
+    right: 0px; } }
+
 footer {
   background: #ffffff;
   color: #333333; }
