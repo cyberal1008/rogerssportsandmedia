@@ -1,5 +1,7 @@
 .products {
   position: relative;
+  margin-top: 5em;
+  margin-bottom: 5em;
 
   &-container {
     position: relative;
@@ -8,12 +10,6 @@
       @include overload-bg;
       z-index: 0;
       background-color: #f5f5f5;
-      @media (max-width: 1199.98px) {
-        width: 30px;
-      }
-      @media (max-width: 767.98px) {
-        width: 20px;
-      }
     }
 
     &-main {
@@ -37,8 +33,37 @@
       #products-slide {
         width: 110%;
         .products-slide-single {
+          a {
+            color: #212529;
+          }
+          h3 {
+            min-height: 2.75em;
+          }
           img {
             width: 17vw;
+            // Extra small devices (portrait phones, less than 576px)
+            @media (max-width: 575.98px) {
+              width: 28vw;
+            }
+            // Small devices (landscape phones, 576px and up)
+            @media (min-width: 576px) and (max-width: 767.98px) {
+              width: 17vw;
+            }
+            // Medium devices (tablets, 768px and up)
+            @media (min-width: 768px) and (max-width: 991.98px) {
+              width: 22vw;
+            }
+            // Large devices (desktops, 992px and up)
+            @media (min-width: 992px) and (max-width: 1199.98px) {
+              width: 22vw;
+            }
+            // Extra large devices (large desktops, 1200px and up)
+            @media (min-width: 1200px) {
+              width: 17vw;
+            }
+            @media (min-width: 1920px) {
+              width: 15vw;
+            }
           }
         }
       }

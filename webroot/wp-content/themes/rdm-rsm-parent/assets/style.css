@@ -9270,7 +9270,9 @@ footer {
         pointer-events: none; }
 
 .products {
-  position: relative; }
+  position: relative;
+  margin-top: 5em;
+  margin-bottom: 5em; }
   .products-container {
     position: relative;
     padding-bottom: 5em; }
@@ -9285,12 +9287,6 @@ footer {
       left: 50%;
       z-index: 0;
       background-color: #f5f5f5; }
-      @media (max-width: 1199.98px) {
-        .products-container::before {
-          width: 30px; } }
-      @media (max-width: 767.98px) {
-        .products-container::before {
-          width: 20px; } }
     .products-container-main {
       background-color: transparent !important; }
     .products-container-title {
@@ -9307,8 +9303,30 @@ footer {
       padding-left: 15px; }
       .products-container .prod-slide-wrapper #products-slide {
         width: 110%; }
+        .products-container .prod-slide-wrapper #products-slide .products-slide-single a {
+          color: #212529; }
+        .products-container .prod-slide-wrapper #products-slide .products-slide-single h3 {
+          min-height: 2.75em; }
         .products-container .prod-slide-wrapper #products-slide .products-slide-single img {
           width: 17vw; }
+          @media (max-width: 575.98px) {
+            .products-container .prod-slide-wrapper #products-slide .products-slide-single img {
+              width: 28vw; } }
+          @media (min-width: 576px) and (max-width: 767.98px) {
+            .products-container .prod-slide-wrapper #products-slide .products-slide-single img {
+              width: 17vw; } }
+          @media (min-width: 768px) and (max-width: 991.98px) {
+            .products-container .prod-slide-wrapper #products-slide .products-slide-single img {
+              width: 22vw; } }
+          @media (min-width: 992px) and (max-width: 1199.98px) {
+            .products-container .prod-slide-wrapper #products-slide .products-slide-single img {
+              width: 22vw; } }
+          @media (min-width: 1200px) {
+            .products-container .prod-slide-wrapper #products-slide .products-slide-single img {
+              width: 17vw; } }
+          @media (min-width: 1920px) {
+            .products-container .prod-slide-wrapper #products-slide .products-slide-single img {
+              width: 15vw; } }
 
 article {
   max-width: 700px;

@@ -5,6 +5,29 @@ if ( empty ( $args['title'] ) ||
      empty ( $args['description'] ) ) {
 	return '';
 }
+$product_page = get_page_by_title('What We Do');
+$product_block_arr = array();
+if ( has_blocks( $product_page->post_content ) ) {
+	$blocks = parse_blocks( $product_page->post_content );
+    $product_blocks = array_filter( $blocks, function ( $block ) {
+        return $block['blockName'] === 'rsm/products-block';
+    } );
+    if(!empty($product_blocks)){
+        foreach($product_blocks as $block){
+            $block_info = array();
+            $dom = new DOMDocument();
+            libxml_use_internal_errors(true);
+            $dom->loadHTML($block['innerHTML']); 
+            $xp = new DOMXpath($dom);
+            //we only have one set of element, so use the first of each block
+            $block_info['title'] = $xp->query('//h2')->item(0)->nodeValue;
+            $block_info['link'] = $xp->query('//a')->item(0)->getAttribute('href');
+            $block_info['img_src'] = $xp->query('//img')->item(0)->getAttribute('src');
+            $product_block_arr[] = $block_info;  
+        }
+    }
+}
+
 ?>
 
 <div class="products">
@@ -27,24 +50,28 @@ if ( empty ( $args['title'] ) ||
                     <?php
                 } ?>
             </div>
-            <div class="col-md-6 mb-5 my-md-auto text-right">
+            <div class="d-none d-sm-block col-md-6 mb-5 my-md-auto text-right">
                 <img id="slide-prev" class="slide-control" src="<?php echo (get_template_directory_uri() . "/assets/images/btn-arrow-left.svg")?>" alt="prev" />
                 <img id="slide-next" class="slide-control" src="<?php echo (get_template_directory_uri() . "/assets/images/btn-arrow-right.svg")?>" alt="next" />
             </div>
         </div>
-        <div class="row ml-2 ml-md-0">
-            <div class="prod-slide-wrapper">
-                <div id="products-slide">
-                    <div class="products-slide-single"><h3>1</h3><img src="<?php echo get_template_directory_uri() . "/assets/images/missing-image-portrait.png"?>" alt=""></div>
-                    <div class="products-slide-single"><h3>2</h3><img src="<?php echo get_template_directory_uri() . "/assets/images/missing-image-portrait.png"?>" alt=""></div>
-                    <div class="products-slide-single"><h3>3</h3><img src="<?php echo get_template_directory_uri() . "/assets/images/missing-image-portrait.png"?>" alt=""></div>
-                    <div class="products-slide-single"><h3>4</h3><img src="<?php echo get_template_directory_uri() . "/assets/images/missing-image-portrait.png"?>" alt=""></div>
-                    <div class="products-slide-single"><h3>5</h3><img src="<?php echo get_template_directory_uri() . "/assets/images/missing-image-portrait.png"?>" alt=""></div>
-                    <div class="products-slide-single"><h3>6</h3><img src="<?php echo get_template_directory_uri() . "/assets/images/missing-image-portrait.png"?>" alt=""></div>
+        <?php if (!empty($product_block_arr)){ ?>        
+            <div class="row ml-2 ml-md-0">
+                <div class="prod-slide-wrapper">
+                    <div id="products-slide">
+                        <?php foreach($product_block_arr as $block) {?>
+                        <div class="products-slide-single">
+                            <a href="<?php echo $block['link'];?>" >
+                                <h3><?php echo $block['title'];?></h3>
+                            </a>
+                            <a href="<?php echo $block['link'];?>" >
+                                <img src="<?php echo $block['img_src'];?>" alt="<?php echo $block['title'];?>">
+                            </a>
+                        </div>
+                        <?php } ?>
+                    </div>
                 </div>
             </div>
-        </div>
+        <?php } ?>
     </div>
 </div>
-
-
