@@ -1,3 +1,76 @@
+/* Slider */
+.slick-slider {
+  position: relative;
+  display: block;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -ms-touch-action: pan-y;
+  touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent; }
+
+.slick-list {
+  position: relative;
+  overflow: hidden;
+  display: block;
+  margin: 0;
+  padding: 0; }
+  .slick-list:focus {
+    outline: none; }
+  .slick-list.dragging {
+    cursor: pointer;
+    cursor: hand; }
+
+.slick-slider .slick-track,
+.slick-slider .slick-list {
+  -webkit-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0); }
+
+.slick-track {
+  position: relative;
+  left: 0;
+  top: 0;
+  display: block;
+  margin-left: auto;
+  margin-right: auto; }
+  .slick-track:before, .slick-track:after {
+    content: "";
+    display: table; }
+  .slick-track:after {
+    clear: both; }
+  .slick-loading .slick-track {
+    visibility: hidden; }
+
+.slick-slide {
+  float: left;
+  height: 100%;
+  min-height: 1px;
+  display: none; }
+  [dir="rtl"] .slick-slide {
+    float: right; }
+  .slick-slide img {
+    display: block; }
+  .slick-slide.slick-loading img {
+    display: none; }
+  .slick-slide.dragging img {
+    pointer-events: none; }
+  .slick-initialized .slick-slide {
+    display: block; }
+  .slick-loading .slick-slide {
+    visibility: hidden; }
+  .slick-vertical .slick-slide {
+    display: block;
+    height: auto;
+    border: 1px solid transparent; }
+
+.slick-arrow.slick-hidden {
+  display: none; }
+
 /*!
  * Bootstrap v4.6.0 (https://getbootstrap.com/)
  * Copyright 2011-2021 The Bootstrap Authors
@@ -9170,12 +9243,9 @@ footer {
 .products {
   position: relative; }
   .products-container {
-    position: relative; }
+    position: relative;
+    padding-bottom: 5em; }
     .products-container::before {
-      background-image: -o-radial-gradient(#000 10%, transparent 10%), -o-radial-gradient(#000 10%, transparent 10%);
-      background-image: radial-gradient(#000 10%, transparent 10%), radial-gradient(#000 10%, transparent 10%);
-      background-position: 0 0, 7px 7px;
-      background-size: 14px 14px;
       display: block;
       content: "";
       width: 100vw;
@@ -9185,7 +9255,7 @@ footer {
       top: 0;
       left: 50%;
       z-index: 0;
-      width: 50px; }
+      background-color: #f5f5f5; }
       @media (max-width: 1199.98px) {
         .products-container::before {
           width: 30px; } }
@@ -9200,6 +9270,16 @@ footer {
       font-size: 56px;
       line-height: 64px;
       letter-spacing: -1.12px; }
+    .products-container .slide-control {
+      cursor: pointer; }
+    .products-container .prod-slide-wrapper {
+      width: 100%;
+      overflow-x: hidden;
+      padding-left: 15px; }
+      .products-container .prod-slide-wrapper #products-slide {
+        width: 110%; }
+        .products-container .prod-slide-wrapper #products-slide .products-slide-single img {
+          width: 17vw; }
 
 article {
   max-width: 700px;

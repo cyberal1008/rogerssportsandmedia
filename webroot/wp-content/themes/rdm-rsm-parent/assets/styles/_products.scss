@@ -3,14 +3,11 @@
 
   &-container {
     position: relative;
+    padding-bottom: 5em;
     &::before {
-      background-image: radial-gradient(#000 10%, transparent 10%),
-        radial-gradient(#000 10%, transparent 10%);
-      background-position: 0 0, 7px 7px;
-      background-size: 14px 14px;
       @include overload-bg;
       z-index: 0;
-      width: 50px;
+      background-color: #f5f5f5;
       @media (max-width: 1199.98px) {
         width: 30px;
       }
@@ -29,6 +26,22 @@
       font-size: 56px;
       line-height: 64px;
       letter-spacing: -1.12px;
+    }
+    .slide-control {
+      cursor: pointer;
+    }
+    .prod-slide-wrapper {
+      width: 100%;
+      overflow-x: hidden;
+      padding-left: 15px;
+      #products-slide {
+        width: 110%;
+        .products-slide-single {
+          img {
+            width: 17vw;
+          }
+        }
+      }
     }
   }
 }
