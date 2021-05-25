@@ -55,7 +55,7 @@ $lang = 'en';
 	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 
 	<?php wp_head(); ?>
-	
+
 	<?php require_once 'views/portfolio-chapters.html'; ?>
 	<?php require_once 'views/solutions-modal.html'; ?>
 
@@ -136,7 +136,10 @@ if ( is_home() ) {
 				</div>
 
 			</nav>
-	</header> 
+	</header>
+
+	<div class="advertise-callout"><a href="<?php echo site_url( '/contact-us/' ); ?>">ADVERTISE WITH US <img src="<?php echo dirname( get_bloginfo( 'stylesheet_url' ) ) . '/assets/images/icon-mail.svg'; ?>"></a></div>
+
 <?php if ( is_single() ) { ?>
 	<div class="wrapper pt-5">
 <?php } else { ?>
