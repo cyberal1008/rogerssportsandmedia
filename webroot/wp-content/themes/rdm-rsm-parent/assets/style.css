@@ -9336,12 +9336,14 @@ article {
 .portfolio-main h2 {
   font-family: urw-din-condensed, serif;
   text-transform: uppercase;
-  font-size: 56px; }
+  font-size: 56px;
+  line-height: 50px; }
 
 .portfolio-main h3 {
   font-family: urw-din-condensed, serif;
   text-transform: uppercase;
-  font-size: 36px; }
+  font-size: 36px;
+  line-height: 32px; }
 
 .portfolio-main .portfolio-header.j-main {
   max-width: 100%; }
@@ -9645,6 +9647,9 @@ article {
   .portfolio-modal-wrapper .portfolio-modal .modal-dialog .modal-content .modal-body .grid-item-title {
     font-family: "Ted Next Bold", serif;
     font-size: 54px; }
+    @media (max-width: 767.98px) {
+      .portfolio-modal-wrapper .portfolio-modal .modal-dialog .modal-content .modal-body .grid-item-title {
+        font-size: 32px; } }
   .portfolio-modal-wrapper .portfolio-modal .modal-dialog .modal-content .modal-body .grid-item-subtitle, .portfolio-modal-wrapper .portfolio-modal .modal-dialog .modal-content .modal-body .grid-item-subsubtitle {
     font-family: "Ted Next", serif;
     font-size: 18px; }
@@ -9697,7 +9702,8 @@ article {
       counter-increment: section; }
     .legal-main .page p {
       line-height: 1.6em;
-      font-size: 1.1em; }
+      font-size: 1.1em;
+      word-break: break-word; }
     .legal-main .page ul {
       display: block;
       list-style-type: disc;
