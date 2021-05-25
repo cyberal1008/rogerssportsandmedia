@@ -9228,8 +9228,6 @@ article {
     padding-top: 20px;
     width: 100%;
     height: auto; }
-  article .entry-title {
-    text-transform: uppercase; }
   article .entry-header, article .entry-content {
     padding-left: 10px;
     padding-right: 10px; }
