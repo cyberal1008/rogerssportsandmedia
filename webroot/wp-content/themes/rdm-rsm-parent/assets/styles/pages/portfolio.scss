@@ -242,9 +242,10 @@
 
       .video-chapters {
         position: relative;
-        overflow-x: scroll;
         max-height: 60vh;
         width: 100%;
+        overflow-y: scroll;
+        overflow-x: hidden;
 
         .video-chapter {
           position: relative;

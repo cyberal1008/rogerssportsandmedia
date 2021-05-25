@@ -10,24 +10,26 @@
 get_header();
 
 get_template_part(
-    'template-parts/content',
-    'header',
-    array(
-        'title' => single_cat_title('',  false),
-        'subtitle' => category_description(),
-    ) );
 
+	'template-parts/content',
+	'header',
+	array(
+		'title'    => single_cat_title( '', false ),
+		'subtitle' => category_description(),
+	)
+);
 ?>
 <div class="container">
 	<?php
 	global $post;
-	$category  = get_the_category();
+	$term = get_queried_object();
+	$term->slug;
 	$the_query = new WP_Query(
 		array(
 			'post__in'       => get_option( 'sticky_posts' ),
 			'post_date'      => 'DESC',
 			'posts_per_page' => 1,
-			'cat'            => '' . $category[0]->cat_ID . '',
+			'cat'            => $term->slug,
 		)
 	);
 	?>
@@ -75,8 +77,9 @@ get_template_part(
 
 		<div class="row">
 			<?php
-			$paged     = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
-			$the_query = new WP_Query(
+			$paged          = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
+			$current_cat_id = get_query_var( 'cat' );
+			$the_query      = new WP_Query(
 				array(
 					'post__not_in'   => get_option( 'sticky_posts' ),
 					'post_type'      => 'post',
@@ -85,7 +88,7 @@ get_template_part(
 					'post_status'    => 'publish',
 					'posts_per_page' => 10,
 					'paged'          => $paged,
-					'cat'            => '' . $category[0]->cat_ID . '',
+					'category__in'   => $current_cat_id,
 				)
 			);
 			?>
