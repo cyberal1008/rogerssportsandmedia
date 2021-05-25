@@ -19,11 +19,13 @@
   h2 {
     @include heading-style;
     font-size: 56px;
+    line-height: 50px;
   }
 
   h3 {
     @include heading-style;
     font-size: 36px;
+    line-height: 32px;
   }
 
   .portfolio-header {
@@ -324,6 +326,10 @@
             &-title {
               @include ted-next-bold-font;
               font-size: 54px;
+              @include media-breakpoint-down(sm){
+                font-size: 32px;
+              }
+              
             }
 
             &-subtitle,
