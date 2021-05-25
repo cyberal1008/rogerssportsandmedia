@@ -8,7 +8,7 @@
  */
 
 get_header(); ?>
-	<div  class="container contactus-main" id="main">
+	<div  class="container contactus-main">
 		<div class="cat-header">
 			<p class="cat-page-title text-center">Contact Us</p>
 				<div class="cat-page-desc text-center"><p>HOW CAN WE HELP?</p></div>

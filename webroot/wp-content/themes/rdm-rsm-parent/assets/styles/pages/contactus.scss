@@ -11,7 +11,7 @@
 	}
 }
 
-@include media-breakpoint-down(md) {
+@include media-breakpoint-down(sm) {
 	.contactus-main {
 		iframe {
 			height: 1000px;
