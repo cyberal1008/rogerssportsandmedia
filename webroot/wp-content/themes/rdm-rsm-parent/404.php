@@ -24,7 +24,7 @@ get_template_part(
 		<div id="main" class="site-main" role="main">
 
 			<section class="error-404 not-found">
-				<header class="page-header">
+				<header class="error-header">
 					<h1 class="page-title"><?php esc_html_e( 'Oops! That page can&rsquo;t be found.', 'rdm-rsm-parent' ); ?></h1>
 				</header>
 
