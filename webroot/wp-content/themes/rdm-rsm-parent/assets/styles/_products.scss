@@ -17,10 +17,12 @@
       background-repeat: no-repeat;
       background-image: url(../assets/images/circle-yellow.svg);
       background-size: 200px 200px;
-      background-position: left bottom;
+      background-position: left top;
       position: absolute;
-      right: 0;
-      bottom: 8.75em;
+      //right: calc(-15px - (100vw - 1140px) / 2);
+      right: calc(50% - 50vw);
+
+      bottom: 0;
       z-index: 1;
       content: "";
       display: inline-block;
