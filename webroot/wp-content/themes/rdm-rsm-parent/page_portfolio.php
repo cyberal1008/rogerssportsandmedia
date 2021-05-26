@@ -56,7 +56,7 @@ $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, tr
 					'anchors',
 					array(
 						'portfolio-about'              => 'About',
-						'portfolio-grid-anchor'        => 'Solutions',
+						'portfolio-solutions-anchor'   => 'Solutions',
 						'portfolio-hightlights-anchor' => 'Highlights',
 						'portfolio-news-anchor'        => 'News and updates',
 					)

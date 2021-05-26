@@ -9,7 +9,7 @@
 			<div class="tri-element"></div>
 		</div>
 		<div class="page-header">
-			<h1>WHAT’S HAPPENING</h1>      
+			<h1 id="portfolio-news-anchor">WHAT’S HAPPENING</h1>      
 		</div>
 		<p class="page-header-desc">Get the latest news from Rogers Sports & Media. </p>
 			<?php
