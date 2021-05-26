@@ -8780,7 +8780,7 @@ header {
   background-color: #FFBF3F;
   text-align: center;
   vertical-align: middle;
-  z-index: 10000; }
+  z-index: 1000; }
   .advertise-callout a {
     color: black;
     display: block;
@@ -8801,7 +8801,8 @@ header {
 
 footer {
   background: #ffffff;
-  color: #333333; }
+  color: #333333;
+  padding-bottom: 50px; }
   footer a, footer a:hover {
     color: #333; }
   footer a:hover {
