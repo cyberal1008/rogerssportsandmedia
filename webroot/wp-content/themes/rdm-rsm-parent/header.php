@@ -138,7 +138,9 @@ if ( is_home() ) {
 			</nav>
 	</header>
 
-	<div class="advertise-callout"><a href="<?php echo site_url( '/contact-us/' ); ?>">ADVERTISE WITH US <img src="<?php echo dirname( get_bloginfo( 'stylesheet_url' ) ) . '/assets/images/icon-mail.svg'; ?>"></a></div>
+	<?php if( !is_page() || !is_page_template( 'page-contactus.php' ) ) { ?>
+		<div class="advertise-callout"><a href="<?php echo site_url( '/contact-us/' ); ?>">ADVERTISE WITH US <img src="<?php echo dirname( get_bloginfo( 'stylesheet_url' ) ) . '/assets/images/icon-mail.svg'; ?>"></a></div>
+	<?php } ?>
 
 <?php if ( is_single() ) { ?>
 	<div class="wrapper pt-5">
