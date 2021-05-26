@@ -8657,7 +8657,7 @@ header {
     background: linear-gradient(to bottom right, #da291c 50%, transparent 50%) 0 0/450px 453px, transparent; }
   .j-title {
     font-size: 84px !important;
-    letter-spacing: -3px !important;
+    letter-spacing: -3.36px !important;
     line-height: 80px; }
   .j-desc {
     font-size: 24px !important;
@@ -8674,8 +8674,8 @@ header {
     background: linear-gradient(to bottom right, #da291c 50%, transparent 50%) 0 0/250px 250px, transparent; }
   .j-title {
     font-size: 52px !important;
-    letter-spacing: -1px !important;
-    line-height: 50px;
+    letter-spacing: -2.08px !important;
+    line-height: 56px;
     max-width: 410px; }
   .j-desc {
     font-size: 18px !important;
@@ -8707,7 +8707,13 @@ header {
 .j-main {
   max-width: 552px;
   background-color: transparent !important;
-  min-height: 550px; }
+  min-height: 550px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center; }
 
 .j-button:hover {
   text-decoration: underline !important; }
