@@ -8456,6 +8456,10 @@ header {
   z-index: 999999999;
   min-height: 75px; }
 
+.navbar-brand {
+  padding-top: 0;
+  padding-bottom: 0; }
+
 .header-container .active > a,
 .header-container .active > a > span {
   text-shadow: 0 0 0.5px black;
