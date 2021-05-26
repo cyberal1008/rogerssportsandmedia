@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="45" height="45" viewBox="0 0 45 45">
+  <defs>
+    <clipPath id="clip-btn-arrow-right">
+      <rect width="45" height="45"/>
+    </clipPath>
+  </defs>
+  <g id="btn-arrow-right" clip-path="url(#clip-btn-arrow-right)">
+    <text id="_" data-name="→" transform="translate(10 8)" font-size="24" font-family="LucidaGrande, Lucida Grande"><tspan x="0" y="23">→</tspan></text>
+  </g>
+</svg>
