@@ -2771,13 +2771,13 @@ input[type="button"].btn-block {
   white-space: nowrap; }
   .dropdown-toggle::after {
     display: inline-block;
-    margin-left: 0.1625em;
-    vertical-align: 0.1625em;
+    margin-left: 0.255em;
+    vertical-align: 0.255em;
     content: "";
-    border-top: 0.25em solid;
-    border-right: 0.25em solid transparent;
+    border-top: 0.3em solid;
+    border-right: 0.3em solid transparent;
     border-bottom: 0;
-    border-left: 0.25em solid transparent; }
+    border-left: 0.3em solid transparent; }
   .dropdown-toggle:empty::after {
     margin-left: 0; }
 
@@ -2848,13 +2848,13 @@ input[type="button"].btn-block {
 
 .dropup .dropdown-toggle::after {
   display: inline-block;
-  margin-left: 0.1625em;
-  vertical-align: 0.1625em;
+  margin-left: 0.255em;
+  vertical-align: 0.255em;
   content: "";
   border-top: 0;
-  border-right: 0.25em solid transparent;
-  border-bottom: 0.25em solid;
-  border-left: 0.25em solid transparent; }
+  border-right: 0.3em solid transparent;
+  border-bottom: 0.3em solid;
+  border-left: 0.3em solid transparent; }
 
 .dropup .dropdown-toggle:empty::after {
   margin-left: 0; }
@@ -2868,13 +2868,13 @@ input[type="button"].btn-block {
 
 .dropright .dropdown-toggle::after {
   display: inline-block;
-  margin-left: 0.1625em;
-  vertical-align: 0.1625em;
+  margin-left: 0.255em;
+  vertical-align: 0.255em;
   content: "";
-  border-top: 0.25em solid transparent;
+  border-top: 0.3em solid transparent;
   border-right: 0;
-  border-bottom: 0.25em solid transparent;
-  border-left: 0.25em solid; }
+  border-bottom: 0.3em solid transparent;
+  border-left: 0.3em solid; }
 
 .dropright .dropdown-toggle:empty::after {
   margin-left: 0; }
@@ -2891,8 +2891,8 @@ input[type="button"].btn-block {
 
 .dropleft .dropdown-toggle::after {
   display: inline-block;
-  margin-left: 0.1625em;
-  vertical-align: 0.1625em;
+  margin-left: 0.255em;
+  vertical-align: 0.255em;
   content: ""; }
 
 .dropleft .dropdown-toggle::after {
@@ -2900,12 +2900,12 @@ input[type="button"].btn-block {
 
 .dropleft .dropdown-toggle::before {
   display: inline-block;
-  margin-right: 0.1625em;
-  vertical-align: 0.1625em;
+  margin-right: 0.255em;
+  vertical-align: 0.255em;
   content: "";
-  border-top: 0.25em solid transparent;
-  border-right: 0.25em solid;
-  border-bottom: 0.25em solid transparent; }
+  border-top: 0.3em solid transparent;
+  border-right: 0.3em solid;
+  border-bottom: 0.3em solid transparent; }
 
 .dropleft .dropdown-toggle:empty::after {
   margin-left: 0; }
@@ -8561,9 +8561,9 @@ header {
 
 @media screen and (min-width: 767px) and (max-width: 940px) {
   .header-container .navbar-nav > li {
-    margin-left: 11px;
-    margin-right: 12px;
-    width: 13vw; } }
+    margin-left: 0px;
+    margin-right: 0px;
+    width: 16vw; } }
 
 @media (max-width: 767px) {
   .header-container .nav-bg-active {
