@@ -6,6 +6,10 @@ header {
   z-index: 999999999;
   min-height: 75px;
 }
+.navbar-brand {
+  padding-top: 0;
+  padding-bottom: 0;
+}
 .header-container {
   .active > a,
   .active > a > span {
