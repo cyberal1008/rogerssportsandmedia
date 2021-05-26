@@ -7,11 +7,11 @@
     line-height: 80px;
 }
 .cat-page-desc {
-    font-family: urw-din-condensed;
+    font-family: urw-din-condensed, serif;
     font-size: 84px;
     line-height: 80px;
     text-transform: uppercase;
-    padding-bottom: 150px;
+    padding: 0 50px 150px;
     margin-top: -30px;
 }
 
@@ -38,11 +38,11 @@
 }
 @media (max-width: 768px) {
     .cat-page-desc {
-        font-size: 52px;
+        font-size: 40px;
         line-height: 50px;
         margin-top: -40px;
         max-width: 270px;
-        padding-bottom: 50px;
+        padding:0 0 50px;
     }
     .cat-header {
         text-align: -webkit-center;
