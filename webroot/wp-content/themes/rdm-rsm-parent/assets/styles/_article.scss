@@ -58,11 +58,14 @@ article {
     }
 }
 .error-header h1{
-  font-size: 56px;
-  font-family: urw-din-condensed;
-  font-weight: 800!important;
+  font-size: 32px;
+  line-height: 56px;
+  font-family: $ted-next-b;
+  text-align: center;
 }
-
+.not-found{
+    max-width: 632px;
+}
 #main{
     background-color: #ffffff; 
 }
