@@ -15,7 +15,7 @@ $radio_terms = get_terms( array(
 	'hide_empty' => false,
 ) );
 
-$radio_category = array_merge( array( 'all' => 'Featured Stations and Podcasts' ), wp_list_pluck( $radio_terms, 'name', 'slug' ) );
+$radio_category = array_merge( array( 'all' => 'All Stations and Podcasts' ), wp_list_pluck( $radio_terms, 'name', 'slug' ) );
 
 $region_terms = get_terms( array(
 	'taxonomy'   => RSM\Broadcast\Taxonomy\Region::SLUG,
