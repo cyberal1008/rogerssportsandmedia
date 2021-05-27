@@ -78,6 +78,9 @@
   text-transform: capitalize;
   line-height: 16px;
   padding-bottom: 6px;
+  @include media-breakpoint-down(md){
+    padding-bottom: 0;
+  }
   position: relative;
   z-index: 2;
   &:hover {
