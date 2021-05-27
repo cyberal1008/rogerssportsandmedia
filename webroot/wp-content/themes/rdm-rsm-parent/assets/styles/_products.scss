@@ -50,6 +50,7 @@
       #products-slide {
         width: 110%;
         .products-slide-single {
+          padding-right: 10px;
           a {
             color: #212529;
           }
@@ -57,13 +58,14 @@
             min-height: 2.75em;
           }
           img {
-            width: 17vw;
+            width: 297px;
             // Extra small devices (portrait phones, less than 576px)
             @media (max-width: 575.98px) {
-              width: 28vw;
+              width: 29vw;
             }
+            /*
             // Small devices (landscape phones, 576px and up)
-            @media (min-width: 576px) and (max-width: 767.98px) {
+              @media (min-width: 576px) and (max-width: 767.98px) {
               width: 17vw;
             }
             // Medium devices (tablets, 768px and up)
@@ -73,14 +75,11 @@
             // Large devices (desktops, 992px and up)
             @media (min-width: 992px) and (max-width: 1199.98px) {
               width: 22vw;
-            }
+            } 
             // Extra large devices (large desktops, 1200px and up)
             @media (min-width: 1200px) {
-              width: 17vw;
-            }
-            @media (min-width: 1920px) {
-              width: 15vw;
-            }
+              width: 297px;
+            }*/
           }
         }
       }
