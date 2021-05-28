@@ -50,6 +50,38 @@ $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, tr
 						'portfolio-news-anchor'        => 'News and updates',
 					)
 				);
+			} elseif ( stripos( get_the_title(), 'sports' ) !== false ) {
+				get_template_part(
+					'template-parts/portfolio',
+					'anchors',
+					array(
+						'portfolio-about'              => 'About',
+						'portfolio-grid-anchor'        => 'Our Sports',
+						'portfolio-hightlights-anchor' => 'Highlights',
+						'portfolio-news-anchor'        => 'News and updates',
+					)
+				);
+			} elseif ( stripos( get_the_title(), 'advertising' ) !== false ) {
+				get_template_part(
+					'template-parts/portfolio',
+					'anchors',
+					array(
+						'portfolio-about'              => 'About',
+						'portfolio-grid-anchor'        => 'Products',
+						'portfolio-hightlights-anchor' => 'Highlights',
+						'portfolio-news-anchor'        => 'News and updates',
+					)
+				);
+			}elseif ( stripos( get_the_title(), 'shopping' ) !== false ) {
+					get_template_part(
+						'template-parts/portfolio',
+						'anchors',
+						array(
+							'portfolio-about'              => 'About',
+							'portfolio-hightlights-anchor' => 'Highlights',
+							'portfolio-news-anchor'        => 'News and updates',
+						)
+					);
 			} else {
 				get_template_part(
 					'template-parts/portfolio',
