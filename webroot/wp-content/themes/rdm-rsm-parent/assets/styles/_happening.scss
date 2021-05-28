@@ -131,6 +131,22 @@
     padding-top: 50px;
     position: relative;
   }
+  .one{
+    width : 70%;
+    float: left
+  }
+  .two{
+    width : 30%;
+    float : right;
+  }
+  .three{
+    width : 70%;
+  }
+  .card-gb{
+    width: 100%;
+    min-width: 300px;
+    display: block;
+  }
 }
 @media (min-width: 767px) {
   .tri{
@@ -162,7 +178,7 @@
     width: 107px;
   }
   .card-title-next{
-    width: 70%;
+    width: 100%;
   }
   .card-body{
     padding:  10px 16px 15px 16px!important;
@@ -192,15 +208,5 @@
     width: 48px;
     right: -7px;
     top: -7px;
-  }
-}
-@media (max-width:767px){
-  .img-shadow{
-    right: 0px;
-    position: absolute;
-  }
-  .card-gb{
-    width: 90%;
-    min-width: 350px;
   }
 }
