@@ -80,6 +80,9 @@
 		</div>
 		<div class="col-md-4">
 			<div class="site-info-links">
+				<div class="footer-legal-heading">
+				Legal
+				</div>
 				<?php
 				if ( is_active_sidebar( 'footer-6' ) ) {
 					dynamic_sidebar( 'footer-6' );

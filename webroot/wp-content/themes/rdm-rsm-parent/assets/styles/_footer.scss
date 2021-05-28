@@ -1,94 +1,111 @@
-footer{
-    background: #ffffff;
-    color:#333333;
-	padding-bottom: 50px;
-    a, a:hover{
-       color: #333;
-    }
-    a:hover{
-        font-family: $ted-next-sb;
-    }
-    ul, li {
-        list-style:none;
-        line-height: 48px;
-        //white-space: nowrap;
-    }
+footer {
+  background: #ffffff;
+  color: #333333;
+  padding-bottom: 50px;
+  a,
+  a:hover {
+    color: #333;
+  }
+  a:hover {
+    font-family: $ted-next-sb;
+  }
+  ul,
+  li {
+    list-style: none;
+    line-height: 48px;
+    //white-space: nowrap;
+  }
 
-    .footer-logo{
-        margin-bottom: 40px;
-    }
-    .footer-nav-title, .menu .menu-item-has-children>a{
-        text-decoration: underline;
-        font-size: 16px;
-        line-height: 48px;
-    }
+  .footer-logo {
+    margin-bottom: 40px;
+  }
+  .footer-nav-title,
+  .menu .menu-item-has-children > a,
+  .footer-legal-heading {
+    text-decoration: underline;
+    font-size: 16px;
+    line-height: 48px;
+  }
 
-    .social-icons li{
-        display: inline-block;
-        padding-right:8px;
-        //margin-bottom: 15px;
+  .footer-legal-heading {
+    text-decoration: none;
+    padding-inline-start: 40px;
+  }
+
+  .social-icons li {
+    display: inline-block;
+    padding-right: 8px;
+    //margin-bottom: 15px;
+  }
+  .social-icons {
+    padding-inline-start: 0px !important;
+  }
+  .widget-3 div ul,
+  .widget-4 div ul,
+  .widget-5 div ul {
+    padding-inline-start: 0px;
+  }
+  .site-info-links .widget-3,
+  .site-info-links .widget-4 {
+    padding-bottom: 30px;
+  }
+  .widget-text {
+    font-size: 14px;
+    line-height: 18px;
+  }
+  .site-info-links .widget-5 {
+    padding-bottom: 20px;
+  }
+  .sub-menu {
+    padding-inline-start: 0px;
+  }
+  .sub-menu li,
+  .widget-6 ul li {
+    display: inline-block;
+    font-family: $ted-next-b;
+    font-size: 14px;
+    min-width: 226px;
+    text-decoration: none;
+    &:last-child {
+      padding-right: 0px;
     }
-    .social-icons {
-        padding-inline-start: 0px!important;
+  }
+  .widget-6 .sub-menu li {
+    display: block;
+  }
+  .widget-1 li {
+    text-decoration: underline;
+  }
+  @media (max-width: 768px) {
+    .sub-menu li {
+      display: block;
     }
-    .widget-3 div ul, .widget-4 div ul, .widget-5 div ul{
-        padding-inline-start: 0px;
+    .menu {
+      padding-inline-start: 0px;
     }
-    .site-info-links .widget-3, .site-info-links .widget-4{
+    .site-info-links {
+      .widget-1,
+      .widget-3,
+      .widget-4,
+      .widget-5 {
         padding-bottom: 30px;
+      }
     }
-    .widget-text{
-        font-size: 14px;
-        line-height: 18px;
-    }
-    .site-info-links .widget-5{
-        padding-bottom:20px;
-    }
-    .sub-menu {
-        padding-inline-start: 0px;
-    }
-    .sub-menu li{
-        display: inline-block;
-        font-family: $ted-next-b;
-        font-size:14px;
-        min-width: 226px;
-        text-decoration: none;
-        &:last-child{
-            padding-right:0px;
-        }
-    }
-    .widget-6 .sub-menu li{
-        display: block;
-    }
-    .widget-1 li{
-        text-decoration: underline;
-    }
-    @media (max-width: 768px) {
-        .sub-menu li{
-            display: block;
-        }
-        .menu{
-            padding-inline-start: 0px;
-        }
-        .site-info-links{
-            .widget-1, .widget-3, .widget-4, .widget-5{
-                padding-bottom:30px;
-            }
-        }
-    }
-    .sub-menu li a:hover {
-        text-decoration: underline;
-        font-family: $ted-next-b;
-    }
-    .site-info{
-        font-family: $ted-next;
-    }
-    .site-info a:hover{
-        text-decoration: none;
-        font-family: $ted-next;
-    }
-    .footer-copyright{
-        margin-bottom: 25px;
-        padding-left: 15px;
-    }
+  }
+  .sub-menu li a:hover,
+  .widget-6 ul li a:hover {
+    text-decoration: underline;
+    font-family: $ted-next-b;
+  }
+  .site-info {
+    font-family: $ted-next;
+  }
+  .site-info a:hover {
+    text-decoration: none;
+    font-family: $ted-next;
+  }
+  .footer-copyright {
+    margin-bottom: 25px;
+    padding-left: 15px;
+  }
 }
