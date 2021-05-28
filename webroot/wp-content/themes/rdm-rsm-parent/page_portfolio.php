@@ -56,7 +56,7 @@ $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, tr
 					'anchors',
 					array(
 						'portfolio-about'              => 'About',
-						'portfolio-grid-anchor'        => 'Our Sports',
+						'portfolio-solutions-anchor'   => 'Our Sports',
 						'portfolio-hightlights-anchor' => 'Highlights',
 						'portfolio-news-anchor'        => 'News and updates',
 					)
@@ -67,7 +67,7 @@ $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, tr
 					'anchors',
 					array(
 						'portfolio-about'              => 'About',
-						'portfolio-grid-anchor'        => 'Products',
+						'portfolio-solutions-anchor'   => 'Products',
 						'portfolio-hightlights-anchor' => 'Highlights',
 						'portfolio-news-anchor'        => 'News and updates',
 					)
