@@ -157,9 +157,9 @@ get_template_part(
 			wp_reset_postdata();
 			?>
 			<?php else : ?>
-				<p>
+				<div class="no-posts container">
 					<?php esc_html_e( 'Sorry, no posts matched your criteria.' ); ?>
-				</p>
+				</div>
 
 		<?php endif; ?>
 		</div>

@@ -37,7 +37,7 @@ if ( empty ( $args['title'] ) ||
 
         </div>
     </div>
-    <div class="circle-container">
+    <div class="circle-container-quarter">
         <div class="circle">
             <div class="quarter"></div>
             <div class="cut"></div>
