@@ -78,7 +78,7 @@
 				<?php } else { ?>   
 					<div class="col-lg-6 col-md-12 mb-4 second">
 						<div class="card mb-5 card-gb">
-							<div class="cat-date-next">
+							<div class="cat-date-next one">
 								<p class="cat-date date-mobile"><?php echo get_the_date( get_option( 'date_format' ) ); ?>
 									<?php
 									if ( ! empty( $categories ) ) {
@@ -87,12 +87,12 @@
 									?>
 								</p>
 							</div>
-							<div class="img-shadow">
+							<div class="img-shadow two">
 								<div class="card-rectangle"></div>                          
 								<img class="card-img-next small-img" src="<?php echo $featured_img_url_m; ?>">
 								<img class="card-img-next large-img" src="<?php echo $featured_img_url; ?>">
 							</div>
-							<div class="card-body">
+							<div class="card-body three">
 								<h4 class="card-title-next"><a href="<?php echo get_permalink( $post->id ); ?>"><?php the_title(); ?></a></h4>
 								<?php
 								if ( ! empty( $post_meta['blog_meta']['buttontext'] ) ) {
