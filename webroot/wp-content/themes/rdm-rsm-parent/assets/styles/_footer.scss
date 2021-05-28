@@ -30,6 +30,9 @@ footer {
   .footer-legal-heading {
     text-decoration: none;
     padding-inline-start: 40px;
+    @media (max-width: 575.98px) {
+      padding-inline-start: 0px;
+    }
   }
 
   .social-icons li {

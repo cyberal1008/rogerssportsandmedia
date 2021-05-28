@@ -56,6 +56,9 @@
           }
           h3 {
             min-height: 2.75em;
+            @media (max-width: 575.98px) {
+              padding-right: 1em;
+            }
           }
           img {
             width: 297px;
