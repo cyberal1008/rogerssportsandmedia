@@ -25,7 +25,7 @@
 			'title'       => 'WHO WE ARE',
 			'description' => 'We&rsquo;re reimaging the future of sports and media by innovating at the intersection of data, technology, and audience engagement.',
 			'more'        => array(
-				'url'  => get_home_url( null, './who-we-are' ), // @todo replace with blog id when available
+				'url'  => get_home_url( null, './who-we-are/who-we-are/' ), // @todo replace with blog id when available
 				'text' => 'Discover RSM',
 			),
 			'image_url'   => get_theme_mod( 'image_url_logos' ),
