@@ -46,6 +46,12 @@ class PageMeta {
 						'label'             => __( "About Section Brightcove Video ID", RSM_BROADCAST_LOCALE ),
 						'description'       => __( "", RSM_BROADCAST_LOCALE )
 					),
+					array(
+						'id'                => 'solutions_label',
+						'type'              => 'text',
+						'label'             => __( "Label for the Programming/Solutions section", RSM_BROADCAST_LOCALE ),
+						'description'       => __( "", RSM_BROADCAST_LOCALE )
+					),
 				),
 			),
 			array(

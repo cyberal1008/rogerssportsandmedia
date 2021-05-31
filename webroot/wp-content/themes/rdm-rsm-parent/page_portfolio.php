@@ -10,6 +10,27 @@
 get_header();
 global $post;
 $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, true );
+$anchors   = array( 'portfolio-about' => 'About' );
+
+$solutions_anchor_label = 'Solutions';
+if ( ! empty( $page_meta['broadcast'] ) && ! empty ( $page_meta['broadcast']['solutions_label'] ) ) {
+	$solutions_anchor_label = $page_meta['broadcast']['solutions_label'];
+}
+
+$solutions_exists = ! empty( $page_meta['zones'] ) && ! empty( $page_meta['zones']['solutions'] );
+if ( $solutions_exists || stripos( get_the_title(), 'radio' ) !== false || stripos( get_the_title(), 'television' ) !== false ) {
+	$anchors['portfolio-grid-anchor'] = $solutions_anchor_label;
+}
+
+$highlights_exists = ! empty( $page_meta['zones'] ) && ! empty( $page_meta['zones']['highlights'] );
+if ( $highlights_exists ) {
+	$anchors['portfolio-hightlights-anchor'] = 'Highlights';
+}
+
+$whats_happening_exists = ! empty( $page_meta['zones'] ) && ! empty( $page_meta['zones']['whats_happening'] );
+if ( $whats_happening_exists ) {
+	$anchors['portfolio-news-anchor'] = 'News and updates';
+}
 ?>
     <div class="portfolio-main">
         <div class="portfolio-header jumbotron j-main d-flex justify-content-center align-items-center">
@@ -28,72 +49,12 @@ $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, tr
         </div>
         <div class="portfolio-anchors">
 			<?php
-			if ( stripos( get_the_title(), 'television' ) !== false ) {
-				get_template_part(
-					'template-parts/portfolio',
-					'anchors',
-					array(
-						'portfolio-about'              => 'About',
-						'portfolio-grid-anchor'        => 'Programming',
-						'portfolio-hightlights-anchor' => 'Highlights',
-						'portfolio-news-anchor'        => 'News and updates',
-					)
-				);
-			} elseif ( stripos( get_the_title(), 'radio' ) !== false ) {
-				get_template_part(
-					'template-parts/portfolio',
-					'anchors',
-					array(
-						'portfolio-about'              => 'About',
-						'portfolio-grid-anchor'        => 'Stations and Podcasts',
-						'portfolio-hightlights-anchor' => 'Highlights',
-						'portfolio-news-anchor'        => 'News and updates',
-					)
-				);
-			} elseif ( stripos( get_the_title(), 'sports' ) !== false ) {
-				get_template_part(
-					'template-parts/portfolio',
-					'anchors',
-					array(
-						'portfolio-about'              => 'About',
-						'portfolio-solutions-anchor'   => 'Our Sports',
-						'portfolio-hightlights-anchor' => 'Highlights',
-						'portfolio-news-anchor'        => 'News and updates',
-					)
-				);
-			} elseif ( stripos( get_the_title(), 'advertising' ) !== false ) {
-				get_template_part(
-					'template-parts/portfolio',
-					'anchors',
-					array(
-						'portfolio-about'              => 'About',
-						'portfolio-solutions-anchor'   => 'Products',
-						'portfolio-hightlights-anchor' => 'Highlights',
-						'portfolio-news-anchor'        => 'News and updates',
-					)
-				);
-			}elseif ( stripos( get_the_title(), 'shopping' ) !== false ) {
-					get_template_part(
-						'template-parts/portfolio',
-						'anchors',
-						array(
-							'portfolio-about'              => 'About',
-							'portfolio-hightlights-anchor' => 'Highlights',
-							'portfolio-news-anchor'        => 'News and updates',
-						)
-					);
-			} else {
-				get_template_part(
-					'template-parts/portfolio',
-					'anchors',
-					array(
-						'portfolio-about'              => 'About',
-						'portfolio-solutions-anchor'   => 'Solutions',
-						'portfolio-hightlights-anchor' => 'Highlights',
-						'portfolio-news-anchor'        => 'News and updates',
-					)
-				);
-			}
+			get_template_part(
+				'template-parts/portfolio',
+				'anchors',
+				$anchors
+			);
+
 			?>
         </div>
 		<?php
@@ -125,7 +86,8 @@ $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, tr
 					'template-parts/portfolio',
 					'television',
 					array(
-						'page_meta' => $page_meta,
+						'page_meta'     => $page_meta,
+						'section_title' => $solutions_anchor_label
 					)
 				);
 			} else if ( stripos( get_the_title(), 'radio' ) !== false ) {
@@ -133,17 +95,19 @@ $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, tr
 					'template-parts/portfolio',
 					'radio',
 					array(
-						'page_id' => get_the_ID(),
+						'page_id'       => get_the_ID(),
+						'section_title' => $solutions_anchor_label
 					)
 				);
 			} else {
-				if ( ! empty( $page_meta['zones'] ) && ! empty( $page_meta['zones']['solutions'] ) ) {
+				if ( $solutions_exists ) {
 					get_template_part(
 						'template-parts/portfolio',
 						'solutions',
 						array(
-							'zone'      => $page_meta['zones']['solutions'],
-							'page_meta' => $page_meta,
+							'zone'          => $page_meta['zones']['solutions'],
+							'page_meta'     => $page_meta,
+							'section_title' => $solutions_anchor_label
 						)
 					);
 				}
@@ -153,43 +117,40 @@ $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, tr
         </div>
 		<?php
 		if ( function_exists( 'z_get_posts_in_zone' )
-		     && ! empty( $page_meta['zones'] ) ) {
+		     && $highlights_exists ) {
 
-			if ( ! empty( $page_meta['zones']['highlights'] ) ) {
-				$highlights = z_get_posts_in_zone( $page_meta['zones']['highlights'] );
-				if ( count( $highlights ) > 2 ) {
-					?>
-                    <div class="container portfolio-highlights">
-                        <div class="row portfolio-highlights-header pt-5">
-                            <div class="col-12">
-                                <h2 id="portfolio-hightlights-anchor">Highlights</h2>
+			$highlights = z_get_posts_in_zone( $page_meta['zones']['highlights'] );
+			if ( count( $highlights ) > 2 ) {
+				?>
+                <div class="container portfolio-highlights">
+                    <div class="row portfolio-highlights-header pt-5">
+                        <div class="col-12">
+                            <h2 id="portfolio-hightlights-anchor">Highlights</h2>
+                        </div>
+                    </div>
+					<?php
+					foreach ( $highlights as $key => $highlight ) {
+						?>
+                        <div class="row portfolio-highlights-item justify-content-md-between py-5 mb-5<?php echo ( ( $key + 1 ) % 2 !== 0 ) ? ' flex-md-row-reverse' : '' ?>">
+                            <div class="col-8 mx-auto mb-3 col-md-6 mb-md-auto mx-md-0 col-lg-4">
+								<?php echo wp_get_attachment_image( get_post_thumbnail_id( $highlight->ID ), 'portrait' ); ?>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6 d-flex align-items-md-center">
+                                <div>
+                                    <h3><?php echo esc_html( $highlight->post_title ); ?></h3>
+                                    <p><?php echo esc_html( $highlight->post_content ); ?></p>
+                                </div>
                             </div>
                         </div>
 						<?php
-						foreach ( $highlights as $key => $highlight ) {
-							?>
-                            <div class="row portfolio-highlights-item justify-content-md-between py-5 mb-5<?php echo ( ( $key + 1 ) % 2 !== 0 ) ? ' flex-md-row-reverse' : '' ?>">
-                                <div class="col-8 mx-auto mb-3 col-md-6 mb-md-auto mx-md-0 col-lg-4">
-									<?php echo wp_get_attachment_image( get_post_thumbnail_id( $highlight->ID ), 'portrait' ); ?>
-                                </div>
-                                <div class="col-12 col-md-6 col-lg-6 d-flex align-items-md-center">
-                                    <div>
-                                        <h3><?php echo esc_html( $highlight->post_title ); ?></h3>
-                                        <p><?php echo esc_html( $highlight->post_content ); ?></p>
-                                    </div>
-                                </div>
-                            </div>
-							<?php
-						}
-						?>
-                    </div>
-					<?php
-				}
-
-
+					}
+					?>
+                </div>
+				<?php
 			}
 
-			if ( ! empty( $page_meta['zones']['whats_happening'] ) ) {
+
+			if ( $whats_happening_exists ) {
 				$zone = $page_meta['zones']['whats_happening'];
 				$zone = ( function_exists( 'z_get_zone' ) && z_get_zone( $zone ) ) ? $zone : '';
 				get_template_part( 'template-parts/content', 'happening', $zone );
