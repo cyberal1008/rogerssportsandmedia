@@ -13,13 +13,6 @@
 
 <div class="container">
 	<div class="row">
-		<div class="col-md-12">
-			<div class="footer-logo" itemscope itemtype="https://schema.org/Organization">
-						<a class="footer-brand" href="<?php echo esc_url( home_url( '/' ) ); ?>">
-						<img src="<?php echo dirname( get_bloginfo( 'stylesheet_url' ) ); ?>/assets/images/Logo-RSM.svg" width="120"  alt="<?php esc_url( bloginfo( 'name' ) ); ?>">
-						</a>
-					</div>
-				</div>
 		<div class="col-md-8">
 			<?php
 			if ( is_active_sidebar( 'footer-2' ) ) {
@@ -92,7 +85,14 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="footer-copyright d-flex ">
+		<div class="col-md-3 col-lg-2">
+			<div class="footer-logo" itemscope itemtype="https://schema.org/Organization">
+				<a class="footer-brand" href="<?php echo esc_url( home_url( '/' ) ); ?>">
+				<img src="<?php echo dirname( get_bloginfo( 'stylesheet_url' ) ); ?>/assets/images/Logo-RSM.svg" width="120"  alt="<?php esc_url( bloginfo( 'name' ) ); ?>">
+				</a>
+			</div>
+		</div>
+		<div class="footer-copyright d-flex col-md-9 col-lg-10">
 			<div class="site-info">
 				&copy; <?php echo date( 'Y' ); ?> <?php echo '<a href="' . home_url() . '">' . get_bloginfo( 'name' ) . '</a>'; ?>. All rights reserved.
 			</div >
