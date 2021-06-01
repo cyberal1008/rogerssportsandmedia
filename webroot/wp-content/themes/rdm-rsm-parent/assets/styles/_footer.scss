@@ -17,7 +17,7 @@ footer {
   }
 
   .footer-logo {
-    margin-bottom: 40px;
+    margin-bottom: 20px;
   }
   .footer-nav-title,
   .menu .menu-item-has-children > a,
@@ -102,6 +102,8 @@ footer {
   }
   .site-info {
     font-family: $ted-next;
+    vertical-align: middle;
+    display: table-cell;
   }
   .site-info a:hover {
     text-decoration: none;
@@ -110,5 +112,7 @@ footer {
   .footer-copyright {
     margin-bottom: 25px;
     padding-left: 15px;
+    display: table!important;
+    height: 60px;
   }
 }
