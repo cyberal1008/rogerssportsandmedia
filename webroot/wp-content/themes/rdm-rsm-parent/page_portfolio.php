@@ -148,14 +148,14 @@ if ( $whats_happening_exists ) {
                 </div>
 				<?php
 			}
-
-
-			if ( $whats_happening_exists ) {
-				$zone = $page_meta['zones']['whats_happening'];
-				$zone = ( function_exists( 'z_get_zone' ) && z_get_zone( $zone ) ) ? $zone : '';
-				get_template_part( 'template-parts/content', 'happening', $zone );
-			}
 		}
+
+		if ( $whats_happening_exists ) {
+			$zone = $page_meta['zones']['whats_happening'];
+			$zone = ( function_exists( 'z_get_zone' ) && z_get_zone( $zone ) ) ? $zone : '';
+			get_template_part( 'template-parts/content', 'happening', $zone );
+		}
+		
 		?>
     </div>
 <?php
