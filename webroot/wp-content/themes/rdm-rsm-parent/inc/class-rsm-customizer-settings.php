@@ -68,22 +68,21 @@ if ( ! class_exists( 'RSM_Customizer_Settings' ) ) {
 					)
 				)
 			);
-
+			// who we are.
 			$wp_customize->add_section(
 				'rsm_images_home',
 				array(
-					'title'       => __( 'Join and About section', 'rsm_parent' ),
+					'title'       => __( 'Who We Are section', 'rsm_parent' ),
 					'priority'    => 50,
 					'capability'  => 'edit_theme_options',
-					'description' => __( 'Add images for Join and About sections.', 'rsm_parent' ),
+					'description' => __( 'Add details to Who We Are section.', 'rsm_parent' ),
 					'panel'       => 'header_settings',
 				)
 			);
 
 			$wp_customize->add_setting(
-				'image_url_join',
+				'wwa_title',
 				array(
-					'default'    => 'Join our Team image url 577x433',
 					'type'       => 'theme_mod',
 					'capability' => 'edit_theme_options',
 					'transport'  => 'refresh',
@@ -93,9 +92,75 @@ if ( ! class_exists( 'RSM_Customizer_Settings' ) ) {
 			$wp_customize->add_control(
 				new WP_Customize_Control(
 					$wp_customize,
-					'image_url_join',
+					'wwa_title',
 					array(
-						'label'    => __( 'Add images for Join our Team section.', 'rsm_parent' ),
+						'label'    => __( 'Add Title.', 'rsm_parent' ),
+						'section'  => 'rsm_images_home',
+						'type'     => 'text',
+						'priority' => 5,
+					)
+				)
+			);
+
+			$wp_customize->add_setting(
+				'wwa_description',
+				array(
+					'type'       => 'theme_mod',
+					'capability' => 'edit_theme_options',
+					'transport'  => 'refresh',
+				)
+			);
+
+			$wp_customize->add_control(
+				new WP_Customize_Control(
+					$wp_customize,
+					'wwa_description',
+					array(
+						'label'    => __( 'Add Description.', 'rsm_parent' ),
+						'section'  => 'rsm_images_home',
+						'type'     => 'textarea',
+						'priority' => 5,
+					)
+				)
+			);
+
+			$wp_customize->add_setting(
+				'wwa_cta_url',
+				array(
+					'type'       => 'theme_mod',
+					'capability' => 'edit_theme_options',
+					'transport'  => 'refresh',
+				)
+			);
+
+			$wp_customize->add_control(
+				new WP_Customize_Control(
+					$wp_customize,
+					'wwa_cta_url',
+					array(
+						'label'    => __( 'Add button URL.', 'rsm_parent' ),
+						'section'  => 'rsm_images_home',
+						'type'     => 'text',
+						'priority' => 5,
+					)
+				)
+			);
+
+			$wp_customize->add_setting(
+				'wwa_cta_text',
+				array(
+					'type'       => 'theme_mod',
+					'capability' => 'edit_theme_options',
+					'transport'  => 'refresh',
+				)
+			);
+
+			$wp_customize->add_control(
+				new WP_Customize_Control(
+					$wp_customize,
+					'wwa_cta_text',
+					array(
+						'label'    => __( 'Add button text.', 'rsm_parent' ),
 						'section'  => 'rsm_images_home',
 						'type'     => 'text',
 						'priority' => 5,
@@ -106,7 +171,7 @@ if ( ! class_exists( 'RSM_Customizer_Settings' ) ) {
 			$wp_customize->add_setting(
 				'image_url_logos',
 				array(
-					'default'    => 'Logos image url 577x433',
+					'default'    => 'Who We Are image url 577x433',
 					'type'       => 'theme_mod',
 					'capability' => 'edit_theme_options',
 					'transport'  => 'refresh',
@@ -118,8 +183,143 @@ if ( ! class_exists( 'RSM_Customizer_Settings' ) ) {
 					$wp_customize,
 					'image_url_logos',
 					array(
-						'label'    => __( 'Add images for Who We Are section.', 'rsm_parent' ),
+						'label'    => __( 'Add image URL.', 'rsm_parent' ),
 						'section'  => 'rsm_images_home',
+						'type'     => 'text',
+						'priority' => 5,
+					)
+				)
+			);
+
+			// What We Do.
+			$wp_customize->add_section(
+				'rsm_wwd_home',
+				array(
+					'title'       => __( 'What We Do section', 'rsm_parent' ),
+					'priority'    => 50,
+					'capability'  => 'edit_theme_options',
+					'description' => __( 'Add details to What We Do section.', 'rsm_parent' ),
+					'panel'       => 'header_settings',
+				)
+			);
+
+			$wp_customize->add_setting(
+				'wwd_title',
+				array(
+					'type'       => 'theme_mod',
+					'capability' => 'edit_theme_options',
+					'transport'  => 'refresh',
+				)
+			);
+
+			$wp_customize->add_control(
+				new WP_Customize_Control(
+					$wp_customize,
+					'wwd_title',
+					array(
+						'label'    => __( 'Add Title.', 'rsm_parent' ),
+						'section'  => 'rsm_wwd_home',
+						'type'     => 'text',
+						'priority' => 5,
+					)
+				)
+			);
+
+			$wp_customize->add_setting(
+				'wwd_description',
+				array(
+					'type'       => 'theme_mod',
+					'capability' => 'edit_theme_options',
+					'transport'  => 'refresh',
+				)
+			);
+
+			$wp_customize->add_control(
+				new WP_Customize_Control(
+					$wp_customize,
+					'wwd_description',
+					array(
+						'label'    => __( 'Add Description.', 'rsm_parent' ),
+						'section'  => 'rsm_wwd_home',
+						'type'     => 'textarea',
+						'priority' => 5,
+					)
+				)
+			);
+
+			$wp_customize->add_setting(
+				'wwd_cta_url',
+				array(
+					'type'       => 'theme_mod',
+					'capability' => 'edit_theme_options',
+					'transport'  => 'refresh',
+				)
+			);
+
+			$wp_customize->add_control(
+				new WP_Customize_Control(
+					$wp_customize,
+					'wwd_cta_url',
+					array(
+						'label'    => __( 'Add button URL.', 'rsm_parent' ),
+						'section'  => 'rsm_wwd_home',
+						'type'     => 'text',
+						'priority' => 5,
+					)
+				)
+			);
+
+			$wp_customize->add_setting(
+				'wwd_cta_text',
+				array(
+					'type'       => 'theme_mod',
+					'capability' => 'edit_theme_options',
+					'transport'  => 'refresh',
+				)
+			);
+
+			$wp_customize->add_control(
+				new WP_Customize_Control(
+					$wp_customize,
+					'wwd_cta_text',
+					array(
+						'label'    => __( 'Add button text.', 'rsm_parent' ),
+						'section'  => 'rsm_wwd_home',
+						'type'     => 'text',
+						'priority' => 5,
+					)
+				)
+			);
+
+			// Join our team.
+			$wp_customize->add_section(
+				'rsm_images_join',
+				array(
+					'title'       => __( 'Join our team section', 'rsm_parent' ),
+					'priority'    => 50,
+					'capability'  => 'edit_theme_options',
+					'description' => __( 'Add image.', 'rsm_parent' ),
+					'panel'       => 'header_settings',
+				)
+			);
+
+			$wp_customize->add_setting(
+				'image_url_join',
+				array(
+					'default'    => 'Join our team image url 577x433',
+					'type'       => 'theme_mod',
+					'capability' => 'edit_theme_options',
+					'transport'  => 'refresh',
+				)
+			);
+
+			$wp_customize->add_control(
+				new WP_Customize_Control(
+					$wp_customize,
+					'image_url_join',
+					array(
+						'label'    => __( 'Add images to Join our team section.', 'rsm_parent' ),
+						'section'  => 'rsm_images_join',
 						'type'     => 'text',
 						'priority' => 5,
 					)

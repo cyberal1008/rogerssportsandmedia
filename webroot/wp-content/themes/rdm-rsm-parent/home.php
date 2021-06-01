@@ -22,11 +22,11 @@
 		'template-parts/content',
 		'about',
 		array(
-			'title'       => 'WHO WE ARE',
-			'description' => 'We&rsquo;re reimaging the future of sports and media by innovating at the intersection of data, technology, and audience engagement.',
+			'title'       => get_theme_mod( 'wwa_title' ),
+			'description' => get_theme_mod( 'wwa_description' ),
 			'more'        => array(
-				'url'  => get_home_url( null, './who-we-are/who-we-are/' ), // @todo replace with blog id when available
-				'text' => 'Discover RSM',
+				'url'  => get_theme_mod( 'wwa_cta_url' ),
+				'text' => get_theme_mod( 'wwa_cta_text' ),
 			),
 			'image_url'   => get_theme_mod( 'image_url_logos' ),
 		)
@@ -37,11 +37,11 @@
 		'template-parts/content',
 		'products',
 		array(
-			'title'       => 'WHAT WE DO',
-			'description' => 'With an extensive collection of media assets, we use our launch pad to help amplify your brand. Rogers Sports & Media reaches 96% of Canadians through our various platforms. We are deeply committed to using our media megaphone to give back and help make a positive difference in communities across the country. We are proud to help ensure diverse voices are heard.',
+			'title'       => get_theme_mod( 'wwd_title' ),
+			'description' => get_theme_mod( 'wwd_description' ),
 			'more'        => array(
-				'url'  => get_home_url( null, './what-we-do' ), // @todo replace with blog id when available
-				'text' => 'Our products',
+				'url'  => get_theme_mod( 'wwd_cta_url' ),
+				'text' => get_theme_mod( 'wwd_cta_text' ),
 			),
 		)
 	);
