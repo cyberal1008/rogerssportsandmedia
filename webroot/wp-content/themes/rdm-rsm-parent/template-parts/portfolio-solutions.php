@@ -11,7 +11,7 @@ if ( ! empty ( $args['zone'] ) && ! empty ( $args['page_meta'] ) ) {
         <div class="container portfolio-solutions">
             <div class="row portfolio-solutions-header py-5">
                 <div class="col-12">
-                    <h2 id="portfolio-solutions-anchor">Solutions</h2>
+                    <h2 id="portfolio-grid-anchor"><?php echo $args['section_title']; ?></h2>
                 </div>
             </div>
             <div class="row solutions-grid pb-5">
