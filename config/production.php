@@ -1,5 +1,5 @@
 <?php
-define( 'DOMAIN_CURRENT_SITE', 'preprod-www.rogerssportsandmedia.com' );
+define( 'DOMAIN_CURRENT_SITE', 'www.rogerssportsandmedia.com' );
 // ** MySQL settings ** //
 define( 'DB_NAME', getenv( 'RDM_RDS_DATABASE' ) );
 define( 'DB_USER', getenv( 'RDM_RDS_USERNAME' ) );
