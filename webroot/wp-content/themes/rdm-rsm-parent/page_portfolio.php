@@ -10,10 +10,10 @@
 get_header();
 global $post;
 $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, true );
-$anchors   = array( 'portfolio-about' => 'About' );
+$anchors   = array( 'portfolio-about' => 'ABOUT' );
 
 $solutions_anchor_label = 'Solutions';
-if ( ! empty( $page_meta['broadcast'] ) && ! empty ( $page_meta['broadcast']['solutions_label'] ) ) {
+if ( ! empty( $page_meta['broadcast'] ) && ! empty( $page_meta['broadcast']['solutions_label'] ) ) {
 	$solutions_anchor_label = $page_meta['broadcast']['solutions_label'];
 }
 
@@ -32,22 +32,22 @@ if ( $whats_happening_exists ) {
 	$anchors['portfolio-news-anchor'] = 'News and updates';
 }
 ?>
-    <div class="portfolio-main">
-        <div class="portfolio-header jumbotron j-main d-flex justify-content-center align-items-center">
-            <div>
+	<div class="portfolio-main">
+		<div class="portfolio-header jumbotron j-main d-flex justify-content-center align-items-center">
+			<div>
 				<?php
 				if ( $post->post_parent ) {
 					?>
-                    <div class="text-center parent-url">
-                        <a href="<?php echo get_permalink( $post->post_parent ); ?>">
+					<div class="text-center parent-url">
+						<a href="<?php echo get_permalink( $post->post_parent ); ?>">
 							<?php echo get_the_title( $post->post_parent ); ?>
-                        </a>
-                    </div>
+						</a>
+					</div>
 				<?php } ?>
-                <h1 class="display-3 j-title text-center"><?php echo esc_html( get_the_title() ); ?></h1>
-            </div>
-        </div>
-        <div class="portfolio-anchors">
+				<h1 class="display-3 j-title text-center"><?php echo esc_html( get_the_title() ); ?></h1>
+			</div>
+		</div>
+		<div class="portfolio-anchors">
 			<?php
 			get_template_part(
 				'template-parts/portfolio',
@@ -56,16 +56,17 @@ if ( $whats_happening_exists ) {
 			);
 
 			?>
-        </div>
+		</div>
 		<?php
 		get_template_part(
 			'template-parts/content',
 			'about',
 			array(
-				'title'       => 'About',
+				'title'       => 'ABOUT',
 				'description' => get_the_content(),
-				'image_url'   => $page_meta['broadcast']['about_image_uri']
-			) );
+				'image_url'   => $page_meta['broadcast']['about_image_uri'],
+			)
+		);
 
 		if ( $page_meta['broadcast'] && $page_meta['broadcast']['about_video_id'] ) {
 			get_template_part(
@@ -73,13 +74,13 @@ if ( $whats_happening_exists ) {
 				'video',
 				array(
 					'video_id' => $page_meta['broadcast']['about_video_id'],
-				) );
-
+				)
+			);
 		}
 
 		?>
-        <div class="w-100 p-5"></div>
-        <div class="container portfolio-page">
+		<div class="w-100 p-5"></div>
+		<div class="container portfolio-page">
 			<?php
 			if ( get_post_field( 'post_name' ) === 'television-and-streaming' ) {
 				get_template_part(
@@ -87,16 +88,16 @@ if ( $whats_happening_exists ) {
 					'television',
 					array(
 						'page_meta'     => $page_meta,
-						'section_title' => $solutions_anchor_label
+						'section_title' => $solutions_anchor_label,
 					)
 				);
-			} else if ( get_post_field( 'post_name' ) === 'radio-podcasts' ) {
+			} elseif ( get_post_field( 'post_name' ) === 'radio-podcasts' ) {
 				get_template_part(
 					'template-parts/portfolio',
 					'radio',
 					array(
 						'page_id'       => get_the_ID(),
-						'section_title' => $solutions_anchor_label
+						'section_title' => $solutions_anchor_label,
 					)
 				);
 			} else {
@@ -107,45 +108,44 @@ if ( $whats_happening_exists ) {
 						array(
 							'zone'          => $page_meta['zones']['solutions'],
 							'page_meta'     => $page_meta,
-							'section_title' => $solutions_anchor_label
+							'section_title' => $solutions_anchor_label,
 						)
 					);
 				}
 			}
 			?>
 
-        </div>
+		</div>
 		<?php
 		if ( function_exists( 'z_get_posts_in_zone' )
-		     && $highlights_exists ) {
-
+			 && $highlights_exists ) {
 			$highlights = z_get_posts_in_zone( $page_meta['zones']['highlights'] );
 			if ( count( $highlights ) > 2 ) {
 				?>
-                <div class="container portfolio-highlights">
-                    <div class="row portfolio-highlights-header pt-5">
-                        <div class="col-12">
-                            <h2 id="portfolio-hightlights-anchor">Highlights</h2>
-                        </div>
-                    </div>
+				<div class="container portfolio-highlights">
+					<div class="row portfolio-highlights-header pt-5">
+						<div class="col-12">
+							<h2 id="portfolio-hightlights-anchor">Highlights</h2>
+						</div>
+					</div>
 					<?php
 					foreach ( $highlights as $key => $highlight ) {
 						?>
-                        <div class="row portfolio-highlights-item justify-content-md-between py-5 mb-5<?php echo ( ( $key + 1 ) % 2 !== 0 ) ? ' flex-md-row-reverse' : '' ?>">
-                            <div class="col-8 mx-auto mb-3 col-md-6 mb-md-auto mx-md-0 col-lg-4">
+						<div class="row portfolio-highlights-item justify-content-md-between py-5 mb-5<?php echo ( ( $key + 1 ) % 2 !== 0 ) ? ' flex-md-row-reverse' : ''; ?>">
+							<div class="col-8 mx-auto mb-3 col-md-6 mb-md-auto mx-md-0 col-lg-4">
 								<?php echo wp_get_attachment_image( get_post_thumbnail_id( $highlight->ID ), 'portrait' ); ?>
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-6 d-flex align-items-md-center">
-                                <div>
-                                    <h3><?php echo esc_html( $highlight->post_title ); ?></h3>
-                                    <p><?php echo esc_html( $highlight->post_content ); ?></p>
-                                </div>
-                            </div>
-                        </div>
+							</div>
+							<div class="col-12 col-md-6 col-lg-6 d-flex align-items-md-center">
+								<div>
+									<h3><?php echo esc_html( $highlight->post_title ); ?></h3>
+									<p><?php echo esc_html( $highlight->post_content ); ?></p>
+								</div>
+							</div>
+						</div>
 						<?php
 					}
 					?>
-                </div>
+				</div>
 				<?php
 			}
 		}
@@ -155,9 +155,9 @@ if ( $whats_happening_exists ) {
 			$zone = ( function_exists( 'z_get_zone' ) && z_get_zone( $zone ) ) ? $zone : '';
 			get_template_part( 'template-parts/content', 'happening', $zone );
 		}
-		
+
 		?>
-    </div>
+	</div>
 <?php
 get_footer();
 
