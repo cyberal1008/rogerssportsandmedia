@@ -30,7 +30,7 @@ footer {
   .footer-legal-heading {
     text-decoration: none;
     padding-inline-start: 40px;
-    @media (max-width: 767.98px) {
+    @include media-breakpoint-down(sm) {
       padding-inline-start: 0px;
     }
   }
@@ -79,7 +79,7 @@ footer {
   .widget-1 li {
     text-decoration: underline;
   }
-  @media (max-width: 768px) {
+  @include media-breakpoint-down(sm) {
     .sub-menu li {
       display: block;
     }
