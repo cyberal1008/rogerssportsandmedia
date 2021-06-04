@@ -1,6 +1,5 @@
 $(document).ready(function () {
     var programming_item = $('.radio-grid .radio-item');
-    
     if(programming_item.length > 0) {
 
         programming_item.click(function () {
@@ -28,7 +27,6 @@ $(document).ready(function () {
         });
         
         $("input.selectopt").change(function () {
-
             var category_term = $('input[name="radio-category"]:checked').val();
             var region_term = $('input[name="region"]:checked').val();
             $('.grid-filters .select').blur();
@@ -57,6 +55,13 @@ $(document).ready(function () {
                 $('.programming-none').show();
             }
         });
+        /* 
+        This is a temporary update for radio portfolio to load "featured stations and podcasts" as default selection on page load
+        as per RSMW-117
+        @TODO: redesign the programming grid function, give ability to order drop down filter "types" in the programming grid
+        */
+        $("input.selectopt#radio-category-featured-stations-and-podcasts").prop('checked', true);
+        $("input.selectopt").trigger('change');
     }
     else{
         $('.programming-none').show();
