@@ -1,4 +1,4 @@
-	<div class="container">
+	<div class="container pt-4">
 		<?php if ( is_single() ) { ?>
 			<div class="page-header single-header">
 				<h1>SIMILAR READS</h1>      
@@ -64,7 +64,7 @@
 									if ( ! empty( $post_meta['blog_meta']['buttontext'] ) ) {
 										?>
 									<a href="<?php echo $post_meta['blog_meta']['buttonurl']; ?>" class="card-button"><?php echo $post_meta['blog_meta']['buttontext']; ?></a>
-								<?php } ?>
+									<?php } ?>
 								</div>
 							</div>
 							<div class="col-md order-first order-md-2">
@@ -77,7 +77,7 @@
 					</div>
 				<?php } else { ?>   
 					<div class="col-lg-6 col-md-12 mb-4 second">
-						<div class="card mb-5 card-gb">
+						<div class="card card-gb">
 							<div class="cat-date-next one">
 								<p class="cat-date date-mobile"><?php echo get_the_date( get_option( 'date_format' ) ); ?>
 									<?php
