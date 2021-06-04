@@ -1,4 +1,4 @@
-	<div class="container">
+	<div class="container pt-4">
 		<?php if ( is_single() ) { ?>
 			<div class="page-header single-header">
 				<h1>SIMILAR READS</h1>      
@@ -64,7 +64,7 @@
 									if ( ! empty( $post_meta['blog_meta']['buttontext'] ) ) {
 										?>
 									<a href="<?php echo $post_meta['blog_meta']['buttonurl']; ?>" class="card-button"><?php echo $post_meta['blog_meta']['buttontext']; ?></a>
-								<?php } ?>
+									<?php } ?>
 								</div>
 							</div>
 							<div class="col-md order-first order-md-2">

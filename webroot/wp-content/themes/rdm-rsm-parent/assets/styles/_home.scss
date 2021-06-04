@@ -1,4 +1,4 @@
-.join-our-team{
+.join-our-team {
 	background-color: #333333;
     margin-left: calc(-50vw + 50%);
     margin-right: calc(-50vw + 50%);
@@ -44,9 +44,15 @@
 		.jot-main {
 			padding: 2rem 2rem 6rem!important;
 		}
+		.join-our-team {
+			margin-top: 3rem;
+		}
 	}
 
-	@media (max-width: 768px) {
+	@media (max-width: 767.98px) {
+		.join-our-team {
+			margin-top: 1.5rem;
+		}
 		.jot-title {
 			font-size: 52px!important;
 		    letter-spacing: -1px!important;
