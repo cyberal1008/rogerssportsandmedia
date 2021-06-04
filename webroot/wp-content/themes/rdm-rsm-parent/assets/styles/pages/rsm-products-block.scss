@@ -11,14 +11,13 @@
 
     .product-title {
       text-transform: uppercase;
-      padding-bottom: 16px;
-      font-size: 32px;
-      line-height: 30px;
-      @include media-breakpoint-up(sm) {
-        font-size: 52px;
-        line-height: 50px;
-      }
-      
+      //padding-bottom: 16px;
+      //font-size: 32px;
+      //line-height: 30px;
+      //@include media-breakpoint-up(sm) {
+      //  font-size: 52px;
+      //  line-height: 50px;
+      //}
     }
 
     .product-url {

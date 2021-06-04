@@ -17,15 +17,12 @@
   }
 
   h2 {
-    @include heading-style;
-    font-size: 56px;
-    line-height: 50px;
+    text-transform: uppercase;
+
   }
 
   h3 {
-    @include heading-style;
-    font-size: 36px;
-    line-height: 32px;
+    text-transform: uppercase;
   }
 
   .portfolio-header {

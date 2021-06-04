@@ -1,7 +1,7 @@
 	<div class="container pt-4">
 		<?php if ( is_single() ) { ?>
 			<div class="page-header single-header">
-				<h1>SIMILAR READS</h1>      
+				<h2>similar reads</h2>      
 			</div>
 		<?php } else { ?>
 		<div class="tri">
@@ -9,7 +9,7 @@
 			<div class="tri-element"></div>
 		</div>
 		<div class="page-header">
-			<h1 id="portfolio-news-anchor">WHAT’S HAPPENING</h1>      
+			<h2 id="portfolio-news-anchor">what&lsquo;S happening</h2>      
 		</div>
 		<p class="page-header-desc">Get the latest news from Rogers Sports & Media. </p>
 			<?php

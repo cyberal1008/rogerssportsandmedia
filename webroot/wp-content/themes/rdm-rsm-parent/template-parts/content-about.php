@@ -12,7 +12,7 @@ if ( empty ( $args['title'] ) ||
         <div class="row ml-2 ml-md-0<?php echo empty ( $args['image_url'] ) ? ' justify-content-sm-center': '' ?>">
             <div class="col-md-6 mb-5 my-md-auto<?php echo empty ( $args['image_url'] ) ? ' text-center': '' ?>">
                 <div class="about-container-main">
-                    <h1 class="about-container-title" id="portfolio-about"><?php echo esc_html( $args['title'] ); ?></h1>
+                    <h2 class="about-container-title" id="portfolio-about"><?php echo esc_html( $args['title'] ); ?></h2>
                     <p class="lead about-container-desc"><?php echo esc_html( $args['description'] ); ?></p>
 					<?php
 					if ( ! empty ( $args['more'] ) && ! empty ( $args['more']['url'] ) && ! empty ( $args['more']['text'] ) ) {
