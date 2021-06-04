@@ -8,6 +8,9 @@
   &-container {
     position: relative;
     padding-bottom: 15em;
+    @include media-breakpoint-down(sm) {
+      padding-bottom: 7em;
+    }
     &::before {
       @include overload-bg;
       z-index: 0;
