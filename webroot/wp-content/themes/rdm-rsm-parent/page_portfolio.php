@@ -79,7 +79,7 @@ if ( $whats_happening_exists ) {
 		}
 
 		?>
-		<div class="w-100 p-5"></div>
+		<div class="w-100 p-4"></div>
 		<div class="container portfolio-page">
 			<?php
 			if ( get_post_field( 'post_name' ) === 'television-and-streaming' ) {
@@ -131,7 +131,7 @@ if ( $whats_happening_exists ) {
 					<?php
 					foreach ( $highlights as $key => $highlight ) {
 						?>
-						<div class="row portfolio-highlights-item justify-content-md-between py-5 mb-5<?php echo ( ( $key + 1 ) % 2 !== 0 ) ? ' flex-md-row-reverse' : ''; ?>">
+						<div class="row portfolio-highlights-item justify-content-md-between py-5 mb-4<?php echo ( ( $key + 1 ) % 2 !== 0 ) ? ' flex-md-row-reverse' : ''; ?>">
 							<div class="col-8 mx-auto mb-3 col-md-6 mb-md-auto mx-md-0 col-lg-4">
 								<?php echo wp_get_attachment_image( get_post_thumbnail_id( $highlight->ID ), 'portrait' ); ?>
 							</div>
