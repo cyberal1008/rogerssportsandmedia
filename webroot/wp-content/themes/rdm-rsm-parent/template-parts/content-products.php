@@ -35,7 +35,7 @@ if ( has_blocks( $product_page->post_content ) ) {
         <div class="row ml-2 ml-md-0">
             <div class="col-md-6 mb-5 my-md-auto">
                 <div class="products-container-main">
-                    <h1 class="products-container-title"><?php echo esc_html( $args['title'] ); ?></h1>
+                    <h2 class="products-container-title"><?php echo esc_html( $args['title'] ); ?></h2>
                     <p class="lead products-container-desc"><?php echo esc_html( $args['description'] ); ?></p>
                 </div>
             </div>

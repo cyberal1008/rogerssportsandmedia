@@ -10,7 +10,7 @@
 get_header();
 global $post;
 $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, true );
-$anchors   = array( 'portfolio-about' => 'ABOUT' );
+$anchors   = array( 'portfolio-about' => 'About' );
 
 $solutions_anchor_label = 'Solutions';
 if ( ! empty( $page_meta['broadcast'] ) && ! empty( $page_meta['broadcast']['solutions_label'] ) ) {
