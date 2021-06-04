@@ -4,7 +4,7 @@ if ( strpos( $jot_image_url, '://' ) == false && substr( $jot_image_url, 0, 2 ) 
 	$jot_image_url = '/' . $jot_image_url;
 }
 ?>
-<div class="join-our-team">
+<div class="join-our-team my-4">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-5 my-auto">
