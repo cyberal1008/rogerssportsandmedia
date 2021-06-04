@@ -30,7 +30,7 @@ footer {
   .footer-legal-heading {
     text-decoration: none;
     padding-inline-start: 40px;
-    @media (max-width: 575.98px) {
+    @media (max-width: 767.98px) {
       padding-inline-start: 0px;
     }
   }
@@ -83,15 +83,20 @@ footer {
     .sub-menu li {
       display: block;
     }
+    ul,
+    li {
+      line-height: 32px;
+    }
     .menu {
       padding-inline-start: 0px;
     }
+
     .site-info-links {
       .widget-1,
       .widget-3,
       .widget-4,
       .widget-5 {
-        padding-bottom: 30px;
+        padding-bottom: 0px;
       }
     }
   }
