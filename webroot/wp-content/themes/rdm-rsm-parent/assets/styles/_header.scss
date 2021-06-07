@@ -288,7 +288,9 @@ header {
   align-items: center;
   overflow: hidden;
   padding: 2rem 2rem 6rem !important;
-  margin-bottom: 0;
+  @include media-breakpoint-down(sm) {
+    margin-bottom: 0;
+  }
 }
 .j-button:hover {
   text-decoration: underline !important;
