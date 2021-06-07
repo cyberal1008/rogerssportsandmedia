@@ -44,7 +44,18 @@ if ( $whats_happening_exists ) {
 						</a>
 					</div>
 				<?php } ?>
-				<h1 class="display-3 j-title text-center"><?php echo esc_html( get_the_title() ); ?></h1>
+				<h1 class="display-3 j-title text-center">
+                    <?php 
+                    if(get_post_field( 'post_name' ) === 'television-and-streaming'){
+                        ?>
+                        <img src="<?php echo get_template_directory_uri().'/assets/images/logo-upfront.png'?>" alt="Upfronts" />
+                        <?php
+                    }
+                    else{
+	                    echo esc_html( get_the_title() );
+                    }
+                    ?>
+                </h1>
 			</div>
 		</div>
 		<div class="portfolio-anchors">
