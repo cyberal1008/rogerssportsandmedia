@@ -28,6 +28,14 @@
   .portfolio-header {
     &.j-main {
       max-width: 100%;
+      .upfronts{
+        h1{
+          text-indent:-9999px;
+          overflow:hidden;
+          font-size: 1px;
+          line-height: 1px;
+        }
+      }
     }
 
     .parent-url {
