@@ -9,7 +9,7 @@
     position: relative;
     padding-bottom: 15em;
     @include media-breakpoint-down(sm) {
-      padding-bottom: 7em;
+      padding-bottom: 4em;
     }
     &::before {
       @include overload-bg;
@@ -31,6 +31,9 @@
       z-index: 1;
       content: "";
       display: inline-block;
+      @include media-breakpoint-down(sm) {
+        display: none;
+      }
     }
 
     &-main {
