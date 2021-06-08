@@ -182,6 +182,16 @@ header {
     padding-inline-start: 0px;
   }
 }
+@include media-breakpoint-down(sm) {
+  .header-container {
+    height: 76px;
+  }
+}
+@include media-breakpoint-up(md) {
+  .header-container {
+    height: 86px;
+  }
+}    
 .fullscreen-video {
   position: absolute;
   top: 0;
@@ -196,7 +206,7 @@ header {
 }
 @media (min-width: 1024px) {
   #video {
-    width: 100%;
+    //width: 100%;
   }
 }
 @media (max-width: 1024px) {
@@ -228,11 +238,8 @@ header {
     font-size: 24px !important;
     line-height: 36px;
   }
-  .j-main {
-    padding: 2rem 2rem 6rem !important;
-  }
 }
-@media (max-width: 768px) {
+@media (max-width: 767.98px) {
   .element {
     width: 250px;
     height: 250px;
@@ -249,10 +256,6 @@ header {
   .j-desc {
     font-size: 18px !important;
     line-height: 27px;
-  }
-  .j-main {
-    padding: 4rem 2rem 6rem !important;
-    margin-bottom: 4rem !important;
   }
 }
 .j-title {
@@ -280,8 +283,14 @@ header {
   max-width: 552px;
   background-color: transparent !important;
   min-height: 73vh;
+  max-height: 73vh;
   display: flex;
   align-items: center;
+  overflow: hidden;
+  padding: 2rem 2rem 6rem !important;
+  @include media-breakpoint-down(sm) {
+    margin-bottom: 0;
+  }
 }
 .j-button:hover {
   text-decoration: underline !important;

@@ -19,9 +19,6 @@ get_template_part(
 
 ?>
 <div class="container legal-main">
-<!--     <div class="legal-header">
-        <h1><?php echo esc_html( get_the_title() ); ?></h1>
-    </div> -->
     <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
         <?php 
         the_content();

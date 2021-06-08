@@ -7,14 +7,19 @@
 	 * @since Ver 1.0
 	 */
 
-	get_header();?>
+	get_header();
+	$home_hero_btn_url = get_theme_mod( 'desktop_vid_link_button_url' );
+	$home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
+	?>
 
 <div class="container">
 	<header class="jumbotron j-main">
 		<div class="container">
 			<h1 class="display-3 j-title"><?php echo get_theme_mod( 'desktop_vid_link_vid_title' ); ?></h1>
 			<p class="lead j-desc"><?php echo get_theme_mod( 'desktop_vid_link_vid_desc' ); ?></p>
+			<?php if (!empty($home_hero_btn_url) && !empty($home_hero_btn_text)) { ?>
 			<a href="<?php echo get_theme_mod( 'desktop_vid_link_button_url' ); ?>" class="btn btn-primary btn-lg j-button"><?php echo get_theme_mod( 'desktop_vid_link_button_text' ); ?></a>
+			<?php } ?>
 		</div>
 	</header>
 	<?php

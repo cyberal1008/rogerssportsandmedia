@@ -50,39 +50,70 @@ h4,
 h5,
 h6 {
   font-family: urw-din-condensed, serif;
+  font-weight: 600;
 }
 
-@include media-breakpoint-down(sm) {
-  h1 {
+h1 {
+  font-size: 84px;
+  line-height: 80px;
+  letter-spacing: -3px;
+  @include media-breakpoint-down(sm) {
     font-size: 52px;
     line-height: 50px;
-    letter-spacing: -3px;
+    letter-spacing: -1px;
   }
-  h2 {
+}
+
+h2 {
+  font-size: 52px;
+  line-height: 50px;
+  letter-spacing: -1px;
+  @include media-breakpoint-down(sm) {
     font-size: 32px;
     line-height: 30px;
     letter-spacing: -1px;
   }
+}
 
-  h3 {
+h3 {
+  font-size: 32px;
+  line-height: 30px;
+  letter-spacing: -1px;
+  @include media-breakpoint-down(sm) {
     font-size: 27px;
     line-height: 24px;
     letter-spacing: -1px;
   }
+}
 
-  h4 {
+h4 {
+  font-size: 27px;
+  line-height: 24px;
+  letter-spacing: -1px;
+  @include media-breakpoint-down(sm) {
     font-size: 24px;
     line-height: 21px;
     letter-spacing: -1px;
   }
+  
+}
 
-  h5 {
+h5 {
+  font-size: 24px;
+  line-height: 21px;
+  letter-spacing: -1px;
+  @include media-breakpoint-down(sm) {
     font-size: 21px;
     line-height: 18px;
     letter-spacing: -1px;
   }
+}
 
-  h6 {
+h6 {
+  font-size: 21px;
+  line-height: 18px;
+  letter-spacing: -1px;
+  @include media-breakpoint-down(sm) {
     font-size: 18px;
     line-height: 18px;
     letter-spacing: -1px;

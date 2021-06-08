@@ -2,10 +2,15 @@
   position: relative;
   //margin-top: 5em;
   margin-bottom: 5em;
-
+  @media (max-width: 767.98px) {
+    margin-bottom: 1.5em;
+  }
   &-container {
     position: relative;
     padding-bottom: 15em;
+    @include media-breakpoint-down(sm) {
+      padding-bottom: 4em;
+    }
     &::before {
       @include overload-bg;
       z-index: 0;
@@ -26,19 +31,22 @@
       z-index: 1;
       content: "";
       display: inline-block;
+      @include media-breakpoint-down(sm) {
+        display: none;
+      }
     }
 
     &-main {
       background-color: transparent !important;
     }
 
-    &-title {
-      font-family: urw-din-condensed, serif;
-      font-weight: 800 !important;
-      font-size: 56px;
-      line-height: 64px;
-      letter-spacing: -1.12px;
-    }
+    //&-title {
+    //  font-family: urw-din-condensed, serif;
+    //  font-weight: 800 !important;
+    //  font-size: 56px;
+    //  line-height: 64px;
+    //  letter-spacing: -1.12px;
+    //}
     .slide-control {
       cursor: pointer;
     }

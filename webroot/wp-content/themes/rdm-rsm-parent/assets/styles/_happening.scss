@@ -1,10 +1,8 @@
 .page-header{
   position: relative;
 }
-.page-header h1{
-  font-size: 56px;
-  font-family: urw-din-condensed;
-  font-weight: 800!important;
+.page-header h2{
+  text-transform: uppercase;
 }
 .page-header-desc{
   font-size: 21px;
@@ -128,7 +126,7 @@
 }
 @media (max-width: 767px) {
   .tri{
-    padding-top: 50px;
+    display: none;
     position: relative;
   }
   .one{
