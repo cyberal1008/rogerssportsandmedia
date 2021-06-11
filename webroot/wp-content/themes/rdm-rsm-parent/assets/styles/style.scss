@@ -11,6 +11,9 @@
 @import "pages/rsm-products-block", "pages/portfolio", "pages/legal",
   "pages/contactus";
 
+html, body {
+  height: 100%;
+}
 body {
   font-family: $ted-next, sans-serif;
   .wrapper {
