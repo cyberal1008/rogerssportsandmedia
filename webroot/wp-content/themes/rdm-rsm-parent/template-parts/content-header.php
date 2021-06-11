@@ -1,6 +1,6 @@
 <div class="cat-header">
 	<?php
-	if ( ! empty( $args['title'] ) ) { ?>
+	if ( ! empty( $args['title'] ) || ( isset( $args['allow_empty_title'] ) && $args['allow_empty_title'] ) ) { ?>
         <p class="cat-page-title text-center"><?php echo esc_html( $args['title'] ); ?></p>
 		<?php
 	}
