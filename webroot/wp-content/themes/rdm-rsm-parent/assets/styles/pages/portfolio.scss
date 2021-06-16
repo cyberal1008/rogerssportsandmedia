@@ -25,27 +25,6 @@
     text-transform: uppercase;
   }
 
-  .portfolio-header {
-    &.j-main {
-      max-width: 100%;
-      .upfronts{
-        h1{
-          text-indent:-9999px;
-          overflow:hidden;
-          font-size: 1px;
-          line-height: 1px;
-        }
-      }
-    }
-
-    .parent-url {
-      a {
-        color: #fff;
-        text-decoration: underline;
-      }
-    }
-  }
-
   .portfolio-anchors {
     display: flex;
     justify-content: center;
@@ -70,8 +49,9 @@
       overflow-x: auto;
       justify-content: start;
       -webkit-overflow-scrolling: touch;
-      height: 24px;
-      padding-top: 0;
+      //height: 24px;
+      //padding-top: 0;
+      margin-top: 2rem;
       &::-webkit-scrollbar {
         display: none;
       }
@@ -357,3 +337,5 @@
     }
   }
 }
+
+

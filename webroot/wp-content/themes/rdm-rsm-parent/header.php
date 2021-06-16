@@ -75,14 +75,19 @@ if ( is_home() ) {
 		'template-parts/header',
 		'media',
 		array(
-			'image_url' => get_theme_mod( 'desktop_vid_link_image_url' ),
-			'video_url' => get_theme_mod( 'desktop_vid_link_video_url' ),
+			'image_url'          => get_theme_mod( 'desktop_vid_link_image_url' ),
+			'video_url'          => get_theme_mod( 'desktop_vid_link_video_url' ),
+			'hero_title'         => get_theme_mod( 'desktop_vid_link_vid_title' ),
+			'hero_desc'          => get_theme_mod( 'desktop_vid_link_vid_desc' ),
+			'home_hero_btn_url'  => get_theme_mod( 'desktop_vid_link_button_url' ),
+			'home_hero_btn_text' => get_theme_mod( 'desktop_vid_link_button_text' ),
 		)
 	);
 } elseif ( is_page() && is_page_template( 'page_portfolio.php' ) ) {
-	$page_meta = get_post_meta( get_the_ID(), RSM\Broadcast\PageMeta::METADATA_SLUG, true );
-	$image_uri = '';
-	$video_uri = '';
+	$page_meta  = get_post_meta( get_the_ID(), RSM\Broadcast\PageMeta::METADATA_SLUG, true );
+	$image_uri  = '';
+	$video_uri  = '';
+	$hero_title = esc_html( get_the_title() );
 	if ( isset( $page_meta['broadcast'] ) ) {
 		if ( isset( $page_meta['broadcast']['image_uri'] ) ) {
 			$image_uri = $page_meta['broadcast']['image_uri'];
@@ -95,8 +100,9 @@ if ( is_home() ) {
 		'template-parts/header',
 		'media',
 		array(
-			'image_url' => $image_uri,
-			'video_url' => $video_uri,
+			'image_url'  => $image_uri,
+			'video_url'  => $video_uri,
+			'hero_title' => $hero_title,
 		)
 	);
 } elseif ( is_category() || is_page() || is_404() ) {
@@ -138,7 +144,7 @@ if ( is_home() ) {
 			</nav>
 	</header>
 
-	<?php if( !is_page() || !is_page_template( 'page-contactus.php' ) ) { ?>
+	<?php if ( ! is_page() || ! is_page_template( 'page-contactus.php' ) ) { ?>
 		<div class="advertise-callout"><a href="<?php echo site_url( '/contact-us/' ); ?>">ADVERTISE WITH US <img src="<?php echo dirname( get_bloginfo( 'stylesheet_url' ) ) . '/assets/images/icon-mail.svg'; ?>"></a></div>
 	<?php } ?>
 
