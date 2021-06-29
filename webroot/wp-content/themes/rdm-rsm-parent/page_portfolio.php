@@ -18,7 +18,7 @@ if ( ! empty( $page_meta['broadcast'] ) && ! empty( $page_meta['broadcast']['sol
 }
 
 $solutions_exists = ! empty( $page_meta['zones'] ) && ! empty( $page_meta['zones']['solutions'] );
-if ( $solutions_exists || get_post_field( 'post_name' ) === 'radio-podcasts' || get_post_field( 'post_name' ) === 'television-and-streaming' ) {
+if ( $solutions_exists || get_post_field( 'post_name' ) === 'radio-podcasts' || get_post_field( 'post_name' ) === 'television-and-streaming' || get_post_field( 'post_name' ) === 'upfronts' ) {
 	$anchors['portfolio-grid-anchor'] = $solutions_anchor_label;
 }
 
