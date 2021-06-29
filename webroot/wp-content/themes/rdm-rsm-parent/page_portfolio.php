@@ -33,7 +33,7 @@ if ( $whats_happening_exists ) {
 }
 ?>
 	<div class="portfolio-main">
-		
+
 		<div class="portfolio-anchors">
 			<?php
 			get_template_part(
@@ -69,7 +69,7 @@ if ( $whats_happening_exists ) {
 		<div class="w-100 p-4"></div>
 		<div class="container portfolio-page">
 			<?php
-			if ( get_post_field( 'post_name' ) === 'television-and-streaming' ) {
+			if ( get_post_field( 'post_name' ) === 'television-and-streaming' || get_post_field( 'post_name' ) === 'upfronts' ) {
 				get_template_part(
 					'template-parts/portfolio',
 					'television',
@@ -147,4 +147,3 @@ if ( $whats_happening_exists ) {
 	</div>
 <?php
 get_footer();
-
