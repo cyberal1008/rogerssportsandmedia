@@ -20,7 +20,7 @@
 			}
 			?>
 			<ul class="social-icons">
-				<li><a class="footer-social" target="_blank" href="https://mobile.twitter.com/RogersMedia?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"><img src="<?php bloginfo( 'template_directory' ); ?>/assets/images/icon-twitter.svg" width="30"  alt=""></a></li>
+				<li><a class="footer-social" target="_blank" href="https://twitter.com/RogersMedia"><img src="<?php bloginfo( 'template_directory' ); ?>/assets/images/icon-twitter.svg" width="30"  alt=""></a></li>
 				<li><a class="footer-social" target="_blank" href="https://ca.linkedin.com/company/rogers-sports-and-media"><img src="<?php bloginfo( 'template_directory' ); ?>/assets/images/icon-linkedin.svg" width="30"  alt=""></a></li>
 				<li><a class="footer-social" target="_blank" href="https://www.instagram.com/rogerssportsandmedia/"><img src="<?php bloginfo( 'template_directory' ); ?>/assets/images/icon-instagram.svg" width="30"  alt=""></a></li>
 			</ul>
