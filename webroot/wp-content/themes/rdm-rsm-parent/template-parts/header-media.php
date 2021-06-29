@@ -29,7 +29,7 @@ $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, tr
 					</div>
 					<?php
 				}
-				if ( get_post_field( 'post_name' ) === 'television-and-streaming' ) {
+				if ( get_post_field( 'post_name' ) === 'television-and-streaming' || get_post_field( 'post_name' ) === 'upfronts' ) {
 					?>
 					<div class="upfronts">
 						<img

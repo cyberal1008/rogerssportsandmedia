@@ -60,7 +60,7 @@ $lang = 'en';
 	<?php require_once 'views/solutions-modal.html'; ?>
 
 	<?php
-	if ( is_page() && get_post_field( 'post_name' ) === 'television-and-streaming' ) {
+	if ( is_page() && ( get_post_field( 'post_name' ) === 'television-and-streaming' || get_post_field( 'post_name' ) === 'upfronts' ) ) {
 		include_once 'views/television-modal.html';
 	} elseif ( is_page() && get_post_field( 'post_name' ) === 'radio-podcasts' ) {
 		include_once 'views/radio-modal.html';
