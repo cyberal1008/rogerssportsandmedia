@@ -18,7 +18,7 @@ if ( ! empty( $page_meta['broadcast'] ) && ! empty( $page_meta['broadcast']['sol
 }
 
 $solutions_exists = ! empty( $page_meta['zones'] ) && ! empty( $page_meta['zones']['solutions'] );
-if ( $solutions_exists || get_post_field( 'post_name' ) === 'radio-podcasts' || get_post_field( 'post_name' ) === 'television-and-streaming' || get_post_field( 'post_name' ) === 'upfronts' ) {
+if ( $solutions_exists || get_post_field( 'post_name' ) === 'radio-podcasts' || get_post_field( 'post_name' ) === 'television-and-streaming' || get_post_field( 'post_name' ) === 'upfront' ) {
 	$anchors['portfolio-grid-anchor'] = $solutions_anchor_label;
 }
 
@@ -69,7 +69,7 @@ if ( $whats_happening_exists ) {
 		<div class="w-100 p-4"></div>
 		<div class="container portfolio-page">
 			<?php
-			if ( get_post_field( 'post_name' ) === 'television-and-streaming' || get_post_field( 'post_name' ) === 'upfronts' ) {
+			if ( get_post_field( 'post_name' ) === 'television-and-streaming' || get_post_field( 'post_name' ) === 'upfront' ) {
 				get_template_part(
 					'template-parts/portfolio',
 					'television',
