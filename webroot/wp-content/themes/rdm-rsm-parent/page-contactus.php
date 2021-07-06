@@ -18,7 +18,7 @@ get_header(); ?>
 				<iframe src="https://fe3611727564047c771279.pub.s6.sfmc-content.com/drlrqqp5mtl"></iframe>
 			</div>
 			<div class="col-sm-12 col-md-12 col-lg-4 single-article-sidebar">
-				<p>Want to advertise with us? Job opportunity? Reimagine the future with Rogers Sports & Media. You can also contact us at <a href="mailto:contact.rsm@rci.rogers.com">contact.rsm@rci.rogers.com</a>.</p>
+				<p>Want to advertise with us? Job opportunity? Reimagine the future with Rogers Sports & Media. You can also contact us at <a href="mailto:RogersSportsMedia@rci.rogers.com">RogersSportsMedia@rci.rogers.com</a>.</p>
 			</div>
 		</div>
 		<?php get_template_part( 'template-parts/content', 'join-our-team' ); ?>
