@@ -1,0 +1,417 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$ref": "#/definitions/Data",
+    "definitions": {
+        "Data": {
+            "title": "Data Definition",
+            "type": "object",
+            "properties": {
+                "types": {
+                    "$ref": "#/definitions/Types"
+                }
+            },
+            "additionalProperties": false
+        },
+        "TextForUser": {
+            "title": "Specification details - DETAILED TEXTS PROVIDED TO USER",
+            "anyOf": [
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "type": "string"
+                }
+            ]
+        },
+        "SpecKV": {
+            "$ref": "#/definitions/TextForUser"
+        },
+        "Types": {
+            "title": "Type Definitions",
+            "type": "object",
+            "properties": {
+                "Desktop": {
+                    "$ref": "#/definitions/Desktop"
+                },
+                "Digital_Video__Audio": {
+                    "$ref": "#/definitions/DigitalVideoAudio"
+                },
+                "Mobile": {
+                    "$ref": "#/definitions/Mobile"
+                },
+                "Broadcast": {
+                    "$ref": "#/definitions/Broadcast"
+                }
+            },
+            "additionalProperties": false
+        },
+        "UI": {
+            "title": "Type's UI definition",
+            "type": "object",
+            "properties": {
+                "style": {
+                    "type": "string"
+                },
+                "icon": {
+                    "type": "string"
+                },
+                "alt": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "style",
+                "icon",
+                "alt",
+                "name"
+            ],
+            "additionalProperties": false
+        },
+        "subtypeDetails": {
+            "title": "Subtitle's details definition",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "spec": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Spec"
+                    }
+                }
+            },
+            "required": [
+                "name",
+                "spec"
+            ],
+            "additionalProperties": false
+        },
+        "Spec": {
+            "title": "Specification definition",
+            "type": "object",
+            "properties": {
+                "ID": {
+                    "description": "valid css selector, used as node identifier",
+                    "type": "string",
+                    "pattern": "^[A-Za-z][A-Za-z0-9_-]*$"
+                },
+                "UnitName": {
+                    "description": "item name, text only",
+                    "type": "string"
+                },
+                "Type": {
+                    "title": "Ad type",
+                    "description": "valid css selector, used as node identifier and class name",
+                    "type": "string",
+                    "pattern": "^[A-Za-z_][A-Za-z0-9_-]*$"
+                },
+                "Subtype": {
+                    "title": "Ad subtype",
+                    "description": "valid css selector, used as node identifier and class name",
+                    "type": "string",
+                    "pattern": "^[A-Za-z_][A-Za-z0-9_-]*$"
+                },
+                "Image": {
+                    "description": "ad screenshot/representation filename.ext, no path",
+                    "type": "string"
+                },
+                "Details": {
+                    "description": "spec information that will be generated",
+                    "$ref": "#/definitions/SpecSections"
+                }
+            },
+            "required": [
+                "ID",
+                "UnitName",
+                "Image",
+                "Details"
+            ],
+            "additionalProperties": false
+        },
+        "TBD_listOfObject": {
+            "type":"object"
+        },
+        "SpecSections": {
+            "title": "Specification details",
+            "type": "object",
+            "properties": {
+                "Dimensions": {
+                    "$ref": "#/definitions/TBD_listOfObject"
+                },
+                "Load": {
+                    "$ref": "#/definitions/TBD_listOfObject"
+                },
+                "Formats": {
+                    "$ref": "#/definitions/TBD_listOfObject"
+                },
+                "Animation and Video": {
+                    "$ref": "#/definitions/TBD_listOfObject"
+                },
+                "Content Information": {
+                    "$ref": "#/definitions/TBD_listOfObject"
+                },
+                "Additional Notes": {
+                    "$ref": "#/definitions/AdditionalNotes"
+                }
+            },
+            "additionalProperties": true
+        },
+        "AdditionalNotes": {
+            "title": "Specification details - Additional Notes",
+            "TODO": "ADD MORE - up to TextForUser",
+            "type": "object",
+            "properties": {
+                "Sites": {
+                    "$ref": "#/definitions/SpecKV"
+                },
+                "Verified Vendors": {
+                    "$ref": "#/definitions/SpecKV"
+                },
+                "Background Color appearing behind Page Content area": {
+                    "$ref": "#/definitions/SpecKV"
+                },
+                "JPG Spec (send link to creative agency)": {
+                    "$ref": "#/definitions/SpecKV"
+                },
+                "PSD template instructions": {
+                    "$ref": "#/definitions/SpecKV"
+                },
+                "Deployment Time": {
+                    "$ref": "#/definitions/SpecKV"
+                },
+                "Submission Lead-Time": {
+                    "$ref": "#/definitions/SpecKV"
+                },
+                "Implementation Notes & Best Practices": {
+                    "$ref": "#/definitions/SpecKV"
+                }
+            },
+            "additionalProperties": true
+        },
+        "ContentInformation": {
+            "title": "Specification details - Content Information",
+            "type": "object",
+            "properties": {
+                "Headline": {
+                    "$ref": "#/definitions/TextForUser",
+                    "title": "Used for native"
+                },
+                "UnitName": {
+                    "$ref": "#/definitions/TextForUser",
+                    "title": "Used for native"
+                },
+                "Image Dimensions": {
+                    "$ref": "#/definitions/TextForUser",
+                    "title": "Used for native"
+                },
+                "App Icon/Logo": {
+                    "$ref": "#/definitions/TextForUser",
+                    "title": "Used for native"
+                },
+                "Call to action": {
+                    "$ref": "#/definitions/TextForUser",
+                    "title": "Used for native"
+                },
+                "Advertiser": {
+                    "$ref": "#/definitions/TextForUser",
+                    "title": "Used for native"
+                },
+                "Click-through URL": {
+                    "$ref": "#/definitions/TextForUser",
+                    "title": "Used for native"
+                },
+                "Check your Native specs": {
+                    "$ref": "#/definitions/TextForUser",
+                    "title": "Used for Geo_Txt"
+                },
+                "Message Copy": {
+                    "$ref": "#/definitions/TextForUser",
+                    "title": "Used for Geo_Txt"
+                },
+                "Product Image": {
+                    "$ref": "#/definitions/TextForUser",
+                    "title": "Used for Geo_Txt"
+                },
+                "Video": {
+                    "$ref": "#/definitions/TextForUser",
+                    "title": "Used for Geo_Txt"
+                },
+                "Promo Code (optional)": {
+                    "$ref": "#/definitions/TextForUser",
+                    "title": "Used for Geo_Txt"
+                },
+                "BLOB": {
+                    "$ref": "#/definitions/TextForUser",
+                    "title": "Used for Geo_Txt"
+                },
+                "File Size": {
+                    "$ref": "#/definitions/TextForUser"
+                },
+                "Format": {
+                    "$ref": "#/definitions/TextForUser"
+                },
+                "Upload Address": {
+                    "$ref": "#/definitions/TextForUser"
+                },
+                "Length": {
+                    "$ref": "#/definitions/TextForUser"
+                }
+            },
+            "additionalProperties": true
+        },
+        "Broadcast": {
+            "title": "Broadcast Type",
+            "type": "object",
+            "properties": {
+                "ui": {
+                    "$ref": "#/definitions/UI"
+                },
+                "subtypes": {
+                    "$ref": "#/definitions/BroadcastSubtypes"
+                }
+            },
+            "additionalProperties": false
+        },
+        "BroadcastSubtypes": {
+            "title": "Broadcast's Subtypes",
+            "description":"Use to list Broadcast subtypes",
+            "type": "object",
+            "properties": {
+                "Conventional_and_Specialty-Broadcast": {
+                    "$ref": "#/definitions/subtypeDetails"
+                },
+                "Sportsnet-Broadcast": {
+                    "$ref": "#/definitions/subtypeDetails"
+                }
+            },
+            "additionalProperties": false
+        },
+        "Desktop": {
+            "title": "Desktop Type",
+            "type": "object",
+            "properties": {
+                "ui": {
+                    "$ref": "#/definitions/UI"
+                },
+                "subtypes": {
+                    "$ref": "#/definitions/DesktopSubtypes"
+                }
+            },
+            "additionalProperties": false
+        },
+        "DesktopSubtypes": {
+            "title": "Desktop's Subtypes",
+            "description":"Use to list Desktop subtypes",
+            "type": "object",
+            "properties": {
+                "Big_Box-Desktop": {
+                    "$ref": "#/definitions/subtypeDetails"
+                },
+                "Custom_Sponsorship_Units-Desktop": {
+                    "$ref": "#/definitions/subtypeDetails"
+                },
+                "Email-Desktop": {
+                    "$ref": "#/definitions/subtypeDetails"
+                },
+                "Large_Format-Desktop": {
+                    "$ref": "#/definitions/subtypeDetails"
+                },
+                "Leaderboard-Desktop": {
+                    "$ref": "#/definitions/subtypeDetails"
+                },
+                "Native_Ads-Desktop": {
+                    "$ref": "#/definitions/subtypeDetails"
+                },
+                "Silver-Desktop": {
+                    "$ref": "#/definitions/subtypeDetails"
+                },
+                "Wallpaper-Desktop": {
+                    "$ref": "#/definitions/subtypeDetails"
+                }
+            },
+            "additionalProperties": false
+        },
+        "DigitalVideoAudio": {
+            "title": "DigitalVideoAudio Type",
+            "type": "object",
+            "properties": {
+                "ui": {
+                    "$ref": "#/definitions/UI"
+                },
+                "subtypes": {
+                    "$ref": "#/definitions/DigitalVideoAudioSubtypes"
+                }
+            },
+            "additionalProperties": false
+        },
+        "DigitalVideoAudioSubtypes": {
+            "title": "DigitalVideoAudio's Subtypes",
+            "description":"Use to list DigitalVideoAudio subtypes",
+            "type": "object",
+            "properties": {
+                "A_3rd_Party_Tags__vast_redirects-Digital_Video__Audio": {
+                    "$ref": "#/definitions/subtypeDetails"
+                },
+                "Audio-Digital_Video___Audio": {
+                    "$ref": "#/definitions/subtypeDetails"
+                },
+                "In-Banner_Video-Digital_Video___Audio": {
+                    "$ref": "#/definitions/subtypeDetails"
+                },
+                "Site_Hosted-Digital_Video___Audio": {
+                    "$ref": "#/definitions/subtypeDetails"
+                },
+                "Youtube-Digital_Video___Audio": {
+                    "$ref": "#/definitions/subtypeDetails"
+                }
+            },
+            "additionalProperties": false
+        },
+        "Mobile": {
+            "title": "Mobile Type",
+            "type": "object",
+            "properties": {
+                "ui": {
+                    "$ref": "#/definitions/UI"
+                },
+                "subtypes": {
+                    "$ref": "#/definitions/MobileSubtypes"
+                }
+            },
+            "additionalProperties": false
+        },
+        "MobileSubtypes": {
+            "title": "Mobile's Subtypes",
+            "description":"Use to list DigitalVideoAudio subtypes",
+            "type": "object",
+            "properties": {
+                "Apps-Mobile": {
+                    "$ref": "#/definitions/subtypeDetails"
+                },
+                "Geo_Txt_Specs-Mobile": {
+                    "$ref": "#/definitions/subtypeDetails"
+                },
+                "HLM_Specs-Mobile": {
+                    "$ref": "#/definitions/subtypeDetails"
+                },
+                "Native_Ads-Mobile": {
+                    "$ref": "#/definitions/subtypeDetails"
+                },
+                "Smartphone_Banner-Mobile": {
+                    "$ref": "#/definitions/subtypeDetails"
+                },
+                "Smartphone_Tablet_RichMedia-Mobile": {
+                    "$ref": "#/definitions/subtypeDetails"
+                }
+            },
+            "additionalProperties": false
+        }
+    }
+}
