@@ -123,7 +123,15 @@ $tv_posts = new WP_Query(
 
 		$post_days = get_data_items( $post->ID, Days::TAXONOMY );
 		if ( $post_days ) {
-			$tmpjsvar['days'] = ucwords( str_replace( '|', ', ', $post_days ) );
+			$days = explode( '|', $post_days );
+			$order = array( 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday' );
+			usort( $days, function ( $a, $b ) use ( $order ) {
+				$pos_a = array_search( $a, $order );
+				$pos_b = array_search( $b, $order );
+				return $pos_a - $pos_b;
+			});
+
+			$tmpjsvar['days'] = ucwords( implode( ', ', $days ) );
 		}
 
 
