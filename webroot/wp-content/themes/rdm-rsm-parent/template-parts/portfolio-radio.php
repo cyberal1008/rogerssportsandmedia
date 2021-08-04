@@ -32,7 +32,7 @@ $region_terms = get_terms(
 	)
 );
 
-$regions = array_merge( array( 'all' => 'All Regions' ), wp_list_pluck( $region_terms, 'name', 'slug' ) );
+$regions = array_merge( array( 'all' => 'All Markets' ), wp_list_pluck( $region_terms, 'name', 'slug' ) );
 ?>
 <div class="row television-header radio-header justify-content-md-between">
 	<div class="col-12 col-lg-12 col-md-3">
@@ -104,7 +104,7 @@ $regions = array_merge( array( 'all' => 'All Regions' ), wp_list_pluck( $region_
 		$post_subtitle = ucfirst( $post_subtitle );
 
 		?>
-		<div class="col-4 col-sm-4 col-md-2 col-lg-1 radio-card-col radio-item" 
+		<div class="col-4 col-sm-4 col-md-2 col-lg-1 radio-card-col radio-item"
 			data-program-id="<?php echo $post->ID; ?>"
 			data-catetory="<?php echo get_data_items( $post->ID, RSM\Broadcast\Taxonomy\RadioCategory::SLUG ); ?>"
 			data-region="<?php echo get_data_items( $post->ID, RSM\Broadcast\Taxonomy\Region::SLUG ); ?>"
