@@ -124,7 +124,7 @@ $tv_posts = new WP_Query(
 		$post_days = get_data_items( $post->ID, Days::TAXONOMY );
 		if ( $post_days ) {
 			$days = explode( '|', $post_days );
-			$order = array( 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday' );
+			$order = array( 'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday' );
 			usort( $days, function ( $a, $b ) use ( $order ) {
 				$pos_a = array_search( $a, $order );
 				$pos_b = array_search( $b, $order );
