@@ -8,8 +8,7 @@
   "about", "products", "article";
 
 // Pages
-@import "pages/rsm-products-block", "pages/portfolio", "pages/legal",
-  "pages/contactus";
+@import "pages/rsm-products-block", "pages/portfolio", "pages/legal", "pages/contactus", "pages/whoweare";
 
 html, body {
   height: 100%;
@@ -99,7 +98,7 @@ h4 {
     line-height: 21px;
     letter-spacing: -1px;
   }
-  
+
 }
 
 h5 {

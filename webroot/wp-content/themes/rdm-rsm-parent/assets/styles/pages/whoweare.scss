@@ -1,0 +1,62 @@
+.page-template-page-whoweare > .row {
+	margin-top: 56px;
+}
+
+.whoweare-main {
+	.cat-header {
+		min-height: auto;
+	}
+
+	.cat-page-desc {
+		padding-bottom: 40px;
+	}
+
+	.single-article-container {
+		p {
+			font-size: 1.25rem;
+			font-weight: 300;
+		}
+
+		h2 {
+			margin-bottom: 2rem;
+		}
+	}
+	.community-causes-container-main {
+		margin-top: 2rem;
+	}
+}
+
+.whoweare-anchors {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	margin-bottom: 2em;
+	padding-top: 2em;
+
+	.portfolio-anchor {
+		width: 15%;
+		display: flex;
+		justify-content: center;
+
+		a {
+			color: #333333;
+			font-size: 14px;
+			font-weight: 400;
+		}
+	}
+
+	@media (max-width: 991.98px) {
+		flex-wrap: nowrap;
+		overflow-x: auto;
+		justify-content: start;
+		-webkit-overflow-scrolling: touch;
+		margin-top: 2rem;
+		&::-webkit-scrollbar {
+			display: none;
+		}
+		.portfolio-anchor {
+			width: 150px;
+			flex: 0 0 auto;
+		}
+	}
+}
