@@ -54,6 +54,9 @@ add_action( 'wp_enqueue_scripts', function () {
 	if (is_page() && is_page_template( 'page-legal.php' )){
 		wp_enqueue_script( 'portfolio-js', get_template_directory_uri() . "/assets/scripts/scroll-animation.js", "parent-scripts", '', true );
 	}
+	if (is_page() && is_page_template( 'page-whoweare.php' )){
+		wp_enqueue_script( 'portfolio-js', get_template_directory_uri() . "/assets/scripts/scroll-animation.js", "parent-scripts", '', true );
+	}
 } );
 
 //wp enqueue script for homepage
