@@ -29,11 +29,11 @@ $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, tr
 					</div>
 					<?php
 				}
-				if ( get_post_field( 'post_name' ) === 'upfront' ) {
+				if ( ! empty( $page_meta['broadcast'] ) && ! empty( $page_meta['broadcast']['enable_image_uri'] ) && ! empty( $page_meta['broadcast']['enable_image_cb'] ) ) {
 					?>
 					<div class="upfronts">
 						<img
-								src="<?php echo get_template_directory_uri() . '/assets/images/logo-upfront.png'; ?>"
+								src="<?php echo esc_attr( $page_meta['broadcast']['enable_image_uri'] ); ?>"
 								alt="<?php echo esc_attr( get_the_title() ); ?>"/>
 						<h1><?php echo esc_html( get_the_title() ); ?></h1>
 					</div>

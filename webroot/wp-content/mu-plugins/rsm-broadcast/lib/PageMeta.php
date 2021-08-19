@@ -13,6 +13,20 @@ class PageMeta {
 				'title'  => __( 'Header, About and Schedule', RSM_BROADCAST_LOCALE ),
 				'fields' => array(
 					array(
+						'id'                => 'enable_image_cb',
+						'type'              => 'checkbox',
+						'label'             => __( "Replace product title with a logo ", RSM_BROADCAST_LOCALE ),
+						'choices'           => array("Yes, use a logo"),
+						'description'       => __( "", RSM_BROADCAST_LOCALE )
+					),
+					array(
+						'id'                => 'enable_image_uri',
+						'type'              => 'upload',
+						'mediatype'         => 'image',
+						'label'             => __( "Product logo URL from media library", RSM_BROADCAST_LOCALE ),
+						'description'       => __( "", RSM_BROADCAST_LOCALE )
+					),
+					array(
 						'id'                => 'schedule_uri',
 						'type'              => 'upload',
 						'mediatype'         => 'pdf',
