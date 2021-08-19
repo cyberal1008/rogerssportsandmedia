@@ -145,7 +145,7 @@ if ( is_home() ) {
 	</header>
 
 	<?php if ( ! is_page() || ! is_page_template( 'page-contactus.php' ) ) { ?>
-		<div class="advertise-callout"><a href="<?php echo site_url( '/contact-us/' ); ?>">ADVERTISE WITH US <img src="<?php echo dirname( get_bloginfo( 'stylesheet_url' ) ) . '/assets/images/icon-mail.svg'; ?>"></a></div>
+		<div class="advertise-callout"><a href="<?php echo site_url( '/contact-us/' ); ?>">Advertise With Us <img src="<?php echo dirname( get_bloginfo( 'stylesheet_url' ) ) . '/assets/images/icon-mail.svg'; ?>"></a></div>
 	<?php } ?>
 
 <?php if ( is_single() ) { ?>
