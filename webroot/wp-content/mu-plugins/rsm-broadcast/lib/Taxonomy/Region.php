@@ -1,6 +1,6 @@
 <?php
 /**
- * Custom taxonomy for radio program regions 
+ * Custom taxonomy for radio program regions
  */
 namespace RSM\Broadcast\Taxonomy;
 
@@ -33,7 +33,7 @@ class Region {
             'rewrite'           => false,
             'hierarchical'      => true,
         );
-        
+
 		register_taxonomy( self::SLUG, Radio::TYPE, $args );
 	}
 
