@@ -15,9 +15,6 @@ $event_date = strtotime( $post_meta['event']['date'] );
 $start_time = strtotime( $post_meta['event']['start_time'] );
 $end_time = strtotime( $post_meta['event']['end_time'] );
 
-echo "Blah!";
-var_dump($post_meta);
-
 get_header(); ?>
 	<div class="container" id="main">
 		<div class="row">
