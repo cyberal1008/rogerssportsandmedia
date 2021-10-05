@@ -6,11 +6,13 @@ use RSM\Broadcast\PostType\Highlights;
 use RSM\Broadcast\PostType\Shows;
 use RSM\Broadcast\PostType\Radio;
 use RSM\Broadcast\PostType\Solutions;
+use RSM\Broadcast\PostType\Events;
 use RSM\Broadcast\Taxonomy\Days;
 use RSM\Broadcast\Taxonomy\Networks;
 use RSM\Broadcast\Taxonomy\ShowCategory;
 use RSM\Broadcast\Taxonomy\Region;
 use RSM\Broadcast\Taxonomy\RadioCategory;
+use RSM\Broadcast\Taxonomy\Speakers;
 
 /**
  * The core plugin class.
@@ -179,11 +181,11 @@ class Plugin {
 			'style_handle' => 'rsm-bootstrap4-editor-style',
 			)
 		);
-		
+
 	}
 
 //	public function rsm_add_editor_styles() {
-//		
+//
 //	}
 
 
@@ -200,11 +202,13 @@ class Plugin {
 		$radio_post_type          = new Radio();
 		$solution_post_type       = new Solutions();
 		$highlights_post_type     = new Highlights();
+		$events_post_type					= new Events();
 		$networks_taxonomy        = new Networks();
 		$days_taxonomy            = new Days();
 		$show_categories_taxonomy = new ShowCategory();
 		$region_taxonomy          = new Region();
 		$radio_catetory_taxonomy  = new RadioCategory();
+		$speakers_taxonomy				= new Speakers();
 
 		$page_meta = new PageMeta();
 		$post_meta = new PostMeta();
@@ -220,11 +224,13 @@ class Plugin {
 		$this->loader->add_action( 'init', $radio_post_type, 'register' );
 		$this->loader->add_action( 'init', $solution_post_type, 'register_post_type' );
 		$this->loader->add_action( 'init', $highlights_post_type, 'register_post_type' );
+		$this->loader->add_action( 'init', $events_post_type, 'register_post_type' );
 		$this->loader->add_action( 'init', $networks_taxonomy, 'register_taxonomy' );
 		$this->loader->add_action( 'init', $show_categories_taxonomy, 'register_taxonomy' );
 		$this->loader->add_action( 'init', $radio_catetory_taxonomy, 'register' );
 		$this->loader->add_action( 'init', $region_taxonomy, 'register' );
 		$this->loader->add_action( 'init', $days_taxonomy, 'register_taxonomy' );
+		$this->loader->add_action( 'init', $speakers_taxonomy, 'register_taxonomy' );
 		$this->loader->add_action( 'add_meta_boxes', $show_post_type, 'add_meta_box' );
 		$this->loader->add_action( 'save_post', $show_post_type, 'save_meta' );
 
@@ -240,6 +246,15 @@ class Plugin {
 
 		$this->loader->add_action( 'add_meta_boxes', $solution_post_type, 'add_meta_box' );
 		$this->loader->add_action( 'save_post', $solution_post_type, 'save_meta' );
+
+		$this->loader->add_action( 'add_meta_boxes', $events_post_type, 'add_meta_box' );
+		$this->loader->add_action( 'save_post', $events_post_type, 'save_meta' );
+
+		$this->loader->add_action( 'speaker_add_form_fields', $speakers_taxonomy, 'add_form_fields' );
+		$this->loader->add_action( 'speaker_edit_form_fields', $speakers_taxonomy, 'add_edit_form_fields' );
+		$this->loader->add_action( 'created_speaker', $speakers_taxonomy, 'save_meta' );
+		$this->loader->add_action( 'edited_speaker', $speakers_taxonomy, 'save_meta' );
+		//$this->loader->add_action( 'save_post', $events_post_type, 'save_meta' );
 
 
 	}
