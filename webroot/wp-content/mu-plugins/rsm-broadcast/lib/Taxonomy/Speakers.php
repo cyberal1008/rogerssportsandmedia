@@ -119,12 +119,12 @@ class Speakers {
 			$job_title = isset( $speaker_meta['speaker-job-title'] ) ? $speaker_meta['speaker-job-title'][0] : '';
 
 			$output .= "<div class='speaker'>
-				<image src='" . $image . "'/>
+				<image src='" . esc_attr( $image ) . "'/>
 				<div>
-					<p class='name'>" . $speaker->name . "</p>
-					<p>" . $company . "</p>
-					<p>" . $job_title . "</p>
-					<p class='speaker-description'>" . $speaker->description . "</p>
+					<p class='name'>" . esc_html( $speaker->name ) . "</p>
+					<p>" . esc_html( $company ) . "</p>
+					<p>" . esc_html( $job_title ) . "</p>
+					<p class='speaker-description'>" . esc_html( $speaker->description ) . "</p>
 				</div>
 			</div>";
 		}
