@@ -83,7 +83,7 @@ class Speakers {
 				<td><input name="speaker-company" id="speaker-company" type="text" value="' . esc_attr( $company ) .'" /></td>
 			</tr>
 			<tr class="form-field">
-				<th><label for="speaker-job-title">Speaker Company</label></th>
+				<th><label for="speaker-job-title">Speaker Job Title</label></th>
 				<td><input name="speaker-job-title" id="speaker-job-title" type="text" value="' . esc_attr( $job_title ) .'" /></td>
 			</tr>
 			<tr class="form-field">
@@ -111,6 +111,17 @@ class Speakers {
 		$speakers = get_terms( 'speaker' );
 		$output = "<div class='speakers'>
 			<h1>Meet Your Speakers</h1>";
+
+		if( class_exists('WPSEO_Primary_Term') ) {
+			$wpseo_primary_term = new \WPSEO_Primary_Term( 'speaker', get_the_id() );
+			$wpseo_primary_term = $wpseo_primary_term->get_primary_term();
+			$term = get_term( $wpseo_primary_term );
+			if ( ! is_wp_error( $term ) ) {
+				$primary_position = array_search( $term, $speakers );
+				unset( $speakers[$primary_position] );
+				array_unshift( $speakers, $term );
+			}
+		}
 
 		foreach( $speakers as $speaker ) {
 			$speaker_meta = get_term_meta( $speaker->term_id );
