@@ -254,6 +254,8 @@ class Plugin {
 		$this->loader->add_action( 'speaker_edit_form_fields', $speakers_taxonomy, 'add_edit_form_fields' );
 		$this->loader->add_action( 'created_speaker', $speakers_taxonomy, 'save_meta' );
 		$this->loader->add_action( 'edited_speaker', $speakers_taxonomy, 'save_meta' );
+
+		add_shortcode( "speakers", array( $speakers_taxonomy, 'render_speakers' ) );
 		//$this->loader->add_action( 'save_post', $events_post_type, 'save_meta' );
 
 

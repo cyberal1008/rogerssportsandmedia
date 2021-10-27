@@ -48,4 +48,41 @@
       }
     }
   }
+
+  .speakers {
+    .speaker {
+      overflow: auto;
+      margin-bottom: 40px;
+    }
+
+    .name {
+      font-weight: 600;
+    }
+
+    .speaker-description {
+      margin-top: 1rem;
+    }
+
+    h1 {
+      margin-bottom: 2rem;
+    }
+
+    img {
+      float: left;
+      max-width: 200px;
+      max-height: 200px;
+      border-radius: 100px;
+      margin-right: 50px;
+    }
+
+    p {
+      margin-bottom: 0;
+    }
+
+    @include media-breakpoint-up(md) {
+      .speaker-description {
+        overflow: hidden;
+      }
+    }
+  }
 }

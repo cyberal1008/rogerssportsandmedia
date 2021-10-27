@@ -67,20 +67,31 @@ class Speakers {
 			<input type="text" name="speaker-company" id="speaker-company" />
 			<label for="speaker-job-title">Speaker Job Title</label>
 			<input type="text" name="speaker-job-title" id="speaker-job-title" />
+			<label for="speaker-image">Speaker Image</label>
+			<input type="url" name="speaker-image" size="60" />
+			<button type="button" class="rsm_upload_button" value="Upload Image">Upload Image</button>
 		</div>';
 	}
 
 	public function add_edit_form_fields($term) {
 		$company = get_term_meta( $term->term_id, 'speaker-company', true );
 		$job_title = get_term_meta( $term->term_id, 'speaker-job-title', true );
+		$image = get_term_meta( $term->term_id, 'speaker-image', true );
 
 		echo '<tr class="form-field">
 				<th><label for="speaker-company">Speaker Company</label></th>
 				<td><input name="speaker-company" id="speaker-company" type="text" value="' . esc_attr( $company ) .'" /></td>
 			</tr>
 			<tr class="form-field">
-				<th><label for="speaker-job-title">Speaker Company</label></th>
+				<th><label for="speaker-job-title">Speaker Job Title</label></th>
 				<td><input name="speaker-job-title" id="speaker-job-title" type="text" value="' . esc_attr( $job_title ) .'" /></td>
+			</tr>
+			<tr class="form-field">
+				<th><label for="speaker-image">Speaker Image</label></th>
+				<td>
+					<input type="url" name="speaker-image" value="' . esc_attr( $image ) . '" size="60" />
+					<button type="button" class="rsm_upload_button" value="Upload Image">Upload Image</button>
+				</td>
 			</tr>';
 	}
 
@@ -91,5 +102,44 @@ class Speakers {
 		if( isset( $_POST['speaker-job-title'] ) ) {
 			update_term_meta( $term_id, 'speaker-job-title', sanitize_text_field( $_POST['speaker-job-title'] ) );
 		}
+		if( isset( $_POST['speaker-image'] ) ) {
+			update_term_meta( $term_id, 'speaker-image', sanitize_text_field( $_POST['speaker-image'] ) );
+		}
+	}
+
+	public function render_speakers() {
+		$speakers = get_terms( 'speaker' );
+		$output = "<div class='speakers'>
+			<h1>Meet Your Speakers</h1>";
+
+		if( class_exists('WPSEO_Primary_Term') ) {
+			$wpseo_primary_term = new \WPSEO_Primary_Term( 'speaker', get_the_id() );
+			$wpseo_primary_term = $wpseo_primary_term->get_primary_term();
+			$term = get_term( $wpseo_primary_term );
+			if ( ! is_wp_error( $term ) ) {
+				$primary_position = array_search( $term, $speakers );
+				unset( $speakers[$primary_position] );
+				array_unshift( $speakers, $term );
+			}
+		}
+
+		foreach( $speakers as $speaker ) {
+			$speaker_meta = get_term_meta( $speaker->term_id );
+			$image = isset( $speaker_meta['speaker-image'] ) ? $speaker_meta['speaker-image'][0] : '';
+			$company = isset( $speaker_meta['speaker-company'] ) ? $speaker_meta['speaker-company'][0] : '';
+			$job_title = isset( $speaker_meta['speaker-job-title'] ) ? $speaker_meta['speaker-job-title'][0] : '';
+
+			$output .= "<div class='speaker'>
+				<image src='" . esc_attr( $image ) . "'/>
+				<div>
+					<p class='name'>" . esc_html( $speaker->name ) . "</p>
+					<p>" . esc_html( $company ) . "</p>
+					<p>" . esc_html( $job_title ) . "</p>
+					<p class='speaker-description'>" . esc_html( $speaker->description ) . "</p>
+				</div>
+			</div>";
+		}
+
+		return $output . "</div>";
 	}
 }
