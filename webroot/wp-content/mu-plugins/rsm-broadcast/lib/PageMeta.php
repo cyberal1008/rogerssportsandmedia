@@ -65,6 +65,20 @@ class PageMeta {
 						'type'              => 'text',
 						'label'             => __( "Label for the Programming/Solutions section", RSM_BROADCAST_LOCALE ),
 						'description'       => __( "", RSM_BROADCAST_LOCALE )
+					),					
+					array(
+						'id'                => 'citynews',
+						'type'              => 'textarea',
+						'label'             => __( "City News Description", RSM_BROADCAST_LOCALE ),
+						'description'       => __( "", RSM_BROADCAST_LOCALE ),
+						'maxlength'			=> 1000
+					),					
+					array(
+						'id'                => 'citynews_image_uri',
+						'type'              => 'upload',
+						'mediatype'         => 'image',
+						'label'             => __( "Image for City News section", RSM_BROADCAST_LOCALE ),
+						'description'       => __( "", RSM_BROADCAST_LOCALE )
 					),
 				),
 			),

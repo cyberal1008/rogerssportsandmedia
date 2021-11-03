@@ -1,4 +1,4 @@
-.about{
+.about, .section{
   position: relative;
   
   &-container {
@@ -20,6 +20,7 @@
 
     &-main {
       background-color: transparent !important;
+      padding: 1rem 0;
     }
 
     //&-title {
@@ -51,3 +52,11 @@
   @include circle-container-quarter(#00A955, #FFFFFF);
 }
 
+.section{
+  padding: 100px 0;
+  &-container {
+    &::before {
+      width: 0;
+    }
+  }
+}

@@ -12,6 +12,10 @@ global $post;
 $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, true );
 $anchors   = array( 'portfolio-about' => 'About' );
 
+if(! empty( $page_meta['broadcast'] ) && ! empty($page_meta['broadcast']['citynews'])) {
+	$anchors['section'] = 'City News';
+}
+
 $solutions_anchor_label = 'Solutions';
 if ( ! empty( $page_meta['broadcast'] ) && ! empty( $page_meta['broadcast']['solutions_label'] ) ) {
 	$solutions_anchor_label = $page_meta['broadcast']['solutions_label'];
@@ -44,6 +48,7 @@ if ( $whats_happening_exists ) {
 
 			?>
 		</div>
+		
 		<?php
 		get_template_part(
 			'template-parts/content',
@@ -54,6 +59,18 @@ if ( $whats_happening_exists ) {
 				'image_url'   => $page_meta['broadcast']['about_image_uri'],
 			)
 		);
+
+		if ( get_post_field( 'post_name' ) === 'television-and-streaming' || get_post_field( 'post_name' ) === 'upfront' ) {
+			get_template_part(
+				'template-parts/content',
+				'section',
+				array(
+					'title'       => 'CITY NEWS',
+					'description' => $page_meta['broadcast']['citynews'],
+					'image_url'   => $page_meta['broadcast']['citynews_image_uri'],
+				)
+			);
+		}
 
 		if ( $page_meta['broadcast'] && $page_meta['broadcast']['about_video_id'] ) {
 			get_template_part(
