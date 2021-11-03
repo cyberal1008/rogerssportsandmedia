@@ -13,7 +13,7 @@ $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, tr
 $anchors   = array( 'portfolio-about' => 'About' );
 
 if(! empty( $page_meta['broadcast'] ) && ! empty($page_meta['broadcast']['citynews'])) {
-	$anchors['section'] = 'City News';
+	$anchors['section'] = 'CityNews';
 }
 
 $solutions_anchor_label = 'Solutions';
@@ -65,7 +65,7 @@ if ( $whats_happening_exists ) {
 				'template-parts/content',
 				'section',
 				array(
-					'title'       => 'CITY NEWS',
+					'title'       => 'CITYNEWS',
 					'description' => $page_meta['broadcast']['citynews'],
 					'image_url'   => $page_meta['broadcast']['citynews_image_uri'],
 				)
