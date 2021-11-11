@@ -48,6 +48,7 @@ header {
     float: right;
     border: none;
     padding-right: 0;
+    z-index: 1000;
   }
   .navbar-toggler:active,
   .navbar-toggler:focus {
