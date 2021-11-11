@@ -1,0 +1,383 @@
+{
+  "version": "3.1",
+  "types": {
+    "Desktop": {
+      "ui": {
+        "style": "background-image: url(./assets/img/Desktop.jpg)",
+        "icon": "./assets/img/Desktop.svg",
+        "alt": "",
+        "name": "Desktop"
+      },
+      "subtypes": {
+        "Big_Box-Desktop": {
+          "name": "Big Box",
+          "spec": [
+            {
+              "ID": "Big_Box",
+              "UnitName": "Big Box",
+              "Type": "Desktop",
+              "Subtype": "Big_Box-Desktop",
+              "Image": "Big_Box.png",
+              "updated": true,
+              "Details": {
+                "Dimensions": {
+                  "Dimensions": "300x250",
+                  "Expands To": "Left, 600x600"
+                },
+                "Load": {
+                  "Max Initial Load": "Image: 40 KB | HTML5: 100 KB",
+                  "Subsequent Max Polite Load": "2.2 MB | Unlimited if streaming video within the ad unit."
+                },
+                "Formats": {
+                  "Media Files": "JPG | GIF | PNG | Must be in RGB colour format.",
+                  "HTML5": "Yes, must contain Universal clickTAG & SSL compliant. All assets referenced in HTML5 code must be externally hosted by client.",
+                  "Serving:": "All Rich Media must be 3rd Party served, SSL compliant and adhere to IAB's LEAN Ads guidance."
+                },
+                "Animation and Video": {
+                  "Max Animation & Video Frame Rate": "24 FPS",
+                  "Max Animation & Video Length": [
+                    "Must not exceed 15s, no looping beyond 15s.",
+                    "Animation recommended to start when ad is in view information.",
+                    "Recommended that first and final frame contains pertinent information."
+                  ],
+                  "Audio Initiation": [
+                    "Audio must be user-initiated (on click: mute/un-mute).",
+                    "Default state is muted."
+                  ],
+                  "Minimum Required Controls": [
+                    "Expandable Creative: <br>Control = \"Close X\" on expanded panel and \"Expand\" on collapsed panel <br>Font = 8pt (11px) - 16pt (21px) <br>Retract Feature = Either click to close/expand or enable mouse-off retraction",
+                    "In-Banner Video: <br>Video must include: Play, Pause, Mute (and/or volume control to 0). ",
+                    "Note:<br>A close button is not required as the video resides within the ad unit itself Take note of the Z-Index guidelines",
+                    "Video ads which do not have 100% share of screen must provide user controls to pause/stop the video play or close button.",
+                    "All video ads must have 50% of pixels in view before video play start.<br>Auto play video ads must automatically pause/stop when 50% or more of the ad pixels are no longer in view of the user."
+                  ]
+                },
+                "Additional Notes": {
+                  "Submission Lead-Time": [
+                    "Standard/Static Creative: Submit to publisher min. 3 business days before campaign start.",
+                    "Expandable/Rich/Wallpaper/Custom: Submit to publisher min. 5 business days before campaign start.",
+                    "Submit to rich media vendor min. 10 days before campaign start."
+                  ],
+                  "Implementation Notes & Best Practices": [
+                    "Standard Creative:<br>Accepted file formats include: .GIF or .JPG images, or HTML5. <br>All assets referenced in HTML5 code must be externally hosted by client. <br>Must provide a standard GIF/JPEG image backup file.",
+                    "Expandable Creative: <br>Must provide a standard GIF/JPEG image backup file. <br>Expansion must be user-initiated. <br>Pre-expanding ads NOT supported. <br>Provide a call-to-action (\"\"roll over to expand\"\" or \"\"click to expand\"\") for clarity; retract instantly on mouse-off.",
+                    "Must also expand over content, no pushdown action.",
+                    "iFrame template required for iFrame sites.",
+                    "Please see your Adops!",
+                    "See z-index guidelines from <a href=\"https://iabcanada.com/content/uploads/2017/07/IABNewAdPortfolio_FINAL_2017-07.pdf\">IAB Canada</a>."
+                  ]
+                }
+              }
+            },
+            {
+              "ID": "Tall_Big_Box",
+              "UnitName": "Tall Big Box",
+              "Type": "Desktop",
+              "Subtype": "Big_Box-Desktop",
+              "Image": "Tall_Big_Box.png",
+              "updated": true,
+              "Details": {
+                "Dimensions": {
+                  "Dimensions": "300x600"
+                },
+                "Load": {
+                  "Max Initial Load": "Image: 80 KB | HTML5: 150 KB",
+                  "Subsequent Max Polite Load": "2.2 MB | Unlimited if streaming video within the ad unit."
+                },
+                "Formats": {
+                  "Media Files": "JPG | GIF | PNG | Must be in RGB colour format.",
+                  "HTML5": "Yes, must contain Universal clickTAG & SSL compliant. All assets referenced in HTML5 code must be externally hosted by client.",
+                  "Serving:": "All Rich Media must be 3rd Party served, SSL compliant and adhere to IAB's LEAN Ads guidance."
+                },
+                "Animation and Video": {
+                  "Max Animation & Video Frame Rate": "24 FPS",
+                  "Max Animation & Video Length": [
+                    "Must not exceed 15s, no looping beyond 15s.",
+                    "Animation recommended to start when ad is in view information.",
+                    "Recommended that first and final frame contains pertinent information."
+                  ],
+                  "Audio Initiation": [
+                    "Audio must be user-initiated (on click: mute/un-mute).",
+                    "Default state is muted."
+                  ],
+                  "Minimum Required Controls": [
+                    "In-Banner Video:",
+                    "Must include Play, Pause, Mute (and/or volume control to 0).",
+                    "Close button is not required.",
+                    "Video ads which do not have 100% share of screen must provide user controls to pause/stop the video play or close button.",
+                    "All video ads must have 50% of pixels in view before video play start.<br>Auto play video ads must automatically pause/stop when 50% or more of the ad pixels are no longer in view of the user."
+                  ]
+                },
+                "Additional Notes": {
+                  "Submission Lead-Time": [
+                    "Standard/Static Creative: Submit to publisher min. 3 business days before campaign start.",
+                    "Expandable/Rich/Wallpaper/Custom: Submit to publisher min. 5 business days before campaign start.",
+                    "Submit to rich media vendor min. 10 days before campaign start."
+                  ],
+                  "Implementation Notes & Best Practices": [
+                    "Must provide a standard GIF or JPG image backup file.",
+                    "iFrame template required for iFrame sites.",
+                    "See z-index guidelines from <a href=\"https://iabcanada.com/content/uploads/2017/07/IABNewAdPortfolio_FINAL_2017-07.pdf\">IAB Canada</a>."
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "Digital_Video___Audio": {
+      "ui": {
+        "style": "background-image: url(./assets/img/Digital_Video___Audio.jpg)",
+        "icon": "./assets/img/Digital_Video___Audio.svg",
+        "alt": "",
+        "name": "Digital Video & Audio"
+      },
+      "subtypes": {
+        "3rd_Party_Tags_(vast_redirects)-Digital_Video___Audio": {
+          "name": "3rd Party Tags (vast redirects)",
+          "spec": [
+            {
+              "ID": "Console_OTT",
+              "UnitName": "Console(OTT)",
+              "Type": "Digital Video & Audio",
+              "Subtype": "3rd_Party_Tags_(vast_redirects)-Digital_Video___Audio",
+              "Image": "Console(OTT).png",
+              "Details": {
+                "Animation and Video": {
+                  "Frame Size": "min. 1280x720",
+                  "Total Bitrate": "min. 700 kbps",
+                  "Allowed Formats": "H.264 MP4",
+                  "Video Specs": [
+                    "Aspect ratio: 16:9",
+                    "Framerate: 29.97 FPS",
+                    "Scanning: Progressive",
+                    "No Slates or Load Plates"
+                  ],
+                  "Audio Specs": [
+                    "192 kbps bitrate",
+                    "AAC audio codec",
+                    "Stereo 2.0",
+                    "Sample rate: 44100 Hz (minimum)",
+                    "Audio average must be within -24 +/- 2 LKFS (US ATSC/85, Japan TR-B32)",
+                    "Audio Peak: -1 dBTP"
+                  ]
+                },
+                "Additional Notes": {
+                  "Submission Lead-Time": "5 Days, if conflicts are found with the creative the submission lead time may restart upon re-submission.",
+                  "Implementation Notes & Best Practices": [
+                    "Companions must be wrapped within VAST tag.",
+                    "3rd Party redirects must return 100% fill.",
+                    "3rd Party must only contain 1 duration.",
+                    "15s, 30s, 60s, would need separate tags.",
+                    "Ad tags provided by agencies, advertisers or their contracted vendors should not restrict ad responses based on upstream or buy side targeting or capping. Publisher targeting will be enforced at the time of booking per the IO contract. This includes, but is not limited to: GEO targeting, Audience or BT targeting, frequency capping, Dayparting, etc.",
+                    "Furthermore, ad tags provided on a specific advertiser/brand IO contract should not rotate in ads from advertisers or brands not covered on the IO contract."
+                  ]
+                }
+              }
+            },
+            {
+              "ID": "Cross_Platform",
+              "UnitName": "Cross-Platform",
+              "Type": "Digital Video & Audio",
+              "Subtype": "3rd_Party_Tags_(vast_redirects)-Digital_Video___Audio",
+              "Image": "Cross-Platform.png",
+              "Details": {
+                "Animation and Video": {
+                  "Frame Size": "min. 640x360 | max. 1280x720",
+                  "Total Bitrate": "min. 700 kbps | max. 2,000 kbps",
+                  "Allowed Formats": "H.264 MP4",
+                  "Video Specs": [
+                    "Aspect ratio: 16:9",
+                    "Framerate: 29.97 FPS",
+                    "Scanning: Progressive",
+                    "No Slates or Load Plates"
+                  ],
+                  "Audio Specs": [
+                    "192 kbps bitrate",
+                    "AAC audio codec",
+                    "Stereo 2.0",
+                    "Sample rate: 44100 Hz (minimum)",
+                    "Audio average must be within -24 +/- 2 LKFS (US ATSC/85, Japan TR-B32)",
+                    "Audio Peak: -1 dBTP"
+                  ]
+                },
+                "Additional Notes": {
+                  "Submission Lead-Time": "5 Days, if conflicts are found with the creative the submission lead time may restart upon re-submission.",
+                  "Implementation Notes & Best Practices": [
+                    "Companions must be wrapped within VAST tag.",
+                    "3rd Party redirects must return 100% fill.",
+                    "3rd Party must only contain 1 duration.",
+                    "15s, 30s, 60s, would need separate tags.",
+                    "Ad tags provided by agencies, advertisers or their contracted vendors should not restrict ad responses based on upstream or buy side targeting or capping. Publisher targeting will be enforced at the time of booking per the IO contract. This includes, but is not limited to: GEO targeting, Audience or BT targeting, frequency capping, Dayparting, etc.",
+                    "Furthermore, ad tags provided on a specific advertiser/brand IO contract should not rotate in ads from advertisers or brands not covered on the IO contract."
+                  ]
+                }
+              }
+            },
+            {
+              "ID": "Desktop_Mobile_Web",
+              "UnitName": "Desktop / Mobile Web",
+              "Type": "Digital Video & Audio",
+              "Subtype": "3rd_Party_Tags_(vast_redirects)-Digital_Video___Audio",
+              "Image": "Desktop___Mobile_Web.png",
+              "Details": {
+                "Animation and Video": {
+                  "Frame Size": "min. 640x360 | max. 1280x720",
+                  "Total Bitrate": "min. 700 kbps",
+                  "Allowed Formats": "H.264 MP4 | MOV | VPAID 2.0",
+                  "Video Specs": [
+                    "Aspect ratio: 16:9",
+                    "Framerate: 29.97 FPS",
+                    "Scanning: Progressive",
+                    "No Slates or Load Plates"
+                  ],
+                  "Audio Specs": [
+                    "192 kbps bitrate",
+                    "AAC audio codec",
+                    "Stereo 2.0",
+                    "Sample rate: 44100 Hz (minimum)",
+                    "Audio average must be within -24 +/- 2 LKFS (US ATSC/85, Japan TR-B32)",
+                    "Audio Peak: -1 dBTP"
+                  ]
+                },
+                "Additional Notes": {
+                  "Submission Lead-Time": "5 Days, if conflicts are found with the creative the submission lead time may restart upon re-submission.",
+                  "Implementation Notes & Best Practices": [
+                    "Companions must be wrapped within VAST tag.",
+                    "3rd Party redirects must return 100% fill.",
+                    "3rd Party must only contain 1 duration.",
+                    "15s, 30s, 60s, would need separate tags.",
+                    "Ad tags provided by agencies, advertisers or their contracted vendors should not restrict ad responses based on upstream or buy side targeting or capping. Publisher targeting will be enforced at the time of booking per the IO contract. This includes, but is not limited to: GEO targeting, Audience or BT targeting, frequency capping, Dayparting, etc.",
+                    "Furthermore, ad tags provided on a specific advertiser/brand IO contract should not rotate in ads from advertisers or brands not covered on the IO contract."
+                  ]
+                }
+              }
+            },
+            {
+              "ID": "Mobile_Apps",
+              "UnitName": "Mobile Apps",
+              "Type": "Digital Video & Audio",
+              "Subtype": "3rd_Party_Tags_(vast_redirects)-Digital_Video___Audio",
+              "Image": "Mobile_Apps.png",
+              "Details": {
+                "Animation and Video": {
+                  "Frame Size": "min. 640x360 | max. 1280x720",
+                  "Total Bitrate": "max. 2,000 kbps",
+                  "Allowed Formats": "H.264 MP4",
+                  "Video Specs": [
+                    "Aspect ratio: 16:9",
+                    "Framerate: 29.97 FPS",
+                    "Scanning: Progressive",
+                    "No Slates or Load Plates"
+                  ],
+                  "Audio Specs": [
+                    "192 kbps bitrate",
+                    "AAC audio codec",
+                    "Stereo 2.0",
+                    "Sample rate: 44100 Hz (minimum)",
+                    "Audio average must be within -24 +/- 2 LKFS (US ATSC/85, Japan TR-B32)",
+                    "Audio Peak: -1 dBTP"
+                  ]
+                },
+                "Additional Notes": {
+                  "Submission Lead-Time": "5 Days, if conflicts are found with the creative the submission lead time may restart upon re-submission.",
+                  "Implementation Notes & Best Practices": [
+                    "Companions must be wrapped within VAST tag.",
+                    "3rd Party redirects must return 100% fill.",
+                    "3rd Party must only contain 1 duration.",
+                    "15s, 30s, 60s, would need separate tags.",
+                    "Ad tags provided by agencies, advertisers or their contracted vendors should not restrict ad responses based on upstream or buy side targeting or capping. Publisher targeting will be enforced at the time of booking per the IO contract. This includes, but is not limited to: GEO targeting, Audience or BT targeting, frequency capping, Dayparting, etc.",
+                    "Furthermore, ad tags provided on a specific advertiser/brand IO contract should not rotate in ads from advertisers or brands not covered on the IO contract."
+                  ]
+                }
+              }
+            },
+            {
+              "ID": "RGCL_MLBTV_Mobile_OTT",
+              "UnitName": "RGCL (bamtech gam served), MLB.TV (Rogers gam served)",
+              "Type": "Digital Video & Audio",
+              "Subtype": "3rd_Party_Tags_(vast_redirects)-Digital_Video___Audio",
+              "Image": "RGCL_(bamtech_gam_served),_MLB_TV_(Rogers_gam_served).png",
+              "Details": {
+                "Animation and Video": {
+                  "Frame Size": "1280x720 | 1920x1080",
+                  "Total Bitrate": "2,000 kbps + ",
+                  "Allowed Formats": "H.264 MP4, MOV",
+                  "Video Specs": [
+                    "Aspect ratio: 16:9",
+                    "Framerate: 29.97 FPS",
+                    "Scanning: Progressive",
+                    "No Slates or Load Plates",
+                    ":15 or :30 seconds to the frame."
+                  ],
+                  "Audio Specs": [
+                    "16 or 24-bit",
+                    "Sample rate: 48 kHz (Mono or Stereo)",
+                    "Audio average must be within -24 +/- 2 LKFS (US ATSC/85, Japan TR-B32)",
+                    "Audio Peak: -1 dBTP"
+                  ]
+                },
+                "Additional Notes": {
+                  "Submission Lead-Time": "5 Days, if conflicts are found with the creative the submission lead time may restart upon re-submission.",
+                  "Implementation Notes & Best Practices (copy)": [
+                    "Companions must be wrapped within VAST tag.",
+                    "3rd Party redirects must return 100% fill.",
+                    "3rd Party must only contain 1 duration.",
+                    "15s, 30s, 60s, would need separate tags.",
+                    "Ad tags provided by agencies, advertisers or their contracted vendors should not restrict ad responses based on upstream or buy side targeting or capping. Publisher targeting will be enforced at the time of booking per the IO contract. This includes, but is not limited to: GEO targeting, Audience or BT targeting, frequency capping, Dayparting, etc.",
+                    "Furthermore, ad tags provided on a specific advertiser/brand IO contract should not rotate in ads from advertisers or brands not covered on the IO contract.",
+                    "<a href='https://docs.google.com/spreadsheets/d/1O6NfCi4T0wTomwnfcfHUWMqIcgC2LH9cbz8GiRKsLoQ/edit#gid=0' target='blank'>Complete Specs for MLB.TV Mobile / OTT can be found here</a>",
+                    "<a href='https://docs.google.com/spreadsheets/d/1O6NfCi4T0wTomwnfcfHUWMqIcgC2LH9cbz8GiRKsLoQ/edit#gid=0' target='blank'>Complete Specs for MLB.TV Mobile / OTT can be found here</a>"
+                  ]
+                }
+              }
+            },
+            {
+              "ID": "Server_Side_Ad_Insertion",
+              "UnitName": "Server Side Ad Insertion",
+              "Type": "Digital Video & Audio",
+              "Subtype": "3rd_Party_Tags_(vast_redirects)-Digital_Video___Audio",
+              "Image": "Server_Side_Ad_Insertion.png",
+              "Details": {
+                "Note": {
+                  "": "Server Side Ad Insertion, includes O&O Live Streams & Ad-Blocked Content"
+                },
+                "Animation and Video": {
+                  "Frame Size": "min. 640x360 | max. 1280x720",
+                  "Total Bitrate": "min. 700 kbps | max. 2,000 kbps",
+                  "Allowed Formats": "H.264 MP4",
+                  "Video Specs": [
+                    "Aspect ratio: 16:9",
+                    "Framerate: 29.97 FPS",
+                    "Scanning: Progressive",
+                    "No Slates or Load Plates"
+                  ],
+                  "Audio Specs": [
+                    "192 kbps bitrate",
+                    "AAC audio codec",
+                    "Stereo 2.0",
+                    "Sample rate: 44100 Hz (minimum)",
+                    "Audio average must be within -24 +/- 2 LKFS (US ATSC/85, Japan TR-B32)",
+                    "Audio Peak: -1 dBTP"
+                  ]
+                },
+                "Additional Notes": {
+                  "Submission Lead-Time": "5 Days, if conflicts are found with the creative the submission lead time may restart upon re-submission.",
+                  "Implementation Notes & Best Practices": [
+                    "Companions must be wrapped within VAST tag.",
+                    "3rd Party redirects must return 100% fill.",
+                    "3rd Party must only contain 1 duration.",
+                    "15s, 30s, 60s, would need separate tags.",
+                    "Ad tags provided by agencies, advertisers or their contracted vendors should not restrict ad responses based on upstream or buy side targeting or capping. Publisher targeting will be enforced at the time of booking per the IO contract. This includes, but is not limited to: GEO targeting, Audience or BT targeting, frequency capping, Dayparting, etc.",
+                    "Furthermore, ad tags provided on a specific advertiser/brand IO contract should not rotate in ads from advertisers or brands not covered on the IO contract."
+                  ]
+                }
+              }
+            }
+          ]
+        }        
+      }
+    }
+  }
+}

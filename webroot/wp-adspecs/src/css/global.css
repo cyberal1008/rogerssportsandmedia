@@ -1,0 +1,104 @@
+
+/* g-Globals */
+.g-Container {
+  display: block;
+  width: 100%;
+  max-width: 136.2rem;
+  margin: 0 auto;
+  padding: 0 3rem;
+}
+
+@media (min-width: 576px) {
+  .g-Container {
+    width: 90%;
+  }
+}
+
+.g-Title {
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 2px;
+  padding-bottom: 1em;
+  margin-bottom: 1em;
+  border-bottom: 1px solid white;
+  cursor: pointer;
+}
+
+.g-BgImage {
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -10;
+    transition: all .3s;
+}
+
+.g-BgImage-RedTint {
+  background-color: var(--red-tint);
+}
+
+.g-Blur {
+  background-size: 0 0;
+  transform: matrix3d(
+      1.3, 0, 0, 0,
+      0, 1.3, 0, 0,
+      0, 0, 1.3, 0,
+      0, 0, 0, 0.04);
+
+  &:before {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      content: '';
+      background-image: inherit;
+      background-size: cover;
+      background-repeat: inherit;
+      background-position: center;
+      transform: scale(0.05);
+  }
+
+  @supports ( filter: blur() ) {
+      -webkit-filter: blur(17px);
+      -moz-filter: blur(17px);
+      -ms-filter: blur(17px);
+      -o-filter: blur(17px);
+      filter: blur(17px);
+      transform: scale(1.1);
+      background-size: cover;
+      &:before {
+          display: none;
+      }
+  }
+}
+
+.g-Button {
+  display: inline-block;
+  padding: 0.45em 2.22em 0.4em;
+  margin: 1.5em 0 1em;
+  background: var(--light-gray);
+  border-radius: var(--border-radius);
+  border: none;
+  vertical-align: center;
+  font-size: 18px;
+  transition: all .2s ease;
+  text-align: center;
+  &:hover {
+      background: var(--font-color);
+  }
+}
+
+.g-Button-outline {
+    background-color: transparent;
+    border: 1px solid currentColor;
+    &:hover {
+        background-color: white;
+        border-color: white;
+        color: var(--brand-red);
+    }
+}

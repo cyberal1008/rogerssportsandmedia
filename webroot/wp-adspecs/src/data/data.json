@@ -1,0 +1,2290 @@
+{
+  "version": "3.4",
+  "types": {
+    "Desktop": {
+      "ui": {
+        "style": "background-image: url(./assets/img/Desktop.jpg)",
+        "icon": "./assets/img/Desktop.svg",
+        "alt": "",
+        "name": "Desktop"
+      },
+      "subtypes": {
+        "Big_Box-Desktop": {
+          "name": "Big Box",
+          "spec": [
+            {
+              "ID": "Big_Box",
+              "UnitName": "Big Box",
+              "Type": "Desktop",
+              "Subtype": "Big_Box-Desktop",
+              "Image": "Big_Box.png",
+              "updated": true,
+              "Details": {
+                "Dimensions": {
+                  "Dimensions": "300x250",
+                  "Expands To": "Left, 600x600"
+                },
+                "Load": {
+                  "Max Initial Load": "Image: 40 KB | HTML5: 100 KB",
+                  "Subsequent Max Polite Load": "2.2 MB | Unlimited if streaming video within the ad unit."
+                },
+                "Formats": {
+                  "Media Files": "JPG | GIF | PNG | Must be in RGB colour format.",
+                  "HTML5": "Yes, must contain Universal clickTAG & SSL compliant. All assets referenced in HTML5 code must be externally hosted by client.",
+                  "Serving:": "All Rich Media must be 3rd Party served, SSL compliant and adhere to IAB's LEAN Ads guidance."
+                },
+                "Animation and Video": {
+                  "Max Animation & Video Frame Rate": "24 FPS",
+                  "Max Animation & Video Length": [
+                    "Must not exceed 15s, no looping beyond 15s.",
+                    "Animation recommended to start when ad is in view information.",
+                    "Recommended that first and final frame contains pertinent information."
+                  ],
+                  "Audio Initiation": [
+                    "Audio must be user-initiated (on click: mute/un-mute).",
+                    "Default state is muted."
+                  ],
+                  "Minimum Required Controls": [
+                    "Expandable Creative: <br>Control = \"Close X\" on expanded panel and \"Expand\" on collapsed panel <br>Font = 8pt (11px) - 16pt (21px) <br>Retract Feature = Either click to close/expand or enable mouse-off retraction",
+                    "In-Banner Video: <br>Video must include: Play, Pause, Mute (and/or volume control to 0). ",
+                    "Note:<br>A close button is not required as the video resides within the ad unit itself Take note of the Z-Index guidelines",
+                    "Video ads which do not have 100% share of screen must provide user controls to pause/stop the video play or close button.",
+                    "All video ads must have 50% of pixels in view before video play start.<br>Auto play video ads must automatically pause/stop when 50% or more of the ad pixels are no longer in view of the user."
+                  ]
+                },
+                "Additional Notes": {
+                  "Submission Lead-Time": [
+                    "Standard/Static Creative: Submit to publisher min. 3 business days before campaign start.",
+                    "Expandable/Rich/Wallpaper/Custom: Submit to publisher min. 5 business days before campaign start.",
+                    "Submit to rich media vendor min. 10 days before campaign start."
+                  ],
+                  "Implementation Notes & Best Practices": [
+                    "Standard Creative:<br>Accepted file formats include: .GIF or .JPG images, or HTML5. <br>All assets referenced in HTML5 code must be externally hosted by client. <br>Must provide a standard GIF/JPEG image backup file.",
+                    "Expandable Creative: <br>Must provide a standard GIF/JPEG image backup file. <br>Expansion must be user-initiated. <br>Pre-expanding ads NOT supported. <br>Provide a call-to-action (\"\"roll over to expand\"\" or \"\"click to expand\"\") for clarity; retract instantly on mouse-off.",
+                    "Must also expand over content, no pushdown action.",
+                    "iFrame template required for iFrame sites.",
+                    "Please see your Adops!",
+                    "See z-index guidelines from <a href=\"https://iabcanada.com/content/uploads/2017/07/IABNewAdPortfolio_FINAL_2017-07.pdf\" target='blank'>IAB Canada</a>."
+                  ]
+                }
+              }
+            },
+            {
+              "ID": "Tall_Big_Box",
+              "UnitName": "Tall Big Box",
+              "Type": "Desktop",
+              "Subtype": "Big_Box-Desktop",
+              "Image": "Tall_Big_Box.png",
+              "updated": true,
+              "Details": {
+                "Dimensions": {
+                  "Dimensions": "300x600"
+                },
+                "Load": {
+                  "Max Initial Load": "Image: 80 KB | HTML5: 150 KB",
+                  "Subsequent Max Polite Load": "2.2 MB | Unlimited if streaming video within the ad unit."
+                },
+                "Formats": {
+                  "Media Files": "JPG | GIF | PNG | Must be in RGB colour format.",
+                  "HTML5": "Yes, must contain Universal clickTAG & SSL compliant. All assets referenced in HTML5 code must be externally hosted by client.",
+                  "Serving:": "All Rich Media must be 3rd Party served, SSL compliant and adhere to IAB's LEAN Ads guidance."
+                },
+                "Animation and Video": {
+                  "Max Animation & Video Frame Rate": "24 FPS",
+                  "Max Animation & Video Length": [
+                    "Must not exceed 15s, no looping beyond 15s.",
+                    "Animation recommended to start when ad is in view information.",
+                    "Recommended that first and final frame contains pertinent information."
+                  ],
+                  "Audio Initiation": [
+                    "Audio must be user-initiated (on click: mute/un-mute).",
+                    "Default state is muted."
+                  ],
+                  "Minimum Required Controls": [
+                    "In-Banner Video:",
+                    "Must include Play, Pause, Mute (and/or volume control to 0).",
+                    "Close button is not required.",
+                    "Video ads which do not have 100% share of screen must provide user controls to pause/stop the video play or close button.",
+                    "All video ads must have 50% of pixels in view before video play start.<br>Auto play video ads must automatically pause/stop when 50% or more of the ad pixels are no longer in view of the user."
+                  ]
+                },
+                "Additional Notes": {
+                  "Submission Lead-Time": [
+                    "Standard/Static Creative: Submit to publisher min. 3 business days before campaign start.",
+                    "Expandable/Rich/Wallpaper/Custom: Submit to publisher min. 5 business days before campaign start.",
+                    "Submit to rich media vendor min. 10 days before campaign start."
+                  ],
+                  "Implementation Notes & Best Practices": [
+                    "Must provide a standard GIF or JPG image backup file.",
+                    "iFrame template required for iFrame sites.",
+                    "See z-index guidelines from <a href=\"https://iabcanada.com/content/uploads/2017/07/IABNewAdPortfolio_FINAL_2017-07.pdf\" target='blank'>IAB Canada</a>."
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "Custom_Sponsorship_Units-Desktop": {
+          "name": "Custom Sponsorship Units",
+          "spec": [
+            {
+              "ID": "Content_Listing",
+              "UnitName": "Content Listings",
+              "Type": "Desktop",
+              "Subtype": "Custom_Sponsorship_Units-Desktop",
+              "Image": "Content_Listings.png",
+              "updated": true,
+              "Details": {
+                "Dimensions": {
+                  "Dimensions": "<a href='https://docs.google.com/document/d/1SDhXHJaV09f2UMwnG1eK3tQyNXIWehDowllq2_xQt3M/edit' target='blank'>See Contest Listings document</a>"
+                },
+                "Load": {
+                  "Max Initial Load / File Size": "15KB"
+                },
+                "Formats": {
+                  "Media Files": "JPG | GIF | PNG - Must be in RGB colour format.",
+                  "HTML5 Accepted": "No.",
+                  "Serving": "DFP hosted only (Impression pixel allowed) - if you wish to supply 3rd party served creative, must be & SSL compliant, please work with Ad Ops and Ad Tech."
+                },
+                "Additional Notes": {
+                  "Submission Lead Time": [
+                    "5 Days, If conflicts are found with the creative the submission lead time may restart upon re-submission."
+                  ],
+                  "Implementation Notes & Best Practices": [
+                    "<a href='https://docs.google.com/document/d/1SDhXHJaV09f2UMwnG1eK3tQyNXIWehDowllq2_xQt3M/edit' target='blank'>See Contest Listings document</a>"
+                  ]
+                }
+              }
+            },
+            {
+              "ID": "Frequency_Podcast_Network_Sponsorship_Button",
+              "UnitName": "Frequency Podcast Network - Sponsorship Button",
+              "Type": "Desktop",
+              "Subtype": "Custom_Sponsorship_Units-Desktop",
+              "Image": "Frequency_Podcast_Network_-_Sponsorship_Button.png",
+              "updated": false,
+              "Details": {
+                "Dimensions": {
+                  "Dimensions": "150x50 Ad Slot"
+                },
+                "Load": {
+                  "Max Initial Load / File Size": "Image: 30 KB"
+                },
+                "Formats": {
+                  "Media Files": "JPG | GIF | PNG | Must be in RGB colour format.",
+                  "HTML5 Accepted": "No.",
+                  "Serving": "DFP hosted only (Impression pixel allowed)"
+                },
+                "Animation and Video": {
+                  "Max Animation & Video Length": "No animation allowed.",
+                  "Audio Specs": "No audio allowed."
+                },
+                "Additional Notes": {
+                  "Submission Lead Time": [
+                    "Standard/Static Creative: Submit to publisher min. 3 business days before campaign start.",
+                    "Expandable/Rich/Wallpaper/Custom: Submit to publisher min. 5 business days before campaign start. Submit to rich media vendor min. 10 days before campaign start."
+                  ],
+                  "Implementation Notes & Best Practices": [
+                    "Use <a href='https://rogersadops-a.akamaihd.net/specdocs/FPN_Sponsor_Template.psd' target='blank'>logo template PSD file</a> to generate 2x 400x80 image files that includes \"Presented by\" leading text in black and white",
+                    "Actual sponsor logo image must fit within 288x80 red \"box\" guide layer, which should be turned off to output logo"
+                  ]
+                }
+              }
+            },
+            {
+              "ID": "Rogers_Radio_Sponsorship_Button",
+              "UnitName": "Rogers Radio Sponsorship Button",
+              "Type": "Desktop",
+              "Subtype": "Custom_Sponsorship_Units-Desktop",
+              "Image": "Rogers_Radio_Sponsorship_Button.png",
+              "updated": true,
+              "Details": {
+                "Dimensions": {
+                  "Dimensions": "Max: 200x55 (can be smaller) | 300x60 Ad slot"
+                },
+                "Load": {
+                  "Max Initial Load / File Size": "Image: 30 KB"
+                },
+                "Formats": {
+                  "Media Files": "JPG | GIF | PNG - PNG with transparent background prefered",
+                  "HTML5 Accepted": "No.",
+                  "Serving": "DFP Served (impression pixel allowed)"
+                },
+                "Animation and Video": {
+                  "Max Animation & Video Length": "30 secondsor less - maximum 3 loops",
+                  "Audio Specs": "No audio allowed.",
+                  "Minimum Required Controls": "Leading text must be a presentation of the livestream / show (ex: \"presented by\", \"powered by\", \"a presentation of\", etc...)"
+                },
+                "Additional Notes": {
+                  "Submission Lead Time": [
+                    "Standard/Static Creative: Submit to publisher min. 3 business days before campaign start."
+                  ],
+                  "Implementation Notes & Best Practices": [
+                    "Client must provide logo/image."
+                  ]
+                }
+              }
+            },
+            {
+              "ID": "Sponsorship_Buttons",
+              "UnitName": "Sponsorship Badges / Buttons",
+              "Type": "Desktop",
+              "Subtype": "Custom_Sponsorship_Units-Desktop",
+              "Image": "Sponsorship_Badges___Buttons.png",
+              "updated": true,
+              "Details": {
+                "Dimensions": {
+                  "Dimensions": [
+                    "150x50 - sponsor badge images may be bigger in dimensions but must fit within 3:1 aspect ratio",
+                    "300x35",
+                    "300x60"
+                  ]
+                },
+                "Load": {
+                  "Max Initial Load / File Size": "Image: 40 KB"
+                },
+                "Formats": {
+                  "Media Files": "JPG | GIF | PNG - Must be in RGB colour format.",
+                  "HTML5 Accepted": "No.",
+                  "Serving": "DFP hosted only (Impression pixel allowed) - if you wish to supply 3rd party served creative, must be SSL compliant, please work with Ad Ops and Ad Tech."
+                },
+                "Additional Notes": {
+                  "Submission Lead Time": [
+                    "5 Days, If conflicts are found with the creative the submission lead time may restart upon re-submission."
+                  ],
+                  "Implementation Notes & Best Practices": [
+                    "Provide HD sizes when possible (2x)."
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "Email-Desktop": {
+          "name": "Email",
+          "spec": [
+            {
+              "ID": "Eblast",
+              "UnitName": "Eblast",
+              "Type": "Desktop",
+              "Subtype": "Email-Desktop",
+              "Image": "Eblast.png",
+              "Details": {
+                "Dimensions": {
+                  "Dimensions": "Body: 600px to 700px | Header: 600Wx70H | Footer: 600Wx150H"
+                },
+                "Load": {
+                  "Max Initial Load / File Size": [
+                    "Subject Line length: 50 characters max.",
+                    "Avoid using special characters in subject lines, as they may not always render properly on all email providers and devices.",
+                    "Subject lines must include advertiser’s name."
+                  ]
+                },
+                "Formats": {
+                  "Media Files": "HTML File or URL | Sliced and in final coded format"
+                },
+                "Additional Notes": {
+                  "Deployment Time": "Unless otherwise arranged, and barring any delays, all eBlasts will be deployed at 11:00AM Eastern Standard Time.",
+                  "Submission Lead Time": [
+                    "Final creative assets due a minimum of 5 business days prior to deployment.",
+                    "Failure to deliver assets on time may result in delays to the deployment date.",
+                    "Last minute changes to creative may result in delays to the deployment date or cancellation."
+                  ],
+                  "Implementation Notes & Best Practices": [
+                    "Do's:",
+                    "Place bulk of message in the top 400px portion of the screen (i.e. above the fold). Include a link or clickable area (i.e. call-to-action) above the fold for optimal click-throughresults.",
+                    "Include both images and text in creative, rather thanone large image with text embedded within graphic. (If the design requires the creative to be all images, add all text components of the creative to their respective alt tags).",
+                    "Hardcode all accents (i.e. French) and punctuations (i.e. bullets, ampersands, hyphens).",
+                    "Host all images, and hardcode the image URL in the HTML code.",
+                    "Define all cell widths, align, and valign properties.",
+                    "Define all table widths, borders, cellpadding ,and cellspacing properties.",
+                    "Insert click tags or tracked URLs in the final HTMLfile.",
+                    "Avoid URL re-directs or links with .aspx extensions.",
+                    "Don'ts:",
+                    "Do not use FLASH, JavaScript, CSS, or DIV tags, as most email clients strip these codes out and render inaccurate displays.",
+                    "If using CSS, they should be coded in-line, and not in the head tag.",
+                    "Do not rely on background images (most email clients do not support backgroundimages)",
+                    "Keep email background white or use an HTML bgcolor as a fallback option.",
+                    "Note: We apply tracking to all links provided in an eBlast. If you provide an already-tracked link, our email software may run into problems re-tracking that link. Please inform us in advance if your eBlast has tracking.",
+                    "Advertiser Contact Info: Advertiser’s legal name and mailing address. Plus either a URL or email address or phone number.",
+                    "Note: Per CASL regulations, the email cannot be deployed without this information.",
+                    "Test List + Seed Lists: Email addresses for everyone that should receive a test and/or actual email (seed) when deployed.",
+                    "Quality Assurance: Client/Agency is responsible for QA of the creative before final HTML is submitted."
+                  ]
+                }
+              }
+            },
+            {
+              "ID": "Newsletter",
+              "UnitName": "Newsletter",
+              "Type": "Desktop",
+              "Subtype": "Email-Desktop",
+              "Image": "Newsletter.png",
+              "updated": true,
+              "Details": {
+                "Dimensions": {
+                  "Dimensions": "300x250"
+                },
+                "Load": {
+                  "Max Initial Load / File Size": "Static Image: 40 KB | Animated GIF: 150 KB"
+                },
+                "Formats": {
+                  "Media Files": "JPG | GIF | PNG",
+                  "HTML5 Accepted": "No.",
+                  "Serving": [
+                    "For optimal performance, provide 1x1 impression tracker, click tracker & image file per each placement.",
+                    "Static tags (Standard Images and/or no script section of Javascript tags) must run the same creatives as the Javascript tags in order to ensure the correct images serve.",
+                    "Only one creative per placement.  Do not rotate creative or campaign."
+                  ]
+                },
+                "Animation and Video": {
+                  "Max Animation & Video Frame Rate": "5 FPS",
+                  "Max Animation & Video Length": [
+                    "30 secondsor less (loops included);maximum 3 loops",
+                    "Complete creative rendering must be in first frame of animation"
+                  ]
+                },
+                "Additional Notes": {
+                  "Submission Lead Time": [
+                    "Standard/Static Creative: Submit to publisher minimum 3 business days before campaign start",
+                    "Expandable/Rich/Wallpaper/Custom: Submit to publisher min. 5 business days before campaign start.",
+                    "Submit to rich media vendor min. 10 days before campaign start."
+                  ],
+                  "Implementation Notes & Best Practices": [
+                    "Although acceptable, animated GIFs are not recommended as they may not be supported in the same way by all email clients.",
+                    "If submitting multiple creatives for the same ad slot or booking, please specify to ad ops if they should have equal SOV or if they should be set up for optimized delivery.",
+                    "NOTE: The ad loaded upon a user's first open of a newsletter will hold state for 14 days"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "Large_Format-Desktop": {
+          "name": "Large Format",
+          "spec": [
+            {
+              "ID": "Billboard_Desktop",
+              "UnitName": "Billboard - Desktop",
+              "Type": "Desktop",
+              "Subtype": "Large_Format-Desktop",
+              "Image": "Billboard_-_Desktop.png",
+              "updated": true,
+              "Details": {
+                "Dimensions": {
+                  "Dimensions": "970x250",
+                  "Collapses to": [
+                    "\"Show Ad\" text with icon (or 88x31 image), or \"Show Ad\" text/icon with residual branding in 62x88 px or 196x31 px image",
+                    "Note: Close button not required for static creative that does not expand or collapse)."
+                  ]
+                },
+                "Load": {
+                  "Max Initial Load / File Size": "200 KB",
+                  "Subsequent Max Polite Load": "1 MB | 1.5 MB for creative files | 10 MB for non-YouTube served video | 10 MB total for creative & video combined | Streaming not allowed."
+                },
+                "Formats": {
+                  "Media Files": "JPG | PNG for Static | Must be in RGB colour format",
+                  "HTML5 Accepted": "Yes, must use friendly iframe template & SSL compliant",
+                  "Serving": [
+                    "Static Image can be served in DFP, through new template.",
+                    "Rich Media must be 3rd-Party Ad-Served & SSL compliant."
+                  ]
+                },
+                "Animation and Video": {
+                  "Max Animation & Video Frame Rate": "24 FPS",
+                  "Max Animation & Video Length": "30 seconds or less; unlimited with user interaction",
+                  "Audio Specs": [
+                    "Must be user-initiated (on click: mute/un-mute)",
+                    "Default state is muted"
+                  ],
+                  "Minimum Required Controls": [
+                    "Close X collapses ad 100% when clicked, with \"Show Ad\" button available that expands ad upon click.",
+                    "Close button not required for static creative that does not expand or collapse.",
+                    "Video must include: Play, Pause, Mute (and/or volume control to 0)."
+                  ]
+                },
+                "Additional Notes": {
+                  "Submission Lead Time": [
+                    "Minimum 5 business days before campaign start to Publisher (3 days for static), 10 days to Rich Media Vendor"
+                  ]
+                }
+              }
+            },
+            {
+              "ID": "Filmstrip",
+              "UnitName": "Filmstrip",
+              "Type": "Desktop",
+              "Subtype": "Large_Format-Desktop",
+              "Image": "Filmstrip.png",
+              "updated": true,
+              "Details": {
+                "Dimensions": {
+                  "Dimensions": "300x600"
+                },
+                "Load": {
+                  "Max Initial Load / File Size": "200 KB",
+                  "Subsequent Max Polite Load": "2.2 MB | Unlimited if streaming video within the ad unit"
+                },
+                "Formats": {
+                  "HTML5 Accepted": "Yes, must use friendly iframe template & SSL compliant",
+                  "Serving": "Must be 3rd-Party Ad-Served & SSL compliant"
+                },
+                "Animation and Video": {
+                  "Max Animation & Video Frame Rate": "24 FPS",
+                  "Max Animation & Video Length": "30 seconds or less; unlimited with user interaction",
+                  "Audio Specs": [
+                    "Must be user-initiated (on click: mute/un-mute)",
+                    "Default state is muted"
+                  ],
+                  "Minimum Required Controls": "Video must include: Play, Pause, Mute (and/or volume control to 0)."
+                },
+                "Additional Notes": {
+                  "Submission Lead Time": [
+                    "Minimum 5 business days before campaign start to Publisher (3 days for static), 10 days to Rich Media Vendor"
+                  ]
+                }
+              }
+            },
+            {
+              "ID": "Pushdown",
+              "UnitName": "Pushdown",
+              "Type": "Desktop",
+              "Subtype": "Large_Format-Desktop",
+              "Image": "Pushdown.png",
+              "Details": {
+                "Dimensions": {
+                  "Dimensions": [
+                    "975x50 | 970x66 | 970x250",
+                    "Pushes down - the content of the page, while expanding to a height of 415px (max height in 250px on NBA)"
+                  ]
+                },
+                "Load": {
+                  "Max Initial Load / File Size": "200 KB",
+                  "Subsequent Max Polite Load": "2.2 MB | Unlimited if streaming video within the ad unit"
+                },
+                "Formats": {
+                  "Media Files": "N/A",
+                  "HTML Accepted": "Yes, must use friendly iframe template & SSL compliant",
+                  "Serving": "Must be 3rd-Party Ad-Served & SSL compliant"
+                },
+                "Animation and Video": {
+                  "Max Animation & Video Frame Rate": "24 FPS",
+                  "Max Animation & Video Length": "30 seconds or less; unlimited with user interaction",
+                  "Audio Specs": [
+                    "Must be user-initiated (on click: mute/un-mute)",
+                    "Default state is muted"
+                  ],
+                  "Minimum Required Controls": [
+                    "Close button on expanded pushdown, initiated by click",
+                    "Uninitiated expanded panel closes automatically and collapsed ad provides expand button that can be initiated with a click",
+                    "Video must include: Play, Pause, Mute (and/or volume control to 0)",
+                    "Other controls dependent on modules used. See style guide for control details, styles and specifications"
+                  ]
+                },
+                "Additional Notes": {
+                  "Submission Lead Time": "Minimum 5 business days before campaign start to Publisher (3 days for static), 10 days to Rich Media Vendor"
+                }
+              }
+            },
+            {
+              "ID": "Universal_Banner_Celtra",
+              "UnitName": "Universal Banner (Celtra)",
+              "Type": "Desktop",
+              "Subtype": "Large_Format-Desktop",
+              "Image": "Universal_Banner_(Celtra).png",
+              "Details": {
+                "Dimensions": {
+                  "Ad Slot Size": "300x50 | 320x50 | 300x250 | 728x90 | 970x250"
+                },
+                "Animation and Video": {
+                  "Max Animation & Video Frame Rate": "24 FPS",
+                  "Max Animation & Video Length": "30 seconds or less; unlimited with user interaction",
+                  "Audio Specs": [
+                    "Must be user-initiated (on click: mute/un-mute)",
+                    "Default state is muted"
+                  ]
+                },
+                "Additional Notes": {
+                  "Submission Lead Time": "Minimum 5 business days before campaign start to Publisher (3 days for static), 10 days to Rich Media Vendor",
+                  "Implementation Notes & Best Practices": [
+                    "A single unit with multiple unit sizes",
+                    "Environment: Web - Sticky is only available on Web SDKs, In-app (MRAID). Dynamic sizing of the ad container is not guaranteed for Universal ads running in-app",
+                    "For exact creative build requirements, contact your Account Manager to begin discussion with the creative design team"
+                  ]
+                }
+              }
+            },
+            {
+              "ID": "Universal_Expandable_Celtra",
+              "UnitName": "Universal Expandable (Celtra)",
+              "Type": "Desktop",
+              "Subtype": "Large_Format-Desktop",
+              "Image": "Universal_Banner_II_(Celtra).png",
+              "Details": {
+                "Dimensions": {
+                  "Ad Slot Size": [
+                    "300x50 | 320x50 | 300x250 | 728x90 | 970x250",
+                    "Expands to fullscreen"
+                  ]
+                },
+                "Animation and Video": {
+                  "Max Animation & Video Frame Rate": "24 FPS",
+                  "Max Animation & Video Length": "30 seconds or less; unlimited with user interaction",
+                  "Audio Specs": [
+                    "Must be user-initiated (on click: mute/un-mute)",
+                    "Default state is muted"
+                  ]
+                },
+                "Additional Notes": {
+                  "Submission Lead Time": "Minimum 5 business days before campaign start to Publisher (3 days for static), 10 days to Rich Media Vendor",
+                  "Implementation Notes & Best Practices": [
+                    "A single unit with multiple unit sizes that expands to full screen",
+                    "Environment: Web - Sticky is only available on Web SDKs, In-app (MRAID). Dynamic sizing of the ad container is not guaranteed for Universal ads running in-app",
+                    "For exact creative build requirements, contact your Account Manager to begin discussion with the creative design team"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "Leaderboard-Desktop": {
+          "name": "Leaderboard",
+          "spec": [
+            {
+              "ID": "Leaderboard",
+              "UnitName": "Leaderboard",
+              "Type": "Desktop",
+              "Subtype": "Leaderboard-Desktop",
+              "Image": "Leaderboard.png",
+              "updated": true,
+              "Details": {
+                "Dimensions": {
+                  "Dimensions": "728x90",
+                  "Expands": "Down, to 728x360"
+                },
+                "Load": {
+                  "Max Initial Load": "Image: 40 KB | HTML5: 100 KB",
+                  "Subsequent Max Polite Load": "2.2 MB | Unlimited if streaming video within the ad unit."
+                },
+                "Formats": {
+                  "Media Files": "JPG | GIF | PNG | Must be in RGB colour format.",
+                  "HTML5": "Yes, must contain Universal clickTAG & SSL compliant. All assets referenced in HTML5 code must be externally hosted by client.",
+                  "Serving:": "All Rich Media must be 3rd Party served, SSL compliant and adhere to IAB's LEAN Ads guidance."
+                },
+                "Animation and Video": {
+                  "Max Animation & Video Frame Rate": "24 FPS",
+                  "Max Animation & Video Length": [
+                    "Must not exceed 15s, no looping beyond 15s.",
+                    "Animation recommended to start when ad is in view information.",
+                    "Recommended that first and final frame contains pertinent information."
+                  ],
+                  "Audio Initiation": [
+                    "Audio must be user-initiated (on click: mute/un-mute).",
+                    "Default state is muted."
+                  ],
+                  "Minimum Required Controls": [
+                    "Expandable Creative: <br>Control = \"Close X\" on expanded panel and \"Expand\" on collapsed panel <br>Font = 8pt (11px) - 16pt (21px) <br>Retract Feature = Either click to close/expand or enable mouse-off retraction",
+                    "In-Banner Video: <br>Video must include: Play, Pause, Mute (and/or volume control to 0). ",
+                    "Note:<br>A close button is not required as the video resides within the ad unit itself Take note of the Z-Index guidelines",
+                    "Video ads which do not have 100% share of scree must provide user controls to pause/stop the video play or close button.",
+                    "All video ads must have 50% of pixels in view before video play start.<br>Auto play video ads must automatically pause/stop when 50% or more of the ad pixels are no longer in view of the user."
+                  ]
+                },
+                "Additional Notes": {
+                  "Submission Lead-Time": [
+                    "Standard/Static Creative: Submit to publisher min. 3 business days before campaign start.",
+                    "Expandable/Rich/Wallpaper/Custom: Submit to publisher min. 5 business days before campaign start.",
+                    "Submit to rich media vendor min. 10 days before campaign start."
+                  ],
+                  "Implementation Notes & Best Practices": [
+                    "Standard Creative:<br>Accepted file formats include: .GIF or .JPG images, or HTML5. <br>All assets referenced in HTML5 code must be externally hosted by client. <br>Must provide a standard GIF/JPEG image backup file.",
+                    "Expandable Creative: <br>Must provide a standard GIF/JPEG image backup file. <br>Expansion must be user-initiated. <br>Pre-expanding ads NOT supported. <br>Provide a call-to-action (\"\"roll over to expand\"\" or \"\"click to expand\"\") for clarity; retract instantly on mouse-off.",
+                    "Must also expand over content, no pushdown action.",
+                    "iFrame template required for iFrame sites.",
+                    "Please see your Adops!",
+                    "See z-index guidelines from <a href=\"https://iabcanada.com/content/uploads/2017/07/IABNewAdPortfolio_FINAL_2017-07.pdf\" target='blank'>IAB Canada</a>."
+                  ]
+                }
+              }
+            },
+            {
+              "ID": "Super_Leaderboard",
+              "UnitName": "Super Leaderboard",
+              "Type": "Desktop",
+              "Subtype": "Leaderboard-Desktop",
+              "Image": "Super_Leaderboard.png",
+              "updated": true,
+              "Details": {
+                "Dimensions": {
+                  "Dimensions": "970x90",
+                  "Expands To": "Down, 970x250"
+                },
+                "Load": {
+                  "Max Initial Load": "Image: 200 KB | HTML5: 400 KB",
+                  "Subsequent Max Polite Load": "2.2 MB | Unlimited if streaming video within the ad unit."
+                },
+                "Formats": {
+                  "Media Files": "JPG | GIF | PNG | Must be in RGB colour format.",
+                  "HTML5": "Yes, must contain Universal clickTAG & SSL compliant. All assets referenced in HTML5 code must be externally hosted by client.",
+                  "Serving:": "All Rich Media must be 3rd Party served, SSL compliant and adhere to IAB's LEAN Ads guidance."
+                },
+                "Animation and Video": {
+                  "Max Animation & Video Frame Rate": "24 FPS",
+                  "Max Animation & Video Length": [
+                    "Must not exceed 15s, no looping beyond 15s.",
+                    "Animation recommended to start when ad is in view information.",
+                    "Recommended that first and final frame contains pertinent information."
+                  ],
+                  "Audio Initiation": [
+                    "Audio must be user-initiated (on click: mute/un-mute).",
+                    "Default state is muted."
+                  ],
+                  "Minimum Required Controls": [
+                    "Expandable Creative: <br>Control = \"Close X\" on expanded panel and \"Expand\" on collapsed panel <br>Font = 8pt (11px) - 16pt (21px) <br>Retract Feature = Either click to close/expand or enable mouse-off retraction",
+                    "In-Banner Video: <br>Video must include: Play, Pause, Mute (and/or volume control to 0). ",
+                    "Note:<br>A close button is not required as the video resides within the ad unit itself Take note of the Z-Index guidelines",
+                    "Video ads which do not have 100% share of screen must provide user controls to pause/stop the video play or close button.",
+                    "All video ads must have 50% of pixels in view before video play start.<br>Auto play video ads must automatically pause/stop when 50% or more of the ad pixels are no longer in view of the user."
+                  ]
+                },
+                "Additional Notes": {
+                  "Submission Lead-Time": [
+                    "Standard/Static Creative: Submit to publisher min. 3 business days before campaign start.",
+                    "Expandable/Rich/Wallpaper/Custom: Submit to publisher min. 5 business days before campaign start.",
+                    "Submit to rich media vendor min. 10 days before campaign start."
+                  ],
+                  "Implementation Notes & Best Practices": [
+                    "Standard Creative:<br>Accepted file formats include: .GIF or .JPG images, or HTML5. <br>All assets referenced in HTML5 code must be externally hosted by client. <br>Must provide a standard GIF/JPEG image backup file.",
+                    "Expandable Creative: <br>Must provide a standard GIF/JPEG image backup file. <br>Expansion must be user-initiated. <br>Pre-expanding ads NOT supported. <br>Provide a call-to-action (\"\"roll over to expand\"\" or \"\"click to expand\"\") for clarity; retract instantly on mouse-off.",
+                    "Must also expand over content, no pushdown action.",
+                    "iFrame template required for iFrame sites.",
+                    "Please see your Adops!",
+                    "See z-index guidelines from <a href=\"https://iabcanada.com/content/uploads/2017/07/IABNewAdPortfolio_FINAL_2017-07.pdf\" target='blank'>Canada</a>."
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "Native_Ads-Desktop": {
+          "name": "Native Ads",
+          "spec": [
+            {
+              "ID": "Native_App_Install_Desktop",
+              "UnitName": "Native App Install - Desktop",
+              "Type": "Desktop",
+              "Subtype": "Native_Ads-Desktop",
+              "Image": "Native_App_Install_-_Desktop.png",
+              "Details": {
+                "Content Information": {
+                  "Headline": "25 characters max. (required)",
+                  "Image Dimensions": [
+                    "1200 x 627 px min. | Aspect Ratio 1.91:1 (required)",
+                    "Note: For web, the native ad may be cropped width-wise but not  height-wise."
+                  ],
+                  "Body": "90 characters max. (required)",
+                  "App Icon/Logo": "128 x 128 px | Aspect Ratio 1:1  (required)",
+                  "Call to action": "15 characters max. (required)",
+                  "Advertiser": "25 characters max.",
+                  "Click-through URL": "Required.",
+                  "Check your Native specs": "<a href='https://docs.google.com/spreadsheets/d/1ME4nW-q3AC6E7zcfqEKgXxwfBZ9U614S1hNmacPV2UI/edit?usp=sharing' target='blank'>Click here to check your Native specs</a>"
+                },
+                "Additional Notes": {
+                  "Submission Lead Time": [
+                    "Standard/Static Creative: Submit to publisher min. 3 business days before campaign start.",
+                    "Expandable/Rich/Wallpaper/Custom: Submit to publisher min. 5 business days before campaign start. Submit to rich media vendor min. 10 days before campaign start."
+                  ],
+                  "Implementation Notes & Best Practices": [
+                    "Characters limits that exceed our specs are not allowed, as it will not fit properly in the native ad slots designed for our sites/apps.",
+                    "Image aspect ratios must be followed, otherwise the image may appear distorted.",
+                    "All required elements for native should be submitted, even though not all elements supplied may appear in all native ad slots.",
+                    "Native ad slots are styled to appear similar to surrounding content, this is the reason that some native slots do not display all elements."
+                  ]
+                }
+              }
+            },
+            {
+              "ID": "Native_Content_Desktop",
+              "UnitName": "Native Content - Desktop",
+              "Type": "Desktop",
+              "Subtype": "Native_Ads-Desktop",
+              "Image": "Native_Content_-_Desktop.png",
+              "Details": {
+                "Content Information": {
+                  "UnitName": "Native Content",
+                  "Headline": "25 characters max. (required)",
+                  "Image Dimensions": [
+                    "1200 x 627 px min. | Aspect Ratio 1.91:1  (required)",
+                    "Note: For web, the native ad may be cropped width-wise but not  height-wise."
+                  ],
+                  "Body": "90 characters max. (required)",
+                  "App Icon/Logo": "128 x 128 px | Aspect Ratio 1:1 (optional)",
+                  "Call to action": "15 characters max. (required)",
+                  "Advertiser": "25 characters max. (required)",
+                  "Click-through URL": "Required.",
+                  "Check your Native specs": "<a href='https://docs.google.com/spreadsheets/d/1ME4nW-q3AC6E7zcfqEKgXxwfBZ9U614S1hNmacPV2UI/edit?usp=sharing' target='blank'>Click here to check your Native specs</a>"
+                },
+                "Additional Notes": {
+                  "Submission Lead Time": [
+                    "Standard/Static Creative: Submit to publisher min. 3 business days before campaign start.",
+                    "Expandable/Rich/Wallpaper/Custom: Submit to publisher min. 5 business days before campaign start. Submit to rich media vendor min. 10 days before campaign start."
+                  ],
+                  "Implementation Notes & Best Practices": [
+                    "Characters limits that exceed our specs are not allowed, as it will not fit properly in the native ad slots designed for our sites/apps.",
+                    "Image aspect ratios must be followed, otherwise the image may appear distorted.",
+                    "All required elements for native should be submitted, even though not all elements supplied may appear in all native ad slots.",
+                    "Native ad slots are styled to appear similar to surrounding content, this is the reason that some native slots do not display all elements."
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "Sliver-Desktop": {
+          "name": "Sliver",
+          "spec": [
+            {
+              "ID": "Sliver_Radio_Broadcast",
+              "UnitName": "Sliver Radio, Broadcast",
+              "Type": "Desktop",
+              "Subtype": "Sliver-Desktop",
+              "Image": "Silver.png",
+              "updated": true,
+              "Details": {
+                "Dimensions": {
+                  "Dimensions": "970x50"
+                },
+                "Load": {
+                  "Max Initial Load": "Image: 80 KB | HTML5: 150 KB",
+                  "Subsequent Max Polite Load": "2.2 MB | Unlimited if streaming video within the ad unit."
+                },
+                "Formats": {
+                  "Media Files": "JPG | GIF | PNG | Must be in RGB colour format.",
+                  "HTML5": "Yes, must contain Universal clickTAG & SSL compliant. All assets referenced in HTML5 code must be externally hosted by client.",
+                  "Serving:": "All Rich Media must be 3rd Party served, SSL compliant and adhere to IAB's LEAN Ads guidance."
+                },
+                "Animation and Video": {
+                  "Max Animation & Video Frame Rate": "24 FPS",
+                  "Max Animation & Video Length": [
+                    "Must not exceed 15 seconds, no looping.",
+                    "Animation recommended to start when ad is in view information."
+                  ],
+                  "Audio Initiation": [
+                    "Audio must be user-initiated (on click: mute/un-mute).",
+                    "Default state is muted."
+                  ],
+                  "Minimum Required Controls": [
+                    "In-Banner Video:",
+                    "Must include Play, Pause, Mute (and/or volume control to 0).",
+                    "Close button is not required.",
+                    "Must have 50% pixels in view before video play start.",
+                    "Autoplay video ads must auto pause/stop when 50% or more of ad pixels no longer in view."
+                  ]
+                },
+                "Additional Notes": {
+                  "Submission Lead-Time": [
+                    "Standard/Static Creative: Submit to publisher min. 3 business days before campaign start.",
+                    "Expandable/Rich/Wallpaper/Custom: Submit to publisher min. 5 business days before campaign start.",
+                    "Submit to rich media vendor min. 10 days before campaign start."
+                  ],
+                  "Implementation Notes & Best Practices": [
+                    "Must provide a standard GIF or JPG image backup file.",
+                    "iFrame template required for iFrame sites.",
+                    "See z-index guidelines from <a href=\"https://iabcanada.com/content/uploads/2017/07/IABNewAdPortfolio_FINAL_2017-07.pdf\" target='blank'>IAB Canada</a>."
+                  ]
+                }
+              }
+            },
+            {
+              "ID": "Sliver_Partner_SNET_Publisher",
+              "UnitName": "Sliver Partner, SNET and Publisher",
+              "Type": "Desktop",
+              "Subtype": "Sliver-Desktop",
+              "Image": "Silver.png",
+              "updated": true,
+              "Details": {
+                "Dimensions": {
+                  "Dimensions": "970x66"
+                },
+                "Load": {
+                  "Max Initial Load": "Image: 80 KB | HTML5: 150 KB",
+                  "Subsequent Max Polite Load": "2.2 MB | Unlimited if streaming video within the ad unit."
+                },
+                "Formats": {
+                  "Media Files": "JPG | GIF | PNG | Must be in RGB colour format.",
+                  "HTML5": "Yes, must contain Universal clickTAG & SSL compliant. All assets referenced in HTML5 code must be externally hosted by client.",
+                  "Serving:": "All Rich Media must be 3rd Party served, SSL compliant and adhere to IAB's LEAN Ads guidance."
+                },
+                "Animation and Video": {
+                  "Max Animation & Video Frame Rate": "24 FPS",
+                  "Max Animation & Video Length": [
+                    "Must not exceed 15 seconds, no looping.",
+                    "Animation recommended to start when ad is in view information."
+                  ],
+                  "Audio Initiation": [
+                    "Audio must be user-initiated (on click: mute/un-mute).",
+                    "Default state is muted."
+                  ],
+                  "Minimum Required Controls": [
+                    "In-Banner Video:",
+                    "Must include Play, Pause, Mute (and/or volume control to 0).",
+                    "Close button is not required.",
+                    "Must have 50% pixels in view before video play start.",
+                    "Autoplay video ads must auto pause/stop when 50% or more of ad pixels no longer in view."
+                  ]
+                },
+                "Additional Notes": {
+                  "Submission Lead-Time": [
+                    "Standard/Static Creative: Submit to publisher min. 3 business days before campaign start.",
+                    "Expandable/Rich/Wallpaper/Custom: Submit to publisher min. 5 business days before campaign start.",
+                    "Submit to rich media vendor min. 10 days before campaign start."
+                  ],
+                  "Implementation Notes & Best Practices": [
+                    "Must provide a standard GIF or JPG image backup file.",
+                    "iFrame template required for iFrame sites.",
+                    "See z-index guidelines from <a href=\"https://iabcanada.com/content/uploads/2017/07/IABNewAdPortfolio_FINAL_2017-07.pdf\" target='blank'>IAB Canada</a>."
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "Wallpaper-Desktop": {
+          "name": "Wallpaper",
+          "spec": [
+            {
+              "ID": "MLB_and_Club_Sites",
+              "UnitName": "MLB and Club Sites",
+              "Type": "Desktop",
+              "Subtype": "Wallpaper-Desktop",
+              "Image": "MLB_and_Club_Sites.png",
+              "Details": {
+                "Dimensions": {
+                  "Dimensions": "Artwork size: 1680px x 900px"
+                },
+                "Load": {
+                  "Max Initial Load / File Size": "Image: 250 KB"
+                },
+                "Formats": {
+                  "Media Files": "JPG (only)",
+                  "Serving": "Must be site-served. No third-party tags accepted."
+                },
+                "Additional Notes": {
+                  "Submission Lead Time": "Submission time for all creative is 5 business days. If conflicts are found with the creative the submission lead time may restart upon re-submission.",
+                  "Implementation Notes & Best Practices": [
+                    "Design must fade into a solid color on the left, right and bottom.",
+                    "Elements must be different on both sides left and right.",
+                    "Background messaging may not extend beyond 130px in width on either side.",
+                    "Messaging and logos should not be placed above 80px from the top and below 600px from the bottom of the image.",
+                    "Do not use tiled images in the background.",
+                    "Primary messaging and call to action must appear in all units other than wallpaper.",
+                    "Wallpaper is clickable.",
+                    "<a href='https://drive.google.com/file/d/0B3OLb9Xo3dRLQ0ZkNW9wQ0tqTXc/view?usp=sharing' target='blank'>Click here to see Takeover style guide.</a>"
+                  ]
+                }
+              }
+            },
+            {
+              "ID": "News",
+              "UnitName": "News",
+              "Type": "Desktop",
+              "Subtype": "Wallpaper-Desktop",
+              "Image": "News.png",
+              "Details": {
+                "Dimensions": {
+                  "Dimensions": "Centre Width - 1304px"
+                },
+                "Load": {
+                  "Max Initial Load / File Size": "Image: 250 KB"
+                },
+                "Formats": {
+                  "Media Files": "JPG",
+                  "HTML5 Accepted": "No.",
+                  "Serving": "DFP hosted only."
+                },
+                "Additional Notes": {
+                  "Background Color appearing behind Page Content area": "N/A | Hidden by page content",
+                  "JPG Spec (Send link to creative agency)": "<a href='http://adops.rogersdigitalmedia.com.edgesuite.net/specdocs/RDM_wallpaper_specs_news_2016_v2.jpg' target='blank'>Click here to see JPG Spec </a>",
+                  "Submission Lead Time": [
+                    "Submission time for all creative is 5 business days. If conflicts are found with the creative the submission lead time may restart upon re-submission."
+                  ]
+                }
+              }
+            },
+            {
+              "ID": "NHL_and_Team_Sites",
+              "UnitName": "NHL and Team Sites",
+              "Type": "Desktop",
+              "Subtype": "Wallpaper-Desktop",
+              "Image": "NHL_and_Team_Sites.png",
+              "Details": {
+                "Dimensions": {
+                  "Dimensions": "Artwork size: 1680px x 900px"
+                },
+                "Load": {
+                  "Max Initial Load / File Size": "Image: 250 KB"
+                },
+                "Formats": {
+                  "Media Files": "JPG (only)",
+                  "Serving": "Must be site-served. No third-party tags accepted."
+                },
+                "Additional Notes": {
+                  "Submission Lead Time": "Submission time for all creative is 5 business days. If conflicts are found with the creative the submission lead time may restart upon re-submission.",
+                  "Implementation Notes & Best Practices": [
+                    "Design must fade into a solid color on the left, right and bottom.",
+                    "Elements must be different on both sides left and right.",
+                    "Background messaging may not extend beyond 130px in width on either side.",
+                    "Messaging and logos should not be placed above 80px from the top and below 600px from the bottom of the image.",
+                    "Do not use tiled images in the background.",
+                    "Wallpaper is clickable.",
+                    "<a href='https://docs.google.com/spreadsheets/d/16B_Hoez0w5WYHyWcuxNHYbHtcM9_r3VNx0YyxJ9ej2k/edit#gid=1664290195' target='blank'>Click here to see HPTO Specs spreadsheet.</a>",
+                    "For NHL Homepage Skin Specs:<br><a href='http://adops.rogersdigitalmedia.com.edgesuite.net/specdocs/HPRB_1680x900_billboard.psd' target='blank'>Billboard</a> | <a href='http://adops.rogersdigitalmedia.com.edgesuite.net/specdocs/HPRB_1680x900_nonbillboard.psd' target='blank'>Not Billboard</a>"
+                  ]
+                }
+              }
+            },
+            {
+              "ID": "Radio",
+              "UnitName": "Radio",
+              "Type": "Desktop",
+              "Subtype": "Wallpaper-Desktop",
+              "Image": "Radio.png",
+              "Details": {
+                "Dimensions": {
+                  "Dimensions": "Centre Width - 1440px"
+                },
+                "Load": {
+                  "Max Initial Load / File Size": "Image: 250 KB"
+                },
+                "Formats": {
+                  "Media Files": "JPG",
+                  "HTML5 Accepted": "No.",
+                  "Serving": "DFP hosted only."
+                },
+                "Additional Notes": {
+                  "Sites": "All Rogers owned & operated music radio sites.",
+                  "Background Color appearing behind Page Content area": "#FFFFFF (The middle area must be white)",
+                  "Submission Lead Time": [
+                    "Submission time for all creative is 5 business days. If conflicts are found with the creative the submission lead time may restart upon re-submission."
+                  ]
+                }
+              }
+            },
+            {
+              "ID": "Sportsnet",
+              "UnitName": "Sportsnet",
+              "Type": "Desktop",
+              "Subtype": "Wallpaper-Desktop",
+              "Image": "Sportsnet.png",
+              "Details": {
+                "Dimensions": {
+                  "Dimensions": [
+                    "Centre Width - 1440px",
+                    "Artwork size: 1920px x 1200px"
+                  ]
+                },
+                "Load": {
+                  "Max Initial Load / File Size": "Image: 250 KB"
+                },
+                "Formats": {
+                  "Media Files": "JPG",
+                  "HTML5 Accepted": "No.",
+                  "Serving": "DFP hosted only."
+                },
+                "Additional Notes": {
+                  "Background Color appearing behind Page Content area": "#FFFFFF (The middle area must be white)",
+                  "JPG Spec (send link to creative agency)": "Note: Allow for minimum amount of space at the top of wallpaper design that may be obscured by site layout: 415px - Homepage | 450px - non-Homepage | 375px - Video Gallery.",
+                  "Submission Lead Time": "Submission time for all creative is 5 business days. If conflicts are found with the creative the submission lead time may restart upon re-submission.",
+                  "PSD template instructions": "Design the wallpaper based on the Take-Over image layers, preview and test design as if on the site by placing image under the Site-Graphics layers",
+                  "The wallpaper will only be served when the screen width is equal to or greater than 1680px": "",
+                  "Implementation Notes & Best Practices": [
+                    "<a href='http://adops.rogersdigitalmedia.com.edgesuite.net/specdocs/SN_wallpaper-takeover-template-1920x1200.jpg' target='blank'>Click here to download wallpaper specs image </a>",
+                    "<a href='http://adops.rogersdigitalmedia.com.edgesuite.net/specdocs/SN_wallpaper-takeover-template-1920x1200.psd' target='blank'>Click here to download wallpaper specs template</a>"
+                  ]
+                }
+              }
+            },
+            {
+              "ID": "Television",
+              "UnitName": "Television",
+              "Type": "Desktop",
+              "Subtype": "Wallpaper-Desktop",
+              "Image": "Television.png",
+              "Details": {
+                "Dimensions": {
+                  "Dimensions": "Centre Width - 998px | Centre Width - 990px"
+                },
+                "Load": {
+                  "Max Initial Load / File Size": "Image: 250 KB"
+                },
+                "Formats": {
+                  "Media Files": "JPG",
+                  "HTML5 Accepted": "No.",
+                  "Serving": "DFP hosted only."
+                },
+                "Additional Notes": {
+                  "Sites": [
+                    "Breakfast Television (998px)",
+                    "OMNI TV (990px)"
+                  ],
+                  "Background Color appearing behind Page Content area": "N/A | Hidden by page content",
+                  "JPG Spec (send link to creative agency)": [
+                    "<a href='http://adops.rogersdigitalmedia.com.edgesuite.net/specdocs/RDM_wallpaper_specs_998-BT.jpg' target='blank'>Click here to see JPG Spec for 998px</a>",
+                    "<a href='http://adops.rogersdigitalmedia.com.edgesuite.net/specdocs/RDM_wallpaper_specs_990.jpg' target='blank'>Click here to see JPG Spec for 990px</a>"
+                  ],
+                  "Submission Lead Time": [
+                    "Submission time for all creative is 5 business days. If conflicts are found with the creative the submission lead time may restart upon re-submission."
+                  ],
+                  "Implementation Notes & Best Practices": "Not accepted on these sites: CityTV, Cityline, FX Now Canada, OLN"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "Digital_Video___Audio": {
+      "ui": {
+        "style": "background-image: url(./assets/img/Digital_Video___Audio.jpg)",
+        "icon": "./assets/img/Digital_Video___Audio.svg",
+        "alt": "",
+        "name": "Digital Video & Audio"
+      },
+      "subtypes": {
+        "3rd_Party_Tags_(vast_redirects)-Digital_Video___Audio": {
+          "name": "3rd Party Tags (vast redirects)",
+          "spec": [
+            {
+              "ID": "Console_OTT",
+              "UnitName": "Console(OTT)",
+              "Type": "Digital Video & Audio",
+              "Subtype": "3rd_Party_Tags_(vast_redirects)-Digital_Video___Audio",
+              "Image": "Console(OTT).png",
+              "Details": {
+                "Animation and Video": {
+                  "Frame Size": "min. 1280x720",
+                  "Total Bitrate": "min. 700 kbps",
+                  "Allowed Formats": "H.264 MP4",
+                  "Video Specs": [
+                    "Aspect ratio: 16:9",
+                    "Framerate: 29.97 FPS",
+                    "Scanning: Progressive",
+                    "No Slates or Load Plates"
+                  ],
+                  "Audio Specs": [
+                    "192 kbps bitrate",
+                    "AAC audio codec",
+                    "Stereo 2.0",
+                    "Sample rate: 44100 Hz (minimum)",
+                    "Audio average must be within -24 +/- 2 LKFS (US ATSC/85, Japan TR-B32)",
+                    "Audio Peak: -1 dBTP"
+                  ]
+                },
+                "Additional Notes": {
+                  "Submission Lead-Time": "5 Days, if conflicts are found with the creative the submission lead time may restart upon re-submission.",
+                  "Implementation Notes & Best Practices": [
+                    "Companions must be wrapped within VAST tag.",
+                    "3rd Party redirects must return 100% fill.",
+                    "3rd Party must only contain 1 duration.",
+                    "15s, 30s, 60s, would need separate tags.",
+                    "Ad tags provided by agencies, advertisers or their contracted vendors should not restrict ad responses based on upstream or buy side targeting or capping. Publisher targeting will be enforced at the time of booking per the IO contract. This includes, but is not limited to: GEO targeting, Audience or BT targeting, frequency capping, Dayparting, etc.",
+                    "Furthermore, ad tags provided on a specific advertiser/brand IO contract should not rotate in ads from advertisers or brands not covered on the IO contract."
+                  ]
+                }
+              }
+            },
+            {
+              "ID": "Cross_Platform",
+              "UnitName": "Cross-Platform",
+              "Type": "Digital Video & Audio",
+              "Subtype": "3rd_Party_Tags_(vast_redirects)-Digital_Video___Audio",
+              "Image": "Cross-Platform.png",
+              "Details": {
+                "Animation and Video": {
+                  "Frame Size": "min. 640x360 | max. 1280x720",
+                  "Total Bitrate": "min. 700 kbps | max. 2,000 kbps",
+                  "Allowed Formats": "H.264 MP4",
+                  "Video Specs": [
+                    "Aspect ratio: 16:9",
+                    "Framerate: 29.97 FPS",
+                    "Scanning: Progressive",
+                    "No Slates or Load Plates"
+                  ],
+                  "Audio Specs": [
+                    "192 kbps bitrate",
+                    "AAC audio codec",
+                    "Stereo 2.0",
+                    "Sample rate: 44100 Hz (minimum)",
+                    "Audio average must be within -24 +/- 2 LKFS (US ATSC/85, Japan TR-B32)",
+                    "Audio Peak: -1 dBTP"
+                  ]
+                },
+                "Additional Notes": {
+                  "Submission Lead-Time": "5 Days, if conflicts are found with the creative the submission lead time may restart upon re-submission.",
+                  "Implementation Notes & Best Practices": [
+                    "Companions must be wrapped within VAST tag.",
+                    "3rd Party redirects must return 100% fill.",
+                    "3rd Party must only contain 1 duration.",
+                    "15s, 30s, 60s, would need separate tags.",
+                    "Ad tags provided by agencies, advertisers or their contracted vendors should not restrict ad responses based on upstream or buy side targeting or capping. Publisher targeting will be enforced at the time of booking per the IO contract. This includes, but is not limited to: GEO targeting, Audience or BT targeting, frequency capping, Dayparting, etc.",
+                    "Furthermore, ad tags provided on a specific advertiser/brand IO contract should not rotate in ads from advertisers or brands not covered on the IO contract."
+                  ]
+                }
+              }
+            },
+            {
+              "ID": "Desktop_Mobile_Web",
+              "UnitName": "Desktop / Mobile Web",
+              "Type": "Digital Video & Audio",
+              "Subtype": "3rd_Party_Tags_(vast_redirects)-Digital_Video___Audio",
+              "Image": "Desktop___Mobile_Web.png",
+              "Details": {
+                "Animation and Video": {
+                  "Frame Size": "min. 640x360 | max. 1280x720",
+                  "Total Bitrate": "min. 700 kbps",
+                  "Allowed Formats": "H.264 MP4 | MOV | VPAID 2.0",
+                  "Video Specs": [
+                    "Aspect ratio: 16:9",
+                    "Framerate: 29.97 FPS",
+                    "Scanning: Progressive",
+                    "No Slates or Load Plates"
+                  ],
+                  "Audio Specs": [
+                    "192 kbps bitrate",
+                    "AAC audio codec",
+                    "Stereo 2.0",
+                    "Sample rate: 44100 Hz (minimum)",
+                    "Audio average must be within -24 +/- 2 LKFS (US ATSC/85, Japan TR-B32)",
+                    "Audio Peak: -1 dBTP"
+                  ]
+                },
+                "Additional Notes": {
+                  "Submission Lead-Time": "5 Days, if conflicts are found with the creative the submission lead time may restart upon re-submission.",
+                  "Implementation Notes & Best Practices": [
+                    "Companions must be wrapped within VAST tag.",
+                    "3rd Party redirects must return 100% fill.",
+                    "3rd Party must only contain 1 duration.",
+                    "15s, 30s, 60s, would need separate tags.",
+                    "Ad tags provided by agencies, advertisers or their contracted vendors should not restrict ad responses based on upstream or buy side targeting or capping. Publisher targeting will be enforced at the time of booking per the IO contract. This includes, but is not limited to: GEO targeting, Audience or BT targeting, frequency capping, Dayparting, etc.",
+                    "Furthermore, ad tags provided on a specific advertiser/brand IO contract should not rotate in ads from advertisers or brands not covered on the IO contract."
+                  ]
+                }
+              }
+            },
+            {
+              "ID": "Mobile_Apps",
+              "UnitName": "Mobile Apps",
+              "Type": "Digital Video & Audio",
+              "Subtype": "3rd_Party_Tags_(vast_redirects)-Digital_Video___Audio",
+              "Image": "Mobile_Apps.png",
+              "Details": {
+                "Animation and Video": {
+                  "Frame Size": "min. 640x360 | max. 1280x720",
+                  "Total Bitrate": "max. 2,000 kbps",
+                  "Allowed Formats": "H.264 MP4",
+                  "Video Specs": [
+                    "Aspect ratio: 16:9",
+                    "Framerate: 29.97 FPS",
+                    "Scanning: Progressive",
+                    "No Slates or Load Plates"
+                  ],
+                  "Audio Specs": [
+                    "192 kbps bitrate",
+                    "AAC audio codec",
+                    "Stereo 2.0",
+                    "Sample rate: 44100 Hz (minimum)",
+                    "Audio average must be within -24 +/- 2 LKFS (US ATSC/85, Japan TR-B32)",
+                    "Audio Peak: -1 dBTP"
+                  ]
+                },
+                "Additional Notes": {
+                  "Submission Lead-Time": "5 Days, if conflicts are found with the creative the submission lead time may restart upon re-submission.",
+                  "Implementation Notes & Best Practices": [
+                    "Companions must be wrapped within VAST tag.",
+                    "3rd Party redirects must return 100% fill.",
+                    "3rd Party must only contain 1 duration.",
+                    "15s, 30s, 60s, would need separate tags.",
+                    "Ad tags provided by agencies, advertisers or their contracted vendors should not restrict ad responses based on upstream or buy side targeting or capping. Publisher targeting will be enforced at the time of booking per the IO contract. This includes, but is not limited to: GEO targeting, Audience or BT targeting, frequency capping, Dayparting, etc.",
+                    "Furthermore, ad tags provided on a specific advertiser/brand IO contract should not rotate in ads from advertisers or brands not covered on the IO contract."
+                  ]
+                }
+              }
+            },
+            {
+              "ID": "RGCL_MLBTV_Mobile_OTT",
+              "UnitName": "RGCL (bamtech gam served), MLB.TV (Rogers gam served)",
+              "Type": "Digital Video & Audio",
+              "Subtype": "3rd_Party_Tags_(vast_redirects)-Digital_Video___Audio",
+              "Image": "RGCL_(bamtech_gam_served),_MLB_TV_(Rogers_gam_served).png",
+              "Details": {
+                "Animation and Video": {
+                  "Frame Size": "1280x720 | 1920x1080",
+                  "Total Bitrate": "2,000 kbps + ",
+                  "Allowed Formats": "H.264 MP4, MOV",
+                  "Video Specs": [
+                    "Aspect ratio: 16:9",
+                    "Framerate: 29.97 FPS",
+                    "Scanning: Progressive",
+                    "No Slates or Load Plates",
+                    ":15 or :30 seconds to the frame."
+                  ],
+                  "Audio Specs": [
+                    "16 or 24-bit",
+                    "Sample rate: 48 kHz (Mono or Stereo)",
+                    "Audio average must be within -24 +/- 2 LKFS (US ATSC/85, Japan TR-B32)",
+                    "Audio Peak: -1 dBTP"
+                  ]
+                },
+                "Additional Notes": {
+                  "Submission Lead-Time": "5 Days, if conflicts are found with the creative the submission lead time may restart upon re-submission.",
+                  "Implementation Notes & Best Practices (copy)": [
+                    "Companions must be wrapped within VAST tag.",
+                    "3rd Party redirects must return 100% fill.",
+                    "3rd Party must only contain 1 duration.",
+                    "15s, 30s, 60s, would need separate tags.",
+                    "Ad tags provided by agencies, advertisers or their contracted vendors should not restrict ad responses based on upstream or buy side targeting or capping. Publisher targeting will be enforced at the time of booking per the IO contract. This includes, but is not limited to: GEO targeting, Audience or BT targeting, frequency capping, Dayparting, etc.",
+                    "Furthermore, ad tags provided on a specific advertiser/brand IO contract should not rotate in ads from advertisers or brands not covered on the IO contract.",
+                    "<a href='https://docs.google.com/spreadsheets/d/1O6NfCi4T0wTomwnfcfHUWMqIcgC2LH9cbz8GiRKsLoQ/edit#gid=0' target='blank'>Complete Specs for MLB.TV Mobile / OTT can be found here</a>",
+                    "<a href='https://docs.google.com/spreadsheets/d/1O6NfCi4T0wTomwnfcfHUWMqIcgC2LH9cbz8GiRKsLoQ/edit#gid=0' target='blank'>Complete Specs for MLB.TV Mobile / OTT can be found here</a>"
+                  ]
+                }
+              }
+            },
+            {
+              "ID": "Server_Side_Ad_Insertion",
+              "UnitName": "Server Side Ad Insertion",
+              "Type": "Digital Video & Audio",
+              "Subtype": "3rd_Party_Tags_(vast_redirects)-Digital_Video___Audio",
+              "Image": "Server_Side_Ad_Insertion.png",
+              "Details": {
+                "Note": {
+                  "": "Server Side Ad Insertion, includes O&O Live Streams & Ad-Blocked Content"
+                },
+                "Animation and Video": {
+                  "Frame Size": "min. 640x360 | max. 1280x720",
+                  "Total Bitrate": "min. 700 kbps | max. 2,000 kbps",
+                  "Allowed Formats": "H.264 MP4",
+                  "Video Specs": [
+                    "Aspect ratio: 16:9",
+                    "Framerate: 29.97 FPS",
+                    "Scanning: Progressive",
+                    "No Slates or Load Plates"
+                  ],
+                  "Audio Specs": [
+                    "192 kbps bitrate",
+                    "AAC audio codec",
+                    "Stereo 2.0",
+                    "Sample rate: 44100 Hz (minimum)",
+                    "Audio average must be within -24 +/- 2 LKFS (US ATSC/85, Japan TR-B32)",
+                    "Audio Peak: -1 dBTP"
+                  ]
+                },
+                "Additional Notes": {
+                  "Submission Lead-Time": "5 Days, if conflicts are found with the creative the submission lead time may restart upon re-submission.",
+                  "Implementation Notes & Best Practices": [
+                    "Companions must be wrapped within VAST tag.",
+                    "3rd Party redirects must return 100% fill.",
+                    "3rd Party must only contain 1 duration.",
+                    "15s, 30s, 60s, would need separate tags.",
+                    "Ad tags provided by agencies, advertisers or their contracted vendors should not restrict ad responses based on upstream or buy side targeting or capping. Publisher targeting will be enforced at the time of booking per the IO contract. This includes, but is not limited to: GEO targeting, Audience or BT targeting, frequency capping, Dayparting, etc.",
+                    "Furthermore, ad tags provided on a specific advertiser/brand IO contract should not rotate in ads from advertisers or brands not covered on the IO contract."
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "Audio-Digital_Video___Audio": {
+          "name": "Audio",
+          "spec": [
+            {
+              "ID": "Audio",
+              "UnitName": "Audio",
+              "Type": "Digital Video & Audio",
+              "Subtype": "Audio-Digital_Video___Audio",
+              "Image": "Audio.png",
+              "Details": {
+                "Details": {
+                  "Audio Specs": "Ad Length: 15 or 30 second spots",
+                  "File Type": [
+                    "MP3, AAC, WAV",
+                    "File types are guidelines, We accept a wide array of digital audio files"
+                  ],
+                  "File Size": "Maximum 20MB",
+                  "Bitrate": "Minimum 128 kbps, 196kbps recommended",
+                  "Sample Rate": "44100 Hz"
+                },
+                "Additional Notes": {
+                  "Submission Lead Time": "5 Days, If conflicts are found with the creative the submission lead time may restart upon re-submission.",
+                  "Implementation Notes & Best Practices": [
+                    "We accept 3rd party DAAST Tags and direct creative with the following specs.",
+                    "IAB DAAST info : <a href='https://www.iab.com/guidelines/digital-audio-ad-serving-template/' target='blank'>www.iab.com/guidelines/digital-audio-ad-serving-template/</a>"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "In-Banner_Video-Digital_Video___Audio": {
+          "name": "In-Banner Video",
+          "spec": [
+            {
+              "ID": "In_Banner_Video",
+              "UnitName": "In-Banner Video",
+              "Type": "Digital Video & Audio",
+              "Subtype": "In-Banner_Video-Digital_Video___Audio",
+              "Image": "In-Banner_Video.png",
+              "Details": {
+                "Dimensions": {
+                  "Dimensions": [
+                    "Size: 728x90 | Expands To: Down, 728x360",
+                    "Size: 300x250 | Expands To: 300x250",
+                    "Size: 300x600 | Expands To: Left, 600x600"
+                  ]
+                },
+                "Load": {
+                  "Max Initial Load": [
+                    "Image: 40 KB | HTML5: 100 KB"
+                  ],
+                  "Subsequent Max Polite Load": "50 MB maximum for video file load; Unlimited if streaming video within the ad unit."
+                },
+                "Formats": {
+                  "Media Files": [
+                    "Commonly used: 640x360 10 MB in MP4, WEBM and FLV formats",
+                    "Use largest codec available"
+                  ],
+                  "HTML5": "Yes, must contain Universal clickTAG & SSL compliant. All assets referenced in HTML5 code must be externally hosted by client.",
+                  "Serving": "All Rich Media must be 3rd Party served & SSL compliant"
+                },
+                "Animation and Video": {
+                  "Max Animation & Video Frame Rate": [
+                    "Minimum: 24 FPS",
+                    "Maximum: 30 FPS",
+                    "Use source when possible"
+                  ],
+                  "Max Animation & Video Length": [
+                    "30 seconds or less",
+                    "15 seconds recommended",
+                    "unlimited with user interaction"
+                  ],
+                  "Audio Initiation": [
+                    "Audio must be user-initiated (on click: mute/un-mute).",
+                    "Default state is muted."
+                  ],
+                  "Minimum Required Controls": [
+                    "Must include Play, Pause, Mute (and/or volume control to 0).",
+                    "Video may be played in native player which has standard controls.",
+                    "Custom video players must include: Play, Pause, Mute (volume control to zero (0) output may be included instead of or in addition to mute control)."
+                  ]
+                },
+                "Additional Notes": {
+                  "Submission Lead Time": [
+                    "Minimum 5 business days before campaign start to publisher, 10 days to rich media vendor"
+                  ],
+                  "Implementation Notes & Best Practices": [
+                    "Use largest codec available",
+                    "Commonly used: 640x360 10 MB in MP4, WEBM and FLV formats"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "Site_Hosted-Digital_Video___Audio": {
+          "name": "Akamai Hosted",
+          "spec": [
+            {
+              "ID": "O_O_Client_Supplied_files",
+              "UnitName": "O&O Client Supplied Files",
+              "Type": "Digital Video & Audio",
+              "Subtype": "Site_Hosted-Digital_Video___Audio",
+              "Image": "O&amp;O_Client_Supplied_Files.png",
+              "Details": {
+                "Animation and Video": {
+                  "Frame Size": "min. 1280x720",
+                  "Total Bitrate": "min. 3,000 kbps",
+                  "Allowed Formats": "MP4 or MOV",
+                  "Video Specs": [
+                    "Aspect ratio: 16:9",
+                    "Framerate: 29.97 FPS",
+                    "Scanning: Progressive",
+                    "No Slates or Load Plates"
+                  ],
+                  "Audio Specs": [
+                    "192 kbps bitrate",
+                    "AAC audio codec",
+                    "Stereo 2.0",
+                    "Sample rate: 44100 Hz (min.)",
+                    "Audio average must be within -24 +/- 2 LKFS (US ATSC/85, Japan TR-B32)",
+                    "Audio Peak: -1 dBTP"
+                  ]
+                },
+                "Additional Notes": {
+                  "Submission Lead-Time": "5 Days, if conflicts are found with the creative the submission lead time may restart upon re-submission.",
+                  "Important Notes": "Encoding Profiles (Please encode to all profiles):<br>- H264_BASE<br>- H264_MAIN<br>- H264_HIGH"
+                }
+              }
+            },
+            {
+              "ID": "RGCL_MLBTV_Mobile_OTT_DFP_Served",
+              "UnitName": "RGCL / MLB.TV – mobile / OTT (bamtech gam-served)",
+              "Type": "Digital Video & Audio",
+              "Subtype": "Site_Hosted-Digital_Video___Audio",
+              "Image": "RGCL___MLB_TV_–_mobile___OTT_(bamtech_gam-served).png",
+              "Details": {
+                "Animation and Video": {
+                  "Frame Size": "1280x720 | 1920x1080",
+                  "Total Bitrate": [
+                    "min. 2000 kbps - RGCL (5000 kbps suggested)",
+                    "min. 5 mbps – MLB.TV (Conditioned and transcoded by mlbam)."
+                  ],
+                  "Allowed Formats": "H.264 MP4, MOV",
+                  "Video Specs": [
+                    "Aspect ratio: 16:9",
+                    "Framerate: 23.976 / 25 / 29.97 / 50 / 59.94 FPS",
+                    "No Slates or Load Plates",
+                    ":15 or :30 seconds to the frame"
+                  ],
+                  "Audio Specs": [
+                    "16 or 24-bit",
+                    "Sample rate: 48 kHz (Mono or Stereo)",
+                    "Audio average must be within -24 +/- 2 LKFS (US ATSC/85, Japan TR-B32)",
+                    "Audio Peak: -1 dBTP"
+                  ]
+                },
+                "Additional Notes": {
+                  "Submission Lead Time": "5 Days, if conflicts are found with the creative the submission lead time may restart upon re-submission.",
+                  "Implementation Notes & Best Practices": [
+                    "<a href='https://docs.google.com/spreadsheets/d/1_ZQkDS7bZm-ppqZ0ueMlThPqRCwtch-HXDdpnIhELtg' target='blank'>Complete Specs for NHL/RGCL can be found here</a>",
+                    "<a href='https://docs.google.com/spreadsheets/d/1O6NfCi4T0wTomwnfcfHUWMqIcgC2LH9cbz8GiRKsLoQ/edit#gid=0' target='blank'>Complete Specs for MLB.TV Mobile / OTT can be found here</a>"
+                  ]
+                }
+              }
+            },
+            {
+              "ID": "Youtube",
+              "UnitName": "Youtube",
+              "Type": "Digital Video & Audio",
+              "Subtype": "Site_Hosted-Digital_Video___Audio",
+              "Image": "vYoutube.png",
+              "Details": {
+                "Animation and Video": {
+                  "Resolution": "720p or below is required, the optional inclusion of 1080p is recommended",
+                  "Total Bitrate": [
+                    "Site-Served: use <a href='https://rogers-adspecs.netlify.com/?filter1=Digital_Video___Audio&filter2=3rd_Party_Tags_(vast_redirects)-Digital_Video___Audio#Specsheet-Cross-Platform' target='blank'>Cross-Platform notes</a> as guideline",
+                    "3rd Party Tags: Must contain at least one mediafile under 1000kbps"
+                  ],
+                  "Allowed Formats": "H.264 (MP4) video file type must be included for each video creative (other formats such as WebM can be included but may not be used)",
+                  "Video Specs": [
+                    "Up to 6 min, :12s minimum (skippable ads)",
+                    ":15s (non-skippable ads)",
+                    ":6s (bumper ads)",
+                    "Optional 300x60 companion banner may be submitted, delivery is not guaranteed",
+                    "Aspect Ratio: 16:9 or 4:3 are acceptable",
+                    "Maximum file size: 10 MB",
+                    "Framerate: Up to 30fps"
+                  ],
+                  "Audio Specs": "MP3 or AAC preferred"
+                },
+                "Additional Notes": {
+                  "Submission Lead Time": "5 Days, if conflicts are found with the creative the submission lead time may restart upon re-submission.",
+                  "Implementation Notes & Best Practices": [
+                    "Must comply with YouTube's XML summary for VAST ad server response",
+                    "Must be SSL-compliant",
+                    "Only VAST 3.0 tags are allowed for skippable video ads. VAST 2.0 will not be accepted.",
+                    "Must be served via a linear VAST tag (pre-fetch tag) by a YouTube-approved vendor.",
+                    "Must not have geo, browser or any other targeting on the third party end.",
+                    "Please ensure your ad server returns a valid crossdomain.xml file. If you choose to explicitly list domains, please ensure all ad serving domains are included.",
+                    "VAST-served video ads are not guaranteed to run on all mobile web browsers, game consoles or connected TV devices (most modern updated environments are supported).",
+                    "Only VAST 2.0 and 3.0 are currently supported",
+                    "VPAID is not allowed on YouTube"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "Youtube-Digital_Video___Audio": {
+          "name": "Youtube",
+          "spec": [
+            {
+              "ID": "Youtube",
+              "UnitName": "Youtube",
+              "Type": "Digital Video & Audio",
+              "Subtype": "Youtube-Digital_Video___Audio",
+              "Image": "vYoutube.png",
+              "Details": {
+                "Animation and Video": {
+                  "Resolution": "720p or below is required, the optional inclusion of 1080p is recommended",
+                  "Total Bitrate": [
+                    "Site-Served: use <a href='https://rogers-adspecs.netlify.com/?filter1=Digital_Video___Audio&filter2=3rd_Party_Tags_(vast_redirects)-Digital_Video___Audio#Specsheet-Cross-Platform' target='blank'>Cross-Platform notes</a> as guideline",
+                    "3rd Party Tags: Must contain at least one mediafile under 1000kbps"
+                  ],
+                  "Allowed Formats": "H.264 (MP4) video file type must be included for each video creative (other formats such as WebM can be included but may not be used)",
+                  "Video Specs": [
+                    "Up to 6 min, :12s minimum (skippable ads)",
+                    ":15s (non-skippable ads)",
+                    ":6s (bumper ads)",
+                    "Optional 300x60 companion banner may be submitted, delivery is not guaranteed",
+                    "Aspect Ratio: 16:9 or 4:3 are acceptable",
+                    "Maximum file size: 10 MB",
+                    "Framerate: Up to 30fps"
+                  ],
+                  "Audio Specs": "MP3 or AAC preferred"
+                },
+                "Additional Notes": {
+                  "Submission Lead Time": "5 Days, if conflicts are found with the creative the submission lead time may restart upon re-submission.",
+                  "Implementation Notes & Best Practices": [
+                    "Must comply with YouTube's XML summary for VAST ad server response",
+                    "Must be SSL-compliant",
+                    "Only VAST 3.0 tags are allowed for skippable video ads. VAST 2.0 will not be accepted.",
+                    "Must be served via a linear VAST tag (pre-fetch tag) by a YouTube-approved vendor.",
+                    "Must not have geo, browser or any other targeting on the third party end.",
+                    "Please ensure your ad server returns a valid crossdomain.xml file. If you choose to explicitly list domains, please ensure all ad serving domains are included.",
+                    "VAST-served video ads are not guaranteed to run on all mobile web browsers, game consoles or connected TV devices (most modern updated environments are supported).",
+                    "Only VAST 2.0 and 3.0 are currently supported",
+                    "VPAID is not allowed on YouTube"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "TubiTV-Digital_Video___Audio": {
+          "name": "Tubi TV",
+          "spec": [
+            {
+              "ID": "TubiTV",
+              "UnitName": "Tubi TV",
+              "Type": "Digital Video & Audio",
+              "Subtype": "TubiTV-Digital_Video___Audio",
+              "Image": "vTubiTV.png",
+              "Details": {
+                "Animation and Video": {
+                  "Resolution": "720p or below is required, the optional inclusion of 1080p is recommended",
+                  "Total Bitrate": [
+                    "Progressive > 50Mbps +"
+                  ],
+                  "Allowed Formats": ".mov | .mp4 | AVI | FLV | webm",
+                  "Video Specs": [
+                    "Server Side Ad Insertion",
+                    "15 - 30 sec (non-skippable ads)",
+                    "Aspect Ratio: 16:9",
+                    "Frame Rate : 23.98Fps | 29.97Fps",
+                    "File size : 85Mb"
+                  ],
+                  "Audio Specs": "MP3 or AAC preferred"
+                },
+                "Additional Notes": {
+                  "Submission Lead Time": "5 Days, if conflicts are found with the creative the submission lead time may restart upon re-submission.",
+                  "Implementation Notes & Best Practices": [
+                    "VAST Formats : VAST 2.0 | VAST 3.0 | VMAP 1.0.1",
+                    "Ad POD Duration : 120sec",
+                    "Aspect Ratio : 16:9",
+                    "Frame Rate : 23.98Fps | 29.97Fps",
+                    "File size : 85Mb",
+                    "Platform : Mobile In-App | CTP | Desktop"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "Console_OTT_ConnectedTV-Digital_Video___Audio": {
+          "name": "Console / Connected TV / OTT Single Spec",
+          "spec": [
+            {
+              "ID": "Console_OTT_ConnectedTV",
+              "UnitName": "Console / Connected TV / OTT Single Spec",
+              "Type": "Digital Video & Audio",
+              "Subtype": "Console_OTT_ConnectedTV-Digital_Video___Audio",
+              "Image": "Console_OTT_ConnectedTV.png",
+              "Details": {
+                "Animation and Video": {
+                  "Frame Size": "1280x720",
+                  "Total Bitrate": "5 Mbps",
+                  "Allowed Formats": "H.264 | MP4",
+                  "Video Specs": [
+                    "Aspect ratio: 16:9",
+                    "Framerate: 29.97 FPS",
+                    "Scanning: Progressive",
+                    "No Slates or Load Plates"
+                  ],
+                  "Audio Specs": [
+                    "AAC audio codec",
+                    "Stereo 2.0",
+                    "Sample rate: 48 kHz",
+                    "Audio average must be within -24 +/- 2 LKFS (US ATSC/85, Japan TR-B32)",
+                    "Audio Peak: -1 dBTP"
+                  ]
+                },
+                "Additional Notes": {
+                  "Submission Lead-Time": "5 Days, if conflicts are found with the creative the submission lead time may restart upon re-submission.",
+                  "Important Notes": [
+                    "15 or 30 seconds to the frame",
+                    "*These specs will allow advertisers to send us a single file / vast tag to be used on all of Rogers and partners OTT properties."
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "RED_Contobox-Digital_Video___Audio": {
+          "name": "R.E.D. Contobox",
+          "spec": [
+            {
+              "ID": "RED_Contobox",
+              "UnitName": "R.E.D. Contobox",
+              "Type": "Digital Video & Audio",
+              "Subtype": "RED_Contobox-Digital_Video___Audio",
+              "Image": "RED_Contobox.png",
+              "Details": {
+                "Animation and Video": {
+                  "Allowed Formats": "MP4 | MOV",
+                  "Video Specs": [
+                    "Aspect ratio: 16:9, 1:1 for mobile"
+                  ],
+                  "Audio Specs": [
+                    "AAC audio codec",
+                    "Stereo 2.0",
+                    "Sample rate: 48 kHz",
+                    "Audio average must be within -24 +/- 2 LKFS (US ATSC/85, Japan TR-B32)",
+                    "Audio Peak: -1 dBTP"
+                  ]
+                },
+                "Additional Notes": {
+                  "Submission Lead-Time": "5 Days, if conflicts are found with the creative the submission lead time may restart upon re-submission.",
+                  "Important Notes": [
+                    "15 or 30 seconds to the frame",
+                    "*These specs will allow advertisers to send us a single file / vast tag to be used on all of Rogers and partners OTT properties.",
+                    "* IAB Banner PSDs (300x250, 160x600, 728x90, 970x250 & 320x50)",
+                    "* Expandable Banner PSDs OR Creative Brief/Direction (ex. how many tabs the expandable banner will feature, what each tab will feature, etc.) * Desktop: https://onboard.contobox.com/knowledge-base/designing-for-engagement/#expandable * Mobile: https://onboard.contobox.com/knowledge-base/designing-for-engagement/#mobile * Non-expandables: https://onboard.contobox.com/knowledge-base/designing-for-engagement/#non-expandable ",
+                    "* Brand elements (style guide): * Fonts * Logos ",
+                    "* YouTube links with no issues. * :60s or less will auto play * More than will be user-initiated play ",
+                    "* Copy document * Click out URLs * 3rd party trackers",
+                    "Full Spec Doc @ https://rogersadops-a.akamaihd.net/adopstoolkit/docs/R.E.D._Contobox_Required_Assets+Specs_Document-2020.pdf"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "Mobile": {
+      "ui": {
+        "style": "background-image: url(./assets/img/Mobile.jpg)",
+        "icon": "./assets/img/Mobile.svg",
+        "alt": "",
+        "name": "Mobile"
+      },
+      "subtypes": {
+        "Apps-Mobile": {
+          "name": "Apps",
+          "spec": [
+            {
+              "ID": "Sportsnet_App_LaunchScreen_IOSonly",
+              "UnitName": "Sportsnet App Launch Screen (IOS only)",
+              "Type": "Mobile",
+              "Subtype": "Apps-Mobile",
+              "Image": "Sportsnet_App_LaunchScreen_IOSonly.png",
+              "updated ": false,
+              "Details": {
+                "Required": {
+                  "Asset": "Vertical Image<br>This needs to be a still photo. No animations or moving parts are possible.<br>Find <a href='./assets/docs/SN App Launch Template.psd'>PSD Template here</a>.",
+                  "Dimensions": "1044x1852",
+                  "SN Logo preference": 
+                    "1, 2, 3, 4<br><h4>Notes</h4>1 - SN_WHITE, <br>2 - SN_BLACK, <br>3 - SN_REV_PMS, <br>4 - SN_PMS, <br>Rank preference, refer to <a href='./assets/docs/LaunchScreenReqs.pdf'>Launch Screen Requirements</a> if needed.",
+                  "Device Type": 
+                    "iOS"
+                  
+                },
+                "Additional Notes": {
+                  "Submission Checklist": [
+                    "<h4>Safe Space for SN Logo</h4>If we cannot place the SN logo in the centre, we may reject the Ad.",
+                    "<h4>Gutter Zone for cropping</h4>We need this room for cropping across various mobile sizes.",
+                    "<h4>Safe Zone for Legal</h4>This is for legal information we may need.",
+                    "<h4>Text interference with logo</h4>Only exception is for player jerseys. No other text/logo.",
+                    "<h4>Text Volume</h4>Can the entirety of the Ad be consumed in 3 seconds or less? Users cannot go back or hold the Ad to read more."
+                  ]
+                }
+              }
+            },
+            {
+              "ID": "App_Splash_Logo",
+              "UnitName": "App Splash Logo",
+              "Type": "Mobile",
+              "Subtype": "Apps-Mobile",
+              "Image": "App_Splash_Logo.png",
+              "updated ": true,
+              "Details": {
+                "Dimensions": {
+                  "Dimensions": "150x100 | HD: 300x200"
+                },
+                "Formats": {
+                  "Media Files": "PNG | See Implementation Notes.",
+                  "HTML5": "No.",
+                  "Serving:": "DFP hosted only."
+                },
+                "Additional Notes": {
+                  "Implementation Notes & Best Practices": [
+                    "Client must provide their logo as EPS or High-Res Layered PSD.",
+                    "Reversed colour version also required.",
+                    "Send files to UX team to be built to spec.",
+                    "Splashscreen Logo are non-clickable."
+                  ]
+                }
+              }
+            },
+            {
+              "ID": "App_Sponsor_Logo",
+              "UnitName": "App Sponsor Logo",
+              "Type": "Mobile",
+              "Subtype": "Apps-Mobile",
+              "Image": "App_Sponsor_Logo.png",
+              "updated": true,
+              "Details": {
+                "Dimensions": {
+                  "Dimensions": "100x35 | HD: 200x70"
+                },
+                "Formats": {
+                  "Media Files": "PNG | See Implementation Notes.",
+                  "HTML5": "No.",
+                  "Serving:": "DFP hosted only."
+                },
+                "Additional Notes": {
+                  "Implementation Notes & Best Practices": [
+                    "Client must provide their logo as EPS or High-Res Layered PSD.",
+                    "Reversed colour version also required.",
+                    "Send files to UX team to be built to spec.",
+                    "Splashscreen Logo are non-clickable."
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "Native_Ads-Mobile": {
+          "name": "Native Ads",
+          "spec": [
+            {
+              "ID": "Native_App_Install_Mobile",
+              "UnitName": "Native App Install - Mobile",
+              "Type": "Mobile",
+              "Subtype": "Native_Ads-Mobile",
+              "Image": "Native_App_Install_-_Mobile.png",
+              "Details": {
+                "Content Information": {
+                  "Headline": "25 characters max.",
+                  "Image Dimensions": [
+                    "1200 x 627 px min. | Aspect Ratio 1.91:1",
+                    "Note: For web, the native ad may be cropped width-wise but not  height-wise."
+                  ],
+                  "Body": "90 characters max.",
+                  "App Icon/Logo": "128 x 128 px | Aspect Ratio 1:1",
+                  "Call to action": "15 characters max.",
+                  "Advertiser": "25 characters max.",
+                  "Click-through URL": "Required.",
+                  "Check your Native specs": "<a href='https://docs.google.com/spreadsheets/d/1ME4nW-q3AC6E7zcfqEKgXxwfBZ9U614S1hNmacPV2UI/edit?usp=sharing' target='blank'>Click here to check your Native specs</a>"
+                },
+                "Additional Notes": {
+                  "Implementation Notes & Best Practices": [
+                    "Character limits and image aspect ratios must be strictly followed, as the ad may appear distorted otherwise.",
+                    "All required elements for native ads should be submitted, even though not all elements supplied may appear in all placements because native ad slots are styled to appear similar to surrounding content and will appear different on various sites/pages."
+                  ]
+                }
+              }
+            },
+            {
+              "ID": "Native_Content_Mobile",
+              "UnitName": "Native Content - Mobile",
+              "Type": "Mobile",
+              "Subtype": "Native_Ads-Mobile",
+              "Image": "Native_Content_-_Mobile.png",
+              "Details": {
+                "Content Information": {
+                  "Headline": "25 characters max.",
+                  "Image Dimensions": [
+                    "1200 x 627 px min. | Aspect Ratio 1.91:1",
+                    "Note: For web, the native ad may be cropped width-wise but not  height-wise."
+                  ],
+                  "Body": "90 characters max.",
+                  "App Icon/Logo": "128 x 128 px | Aspect Ratio 1:1",
+                  "Call to action": "15 characters max.",
+                  "Advertiser": "25 characters max.",
+                  "Click-through URL": "Required.",
+                  "Check your Native specs": "<a href='https://docs.google.com/spreadsheets/d/1ME4nW-q3AC6E7zcfqEKgXxwfBZ9U614S1hNmacPV2UI/edit?usp=sharing' target='blank'>Click here to check your Native specs</a>"
+                },
+                "Additional Notes": {
+                  "Implementation Notes & Best Practices": [
+                    "Character limits and image aspect ratios must be strictly followed, as the ad may appear distorted otherwise.",
+                    "All required elements for native ads should be submitted, even though not all elements supplied may appear in all placements because native ad slots are styled to appear similar to surrounding content and will appear different on various sites/pages."
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "Smartphone_Banner-Mobile": {
+          "name": "Smartphone Banner",
+          "spec": [
+            {
+              "ID": "HD",
+              "UnitName": "HD",
+              "Type": "Mobile",
+              "Subtype": "Smartphone_Banner-Mobile",
+              "Image": "HD.png",
+              "updated": true,
+              "Details": {
+                "Dimensions": {
+                  "Dimensions": "600x100 | 640x100",
+                  "Expands To": "Full Screen"
+                },
+                "Load": {
+                  "Max Initial Load": "Image: 40 KB | HTML5: 100 KB"
+                },
+                "Formats": {
+                  "Media Files": "JPG | GIF | PNG | Must be in RGB colour format.",
+                  "HTML5": "Yes, must contain Universal clickTAG & SSL compliant. All assets referenced in HTML5 code must be externally hosted by client.",
+                  "Serving:": "All Rich Media must be 3rd Party served, SSL compliant and adhere to IAB's LEAN Ads guidance."
+                },
+                "Animation and Video": {
+                  "Max Animation & Video Frame Rate": "24 FPS",
+                  "Max Animation & Video Length": [
+                    "30 seconds or less (loops included)",
+                    "15 seconds recommended; maximum 3 loops",
+                    "Recommended that first and final frame contains pertinent information.",
+                    "Expandables: unlimited with user interaction (not support on eNewsletters)"
+                  ],
+                  "Audio Initiation": "VAS",
+                  "Minimum Required Controls": [
+                    "Controls: Play, Pause, Mute (and/or volume control to 0).",
+                    "Video may be played in native player which has standard controls."
+                  ]
+                },
+                "Additional Notes": {
+                  "Submission Lead-Time": [
+                    "Minimum 3 business days before campaign start to publisher.",
+                    "5 days for rich media.",
+                    "10 days to rich media vendor."
+                  ],
+                  "Implementation Notes & Best Practices": [
+                    "Expanding ads need to be built in-house.",
+                    "For all smartphone ad units, it is recommended to clearly define what happens post-tap (e.g. call, app download, etc.)."
+                  ]
+                }
+              }
+            },
+            {
+              "ID": "SD",
+              "UnitName": "SD",
+              "Type": "Mobile",
+              "Subtype": "Smartphone_Banner-Mobile",
+              "Image": "SD.png",
+              "updated": true,
+              "Details": {
+                "Dimensions": {
+                  "Dimensions": "300x50 | 320x50",
+                  "Expands To": "Full Screen"
+                },
+                "Load": {
+                  "Max Initial Load": "Image: 40 KB | HTML5: 50 KB"
+                },
+                "Formats": {
+                  "Media Files": "JPG | GIF | PNG | Must be in RGB colour format.",
+                  "HTML5": "Yes, must contain Universal clickTAG & SSL compliant. All assets referenced in HTML5 code must be externally hosted by client.",
+                  "Serving:": "All Rich Media must be 3rd Party served, SSL compliant and adhere to IAB's LEAN Ads guidance."
+                },
+                "Animation and Video": {
+                  "Max Animation & Video Frame Rate": "24 FPS",
+                  "Max Animation & Video Length": [
+                    "30 seconds or less (loops included)",
+                    "15 seconds recommended; maximum 3 loops",
+                    "Recommended that first and final frame contains pertinent information.",
+                    "Expandables: unlimited with user interaction (not support on eNewsletters)"
+                  ],
+                  "Audio Initiation": "VAS",
+                  "Minimum Required Controls": [
+                    "Controls: Play, Pause, Mute (and/or volume control to 0).",
+                    "Video may be played in native player which has standard controls."
+                  ]
+                },
+                "Additional Notes": {
+                  "Submission Lead-Time": [
+                    "Minimum 3 business days before campaign start to publisher.",
+                    "5 days for rich media.",
+                    "10 days to rich media vendor."
+                  ],
+                  "Implementation Notes & Best Practices": [
+                    "Expanding ads need to be built in-house.",
+                    "For all smartphone ad units, it is recommended to clearly define what happens post-tap (e.g. call, app download, etc.)."
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "Smartphone_Tablet_RichMedia-Mobile": {
+          "name": "Smartphone Tablet RichMedia",
+          "spec": [
+            {
+              "ID": "Pull_Slide_to_Expand",
+              "UnitName": "Pull / Slide to Expand",
+              "Type": "Mobile",
+              "Subtype": "Smartphone_Tablet_RichMedia-Mobile",
+              "Image": "Pull___Slide_to_Expand.png",
+              "Details": {
+                "Dimensions": {
+                  "Dimensions": "320x50 | 480x50 | 768x50 | 1024x50",
+                  "Expands To": "Full Screen"
+                },
+                "Load": {
+                  "Max Initial Load": "Image: 40 KB | HTML5: 500 KB",
+                  "Subsequent Max Polite Load": "2.2 MB | Unlimited if streaming"
+                },
+                "Formats": {
+                  "HTML5": "Yes, must contain Universal clickTAG & SSL compliant.",
+                  "Serving:": "Must be 3rd-Party Ad-Served & SSL compliant."
+                },
+                "Animation and Video": {
+                  "Max Animation & Video Frame Rate": "24 FPS",
+                  "Max Animation & Video Length": [
+                    "30 seconds or less, no loop",
+                    "recommended that final frame contains pertinent information"
+                  ],
+                  "Audio Initiation": "Audio must be user-initiated (on tap: mute/un-mute). Default state is muted.",
+                  "Minimum Required Controls": [
+                    "Controls: Play, Pause, Mute (and/or volume control to 0).",
+                    "Video may be played in native player which has standard controls."
+                  ]
+                },
+                "Additional Notes": {
+                  "Submission Lead-Time": [
+                    "Minimum 3 business days before campaign start to publisher.",
+                    "5 days for rich media. 10 days to rich media vendor."
+                  ],
+                  "Implementation Notes & Best Practices": [
+                    "Use only HTML5 or GIF/JPG (3rd Party must be Celtra or Flite).",
+                    "Creative for apps must be MRAID compliant.",
+                    "For all smartphone ad units, it is recommended to clearly define what happens post-tap (e.g. call, app download, etc.).",
+                    "Supported on iOS and Android.",
+                    "See z-index guidelines from <a href=\"https://iabcanada.com/content/uploads/2017/07/IABNewAdPortfolio_FINAL_2017-07.pdf\" target='blank'>IAB Canada</a>."
+                  ]
+                }
+              }
+            },
+            {
+              "ID": "Sticky_Banners",
+              "UnitName": "Sticky Banners",
+              "Type": "Mobile",
+              "Subtype": "Smartphone_Tablet_RichMedia-Mobile",
+              "Image": "Sticky_Banners.png",
+              "Details": {
+                "Dimensions": {
+                  "Dimensions": "300x50 | 320x50 | 728x90",
+                  "Expands To": "Full Screen"
+                },
+                "Load": {
+                  "Max Initial Load": "Image: 40 KB | HTML5: 100 KB",
+                  "Subsequent Max Polite Load": "2.2 MB | Unlimited if streaming"
+                },
+                "Formats": {
+                  "HTML5": "Yes, must contain Universal clickTAG & SSL compliant.",
+                  "Serving:": "Must be 3rd-Party Ad-Served & SSL compliant."
+                },
+                "Animation and Video": {
+                  "Max Animation & Video Frame Rate": "24 FPS",
+                  "Max Animation & Video Length": [
+                    "Max animation length: 10 seconds (disappears if no interaction)",
+                    "unlimited with user interaction"
+                  ],
+                  "Audio Initiation": "Audio must be user-initiated (on tap: mute/un-mute). Default state is muted.",
+                  "Minimum Required Controls": [
+                    "Controls: Play, Pause, Mute (and/or volume control to 0).",
+                    "Video may be played in native player which has standard controls."
+                  ]
+                },
+                "Additional Notes": {
+                  "Submission Lead-Time": [
+                    "Minimum 3 business days before campaign start to publisher.",
+                    "5 days for rich media. 10 days to rich media vendor."
+                  ],
+                  "Implementation Notes & Best Practices": [
+                    "Use only HTML5 or GIF/JPG (3rd Party must be Celtra or Flite).",
+                    "Creative for apps must be MRAID compliant.",
+                    "For all smartphone ad units, it is recommended to clearly define what happens post-tap (e.g. call, app download, etc.).",
+                    "Supported on iOS and Android.",
+                    "See z-index guidelines from <a href=\"https://iabcanada.com/content/uploads/2017/07/IABNewAdPortfolio_FINAL_2017-07.pdf\" target='blank'>IAB Canada</a>."
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "Broadcast": {
+      "ui": {
+        "style": "background-image: url(./assets/img/Broadcast.jpg)",
+        "icon": "./assets/img/Broadcast.svg",
+        "alt": "",
+        "name": "Broadcast"
+      },
+      "subtypes": {
+        "Conventional_and_Specialty-Broadcast": {
+          "name": "Conventional and Specialty",
+          "spec": [
+            {
+              "ID": "Billboard_Captioning",
+              "UnitName": "Billboard / Closed Captioning",
+              "Type": "Broadcast",
+              "Subtype": "Conventional_and_Specialty-Broadcast",
+              "Image": "Billboard___Closed_Captioning.png",
+              "Details": {
+                "Content Information": {
+                  "File Size": [
+                    "Perferred aspect ratio is 16:9 | HD, 1920x1090",
+                    "For videos to use in editing we prefer Apple pro res 422, 1920x1080"
+                  ],
+                  "Format": [
+                    "Closed Captioning tagline: \"Closed captioning is brought to you in part by 'advertiser'. 'Advertiser' tag line.\" ",
+                    "Billboard tagline: \"This program is brought to you in part by 'advertiser'. 'Advertiser' tag line.\" "
+                  ],
+                  "Upload Address": [
+                    "BetaSP, or receipt of material via Extreme Reach Production questions: pacifica.virzi@rci.rogers.com",
+                    "Traffic questions: traffic@rci.rogers.com"
+                  ],
+                  "Length": ":10 seconds"
+                },
+                "Additional Notes": {
+                  "Submission Lead-Time": "Material is required a minimum of two weeks prior to the contract start date",
+                  "Implementation Notes & Best Practices": [
+                    "Acceptable:",
+                    "The corporate advertiser andor brand name of product",
+                    "In either audio or video the trademark slogan of a product. (i.e \"GM - like a rock\", \"built Ford tough\") ",
+                    "You can include a phone number/web site for further information.",
+                    "You can say \"available soon\" or \"available everywhere\" ",
+                    "Unacceptable:",
+                    "Product claims: i.e. \"Cleans your skin\", \"Will recieve 8% ROI\", \"Reduces engine emissions\", etc.",
+                    "Indirect or direct comparative claimes regarding quality. (i.e \"Market share\", \"Best selling\", \"BC's favourite\")",
+                    "No prices or percentages",
+                    "No call to action. (i.e. \"Call now!\" or \"Come see us!\")",
+                    "See z-index guidelines from <a href=\"https://iabcanada.com/content/uploads/2017/07/IABNewAdPortfolio_FINAL_2017-07.pdf\" target='blank'>IAB Canada</a>."
+                  ]
+                }
+              }
+            },
+            {
+              "ID": "Snipes",
+              "UnitName": "Snipes",
+              "Type": "Broadcast",
+              "Subtype": "Conventional_and_Specialty-Broadcast",
+              "Image": "Snipes.png",
+              "Details": {
+                "Content Information": {
+                  "File Size": "1920 x 1080",
+                  "Format": [
+                    ".MOV files with alpha or png sequence are acceptable.",
+                    "Frame Rate: 29.97",
+                    "Creative should not cover screen space above 250 pixels for longer than :01 - :02 seconds"
+                  ],
+                  "Upload Address": "pacifica.virzi@rci.rogers.com",
+                  "Length": ":10 seconds, no audio"
+                },
+                "Additional Notes": {
+                  "Submission Lead-Time": "Material is required a minimum of two weeks prior to the contract start date",
+                  "Implementation Notes & Best Practices": "Snipe content may contain prices/discounts. | We reserve the right to make necessary changes to ensure the snipe airs successfully."
+                }
+              }
+            }
+          ]
+        },
+        "Sportsnet-Broadcast": {
+          "name": "Sportsnet",
+          "spec": [
+            {
+              "ID": "10_drop_ins",
+              "UnitName": ":10 drop ins",
+              "Type": "Broadcast",
+              "Subtype": "Sportsnet-Broadcast",
+              "Image": "",
+              "Details": {
+                "Content Information": {
+                  "File Size": "HD 1920x1080",
+                  "Format": "29.97 FPS | .MOV file preferred",
+                  "Upload Address": [
+                    "FTP address: https://rogers1.mediashuttle.com/",
+                    "From: (the address of the individual sending the material)",
+                    "To: sportsnet.billboard@rci.rogers.com"
+                  ],
+                  "Length": ":10 seconds"
+                },
+                "Additional Notes": {
+                  "Submission Lead-Time": [
+                    "Creative must be sent as soon as possible and no later than 2 weeks prior to the flight date to ensure completion (3 weeks prior if there is custom design work needed). This time is needed to ensure an adequate approval and delivery workflow.",
+                    "Changes to creative mid-run must be approved by the Sales rep, and will require 2 weeks-notice to ensure creative change (3 weeks-notice if there is custom design work needed)."
+                  ],
+                  "Implementation and Best Practices ": "Voiceover must be completed by our station talent and no client-supplied music or sound effects are to be included. (Music and/or other in-stadium audio may be present)."
+                }
+              }
+            },
+            {
+              "ID": "Billboard_Broadcast",
+              "UnitName": "Billboard - Broadcast",
+              "Type": "Broadcast",
+              "Subtype": "Sportsnet-Broadcast",
+              "Image": "Billboard_-_Broadcast.png",
+              "Details": {
+                "Content Information": {
+                  "File Size": "HD 1920x1080",
+                  "Format": "29.97 FPS | .MOV file preferred",
+                  "Upload Address": [
+                    "FTP address: https://rogers1.mediashuttle.com/",
+                    "From: (the address of the individual sending the material)",
+                    "To: sportsnet.billboard@rci.rogers.com"
+                  ],
+                  "Length": ":07 or :10 seconds (contact billboard team for details)"
+                },
+                "Additional Notes": {
+                  "Submission Lead-Time": [
+                    "Creative must be sent as soon as possible and no later than 2 weeks prior to the flight date to ensure completion (3 weeks prior if there is custom design work needed). This time is needed to ensure an adequate approval and delivery workflow.",
+                    "Changes to creative mid-run must be approved by the Sales rep, and will require 2 weeks-notice to ensure creative change (3 weeks-notice if there is custom design work needed)."
+                  ],
+                  "Implementation and Best Practices ": "Integration elements and Billboards may not include Price points, discount references, or Contest entry CTAs that are not cobranded with SN. URL’s are accepted on a case-by-case basis."
+                }
+              }
+            },
+            {
+              "ID": "Live_Mentions",
+              "UnitName": "Live Mentions (Charity/Team initiatives)",
+              "Type": "Broadcast",
+              "Subtype": "Sportsnet-Broadcast",
+              "Image": "Live_Mentions_(Charity_Team_initiatives).png",
+              "Details": {
+                "Content Information": {
+                  "Upload Address": [
+                    "FTP address: https://rogers1.mediashuttle.com/",
+                    "From: (the address of the individual sending the material)",
+                    "To: sportsnet.billboard@rci.rogers.com"
+                  ],
+                  "Length": "Script must not exceed 35 words and must be approved by Sportsnet sales & production."
+                },
+                "Additional Notes": {
+                  "Submission Lead-Time": [
+                    "Creative must be sent as soon as possible and no later than 2 weeks prior to the flight date to ensure completion (3 weeks prior if there is custom design work needed). This time is needed to ensure an adequate approval and delivery workflow.",
+                    "Changes to creative mid-run must be approved by the Sales rep, and will require 2 weeks-notice to ensure creative change (3 weeks-notice if there is custom design work needed)."
+                  ]
+                }
+              }
+            },
+            {
+              "ID": "Lower_Animation",
+              "UnitName": "Lower Animation",
+              "Type": "Broadcast",
+              "Subtype": "Sportsnet-Broadcast",
+              "Image": "Lower_Animation.png",
+              "Details": {
+                "Content Information": {
+                  "File Size": "1890x179 pixels",
+                  "Format": "29.97 FPS | .MOV or .WMV",
+                  "Upload Address": [
+                    "FTP address: https://rogers1.mediashuttle.com/",
+                    "From: (the address of the individual sending the material)",
+                    "To: sportsnet.billboard@rci.rogers.com"
+                  ],
+                  "Length": ":10 seconds"
+                },
+                "Additional Notes": {
+                  "Submission Lead-Time": [
+                    "Creative must be sent as soon as possible and no later than 2 weeks prior to the flight date to ensure completion (3 weeks prior if there is custom design work needed). This time is needed to ensure an adequate approval and delivery workflow.",
+                    "Changes to creative mid-run must be approved by the Sales rep, and will require 2 weeks-notice to ensure creative change (3 weeks-notice if there is custom design work needed)."
+                  ]
+                }
+              }
+            },
+            {
+              "ID": "Moving_Images",
+              "UnitName": "Moving Images",
+              "Type": "Broadcast",
+              "Subtype": "Sportsnet-Broadcast",
+              "Image": "Moving_Images.png",
+              "Details": {
+                "Content Information": {
+                  "File Size": "HD 1920x1080",
+                  "Format": "29.97 FPS | .MOV file preferred",
+                  "Upload Address": [
+                    "FTP address: https://rogers1.mediashuttle.com/",
+                    "From: (the address of the individual sending the material)",
+                    "To: sportsnet.billboard@rci.rogers.com"
+                  ],
+                  "Length": "Typically duration of creative should not exceed 7 seconds, however length can be dependant on type of sponsorship."
+                },
+                "Additional Notes": {
+                  "Submission Lead-Time": [
+                    "Creative must be sent as soon as possible and no later than 2 weeks prior to the flight date to ensure completion (3 weeks prior if there is custom design work needed). This time is needed to ensure an adequate approval and delivery workflow.",
+                    "Changes to creative mid-run must be approved by the Sales rep, and will require 2 weeks-notice to ensure creative change (3 weeks-notice if there is custom design work needed)."
+                  ],
+                  "Implementation and Best Practices ": "Ideal for all videos to end on a still frame."
+                }
+              }
+            },
+            {
+              "ID": "Scripts",
+              "UnitName": "Scripts",
+              "Type": "Broadcast",
+              "Subtype": "Sportsnet-Broadcast",
+              "Image": "Scripts.png",
+              "Details": {
+                "Content Information": {
+                  "Upload Address": [
+                    "FTP address: https://rogers1.mediashuttle.com/",
+                    "From: (the address of the individual sending the material)",
+                    "To: sportsnet.billboard@rci.rogers.com"
+                  ],
+                  "Length": "Taglines of :05-:07 seconds and a word count of 18 or less that includes the words \"brought to you by\" should be sent in script form, which will then be read by our Network voice."
+                },
+                "Additional Notes": {
+                  "Submission Lead-Time": [
+                    "Creative must be sent as soon as possible and no later than 2 weeks prior to the flight date to ensure completion (3 weeks prior if there is custom design work needed). This time is needed to ensure an adequate approval and delivery workflow.",
+                    "Changes to creative mid-run must be approved by the Sales rep, and will require 2 weeks-notice to ensure creative change (3 weeks-notice if there is custom design work needed)."
+                  ],
+                  "Implementation and Best Practices ": [
+                    "Not all sponsorships have or require tag lines.",
+                    "Length of tagline is also dependent on type of sponsorship.",
+                    "Any questionable scripts can be sent for approval and addressed on a case by case basis.",
+                    "Billboard tagline example: \"...brought to you by Midas. Total Car Care, total customer care. Trust the Midas Touch.\" ",
+                    "Live Event Billboard tagline example: \"...Brought to you by Subway. Think Fresh. Eat Fresh.\" "
+                  ]
+                }
+              }
+            },
+            {
+              "ID": "Still_Logos",
+              "UnitName": "Still Logos",
+              "Type": "Broadcast",
+              "Subtype": "Sportsnet-Broadcast",
+              "Image": "Still_Logos.png",
+              "Details": {
+                "Content Information": {
+                  "File Size": "HD 1920x1080 canvas",
+                  "Format": "TIFF file with Alpha Channel | Targa File (.tga) | EPS File - greater than 300dpi | PSD file with all layers | Ai files greater than 300dpi",
+                  "Upload Address": [
+                    "FTP address: https://rogers1.mediashuttle.com/",
+                    "From: (the address of the individual sending the material)",
+                    "To: sportsnet.billboard@rci.rogers.com"
+                  ]
+                },
+                "Additional Notes": {
+                  "Submission Lead-Time": [
+                    "Creative must be sent as soon as possible and no later than 2 weeks prior to the flight date to ensure completion (3 weeks prior if there is custom design work needed). This time is needed to ensure an adequate approval and delivery workflow.",
+                    "Changes to creative mid-run must be approved by the Sales rep, and will require 2 weeks-notice to ensure creative change (3 weeks-notice if there is custom design work needed)."
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

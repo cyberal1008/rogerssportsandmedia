@@ -1,0 +1,88 @@
+/* Fonts */
+@font-face {
+  font-family: 'Ted Next';
+  src: url('../assets/fonts/TedNext-Bold.eot'); /* IE9 Compat Modes */
+  src: url('../assets/fonts/TedNext-Bold.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('../assets/fonts/TedNext-Bold.woff') format('woff'), /* Modern Browsers */
+    url('../assets/fonts/TedNext-Bold.ttf')  format('truetype'), /* Safari, Android, iOS */
+    url('../assets/fonts/TedNext-Bold.svg#67f09c3f52e7fad99743a6ff833a4b6e') format('svg'); /* Legacy iOS */
+  font-style: normal;
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: 'Ted Next';
+  src: url('../assets/fonts/TedNext-BoldItalic.eot'); /* IE9 Compat Modes */
+  src: url('../assets/fonts/TedNext-BoldItalic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('../assets/fonts/TedNext-BoldItalic.woff') format('woff'), /* Modern Browsers */
+    url('../assets/fonts/TedNext-BoldItalic.ttf')  format('truetype'), /* Safari, Android, iOS */
+    url('../assets/fonts/TedNext-BoldItalic.svg#79d31411e1f8cc4ae6c261b42c06a14f') format('svg'); /* Legacy iOS */
+  font-style: italic;
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: 'Ted Next';
+  src: url('../assets/fonts/TedNext-Light.eot'); /* IE9 Compat Modes */
+  src: url('../assets/fonts/TedNext-Light.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('../assets/fonts/TedNext-Light.woff') format('woff'), /* Modern Browsers */
+    url('../assets/fonts/TedNext-Light.ttf')  format('truetype'), /* Safari, Android, iOS */
+    url('../assets/fonts/TedNext-Light.svg#d7e8329db0e96f6a0ac9e1ac41e46cdc') format('svg'); /* Legacy iOS */
+  font-style: normal;
+  font-weight: 200;
+}
+
+@font-face {
+  font-family: 'Ted Next';
+  src: url('../assets/fonts/TedNext-LightItalic.eot'); /* IE9 Compat Modes */
+  src: url('../assets/fonts/TedNext-LightItalic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('../assets/fonts/TedNext-LightItalic.woff') format('woff'), /* Modern Browsers */
+    url('../assets/fonts/TedNext-LightItalic.ttf')  format('truetype'), /* Safari, Android, iOS */
+    url('../assets/fonts/TedNext-LightItalic.svg#a76757188fd76b8781aae7fe34a3c4a2') format('svg'); /* Legacy iOS */
+  font-style: italic;
+  font-weight: 200;
+}
+
+@font-face {
+  font-family: 'Ted Next';
+  src: url('../assets/fonts/TedNext-Regular.eot'); /* IE9 Compat Modes */
+  src: url('../assets/fonts/TedNext-Regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('../assets/fonts/TedNext-Regular.woff') format('woff'), /* Modern Browsers */
+    url('../assets/fonts/TedNext-Regular.ttf')  format('truetype'), /* Safari, Android, iOS */
+    url('../assets/fonts/TedNext-Regular.svg#517c0443cb6aa0303f6c3d492aee5ddd') format('svg'); /* Legacy iOS */
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Ted Next';
+  src: url('../assets/fonts/TedNext-Italic.eot');
+  src: url('../assets/fonts/TedNext-Italic.eot?#iefix') format('embedded-opentype'),
+    url('../assets/fonts/TedNext-Italic.woff') format('woff'),
+    url('../assets/fonts/TedNext-Italic.ttf') format('truetype'),
+    url('../assets/fonts/TedNext-Italic.svg#TedNext-Italic') format('svg');
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Ted Next';
+  src: url('../assets/fonts/TedNext-Semibold.eot'); /* IE9 Compat Modes */
+  src: url('../assets/fonts/TedNext-Semibold.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('../assets/fonts/TedNext-Semibold.woff') format('woff'), /* Modern Browsers */
+    url('../assets/fonts/TedNext-Semibold.ttf')  format('truetype'), /* Safari, Android, iOS */
+    url('../assets/fonts/TedNext-Semibold.svg#e0a0a6502a747f84e272ba1778cbfd21') format('svg'); /* Legacy iOS */
+  font-style: normal;
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: 'Ted Next';
+  src: url('../assets/fonts/TedNext-SemiBoldItalic.eot'); /* IE9 Compat Modes */
+  src: url('../assets/fonts/TedNext-SemiBoldItalic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('../assets/fonts/TedNext-SemiBoldItalic.woff') format('woff'), /* Modern Browsers */
+    url('../assets/fonts/TedNext-SemiBoldItalic.ttf')  format('truetype'), /* Safari, Android, iOS */
+    url('../assets/fonts/TedNext-SemiBoldItalic.svg#50ca0ac6c1e4c4bb0b040e3d4e6c8ec6') format('svg'); /* Legacy iOS */
+  font-style: italic;
+  font-weight: 600;
+}
