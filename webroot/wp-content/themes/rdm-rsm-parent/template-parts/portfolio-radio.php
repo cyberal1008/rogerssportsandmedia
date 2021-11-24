@@ -67,7 +67,7 @@ $regions = array_merge( array( 'all' => 'All Markets' ), wp_list_pluck( $region_
 
 		$tmpjsvar = array(
 			'title'       => $post->post_title,
-			'description' => strip_tags( $post->post_content ),
+			'description' => $post->post_content,
 			'format'      => isset( $post_meta['_rsm_radio_format'] ) && ! empty( $post_meta['_rsm_radio_format'][0] ) ? $post_meta['_rsm_radio_format'][0] : '',
 			'location'    => isset( $post_region ) && ! empty( $post_region ) ? $post_region[0]->name : '',
 		);
