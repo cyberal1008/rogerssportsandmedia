@@ -122,3 +122,15 @@ h6 {
     letter-spacing: -1px;
   }
 }
+
+.row-leader{
+  margin-bottom: 50px;
+}
+@media screen and (max-width: 767px) {
+  .row-leader{
+    flex-direction: column;
+    .col{
+      margin-top: 25px;
+    }
+  }
+}
