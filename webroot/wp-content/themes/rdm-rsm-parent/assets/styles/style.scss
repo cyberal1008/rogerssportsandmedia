@@ -122,3 +122,24 @@ h6 {
     letter-spacing: -1px;
   }
 }
+
+p:empty::before {
+  display: none;
+}
+
+.row-leader{
+  margin-bottom: 50px;
+  .col{
+    h5{font-weight: 100; font-size:16px;}
+    h4{font-weight: 900;}
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .row-leader{
+    flex-direction: column;
+    .col{
+      margin-top: 25px;
+    }
+  }
+}
