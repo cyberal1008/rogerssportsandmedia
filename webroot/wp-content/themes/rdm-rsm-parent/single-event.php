@@ -28,7 +28,7 @@ get_header(); ?>
         }
       } else {
         ?>
-        <iframe src="https://mcdjql80kmghrjj6lg68bbtqbgv1.pub.sfmc-content.com/kebewevkwnm?event=<?php echo $cloud_page_id; ?>"></iframe>
+        <iframe src="https://mcdjql80kmghrjj6lg68bbtqbgv1.pub.sfmc-content.com/fjvu0tj21uh?event=<?php echo $cloud_page_id; ?>"></iframe>
         <?php
       }
 			?>
