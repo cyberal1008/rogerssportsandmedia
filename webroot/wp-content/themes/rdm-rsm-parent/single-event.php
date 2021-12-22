@@ -11,6 +11,7 @@ global $post;
 $post_meta = get_post_meta( $post->ID, "events_metadata", true );
 $show_form = isset( $_GET['register'] );
 
+$cloud_page_id = $post_meta['event']['id'];
 $event_date = strtotime( $post_meta['event']['date'] );
 $start_time = strtotime( $post_meta['event']['start_time'] );
 $end_time = strtotime( $post_meta['event']['end_time'] );
@@ -27,7 +28,7 @@ get_header(); ?>
         }
       } else {
         ?>
-        <iframe src="https://mcdjql80kmghrjj6lg68bbtqbgv1.pub.sfmc-content.com/fjvu0tj21uh"></iframe>
+        <iframe src="https://mcdjql80kmghrjj6lg68bbtqbgv1.pub.sfmc-content.com/fjvu0tj21uh?event=<?php echo $cloud_page_id; ?>"></iframe>
         <?php
       }
 			?>
