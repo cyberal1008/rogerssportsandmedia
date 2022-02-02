@@ -16,6 +16,20 @@
     width: 100%;
     height: 700px;
     margin-top: 50px;
+
+    &.address {
+      height: 800px;
+    }
+  }
+
+  @include media-breakpoint-down(sm) {
+    iframe {
+      height: 800px;
+
+      &.address {
+        height: 1075px;
+      }
+    }
   }
 
   .single-article-sidebar {

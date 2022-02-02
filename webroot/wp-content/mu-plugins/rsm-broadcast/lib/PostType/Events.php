@@ -87,6 +87,13 @@ class Events {
             'label'       => __( 'Event End Time', RSM_BROADCAST_LOCALE ),
             'description' => __( '', RSM_BROADCAST_LOCALE ),
           ),
+					array(
+						'id'          => 'show_address_fields',
+						'type'        => 'checkbox',
+						'choices'     => array('' => ''),
+						'label'       => __( 'Show Address Fields', RSM_BROADCAST_LOCALE ),
+						'description' => __( '', RSM_BROADCAST_LOCALE ),
+					),
         ),
       ),
     );
