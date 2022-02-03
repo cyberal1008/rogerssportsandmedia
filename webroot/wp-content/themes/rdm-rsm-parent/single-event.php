@@ -16,6 +16,13 @@ $event_date = strtotime( $post_meta['event']['date'] );
 $start_time = strtotime( $post_meta['event']['start_time'] );
 $end_time = strtotime( $post_meta['event']['end_time'] );
 
+$address_parameter = '';
+$classes = '';
+if (isset( $post_meta['event']['show_address_fields'] ) ) {
+	$address_parameter = "&address=yes";
+	$classes .= "address";
+}
+
 get_header(); ?>
 	<div class="container" id="main">
 		<div class="row">
@@ -28,7 +35,7 @@ get_header(); ?>
         }
       } else {
         ?>
-        <iframe src="https://mcdjql80kmghrjj6lg68bbtqbgv1.pub.sfmc-content.com/fjvu0tj21uh?event=<?php echo $cloud_page_id; ?>"></iframe>
+        <iframe class = "<?php echo $classes; ?>" src="https://mcdjql80kmghrjj6lg68bbtqbgv1.pub.sfmc-content.com/fjvu0tj21uh?event=<?php echo $cloud_page_id . $address_parameter; ?>"></iframe>
         <?php
       }
 			?>
