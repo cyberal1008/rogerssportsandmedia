@@ -18,6 +18,13 @@ header {
     font-weight: 800;
     text-decoration: underline;
   }
+  ul.social-icons {
+    list-style: none;
+    margin-bottom: 0;
+    li {
+      display: inline-block;
+    }
+  }
   .navbar-light .navbar-nav .nav-link,
   .menu-item a span {
     font-family: $ted-next;

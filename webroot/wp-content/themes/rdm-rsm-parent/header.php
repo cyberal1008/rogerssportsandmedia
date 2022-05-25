@@ -140,6 +140,13 @@ if ( is_home() ) {
 							?>
 					</div>
 				</div>
+				<div class="nav-social">
+					<ul class="social-icons">
+						<li><a class="header-social" target="_blank" href="https://twitter.com/RogersMedia"><img src="https://rogerssportsandmedia.local/wp-content/themes/rdm-rsm-parent/assets/images/icon-twitter.svg" width="40" alt=""></a></li>
+						<li><a class="header-social" target="_blank" href="https://ca.linkedin.com/company/rogers-sports-and-media"><img src="https://rogerssportsandmedia.local/wp-content/themes/rdm-rsm-parent/assets/images/icon-linkedin.svg" width="40" alt=""></a></li>
+						<li><a class="header-social" target="_blank" href="https://www.instagram.com/rogerssportsandmedia/"><img src="https://rogerssportsandmedia.local/wp-content/themes/rdm-rsm-parent/assets/images/icon-instagram.svg" width="40" alt=""></a></li>
+					</ul>
+				</div>
 
 			</nav>
 	</header>
