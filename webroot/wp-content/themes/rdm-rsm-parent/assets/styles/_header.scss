@@ -21,8 +21,13 @@ header {
   ul.social-icons {
     list-style: none;
     margin-bottom: 0;
+    white-space: nowrap;
     li {
       display: inline-block;
+    }
+
+    @media (max-width: 767px) {
+      display: none;
     }
   }
   .navbar-light .navbar-nav .nav-link,
