@@ -47,7 +47,6 @@
 		$zone = get_theme_mod( 'post_zone' );// 'happening-home';
 		$zone = ( function_exists( 'z_get_zone' ) && z_get_zone( $zone ) ) ? $zone : '';
 		get_template_part( 'template-parts/content', 'happening', $zone );
-		get_template_part( 'template-parts/content', 'join-our-team' );
 	?>
 </div>
 

@@ -43,8 +43,7 @@ get_header(); ?>
 			$zone = $page_meta['zones']['whats_happening'];
 			$zone = ( function_exists( 'z_get_zone' ) && z_get_zone( $zone ) ) ? $zone : '';
 			get_template_part( 'template-parts/content', 'happening', $zone );
-		}
-		get_template_part( 'template-parts/content', 'join-our-team' ); ?>
+		} ?>
 	</div>
 <?php
 get_footer();
