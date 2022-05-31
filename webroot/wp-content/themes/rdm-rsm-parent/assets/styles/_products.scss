@@ -86,11 +86,16 @@
             // Large devices (desktops, 992px and up)
             @media (min-width: 992px) and (max-width: 1199.98px) {
               width: 22vw;
-            } 
+            }
             // Extra large devices (large desktops, 1200px and up)
             @media (min-width: 1200px) {
               width: 297px;
             }*/
+          }
+          .products-slide-text {
+            max-width: 297px;
+            font-size: 1.25rem;
+            margin-top: 1rem;
           }
         }
       }
