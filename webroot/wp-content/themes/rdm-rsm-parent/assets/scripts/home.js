@@ -3,7 +3,7 @@ $(document).ready(function () {
         slidesToShow: 4,
         slidesToScroll: 1,
         autoplay: true,
-        autoplaySpeed: 2000,
+        autoplaySpeed: 1500,
         variableWidth: true,
         prevArrow: $('#slide-prev'),
         nextArrow: $('#slide-next'),

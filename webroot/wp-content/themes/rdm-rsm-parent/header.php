@@ -142,7 +142,7 @@ if ( is_home() ) {
 				</div>
 				<div class="nav-social">
 					<ul class="social-icons">
-						<li><a class="header-social" target="_blank" href="https://twitter.com/RogersMedia"><img src="<?php bloginfo( 'template_directory' ); ?>/assets/images/Tweet.png" width="30" alt=""></a></li>
+						<li><a class="header-social" target="_blank" href="https://twitter.com/RogersMediaPR"><img src="<?php bloginfo( 'template_directory' ); ?>/assets/images/Tweet.png" width="30" alt=""></a></li>
 						<li><a class="header-social" target="_blank" href="https://ca.linkedin.com/company/rogers-sports-and-media"><img src="<?php bloginfo( 'template_directory' ); ?>/assets/images/Linked.png" width="30" alt=""></a></li>
 						<li><a class="header-social" target="_blank" href="https://www.instagram.com/rogerssportsandmedia/"><img src="<?php bloginfo( 'template_directory' ); ?>/assets/images/Insta.png" width="30" alt=""></a></li>
 					</ul>
