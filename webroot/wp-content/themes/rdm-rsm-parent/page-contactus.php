@@ -21,7 +21,6 @@ get_header(); ?>
 				<p>Want to advertise with us? Job opportunity? Reimagine the future with Rogers Sports & Media. You can also contact us at <a href="mailto:RogersSportsMedia@rci.rogers.com">RogersSportsMedia@rci.rogers.com</a>.</p>
 			</div>
 		</div>
-		<?php get_template_part( 'template-parts/content', 'join-our-team' ); ?>
 	</div>
 <?php
 get_footer();

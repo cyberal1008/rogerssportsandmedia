@@ -2,6 +2,8 @@ $(document).ready(function () {
     $('#products-slide').slick({
         slidesToShow: 4,
         slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 1500,
         variableWidth: true,
         prevArrow: $('#slide-prev'),
         nextArrow: $('#slide-next'),

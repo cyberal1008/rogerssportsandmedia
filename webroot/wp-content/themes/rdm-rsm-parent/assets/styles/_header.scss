@@ -18,6 +18,18 @@ header {
     font-weight: 800;
     text-decoration: underline;
   }
+  ul.social-icons {
+    list-style: none;
+    margin-bottom: 0;
+    white-space: nowrap;
+    li {
+      display: inline-block;
+    }
+
+    @media (max-width: 767px) {
+      display: none;
+    }
+  }
   .navbar-light .navbar-nav .nav-link,
   .menu-item a span {
     font-family: $ted-next;
@@ -203,7 +215,7 @@ header {
   }
 }
 .bgimg {
-  height: 80%;
+  height: 66%;
   overflow: hidden;
   position: relative;
   margin-bottom: -80px;
@@ -319,8 +331,8 @@ header {
   position: absolute;
   max-width: 1000px;
   background-color: transparent !important;
-  min-height: 80vh;
-  max-height: 80vh;
+  min-height: 66vh;
+  max-height: 66vh;
   display: flex;
   align-items: center;
   overflow: hidden;

@@ -20,9 +20,9 @@
 			}
 			?>
 			<ul class="social-icons">
-				<li><a class="footer-social" target="_blank" href="https://twitter.com/RogersMedia"><img src="<?php bloginfo( 'template_directory' ); ?>/assets/images/icon-twitter.svg" width="30"  alt=""></a></li>
-				<li><a class="footer-social" target="_blank" href="https://ca.linkedin.com/company/rogers-sports-and-media"><img src="<?php bloginfo( 'template_directory' ); ?>/assets/images/icon-linkedin.svg" width="30"  alt=""></a></li>
-				<li><a class="footer-social" target="_blank" href="https://www.instagram.com/rogerssportsandmedia/"><img src="<?php bloginfo( 'template_directory' ); ?>/assets/images/icon-instagram.svg" width="30"  alt=""></a></li>
+				<li><a class="footer-social" target="_blank" href="https://twitter.com/RogersMediaPR"><img src="<?php bloginfo( 'template_directory' ); ?>/assets/images/Tweet.png" width="30"  alt=""></a></li>
+				<li><a class="footer-social" target="_blank" href="https://ca.linkedin.com/company/rogers-sports-and-media"><img src="<?php bloginfo( 'template_directory' ); ?>/assets/images/Linked.png" width="30"  alt=""></a></li>
+				<li><a class="footer-social" target="_blank" href="https://www.instagram.com/rogerssportsandmedia/"><img src="<?php bloginfo( 'template_directory' ); ?>/assets/images/Insta.png" width="30"  alt=""></a></li>
 			</ul>
 		</div>
 		<div class="col-md-4">

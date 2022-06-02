@@ -29,17 +29,16 @@ get_header(); ?>
 
 				endwhile;
 			?>
-			</div> 
-		</div> 
+			</div>
+		</div>
 		<?php
 		$post_meta = get_post_meta( get_the_ID(), 'blog', true );
 		$zone      = $post_meta ? $post_meta['blog_meta']['whats_happening'] : '';
 		$zone      = ( function_exists( 'z_get_zone' ) && z_get_zone( $zone ) ) ? $zone : '';
 		get_template_part( 'template-parts/content', 'happening', $zone );
-		// get_template_part( 'template-parts/content', 'join-our-team' );
 		?>
 
-	</div> 
-</div> 
+	</div>
+</div>
 <?php
 get_footer();
