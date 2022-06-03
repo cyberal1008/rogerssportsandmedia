@@ -2,6 +2,8 @@ $(document).ready(function () {
     $('#header-carousel').slick({
       prevArrow: $('#header-slide-prev'),
       nextArrow: $('#header-slide-next'),
+      autoplay: true,
+      autoplaySpeed: 2000,
     });
 
     $('#products-slide').slick({

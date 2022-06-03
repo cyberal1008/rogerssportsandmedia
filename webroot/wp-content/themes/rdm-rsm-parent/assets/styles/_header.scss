@@ -223,16 +223,21 @@ header {
   display: flex;
 }
 #header-slide-prev {
-  display: inline-block;
-  width: 5%;
+  width: 55px;
+  height: 100%;
+  position: absolute;
+  z-index: 1;
 }
 #header-carousel {
   display: inline-block;
-  width: 90%;
+  width: 100%;
 }
 #header-slide-next {
-  display: inline-block;
-  width: 5%;
+  width: 55px;
+  height: 100%;
+  position: absolute;
+  z-index: 1;
+  right: 0;
 }
 .portfolio-header {
     &.j-main {
@@ -293,12 +298,12 @@ header {
       transparent;
   }
   .j-title {
-    font-size: 84px !important;
+    font-size: 64px !important;
     letter-spacing: -3.36px !important;
     line-height: 80px;
   }
   .j-desc {
-    font-size: 24px !important;
+    font-size: 18px !important;
     line-height: 36px;
   }
 }
