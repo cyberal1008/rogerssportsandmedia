@@ -20,7 +20,7 @@ $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, tr
 				</header>
 				<video id="video" muted playsinline autoplay loop
 					   poster="<?php echo $args['image_url']; ?>" class="">
-					<source id="mp4" src="<?php echo $args['video_url']; ?>" type="video/mp4">
+					<source id="mp4" src="" type="video/mp4">
 					<p>Your user agent does not support the HTML5 Video element.</p>
 				</video>
 			</div>
@@ -28,16 +28,16 @@ $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, tr
 				<div class=" element"></div>
 				<header class="j-main">
 					<div class="container head-container">
-						<h1 class="display-3 j-title"><?php echo $args['hero_title']; ?></h1>
-						<p class="lead j-desc"><?php echo $args['hero_desc']; ?></p>
-						<?php if ( ! empty( $args['home_hero_btn_url'] ) && ! empty( $args['home_hero_btn_text'] ) ) { ?>
-						<a href="<?php echo $args['home_hero_btn_url']; ?>" class="btn btn-primary btn-lg j-button"><?php echo $args['home_hero_btn_text']; ?></a>
+						<h1 class="display-3 j-title"><?php echo $args['hero_title_2']; ?></h1>
+						<p class="lead j-desc"><?php echo $args['hero_desc_2']; ?></p>
+						<?php if ( ! empty( $args['home_hero_btn_url_2'] ) && ! empty( $args['home_hero_btn_text_2'] ) ) { ?>
+						<a href="<?php echo $args['home_hero_btn_url_2']; ?>" class="btn btn-primary btn-lg j-button"><?php echo $args['home_hero_btn_text_2']; ?></a>
 						<?php } ?>
 					</div>
 				</header>
 				<video id="video" muted playsinline autoplay loop
-					   poster="<?php echo $args['image_url']; ?>" class="">
-					<source id="mp4" src="<?php echo $args['video_url']; ?>" type="video/mp4">
+					   poster="<?php echo $args['image_url_2']; ?>" class="">
+					<source id="mp4" src="" type="video/mp4">
 					<p>Your user agent does not support the HTML5 Video element.</p>
 				</video>
 			</div>
@@ -45,16 +45,16 @@ $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, tr
 				<div class=" element"></div>
 				<header class="j-main">
 					<div class="container head-container">
-						<h1 class="display-3 j-title"><?php echo $args['hero_title']; ?></h1>
-						<p class="lead j-desc"><?php echo $args['hero_desc']; ?></p>
-						<?php if ( ! empty( $args['home_hero_btn_url'] ) && ! empty( $args['home_hero_btn_text'] ) ) { ?>
-						<a href="<?php echo $args['home_hero_btn_url']; ?>" class="btn btn-primary btn-lg j-button"><?php echo $args['home_hero_btn_text']; ?></a>
+						<h1 class="display-3 j-title"><?php echo $args['hero_title_3']; ?></h1>
+						<p class="lead j-desc"><?php echo $args['hero_desc_3']; ?></p>
+						<?php if ( ! empty( $args['home_hero_btn_url_3'] ) && ! empty( $args['home_hero_btn_text_3'] ) ) { ?>
+						<a href="<?php echo $args['home_hero_btn_url_3']; ?>" class="btn btn-primary btn-lg j-button"><?php echo $args['home_hero_btn_text_3']; ?></a>
 						<?php } ?>
 					</div>
 				</header>
 				<video id="video" muted playsinline autoplay loop
-					   poster="<?php echo $args['image_url']; ?>" class="">
-					<source id="mp4" src="<?php echo $args['video_url']; ?>" type="video/mp4">
+					   poster="<?php echo $args['image_url_3']; ?>" class="">
+					<source id="mp4" src="" type="video/mp4">
 					<p>Your user agent does not support the HTML5 Video element.</p>
 				</video>
 			</div>
@@ -96,7 +96,7 @@ $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, tr
 			</div>
 			<video id="video" muted playsinline autoplay loop
 					 poster="<?php echo $args['image_url']; ?>" class="">
-				<source id="mp4" src="<?php echo $args['video_url']; ?>" type="video/mp4">
+				<source id="mp4" src="" type="video/mp4">
 				<p>Your user agent does not support the HTML5 Video element.</p>
 			</video>
 		</div>
