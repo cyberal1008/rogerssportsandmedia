@@ -215,10 +215,24 @@ header {
   }
 }
 .bgimg {
-  height: 66%;
   overflow: hidden;
   position: relative;
   margin-bottom: -80px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+}
+#header-slide-prev {
+  display: inline-block;
+  width: 5%;
+}
+#header-carousel {
+  display: inline-block;
+  width: 90%;
+}
+#header-slide-next {
+  display: inline-block;
+  width: 5%;
 }
 .portfolio-header {
     &.j-main {
@@ -245,12 +259,13 @@ header {
   top: 0;
   min-width: 100%;
   width: 100%;
-  height: 100%;
+  height: 66vh;
   overflow: hidden;
   z-index: 0;
-  display: flex;
+  display: flex !important;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 @media (min-width: 1024px) {
   #video {

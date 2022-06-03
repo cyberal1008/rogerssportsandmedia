@@ -1,4 +1,9 @@
 $(document).ready(function () {
+    $('#header-carousel').slick({
+      prevArrow: $('#header-slide-prev'),
+      nextArrow: $('#header-slide-next'),
+    });
+
     $('#products-slide').slick({
         slidesToShow: 4,
         slidesToScroll: 1,
