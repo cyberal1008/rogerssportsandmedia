@@ -9,7 +9,7 @@ if ( strpos( $jot_image_url, '://' ) == false && substr( $jot_image_url, 0, 2 ) 
 		<div class="row">
 			<div class="col-md-5 my-auto">
 				<div class="jumbotron jot-main">
-					<h1 class="display-3 jot-title">Total TV Upfront</h1>
+					<h1 class="display-3 jot-title">EXPERIENCE TOTAL TV UPFRONT 2022</h1>
 					<p class="lead jot-desc">Watch the Presentation</p>
 					<a href="https://rogersupfront.gallery.video" target="_blank" class="btn btn-primary btn-lg jot-button">Watch Now</a>
 				</div>
