@@ -48,7 +48,7 @@ if ( $whats_happening_exists ) {
 
 			?>
 		</div>
-		
+
 		<?php
 		get_template_part(
 			'template-parts/content',
@@ -82,6 +82,9 @@ if ( $whats_happening_exists ) {
 			);
 		}
 
+		if( get_post_field( 'post_name' ) === 'upfront' ) {
+			get_template_part( 'template-parts/content', 'join-our-team' );
+		}
 		?>
 		<div class="w-100 p-4"></div>
 		<div class="container portfolio-page">

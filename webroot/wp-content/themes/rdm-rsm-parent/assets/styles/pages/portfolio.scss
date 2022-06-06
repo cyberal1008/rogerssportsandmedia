@@ -127,7 +127,7 @@
       }
     }
 
-    .television-grid, 
+    .television-grid,
     .solutions-grid {
       .card {
         transition: transform 0.5s ease;
@@ -200,7 +200,7 @@
       }
     }
   }
-  
+
   .portfolio-video{
     @include media-breakpoint-down(lg) {
       min-height: 50vh;
@@ -212,11 +212,11 @@
     left: 50%;
     background-color: $dark-grey-mode-bg-color;
   }
-  
+
   .portfolio-video-chapters {
     color: $white;
     background-color: #272727;
-    
+
     .chapters-wrapper {
       width: 100%;
       .video-title {
@@ -302,7 +302,7 @@
               text-decoration: underline;
             }
           }
-          
+
           .grid-item {
             &-content {
               color: $white;
@@ -314,7 +314,7 @@
               @include media-breakpoint-down(sm){
                 font-size: 32px;
               }
-              
+
             }
 
             &-subtitle,
@@ -337,5 +337,6 @@
     }
   }
 }
-
-
+body.page-template-page_portfolio .wrapper {
+  margin-top: 0px;
+}

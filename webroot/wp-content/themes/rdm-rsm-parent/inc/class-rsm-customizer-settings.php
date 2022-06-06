@@ -330,6 +330,8 @@ if ( ! class_exists( 'RSM_Customizer_Settings' ) ) {
 			$extra_links = array(
 				[ 'Desktop', 'desktop_vid_link' ],
 				// [ 'Mobile', 'mob_vid_link' ],
+				[ 'Desktop_2', 'desktop_2_vid_link' ],
+				[ 'Desktop_3', 'desktop_3_vid_link' ],
 			);
 			foreach ( $extra_links as $link ) {
 				// Section title.
@@ -462,32 +464,6 @@ if ( ! class_exists( 'RSM_Customizer_Settings' ) ) {
 					)
 				);
 
-				// Link Video URL
-				$wp_customize->add_setting(
-					$link[1] . '_video_url',
-					array(
-						'type'       => 'theme_mod',
-						'capability' => 'edit_theme_options',
-						'transport'  => 'refresh',
-					)
-				);
-
-				$wp_customize->add_control(
-					new WP_Customize_Control(
-						$wp_customize,
-						$link[1] . '_video_url',
-						array(
-							'label'       => __( $link[0] . ' Video URL', 'rsm_parent' ),
-							'settings'    => $link[1] . '_video_url',
-							'priority'    => 15,
-							'section'     => 'rsm_video_links',
-							'input_attrs' => array(
-								'type' => 'text',
-
-							),
-						)
-					)
-				);
 				// Link Image URL
 				$wp_customize->add_setting(
 					$link[1] . '_image_url',
