@@ -113,8 +113,8 @@ $regions = array_merge( array( 'all' => 'All Markets' ), wp_list_pluck( $region_
 				<img class="card-img-top" src="<?php echo $img_src; ?>" srcset="<?php echo $img_srcset; ?>"
 						alt="<?php echo esc_attr( $post->post_title ); ?>">
 				<div class="card-body">
-					<h5 class="card-title"><?php echo esc_html( $post->post_title ); ?></h5>
-					<h6 class="card-subtitle"><?php echo esc_html( $post_subtitle ); ?></h6>
+					<h3 class="card-title"><?php echo esc_html( $post->post_title ); ?></h3>
+					<h3 class="card-subtitle"><?php echo esc_html( $post_subtitle ); ?></h3>
 				</div>
 			</div>
 		</div>
