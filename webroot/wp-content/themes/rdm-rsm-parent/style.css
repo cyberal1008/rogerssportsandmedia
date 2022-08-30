@@ -4,3 +4,11 @@
  Author:   	RDM GB
  Version:  	1.0.0
  */
+
+.card .card-title {
+    font-size: 16px;
+}
+.card .card-subtitle {
+    font-size: 21px;
+    text-transform: initial;
+}

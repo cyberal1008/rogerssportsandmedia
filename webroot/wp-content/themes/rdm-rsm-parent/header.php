@@ -153,9 +153,9 @@ if ( is_home() ) {
 				</div>
 				<div class="nav-social">
 					<ul class="social-icons">
-						<li><a class="header-social" target="_blank" href="https://twitter.com/RogersMediaPR"><img src="<?php bloginfo( 'template_directory' ); ?>/assets/images/Tweet.png" width="30" alt=""></a></li>
-						<li><a class="header-social" target="_blank" href="https://ca.linkedin.com/company/rogers-sports-and-media"><img src="<?php bloginfo( 'template_directory' ); ?>/assets/images/Linked.png" width="30" alt=""></a></li>
-						<li><a class="header-social" target="_blank" href="https://www.instagram.com/rogerssportsandmedia/"><img src="<?php bloginfo( 'template_directory' ); ?>/assets/images/Insta.png" width="30" alt=""></a></li>
+						<li><a class="header-social" target="_blank" href="https://twitter.com/RogersMediaPR" aria-label="View Rogers Sports and Media on Twitter"><img src="<?php bloginfo( 'template_directory' ); ?>/assets/images/Tweet.png" width="30" alt=""></a></li>
+						<li><a class="header-social" target="_blank" href="https://ca.linkedin.com/company/rogers-sports-and-media" aria-label="View Rogers Sports and Media on LinkedIn"><img src="<?php bloginfo( 'template_directory' ); ?>/assets/images/Linked.png" width="30" alt=""></a></li>
+						<li><a class="header-social" target="_blank" href="https://www.instagram.com/rogerssportsandmedia/" aria-label="View Rogers Sports and Media on Instagram"><img src="<?php bloginfo( 'template_directory' ); ?>/assets/images/Insta.png" width="30" alt=""></a></li>
 					</ul>
 				</div>
 
@@ -163,7 +163,7 @@ if ( is_home() ) {
 	</header>
 
 	<?php if ( ! is_page() || ! is_page_template( 'page-contactus.php' ) ) { ?>
-		<div class="advertise-callout"><a href="<?php echo site_url( '/contact-us/' ); ?>">Advertise With Us <img src="<?php echo dirname( get_bloginfo( 'stylesheet_url' ) ) . '/assets/images/icon-mail.svg'; ?>"></a></div>
+		<div class="advertise-callout"><a href="<?php echo site_url( '/contact-us/' ); ?>" role="region" aria-label="Advertise With Us">Advertise With Us <img src="<?php echo dirname( get_bloginfo( 'stylesheet_url' ) ) . '/assets/images/icon-mail.svg'; ?>" alt="envelope"></a></div>
 	<?php } ?>
 
 <?php if ( is_single() ) { ?>
