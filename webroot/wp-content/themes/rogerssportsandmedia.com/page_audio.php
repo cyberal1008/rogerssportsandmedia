@@ -21,9 +21,6 @@
 
 	<div class="portfolio-main">
 
-	    <!-- SKIP -->
-		<a role="banner" href="#content" class="skip-to-content button">Skip to Content</a>
-
 		<?php
 		$hero_title = get_field('hero_title');
 		$hero_image = get_field('hero_image');
@@ -42,7 +39,10 @@
 			</div>
 		</section>
 
-		<main id="content">
+		<!-- SKIP -->
+		<a role="banner" href="#content" class="skip-to-content button" aria-label="Skip to main content" tabindex="0">Skip to main content</a>
+
+		<main id="content" role="main">
 
 			<section class="anchors">
 				<div class="wrapper">
@@ -50,7 +50,7 @@
 						<a href="#our-difference" aria-label="go to Our Difference content">Our Difference</a>
 						<a href="#highlights" aria-label="go to Highlights content">Highlights</a>
 						<a href="#trends" aria-label="go to Trends content">Trends</a>
-						<a href="#stations-podcasts" aria-label="go to Stations and Podcasts">Stations and Podcasts</a>
+						<a href="#stations-podcasts" aria-label="go to Stations and Podcasts content">Stations and Podcasts</a>
 					</div>
 				</div>
 			</section>
@@ -76,7 +76,7 @@
 					else :
 						$intro_button = get_field('intro_button');
 						?>
-						<a href="<?php echo $intro_button['url']; ?>" class="button" aria-label="<?php echo $intro_button['title']; ?>" target="_blank"><?php echo $intro_button['title']; ?></a>
+						<a href="<?php echo $intro_button['url']; ?>" class="button" aria-label="<?php echo $intro_button['title']; ?>" target="<?php echo $intro_button['target']; ?>"><?php echo $intro_button['title']; ?></a>
 						<?php
 					endif;
 					?>
