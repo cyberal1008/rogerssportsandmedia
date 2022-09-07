@@ -373,7 +373,7 @@
 					<h2 class="section-title">PARTNER WITH US TODAY</h2>
 
 					<iframe src="https://mcdjql80kmghrjj6lg68bbtqbgv1.pub.sfmc-content.com/r2bks1awm2k"
-						width="100%" height="820" allowfullscreen sandbox title="partner with us today by filling out the form below">
+						width="100%" height="820" allowfullscreen sandbox="allow-same-origin allow-scripts allow-popups allow-forms" title="partner with us today by filling out the form below">
 						<p>Sorry, your browser does not support iframes.</p>
 					</iframe>
 
