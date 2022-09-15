@@ -319,7 +319,7 @@
 					<?php endif; ?>
 					<?php echo $happening_content; ?>
 					<?php
-					global $zone;
+					$zone = 'whats-happening-radio';
 					if ( function_exists( 'z_get_posts_in_zone' ) && ! empty( $zone ) ) {
 						$the_query = z_get_zone_query( $zone );
 					} else {
