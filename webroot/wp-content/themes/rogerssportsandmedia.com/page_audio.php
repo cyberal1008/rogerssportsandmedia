@@ -319,14 +319,19 @@
 					<?php endif; ?>
 					<?php echo $happening_content; ?>
 					<?php
-					$the_query = new WP_Query(
-						array(
-							'post_type'      => 'post',
-							'posts_per_page' => 3,
-							'post_status'    => 'publish',
-							'post__not_in'   => array( get_the_ID() ),
-						)
-					);
+					$zone = 'whats-happening-radio';
+					if ( function_exists( 'z_get_posts_in_zone' ) && ! empty( $zone ) ) {
+						$the_query = z_get_zone_query( $zone );
+					} else {
+						$the_query = new WP_Query(
+							array(
+								'post_type'      => 'post',
+								'posts_per_page' => 3,
+								'post_status'    => 'publish',
+								'post__not_in'   => array( get_the_ID() ),
+							)
+						);
+					}
 					?>
 					<div class="grid">
 						<?php if ( $the_query->have_posts() ) : while ( $the_query->have_posts() ) : $the_query->the_post();
