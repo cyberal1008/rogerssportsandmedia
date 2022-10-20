@@ -33,22 +33,25 @@
 		?>
 
 	    <!-- HEADER -->
-		<header>
-			<a id="logo" role="button" class="logo" aria-label=""><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/landing/images/logo-landing.svg" alt="logo"></a>
-			<nav class="main">
-				<ul id="aoda_nav" aria-label="main navigation" role="group">
-					<?php if ($header_link && $header_link_text) : ?>
-						<li role="listitem"><a href="<?php echo $header_link; ?>" aria-label="<?php echo $header_link_text; ?>" target="_blank"><?php echo $header_link_text; ?></a></li>
-					<?php endif; ?>
-					<?php if ($grey_button_link && $grey_button_text) : ?>
-						<li role="listitem"><a href="<?php echo $grey_button_link; ?>" class="button light" aria-label="<?php echo $grey_button_text; ?>" target="_blank"><?php echo $grey_button_text; ?></a></li>
-					<?php endif; ?>
-					<?php if ($red_button_link && $red_button_text) : ?>
-						<li role="listitem"><a href="<?php echo $red_button_link; ?>" class="button" aria-label="<?php echo $red_button_text; ?>" target="_blank"><?php echo $red_button_text; ?></a></li>
-					<?php endif; ?>
-				</ul>
-			</nav>
-		</header>
+		<div class="header-wrapper">
+			<a href="https://go.rogerssportsandmedia.com/sign-up" class="top-banner">To help get you started, we'll give you $250 CAD in ad credit when you spend $500 CAD. Use <b>Promo Code GET250</b> at checkout.</a>
+			<header>
+				<a id="logo" role="button" class="logo" aria-label=""><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/landing/images/logo-landing.svg" alt="logo"></a>
+				<nav class="main">
+					<ul id="aoda_nav" aria-label="main navigation" role="group">
+						<?php if ($header_link && $header_link_text) : ?>
+							<li role="listitem"><a href="<?php echo $header_link; ?>" aria-label="<?php echo $header_link_text; ?>" target="_blank"><?php echo $header_link_text; ?></a></li>
+						<?php endif; ?>
+						<?php if ($grey_button_link && $grey_button_text) : ?>
+							<li role="listitem"><a href="<?php echo $grey_button_link; ?>" class="button light" aria-label="<?php echo $grey_button_text; ?>" target="_blank"><?php echo $grey_button_text; ?></a></li>
+						<?php endif; ?>
+						<?php if ($red_button_link && $red_button_text) : ?>
+							<li role="listitem"><a href="<?php echo $red_button_link; ?>" class="button" aria-label="<?php echo $red_button_text; ?>" target="_blank"><?php echo $red_button_text; ?></a></li>
+						<?php endif; ?>
+					</ul>
+				</nav>
+			</header>
+		</div>
 
 		<main id="content">
 
