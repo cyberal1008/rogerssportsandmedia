@@ -69,9 +69,14 @@
 					<?php if ($hero_title) : ?>
 						<h1 class="title"><?php echo $hero_title; ?></h1>
 					<?php endif; ?>
-					<?php if ($hero_subtitle) : ?>
-						<p class="desc"><?php echo $hero_subtitle; ?></p>
-					<?php endif; ?>
+					<div class="hero-left">
+						<?php if ($hero_subtitle) : ?>
+							<p class="desc"><?php echo $hero_subtitle; ?></p>
+						<?php endif; ?>
+					</div>
+					<div class="hero-right">
+						<iframe width="100%" src="https://mcdjql80kmghrjj6lg68bbtqbgv1.pub.sfmc-content.com/jsnbuusei3e"></iframe>
+					</div>
 					<?php if ($video) : ?>
 						<div class="vid-wrap">
 							<video controls>

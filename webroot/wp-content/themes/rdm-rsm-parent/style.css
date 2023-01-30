@@ -12,3 +12,19 @@
     font-size: 21px;
     text-transform: initial;
 }
+
+.hero .hero-left {
+    width: calc(50% - 10px);
+    float: left;
+    margin-right: 10px;
+}
+
+.hero .hero-right {
+    width: 50%;
+    display: inline-block;
+}
+
+.hero .hero-right iframe {
+    border: none;
+    height: 900px;
+}
