@@ -17,6 +17,7 @@
     width: calc(50% - 10px);
     float: left;
     margin-right: 10px;
+    text-align: left;
 }
 
 .hero .hero-right {
