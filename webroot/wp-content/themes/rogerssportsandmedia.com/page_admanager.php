@@ -35,7 +35,6 @@
 
 	    <!-- HEADER -->
 		<div class="header-wrapper">
-			<a href="https://go.rogerssportsandmedia.com/sign-up" class="top-banner">To help get you started, we'll give you $250 CAD in ad credit when you spend $500 CAD. Use <b>Promo Code GET250</b> at checkout.</a>
 			<header>
 				<a id="logo" role="button" class="logo" aria-label=""><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/landing/images/logo-landing.svg" alt="logo"></a>
 				<nav class="main">
