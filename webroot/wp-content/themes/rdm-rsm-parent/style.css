@@ -27,5 +27,22 @@
 
 .hero .hero-right iframe {
     border: none;
-    height: 600px;
+    height: 525px;
+}
+
+@media (max-width:1023px) {
+    .hero .hero-left {
+        float: none;
+        width: 100%;
+    }
+
+    .hero .hero-left .desc {
+        display: block;
+    }
+
+    .hero .hero-right {
+        width: 100%;
+    }
+
+
 }
