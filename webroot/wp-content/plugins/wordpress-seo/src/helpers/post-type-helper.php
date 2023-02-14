@@ -2,6 +2,8 @@
 
 namespace Yoast\WP\SEO\Helpers;
 
+use WP_Post_Type;
+
 /**
  * A helper object for post types.
  */
@@ -26,9 +28,9 @@ class Post_Type_Helper {
 	/**
 	 * Checks if the request post type is public and indexable.
 	 *
-	 * @param string $post_type_name The name of the post type to lookup.
-	 *
 	 * @codeCoverageIgnore We have to write test when this method contains own code.
+	 *
+	 * @param string $post_type_name The name of the post type to lookup.
 	 *
 	 * @return bool True when post type is set to index.
 	 */
@@ -41,11 +43,22 @@ class Post_Type_Helper {
 	}
 
 	/**
+	 * Checks if the request post type has the Yoast Metabox enabled.
+	 *
+	 * @param string $post_type_name The name of the post type to lookup.
+	 *
+	 * @return bool True if metabox is enabled.
+	 */
+	public function has_metabox( $post_type_name ) {
+		return ( $this->options_helper->get( 'display-metabox-pt-' . $post_type_name, true ) === true );
+	}
+
+	/**
 	 * Returns an array with the public post types.
 	 *
-	 * @param string $output The output type to use.
-	 *
 	 * @codeCoverageIgnore It only wraps a WordPress function.
+	 *
+	 * @param string $output The output type to use.
 	 *
 	 * @return array Array with all the public post_types.
 	 */
@@ -126,5 +139,18 @@ class Post_Type_Helper {
 		}
 
 		return ( ! empty( $post_type->has_archive ) );
+	}
+
+	/**
+	 * Returns the post types that should be indexed.
+	 *
+	 * @return array The post types that should be indexed.
+	 */
+	public function get_indexable_post_types() {
+		$public_post_types   = $this->get_public_post_types();
+		$excluded_post_types = $this->get_excluded_post_types_for_indexables();
+
+		// `array_values`, to make sure that the keys are reset.
+		return \array_values( \array_diff( $public_post_types, $excluded_post_types ) );
 	}
 }
