@@ -8,6 +8,11 @@
   src: url("styles/ted-next-font/TedNext-Bold.eot");
   src: url("styles/ted-next-font/TedNext-Bold.eot") format("embedded-opentype"), url("styles/ted-next-font/TedNext-Bold.woff2") format("woff2"), url("styles/ted-next-font/TedNext-Bold.woff") format("woff"), url("styles/ted-next-font/TedNext-Bold.svg") format("svg");
 }
+@font-face {
+  font-family: 'Ted Next Medium';
+  src: url("styles/ted-next-font/TedNext-Medium.eot");
+  src: url("styles/ted-next-font/TedNext-Medium.eot") format("embedded-opentype"), url("styles/ted-next-font/TedNext-Medium.woff2") format("woff2"), url("styles/ted-next-font/TedNext-Medium.woff") format("woff"), url("styles/ted-next-font/TedNext-Medium.svg") format("svg");
+}
  @font-face {
   font-family: 'Ted Next';
   src: url("styles/ted-next-font/TedNext-Regular.eot");
@@ -17,3 +22,4 @@
 $ted-next: 'Ted Next';
 $ted-next-b: 'Ted Next Bold';
 $ted-next-sb: 'Ted Next SemiB';
+$ted-next-m: 'Ted Next Medium';
