@@ -30,6 +30,10 @@
     height: 525px;
 }
 
+.hero video {
+    border: 1px solid black;
+}
+
 @media (max-width:1023px) {
     .hero .hero-left {
         float: none;
@@ -43,6 +47,4 @@
     .hero .hero-right {
         width: 100%;
     }
-
-
 }
