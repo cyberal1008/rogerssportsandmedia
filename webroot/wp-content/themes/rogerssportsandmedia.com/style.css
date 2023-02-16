@@ -5,3 +5,246 @@
  Template: 	rdm-rsm-parent
  Version:  	1.0.0
  */
+
+header .nav-social {
+    display: none;
+}
+header .nav-social .social-icons {
+    align-items: center;
+    display: flex;
+    gap: 5px;
+    padding: 0;
+}
+header .nav-social .social-icons a {
+    color: #414042;
+    font-size: 32px;
+    transition: 250ms all;
+}
+header .nav-social .social-icons a:hover,
+header .nav-social .social-icons a:focus {
+    color: #000;
+}
+@media (min-width: 768px) {
+    header .nav-social {
+        display: block;
+    }
+}
+
+footer#primary {
+    background-color: #F5F5F5;
+    padding: clamp(30px, 10vw, 60px) 0;
+    position: relative;
+    z-index: 9;
+}
+footer#primary p {
+    font-size: clamp(13px, 5vw, 16px);
+    margin: 16px 0;
+}
+footer#primary p:last-of-type {
+    margin-bottom: 25px;
+}
+footer#primary ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+footer#primary ul li {
+    line-height: 1.5;
+    margin: 15px 0;
+}
+footer#primary ul li:last-child {
+    margin-bottom: 0;
+}
+footer#primary ul ul li {
+    display: block;
+    font-family: 'Ted Next', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    margin: 10px 0;
+}
+footer#primary ul ul li:first-child {
+    margin-top: 10px;
+}
+footer#primary ul ul li:last-child {
+    margin-bottom: 0;
+}
+footer#primary ul ul a {
+    font-size: 14px;
+    text-decoration: none;
+}
+footer#primary ul ul a:focus,
+footer#primary ul ul a:hover {
+    font-family: 'Ted Next', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    text-decoration: underline;
+}
+footer#primary .item aside > div {
+
+}
+footer#primary .item aside > div > ul > li:first-child
+footer#primary .item > ul > li:first-child {
+    margin: 0;
+}
+footer#primary .item aside > div > ul > li > a,
+footer#primary .item > ul > li > a {
+    text-decoration: underline;
+}
+footer#primary .item aside > div > ul > li > a:focus,
+footer#primary .item aside > div > ul > li > a:hover,
+footer#primary .item > ul > li > a:focus,
+footer#primary .item > ul > li > a:hover {
+    font-weight: 600;
+}
+footer#primary .grid {
+    display: grid;
+    gap: 25px 5%;
+    grid-auto-flow: dense;
+    grid-template-columns: repeat(1, 1fr);
+}
+footer#primary a {
+    color: #000;
+    font-family: "Ted Next Medium";
+    text-underline-offset: 25%;
+}
+footer#primary a:focus,
+footer#primary a:hover {
+    font-family: 'Ted Next', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+footer#primary .logo {
+    margin-bottom: 25px;
+}
+footer#primary .copyright {
+    font-size: 13px;
+    margin-top: 25px;
+    text-align: right;
+}
+footer#primary .footer-nav-title {
+    line-height: 1.5;
+    text-decoration: none;
+}
+footer#primary .footer-nav-title a {
+    text-decoration: underline;
+}
+footer#primary .footer-nav-title a:focus,
+footer#primary .footer-nav-title a:hover {
+    font-weight: 600;
+}
+footer#primary .nav-social {
+    margin-top: 25px;
+}
+footer#primary .nav-social ul {
+    align-items: center;
+    display: flex;
+    gap: 0 5px;
+    justify-content: flex-start;
+}
+footer#primary .nav-social ul li {
+    line-height: normal;
+    margin: 0;
+    padding: 0;
+}
+footer#primary .nav-social a {
+    color: #414042;
+    font-size: 32px;
+    transition: all 250ms;
+}
+footer#primary .nav-social a:focus,
+footer#primary .nav-social a:hover {
+    color: #000;
+}
+@media (min-width: 768px) {
+    footer#primary ul li {
+        margin: 25px 0; 
+    }
+    footer#primary ul ul li {
+        margin: 20px 0;
+    }
+    footer#primary .copyright {
+        margin-top: 40px;
+    }
+    footer#primary .nav-social {
+        margin-top: 40px;
+    }
+    footer#primary .grid {
+        gap: 5rem 3rem;
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (min-width: 1024px) { 
+    footer#primary .grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+a.fixedbtn {
+    bottom: 0;
+    position: fixed;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 15px 10px 15px;
+    background: #d9291c;
+    border: 2px solid #d9291c;
+    border-radius: 0;
+    color: #fff;
+    font-family: 'Ted Next', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: clamp(14px, 4vw, 16px);
+    font-weight: 600;
+    left: 0;
+    right: 0;
+    line-height: 1.2;
+    min-height: 45px;
+    text-align: center;
+    text-decoration: none;
+    transform: translateZ(0);
+    width: 100%;
+    z-index: 9999;
+    transition: all 250ms;
+}
+a.fixedbtn:focus,
+a.fixedbtn:hover {
+    background-color: #c22419;
+    border-color: #c22419;
+    color: #fff;
+}
+a.fixedbtn img.hover {
+    opacity: 0;
+}
+a.fixedbtn:focus img.static,
+a.fixedbtn:hover img.static {
+    opacity: 0;
+}
+a.fixedbtn:focus img.hover,
+a.fixedbtn:hover img.hover {
+    opacity: 1;
+}
+a.fixedbtn span:after {
+    background: #000;
+    border-radius: 5px;
+    content: '';
+    display: block;
+    height: 5px;
+    margin: 15px 0 0 0;
+    width: 100%;
+}
+a.fixedbtn img {
+    display: none;
+}
+@media (min-width: 768px) {
+    a.fixedbtn {
+        bottom: 30px;
+        left: unset;
+        padding: 20px 50px 20px 20px;
+        right: 60px;
+        width: auto;
+    }
+    a.fixedbtn span:after {
+        display: none;
+    }
+    a.fixedbtn img {
+        bottom: -6px;
+        display: block;
+        position: absolute;
+        right: -39px;
+    }
+    a.fixedbtn img:hover {
+        opacity: 0;
+    }
+}

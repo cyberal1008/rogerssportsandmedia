@@ -125,8 +125,8 @@
 									<button class="accordion-trigger" id="accordion-1" aria-expanded="false" aria-controls="accordion-1-content">
 										<img src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt']; ?>" class="mobile" loading="lazy">
 										<?php echo $title; ?>
-										<i class="fas fa-plus status plus"></i>
-										<i class="fas fa-minus status minus"></i>
+										<i class="fa-sharp fa-solid fa-plus-large status plus"></i>
+										<i class="fa-sharp fa-solid fa-minus status minus"></i>
 									</button>
 									<div class="accordion-content" id="accordion-1-content" aria-labelledby="accordion-1">
 										<img src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt']; ?>" class="desktop" loading="lazy">
@@ -146,8 +146,8 @@
 									<button class="accordion-trigger" id="accordion-2" aria-expanded="false" aria-controls="accordion-2-content">
 										<img src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt']; ?>" class="mobile" loading="lazy">
 										<?php echo $title; ?>
-										<i class="fas fa-plus status plus"></i>
-										<i class="fas fa-minus status minus"></i>
+										<i class="fa-sharp fa-solid fa-plus-large status plus"></i>
+										<i class="fa-sharp fa-solid fa-minus status minus"></i>
 									</button>
 									<div class="accordion-content" id="accordion-2-content" aria-labelledby="accordion-2">
 										<img src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt']; ?>" class="desktop" loading="lazy">
@@ -167,8 +167,8 @@
 									<button class="accordion-trigger" id="accordion-3" aria-expanded="false" aria-controls="accordion-3-content">
 										<img src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt']; ?>" class="mobile" loading="lazy">
 										<?php echo $title; ?>
-										<i class="fas fa-plus status plus"></i>
-										<i class="fas fa-minus status minus"></i>
+										<i class="fa-sharp fa-solid fa-plus-large status plus"></i>
+										<i class="fa-sharp fa-solid fa-minus status minus"></i>
 									</button>
 									<div class="accordion-content" id="accordion-3-content" aria-labelledby="accordion-3">
 										<img src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt']; ?>" class="desktop" loading="lazy">
@@ -188,8 +188,8 @@
 									<button class="accordion-trigger" id="accordion-4" aria-expanded="false" aria-controls="accordion-4-content">
 										<img src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt']; ?>" class="mobile" loading="lazy">
 										<?php echo $title; ?>
-										<i class="fas fa-plus status plus"></i>
-										<i class="fas fa-minus status minus"></i>
+										<i class="fa-sharp fa-solid fa-plus-large status plus"></i>
+										<i class="fa-sharp fa-solid fa-minus status minus"></i>
 									</button>
 									<div class="accordion-content" id="accordion-4-content" aria-labelledby="accordion-4">
 										<img src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt']; ?>" class="desktop" loading="lazy">
@@ -387,7 +387,7 @@
 
 		</main>
 
-		<script src="https://kit.fontawesome.com/b2f2db8aa3.js" data-search-pseudo-elements crossorigin="anonymous"></script>
+		<script src="https://kit.fontawesome.com/8ded1e9203.js" data-search-pseudo-elements crossorigin="anonymous"></script>
 	    <script src="<?php echo get_stylesheet_directory_uri(); ?>/assets/audio-landing/main.min.js"></script>
 
 	</div>
