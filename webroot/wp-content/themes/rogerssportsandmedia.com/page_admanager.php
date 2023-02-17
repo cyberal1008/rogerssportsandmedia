@@ -35,7 +35,6 @@
 
 	    <!-- HEADER -->
 		<div class="header-wrapper">
-			<a href="https://go.rogerssportsandmedia.com/sign-up" class="top-banner">To help get you started, we'll give you $250 CAD in ad credit when you spend $500 CAD. Use <b>Promo Code GET250</b> at checkout.</a>
 			<header>
 				<a id="logo" role="button" class="logo" aria-label=""><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/landing/images/logo-landing.svg" alt="logo"></a>
 				<nav class="main">
@@ -69,9 +68,14 @@
 					<?php if ($hero_title) : ?>
 						<h1 class="title"><?php echo $hero_title; ?></h1>
 					<?php endif; ?>
-					<?php if ($hero_subtitle) : ?>
-						<p class="desc"><?php echo $hero_subtitle; ?></p>
-					<?php endif; ?>
+					<div class="hero-left">
+						<?php if ($hero_subtitle) : ?>
+							<p class="desc"><?php echo $hero_subtitle; ?></p>
+						<?php endif; ?>
+					</div>
+					<div class="hero-right">
+						<iframe width="100%" src="https://mcdjql80kmghrjj6lg68bbtqbgv1.pub.sfmc-content.com/jsnbuusei3e"></iframe>
+					</div>
 					<?php if ($video) : ?>
 						<div class="vid-wrap">
 							<video controls>

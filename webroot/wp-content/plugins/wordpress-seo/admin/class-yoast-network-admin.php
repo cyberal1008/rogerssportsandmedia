@@ -8,7 +8,7 @@
 /**
  * Multisite utility class for network admin functionality.
  */
-class Yoast_Network_Admin implements WPSEO_WordPress_Integration, WPSEO_WordPress_AJAX_Integration {
+class Yoast_Network_Admin implements WPSEO_WordPress_AJAX_Integration, WPSEO_WordPress_Integration {
 
 	/**
 	 * Action identifier for updating plugin network options.
@@ -100,7 +100,8 @@ class Yoast_Network_Admin implements WPSEO_WordPress_Integration, WPSEO_WordPres
 	 * @return void
 	 */
 	public function handle_update_options_request() {
-		$option_group = filter_input( INPUT_POST, 'network_option_group', FILTER_SANITIZE_STRING );
+		// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged -- This deprecation will be addressed later.
+		$option_group = filter_input( INPUT_POST, 'network_option_group', @FILTER_SANITIZE_STRING );
 
 		$this->verify_request( "{$option_group}-network-options" );
 
@@ -189,7 +190,7 @@ class Yoast_Network_Admin implements WPSEO_WordPress_Integration, WPSEO_WordPres
 	 */
 	public function enqueue_assets() {
 		$asset_manager = new WPSEO_Admin_Asset_Manager();
-		$asset_manager->enqueue_script( 'network-admin-script' );
+		$asset_manager->enqueue_script( 'network-admin' );
 
 		$translations = [
 			/* translators: %s: success message */
@@ -198,7 +199,7 @@ class Yoast_Network_Admin implements WPSEO_WordPress_Integration, WPSEO_WordPres
 			'error_prefix'   => __( 'Error: %s', 'wordpress-seo' ),
 		];
 		$asset_manager->localize_script(
-			'network-admin-script',
+			'network-admin',
 			'wpseoNetworkAdminGlobalL10n',
 			$translations
 		);

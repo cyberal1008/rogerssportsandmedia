@@ -96,6 +96,11 @@ if ( is_home() ) {
 			'home_hero_btn_text_3' => get_theme_mod( 'desktop_3_vid_link_button_text' ),
 		)
 	);
+} elseif ( is_front_page() ) {
+	get_template_part(
+		'template-parts/header',
+		'home'
+	);
 } elseif ( is_page() && is_page_template( 'page_portfolio.php' ) ) {
 	$page_meta  = get_post_meta( get_the_ID(), RSM\Broadcast\PageMeta::METADATA_SLUG, true );
 	$image_uri  = '';
@@ -155,21 +160,32 @@ if ( is_home() ) {
 				</div>
 				<div class="nav-social">
 					<ul class="social-icons">
-						<li><a class="header-social" target="_blank" href="https://twitter.com/RogersMediaPR" aria-label="View Rogers Sports and Media on Twitter"><img src="<?php bloginfo( 'template_directory' ); ?>/assets/images/Tweet.png" width="30" alt=""></a></li>
-						<li><a class="header-social" target="_blank" href="https://ca.linkedin.com/company/rogers-sports-and-media" aria-label="View Rogers Sports and Media on LinkedIn"><img src="<?php bloginfo( 'template_directory' ); ?>/assets/images/Linked.png" width="30" alt=""></a></li>
-						<li><a class="header-social" target="_blank" href="https://www.instagram.com/rogerssportsandmedia/" aria-label="View Rogers Sports and Media on Instagram"><img src="<?php bloginfo( 'template_directory' ); ?>/assets/images/Insta.png" width="30" alt=""></a></li>
+						<li><a class="header-social" target="_blank" href="https://twitter.com/RogersMediaPR" aria-label="View Rogers Sports and Media on Twitter">
+							<i class="icon fa-brands fa-square-twitter"></i>
+						</a></li>
+						<li><a class="header-social" target="_blank" href="https://ca.linkedin.com/company/rogers-sports-and-media" aria-label="View Rogers Sports and Media on LinkedIn">
+							<i class="icon fa-brands fa-linkedin"></i>
+						</a></li>
+						<li><a class="header-social" target="_blank" href="https://www.instagram.com/rogerssportsandmedia/" aria-label="View Rogers Sports and Media on Instagram">
+							<i class="icon fa-brands fa-square-instagram"></i>
+						</a></li>
 					</ul>
 				</div>
 
 			</nav>
 	</header>
 
-	<?php if ( ! is_page() || ! is_page_template( 'page-contactus.php' ) ) { ?>
-		<div class="advertise-callout"><a href="<?php echo site_url( '/contact-us/' ); ?>" role="region" aria-label="Advertise With Us">Advertise With Us <img src="<?php echo dirname( get_bloginfo( 'stylesheet_url' ) ) . '/assets/images/icon-mail.svg'; ?>" alt="envelope"></a></div>
+	<?php 
+	if ( ! is_page() || ! is_page_template( 'page-contactus.php' ) ) { ?>
+		<a href="#partner" class="button fixedbtn" role="region" aria-label="Advertise with Us">
+			Advertise With Us
+			<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/images/character.svg" class="char static" alt="yellow square-shaped character" loading="lazy">
+			<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/images/character-alt.svg" class="char hover" alt="yellow square-shaped character waving" loading="lazy">
+		</a>
 	<?php } ?>
 
 <?php if ( is_single() ) { ?>
 	<div class="wrapper pt-5">
-<?php } else { ?>
-<div class="wrapper ">
+<?php } else if (!is_home() && !is_front_page()){ ?>
+	<div class="wrapper ">
 <?php } ?>

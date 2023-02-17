@@ -11,6 +11,9 @@ if ( ! defined( 'WPSEO_VERSION' ) ) {
 	exit();
 }
 
+WPSEO_Post_Type::remove_post_types_made_public_notification();
+WPSEO_Post_Type::remove_taxonomies_made_public_notification();
+
 /*
  * WPSEO_Post_Type::get_accessible_post_types() should *not* be used here.
  * Otherwise setting a post-type to `noindex` will remove it from the list,
@@ -28,6 +31,10 @@ echo '</p>';
 $view_utils                   = new Yoast_View_Utils();
 $recommended_replace_vars     = new WPSEO_Admin_Recommended_Replace_Vars();
 $editor_specific_replace_vars = new WPSEO_Admin_Editor_Specific_Replace_Vars();
+$opengraph_disabled_alert     = $view_utils->generate_opengraph_disabled_alert();
+
+// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Is correctly escaped in the generate_opengraph_disabled_alert() method.
+echo $opengraph_disabled_alert;
 
 if ( is_array( $wpseo_post_types ) && $wpseo_post_types !== [] ) {
 	foreach ( array_values( $wpseo_post_types ) as $wpseo_post_type_index => $yoast_seo_post_type ) {
