@@ -18,6 +18,7 @@ $lang = 'en';
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="facebook-domain-verification" content="wu23xn0vfi7xr89rxgr8z05yiqs4vh" />
 	<title>
 	<?php
 	/**
