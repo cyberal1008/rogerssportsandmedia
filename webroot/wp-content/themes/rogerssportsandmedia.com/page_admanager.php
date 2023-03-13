@@ -323,6 +323,13 @@
 		</main>
 
 	    <script src="<?php echo get_stylesheet_directory_uri(); ?>/assets/landing/main.min.js"></script>
+		<script type="text/javascript">
+			window.addEventListener('message', function (event) {
+				if(event.data == "MetaCompleteRegistration") {
+					fbq('track', 'CompleteRegistration');
+				}
+			});
+		</script>
 
 	</body>
 <?php
