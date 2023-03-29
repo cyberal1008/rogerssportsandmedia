@@ -328,7 +328,7 @@
 			window.addEventListener('message', function (event) {
 				if(event.data == "MetaCompleteRegistration") {
 					fbq('track', 'CompleteRegistration');
-					gtag_report_conversion("<?php echo get_permalink(); ?>");
+					gtag('event', 'conversion', {'send_to': 'AW-11083871196/4ADyCP_a8ZEYENznmaUp'});
 				}
 			});
 		</script>
