@@ -292,25 +292,20 @@ function linkedin_pixel_code() {
 
 function google_tracking_code() {
 	?>
-	<!-- Google tag (gtag.js) -->
+	<!-- Global site tag (gtag.js) - Google Ads: 11083871196 -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=AW-11083871196"></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
-		gtag('js', new Date()); gtag('config', 'AW-11083871196');
-	</script>
 
-	<!-- Event snippet for Submit lead form conversion page In your html page, add the snippet and call gtag_report_conversion when someone clicks on the chosen link or button. -->
 	<script>
-		function gtag_report_conversion(url) {
-			var callback = function () {
-				if (typeof(url) != 'undefined') {
-					window.location = url;
-				}
-			};
-			gtag('event', 'conversion', { 'send_to': 'AW-11083871196/4ADyCP_a8ZEYENznmaUp', 'event_callback': callback });
-			return false;
-		}
-	</script> 
+  		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('set', 'linker', {
+			'domains': ['rogerssportsandmedia.com','sfmc-content.com'],
+			'accept_incoming': true,
+			'decorate_forms': true
+		});
+		gtag('js', new Date());
+		
+		gtag('config', 'AW-11083871196');
+	</script>
 	<?php
 }
