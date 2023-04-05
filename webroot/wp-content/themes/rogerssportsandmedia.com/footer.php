@@ -15,7 +15,7 @@
 				<ul>
 						<li><a href="#">Join Our Team</a></li>
 						<li><a href="#">What's Happening</a></li>
-						<li><a href="#">Digital Ad Specs</a></li>
+						<li><a href="#">Ad Specs</a></li>
 						<li><a href="#">Contact Us</a></li>
 				</ul>
 			</div>
