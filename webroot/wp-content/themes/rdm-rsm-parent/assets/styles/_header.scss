@@ -10,6 +10,14 @@ header {
   padding-top: 0;
   padding-bottom: 0;
 }
+.navbar-custom-scroll {
+  @media (max-width: 767px) {
+    display: block;
+    height: 95vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+}
 .header-container {
   display: contents;
   .active > a,
