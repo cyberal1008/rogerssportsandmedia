@@ -11,6 +11,12 @@
 	}
 }
 
+.contactus-form-text {
+	margin: 0px 16px 0px;
+	font-size: 18px;
+	text-align: center; 
+}
+
 @include media-breakpoint-down(sm) {
 	.contactus-main {
 		iframe {

@@ -14,11 +14,13 @@ get_header(); ?>
 				<div class="cat-page-desc text-center"><p>HOW CAN WE HELP?</p></div>
 		</div>
 		<div class="row">
-			<div class="col-sm-12 col-md-11 col-lg-8 single-article-container" role="main">
+			<div class="col-sm-12 col-md-12 col-lg-12 single-article-container" role="main">
+				<div class="contactus-form-text">
+					<p>Want to advertise with Rogers Sports & Media? Complete the form below and a sales representative will be in touch.</p>
+					<p>If you're looking for our self serve platform RSM Ad Manager click <a target="_blank" href="https://www.rogerssportsandmedia.com/ad-manager">here</a>.<p>
+					<p>For press/media inquiries contact <a href="mailto:media@rci.rogers.com">media@rci.rogers.com</a>, and for Sportsnet Now contact <a href="mailto:now@sportsnet.ca">now@sportsnet.ca</a>.</p>
+				</div> 
 				<iframe src="https://mcdjql80kmghrjj6lg68bbtqbgv1.pub.sfmc-content.com/drlrqqp5mtl"></iframe>
-			</div>
-			<div class="col-sm-12 col-md-12 col-lg-4 single-article-sidebar">
-				<p>Want to advertise with us? Job opportunity? Reimagine the future with Rogers Sports & Media. You can also contact us at <a href="mailto:RogersSportsMedia@rci.rogers.com">RogersSportsMedia@rci.rogers.com</a>.</p>
 			</div>
 		</div>
 	</div>
