@@ -43,7 +43,7 @@ get_header(); ?>
       <div class="col-sm-12 col-md-12 col-lg-4 single-article-sidebar">
         <div class="sidebar-content">
 				  <p class="sidebar_title"><?php echo the_title(); ?></p>
-          <p class="sidebar_title">Date And Time</p>
+          <p class="sidebar_title">Date & Time</p>
           <p><?php echo date( "D, F j, Y", $event_date ); ?></p>
           <p><?php echo date( "g:iA", $start_time ) . " - " . date( "g:iA", $end_time ); ?></p>
           <div class="event_register_button">

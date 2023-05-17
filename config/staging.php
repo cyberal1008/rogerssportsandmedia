@@ -1,5 +1,5 @@
 <?php
-define( 'DOMAIN_CURRENT_SITE', 'int-www.rogerssportsandmedia.com' );
+define( 'DOMAIN_CURRENT_SITE', 'staging-www.rogerssportsandmedia.com' );
 // ** MySQL settings ** //
 define( 'DB_NAME', getenv( 'RDM_RDS_DATABASE' ) );
 define( 'DB_USER', getenv( 'RDM_RDS_USERNAME' ) );
@@ -7,6 +7,8 @@ define( 'DB_PASSWORD', getenv( 'RDM_RDS_PASSWORD' ) );
 define( 'DB_HOST', getenv( 'RDM_RDS_URL' ) );
 define( 'DB_CHARSET', 'utf8' );
 define( 'DB_COLLATE', '' );
+define( 'MYSQL_CLIENT_FLAGS', MYSQLI_CLIENT_SSL);
+define( 'MYSQL_SSL_CA', '/etc/rdm_cloudops_ssl/rds-combined-ca-bundle.pem');
 // define('COOKIE_DOMAIN', $_SERVER['HTTP_HOST']);
 define( 'WP_DEBUG', false );
 define( 'WP_DEBUG_DISPLAY', false );
