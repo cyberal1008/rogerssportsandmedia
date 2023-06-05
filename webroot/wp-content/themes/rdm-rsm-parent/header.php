@@ -18,7 +18,6 @@ $lang = 'en';
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="facebook-domain-verification" content="wu23xn0vfi7xr89rxgr8z05yiqs4vh" />
 	<title>
 	<?php
 	/**
@@ -151,7 +150,7 @@ if ( is_home() ) {
 									'container'       => 'div',
 									'container_class' => 'collapse navbar-collapse bg-mob',
 									'container_id'    => 'navbarSupportedContent',
-									'menu_class'      => 'nav navbar-nav navbar-custom-scroll',
+									'menu_class'      => 'nav navbar-nav',
 									'fallback_cb'     => 'WP_Bootstrap_Navwalker::fallback',
 									'walker'          => new WP_Bootstrap_Navwalker(),
 								)
@@ -178,15 +177,15 @@ if ( is_home() ) {
 
 	<?php 
 	if ( ! is_page() || ! is_page_template( 'page-contactus.php' ) ) { ?>
-		<a href="<?php echo is_front_page() ? '#partner' : '/contact-us' ?>" class="button fixedbtn" role="region" aria-label="Advertise with Us">
+		<a href="<?php echo get_home_url(); ?>/contact-us" class="button fixedbtn" role="region" aria-label="Advertise with Us">
 			Advertise With Us
 			<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/images/character.svg" class="char static" alt="yellow square-shaped character" loading="lazy">
 			<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/images/character-alt.svg" class="char hover" alt="yellow square-shaped character waving" loading="lazy">
 		</a>
 	<?php } ?>
 
-<?php if ( is_single() ) { ?>
+<?php if ( is_singular('event') ) { ?>
 	<div class="wrapper pt-5">
-<?php } else if (!is_home() && !is_front_page()){ ?>
+<?php } else if (!is_home() && !is_front_page() && !is_page_template( 'page_whatwedo.php' ) && !is_page_template( 'page_upfront.php' ) && !is_page_template( 'page_tvstreaming.php' ) && !is_page_template( 'page_tv.php' ) && !is_singular('post') && !is_category()) { ?>
 	<div class="wrapper ">
 <?php } ?>

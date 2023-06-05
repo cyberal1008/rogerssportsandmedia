@@ -20,3 +20,5 @@ foreach ( $parent_includes as $file ) {
 	}
 	require_once $filepath;
 }
+
+add_action( 'init', 'enqueue_ajax_scripts' );
