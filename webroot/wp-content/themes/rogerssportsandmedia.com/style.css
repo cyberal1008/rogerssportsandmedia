@@ -51,6 +51,7 @@ footer#primary ul {
 footer#primary ul li {
     line-height: 1.5;
     margin: 15px 0;
+    text-decoration: none;
 }
 footer#primary ul li:last-child {
     margin-bottom: 0;
@@ -93,6 +94,7 @@ footer#primary .item > ul > li > a:hover {
     font-weight: 600;
 }
 footer#primary .grid {
+    align-items: baseline;
     display: grid;
     gap: 25px 5%;
     grid-auto-flow: dense;
@@ -108,12 +110,11 @@ footer#primary a:hover {
     font-family: 'Ted Next', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 footer#primary .logo {
-    margin-bottom: 25px;
+    margin-bottom: 15px;
 }
 footer#primary .copyright {
     font-size: 13px;
     margin-top: 25px;
-    text-align: right;
 }
 footer#primary .footer-nav-title {
     line-height: 1.5;
@@ -170,6 +171,9 @@ footer#primary .nav-social a:hover {
 @media (min-width: 1024px) { 
     footer#primary .grid {
         grid-template-columns: repeat(3, 1fr);
+    }
+    footer#primary .copyright {
+        grid-column: 3;
     }
 }
 
@@ -247,4 +251,22 @@ a.fixedbtn img {
     a.fixedbtn img:hover {
         opacity: 0;
     }
+}
+
+div.portfolio-main .portfolio-page .television-header .program-grid-filter .grid-filters.alt .filter-wrap .select {
+    height: 50px;
+}
+div.portfolio-main .portfolio-page .television-header .program-grid-filter .grid-filters.alt .filter-wrap .select label {
+    color: #6E6E6F;
+    font-size: 20px;
+    font-weight: 500;
+    height: 50px;
+}
+div.portfolio-main .portfolio-page .television-header .program-grid-filter .grid-filters.alt .filter-wrap .select .option {
+    height: auto;
+    min-height: 48px;
+    z-index: 99;
+}
+div.portfolio-main .portfolio-page .television-header .program-grid-filter .grid-filters.alt .button {
+    min-height: 50px;
 }

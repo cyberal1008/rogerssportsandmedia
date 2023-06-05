@@ -8,16 +8,11 @@
 		<div class="grid">
 
 			<div class="item">
-				<div class="footer-nav-title">
-					<a href="#">Who We Are</a>
-				</div>
-				<p>We're reimaging the future of sports and media by innovating at the intersection of data, technology, and audience engagement.</p>
-				<ul>
-						<li><a href="#">Join Our Team</a></li>
-						<li><a href="#">What's Happening</a></li>
-						<li><a href="#">Ad Specs</a></li>
-						<li><a href="#">Contact Us</a></li>
-				</ul>
+				<?php
+				if ( is_active_sidebar( 'footer-1' ) ) {
+					dynamic_sidebar( 'footer-1' );
+				}
+				?>
 			</div>
 				
 			<div class="item">
@@ -49,7 +44,9 @@
 				</div>
 			</div>
 		</div>
-		<div class="copyright">&copy; <?php echo date('Y'); ?> Rogers Sports & Media. All rights reserved.</div>
+		<div class="grid">
+			<div class="copyright">&copy; <?php echo date('Y'); ?> Rogers Sports & Media. All rights reserved.</div>
+		</div>
 	</div>
 </footer>
 

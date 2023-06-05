@@ -1,0 +1,359 @@
+<?php
+/**
+ * Template Name: Upfront
+ *
+ * @package Rogers Digital Media
+ * @subpackage rdm-rsm-parent
+ * @since Ver 1.0
+ */
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/landing/images/favicon.png" />
+    <title><?php echo get_the_title(); ?> | Rogers Sports & Media</title>
+    <?php wp_head(); ?>
+    <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/main.min.css">
+</head>
+<?php
+get_header();
+global $post;
+$page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, true );
+?>
+
+	<?php
+	$hero_title = get_field('hero_title');
+	$hero_image = get_field('hero_image');
+	$hero_mobile_image = get_field('hero_mobile_image');
+	?>
+	<section class="hero light">
+		<picture>
+			<source srcset="<?php echo $hero_image['url']; ?>"
+					media="(min-width: 640px)">
+			<img src="<?php echo $hero_mobile_image['url']; ?>" class="bg" alt="<?php echo $hero_image['alt']; ?>" />
+		</picture>
+
+		<div class="wrapper">
+			<h1><?php echo $hero_title ? $hero_title : get_the_title(); ?></h1>
+		</div>
+	</section>
+
+	<!-- SKIP -->
+	<a role="banner" href="#content" class="skip-to-content button" aria-label="Skip to main content" tabindex="0">Skip to main content</a>
+
+		<main id="content" role="main">
+
+			<section class="anchors desktop">
+				<div class="wrapper">
+					<div class="anchor-list">
+						<a href="#upfront" aria-label="">Upfront</a>
+						<a href="#programming" aria-label="">Programming</a>
+						<a href="#trends" aria-label="">What's Happening</a>
+						<a href="#partner" aria-label="">Partner With Us</a>
+					</div>
+				</div>
+			</section>
+
+			<!-- INTRO -->
+			<?php
+			$intro_title = get_field('intro_title');
+			$intro_content = get_field('intro_content');
+			$brands_logos = get_field('brands_logos');
+			?>
+			<section class="our-difference alt nomargin">
+				<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/images/curve-blue.svg" alt="curved blue line" class="deco btm-left">
+				<div class="wrapper">
+					<div class="top">
+						<?php if ($intro_title) : ?>
+							<h2 class="title"><?php echo $intro_title; ?></h2>
+						<?php endif; ?>
+						<?php echo $intro_content; ?>
+					</div>
+					<?php if ($brands_logos) : ?>
+						<div class="swiper logo-slider">
+							<div class="swiper-wrapper">
+								<?php foreach ($brands_logos as $logo) : ?>
+									<div class="swiper-slide">
+										<img src="<?php echo $logo['url']; ?>" alt="<?php echo $logo['alt']; ?>">
+									</div>
+								<?php endforeach; ?>
+							</div>
+							<div class="swiper-pagination"></div>
+						</div>
+					<?php endif; ?>
+				</div>
+			</section>
+
+			<!-- UPFRONT CTA -->
+			<?php
+			$upfront_title = get_field('upfront_title');
+			$upfront_link = get_field('upfront_link');
+			$upfront_link_arialabel = get_field('upfront_link_arialabel');
+			$upfront_image = get_field('upfront_image');
+			?>
+			<section id="upfront" class="upfront">
+				<div class="wrapper">
+					<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/images/lines.svg" class="deco deco1" alt="diagonal lines decoration" loading="lazy">
+					<div class="inner">
+						<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/images/diamond-yellow.svg" class="deco deco2" alt="yellow diamond decoration" loading="lazy">
+						<?php if ($upfront_title) : ?>
+							<h2 class="title"><?php echo $upfront_title; ?></h2>
+						<?php endif; ?>
+						<?php if ($upfront_link) : ?>
+							<a href="<?php echo $upfront_link['url']; ?>" class="button yellow" aria-label="<?php echo $upfront_link_arialabel ? $upfront_link_arialabel : ''; ?>" target="<?php echo $upfront_link['target'] ? $upfront_link['target'] : '_self'; ?>"><?php echo $upfront_link['title'] ? $upfront_link['title'] : 'Watch Now'; ?></a>
+						<?php endif; ?>
+						<?php if ($upfront_image) : ?>
+							<div class="imgbox">
+								<a href="<?php echo $upfront_link['url']; ?>" class="trigger" aria-label="<?php echo $upfront_link_arialabel ? $upfront_link_arialabel : ''; ?>" target="<?php echo $upfront_link['target'] ? $upfront_link['target'] : '_self'; ?>">
+									<img src="<?php echo $upfront_image['sizes']['large']; ?>" alt="<?php echo $upfront_image['url']; ?>" loading="lazy">
+									<i class="icon fa-sharp fa-solid fa-play"></i>
+								</a>
+							</div>
+						<?php endif; ?>
+					</div>
+				</div>
+			</section>
+
+			<!-- PROGRAMMING -->
+			<?php
+			$prog_section_title = get_field('prog_section_title');
+			$prog_section_button = get_field('prog_section_button');
+			?>	
+			<section id="programming" class="programming">
+				<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/images/circle-yellow.svg" class="deco" alt="yellow ring decoration" loading="lazy">
+				<div class="portfolio-main">
+					<div class=" portfolio-page">
+						<div class="inner wrapper">
+
+							<div class="top">
+								<?php if ($prog_section_title) : ?>
+									<h2 class="section-title"><?php echo $prog_section_title; ?></h2>
+								<?php endif; ?>
+								<?php if ($prog_section_button) : ?>
+									<a href="<?php echo $prog_section_button['url']; ?>" class="lined" aria-label="<?php echo $prog_section_button['title'] ? $prog_section_button['title'] : 'Download TV Schedule'; ?>" target="<?php echo $prog_section_button['target'] ? $prog_section_button['target'] : '_self'; ?>"><?php echo $prog_section_button['title'] ? $prog_section_button['title'] : 'Download TV Schedule'; ?></a>
+								<?php endif; ?>
+							</div>
+
+							<?php
+							get_template_part(
+								'template-parts/portfolio',
+								'program-slider',
+								array(
+									'page_meta'     => $page_meta,
+									'section_title' => $solutions_anchor_label,
+								)
+							);
+							?>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- VIDEO SLIDER -->
+			<?php
+			$vid_section_visibility = get_field('vid_section_visibility');
+			if ($vid_section_visibility == 'visible') :
+				$vid_section_intro_title = get_field('vid_section_intro_title');
+				$vid_section_intro_content = get_field('vid_section_intro_content');
+				?>
+				<section class="vidblock">
+					<div class="inner wrapper">
+
+						<div class="top">
+							<?php if ($vid_section_intro_title) : ?>
+								<h2 class="section-title"><?php echo $vid_section_intro_title; ?></h2>
+							<?php endif; ?>
+							<?php echo $vid_section_intro_content ? $vid_section_intro_content : ''; ?>
+						</div>
+						
+						<?php if( have_rows('video_slider') ) : ?>
+							<div class="slider">
+								<div class="swiper vid-slider">
+									<div class="swiper-wrapper">
+										
+										<?php while( have_rows('video_slider') ) : the_row(); $vid_ctr++;
+											$title = get_sub_field('title');
+											$description = get_sub_field('description');
+											$video_embed_code = get_sub_field('video_embed_code');
+											?>
+											<div class="swiper-slide">
+												<div class="inner">
+													<div class="playbox">
+														<img src="images/discover.jpg" alt="" loading="lazy">
+														<a href="#vid-popup-<?php echo $vid_ctr; ?>" class="trigger" aria-label="<?php echo $title; ?>" data-fancybox><i class="icon fa-sharp fa-solid fa-play"></i></a>
+													</div>
+													<?php if ($title) : ?>
+														<p class="title h4"><?php echo $title; ?></p>
+													<?php endif; ?>
+												</div>
+												<div id="vid-popup-<?php echo $vid_ctr; ?>" class="vid-popup popup">
+													<div class="inner">
+														<a href="#" class="back" data-fancybox-close aria-label="Back to content">Back</a>
+														<?php echo $video_embed_code ? $video_embed_code : ''; ?>
+														<?php if ($title) : ?>
+															<p class="title h4"><?php echo $title; ?></p>
+														<?php endif; ?>
+														<?php if ($description) : ?>
+															<p><?php echo $description; ?></p>
+														<?php endif; ?>
+													</div>
+												</div>
+											</div>
+										<?php endwhile; ?>
+
+									</div>
+									<div class="swiper-pagination"></div>
+								</div>
+
+								<div class="navi">
+									<div class="swiper-button-prev vid-prev"><i class="icon fa-solid fa-sharp fa-chevron-left"></i></div>
+									<div class="swiper-button-next vid-next"><i class="icon fa-solid fa-sharp fa-chevron-right"></i></div>
+								</div>
+							</div>
+						<?php endif; ?>
+
+					</div>
+				</section>
+			<?php endif; ?>
+
+			<!-- CASE STUDIES -->
+			<?php
+			$case_section_visibility = get_field('case_section_visibility');
+			if ($case_section_visibility == 'visible') :
+				$case_section_title = get_field('case_section_title');
+				?>
+				<section class="case-studies">
+					<div class="inner wrapper">
+
+						<?php if ($case_section_title) : ?>
+							<h2 class="section-title"><?php echo $case_section_title; ?></h2>
+						<?php endif; ?>
+
+						<div class="slider">
+							<div class="swiper case-slider">
+								<div class="swiper-wrapper">
+									
+									<!-- SINGLE -->
+									<div class="swiper-slide">
+										<div class="inner">
+											<div class="txtbox">
+												<h4 class="title h4">Name of Case Study Here</h4>
+												<p class="intro-line"><i>The case study’s introductory short blurb here, just only two sentences.</i></p>
+												<p class="content-title"><strong>OVERVIEW</strong></p>
+												<div class="content">
+													<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Libero id faucibus nisl tincidunt. Vulputate dignissim suspendisse in est ante in nibh mauris.</p>
+													<p>Odio aenean sed adipiscing diam. Leo vel fringilla est ullamcorper eget nulla facilisi etiam.</p>
+													<a href="#" class="button mobile" aria-label="">Read Full Story <i class="icon fa-sharp fa-regular fa-arrow-right"></i></a>
+												</div>
+												
+											</div>
+											<div class="imgbox">
+												<img src="images/discover.jpg" alt="">
+												<a href="#" class="button desktop" aria-label="">Read Full Story <i class="icon fa-sharp fa-regular fa-arrow-right"></i></a>
+											</div>
+										</div>
+									</div>
+									<!-- SINGLE -->
+									<div class="swiper-slide">
+										<div class="inner">
+											<div class="txtbox">
+												<h4 class="title h4">Name of Case Study Here</h4>
+												<p class="intro-line"><i>The case study’s introductory short blurb here, just only two sentences.</i></p>
+												<p class="content-title"><strong>OVERVIEW</strong></p>
+												<div class="content">
+													<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Libero id faucibus nisl tincidunt. Vulputate dignissim suspendisse in est ante in nibh mauris.</p>
+													<p>Odio aenean sed adipiscing diam. Leo vel fringilla est ullamcorper eget nulla facilisi etiam.</p>
+													<p>Urna nec tincidunt praesent semper feugiat nibh. Viverra adipiscing at in tellus integer feugiat scelerisque varius morbi. Molestie nunc non blandit massa enim nec. Elit pellentesque habitant morbi tristique senectus et netus.</p>
+													<p>Tortor posuere ac ut consequat semper viverra nam. Amet risus nullam eget felis eget nunc lobortis. Facilisi nullam vehicula ipsum a arcu cursus vitae. Tempus urna et pharetra pharetra massa massa ultricies mi. Congue mauris rhoncus aenean vel elit scelerisque mauris pellentesque. Ac tincidunt vitae semper quis lectus nulla at volutpat.</p>
+													<a href="#" class="button mobile" aria-label="">Read Full Story <i class="icon fa-sharp fa-regular fa-arrow-right"></i></a>
+												</div>
+												
+											</div>
+											<div class="imgbox">
+												<img src="images/discover.jpg" alt="">
+												<a href="#" class="button desktop" aria-label="">Read Full Story <i class="icon fa-sharp fa-regular fa-arrow-right"></i></a>
+											</div>
+										</div>
+									</div>
+			
+								</div>
+								<div class="swiper-pagination"></div>
+							</div>
+							<div class="navi">
+								<div class="swiper-button-prev case-prev"><i class="icon fa-solid fa-sharp fa-chevron-left"></i></div>
+								<div class="swiper-button-next case-next"><i class="icon fa-solid fa-sharp fa-chevron-right"></i></div>
+							</div>
+						</div>
+
+					</div>
+				</section>
+			<?php endif; ?>
+
+			<!-- WHAT'S HAPPENING -->
+			<?php
+			$happening_section_title = get_field('happening_section_title');
+			$happening_content = get_field('happening_content');
+			?>
+			<section id="trends" class="trends alt">
+				<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/images/semicircles-dots-green.svg" alt="grey decorative rings" class="deco" loading="lazy">
+				<div class="wrapper">
+					<h2 class="section-title"><?php echo $happening_section_title ? $happening_section_title : "WHAT'S HAPPENING"; ?></h2>
+					<?php echo $happening_content ? $happening_content : '<p>Get the latest news from Rogers Sports & Media</p>'; ?>
+					<?php
+					$zone = 'whats-happening-radio';
+					if ( function_exists( 'z_get_posts_in_zone' ) && ! empty( $zone ) ) {
+						$the_query = z_get_zone_query( $zone );
+					} else {
+						$the_query = new WP_Query(
+							array(
+								'post_type'      => 'post',
+								'posts_per_page' => 3,
+								'post_status'    => 'publish',
+								'post__not_in'   => array( get_the_ID() ),
+							)
+						);
+					}
+					?>
+					<div class="grid">
+						<?php if ( $the_query->have_posts() ) : while ( $the_query->have_posts() ) : $the_query->the_post();
+							$featured_img_url   = get_the_post_thumbnail_url( get_the_ID(), 'wide-577' );
+							$categories         = get_the_category();
+							$post_meta          = get_post_meta( get_the_ID(), 'blog', true );
+							?>
+							<div class="item">
+								<?php $title_formatted = ucwords(strtolower(get_the_title())); ?>
+								<a href="<?php the_permalink(); ?>" aria-label="read <?php echo $title_formatted; ?>"><img src="<?php echo $featured_img_url; ?>" alt="" loading="lazy"></a>
+								<p class="date"><?php echo get_the_date( get_option( 'date_format' ) ); ?> / <?php echo $categories ? $categories[0]->name : ''; ?></p>
+								<h3 class="post-title"><a href="<?php the_permalink(); ?>" aria-label="read <?php echo $title_formatted; ?>"><?php echo $title_formatted; ?></a></h3>
+								<div class="btn-wrap">
+									<a href="<?php the_permalink(); ?>" class="lined" aria-label="Read More">Read More</a>
+								</div>
+							</div>
+						<?php endwhile; endif; ?>
+					</div>
+				</div>
+			</section>
+
+			<!-- PARTNER -->
+			<section id="partner" class="partner">
+				<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/audio-landing/images/group-red.png" alt="" class="bg bg3" loading="lazy">
+				<div class="wrapper">
+					<h2 class="section-title">PARTNER WITH US TODAY</h2>
+
+					<iframe src="https://mcdjql80kmghrjj6lg68bbtqbgv1.pub.sfmc-content.com/r2bks1awm2k" width="100%" height="820" allowfullscreen sandbox="allow-same-origin allow-scripts allow-popups allow-forms" title="partner with us today by filling out the form below">
+						<p>Sorry, your browser does not support iframes.</p>
+					</iframe>
+
+				</div>
+			</section>
+
+		</main>
+
+		<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+		<script src="https://kit.fontawesome.com/8ded1e9203.js" data-search-pseudo-elements crossorigin="anonymous"></script>
+	    <script src="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/main.min.js"></script>
+
+<?php
+get_footer();
