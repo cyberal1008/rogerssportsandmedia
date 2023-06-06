@@ -57,4 +57,7 @@ $(document).ready(function () {
             $(this).css('z-index', 99);
         }
     })
+
+    $('#shows-category-new-and-returning').prop("checked", true);
+    $('#progsubmit').click();
 });
