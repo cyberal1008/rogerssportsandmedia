@@ -6,7 +6,7 @@
  Version:  	1.0.0
  */
 
-header .nav-social {
+ header .nav-social {
     display: none;
 }
 header .nav-social .social-icons {
@@ -251,22 +251,4 @@ a.fixedbtn img {
     a.fixedbtn img:hover {
         opacity: 0;
     }
-}
-
-div.portfolio-main .portfolio-page .television-header .program-grid-filter .grid-filters.alt .filter-wrap .select {
-    height: 50px;
-}
-div.portfolio-main .portfolio-page .television-header .program-grid-filter .grid-filters.alt .filter-wrap .select label {
-    color: #6E6E6F;
-    font-size: 20px;
-    font-weight: 500;
-    height: 50px;
-}
-div.portfolio-main .portfolio-page .television-header .program-grid-filter .grid-filters.alt .filter-wrap .select .option {
-    height: auto;
-    min-height: 48px;
-    z-index: 99;
-}
-div.portfolio-main .portfolio-page .television-header .program-grid-filter .grid-filters.alt .button {
-    min-height: 50px;
 }
