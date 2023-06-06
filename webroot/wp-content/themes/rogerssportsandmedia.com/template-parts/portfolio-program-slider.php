@@ -55,6 +55,8 @@ $tv_posts = new WP_Query(
 		'post_status'    => 'publish',
 		'orderby'        => 'title',
 		'posts_per_page' => - 1,
+		'orderby'		 => 'title',
+		'order'			 => 'ASC'
 	)
 );
 
