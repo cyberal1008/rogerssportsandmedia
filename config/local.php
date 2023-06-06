@@ -9,7 +9,7 @@ define( 'DB_CHARSET', 'utf8' );
 define( 'DB_COLLATE', '' );
 define( 'COOKIE_DOMAIN', $_SERVER['HTTP_HOST'] );
 
-define( 'WP_DEBUG', true );
+define( 'WP_DEBUG', false );
 define( 'WP_DEBUG_DISPLAY', true );
 define( 'WP_CACHE', true );
 
