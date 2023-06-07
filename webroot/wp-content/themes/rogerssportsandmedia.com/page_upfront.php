@@ -142,7 +142,6 @@ $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, tr
 								'program-slider',
 								array(
 									'page_meta'     => $page_meta,
-									'section_title' => $solutions_anchor_label,
 								)
 							);
 							?>
@@ -293,48 +292,18 @@ $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, tr
 
 			<!-- WHAT'S HAPPENING -->
 			<?php
-			$happening_section_title = get_field('happening_section_title');
-			$happening_content = get_field('happening_content');
+			get_template_part(
+				'template-parts/whats-happening', null,
+				array(
+					'class'     => 'alt',
+					'deco'   => array(
+						'url' => get_stylesheet_directory_uri() . '/assets/home/images/semicircles-dots-green.svg',
+						'class'    => 'deco',
+						'alt'     => 'Decorative green semicircles and grey dots'
+					),
+				)
+			);
 			?>
-			<section id="trends" class="trends alt">
-				<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/images/semicircles-dots-green.svg" alt="grey decorative rings" class="deco" loading="lazy">
-				<div class="wrapper">
-					<h2 class="section-title"><?php echo $happening_section_title ? $happening_section_title : "WHAT'S HAPPENING"; ?></h2>
-					<?php echo $happening_content ? $happening_content : '<p>Get the latest news from Rogers Sports & Media</p>'; ?>
-					<?php
-					$zone = 'whats-happening-radio';
-					if ( function_exists( 'z_get_posts_in_zone' ) && ! empty( $zone ) ) {
-						$the_query = z_get_zone_query( $zone );
-					} else {
-						$the_query = new WP_Query(
-							array(
-								'post_type'      => 'post',
-								'posts_per_page' => 3,
-								'post_status'    => 'publish',
-								'post__not_in'   => array( get_the_ID() ),
-							)
-						);
-					}
-					?>
-					<div class="grid">
-						<?php if ( $the_query->have_posts() ) : while ( $the_query->have_posts() ) : $the_query->the_post();
-							$featured_img_url   = get_the_post_thumbnail_url( get_the_ID(), 'wide-577' );
-							$categories         = get_the_category();
-							$post_meta          = get_post_meta( get_the_ID(), 'blog', true );
-							?>
-							<div class="item">
-								<?php $title_formatted = ucwords(strtolower(get_the_title())); ?>
-								<a href="<?php the_permalink(); ?>" aria-label="read <?php echo $title_formatted; ?>"><img src="<?php echo $featured_img_url; ?>" alt="" loading="lazy"></a>
-								<p class="date"><?php echo get_the_date( get_option( 'date_format' ) ); ?> / <?php echo $categories ? $categories[0]->name : ''; ?></p>
-								<h3 class="post-title"><a href="<?php the_permalink(); ?>" aria-label="read <?php echo $title_formatted; ?>"><?php echo $title_formatted; ?></a></h3>
-								<div class="btn-wrap">
-									<a href="<?php the_permalink(); ?>" class="lined" aria-label="Read More">Read More</a>
-								</div>
-							</div>
-						<?php endwhile; endif; ?>
-					</div>
-				</div>
-			</section>
 
 			<!-- PARTNER -->
 			<section id="partner" class="partner">

@@ -311,7 +311,7 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 			<?php endif; ?>
 			<?php echo $happening_content; ?>
 			<?php
-			$zone = 'whats-happening-radio';
+			$zone = 'happening-home';
 			if ( function_exists( 'z_get_posts_in_zone' ) && ! empty( $zone ) ) {
 				$the_query = z_get_zone_query( $zone );
 			} else {
