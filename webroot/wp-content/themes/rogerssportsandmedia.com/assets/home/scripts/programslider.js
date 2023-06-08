@@ -58,6 +58,8 @@ $(document).ready(function () {
         }
     })
 
-    $('#shows-category-new-and-returning').prop("checked", true);
-    $('#progsubmit').click();
+    window.setTimeout(function() {
+        $('#shows-category-new-and-returning').prop("checked", true);
+        $('#progsubmit').click();
+    }, 1000);
 });
