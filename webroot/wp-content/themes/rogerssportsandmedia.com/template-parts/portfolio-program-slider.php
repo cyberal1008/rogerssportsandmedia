@@ -49,6 +49,7 @@ $network_terms = get_terms(
 $networks_category = array_merge( array( 'all' => 'All Networks' ), wp_list_pluck( $network_terms, 'name', 'slug' ) );
 
 // schedule and header urls
+$program_default_category = get_field('program_default_category') ? get_field('program_default_category') : '';
 $tv_posts = new WP_Query(
 	array(
 		'post_type'      => RSM\Broadcast\PostType\Shows::SLUG,
@@ -56,7 +57,7 @@ $tv_posts = new WP_Query(
 		'orderby'        => 'title',
 		'posts_per_page' => - 1,
 		'orderby'		 => 'title',
-		'order'			 => 'ASC'
+		'order'			 => 'ASC',
 	)
 );
 
@@ -75,6 +76,7 @@ $tv_posts = new WP_Query(
 					'shows-category'    => $shows_category,
 					'days-category'     => $days,
 				),
+				'slug'		=> $program_default_category->slug
 			)
 		);
 		?>

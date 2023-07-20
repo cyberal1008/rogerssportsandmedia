@@ -19,35 +19,28 @@
 </head>
 <?php get_header(); ?>
 
+<!-- SKIP -->
+<a role="banner" href="#content" class="skip-to-content button" aria-label="Skip to main content" tabindex="0">Skip to main content</a>
+
+<main id="content" role="main">
+
+	<!-- HERO -->
 	<?php
-	$hero_title = get_field('hero_title');
-	$hero_image = get_field('hero_image');
-	$hero_mobile_image = get_field('hero_mobile_image');
+	get_template_part(
+		'template-parts/section-hero', null,
+		array(
+			'subtitle'		=> 'What We Do',
+			'title'     => $hero_title ? $hero_title : 'OUR PRODUCTS',
+		)
+	);
 	?>
-	<section class="hero">
-		<picture>
-			<source srcset="<?php echo $hero_image['url']; ?>"
-					media="(min-width: 640px)">
-			<img src="<?php echo $hero_mobile_image['url']; ?>" class="bg" alt="<?php echo $hero_image['alt']; ?>" />
-		</picture>
-
-		<div class="wrapper">
-			<span>What We Do</span>
-			<h1><?php echo $hero_title ? $hero_title : get_the_title(); ?></h1>
-		</div>
-	</section>
-
-	<!-- SKIP -->
-	<a role="banner" href="#content" class="skip-to-content button" aria-label="Skip to main content" tabindex="0">Skip to main content</a>
-
-		<main id="content" role="main">
 
 			<!-- INTRO -->
 			<?php
 			$intro_title = get_field('intro_title');
 			$intro_content = get_field('intro_content');
 			?>
-			<section class="our-difference alt">
+			<section class="our-difference alt nomargin">
 				<div class="wrapper">
 					<div class="top">
 						<?php if ($intro_title) : ?>
@@ -117,7 +110,6 @@
 
 		</main>
 
-		<script src="https://kit.fontawesome.com/8ded1e9203.js" data-search-pseudo-elements crossorigin="anonymous"></script>
 	    <script src="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/main.min.js"></script>
 
 <?php
