@@ -41,7 +41,7 @@
 			<div class="anchor-list">
 				<a href="#advanced" aria-label="Advanced Solutions">Advanced Solutions</a>
 				<a href="#red" aria-label="R.E.D.">R.E.D.</a>
-				<a href="#suite" aria-label="Advanced Solutions Suite">Advanced Solutions Suite</a>
+				<a href="#suite" aria-label="AS Suite">AS Suite</a>
 				<a href="#trends" aria-label="What's Happening">What's Happening</a>
 				<a href="#partner" aria-label="Partner With Us">Partner With Us</a>
 			</div>
