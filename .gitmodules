@@ -1,11 +1,3 @@
-[submodule "webroot/wp-content/plugins/rdm-video-cloud"]
-	path = webroot/wp-content/plugins/rdm-video-cloud
-	url = git@github.com:digitalmedia/platform_wordpress_plugins.git
-	branch = rdm-video-cloud
-[submodule "webroot/wp-content/plugins/brightcove-video-connect"]
-	path = webroot/wp-content/plugins/brightcove-video-connect
-	url = git@github.com:digitalmedia/brightcove-video-connect.git
-	branch = master
 [submodule "webroot/wp-content/plugins/rdm-dynamic-tag-management"]
 	path = webroot/wp-content/plugins/rdm-dynamic-tag-management
 	url = git@github.com:digitalmedia/platform_wordpress_plugins.git
