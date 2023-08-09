@@ -9,7 +9,7 @@ pipeline {
   agent {
     node {
       label 'available'
-      customWorkspace "/tmp/rogerssportsandmedia/${BRANCH_NAME}"
+      customWorkspace "/tmp_jenkins_workspace/rogerssportsandmedia/${BRANCH_NAME}"
     }
   }
 
