@@ -2,9 +2,28 @@
 </div><!-- wrapper -->
 <footer id="primary">
 	<div class="wrapper">
-		<a class="footer-brand" href="<?php echo esc_url( home_url( '/' ) ); ?>">
-			<img src="<?php echo dirname( get_bloginfo( 'stylesheet_url' ) ); ?>/assets/images/Logo-RSM.svg" width="120" class="logo" alt="<?php esc_url( bloginfo( 'name' ) ); ?>">
-		</a>
+
+		<div class="grid top">
+			<div class="item">
+				<a class="footer-brand" href="<?php echo esc_url( home_url( '/' ) ); ?>">
+					<img src="<?php echo dirname( get_bloginfo( 'stylesheet_url' ) ); ?>/assets/images/Logo-RSM.svg" width="120" class="logo" alt="<?php esc_url( bloginfo( 'name' ) ); ?>">
+				</a>
+			</div>
+			<div class="item form-item">
+				<form id="SubForm" class="formContainer default">
+					<div class="container"> 
+						<div class="form-title">Subscribe to our Newsletter</div>
+					</div>
+					<div class="custColumn">
+						<iframe class="footer-newsletter-iframe" src="https://mcdjql80kmghrjj6lg68bbtqbgv1.pub.sfmc-content.com/a2l1t0y0d2x"></iframe>
+					</div>
+					<div class="custColumn">
+						<label> By subscribing you are agreeing to our <a href="https://www.rogers.com/consumer/privacy-crtc" target="_blank"> Privacy Policy.</a></label>  
+					</div>
+				</form>
+			</div>
+		</div>
+
 		<div class="grid">
 
 			<div class="item">
