@@ -2,9 +2,9 @@
 Contributors: softaculous, loginizer, pagelayer
 Tags: security, access, admin, Loginizer, login, logs, ban ip, failed login, ip, whitelist ip, blacklist ip, failed attempts, lockouts, hack, authentication, login, security, rename login url, rename login, rename wp-admin, secure wp-admin, rename admin url, secure admin, brute force protection
 Requires at least: 3.0
-Tested up to: 6.1
+Tested up to: 6.2
 Requires PHP: 5.5
-Stable tag: 1.7.7
+Stable tag: 1.8.1
 License: LGPLv2.1
 License URI: http://www.gnu.org/licenses/lgpl-2.1.html
 
@@ -50,6 +50,8 @@ Pro Features :
 * Change the Admin Username - The Admin can rename the admin username to something more difficult.
 * Auto Blacklist IPs - IPs will be auto blacklisted, if certain usernames saved by the Admin are used to login by malicious bots / users.
 * Disable Pingbacks - Simple way to disable PingBacks.
+* SSO - Single Sign-on, let any user access to your WordPress Dashboard without the need to share username or password.
+* Limit Concurrent Logins: It prevents user to login from different devices concurrently, you can define how many devices you want to allow, and how you want to restrict the user when concurrent limit is reached.
 
 Features in Loginizer include:
 
@@ -77,6 +79,24 @@ That's it. You're done!
 3. Loginizer Brute Force Settings page
 
 == Changelog ==
+
+= 1.8.1 =
+*[Bug-Fix] There was an issue while checking checksum, if the WordPress install was in en_US but the language was set to some other languages from the settings, then the checksum was comparing the checksums from the language selected in WordPress settings which is now always the language of the install, this has been fixed.
+
+= 1.8.0 =
+* [Feature][Pro] We have added Single Sign-on for you to create temporary login to share to let other login to your account without sharing password.
+* [Refactor] We have reduced the amount of code that was being loaded when a login attempt was made by around 150KB.
+* [Refactor] Screenshots of Loginizer were included in the plugin, we have shifted that to assets of WordPress.org, reducing the overall size of plugin by more than 100KB.
+
+= 1.7.9 =
+* [Bug-Fix] Users were getting PHP notice in init.php file that has been fixed.
+* [Bug-Fix] Math cookie has been set as secure now.
+* [Security] We were sanitizing an output in place of escaping it, that has been fixed [Reported by Erwan Le Rousseau from WPScan]
+
+= 1.7.8 =
+* [Task] Tested with WordPress 6.2
+* [Feature] [Pro] Limit Concurrent user login, you can either block login attempt or revoke when limit of concurrent user is reached.
+* [Feature] Login attempts stats chart on Loginizer Dashboard.
 
 = 1.7.7 =
 * [Feature] Ability to allow only Whitelisted IP's to be able to login with Trusted IP's.

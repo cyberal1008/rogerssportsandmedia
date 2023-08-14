@@ -1,6 +1,6 @@
 <?php
 
-include_once(LOGINIZER_DIR.'/IPv6/IPv6.php');
+include_once(LOGINIZER_DIR.'/lib/IPv6/IPv6.php');
 
 // Get the client IP
 function _lz_getip(){

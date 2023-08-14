@@ -4,7 +4,7 @@ function loginizer_security_init(){
 	
 	global $loginizer;
 
-	// TODO : Disable loginizer/loginizer.php
+	// TODO: Disable loginizer/loginizer.php
 	// ATM, it will not load if the premium plugin is loaded
 	
 	// Load license
@@ -67,6 +67,13 @@ function loginizer_security_init(){
 		}
 	}
 	
+	// Checking For SSO
+	if(!empty($_GET['ssotoken'])){
+		add_filter('authenticate', 'loginizer_sso_authenticate', 10003, 3);
+		add_action('wp_login_errors', 'loginizer_error_handler', 10001, 2);
+		add_action('wp_login', 'loginizer_login_success', 10, 2);
+	}
+	
 	// CSRF Session URL
 	if(!empty($loginizer['enable_csrf_protection']) && loginizer_is_csrf_prot_mod_set()){
 		add_action('init', 'loginizer_csrf_sess_init');
@@ -80,6 +87,12 @@ function loginizer_security_init(){
 	
 	// Ajax handler for updating htaccess for rename admin and CSRF
 	add_action('wp_ajax_loginizer_update_csrf_mod', 'loginizer_update_csrf_mod');
+	
+	// Handles Concurrent Sessions
+	if(!empty($loginizer['limit_session']) && !empty($loginizer['limit_session']['enable'])){
+		add_filter('wp_authenticate_user', 'loginizer_limit_sessions');
+		add_filter('check_password', 'loginizer_limit_destroy_sessions_handler', 10, 4);
+	}
 
 	// MasterStudy Login filter
 	add_filter('stm_lms_login', 'loginizer_handle_stm_lms_login');
@@ -113,6 +126,8 @@ function loginizer_security_init(){
 		
 	}
 	
+	
+
 	// Are we to rename the login ?
 	if(!empty($loginizer['login_slug'])){
 		
@@ -324,7 +339,7 @@ function loginizer_security_init(){
 				
 				// Are we to disable the notice temporarily ?
 				if(isset($_GET['loginizer_2fa_notice']) && (int)$_GET['loginizer_2fa_notice'] == 1){
-					@setcookie('loginizer_2fa_notice_'.$tfa_uid, md5(wp_get_session_token()), time() + (3 * DAY_IN_SECONDS), COOKIEPATH, COOKIE_DOMAIN);
+					@setcookie('loginizer_2fa_notice_'.$tfa_uid, md5(wp_get_session_token()), time() + (3 * DAY_IN_SECONDS), COOKIEPATH, COOKIE_DOMAIN, is_ssl());
 				}
 			
 			}
@@ -398,7 +413,7 @@ function loginizer_premium_page_dashboard(){
 		}
 		
 		$resp = wp_remote_get(LOGINIZER_API.'license.php?license='.$license, array('timeout' => 30));
-		
+
 		if(is_array($resp)){
 			$json = json_decode($resp['body'], true);
 			//print_r($json);
@@ -430,7 +445,7 @@ function loginizer_premium_page_dashboard(){
 
 // Add our license key if ANY
 function loginizer_updater_filter_args($queryArgs) {
-	
+
 	global $loginizer;
 	
 	if ( !empty($loginizer['license']['license']) ) {
@@ -540,7 +555,15 @@ function loginizer_epl_verify(){
 		return new WP_Error('token_invalid', $token_error_msg, 'loginizer_epl');
 		
 	}else{
-		
+	    
+		if(!empty($loginizer['limit_session']) && !empty($loginizer['limit_session']['enable'])){
+			$limit_session = loginizer_limit_destroy_sessions($uid);
+			
+			if(empty($limit_session)){
+				return new WP_Error('loginizer_session_limit', __('User ID not found so can not proceed', 'loginizer'), 'loginizer_epl');
+			}
+		}
+
 		// Login the User
 		wp_set_auth_cookie($uid);
 		
@@ -550,10 +573,10 @@ function loginizer_epl_verify(){
 		
 		$user = get_user_by('id', $uid);
 		$redirect = !empty($_REQUEST['redirect_to']) ? esc_url_raw($_REQUEST['redirect_to']) : '';
-			
+
 		if(!empty($loginizer['passwordless_redirect']) && !empty($user) && !empty($user->roles)){
 			$roles = $user->roles;
-			
+
 			if(!is_array($user->roles)) {
 				$roles = [$user->roles];
 			}
@@ -570,6 +593,8 @@ function loginizer_epl_verify(){
 		$redirect_to = !empty($redirect) ? $redirect : admin_url();
 		$redirect_to = loginizer_csrf_change_url($redirect_to, $uid);
 		
+		loginizer_update_attempt_stats(1);
+		
 		// Redirect and exit
 		wp_safe_redirect($redirect_to);
 		exit;
@@ -577,7 +602,7 @@ function loginizer_epl_verify(){
 	}
 	
 	return false;
-		
+	
 }
 
 // Hides the password field for the password less email login
@@ -665,6 +690,15 @@ function loginizer_epl_wp_authenticate($user, $username, $password){
 		return new WP_Error('invalid_account', $account_error_msg, 'loginizer_epl');
 	}
 	
+	if(!empty($loginizer['limit_session']) && !empty($loginizer['limit_session']['enable'])){
+		$user = get_user_by('email', $email);
+		$session_limit = loginizer_limit_sessions($user);
+		
+		if(is_wp_error($session_limit)){
+		    return $session_limit;
+		}
+	}
+
 	// Send the email
 	$site_name = get_bloginfo('name');
 	$login_url = loginizer_epl_login_url($email);
@@ -717,7 +751,6 @@ function loginizer_epl_login_url($email){
 	$token = loginizer_epl_token($user->ID);
 	
 	// The current URL
-	
 	$redirect_url = '';
 	if(!empty($_REQUEST['redirect_to'])){
 		$redirect_url = $_REQUEST['redirect_to'];
@@ -981,6 +1014,10 @@ function loginizer_cap_login_form(){
 
 // Verify the login captcha is valid ?
 function loginizer_cap_login_verify($user){
+
+	if(defined('REST_REQUEST') && !empty(REST_REQUEST)){
+		return $user;
+	}
 	
 	if(!loginizer_cap_verify()){
 		$captcha_fail_msg = __('The CAPTCHA verification failed. Please try again.', 'loginizer');
@@ -1160,7 +1197,7 @@ function loginizer_cap_session_key(){
 	$new_session_key = lz_RandomString(40);
 	
 	// Set the cookie
-	if(@setcookie('lz_math_sess', $new_session_key, time() + (30 * DAY_IN_SECONDS), COOKIEPATH, COOKIE_DOMAIN)){
+	if(@setcookie('lz_math_sess', $new_session_key, time() + (30 * DAY_IN_SECONDS), COOKIEPATH, COOKIE_DOMAIN, is_ssl())){
 		// Set this to use first time
 		$_COOKIE['lz_math_sess'] = $new_session_key;
 	}
@@ -1414,7 +1451,7 @@ function loginizer_cap_form($return = false, $id = '', $page_type = 'login'){
 		if(!empty($do_multiple)){
 		
 			if(!wp_script_is('loginizer_multi_cap_script', 'registered')){
-				wp_register_script('loginizer_multi_cap_script', LOGINIZER_URL.'/multi-recaptcha.js', array('jquery'), $captcha_js_ver, true);	
+				wp_register_script('loginizer_multi_cap_script', LOGINIZER_URL.'/assets/js/multi-recaptcha.js', array('jquery'), $captcha_js_ver, true);	
 			}
 			wp_enqueue_script('loginizer_multi_cap_script');
 		
@@ -1776,6 +1813,8 @@ function loginizer_user_redirect($user, $username, $password){
 			return $url;
 		}
 
+		loginizer_update_attempt_stats(1);
+		
 		// Lets redirect
 		wp_safe_redirect($url);
 		die();
@@ -2219,7 +2258,7 @@ jQuery(document).ready( function() {
 	<a class="loginizer_2fa_notice-close" href="javascript:" aria-label="Dismiss this Notice">
 		<span class="dashicons dashicons-dismiss"></span> Dismiss Forever
 	</a>
-	<img src="'.LOGINIZER_URL.'/loginizer-200.png" style="float:left; margin:10px 20px 10px 10px" width="100" />
+	<img src="'.LOGINIZER_URL.'/assets/images/loginizer-200.png" style="float:left; margin:10px 20px 10px 10px" width="100" />
 	<p style="font-size:16px">'.__('The site admin has enabled Two Factor Authentication features to secure your account. <br>For your safety, you must setup your login security preferences.', 'loginizer').'</p>
 	<p>
 		<a class="lz_button lz_button1" href="'.admin_url('?page=loginizer_user').'">'.__('Setup My Security Settings', 'loginizer').'</a>
@@ -2257,8 +2296,8 @@ function loginizer_2fa_app_key($settings, $length = 6, $counter = 0){
 function loginizer_2fa_app($uid = 0){
 	
 	// Include necessary stuff
-	include_once(LOGINIZER_DIR.'/hotp.php');
-	include_once(LOGINIZER_DIR.'/Base32.php');
+	include_once(LOGINIZER_DIR.'/lib/hotp.php');
+	include_once(LOGINIZER_DIR.'/lib/Base32.php');
 	
 	$uid = empty($uid) ? get_current_user_id() : $uid;
 	$user = get_user_by('id', $uid);
@@ -2546,7 +2585,7 @@ function loginizer_user_page(){
 		echo '<p><a href="https://wordpress.org/plugins/loginizer/faq/">'._e('You should also bookmark the FAQs, which explain how to de-activate the plugin even if you cannot log in.').'</a></p>';
 	}
 	
-	wp_enqueue_script('jquery-qrcode', LOGINIZER_URL.'/jquery.qrcode.min.js', array('jquery'), '0.12.0');
+	wp_enqueue_script('jquery-qrcode', LOGINIZER_URL.'/assets/js/jquery.qrcode.min.js', array('jquery'), '0.12.0');
 	
 	// Give the user the drop down to choose the settings
 	echo 'Choose Preference : <form method="post" action="">
@@ -2824,14 +2863,18 @@ function loginizer_wp_admin_ajax(){
 // Do the checksum of the core
 function loginizer_checksums(){
 	
-	global $loginizer, $loginizer_allowed;
+	global $loginizer, $loginizer_allowed, $wp_local_package;
 	
 	// Update the time
 	update_option('loginizer_checksums_last_run', time());
 	
 	// Get the locale and version
-	$locale = get_locale();
 	$version = $GLOBALS['wp_version'];
+
+	$locale = 'en_US';
+	if(!empty($wp_local_package)){
+		$locale = $wp_local_package;
+	}
 	//echo $version.' - '.$locale;
 	
 	// Load the checksums
@@ -3159,6 +3202,7 @@ function loginizer_destroy_csrf_session($user_id){
 	delete_user_meta($user_id, 'loginizer_csrf_session');
 	
 	$sess_key = get_user_meta($user_id, 'loginizer_csrf_session', true);
+
 	@setCookie('lz_csrf_sess', $sess_key, time() - 3600, COOKIEPATH, COOKIE_DOMAIN, true); // deleting the cookie by setting past time
 }
 
@@ -3407,6 +3451,93 @@ function loginizer_csrf_admin_bar_shortcut($admin_bar){
 
 // CSRF Protection Session Functions - End
 
+// Restricts user from logging in
+function loginizer_limit_sessions($user){
+
+	if(is_wp_error($user)){
+		return $user;
+	}
+
+	$concurrent_sessions = get_option('loginizer_limit_session');
+
+	if(empty($concurrent_sessions) || empty($concurrent_sessions['enable']) || !class_exists('WP_Session_Tokens')){
+		return $user;
+	}
+
+	// Checks if we have excluded the role
+	if(!empty($concurrent_sessions['roles']) && !empty($user->roles) && is_array($user->roles)){
+		if(!empty(array_intersect($concurrent_sessions['roles'], $user->roles))){
+			return $user;
+		}
+	}
+
+	$concurrent_sessions['count'] = empty($concurrent_sessions['count']) ? $concurrent_sessions['count'] : 1; // if limit is not set then default it to 1
+
+	if(!empty($concurrent_sessions['type']) && $concurrent_sessions['type'] == 'block'){
+		$session = WP_Session_Tokens::get_instance($user->ID);
+		$count = count($session->get_all());
+
+		if($count >= $concurrent_sessions['count']){
+			return new WP_Error('loginizer_session_limit', __('You have reached maximum number of concurrent logins please logout from other devices to access', 'loginizer'));
+		}
+		
+		return $user;
+	}
+
+	return $user;
+	
+}
+
+// Destroys session when concurrent limit is reached
+function loginizer_limit_destroy_sessions_handler($check, $password, $hash, $user_id){
+
+	if(empty($check)){
+		return false;
+	}
+
+	return loginizer_limit_destroy_sessions($user_id);
+}
+
+function loginizer_limit_destroy_sessions($user_id){
+	
+	if(empty($user_id)){
+		return false;
+	}
+
+	if(!class_exists('WP_Session_Tokens')){
+		return true;
+	}
+
+	$user = get_userdata($user_id);
+	
+	$concurrent_sessions = get_option('loginizer_limit_session');
+	
+	if(empty($concurrent_sessions) || empty($concurrent_sessions['enable'])){
+		return true;
+	}
+
+	// Checks if we have excluded the role
+	if(!empty($concurrent_sessions['roles']) && !empty($user->roles) && is_array($user->roles)){
+		if(!empty(array_intersect($concurrent_sessions['roles'], $user->roles))){
+			return true;
+		}
+	}
+
+	if(!empty($concurrent_sessions['type']) && $concurrent_sessions['type'] == 'destroy'){
+		$session = WP_Session_Tokens::get_instance($user_id);
+		$count = count($session->get_all());
+		
+		if($count >= $concurrent_sessions['count']){
+			$session->destroy_all();
+		}
+		
+		return true;
+	}
+
+	return true;
+	
+}
+
 //////////////////////////
 //  BEGIN MasterStudy LMS
 /////////////////////////
@@ -3451,7 +3582,7 @@ function loginizer_handle_stm_lms_login($res){
 	if($loginizer['admin_slug']){
 		$admin_slug = $loginizer['admin_slug'];
 	}
-	
+
 	@setCookie('loginizer_2fa_' . $user->ID, time(), time() + DAY_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN, true);
 	set_transient('loginizer_2fa_' . $user->ID, time(), 600);
 
@@ -3481,3 +3612,138 @@ function loginizer_handle_stm_lms_login($res){
 	return $res;
 }
 // END MasterStudy LMS
+
+// Single Sign ON
+function loginizer_create_sso($uid){
+	$token = loginizer_generate_ssotoken($uid);
+	$url = wp_login_url().'?uid='.$uid.'&ssotoken='.$token;
+	
+	$sso_links = get_option('loginizer_sso_links', []);
+	$sso_links[$uid] = $url;
+	
+	update_option('loginizer_sso_links', $sso_links);
+
+	if(!empty($_POST['sso_email'])){
+		loginizer_sso_send_mail($url, sanitize_email($_POST['sso_email']));
+	}
+
+	return $url;
+}
+	
+function loginizer_sso_send_mail($url, $email){
+
+	$site_name = get_bloginfo('name');
+	$sub = sprintf(__('Login at %s', 'loginizer'), $site_name);
+	$msg = sprintf(__('Hi,
+
+Please find below the Single Sign-On (SSO) link for our platform:
+%s
+This link will allow you to access the platform securely without needing to enter your login credentials, this link is valid for 10 minutes.
+
+Thank you for using our platform.
+
+Best regards,
+%s', 'loginizer'), $url, $site_name);
+	
+	wp_mail($email, $sub, $msg);
+
+}
+
+function loginizer_generate_ssotoken($uid = 0){
+	global $loginizer;
+
+	// Variables
+	$time = time();
+	$expires = ($time + 600);
+	$action =  'loginizer_sso_'.$uid;
+
+	include_once(ABSPATH . '/'.$loginizer['wp-includes'].'/class-phpass.php');
+	$wp_hasher = new \PasswordHash(8, TRUE);
+
+	// Create the token with a random salt and the time
+	$token  = wp_hash(wp_generate_password(20, false).$action.$time);
+
+	// Create a hash of the token
+	$stored_hash = $wp_hasher->HashPassword($expires.$token);
+
+	// Store the hash and when it expires
+	update_user_meta($uid, $action, $stored_hash);
+	update_user_meta($uid, $action.'_expires', $expires);
+
+	return $token;
+}
+
+function loginizer_verify_sso(){
+	global $loginizer;
+
+	if(empty($_GET['uid']) || empty($_GET['ssotoken'])){
+		return false;
+	}
+
+	$uid = (int) sanitize_key($_GET['uid']);
+	$token = sanitize_key($_GET['ssotoken']);
+	$action = 'loginizer_sso_'.$uid;
+
+	$hash = get_user_meta($uid, $action, true);
+	$expires = get_user_meta($uid, $action.'_expires', true);
+
+	include_once(ABSPATH.'/'.$loginizer['wp-includes'].'/class-phpass.php');
+	$wp_hasher = new \PasswordHash(8, TRUE);
+	$time = time();
+
+	if(!$wp_hasher->CheckPassword($expires.$token, $hash) || $expires < $time){
+		$token_error_msg = __('The token is invalid or has expired.', 'loginizer');
+		loginizer_update_attempt_stats(0);
+
+		// Throw an error
+		return new \WP_Error('token_invalid', $token_error_msg, 'loginizer_sso');
+
+	}else{
+
+		if(file_exists(LOGINIZER_DIR . '/premium.php') && !empty($loginizer['limit_session']) && !empty($loginizer['limit_session']['enable'])){
+			$limit_session = loginizer_limit_destroy_sessions($uid);
+			
+			if(empty($limit_session)){
+				return new \WP_Error('loginizer_session_limit', __('User ID not found so can not proceed', 'loginizer'), 'loginizer_epl');
+			}
+		}
+
+		// Login the User
+		wp_set_auth_cookie($uid);
+
+		// Delete the meta
+		delete_user_meta($uid, $action);
+		delete_user_meta($uid, $action.'_expires');
+
+		$redirect_to = loginizer_csrf_change_url(admin_url(), $uid);
+
+		loginizer_update_attempt_stats(1);
+		
+		// Redirect and exit
+		wp_safe_redirect($redirect_to);
+		exit;
+		
+	}
+
+	return false;
+	
+}
+
+function loginizer_sso_authenticate($user, $username, $password){
+
+	if(is_wp_error($user)){
+
+		// Ignore certain codes
+		$ignore_codes = array('empty_username', 'empty_password');
+
+		if(is_wp_error($user) && !in_array($user->get_error_code(), $ignore_codes)) {
+			return $user;
+		}
+	}
+
+	$verified = loginizer_verify_sso();
+
+	if(is_wp_error($verified)){
+		return $verified;
+	}
+}

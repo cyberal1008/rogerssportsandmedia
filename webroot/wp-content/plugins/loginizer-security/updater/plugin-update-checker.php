@@ -1140,6 +1140,7 @@ if ( !class_exists('LoginizerUpdate_3_2', false) ):
  * @version 3.2
  * @access public
  */
+#[\AllowDynamicProperties]
 class LoginizerUpdate_3_2 {
 	public $id = 0;
 	public $slug;
