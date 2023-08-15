@@ -236,7 +236,7 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 				<?php if( have_rows('exp_tabs') ): ?>
 					<div class="tabs">
 						<div class="tablist" role="tablist" aria-label="">
-							<?php while( have_rows('exp_tabs') ): the_row(); $tab_ctr++;
+							<?php $tab_ctr=0; while( have_rows('exp_tabs') ): the_row(); $tab_ctr++;
 								$title = get_sub_field('title');
 								?>
 								<button class="trigger exp" role="tab" aria-selected="<?php echo $tab_ctr == 1 ? 'true' : 'false'; ?>" aria-controls="tab-content-<?php echo $tab_ctr; ?>" id="tab-<?php echo $tab_ctr; ?>" tabindex="<?php echo $tab_ctr == 1 ? '' : '-1'; ?>">
@@ -245,7 +245,7 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 							<?php endwhile; ?>
 						</div>
 						<div class="content">
-							<?php while( have_rows('exp_tabs') ): the_row(); $con_ctr++;
+							<?php $con_ctr=0; while( have_rows('exp_tabs') ): the_row(); $con_ctr++;
 								$content = get_sub_field('content');
 								$button = get_sub_field('button');
 								$button_arialabel = get_sub_field('button_arialabel');

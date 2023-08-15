@@ -14,7 +14,7 @@
 					<picture class="bg">
 						<source srcset="<?php echo $image['url']; ?>"
 								media="(min-width: 640px)">
-						<img src="<?php echo $mobile_image ? $mobile_image['url'] : $image['url']; ?>" class="bg" alt="<?php echo $hero_image['alt']; ?>" />
+						<img src="<?php echo $mobile_image ? $mobile_image['url'] : $image['url']; ?>" class="bg" alt="<?php echo (isset($hero_image['alt'])) ? $hero_image['alt'] : ''; ?>" />
 					</picture>
 					<div class="wrapper">
 						<div class="txtbox" role="region" aria-label="<?php echo $title; ?>">
