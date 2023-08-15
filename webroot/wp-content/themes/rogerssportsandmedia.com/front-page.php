@@ -337,7 +337,7 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 						<p class="date"><?php echo get_the_date( get_option( 'date_format' ) ); ?> / <?php echo $categories ? $categories[0]->name : ''; ?></p>
 						<h3 class="post-title"><a href="<?php the_permalink(); ?>" aria-label="read <?php echo $title_formatted; ?>"><?php echo $title_formatted; ?></a></h3>
 						<div class="btn-wrap">
-							<a href="<?php the_permalink(); ?>" class="lined" aria-label="Read More">Read More</a>
+							<a href="<?php the_permalink(); ?>" class="lined" aria-label="Read More about <?php echo $title_formatted; ?>">Read More</a>
 						</div>
 					</div>
 				<?php endwhile; endif; ?>
@@ -347,9 +347,9 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 
 	<!-- PARTNER -->
 	<section id="partner" class="partner">
-		<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/audio-landing/images/diamond-green.svg" alt="" class="bg bg1" loading="lazy">
-		<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/audio-landing/images/circle-white.svg" alt="" class="bg bg2" loading="lazy">
-		<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/audio-landing/images/group-red.png" alt="" class="bg bg3" loading="lazy">
+		<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/audio-landing/images/diamond-green.svg" alt="green diamond" class="bg bg1" loading="lazy">
+		<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/audio-landing/images/circle-white.svg" alt="decorative grey rings" class="bg bg2" loading="lazy">
+		<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/audio-landing/images/group-red.png" alt="red rectangle and yellow triangles" class="bg bg3" loading="lazy">
 		<div class="wrapper">
 			<h2 class="section-title">PARTNER WITH US TODAY</h2>
 
