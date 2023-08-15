@@ -23,27 +23,21 @@ global $post;
 $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, true );
 ?>
 
+<!-- SKIP -->
+<a role="banner" href="#content" class="skip-to-content button" aria-label="Skip to main content" tabindex="0">Skip to main content</a>
+
+<main id="content" role="main">
+
+	<!-- HERO -->
 	<?php
-	$hero_title = get_field('hero_title');
-	$hero_image = get_field('hero_image');
-	$hero_mobile_image = get_field('hero_mobile_image');
+	get_template_part(
+		'template-parts/section-hero', null,
+		array(
+			'subtitle'		=> '',
+			'title'     => $hero_title ? $hero_title : get_the_title(),
+		)
+	);
 	?>
-	<section class="hero light">
-		<picture>
-			<source srcset="<?php echo $hero_image['url']; ?>"
-					media="(min-width: 640px)">
-			<img src="<?php echo $hero_mobile_image['url']; ?>" class="bg" alt="<?php echo $hero_image['alt']; ?>" />
-		</picture>
-
-		<div class="wrapper">
-			<h1><?php echo $hero_title ? $hero_title : get_the_title(); ?></h1>
-		</div>
-	</section>
-
-	<!-- SKIP -->
-	<a role="banner" href="#content" class="skip-to-content button" aria-label="Skip to main content" tabindex="0">Skip to main content</a>
-
-		<main id="content" role="main">
 
 			<section class="anchors desktop">
 				<div class="wrapper">
@@ -293,7 +287,7 @@ $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, tr
 			<!-- WHAT'S HAPPENING -->
 			<?php
 			get_template_part(
-				'template-parts/whats-happening', null,
+				'template-parts/section-whats-happening', null,
 				array(
 					'class'     => 'alt',
 					'deco'   => array(
@@ -306,22 +300,11 @@ $page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, tr
 			?>
 
 			<!-- PARTNER -->
-			<section id="partner" class="partner">
-				<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/audio-landing/images/group-red.png" alt="" class="bg bg3" loading="lazy">
-				<div class="wrapper">
-					<h2 class="section-title">PARTNER WITH US TODAY</h2>
-
-					<iframe src="https://mcdjql80kmghrjj6lg68bbtqbgv1.pub.sfmc-content.com/r2bks1awm2k" width="100%" height="820" allowfullscreen sandbox="allow-same-origin allow-scripts allow-popups allow-forms" title="partner with us today by filling out the form below">
-						<p>Sorry, your browser does not support iframes.</p>
-					</iframe>
-
-				</div>
-			</section>
+			<?php get_template_part('template-parts/section-partner'); ?>
 
 		</main>
 
 		<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-		<script src="https://kit.fontawesome.com/8ded1e9203.js" data-search-pseudo-elements crossorigin="anonymous"></script>
 	    <script src="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/main.min.js"></script>
 
 <?php

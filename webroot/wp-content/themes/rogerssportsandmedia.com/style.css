@@ -6,7 +6,7 @@
  Version:  	1.0.0
  */
 
- header .nav-social {
+header .nav-social {
     display: none;
 }
 header .nav-social .social-icons {
@@ -149,6 +149,88 @@ footer#primary .nav-social a {
 footer#primary .nav-social a:focus,
 footer#primary .nav-social a:hover {
     color: #000;
+}
+footer#primary .form-item {
+    grid-column: span 2;
+}
+footer#primary .form-item form {
+    max-width: 525px;
+}
+footer#primary .form-item form .container {
+    padding: 0;
+}
+footer#primary .form-item form .row {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 0.8rem 0;
+    margin: 0;
+}
+footer#primary .form-item form .form-title {
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin: 0 0 1rem;
+}
+footer#primary .form-item form input {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 0;
+    color: #000;
+    font-size: 1.6rem;
+    font-weight: 500;
+    height: 4rem;
+    outline: none;
+    padding: 0 1rem;
+    text-align: left;
+    width: 100%;
+}
+footer#primary .form-item form input::placeholder {
+    color: #BBBDC0;
+}
+footer#primary .form-item form label {
+    display: block;
+    font-size: 1.4rem;
+    font-weight: 500;
+    margin: 0.8rem 0 0 0;
+}
+footer#primary .form-item form label a {
+    color: #d9291c;
+}
+footer#primary .form-item form button {
+    min-height: 4rem;
+    padding: 8px 30px;
+    width: 100%;
+}
+footer#primary .form-item form .column,
+footer#primary .form-item form .custColumn {
+    width: 100%;
+}
+footer#primary .form-item form .errormsg {
+    color: red;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight:bold;
+    padding-left:10px;
+    margin-top:0;
+    display: none;
+}
+footer#primary .subscribebtn {
+    background-color: #d9291c;
+    border: 2px solid #d9291c;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+}
+@media (min-width: 640px) {
+    footer#primary .form-item form .column {
+        width: auto;
+    }
+    footer#primary .form-item form .row {
+        flex-direction: row;
+    }
+    footer#primary .form-item form button {
+        width: 135px;
+    }
 }
 @media (min-width: 768px) {
     footer#primary ul li {

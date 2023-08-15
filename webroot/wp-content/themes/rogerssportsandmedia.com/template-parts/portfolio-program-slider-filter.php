@@ -1,5 +1,6 @@
 <?php 
 if(isset($args['filters']) ) :
+	$slug = isset($args['slug']) ? $args['slug'] : '';
 ?>
 <div class="grid-filters filters grid four alt">
     <?php
@@ -10,8 +11,18 @@ if(isset($args['filters']) ) :
 	        <?php 
 	        $count = 0;
 	        foreach($options as $v=>$t) : 
+	        	if ($id == 'shows-category') {
+	        		if (isset($args['slug'])) {
+	        			$checked = $v == $slug ? true : false;
+	        		} else {
+	        			$checked = $count === 0 ? true : false;
+	        		}
+	        	} else {
+	        		$checked = $count === 0 ? true : false;
+	        	}
 	        ?>
-	            <input class="selectopt" name="<?php echo $id ?>" type="radio" value="<?php echo $v ?>" id="<?php echo $id.'-'.$v ?>" <?php echo ($count === 0 ? " checked" : "") ?>>
+	        	<input class="selectopt" name="<?php echo $id ?>" type="radio" value="<?php echo $v ?>" id="<?php echo $id.'-'.$v ?>" <?php echo ($checked == true ? " checked" : "") ?>>
+	            
 	            <label for="<?php echo $id.'-'.$v ?>" class="option"><?php echo $t; ?></label>
 	        <?php
 	        $count++;

@@ -21,28 +21,21 @@
 
 	<div class="portfolio-main">
 
-		<?php
-		$hero_title = get_field('hero_title');
-		$hero_image = get_field('hero_image');
-		$hero_mobile_image = get_field('hero_mobile_image');
-		?>
-		<section class="hero">
-			<picture>
-				<source srcset="<?php echo $hero_image['url']; ?>"
-						media="(min-width: 640px)">
-				<img src="<?php echo $hero_mobile_image['url']; ?>" class="bg" alt="<?php echo $hero_image['alt']; ?>" />
-			</picture>
-
-			<div class="wrapper">
-				<span>What We Do</span>
-				<h1><?php echo $hero_title ? $hero_title : get_the_title(); ?></h1>
-			</div>
-		</section>
-
 		<!-- SKIP -->
 		<a role="banner" href="#content" class="skip-to-content button" aria-label="Skip to main content" tabindex="0">Skip to main content</a>
 
 		<main id="content" role="main">
+
+			<!-- HERO -->
+			<?php
+			get_template_part(
+				'template-parts/section-hero', null,
+				array(
+					'subtitle'		=> 'What We Do',
+					'title'     => $hero_title ? $hero_title : get_the_title(),
+				)
+			);
+			?>
 
 			<section class="anchors">
 				<div class="wrapper">
@@ -371,9 +364,9 @@
 			</section>
 
 			<section id="partner" class="partner">
-				<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/audio-landing/images/diamond-green.svg" alt="" class="bg bg1" loading="lazy">
-				<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/audio-landing/images/circle-white.svg" alt="" class="bg bg2" loading="lazy">
-				<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/audio-landing/images/group-red.png" alt="" class="bg bg3" loading="lazy">
+				<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/audio-landing/images/diamond-green.svg" alt="green diamond" class="bg bg1" loading="lazy">
+				<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/audio-landing/images/circle-white.svg" alt="decorative grey rings" class="bg bg2" loading="lazy">
+				<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/audio-landing/images/group-red.png" alt="red rectangle and yellow triangles" class="bg bg3" loading="lazy">
 				<div class="wrapper">
 					<h2 class="section-title">PARTNER WITH US TODAY</h2>
 
@@ -387,7 +380,6 @@
 
 		</main>
 
-		<script src="https://kit.fontawesome.com/8ded1e9203.js" data-search-pseudo-elements crossorigin="anonymous"></script>
 	    <script src="<?php echo get_stylesheet_directory_uri(); ?>/assets/audio-landing/main.min.js"></script>
 
 	</div>

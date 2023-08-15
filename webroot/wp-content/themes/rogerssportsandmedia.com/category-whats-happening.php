@@ -20,31 +20,22 @@
 </head>
 <?php get_header(); ?>
 
-
-<?php
-$term = get_queried_object();
-$hero_title = get_field('hero_title', $term);
-$hero_image = get_field('hero_image', $term);
-$hero_mobile_image = get_field('hero_mobile_image', $term);
-?>
-<section class="hero">
-	<picture>
-		<source srcset="<?php echo $hero_image['url']; ?>"
-				media="(min-width: 640px)">
-		<img src="<?php echo $hero_mobile_image['url']; ?>" class="bg" alt="<?php echo $hero_image['alt']; ?>" />
-	</picture>
-
-	<div class="wrapper">
-		<span>What We Do</span>
-		<h1>THE LATEST FROM RSM</h1>
-	</div>
-</section>
-
 <!-- SKIP -->
 <a role="banner" href="#content" class="skip-to-content button" tabindex=0 aria-label="Skip to main content" tabindex="0">Skip to main content</a>
 
 <!-- MAIN -->
 <main id="content" role="main">
+
+	<!-- HERO -->
+	<?php
+	get_template_part(
+		'template-parts/section-hero', null,
+		array(
+			'subtitle'		=> 'What We Do',
+			'title'     => $hero_title ? $hero_title : 'THE LATEST FROM RSM',
+		)
+	);
+	?>
 
 	<?php
 	$searchterm = $_GET["searchterm"];

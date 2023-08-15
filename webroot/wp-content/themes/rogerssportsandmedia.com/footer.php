@@ -69,7 +69,7 @@
 	</div>
 </footer>
 
-<script src="https://kit.fontawesome.com/8ded1e9203.js" crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/8ded1e9203.js" data-search-pseudo-elements crossorigin="anonymous"></script>
 <?php wp_footer(); ?>
 <?php linkedin_pixel_code(); ?>
 </body>
