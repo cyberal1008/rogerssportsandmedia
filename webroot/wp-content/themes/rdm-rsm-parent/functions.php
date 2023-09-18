@@ -309,3 +309,64 @@ function google_tracking_code() {
 	</script>
 	<?php
 }
+
+function submit_single_event_form() {
+    global $wpdb;
+
+	$formData = [
+		'firstname' => $_POST['firstname'],
+		'lastname' => $_POST['lastname'],
+		'emailaddress' => $_POST['emailaddress'],
+		'phonenumber' => $_POST['phonenumber'],
+		'company' => $_POST['company'],
+		'job_title' => $_POST['job_title'],
+		'country' => $_POST['country'],
+		'dietary_restrictions' => $_POST['dietary_restrictions']
+	];
+
+	$clientId = get_option('journey_builder_client_id');
+	$clientSecret = get_option('journey_builder_client_secret');
+	$accountId = get_option('journey_builder_account_id');
+	$contactKey = get_option('journey_builder_contact_key');
+	$eventDefinitionKey = get_option('journey_builder_event_definition_key');
+
+	$authData = [
+		"grant_type" => "client_credentials",
+		"client_id" => $clientId,
+		"client_secret" => $clientSecret,
+		"account_id" => $accountId,
+	];
+
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, "https://mcdjql80kmghrjj6lg68bbtqbgv1.auth.marketingcloudapis.com/v2/token");
+	curl_setopt($ch, CURLOPT_POST, 1);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $authData);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	$response = curl_exec($ch);
+	curl_close($ch);
+
+	$results = json_decode($response, true);
+	$accessToken = $results['access_token'];
+
+	$formData['Subscriberkey'] = md5(uniqid(rand(), true));
+	$eventData = [
+		"contactkey" => $contactKey,
+		"EventDefinitionKey" => $eventDefinitionKey,
+		"Data" => $formData
+	];
+
+
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, "https://mcdjql80kmghrjj6lg68bbtqbgv1.rest.marketingcloudapis.com/interaction/v1/events");
+	curl_setopt($ch, CURLOPT_POST, 1);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($eventData));
+	curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-type: application/json', 'Authorization: Bearer '. $accessToken]);
+	$result2 = curl_exec($ch);
+	curl_close($ch);
+	
+	wp_die();
+
+	return 200;
+}
+add_action('wp_ajax_submit_single_event_form', 'submit_single_event_form');
+add_action('wp_ajax_nopriv_submit_single_event_form', 'submit_single_event_form');

@@ -35,8 +35,9 @@ get_header(); ?>
         }
       } else {
         ?>
-        <iframe class = "<?php echo $classes; ?>" src="https://mcdjql80kmghrjj6lg68bbtqbgv1.pub.sfmc-content.com/fjvu0tj21uh?campaign=<?php echo $event_id . $address_parameter; ?>"></iframe>
+        <!-- <iframe class = "<?php echo $classes; ?>" src="https://mcdjql80kmghrjj6lg68bbtqbgv1.pub.sfmc-content.com/fjvu0tj21uh?campaign=<?php echo $event_id . $address_parameter; ?>"></iframe> -->
         <?php
+        get_template_part('template-parts/omni-event-form');
       }
 			?>
 			</div>
