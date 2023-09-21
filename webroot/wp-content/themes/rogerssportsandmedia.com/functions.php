@@ -83,15 +83,6 @@ function config_vars_page_init() {
 	);
 
 	add_settings_field(
-		'journey_builder_contact_key',
-		'JOURNEY_BUILDER_CONTACT_KEY',
-		'config_textbox_callback',
-		'config-vars-page',
-		'journey_builder_settings_section',
-		array('journey_builder_contact_key')
-	);
-
-	add_settings_field(
 		'journey_builder_event_definition_key',
 		'JOURNEY_BUILDER_EVENT_DEFINITION_KEY',
 		'config_textbox_callback',
@@ -103,7 +94,6 @@ function config_vars_page_init() {
 	register_setting( 'config-vars-page', 'journey_builder_client_id' );
 	register_setting( 'config-vars-page', 'journey_builder_client_secret' );
 	register_setting( 'config-vars-page', 'journey_builder_account_id' );
-	register_setting( 'config-vars-page', 'journey_builder_contact_key' );
 	register_setting( 'config-vars-page', 'journey_builder_event_definition_key' );
 }
 
