@@ -238,8 +238,9 @@
             </div>
             <div class="row">
                 <div class="custColumn">
-                    <input type="checkbox" class="filled-in" name="optIn" id="optInCb" style="margin-bottom:15px;margin-left:0px">
-                    <label for="optInCb">I want to stay up to date with email communications from Rogers Sports &
+                    <label for="optInCb">
+                        <input type="checkbox" class="filled-in" name="optIn" id="optInCb" style="margin-bottom:15px; margin-left:0px">
+                        I want to stay up to date with email communications from Rogers Sports &
                         Media on the latest news, events and more. I understand I can unsubscribe at any time. <a
                             href="https://www.rogers.com/consumer/privacy-crtc" target="_blank">View Privacy Policy.</a>
                     </label>
@@ -377,7 +378,7 @@
             'job_title': jobTtileCheck.value,
             'country': document.getElementById("country").value,
             'dietary_restrictions': document.getElementById("dietary_restrictions").value,
-            "opt_in_cb": document.getElementById("optInCb").value,
+            "opt_in_cb": document.getElementById("optInCb").checked,
             'action': document.getElementsByName("action")[0].value
         }
 
