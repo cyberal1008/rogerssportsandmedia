@@ -34,10 +34,13 @@ get_header(); ?>
   				get_template_part( 'template-parts/content', get_post_format() );
         }
       } else {
-        ?>
-        <!-- <iframe class = "<?php echo $classes; ?>" src="https://mcdjql80kmghrjj6lg68bbtqbgv1.pub.sfmc-content.com/fjvu0tj21uh?campaign=<?php echo $event_id . $address_parameter; ?>"></iframe> -->
-        <?php
-        get_template_part('template-parts/omni-event-form');
+        if( strpos( $_SERVER["REQUEST_URI"], "omni" ) !== false ){
+          get_template_part('template-parts/omni-event-form');
+        } else {
+          ?>
+            <iframe class = "<?php echo $classes; ?>" src="https://mcdjql80kmghrjj6lg68bbtqbgv1.pub.sfmc-content.com/fjvu0tj21uh?campaign=<?php echo $event_id . $address_parameter; ?>"></iframe>
+          <?php
+        }
       }
 			?>
 			</div>

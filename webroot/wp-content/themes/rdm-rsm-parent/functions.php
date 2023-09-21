@@ -321,13 +321,13 @@ function submit_single_event_form() {
 		'company' => $_POST['company'],
 		'job_title' => $_POST['job_title'],
 		'country' => $_POST['country'],
-		'dietary_restrictions' => $_POST['dietary_restrictions']
+		'dietary_restrictions' => $_POST['dietary_restrictions'],
+		'opt_in_cb' => $_POST['opt_in_cb']
 	];
 
 	$clientId = get_option('journey_builder_client_id');
 	$clientSecret = get_option('journey_builder_client_secret');
 	$accountId = get_option('journey_builder_account_id');
-	$contactKey = get_option('journey_builder_contact_key');
 	$eventDefinitionKey = get_option('journey_builder_event_definition_key');
 
 	$authData = [
@@ -348,9 +348,11 @@ function submit_single_event_form() {
 	$results = json_decode($response, true);
 	$accessToken = $results['access_token'];
 
-	$formData['Subscriberkey'] = md5(uniqid(rand(), true));
+	$userUniqueId = substr(md5(uniqid(rand(), true)), 0, 18);
+
+	$formData['Subscriberkey'] = $userUniqueId;
 	$eventData = [
-		"contactkey" => $contactKey,
+		"contactkey" => $userUniqueId,
 		"EventDefinitionKey" => $eventDefinitionKey,
 		"Data" => $formData
 	];
@@ -365,8 +367,6 @@ function submit_single_event_form() {
 	curl_close($ch);
 	
 	wp_die();
-
-	return 200;
 }
 add_action('wp_ajax_submit_single_event_form', 'submit_single_event_form');
 add_action('wp_ajax_nopriv_submit_single_event_form', 'submit_single_event_form');
