@@ -321,7 +321,6 @@ function submit_single_event_form() {
 		'company' => $_POST['company'],
 		'job_title' => $_POST['job_title'],
 		'country' => $_POST['country'],
-		'dietary_restrictions' => $_POST['dietary_restrictions'],
 		'opt_in_cb' => $_POST['opt_in_cb']
 	];
 

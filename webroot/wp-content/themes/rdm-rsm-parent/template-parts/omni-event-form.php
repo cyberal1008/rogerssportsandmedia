@@ -232,12 +232,6 @@
             </div>
             <div class="row">
                 <div class="custColumn">
-                    <input type="text" id="dietary_restrictions" name="Dietary Restrictions"
-                        placeholder="Dietary Restrictions">
-                </div>
-            </div>
-            <div class="row">
-                <div class="custColumn">
                     <label for="optInCb">
                         <input type="checkbox" class="filled-in" name="optIn" id="optInCb" style="margin-bottom:15px; margin-left:0px">
                         I want to stay up to date with email communications from Rogers Sports &
@@ -377,7 +371,6 @@
             'company': companyCheck.value,
             'job_title': jobTtileCheck.value,
             'country': document.getElementById("country").value,
-            'dietary_restrictions': document.getElementById("dietary_restrictions").value,
             "opt_in_cb": document.getElementById("optInCb").checked,
             'action': document.getElementsByName("action")[0].value
         }
