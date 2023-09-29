@@ -11,7 +11,7 @@
     margin-top: 50px;
   }
 
-  iframe {
+  .single-event-iframe {
     border: none;
     width: 100%;
     height: 700px;
@@ -23,7 +23,7 @@
   }
 
   @include media-breakpoint-down(sm) {
-    iframe {
+    .single-event-iframe {
       height: 800px;
 
       &.address {
