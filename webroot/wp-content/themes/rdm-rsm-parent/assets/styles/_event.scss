@@ -23,7 +23,7 @@
   }
 
   @include media-breakpoint-down(sm) {
-    iframe {
+    .single-event-iframe {
       height: 800px;
 
       &.address {
