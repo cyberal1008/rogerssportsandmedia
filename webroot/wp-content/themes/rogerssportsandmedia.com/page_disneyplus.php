@@ -17,9 +17,15 @@
     <?php wp_head(); ?>
     <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/main.min.css">
 	<style>
+		.hero:before {
+			background: none;
+		}
 		@media (min-width: 1024px) {
 			.grid.four {
 				grid-template-columns:repeat(4,1fr) !important;
+			}
+			.grid.five {
+				grid-template-columns:repeat(5,1fr) !important;
 			}
 		}
 	</style>
@@ -67,6 +73,33 @@
 			</div>
 		</div>
 	</section>
+	
+	<!--- SHOWS SECTION -->
+	<?php if( have_rows('shows') ) : ?>
+	<?php
+		$shows_section_title = get_field('shows_section_title');
+		$show_section_content = get_field('shows_content_copy');
+	?>
+		<section style="margin-top: 32px;">
+			<div class="wrapper">
+				<div style="margin-bottom: 32px;">
+					<h2 class="title"><?php echo $shows_section_title; ?></h2>
+					<?php echo $show_section_content; ?>
+				</div>
+				<div class="grid five">
+					<?php while( have_rows('shows') ) : the_row(); 
+						$show_title = get_sub_field('show_title');
+						$show_image = get_sub_field('show_image');
+					?>
+						<div class="item mx-auto">
+							<img height="296" src="<?php echo $show_image['url']; ?>" alt="<?php echo $show_image['alt']; ?>" loading="lazy">
+							<p class="text-center"><?php echo $show_title; ?></p>
+						</div>
+					<?php endwhile; ?>
+				</div>
+			</div>
+		</section>
+	<?php endif; ?>
 
 
 	<!-- COUNTERS -->
@@ -98,6 +131,8 @@
 			</div>
 		</section>
 	<?php endif; ?>
+
+	<div style="margin-top: 32px;"></div>
 </main>
 
 <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
