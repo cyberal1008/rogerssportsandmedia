@@ -61,13 +61,14 @@
 	<!-- INTRO -->
 	<?php
 		$intro_title = get_field('intro_title');
+		$intro_title_two = get_field('intro_title_two');
 		$intro_content = get_field('intro_content');
 	?>
 	<section class="our-difference alt nomargin">
 		<div class="wrapper">
 			<div class="top">
 				<?php if ($intro_title) : ?>
-					<h2 class="title"><?php echo $intro_title; ?></h2>
+					<h2 class="title"><?php echo $intro_title; ?> <div><?php echo $intro_title_two; ?></div></h2>
 				<?php endif; ?>
 				<?php echo $intro_content; ?>
 			</div>
@@ -101,6 +102,7 @@
 		</section>
 	<?php endif; ?>
 
+	<div style="margin-top: 140px;"></div>
 
 	<!-- COUNTERS -->
 	<?php if( have_rows('highlights') ) : ?>
