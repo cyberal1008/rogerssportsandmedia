@@ -134,7 +134,10 @@
 		</section>
 	<?php endif; ?>
 
-	<div style="margin-top: 32px;"></div>
+	<div style="margin-top: 32px; margin-bottom: 140px;"></div>
+
+	<!-- PARTNER -->
+	<?php get_template_part('template-parts/section-partner'); ?>
 </main>
 
 <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
