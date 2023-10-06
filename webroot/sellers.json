@@ -1,0 +1,153 @@
+{
+    "contact_email": "#RMI_DigitalAdTech@rci.rogers.com",
+    "contact_address": "Rogers Media Inc., 333 Bloor St E, Toronto, ON M4W 1G9, Canada",
+    "version": "1.0",
+    "update": "2023.10.03 c",
+    "identifiers": [
+      {
+        "name": "TAG-ID",
+        "value": "ab09782ea074dfb5"
+      }
+    ],
+    "sellers": [
+      {
+        "seller_id": "5876",
+        "name": "CBC",
+        "domain": "cbc.ca",
+        "seller_type": "PUBLISHER"
+      },
+      {
+        "seller_id": "8264",
+        "name": "CBSi",
+        "domain": "cbsinteractive.com",
+        "seller_type": "PUBLISHER"
+      },
+      {
+        "seller_id": "31695825",
+        "name": "CCM Benchmark",
+        "domain": "ccmbenchmark.com",
+        "seller_type": "PUBLISHER"
+      },
+      {
+        "seller_id": "22656559276",
+        "name": "CondeNast Entertainment",
+        "domain": "condenast.com",
+        "seller_type": "PUBLISHER"
+      },
+      {
+        "seller_id": "22436210662",
+        "name": "EDUCATOUT",
+        "domain": "educatout.com",
+        "seller_type": "PUBLISHER"
+      },
+      {
+        "seller_id": "21925627211",
+        "name": "Funimation",
+        "domain": "funimation.com",
+        "seller_type": "PUBLISHER"
+      },
+      {
+        "seller_id": "22042192664",
+        "name": "Future Today Inc.",
+        "domain": "futuretodayinc.com",
+        "seller_type": "PUBLISHER"
+      },
+      {
+        "seller_id": "21720049534",
+        "name": "GroupeMarieClaire",
+        "domain": "marieclaireinternational.com",
+        "seller_type": "PUBLISHER"
+      },
+      {
+        "seller_id": "22433348740",
+        "name": "La Parfaite Maman Cinglante",
+        "domain": "parfaitemamancinglante.com",
+        "seller_type": "PUBLISHER"
+      },
+      {
+        "seller_id": "22843744756",
+        "seller_type": "BOTH",
+        "name": "Meredith Corporation DBA Meredith Corporation",
+        "domain": "dotdashmeredith.com"
+      },
+      {
+        "seller_id": "pub-0978064532142215",
+        "seller_type": "BOTH",
+        "name": "Meredith Corporation DBA Meredith Corporation",
+        "domain": "dotdashmeredith.com"
+      },
+      {
+        "seller_id": "2605",
+        "name": "MLB",
+        "domain": "mlb.com",
+        "seller_type": "PUBLISHER"
+      },
+      {
+        "seller_id": "21775459675",
+        "name": "MONEYTAG",
+        "domain": "moneytag.fr",
+        "seller_type": "INTERMEDIARY"
+      },
+      {
+        "seller_id": "21668666170",
+        "name": "NHL",
+        "domain": "bamtechmedia.com",
+        "seller_type": "BOTH"
+      },
+      {
+        "seller_id": "22597733940",
+        "name": "SendToNews",
+        "domain": "stnvideo.com",
+        "seller_type": "PUBLISHER"
+      },
+      {
+        "seller_id": "22455996716",
+        "name": "SOFTVOYAGE INC",
+        "domain": "softvoyage.com",
+        "seller_type": "PUBLISHER"
+      },
+      {
+        "seller_id": "169657134",
+        "name": "TF1",
+        "domain": "tf1.fr",
+        "seller_type": "PUBLISHER"
+      },
+      {
+        "seller_id": "52807143",
+        "name": "Tubi",
+        "domain": "tubitv.com",
+        "seller_type": "PUBLISHER"
+      },
+      {
+        "seller_id": "9466302",
+        "name": "WEB SIM SPORTS INC",
+        "domain": "websimsports.com",
+        "seller_type": "PUBLISHER"
+      },
+      {
+        "seller_id": "4675",
+        "name": "WWE",
+        "domain": "wwe.com",
+        "seller_type": "PUBLISHER"
+      },
+      {
+        "seller_id": "22436085572",
+        "name": "ZoneNordiques",
+        "domain": "zonenordiques.com",
+        "seller_type": "PUBLISHER"
+      },
+      {
+        "seller_id": "539708628",
+        "name": "OpenX Technologies, Inc.",
+        "domain": "openx.com",
+        "seller_type": "INTERMEDIARY"
+      },
+      {
+        "seller_id": "540302365",
+        "name": "OpenX Technologies, Inc.",
+        "domain": "openx.com",
+        "seller_type": "INTERMEDIARY"
+      }
+    ]
+  }
+  
