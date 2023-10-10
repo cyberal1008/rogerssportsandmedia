@@ -321,13 +321,21 @@ function submit_single_event_form() {
 		'company' => $_POST['company'],
 		'job_title' => $_POST['job_title'],
 		'country' => $_POST['country'],
-		'opt_in_cb' => $_POST['opt_in_cb']
+		'opt_in_cb' => $_POST['opt_in_cb'],
+		'form_name' => $_POST['form_name']
 	];
 
 	$clientId = get_option('journey_builder_client_id');
 	$clientSecret = get_option('journey_builder_client_secret');
 	$accountId = get_option('journey_builder_account_id');
 	$eventDefinitionKey = get_option('journey_builder_event_definition_key');
+
+	if (isset($formData['form_name'])) {
+		$formName = $formData['form_name'];
+		if ($formName == 'disney-launch') {
+			$eventDefinitionKey = get_option('disney_launch_event_definition_key');
+		}
+	}
 
 	$authData = [
 		"grant_type" => "client_credentials",
