@@ -232,24 +232,13 @@
             </div>
             <div class="row">
                 <div class="custColumn">
-                    <label>
-                        <strong>Will you be bringing a guest?</strong>
-                    </label>
-                    <div>
-                        <div class="form-check-inline">
-                            <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="has_guest" value="no" checked>No
-                            </label>
-                        </div>
-                        <div class="form-check-inline">
-                            <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="has_guest" value="yes">Yes, 1 Guest
-                            </label>
-                        </div>
-                    </div>
+                    <select id="has_guest" name="has_guest" style="color:gray;">
+                        <option value="" disabled="" selected="">Will you be bringing a guest?</option>
+                        <option id="no" value="no">No</option>
+                        <option id="yes" value="yes">Yes, 1 Guest</option>
+                    </select>
                 </div>
             </div>
-            <br />
             <div class="row">
                 <div class="custColumn">
                     <label for="optInCb">
@@ -392,7 +381,7 @@
             'company': companyCheck.value,
             'job_title': jobTtileCheck.value,
             'country': document.getElementById("country").value,
-            "has_guest": document.querySelector('input[name="has_guest"]:checked').value,
+            "has_guest": document.getElementById("has_guest").value,
             "opt_in_cb": document.getElementById("optInCb").checked,
             'action': document.getElementsByName("action")[0].value
         }
