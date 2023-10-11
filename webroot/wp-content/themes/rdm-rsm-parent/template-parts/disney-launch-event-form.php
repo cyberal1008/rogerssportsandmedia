@@ -232,6 +232,26 @@
             </div>
             <div class="row">
                 <div class="custColumn">
+                    <label>
+                        <strong>Will you be bringing a guest?</strong>
+                    </label>
+                    <div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="guests" value="no" checked>No
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="guests" value="yes">Yes, 1 Guest
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="custColumn">
                     <label for="optInCb">
                         <input type="checkbox" class="filled-in" name="optIn" id="optInCb" style="margin-bottom:15px; margin-left:0px">
                         I want to stay up to date with email communications from Rogers Sports &
@@ -372,6 +392,7 @@
             'company': companyCheck.value,
             'job_title': jobTtileCheck.value,
             'country': document.getElementById("country").value,
+            "guests": document.querySelector('input[name="guests"]:checked').value,
             "opt_in_cb": document.getElementById("optInCb").checked,
             'action': document.getElementsByName("action")[0].value
         }
