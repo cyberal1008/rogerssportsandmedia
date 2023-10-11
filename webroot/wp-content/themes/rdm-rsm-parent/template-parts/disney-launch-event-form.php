@@ -169,7 +169,7 @@
     <div id="successMsg" style="display: none">
         <h2 style="font-size: 32px; font-weight:600; line-height:30px; color:#333333; margin-top:50px;">
             <i class="fa fa-check-circle" style="color:green; margin-right:10px;">
-            </i>Thank you for registering for our Bridging Advertisers With New Canadians Webinar. Please keep an eye out in your inbox for additional event details.
+            </i>Thank you for registering! Please keep an eye out in your inbox for additional event details.
         </h2>
     </div>
     <form id="SubForm" class="formContainer" method="POST" onsubmit="return validate()" autocomplete="off">
