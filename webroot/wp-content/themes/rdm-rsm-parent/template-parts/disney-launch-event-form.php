@@ -238,12 +238,12 @@
                     <div>
                         <div class="form-check-inline">
                             <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="guests" value="no" checked>No
+                                <input type="radio" class="form-check-input" name="has_guest" value="no" checked>No
                             </label>
                         </div>
                         <div class="form-check-inline">
                             <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="guests" value="yes">Yes, 1 Guest
+                                <input type="radio" class="form-check-input" name="has_guest" value="yes">Yes, 1 Guest
                             </label>
                         </div>
                     </div>
@@ -392,7 +392,7 @@
             'company': companyCheck.value,
             'job_title': jobTtileCheck.value,
             'country': document.getElementById("country").value,
-            "guests": document.querySelector('input[name="guests"]:checked').value,
+            "has_guest": document.querySelector('input[name="has_guest"]:checked').value,
             "opt_in_cb": document.getElementById("optInCb").checked,
             'action': document.getElementsByName("action")[0].value
         }

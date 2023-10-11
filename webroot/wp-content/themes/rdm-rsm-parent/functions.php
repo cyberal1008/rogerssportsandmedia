@@ -321,8 +321,7 @@ function submit_single_event_form() {
 		'company' => $_POST['company'],
 		'job_title' => $_POST['job_title'],
 		'country' => $_POST['country'],
-		'opt_in_cb' => $_POST['opt_in_cb'],
-		'form_name' => $_POST['form_name']
+		'opt_in_cb' => $_POST['opt_in_cb']
 	];
 
 	$clientId = get_option('journey_builder_client_id');
@@ -330,10 +329,11 @@ function submit_single_event_form() {
 	$accountId = get_option('journey_builder_account_id');
 	$eventDefinitionKey = get_option('journey_builder_event_definition_key');
 
-	if (isset($formData['form_name'])) {
-		$formName = $formData['form_name'];
+	if (isset($_POST['form_name'])) {
+		$formName = $_POST['form_name'];
 		if ($formName == 'disney-launch') {
 			$eventDefinitionKey = get_option('disney_launch_event_definition_key');
+			$formData['has_guest'] = $_POST['has_guest'] == 'yes' ? true : false;
 		}
 	}
 
