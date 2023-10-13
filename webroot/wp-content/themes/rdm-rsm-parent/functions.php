@@ -329,6 +329,14 @@ function submit_single_event_form() {
 	$accountId = get_option('journey_builder_account_id');
 	$eventDefinitionKey = get_option('journey_builder_event_definition_key');
 
+	if (isset($_POST['form_name'])) {
+		$formName = $_POST['form_name'];
+		if ($formName == 'disney-launch') {
+			$eventDefinitionKey = get_option('disney_launch_event_definition_key');
+			$formData['has_guest'] = $_POST['has_guest'] == 'yes' ? true : false;
+		}
+	}
+
 	$authData = [
 		"grant_type" => "client_credentials",
 		"client_id" => $clientId,
