@@ -25,8 +25,10 @@ define( 'WP_REDIS_PORT', getenv( 'RDM_REDIS_PORT' ) );
 define( 'WP_REDIS_DATABASE', getenv( 'RDM_REDIS_DATABASE' ) );
 define( 'WP_CACHE_KEY_SALT', 'RSM' );
 
-
 $table_prefix = 'rsm_wp_';
+
+define( 'DISALLOW_FILE_MODS', true );
+define( 'DISALLOW_FILE_EDIT', true );
 
 define( 'FORCE_SSL_ADMIN', true );
 if ( $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' ) {

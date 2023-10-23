@@ -27,3 +27,6 @@ define( 'WP_CACHE_KEY_SALT', 'RSM' );
 define('SCRIPT_DEBUG', true);
 
 $table_prefix = 'rsm_wp_';
+
+define( 'DISALLOW_FILE_MODS', true );
+define( 'DISALLOW_FILE_EDIT', true );
