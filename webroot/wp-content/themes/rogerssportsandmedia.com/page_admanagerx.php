@@ -186,24 +186,24 @@
         </div>
         <div class="tw-flex tw-flex-col md:tw-flex-row tw-mb-4">
             <div class="tw-w-full md:tw-w-3/5">
-                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/take_control_1.png" />
+                <img id="take-control-image" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/take_control-1.png" alt="Take control app screenshot" />
             </div>
             <div class="tw-w-full md:tw-w-2/5 tw-flex tw-flex-col tw-space-y-12 tw-p-12">
-                <div class="tw-flex tw-flex-row tw-items-end tw-space-x-8">
-                    <span class="tw-text-5xl tw-font-semibold tw-text-red">1</span>
-                    <span>Select where your ads will run</span>
+                <div id="take-control-content-1" class="take-control-content tw-flex tw-flex-row tw-items-end tw-space-x-8 tw-cursor-pointer">
+                    <span class="take-control-content-number tw-text-5xl tw-font-semibold tw-text-gray-400">1</span>
+                    <span class="take-control-content-text tw-text-gray-400">Select where your ads will run</span>
                 </div>
-                <div class="tw-flex tw-flex-row tw-items-end tw-space-x-8">
-                    <span class="tw-text-5xl tw-font-semibold tw-text-red">2</span>
-                    <span>Set your schedule and budget</span>
+                <div id="take-control-content-2" class="take-control-content tw-flex tw-flex-row tw-items-end tw-space-x-8 tw-cursor-pointer">
+                    <span class="take-control-content-number tw-text-5xl tw-font-semibold tw-text-gray-400">2</span>
+                    <span class="take-control-content-text tw-text-gray-400">Set your schedule and budget</span>
                 </div>
-                <div class="tw-flex tw-flex-row tw-items-end tw-space-x-8">
-                    <span class="tw-text-5xl tw-font-semibold tw-text-red">3</span>
-                    <span>Develop or upload your Ad creative</span>
+                <div id="take-control-content-3" class="take-control-content tw-flex tw-flex-row tw-items-end tw-space-x-8 tw-cursor-pointer">
+                    <span class="take-control-content-number tw-text-5xl tw-font-semibold tw-text-gray-400">3</span>
+                    <span class="take-control-content-text tw-text-gray-400">Develop or upload your Ad creative</span>
                 </div>
-                <div class="tw-flex tw-flex-row tw-items-end tw-space-x-8">
-                    <span class="tw-text-5xl tw-font-semibold tw-text-red">4</span>
-                    <span>Pay for, launch or monitor your campaign</span>
+                <div id="take-control-content-4" class="take-control-content tw-flex tw-flex-row tw-items-end tw-space-x-8 tw-cursor-pointer">
+                    <span class="take-control-content-number tw-text-5xl tw-font-semibold tw-text-gray-400">4</span>
+                    <span class="take-control-content-text tw-text-gray-400">Pay for, launch or monitor your campaign</span>
                 </div>
             </div>
         </div>
@@ -242,6 +242,46 @@
         </div>
     </section>
 </body>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        function deactivateTakeControlElements() {
+            const takeControlDivs = document.querySelectorAll('.take-control-content');
+            takeControlDivs.forEach(el => {
+                const contentNumberElement = el.querySelector('.take-control-content-number');
+                const contentTextElement = el.querySelector('.take-control-content-text');
+                contentNumberElement.classList.remove('tw-text-red');
+                contentNumberElement.classList.add('tw-text-gray-400');
+                contentTextElement.classList.add('tw-text-gray-400');
+            });
+        }
+
+        function activateTakeControlElement(el) {
+            deactivateTakeControlElements();
+            const contentNumberElement = el.querySelector('.take-control-content-number');
+            const contentTextElement = el.querySelector('.take-control-content-text');
+            contentNumberElement.classList.remove('tw-text-gray-400');
+            contentNumberElement.classList.add('tw-text-red');
+            contentTextElement.classList.remove('tw-text-gray-400');
+
+            // Update Image
+            const elementId = el.id;
+            const elementNumber = elementId.split('take-control-content-')[1].trim();
+            const imageElement = document.getElementById('take-control-image');
+            imageElement.src = `<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/take_control-${elementNumber}.png`;
+        }
+
+        // Activate first element
+        const takeControlFirstElement = document.getElementById("take-control-content-1");
+        activateTakeControlElement(takeControlFirstElement);
+
+        // Add event listener to other elements
+        const takeControlDivs = document.querySelectorAll('.take-control-content');
+        takeControlDivs.forEach(el => el.addEventListener('click', event => {
+            activateTakeControlElement(el);
+        }));
+    });
+</script>
 
 <?php
 wp_footer();
