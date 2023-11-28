@@ -101,7 +101,7 @@
             </div>
         </div>
     </section>
-    <section class="tw-py-12 md:tw-py-20 tw-px-4 md:tw-px-48 tw-bg-gray-100">
+    <section class="tw-py-12 md:tw-py-20 tw-px-4 md:tw-px-48 tw-bg-gray">
         <div class="tw-flex tw-flex-col md:tw-flex-row-reverse tw-items-center md:tw-justify-center tw-mb-6 md:tw-space-x-8">
             <div>
                 <img class="tw-w-32 md:tw-w-40 tw--mt-20 md:tw--mt-32" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/helper-circle.png" />
@@ -130,7 +130,7 @@
             <div class="tw-w-full md:tw-w-4/5 tw-text-3xl md:tw-text-4xl tw-text-center tw-font-semibold">RSM Ad Manager Is Your Starting Point For Our Ad Solutions</div>
         </div>
         <div class="tw-flex tw-flex-col md:tw-flex-row tw-mb-10 tw-items-stretch tw-space-y-8 md:tw-space-y-0 md:tw-space-x-10">
-            <div class="tw-w-full md:tw-w-1/4 tw-flex tw-flex-col tw-bg-gray-100 tw-border tw-px-8 tw-py-6 tw-text-center tw-items-center tw-rounded-2xl tw-space-y-8 md:tw-space-y-12">
+            <div class="tw-w-full md:tw-w-1/4 tw-flex tw-flex-col tw-bg-gray tw-px-8 tw-py-6 tw-text-center tw-items-center tw-rounded-2xl tw-space-y-8 md:tw-space-y-12">
                 <div class="tw-h-2/3">
                     <p class="tw-font-semibold tw-text-lg tw-mb-2">Display Advertising</p>
                     <p>Deliver impactful brand messaging across our network of sites.</p>
@@ -142,7 +142,7 @@
                     <img class="tw-h-32" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/starting-point-1.png" />
                 </div>
             </div>
-            <div class="tw-w-full md:tw-w-1/4 tw-flex tw-flex-col tw-bg-gray-100 tw-border tw-px-8 tw-py-6 tw-text-center tw-items-center tw-rounded-2xl tw-space-y-8 md:tw-space-y-12">
+            <div class="tw-w-full md:tw-w-1/4 tw-flex tw-flex-col tw-bg-gray tw-px-8 tw-py-6 tw-text-center tw-items-center tw-rounded-2xl tw-space-y-8 md:tw-space-y-12">
                 <div class="tw-h-2/3">
                     <p class="tw-font-semibold tw-text-lg tw-mb-2">Podcast & Streaming Radio</p>
                     <p>Reach our engaged audiences as they listen to premium podcast and streaming radio content.</p>
@@ -154,7 +154,7 @@
                     <img class="tw-h-32" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/starting-point-2.png" />
                 </div>
             </div>
-            <div class="tw-w-full md:tw-w-1/4 tw-flex tw-flex-col tw-bg-gray-100 tw-border tw-px-8 tw-py-6 tw-text-center tw-items-center tw-rounded-2xl tw-space-y-8 md:tw-space-y-12">
+            <div class="tw-w-full md:tw-w-1/4 tw-flex tw-flex-col tw-bg-gray tw-px-8 tw-py-6 tw-text-center tw-items-center tw-rounded-2xl tw-space-y-8 md:tw-space-y-12">
                 <div class="tw-h-2/3">
                     <p class="tw-font-semibold tw-text-lg tw-mb-2">Radio Advertising</p>
                     <p>Drive top-of-mind awareness for your business in the markets that matter to you.</p>
@@ -166,7 +166,7 @@
                     <img class="tw-h-32" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/starting-point-3.png" />
                 </div>
             </div>
-            <div class="tw-w-full md:tw-w-1/4 tw-flex tw-flex-col tw-bg-gray-100 tw-border tw-px-8 tw-py-6 tw-text-center tw-items-center tw-rounded-2xl tw-space-y-8 md:tw-space-y-12">
+            <div class="tw-w-full md:tw-w-1/4 tw-flex tw-flex-col tw-bg-gray tw-px-8 tw-py-6 tw-text-center tw-items-center tw-rounded-2xl tw-space-y-8 md:tw-space-y-12">
                 <div class="tw-h-2/3">
                     <p class="tw-font-semibold tw-text-lg tw-mb-2">Video & Streaming TV</p>
                     <p>Reach audiences engaged in the best streaming and video content in Canada.</p>
@@ -180,7 +180,7 @@
             </div>
         </div>
     </section>
-    <section class="tw-py-12 md:tw-py-20 tw-px-4 md:tw-px-48 tw-bg-gray-100">
+    <section class="tw-py-12 md:tw-py-20 tw-px-4 md:tw-px-48 tw-bg-gray">
         <div class="tw-flex tw-flex-col tw-items-center tw-text-center tw-mb-6 tw-space-x-4">
             <span class="tw-text-4xl tw-font-semibold">Take Full Control Of How You Advertise Your Business</span>
         </div>
