@@ -25,7 +25,7 @@ class Redirection_Admin {
 	public function __construct() {
 		add_action( 'admin_menu', [ $this, 'admin_menu' ] );
 		add_action( 'admin_notices', [ $this, 'update_nag' ] );
-		add_action( 'plugin_action_links_' . basename( dirname( REDIRECTION_FILE ) ) . '/' . basename( REDIRECTION_FILE ), [ $this, 'plugin_settings' ], 10, 4 );
+		add_filter( 'plugin_action_links_' . basename( dirname( REDIRECTION_FILE ) ) . '/' . basename( REDIRECTION_FILE ), [ $this, 'plugin_settings' ], 10, 4 );
 		add_filter( 'plugin_row_meta', [ $this, 'plugin_row_meta' ], 10, 4 );
 		add_filter( 'redirection_save_options', [ $this, 'flush_schedule' ] );
 		add_filter( 'set-screen-option', [ $this, 'set_per_page' ], 10, 3 );
@@ -34,6 +34,7 @@ class Redirection_Admin {
 		}, 10, 3 );
 		add_action( 'redirection_redirect_updated', [ $this, 'set_default_group' ], 10, 2 );
 		add_action( 'redirection_redirect_updated', [ $this, 'clear_cache' ], 10, 2 );
+		add_filter( 'load_script_translation_file', [ $this, 'load_script_translation_file' ], 10, 3 );
 
 		if ( defined( 'REDIRECTION_FLYING_SOLO' ) && REDIRECTION_FLYING_SOLO ) {
 			add_filter( 'script_loader_src', [ $this, 'flying_solo' ], 10, 2 );
@@ -44,6 +45,22 @@ class Redirection_Admin {
 
 		$this->monitor = new Red_Monitor( red_get_options() );
 		$this->run_hacks();
+	}
+
+	/**
+	 * Massage the Redirection WP translations.
+	 *
+	 * @param [type] $file
+	 * @param [type] $handle
+	 * @param [type] $domain
+	 * @return void
+	 */
+	public function load_script_translation_file( $file, $handle, $domain ) {
+		if ( $domain === 'redirection' ) {
+			return preg_replace( '/-\w*\./', '.', $file );
+		}
+
+		return $file;
 	}
 
 	// These are only called on the single standard site, or in the network admin of the multisite - they run across all available sites
@@ -133,6 +150,8 @@ class Redirection_Admin {
 				red_set_options( [ 'plugin_update' => 'prompt' ] );
 				return;
 			}
+
+			$loop++;
 		}
 	}
 
@@ -266,10 +285,10 @@ class Redirection_Admin {
 		wp_enqueue_style( 'redirection', plugin_dir_url( REDIRECTION_FILE ) . 'redirection.css', array(), $build );
 
 		$is_new = false;
+		$major_version = implode( '.', array_slice( explode( '.', REDIRECTION_VERSION ), 0, 2 ) );
 
 		// phpcs:ignore
 		if ( isset( $_GET['page'] ) && $_GET['page'] === 'redirection.php' && strpos( REDIRECTION_VERSION, '-beta' ) === false ) {
-			$major_version = implode( '.', array_slice( explode( '.', REDIRECTION_VERSION ), 0, 2 ) );
 			$is_new = version_compare( $options['update_notice'], $major_version ) < 0;
 		}
 
@@ -293,11 +312,7 @@ class Redirection_Admin {
 			'pluginBaseUrl' => plugins_url( '', REDIRECTION_FILE ),
 			'pluginRoot' => $this->get_plugin_url(),
 			'per_page' => $this->get_per_page(),
-			'locale' => [
-				'translations' => $translations,
-				'localeSlug' => get_locale(),
-				'Plural-Forms' => isset( $translations['plural-forms'] ) ? $translations['plural-forms'] : 'nplurals=2; plural=n != 1;',
-			],
+			'locale' => implode( '-', array_slice( explode( '-', str_replace( '_', '-', get_locale() ) ), 0, 2 ) ),
 			'settings' => $options,
 			'preload' => $preload,
 			'versions' => implode( "\n", $versions ),
@@ -309,6 +324,8 @@ class Redirection_Admin {
 			],
 			'update_notice' => $is_new ? $major_version : false,
 		) );
+
+		wp_set_script_translations( 'redirection', 'redirection', plugin_dir_path( __FILE__ ) . 'locale/json/' );
 
 		$this->add_help_tab();
 	}
@@ -559,12 +576,17 @@ class Redirection_Admin {
 			}
 
 			resetAll();
-			document.querySelector( '.react-loading' ).style.display = 'none';
-			document.querySelector( '.react-error' ).style.display = 'block';
 
-			if ( typeof Redirectioni10n !== 'undefined' && Redirectioni10n ) {
-				document.querySelector( '.versions' ).innerHTML = Redirectioni10n.versions.replace( /\n/g, '<br />' );
-				document.querySelector( '.react-error .button-primary' ).href += '&body=' + encodeURIComponent( errorText ) + encodeURIComponent( Redirectioni10n.versions );
+			if ( document.querySelector( '.react-loading' ) ) {
+				document.querySelector( '.react-loading' ).style.display = 'none';
+				document.querySelector( '.react-error' ).style.display = 'block';
+
+				if ( typeof Redirectioni10n !== 'undefined' && Redirectioni10n ) {
+					document.querySelector( '.versions' ).innerHTML = Redirectioni10n.versions.replace( /\n/g, '<br />' );
+					document.querySelector( '.react-error .button-primary' ).href += '&body=' + encodeURIComponent( errorText ) + encodeURIComponent( Redirectioni10n.versions );
+				}
+			} else {
+				document.querySelector( '#react-ui' ).innerHTML = '<p>Sorry something went very wrong.</p>';
 			}
 		}
 
