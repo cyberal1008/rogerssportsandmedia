@@ -44,7 +44,7 @@
                     <div class="tw-mb-3">
                         <img class="tw-h-12" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/rsm-difference-scale.png" />
                     </div>
-                    <div class="tw-px-16 tw-font-semibold">Scale that enables you drive awareness and impact with a local audience</div>
+                    <div class="tw-px-16 tw-font-semibold">Scale that enables you to drive awareness and impact with a local audience</div>
                 </div>
                 <div class="tw-w-full md:tw-w-1/3 tw-flex tw-flex-col tw-items-center tw-text-center tw-py-2">
                     <div class="tw-mb-3">
