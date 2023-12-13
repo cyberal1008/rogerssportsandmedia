@@ -65,7 +65,7 @@
             <p class="tw-text-lg tw-mb-4">Your advertising will run on brands such as:</p>
             <div class="tw-grid tw-grid-cols-6 tw-gap-4 md:tw-gap-10 md:tw-flex md:tw-flex-row tw-mb-8">
                 <img class="tw-h-8" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/landing/images/Breakfast-Television.png" alt="Breakfast Television logo" loading="lazy">
-                <img class="tw-h-8" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/landing/images/Frequency-Podcast.png" alt="Frequency Podcast Network logo" loading="lazy">
+                <img class="tw-h-8 tw-grayscale" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/landing/images/Frequency-Podcast.png" alt="Frequency Podcast Network logo" loading="lazy">
                 <img class="tw-h-8" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/landing/images/logo-citynews.png" alt="CityNews logo" loading="lazy">
                 <img class="tw-h-8" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/landing/images/Citytv.png" alt="CityTV logo" loading="lazy">
                 <img class="tw-h-8" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/landing/images/SN.png" alt="Sportsnet logo" loading="lazy">
