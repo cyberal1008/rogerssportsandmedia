@@ -47,7 +47,7 @@
                             <img class="tw-h-16" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/ad_creative_triangles.png" />
                         </div>
                         <div class="tw-w-4/5">
-                            Produce your ad creative
+                            Produce ad creative
                         </div>
                     </div>
                     <div class="tw-flex tw-flex-row tw-space-x-8 tw-items-center tw-font-semibold">
@@ -117,8 +117,8 @@
                 <div class="tw-h-2/3">
                     <p class="tw-font-semibold tw-text-lg tw-mb-2">Display Advertising</p>
                     <p>Deliver impactful brand messaging across our network of sites.</p>
-                    <a href="#" class="tw-mb-16 tw-text-red tw-text-sm tw-underline hover:tw-text-red-dark">
-                        Learn More >
+                    <a href="/ad-solutions/" class="tw-mb-16 tw-text-red tw-text-sm tw-underline hover:tw-text-red-dark">
+                        Learn More
                     </a>
                 </div>
                 <div class="tw-h-1/3 tw-flex tw-justify-center">
@@ -129,8 +129,8 @@
                 <div class="tw-h-2/3">
                     <p class="tw-font-semibold tw-text-lg tw-mb-2">Podcast & Streaming Radio</p>
                     <p>Reach our engaged audiences as they listen to premium podcast and streaming radio content.</p>
-                    <a href="#" class="tw-mb-16 tw-text-red tw-text-sm tw-underline hover:tw-text-red-dark">
-                        Learn More >
+                    <a href="/ad-solutions/" class="tw-mb-16 tw-text-red tw-text-sm tw-underline hover:tw-text-red-dark">
+                        Learn More
                     </a>
                 </div>
                 <div class="tw-h-1/3 tw-flex tw-justify-center">
@@ -141,8 +141,8 @@
                 <div class="tw-h-2/3">
                     <p class="tw-font-semibold tw-text-lg tw-mb-2">Radio Advertising</p>
                     <p>Drive top-of-mind awareness for your business in the markets that matter to you.</p>
-                    <a href="#" class="tw-mb-16 tw-text-red tw-text-sm tw-underline hover:tw-text-red-dark">
-                        Learn More >
+                    <a href="/ad-solutions/" class="tw-mb-16 tw-text-red tw-text-sm tw-underline hover:tw-text-red-dark">
+                        Learn More
                     </a>
                 </div>
                 <div class="tw-h-1/3 tw-flex tw-justify-center">
@@ -153,8 +153,8 @@
                 <div class="tw-h-2/3">
                     <p class="tw-font-semibold tw-text-lg tw-mb-2">Video & Streaming TV</p>
                     <p>Reach audiences engaged in the best streaming and video content in Canada.</p>
-                    <a href="#" class="tw-mb-16 tw-text-red tw-text-sm tw-underline hover:tw-text-red-dark">
-                        Learn More >
+                    <a href="/ad-solutions/" class="tw-mb-16 tw-text-red tw-text-sm tw-underline hover:tw-text-red-dark">
+                        Learn More
                     </a>
                 </div>
                 <div class="tw-h-1/3 tw-flex tw-justify-center">
@@ -182,11 +182,11 @@
                 </div>
                 <div id="take-control-content-3" class="take-control-content tw-flex tw-flex-row tw-items-end tw-space-x-8 tw-cursor-pointer">
                     <span class="take-control-content-number tw-text-5xl tw-font-semibold tw-text-gray-400">3</span>
-                    <span class="take-control-content-text tw-text-gray-400">Develop or upload your Ad creative</span>
+                    <span class="take-control-content-text tw-text-gray-400">Produce or upload your ad creative</span>
                 </div>
                 <div id="take-control-content-4" class="take-control-content tw-flex tw-flex-row tw-items-end tw-space-x-8 tw-cursor-pointer">
                     <span class="take-control-content-number tw-text-5xl tw-font-semibold tw-text-gray-400">4</span>
-                    <span class="take-control-content-text tw-text-gray-400">Pay for, launch or monitor your campaign</span>
+                    <span class="take-control-content-text tw-text-gray-400">Pay for, launch and monitor your campaign</span>
                 </div>
             </div>
         </div>
