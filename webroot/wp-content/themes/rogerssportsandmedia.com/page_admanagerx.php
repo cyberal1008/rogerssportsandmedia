@@ -224,6 +224,7 @@
             </div>
         </div>
     </section>
+    <?php get_template_part('template-parts/ad-manager-footer-text'); ?>
 </body>
 
 <script>

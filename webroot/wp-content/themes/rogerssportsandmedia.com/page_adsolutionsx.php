@@ -82,7 +82,7 @@
                 </div>
                 <div class="tw-w-full md:tw-w-1/4 tw-flex tw-flex-col tw-bg-white tw-px-8 tw-py-6 tw-text-center tw-items-center tw-rounded-2xl tw-space-y-8 md:tw-space-y-12">
                     <div class="tw-h-3/5">
-                        <p class="tw-font-semibold tw-text-lg tw-mb-2">Award winning news and lifestyle podcast content such as <i>The Big Story, Teach Me How to Adult, and Island Crime</i></p>
+                        <p class="tw-font-semibold tw-text-lg tw-mb-2">Award winning news and lifestyle podcast content such as <i>The Big Story, Teach Me How to Adult,</i> and <i>Island Crime</i></p>
                     </div>
                     <div class="tw-h-2/5">
                         <img class="tw-h-32" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/ad-solutions-big-story.png" />
@@ -90,7 +90,7 @@
                 </div>
                 <div class="tw-w-full md:tw-w-1/4 tw-flex tw-flex-col tw-bg-white tw-px-8 tw-py-6 tw-text-center tw-items-center tw-rounded-2xl tw-space-y-8 md:tw-space-y-12">
                     <div class="tw-h-3/5">
-                        <p class="tw-font-semibold tw-text-lg tw-mb-2">7 of the top 20 sports podcasts in Canada including <i>32 Thoughts and The Raptors Show with Will Lou</i></p>
+                        <p class="tw-font-semibold tw-text-lg tw-mb-2">7 of the top 20 sports podcasts in Canada including <i>32 Thoughts</i> and <i>The Raptors Show with Will Lou</i></p>
                     </div>
                     <div class="tw-h-2/5">
                         <img class="tw-h-32" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/ad-solutions-32-thoughts.png" />
@@ -148,22 +148,22 @@
             <div class="tw-flex tw-flex-col md:tw-flex-row tw-mb-10 tw-items-stretch tw-space-y-8 md:tw-space-y-0 md:tw-space-x-10">
                 <div class="tw-w-full md:tw-w-1/4 tw-flex tw-flex-col tw-bg-gray tw-px-8 tw-py-6 tw-text-center tw-items-center tw-rounded-2xl tw-space-y-8 md:tw-space-y-12">
                     <div class="tw-h-1/3">
-                        <img class="tw-h-32" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/radio-advertising-chfi.png" />
+                        <img class="tw-h-48" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/radio-advertising-chfi.png" />
                     </div>
                 </div>
                 <div class="tw-w-full md:tw-w-1/4 tw-flex tw-flex-col tw-bg-gray tw-px-8 tw-py-6 tw-text-center tw-items-center tw-rounded-2xl tw-space-y-8 md:tw-space-y-12">
                     <div class="tw-h-1/3">
-                        <img class="tw-h-32" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/radio-advertising-kiss-radio.png" />
+                        <img class="tw-h-48" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/radio-advertising-kiss-radio.png" />
                     </div>
                 </div>
                 <div class="tw-w-full md:tw-w-1/4 tw-flex tw-flex-col tw-bg-gray tw-px-8 tw-py-6 tw-text-center tw-items-center tw-rounded-2xl tw-space-y-8 md:tw-space-y-12">
                     <div class="tw-h-1/3">
-                        <img class="tw-h-32" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/radio-advertising-citynews.png" />
+                        <img class="tw-h-48" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/radio-advertising-citynews.png" />
                     </div>
                 </div>
                 <div class="tw-w-full md:tw-w-1/4 tw-flex tw-flex-col tw-bg-gray tw-px-8 tw-py-6 tw-text-center tw-items-center tw-rounded-2xl tw-space-y-8 md:tw-space-y-12">
                     <div class="tw-h-1/3">
-                        <img class="tw-h-32" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/radio-advertising-sn590.png" />
+                        <img class="tw-h-48" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/radio-advertising-sn590.png" />
                     </div>
                 </div>
             </div>
@@ -265,6 +265,10 @@
             </a>
         </div>
     </section>
+    <section class="tw-bg-gray tw-px-4 md:tw-px-72 tw-pt-8">
+        <hr />
+    </section>
+    <?php get_template_part('template-parts/ad-manager-footer-text'); ?>
 </body>
 
 <?php
