@@ -65,14 +65,14 @@
             <p class="tw-text-lg tw-mb-4">Your advertising will run on brands such as:</p>
             <div class="tw-grid tw-grid-cols-6 tw-gap-4 md:tw-gap-10 md:tw-flex md:tw-flex-row tw-mb-8">
                 <img class="tw-h-8" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/landing/images/Breakfast-Television.png" alt="Breakfast Television logo" loading="lazy">
-                <img class="tw-h-8" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/landing/images/Cityline.png" alt="Cityline logo" loading="lazy">
+                <img class="tw-h-8" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/landing/images/Frequency-Podcast.png" alt="Frequency Podcast Network logo" loading="lazy">
                 <img class="tw-h-8" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/landing/images/logo-citynews.png" alt="CityNews logo" loading="lazy">
                 <img class="tw-h-8" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/landing/images/Citytv.png" alt="CityTV logo" loading="lazy">
                 <img class="tw-h-8" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/landing/images/SN.png" alt="Sportsnet logo" loading="lazy">
-                <img class="tw-h-8" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/landing/images/98.1-CHFI.png" alt="98.1 CHFI logo" loading="lazy">
-                <img class="tw-h-8" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/landing/images/Kiss-Radio.png" alt="KiSS radio logo" loading="lazy">
-                <img class="tw-h-8" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/landing/images/Jack-Radio.png" alt="Jack radio logo" loading="lazy">
-                <img class="tw-h-8" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/landing/images/NHL.png" alt="NHL logo" loading="lazy">
+                <img class="tw-h-12 -tw-mt-2" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/landing/images/98.1-CHFI.png" alt="98.1 CHFI logo" loading="lazy">
+                <img class="tw-h-10 -tw-mt-1" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/landing/images/Kiss-Radio.png" alt="KiSS radio logo" loading="lazy">
+                <img class="tw-h-10 -tw-mt-1" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/landing/images/Jack-Radio.png" alt="Jack radio logo" loading="lazy">
+                <img class="tw-h-10 -tw-mt-1" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/landing/images/NHL.png" alt="NHL logo" loading="lazy">
                 <img class="tw-h-8" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/landing/images/MLB.png" alt="MLB logo" loading="lazy">
                 <img class="tw-h-8" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/landing/images/Tubi.png" alt="Tubi logo" loading="lazy">
                 <img class="tw-h-8" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/landing/images/FX.png" alt="FX logo" loading="lazy">
