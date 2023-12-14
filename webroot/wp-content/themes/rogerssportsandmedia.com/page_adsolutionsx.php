@@ -32,7 +32,7 @@
         <div class="tw-flex tw-text-center tw-justify-center">
             <img class="tw-w-3/4" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/ad-solutions-hero.png" />
         </div>
-        <div class="tw-mb-6 tw-py-2 tw-px-4 md:tw-px-60">
+        <div class="tw-mb-6 tw-py-2 tw-px-4 md:tw-px-48">
             <div class="tw-flex tw-flex-col md:tw-flex-row tw-space-y-4 md:tw-space-y-0 md:tw-space-x-16">
                 <div class="tw-w-full md:tw-w-1/3 tw-flex tw-flex-col tw-items-center tw-text-center tw-py-2">
                     <div class="tw-mb-3">
@@ -54,7 +54,7 @@
                 </div>
             </div>
         </div>
-        <div class="tw-text-center tw-mb-10 md:tw-px-72">
+        <div class="tw-text-center tw-mb-10 md:tw-px-60">
             <span class="tw-font-semibold">Create a set of display ads at no extra cost.</span> Use our ad builder to create a set of display ads in just a few clicks. Or simply upload ad creative that you already have.
         </div>
         <div class="tw-flex tw-justify-center">
@@ -70,7 +70,7 @@
         <div class="tw-mb-12 tw-text-lg tw-text-center">
             Reach our engaged audiences as they listen to premium podcast and streaming audio content
         </div>
-        <div class="tw-px-4 md:tw-px-48">
+        <div class="tw-px-4 md:tw-px-32">
             <div class="tw-flex tw-flex-col md:tw-flex-row tw-mb-10 tw-items-stretch tw-space-y-8 md:tw-space-y-0 md:tw-space-x-10">
                 <div class="tw-w-full md:tw-w-1/4 tw-flex tw-flex-col tw-bg-white tw-px-8 tw-py-6 tw-text-center tw-items-center tw-rounded-2xl tw-space-y-8 md:tw-space-y-12">
                     <div class="tw-h-3/5">
@@ -106,7 +106,7 @@
                 </div>
             </div>
         </div>
-        <div class="tw-mb-6 tw-py-2 tw-px-4 md:tw-px-60">
+        <div class="tw-mb-6 tw-py-2 tw-px-4 md:tw-px-48">
             <div class="tw-flex tw-flex-col md:tw-flex-row tw-space-y-4 md:tw-space-y-0 md:tw-space-x-16">
                 <div class="tw-w-full md:tw-w-1/3 tw-flex tw-flex-col tw-items-center tw-text-center tw-py-2">
                     <div class="tw-mb-3">
@@ -128,7 +128,7 @@
                 </div>
             </div>
         </div>
-        <div class="tw-text-center tw-mb-10 md:tw-px-72">
+        <div class="tw-text-center tw-mb-10 md:tw-px-48">
             <span class="tw-font-semibold">Create an audio ad for no extra cost.</span> We make it easy to engage with our production team, from creative brief through to final ad. <p>Or simply upload a 30-second audio ad you already have.</p>
         </div>
         <div class="tw-flex tw-justify-center">
@@ -168,7 +168,7 @@
                 </div>
             </div>
         </div>
-        <div class="tw-mb-6 tw-py-2 tw-px-4 md:tw-px-60">
+        <div class="tw-mb-6 tw-py-2 tw-px-4 md:tw-px-48">
             <div class="tw-flex tw-flex-col md:tw-flex-row tw-space-y-4 md:tw-space-y-0 md:tw-space-x-16">
                 <div class="tw-w-full md:tw-w-1/3 tw-flex tw-flex-col tw-items-center tw-text-center tw-py-2">
                     <div class="tw-mb-3">
@@ -190,7 +190,7 @@
                 </div>
             </div>
         </div>
-        <div class="tw-text-center tw-mb-10 md:tw-px-72">
+        <div class="tw-text-center tw-mb-10 md:tw-px-60">
             <span class="tw-font-semibold">Create a radio ad for no extra cost.</span> We make it easy to engage with our production team, from creative brief through to final ad. <p>Or simply upload a 15-second or 30-second radio ad you already have.</p>
         </div>
         <div class="tw-flex tw-justify-center">
@@ -206,35 +206,35 @@
         <div class="tw-mb-12 tw-text-lg tw-text-center">
             Reach audiences engaged in the best streaming and video content in Canada
         </div>
-        <div class="tw-px-4 md:tw-px-72">
-            <div class="md:tw-px-20 tw-flex tw-flex-col md:tw-flex-row tw-mb-10 tw-items-stretch tw-space-y-8 md:tw-space-y-0 md:tw-space-x-10">
-                <div class="tw-w-full md:tw-w-1/3 tw-flex tw-flex-col tw-bg-white tw-px-8 tw-py-6 tw-text-center tw-items-center tw-rounded-2xl tw-space-y-8 md:tw-space-y-12">
-                    <div class="tw-h-3/5">
+        <div class="tw-px-4 md:tw-px-48">
+            <div class="md:tw-px-20 tw-flex tw-flex-col md:tw-flex-row tw-mb-10 tw-space-y-8 md:tw-space-y-0 md:tw-space-x-10">
+                <div class="tw-w-full md:tw-w-1/3 tw-flex tw-flex-col tw-bg-white tw-px-8 tw-py-6 tw-text-center tw-items-center tw-rounded-2xl tw-space-y-4 md:tw-space-y-10">
+                    <div class="tw-h-1/2">
                         <p class="tw-font-semibold tw-text-lg tw-mb-2">Premium streaming TV content from <i>Sportsnet, Citytv, Cityline, Citynews, Breakfast Television</i> and more</p>
                     </div>
-                    <div class="tw-h-2/5">
+                    <div class="tw-h-1/2">
                         <img class="tw-h-32" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/video-streaming-tv-citytv.png" />
                     </div>
                 </div>
-                <div class="tw-w-full md:tw-w-1/3 tw-flex tw-flex-col tw-bg-white tw-px-8 tw-py-6 tw-text-center tw-items-center tw-rounded-2xl tw-space-y-8 md:tw-space-y-12">
-                    <div class="tw-h-3/5">
+                <div class="tw-w-full md:tw-w-1/3 tw-flex tw-flex-col tw-bg-white tw-px-8 tw-py-6 tw-text-center tw-items-center tw-rounded-2xl tw-space-y-4 md:tw-space-y-10">
+                    <div class="tw-h-1/2">
                         <p class="tw-font-semibold tw-text-lg tw-mb-2">Action-packed <i>NHL, MLB</i> and <i>NBA</i> live sports programming or <i>Sportsnet+</i></p>
                     </div>
-                    <div class="tw-h-2/5">
-                        <img class="tw-h-32" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/video-streaming-tv-snnow.png" />
+                    <div class="tw-h-1/2">
+                        <img class="tw-h-32" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/sportsnet-plus.png" />
                     </div>
                 </div>
-                <div class="tw-w-full md:tw-w-1/3 tw-flex tw-flex-col tw-bg-white tw-px-8 tw-py-6 tw-text-center tw-items-center tw-rounded-2xl tw-space-y-8 md:tw-space-y-12">
-                    <div class="tw-h-3/5">
+                <div class="tw-w-full md:tw-w-1/3 tw-flex tw-flex-col tw-bg-white tw-px-8 tw-py-6 tw-text-center tw-items-center tw-rounded-2xl tw-space-y-4 md:tw-space-y-10">
+                    <div class="tw-h-1/2">
                         <p class="tw-font-semibold tw-text-lg tw-mb-2">Popular entertainment content from <i>TUBI</i>. One of the fastest growing ad-supported streaming services</p>
                     </div>
-                    <div class="tw-h-2/5">
+                    <div class="tw-h-1/2">
                         <img class="tw-h-32" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/video-streaming-tv-tubi.png" />
                     </div>
                 </div>
             </div>
         </div>
-        <div class="tw-mb-6 tw-py-2 tw-px-4 md:tw-px-72">
+        <div class="tw-mb-6 tw-py-2 tw-px-4 md:tw-px-48">
             <div class="tw-flex tw-flex-col md:tw-flex-row tw-space-y-4 md:tw-space-y-0 md:tw-space-x-16">
                 <div class="tw-w-full md:tw-w-1/3 tw-flex tw-flex-col tw-items-center tw-text-center tw-py-2">
                     <div class="tw-mb-3">
@@ -256,7 +256,7 @@
                 </div>
             </div>
         </div>
-        <div class="tw-text-center tw-mb-10 md:tw-px-72">
+        <div class="tw-text-center tw-mb-10 md:tw-px-48">
             <span class="tw-font-semibold">Required Ad Creative:</span> You will need a video ad that is 30-seconds or less. Simply upload your ad into your campaign and we'll ensure it meets our specifications.
         </div>
         <div class="tw-flex tw-justify-center">
@@ -265,7 +265,7 @@
             </a>
         </div>
     </section>
-    <section class="tw-bg-gray tw-px-4 md:tw-px-72 tw-pt-8">
+    <section class="tw-bg-gray tw-px-4 md:tw-px-60 tw-pt-8">
         <hr />
     </section>
     <?php get_template_part('template-parts/ad-manager-footer-text'); ?>
