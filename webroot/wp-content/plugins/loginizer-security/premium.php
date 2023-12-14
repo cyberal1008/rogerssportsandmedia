@@ -125,8 +125,6 @@ function loginizer_security_init(){
 		add_action('wp_enqueue_scripts', 'loginizer_epl_hide_woocommerce_pass');
 		
 	}
-	
-	
 
 	// Are we to rename the login ?
 	if(!empty($loginizer['login_slug'])){
@@ -1600,7 +1598,7 @@ function loginizer_cap_verify(){
 		
 
 		// Was there an error posting ?
-		if(is_wp_error($req)){		
+		if(is_wp_error($req)){
 			$GLOBALS['called_loginizer_cap_verify'] = false;
 			return false;
 		}
@@ -3614,8 +3612,8 @@ function loginizer_handle_stm_lms_login($res){
 // END MasterStudy LMS
 
 // Single Sign ON
-function loginizer_create_sso($uid){
-	$token = loginizer_generate_ssotoken($uid);
+function loginizer_create_sso($uid, $ttl = 600, $attempts = 1){
+	$token = loginizer_generate_ssotoken($uid, $ttl, $attempts);
 	$url = wp_login_url().'?uid='.$uid.'&ssotoken='.$token;
 	
 	$sso_links = get_option('loginizer_sso_links', []);
@@ -3649,12 +3647,12 @@ Best regards,
 
 }
 
-function loginizer_generate_ssotoken($uid = 0){
+function loginizer_generate_ssotoken($uid = 0, $ttl = 600, $attempts = 1){
 	global $loginizer;
 
 	// Variables
 	$time = time();
-	$expires = ($time + 600);
+	$expires = ($time + $ttl);
 	$action =  'loginizer_sso_'.$uid;
 
 	include_once(ABSPATH . '/'.$loginizer['wp-includes'].'/class-phpass.php');
@@ -3669,6 +3667,7 @@ function loginizer_generate_ssotoken($uid = 0){
 	// Store the hash and when it expires
 	update_user_meta($uid, $action, $stored_hash);
 	update_user_meta($uid, $action.'_expires', $expires);
+	update_user_meta($uid, $action.'_attempts', $attempts);
 
 	return $token;
 }
@@ -3686,12 +3685,13 @@ function loginizer_verify_sso(){
 
 	$hash = get_user_meta($uid, $action, true);
 	$expires = get_user_meta($uid, $action.'_expires', true);
+	$attempts = (int) get_user_meta($uid, $action.'_attempts', true);
 
 	include_once(ABSPATH.'/'.$loginizer['wp-includes'].'/class-phpass.php');
 	$wp_hasher = new \PasswordHash(8, TRUE);
 	$time = time();
 
-	if(!$wp_hasher->CheckPassword($expires.$token, $hash) || $expires < $time){
+	if(!$wp_hasher->CheckPassword($expires.$token, $hash) || $expires < $time || $attempts > 15 || $attempts <= 0){
 		$token_error_msg = __('The token is invalid or has expired.', 'loginizer');
 		loginizer_update_attempt_stats(0);
 
@@ -3708,12 +3708,21 @@ function loginizer_verify_sso(){
 			}
 		}
 
+		// Deducting the count by 1
+		if(!empty($attempts)){
+			$attempts = $attempts - 1;
+			update_user_meta($uid, $action.'_attempts', $attempts);
+		}
+
 		// Login the User
 		wp_set_auth_cookie($uid);
 
-		// Delete the meta
-		delete_user_meta($uid, $action);
-		delete_user_meta($uid, $action.'_expires');
+		if(empty($attempts) || $expires < $time){
+			// Delete the meta
+			delete_user_meta($uid, $action);
+			delete_user_meta($uid, $action.'_expires');
+			delete_user_meta($uid, $action.'_attempts');
+		}
 
 		$redirect_to = loginizer_csrf_change_url(admin_url(), $uid);
 
