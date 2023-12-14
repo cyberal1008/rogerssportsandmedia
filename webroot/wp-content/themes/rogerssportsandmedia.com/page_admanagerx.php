@@ -26,7 +26,7 @@
         <div class="tw-mb-10 tw-text-center tw-text-4xl tw-font-semibold">
             Grow Your Business with Rogers Sports & Media
         </div>
-        <div class="tw-flex tw-flex-col md:tw-flex-row-reverse md:tw-px-48 tw-mb-8 md:tw-mb-16">
+        <div class="tw-flex tw-flex-col md:tw-flex-row-reverse md:tw-px-32 2xl:tw-px-48 tw-mb-8 md:tw-mb-16">
             <div class="tw-w-full md:tw-w-3/5 tw-flex tw-px-4 md:tw-px-0 tw-mb-4 md:tw-mb-0">
                 <video controls>
                     <source src="https://www.rogerssportsandmedia.com/wp-content/uploads/2022/08/RSM_Explainer_AUG-18_BP_1.mp4" type="video/mp4">
@@ -105,7 +105,7 @@
             </a>
         </div>
     </section>
-    <section class="tw-py-12 md:tw-py-20 tw-px-4 md:tw-px-48">
+    <section class="tw-py-12 md:tw-py-20 tw-px-4 md:tw-px-32 2xl:tw-px-48">
         <div class="tw-flex tw-flex-col md:tw-flex-row tw-mb-8 md:tw-space-x-4 md:tw-px-60">
             <div class="tw-w-full md:tw-w-1/5 tw-flex tw-flex-row tw-justify-center">
                 <img class="tw-w-32 md:tw-w-fit tw--mt-20 md:tw--mt-24" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/helper-square.png" />
@@ -196,7 +196,7 @@
             </a>
         </div>
     </section>
-    <section class="tw-py-12 md:tw-py-20 tw-px-4 md:tw-px-48">
+    <section class="tw-py-12 md:tw-py-20 tw-px-4 md:tw-px-32 2xl:tw-px-48">
         <div class="tw-flex tw-flex-col md:tw-flex-row-reverse tw-items-center md:tw-justify-center tw-mb-6 md:tw-space-x-8">
             <div>
                 <img class="tw-w-32 md:tw-w-40 tw--mt-20 md:tw--mt-32" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/helper-triange.png" />
