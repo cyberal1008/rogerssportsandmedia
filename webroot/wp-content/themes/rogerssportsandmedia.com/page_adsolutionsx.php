@@ -190,8 +190,8 @@
                 </div>
             </div>
         </div>
-        <div class="tw-text-center tw-mb-10 md:tw-px-60">
-            <span class="tw-font-semibold">Create a radio ad for no extra cost.</span> We make it easy to engage with our production team, from creative brief through to final ad. <p>Or simply upload a 15-second or 30-second radio ad you already have.</p>
+        <div class="tw-text-center tw-mb-10 md:tw-px-48">
+            <span class="tw-font-semibold">Create a radio ad for no extra cost.</span> We make it easy to engage with our production team, from creative brief through to final ad. Or simply upload a 15-second or 30-second radio ad you already have.
         </div>
         <div class="tw-flex tw-justify-center">
             <a target="_blank" href="https://go.rogerssportsandmedia.com" class="tw-text-white tw-border-red tw-bg-red tw-py-4 tw-px-8 tw-font-semibold tw-cursor-pointer hover:tw-no-underline hover:tw-text-white hover:tw-bg-red-dark">
@@ -208,27 +208,27 @@
         </div>
         <div class="tw-px-4 md:tw-px-48">
             <div class="md:tw-px-20 tw-flex tw-flex-col md:tw-flex-row tw-mb-10 tw-space-y-8 md:tw-space-y-0 md:tw-space-x-10">
-                <div class="tw-w-full md:tw-w-1/3 tw-flex tw-flex-col tw-bg-white tw-px-8 tw-py-6 tw-text-center tw-items-center tw-rounded-2xl tw-space-y-4 md:tw-space-y-10">
-                    <div class="tw-h-1/2">
+                <div class="tw-w-full md:tw-w-1/3 tw-bg-white tw-px-8 tw-py-6 tw-text-center tw-items-center tw-rounded-2xl tw-space-y-4"">
+                    <div class="tw-h-1/2 2xl:tw-h-2/5">
                         <p class="tw-font-semibold tw-text-lg tw-mb-2">Premium streaming TV content from <i>Sportsnet, Citytv, Cityline, Citynews, Breakfast Television</i> and more</p>
                     </div>
-                    <div class="tw-h-1/2">
+                    <div class="tw-h-1/2 2xl:tw-h-3/5 tw-flex tw-justify-center">
                         <img class="tw-h-32" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/video-streaming-tv-citytv.png" />
                     </div>
                 </div>
-                <div class="tw-w-full md:tw-w-1/3 tw-flex tw-flex-col tw-bg-white tw-px-8 tw-py-6 tw-text-center tw-items-center tw-rounded-2xl tw-space-y-4 md:tw-space-y-10">
-                    <div class="tw-h-1/2">
+                <div class="tw-w-full md:tw-w-1/3 tw-bg-white tw-px-8 tw-py-6 tw-text-center tw-items-center tw-rounded-2xl tw-space-y-4"">
+                    <div class="tw-h-1/2 2xl:tw-h-2/5">
                         <p class="tw-font-semibold tw-text-lg tw-mb-2">Action-packed <i>NHL, MLB</i> and <i>NBA</i> live sports programming or <i>Sportsnet+</i></p>
                     </div>
-                    <div class="tw-h-1/2">
+                    <div class="tw-h-1/2 2xl:tw-h-3/5 tw-flex tw-justify-center">
                         <img class="tw-h-32" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/sportsnet-plus.png" />
                     </div>
                 </div>
-                <div class="tw-w-full md:tw-w-1/3 tw-flex tw-flex-col tw-bg-white tw-px-8 tw-py-6 tw-text-center tw-items-center tw-rounded-2xl tw-space-y-4 md:tw-space-y-10">
-                    <div class="tw-h-1/2">
+                <div class="tw-w-full md:tw-w-1/3 tw-bg-white tw-px-8 tw-py-6 tw-text-center tw-items-center tw-rounded-2xl tw-space-y-4"">
+                    <div class="tw-h-1/2 2xl:tw-h-2/5">
                         <p class="tw-font-semibold tw-text-lg tw-mb-2">Popular entertainment content from <i>TUBI</i>. One of the fastest growing ad-supported streaming services</p>
                     </div>
-                    <div class="tw-h-1/2">
+                    <div class="tw-h-1/2 2xl:tw-h-3/5 tw-flex tw-justify-center">
                         <img class="tw-h-32" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/video-streaming-tv-tubi.png" />
                     </div>
                 </div>
