@@ -22,7 +22,7 @@
 
 <body>
     <?php get_template_part('template-parts/ad-manager-header'); ?>
-    <section class="tw-py-2 tw-px-4 mb:tw-px-20 tw-mb-20">
+    <section id="display-advertising" class="tw-py-2 tw-px-4 mb:tw-px-20 tw-mb-20">
         <div class="tw-mb-4 tw-text-center tw-text-2xl tw-font-semibold tw-text-red">
             Display Advertising
         </div>
@@ -63,7 +63,7 @@
             </a>
         </div>
     </section>
-    <section class="tw-bg-gray tw-px-4 tw-py-10">
+    <section id="podcast-advertising" class="tw-bg-gray tw-px-4 tw-py-10">
         <div class="tw-mb-4 tw-text-center tw-text-2xl tw-font-semibold tw-text-red">
             Podcast & Streaming Radio Advertising
         </div>
@@ -137,7 +137,7 @@
             </a>
         </div>
     </section>
-    <section class="tw-px-4 tw-py-10">
+    <section id="radio-advertising" class="tw-px-4 tw-py-10">
         <div class="tw-mb-4 tw-text-center tw-text-2xl tw-font-semibold tw-text-red">
             Radio Advertising
         </div>
@@ -199,7 +199,7 @@
             </a>
         </div>
     </section>
-    <section class="tw-px-4 tw-py-10 tw-bg-gray">
+    <section id="streaming-video-advertising" class="tw-px-4 tw-py-10 tw-bg-gray">
         <div class="tw-mb-4 tw-text-center tw-text-2xl tw-font-semibold tw-text-red">
             Video & Streaming TV Advertising
         </div>
@@ -264,9 +264,6 @@
                 Advertise Now
             </a>
         </div>
-    </section>
-    <section class="tw-bg-gray tw-px-4 md:tw-px-60 tw-pt-8">
-        <hr />
     </section>
     <?php get_template_part('template-parts/ad-manager-footer-text'); ?>
 </body>

@@ -106,9 +106,9 @@
         </div>
     </section>
     <section class="tw-py-12 md:tw-py-20 tw-px-4 md:tw-px-32 2xl:tw-px-48">
-        <div class="tw-flex tw-flex-col md:tw-flex-row tw-mb-8 md:tw-space-x-4 md:tw-px-60">
+        <div class="tw-flex tw-flex-col md:tw-flex-row tw-mb-8 md:tw-space-x-4 md:tw-px-48">
             <div class="tw-w-full md:tw-w-1/5 tw-flex tw-flex-row tw-justify-center">
-                <img class="tw-w-32 md:tw-w-fit tw--mt-20 md:tw--mt-24" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/helper-square.png" />
+                <img class="tw-w-32 md:tw-w-40 tw--mt-20 md:tw--mt-32" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/helper-square.svg" />
             </div>
             <div class="tw-w-full md:tw-w-4/5 tw-text-3xl md:tw-text-4xl tw-text-center tw-font-semibold">RSM Ad Manager is Your Starting Point for Our Ad Solutions</div>
         </div>
@@ -117,7 +117,7 @@
                 <div class="tw-h-2/3">
                     <p class="tw-font-semibold tw-text-lg tw-mb-2">Display Advertising</p>
                     <p>Deliver impactful brand messaging across our network of sites.</p>
-                    <a href="/ad-solutions/" class="tw-mb-16 tw-text-red tw-text-sm tw-underline hover:tw-text-red-dark">
+                    <a href="/ad-solutions/#display-advertising" class="tw-mb-16 tw-text-red tw-text-sm tw-underline hover:tw-text-red-dark">
                         Learn More
                     </a>
                 </div>
@@ -127,9 +127,9 @@
             </div>
             <div class="tw-w-full md:tw-w-1/4 tw-flex tw-flex-col tw-bg-gray tw-px-8 tw-py-6 tw-text-center tw-items-center tw-rounded-2xl tw-space-y-8">
                 <div class="tw-h-2/3">
-                    <p class="tw-font-semibold tw-text-lg tw-mb-2">Podcast & Streaming Radio</p>
+                    <p class="tw-font-semibold tw-text-lg tw-mb-2">Podcast Advertising</p>
                     <p>Reach our engaged audiences as they listen to premium podcast and streaming radio content.</p>
-                    <a href="/ad-solutions/" class="tw-mb-16 tw-text-red tw-text-sm tw-underline hover:tw-text-red-dark">
+                    <a href="/ad-solutions/#podcast-advertising" class="tw-mb-16 tw-text-red tw-text-sm tw-underline hover:tw-text-red-dark">
                         Learn More
                     </a>
                 </div>
@@ -141,7 +141,7 @@
                 <div class="tw-h-2/3">
                     <p class="tw-font-semibold tw-text-lg tw-mb-2">Radio Advertising</p>
                     <p>Drive top-of-mind awareness for your business in the markets that matter to you.</p>
-                    <a href="/ad-solutions/" class="tw-mb-16 tw-text-red tw-text-sm tw-underline hover:tw-text-red-dark">
+                    <a href="/ad-solutions/#radio-advertising" class="tw-mb-16 tw-text-red tw-text-sm tw-underline hover:tw-text-red-dark">
                         Learn More
                     </a>
                 </div>
@@ -151,9 +151,9 @@
             </div>
             <div class="tw-w-full md:tw-w-1/4 tw-flex tw-flex-col tw-bg-gray tw-px-8 tw-py-6 tw-text-center tw-items-center tw-rounded-2xl tw-space-y-8">
                 <div class="tw-h-2/3">
-                    <p class="tw-font-semibold tw-text-lg tw-mb-2">Video & Streaming TV</p>
+                    <p class="tw-font-semibold tw-text-lg tw-mb-2">Streaming Video Advertising</p>
                     <p>Reach audiences engaged in the best streaming and video content in Canada.</p>
-                    <a href="/ad-solutions/" class="tw-mb-16 tw-text-red tw-text-sm tw-underline hover:tw-text-red-dark">
+                    <a href="/ad-solutions/#streaming-video-advertising" class="tw-mb-16 tw-text-red tw-text-sm tw-underline hover:tw-text-red-dark">
                         Learn More
                     </a>
                 </div>
