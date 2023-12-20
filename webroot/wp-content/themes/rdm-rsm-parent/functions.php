@@ -377,3 +377,10 @@ function submit_single_event_form() {
 }
 add_action('wp_ajax_submit_single_event_form', 'submit_single_event_form');
 add_action('wp_ajax_nopriv_submit_single_event_form', 'submit_single_event_form');
+
+function no_iframe_headers() {
+    header( "X-Frame-Options: DENY", true );
+    header( "Content-Security-Policy: frame-ancestors 'none'", true );
+}
+
+add_action('send_headers', 'no_iframe_headers');
