@@ -72,35 +72,35 @@
         </div>
         <div class="tw-px-4 md:tw-px-32">
             <div class="tw-flex tw-flex-col md:tw-flex-row tw-mb-10 tw-items-stretch tw-space-y-8 md:tw-space-y-0 md:tw-space-x-10">
-                <div class="tw-w-full md:tw-w-1/4 tw-flex tw-flex-col tw-bg-white tw-px-8 tw-py-6 tw-text-center tw-items-center tw-rounded-2xl tw-space-y-8 md:tw-space-y-12">
-                    <div class="tw-h-3/5">
+                <div class="tw-w-full md:tw-w-1/4 tw-bg-white tw-px-4 tw-text-center tw-items-center tw-rounded-2xl tw-py-6 tw-space-y-4">
+                    <div class="tw-h-3/5 xl:tw-h-1/2">
                         <p class="tw-font-semibold tw-text-lg tw-mb-2">Streaming news, entertainment and music content from our 50+ market-leading radio stations</p>
                     </div>
-                    <div class="tw-h-2/5">
+                    <div class="tw-h-2/5 xl:tw-h-1/2 tw-flex tw-justify-center md:tw-pb-12">
                         <img class="tw-h-32" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/ad-solutions-kiss-radio.png" />
                     </div>
                 </div>
-                <div class="tw-w-full md:tw-w-1/4 tw-flex tw-flex-col tw-bg-white tw-px-8 tw-py-6 tw-text-center tw-items-center tw-rounded-2xl tw-space-y-8 md:tw-space-y-12">
-                    <div class="tw-h-3/5">
+                <div class="tw-w-full md:tw-w-1/4 tw-bg-white tw-px-4 tw-text-center tw-items-center tw-rounded-2xl tw-py-6 tw-space-y-4">
+                    <div class="tw-h-3/5 xl:tw-h-1/2">
                         <p class="tw-font-semibold tw-text-lg tw-mb-2">Award winning news and lifestyle podcast content such as <i>The Big Story, Teach Me How to Adult,</i> and <i>Island Crime</i></p>
                     </div>
-                    <div class="tw-h-2/5">
+                    <div class="tw-h-2/5 xl:tw-h-1/2 tw-flex tw-justify-center md:tw-pb-12">
                         <img class="tw-h-32" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/ad-solutions-big-story.png" />
                     </div>
                 </div>
-                <div class="tw-w-full md:tw-w-1/4 tw-flex tw-flex-col tw-bg-white tw-px-8 tw-py-6 tw-text-center tw-items-center tw-rounded-2xl tw-space-y-8 md:tw-space-y-12">
-                    <div class="tw-h-3/5">
+                <div class="tw-w-full md:tw-w-1/4 tw-bg-white tw-px-4 tw-text-center tw-items-center tw-rounded-2xl tw-py-6 tw-space-y-4">
+                    <div class="tw-h-3/5 xl:tw-h-1/2">
                         <p class="tw-font-semibold tw-text-lg tw-mb-2">7 of the top 20 sports podcasts in Canada including <i>32 Thoughts</i> and <i>The Raptors Show with Will Lou</i></p>
                     </div>
-                    <div class="tw-h-2/5">
+                    <div class="tw-h-2/5 xl:tw-h-1/2 tw-flex tw-justify-center md:tw-pb-12">
                         <img class="tw-h-32" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/ad-solutions-32-thoughts.png" />
                     </div>
                 </div>
-                <div class="tw-w-full md:tw-w-1/4 tw-flex tw-flex-col tw-bg-white tw-px-8 tw-py-6 tw-text-center tw-items-center tw-rounded-2xl tw-space-y-8 md:tw-space-y-12">
-                    <div class="tw-h-3/5">
+                <div class="tw-w-full md:tw-w-1/4 tw-bg-white tw-px-4 tw-text-center tw-items-center tw-rounded-2xl tw-py-6 tw-space-y-4">
+                    <div class="tw-h-3/5 xl:tw-h-1/2">
                         <p class="tw-font-semibold tw-text-lg tw-mb-2">Exclusive access to partner podcasts from around the world including <i>Dateline NBC, Conan O'Brien Needs a Friend, Hidden Brain,</i> and many more</p>
                     </div>
-                    <div class="tw-h-2/5">
+                    <div class="tw-h-2/5 xl:tw-h-1/2 tw-flex tw-justify-center md:tw-pb-12">
                         <img class="tw-h-32" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/ad-solutions-nbc-dateline.png" />
                     </div>
                 </div>
@@ -207,28 +207,28 @@
             Reach audiences engaged in the best streaming and video content in Canada
         </div>
         <div class="tw-px-4 md:tw-px-48">
-            <div class="md:tw-px-20 tw-flex tw-flex-col md:tw-flex-row tw-mb-10 tw-space-y-8 md:tw-space-y-0 md:tw-space-x-10">
-                <div class="tw-w-full md:tw-w-1/3 tw-bg-white tw-px-8 tw-py-6 tw-text-center tw-items-center tw-rounded-2xl tw-space-y-4"">
-                    <div class="tw-h-1/2 2xl:tw-h-2/5">
+            <div class="md:tw-px-10 tw-flex tw-flex-col md:tw-flex-row tw-mb-10 tw-space-y-8 md:tw-space-y-0 md:tw-space-x-10">
+                <div class="tw-w-full md:tw-w-1/3 tw-bg-white tw-px-4 tw-text-center tw-items-center tw-rounded-2xl tw-py-6 tw-space-y-4">
+                    <div class="tw-h-3/5 xl:tw-h-1/2">
                         <p class="tw-font-semibold tw-text-lg tw-mb-2">Premium streaming TV content from <i>Sportsnet, Citytv, Cityline, Citynews, Breakfast Television</i> and more</p>
                     </div>
-                    <div class="tw-h-1/2 2xl:tw-h-3/5 tw-flex tw-justify-center">
+                    <div class="tw-h-2/5 xl:tw-h-1/2 tw-flex tw-justify-center md:tw-pb-12">
                         <img class="tw-h-32" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/video-streaming-tv-citytv.png" />
                     </div>
                 </div>
-                <div class="tw-w-full md:tw-w-1/3 tw-bg-white tw-px-8 tw-py-6 tw-text-center tw-items-center tw-rounded-2xl tw-space-y-4"">
-                    <div class="tw-h-1/2 2xl:tw-h-2/5">
+                <div class="tw-w-full md:tw-w-1/3 tw-bg-white tw-px-4 tw-text-center tw-items-center tw-rounded-2xl tw-py-6 tw-space-y-4">
+                    <div class="tw-h-3/5 xl:tw-h-1/2">
                         <p class="tw-font-semibold tw-text-lg tw-mb-2">Action-packed <i>NHL, MLB</i> and <i>NBA</i> live sports programming or <i>Sportsnet+</i></p>
                     </div>
-                    <div class="tw-h-1/2 2xl:tw-h-3/5 tw-flex tw-justify-center">
+                    <div class="tw-h-2/5 xl:tw-h-1/2 tw-flex tw-justify-center md:tw-pb-12">
                         <img class="tw-h-32" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/sportsnet-plus.png" />
                     </div>
                 </div>
-                <div class="tw-w-full md:tw-w-1/3 tw-bg-white tw-px-8 tw-py-6 tw-text-center tw-items-center tw-rounded-2xl tw-space-y-4"">
-                    <div class="tw-h-1/2 2xl:tw-h-2/5">
+                <div class="tw-w-full md:tw-w-1/3 tw-bg-white tw-px-4 tw-text-center tw-items-center tw-rounded-2xl tw-py-6 tw-space-y-4">
+                    <div class="tw-h-3/5 xl:tw-h-1/2">
                         <p class="tw-font-semibold tw-text-lg tw-mb-2">Popular entertainment content from <i>TUBI</i>. One of the fastest growing ad-supported streaming services</p>
                     </div>
-                    <div class="tw-h-1/2 2xl:tw-h-3/5 tw-flex tw-justify-center">
+                    <div class="tw-h-2/5 xl:tw-h-1/2 tw-flex tw-justify-center md:tw-pb-12">
                         <img class="tw-h-32" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/video-streaming-tv-tubi.png" />
                     </div>
                 </div>
