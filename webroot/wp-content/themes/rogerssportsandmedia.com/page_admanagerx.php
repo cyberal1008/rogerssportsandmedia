@@ -20,7 +20,8 @@
 	<?php facebook_pixel_code(); ?>
 </head>
 
-<body>
+<body class="tw-relative tw-z-10" onclick="closeNewsletterModal()">
+    <?php get_template_part('template-parts/ad-manager-popup'); ?>
     <?php get_template_part('template-parts/ad-manager-header'); ?>
     <section class="tw-py-10">
         <div class="tw-mb-10 tw-text-center tw-text-4xl tw-font-semibold">
@@ -228,7 +229,19 @@
 </body>
 
 <script>
+    const newsletterModal = document.getElementById("newsletter-modal");
+    function toggle(e) {
+      e.stopPropagation();
+      newsletterModal.classList.toggle("tw-hidden");
+    }
+    function closeNewsletterModal() {
+      if (!newsletterModal.classList.contains("tw-hidden")) {
+        newsletterModal.classList.toggle("tw-hidden");
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', function () {
+        newsletterModal.classList.remove("tw-hidden");
         function deactivateTakeControlElements() {
             const takeControlDivs = document.querySelectorAll('.take-control-content');
             takeControlDivs.forEach(el => {

@@ -574,6 +574,22 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
+.tw-fixed {
+  position: fixed;
+}
+
+.tw-relative {
+  position: relative;
+}
+
+.tw-inset-0 {
+  inset: 0px;
+}
+
+.tw-z-10 {
+  z-index: 10;
+}
+
 .-tw-mt-1 {
   margin-top: -0.25rem;
 }
@@ -626,8 +642,28 @@ video {
   margin-bottom: 2rem;
 }
 
+.tw-mt-0 {
+  margin-top: 0px;
+}
+
+.tw-mt-0\.5 {
+  margin-top: 0.125rem;
+}
+
+.tw-block {
+  display: block;
+}
+
+.tw-inline {
+  display: inline;
+}
+
 .tw-flex {
   display: flex;
+}
+
+.tw-inline-flex {
+  display: inline-flex;
 }
 
 .tw-grid {
@@ -678,6 +714,10 @@ video {
   height: 2rem;
 }
 
+.tw-min-h-full {
+  min-height: 100%;
+}
+
 .tw-w-1\/4 {
   width: 25%;
 }
@@ -700,6 +740,18 @@ video {
 
 .tw-w-full {
   width: 100%;
+}
+
+.tw-w-screen {
+  width: 100vw;
+}
+
+.tw-shrink-0 {
+  flex-shrink: 0;
+}
+
+.tw-transform {
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
 .tw-cursor-pointer {
@@ -784,12 +836,29 @@ video {
   margin-bottom: calc(2rem * var(--tw-space-y-reverse));
 }
 
+.tw-overflow-hidden {
+  overflow: hidden;
+}
+
+.tw-overflow-y-auto {
+  overflow-y: auto;
+}
+
 .tw-rounded-2xl {
   border-radius: 1rem;
 }
 
+.tw-rounded-lg {
+  border-radius: 0.5rem;
+}
+
 .tw-border {
   border-width: 1px;
+}
+
+.tw-border-gray {
+  --tw-border-opacity: 1;
+  border-color: rgb(245 245 245 / var(--tw-border-opacity));
 }
 
 .tw-border-red {
@@ -820,6 +889,14 @@ video {
 .tw-bg-yellow {
   --tw-bg-opacity: 1;
   background-color: rgb(255 190 61 / var(--tw-bg-opacity));
+}
+
+.tw-bg-opacity-75 {
+  --tw-bg-opacity: 0.75;
+}
+
+.tw-p-4 {
+  padding: 1rem;
 }
 
 .tw-px-12 {
@@ -891,6 +968,10 @@ video {
   padding-top: 0px;
 }
 
+.tw-text-left {
+  text-align: left;
+}
+
 .tw-text-center {
   text-align: center;
 }
@@ -915,6 +996,11 @@ video {
   line-height: 1;
 }
 
+.tw-text-base {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
 .tw-text-lg {
   font-size: 1.125rem;
   line-height: 1.75rem;
@@ -923,6 +1009,11 @@ video {
 .tw-text-sm {
   font-size: 0.875rem;
   line-height: 1.25rem;
+}
+
+.tw-text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
 }
 
 .tw-text-xs {
@@ -953,9 +1044,33 @@ video {
   text-decoration-line: underline;
 }
 
+.tw-shadow-sm {
+  --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.tw-shadow-xl {
+  --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
 .tw-grayscale {
   --tw-grayscale: grayscale(100%);
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
+.tw-transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.tw-transition-opacity {
+  transition-property: opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
 }
 
 .hover\:tw-bg-red-dark:hover {
@@ -987,6 +1102,60 @@ video {
   text-decoration-line: none;
 }
 
+.focus\:tw-border-none:focus {
+  border-style: none;
+}
+
+.focus\:tw-outline-none:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.disabled\:tw-pointer-events-none:disabled {
+  pointer-events: none;
+}
+
+.disabled\:tw-opacity-50:disabled {
+  opacity: 0.5;
+}
+
+@media (min-width: 640px) {
+  .sm\:tw-my-8 {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .sm\:tw-flex {
+    display: flex;
+  }
+
+  .sm\:tw-w-full {
+    width: 100%;
+  }
+
+  .sm\:tw-max-w-lg {
+    max-width: 32rem;
+  }
+
+  .sm\:tw-flex-row-reverse {
+    flex-direction: row-reverse;
+  }
+
+  .sm\:tw-p-0 {
+    padding: 0px;
+  }
+
+  .sm\:tw-px-12 {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+
+  .sm\:tw-px-6 {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
 @media (min-width: 768px) {
   .md\:tw--mt-32 {
     margin-top: -8rem;
@@ -1006,6 +1175,10 @@ video {
 
   .md\:tw-h-16 {
     height: 4rem;
+  }
+
+  .md\:tw-h-24 {
+    height: 6rem;
   }
 
   .md\:tw-h-full {
