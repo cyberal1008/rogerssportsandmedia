@@ -20,7 +20,7 @@
 	<?php facebook_pixel_code(); ?>
 </head>
 
-<body class="tw-relative tw-z-10" onclick="closeNewsletterModal()">
+<body class="tw-relative tw-z-10">
     <?php get_template_part('template-parts/ad-manager-popup'); ?>
     <?php get_template_part('template-parts/ad-manager-header'); ?>
     <section class="tw-py-10">

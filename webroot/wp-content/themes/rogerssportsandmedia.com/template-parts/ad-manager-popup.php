@@ -26,7 +26,7 @@
               <input type="checkbox" class="tw-shrink-0 tw-mt-0.5 tw-border-gray disabled:opacity-50 disabled:tw-pointer-events-none" id="newsletter-opt-in-checkbox">
               <label for="newsletter-opt-in-checkbox" class="tw-text-sm tw-inline">I want to stay up-to-date on Rogers Sports & Media news, events, and more. <a target="_blank" class="tw-underline" href="https://www.rogers.com/support/privacy/rogers-privacy-policy#scope-%26-application-of-this-policy">View Privacy Policy</a></label>
             </div>
-            <button type="button" class="tw-inline-flex tw-w-full tw-justify-center tw-bg-red tw-px-3 tw-py-3 tw-text-base tw-font-semibold tw-text-white tw-shadow-sm hover:tw-bg-red-dark">Sign Up Now</button>
+            <button onclick="closeNewsletterModal()" type="button" class="tw-inline-flex tw-w-full tw-justify-center tw-bg-red tw-px-3 tw-py-3 tw-text-base tw-font-semibold tw-text-white tw-shadow-sm hover:tw-bg-red-dark">Sign Up Now</button>
           </div>
           <div class="tw-text-xs tw-bg-gray tw-px-4 tw-py-3 sm:tw-flex sm:tw-flex-row-reverse sm:tw-px-6">
               *GET250 promo code is valid until 12/31/2024 and can be used on orders of $500CAD or more (before taxes) placed on RSM Ad Manager. Promo code valid for one-time use per account.
