@@ -6,6 +6,10 @@ class Debug_Bar_Console extends Debug_Bar_Panel {
 		add_action( 'wp_ajax_debug_bar_console', array( &$this, 'ajax' ) );
 	}
 
+	static function flush_init() {
+		add_action( 'wp_ajax_debug_bar_console_flush', array( __CLASS__, 'ajax_flush' ) );
+	}
+
 	function prerender() {
 		$this->set_visible( true );
 	}
@@ -92,6 +96,22 @@ class Debug_Bar_Console extends Debug_Bar_Panel {
 			}
 			die();
 		}
+	}
+
+	public static function ajax_flush() {
+		
+		if ( false === check_ajax_referer( 'debug_bar_console_flush', 'nonce', false ) ){
+			die();
+		}
+
+		if (function_exists('wp_cache_flush')) {
+			wp_cache_flush();
+		}
+
+		if (function_exists('opcache_reset')) {
+			opcache_reset();
+		}
+		wp_send_json_success();
 	}
 
 	function print_mysql_table( $data, $query='' ) {

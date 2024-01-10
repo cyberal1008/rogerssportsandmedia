@@ -20,6 +20,7 @@ if ( !class_exists('LoginizerUpdateChecker_3_2', false) ):
  * @version 3.2
  * @access public
  */
+#[\AllowDynamicProperties]
 class LoginizerUpdateChecker_3_2 {
 	public $metadataUrl = ''; //The URL of the plugin's metadata file.
 	public $pluginAbsolutePath = ''; //Full path of the main plugin file.
@@ -998,6 +999,7 @@ if ( !class_exists('LoginizerInfo_3_2', false) ):
  * @version 3.2
  * @access public
  */
+#[\AllowDynamicProperties]
 class LoginizerInfo_3_2 {
 	//Most fields map directly to the contents of the plugin's info.json file.
 	//See the relevant docs for a description of their meaning.  

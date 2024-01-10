@@ -20,6 +20,7 @@ run = function() {
 		data:   input.val(),
 		nonce:  nonce
 	}, function( data ) {
+		$(window).trigger('console_complete', data);
 		iframe.body.html( data );
 	});
 	return false;
@@ -107,6 +108,7 @@ $(document).ready( function(){
 	// Generate iframe variables
 	iframe.container = $('iframe', el.output);
 	iframe.contents  = iframe.container.contents();
+	console.log('--iframe--',iframe.contents );
 	iframe.document  = iframe.contents[0];
 	iframe.body      = $( iframe.document.body );
 
