@@ -377,3 +377,57 @@ function submit_single_event_form() {
 }
 add_action('wp_ajax_submit_single_event_form', 'submit_single_event_form');
 add_action('wp_ajax_nopriv_submit_single_event_form', 'submit_single_event_form');
+
+function submit_ad_manager_email_signup_form() {
+    global $wpdb;
+
+	$formData = [
+		'email_address' => $_POST['email'],
+		'opt_in' => $_POST['opt_in']
+	];
+
+	$clientId = get_option('journey_builder_client_id');
+	$clientSecret = get_option('journey_builder_client_secret');
+	$accountId = get_option('journey_builder_account_id');
+	$eventDefinitionKey = get_option('ad_manager_event_definition_key');
+
+	$authData = [
+		"grant_type" => "client_credentials",
+		"client_id" => $clientId,
+		"client_secret" => $clientSecret,
+		"account_id" => $accountId,
+	];
+
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, "https://mcdjql80kmghrjj6lg68bbtqbgv1.auth.marketingcloudapis.com/v2/token");
+	curl_setopt($ch, CURLOPT_POST, 1);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $authData);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	$response = curl_exec($ch);
+	curl_close($ch);
+
+	$results = json_decode($response, true);
+	$accessToken = $results['access_token'];
+
+	$userUniqueId = substr(md5(uniqid(rand(), true)), 0, 18);
+
+	$formData['Subscriberkey'] = $userUniqueId;
+	$eventData = [
+		"contactkey" => $userUniqueId,
+		"EventDefinitionKey" => $eventDefinitionKey,
+		"Data" => $formData
+	];
+
+
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, "https://mcdjql80kmghrjj6lg68bbtqbgv1.rest.marketingcloudapis.com/interaction/v1/events");
+	curl_setopt($ch, CURLOPT_POST, 1);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($eventData));
+	curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-type: application/json', 'Authorization: Bearer '. $accessToken]);
+	$result2 = curl_exec($ch);
+	curl_close($ch);
+	
+	wp_die();
+}
+add_action('wp_ajax_submit_ad_manager_email_signup_form', 'submit_ad_manager_email_signup_form');
+add_action('wp_ajax_nopriv_submit_ad_manager_email_signup_form', 'submit_ad_manager_email_signup_form');
