@@ -1,6 +1,6 @@
 <div id="newsletter-modal" class="tw-hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-  <div style="background-color: rgb(107 114 128 / var(--tw-bg-opacity))" class="tw-fixed tw-inset-0 tw-bg-opacity-75 tw-transition-opacity"></div>
-  <div class="tw-fixed tw-inset-0 tw-z-10 tw-w-screen tw-overflow-y-auto">
+  <div onclick="closeNewsletterModal()" style="background-color: rgb(107 114 128 / var(--tw-bg-opacity))" class="tw-fixed tw-inset-0 tw-bg-opacity-75 tw-transition-opacity"></div>
+  <div style="transform: translate(calc(50vw - 50%), calc(50vh - 50%));" class="tw-fixed tw-z-10">
     <div class="tw-flex tw-min-h-full tw-items-center tw-justify-center tw-p-4 tw-text-center sm:tw-p-0">
       <div class="tw-relative tw-transform tw-overflow-hidden tw-rounded-lg tw-bg-white tw-text-left tw-shadow-xl tw-transition-all sm:tw-my-8 sm:tw-w-full sm:tw-max-w-lg">
           <div class="tw-bg-red tw-px-4 tw-py-3 tw-flex tw-justify-center">
@@ -15,19 +15,43 @@
             <p class="tw-text-xl tw-font-semibold tw-text-center tw-mb-6">
                 Get a $250 ad credit to use towards your first campaign of $500 or more*
             </p>
-            <div class="tw-mb-4">
-              <input 
-              type="text" 
-              class="tw-py-4 tw-px-4 tw-block tw-w-full tw-text-base tw-bg-gray focus:tw-border-none focus:tw-outline-none disabled:tw-opacity-50 disabled:tw-pointer-events-none"
-              placeholder="Enter your email address"
-            />
+            <div id="newsletter-modal-success-section" class="tw-flex-col tw-text-center tw-hidden">
+                <div class="tw-flex tw-justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="tw-w-16 tw-h-16 tw-text-green">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                </div>
+                <p class="tw-font-semibold tw-mb-4">
+                    Your signup was successful!
+                </p>
+                <button onclick="closeNewsletterModal()" type="button" class="tw-inline-flex tw-w-full tw-justify-center tw-bg-red tw-px-3 tw-py-3 tw-text-base tw-font-semibold tw-text-white tw-shadow-sm hover:tw-bg-red-light">Close</button>
             </div>
-            <div class="tw-mb-4">
-              <input type="checkbox" class="tw-shrink-0 tw-mt-0.5 tw-border-gray disabled:opacity-50 disabled:tw-pointer-events-none" id="newsletter-opt-in-checkbox">
-              <label for="newsletter-opt-in-checkbox" class="tw-text-sm tw-inline">I want to stay up-to-date on Rogers Sports & Media news, events, and more. <a target="_blank" class="tw-underline" href="https://www.rogers.com/support/privacy/rogers-privacy-policy#scope-%26-application-of-this-policy">View Privacy Policy</a></label>
+            <div id="newsletter-modal-error-section" class="tw-flex-col tw-text-center tw-hidden">
+                <div class="tw-flex tw-justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="tw-w-16 tw-h-16 tw-text-red">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                </div>
+                <p class="tw-font-semibold tw-mb-4">
+                    Unable to complete signup request. Please try again.
+                </p>
+                <button onclick="closeNewsletterModal()" type="button" class="tw-inline-flex tw-w-full tw-justify-center tw-bg-red tw-px-3 tw-py-3 tw-text-base tw-font-semibold tw-text-white tw-shadow-sm hover:tw-bg-red-light">Close</button>
             </div>
-            <button onclick="closeNewsletterModal()" type="button" class="tw-inline-flex tw-w-full tw-justify-center tw-bg-red tw-px-3 tw-py-3 tw-text-base tw-font-semibold tw-text-white tw-shadow-sm hover:tw-bg-red-dark">Sign Up Now</button>
-          </div>
+            <div id="newsletter-modal-form-section">
+                <div class="tw-mb-4">
+                    <input 
+                        type="text" 
+                        class="tw-py-4 tw-px-4 tw-block tw-w-full tw-text-base tw-bg-gray focus:tw-border-none focus:tw-outline-none disabled:tw-opacity-50 disabled:tw-pointer-events-none"
+                        placeholder="Enter your email address"
+                    />
+                </div>
+                <div class="tw-mb-4">
+                    <input type="checkbox" class="tw-shrink-0 tw-mt-0.5 tw-border-gray disabled:opacity-50 disabled:tw-pointer-events-none" id="newsletter-opt-in-checkbox">
+                    <label for="newsletter-opt-in-checkbox" class="tw-text-sm tw-inline">I want to stay up-to-date on Rogers Sports & Media news, events, and more. <a target="_blank" class="tw-underline" href="https://www.rogers.com/support/privacy/rogers-privacy-policy#scope-%26-application-of-this-policy">View Privacy Policy</a></label>
+                </div>
+                <button onclick="closeNewsletterModal()" type="button" class="tw-inline-flex tw-w-full tw-justify-center tw-bg-red tw-px-3 tw-py-3 tw-text-base tw-font-semibold tw-text-white tw-shadow-sm hover:tw-bg-red-dark">Sign Up Now</button>
+            </div>
+            </div>
           <div class="tw-text-xs tw-bg-gray tw-px-4 tw-py-3 sm:tw-flex sm:tw-flex-row-reverse sm:tw-px-6">
               *GET250 promo code is valid until 12/31/2024 and can be used on orders of $500CAD or more (before taxes) placed on RSM Ad Manager. Promo code valid for one-time use per account.
           </div>
