@@ -3,9 +3,21 @@
   <div style="transform: translate(calc(50vw - 50%), calc(50vh - 50%));" class="tw-fixed tw-z-10">
     <div class="tw-flex tw-min-h-full tw-items-center tw-justify-center tw-p-4 tw-text-center sm:tw-p-0">
       <div class="tw-relative tw-transform tw-overflow-hidden tw-rounded-lg tw-bg-white tw-text-left tw-shadow-xl tw-transition-all sm:tw-my-8 sm:tw-w-full sm:tw-max-w-lg">
-          <div class="tw-bg-red tw-px-4 tw-py-3 tw-flex tw-justify-center">
-              <img class="tw-h-12 md:tw-h-16" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/logo-landing-white.png" />
-          </div>
+            <div class="tw-grid tw-grid-cols-12 tw-px-4 tw-py-3 tw-bg-red">
+                <div class="tw-col-start-2 tw-col-span-10">
+                    <img class="tw-h-12 md:tw-h-16 tw-mx-auto" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/logo-landing-white.png" />
+                </div>
+                <div class="tw-col-span-1 tw-flex tw-justify-center tw-items-center">
+                    <button
+                        onclick="closeNewsletterModal()"
+                        type="button"
+                        aria-label="Close">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.0" stroke="currentColor" class="tw-w-6 tw-h-6 tw-text-white tw-font-semibold">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                        </svg>                
+                    </button>
+                </div>
+            </div>
           <div class="tw-py-6 tw-px-6 sm:tw-px-12">
                 <div class="tw-flex tw-mb-6 tw-justify-center">
                     <img class="tw-h-12 md:tw-h-24" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/helper-circle.png" />
@@ -22,7 +34,7 @@
                         </svg>
                     </div>
                     <p class="tw-font-semibold tw-mb-4">
-                        Your signup was successful!
+                        Your credit is on the way!
                     </p>
                     <button onclick="closeNewsletterModal()" type="button" class="tw-inline-flex tw-w-full tw-justify-center tw-bg-red tw-px-3 tw-py-3 tw-text-base tw-font-semibold tw-text-white tw-shadow-sm hover:tw-bg-red-light">Close</button>
                 </div>
@@ -33,7 +45,7 @@
                         </svg>
                     </div>
                     <p class="tw-font-semibold tw-mb-4">
-                        Unable to complete signup request. Please try again.
+                        Unable to complete request. Please try again.
                     </p>
                     <button onclick="closeNewsletterModal()" type="button" class="tw-inline-flex tw-w-full tw-justify-center tw-bg-red tw-px-3 tw-py-3 tw-text-base tw-font-semibold tw-text-white tw-shadow-sm hover:tw-bg-red-light">Close</button>
                 </div>
@@ -54,7 +66,7 @@
                     <button type="submit" class="tw-inline-flex tw-w-full tw-justify-center tw-bg-red tw-px-3 tw-py-3 tw-text-base tw-font-semibold tw-text-white tw-shadow-sm hover:tw-bg-red-dark">Sign Up Now</button>
                 </form>
             </div>
-          <div class="tw-text-xs tw-bg-gray tw-px-4 tw-py-3 sm:tw-flex sm:tw-flex-row-reverse sm:tw-px-6">
+          <div class="tw-text-xs tw-bg-gray tw-px-4 tw-py-3 sm:tw-px-6 tw-italic">
               *GET250 promo code is valid until 12/31/2024 and can be used on orders of $500CAD or more (before taxes) placed on RSM Ad Manager. Promo code valid for one-time use per account.
           </div>
       </div>
