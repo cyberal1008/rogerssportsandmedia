@@ -34,7 +34,7 @@
                         </svg>
                     </div>
                     <p class="tw-font-semibold tw-mb-4">
-                        Your credit is on the way!
+                        Check your email for your $250 ad credit!
                     </p>
                     <button onclick="closeNewsletterModal()" type="button" class="tw-inline-flex tw-w-full tw-justify-center tw-bg-red tw-px-3 tw-py-3 tw-text-base tw-font-semibold tw-text-white tw-shadow-sm hover:tw-bg-red-light">Close</button>
                 </div>
