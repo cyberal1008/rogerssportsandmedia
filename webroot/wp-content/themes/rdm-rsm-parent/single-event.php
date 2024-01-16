@@ -39,6 +39,11 @@ get_header(); ?>
         }
         else if( strpos( $_SERVER["REQUEST_URI"], "disney-launch" ) !== false ){
           get_template_part('template-parts/disney-launch-event-form');
+        }
+        else if( strpos( $_SERVER["REQUEST_URI"], "sn-hockey-classic-2024" ) !== false ){
+          ?>
+            <iframe class = "single-event-iframe <?php echo $classes; ?>" src="https://mcdjql80kmghrjj6lg68bbtqbgv1.pub.sfmc-content.com/glcynrk4h21"></iframe>
+          <?php
         } else {
           ?>
             <iframe class = "single-event-iframe <?php echo $classes; ?>" src="https://mcdjql80kmghrjj6lg68bbtqbgv1.pub.sfmc-content.com/fjvu0tj21uh?campaign=<?php echo $event_id . $address_parameter; ?>"></iframe>
