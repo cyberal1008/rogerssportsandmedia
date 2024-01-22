@@ -100,10 +100,20 @@ function config_vars_page_init() {
 		array('disney_launch_event_definition_key')
 	);
 
+	add_settings_field(
+		'ad_manager_event_definition_key',
+		'AD_MANAGER_EVENT_DEFINITION_KEY',
+		'config_textbox_callback',
+		'config-vars-page',
+		'journey_builder_settings_section',
+		array('ad_manager_event_definition_key')
+	);
+
 	register_setting( 'config-vars-page', 'journey_builder_client_id' );
 	register_setting( 'config-vars-page', 'journey_builder_client_secret' );
 	register_setting( 'config-vars-page', 'journey_builder_account_id' );
 	register_setting( 'config-vars-page', 'disney_launch_event_definition_key' );
+	register_setting( 'config-vars-page', 'ad_manager_event_definition_key' );
 }
 
 function journey_builder_settings_section_callback_function() {
