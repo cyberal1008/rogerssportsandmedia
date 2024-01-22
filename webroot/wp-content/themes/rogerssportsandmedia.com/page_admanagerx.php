@@ -118,7 +118,7 @@
                 <div class="tw-h-2/3">
                     <p class="tw-font-semibold tw-text-lg tw-mb-2">Display Advertising</p>
                     <p>Deliver impactful brand messaging across our network of sites.</p>
-                    <a href="/ad-solutions/#display-advertising" class="tw-mb-16 tw-text-red tw-text-sm tw-underline hover:tw-text-red-dark">
+                    <a target="_blank" href="/ad-solutions/#display-advertising" class="tw-mb-16 tw-text-red tw-text-sm tw-underline hover:tw-text-red-dark">
                         Learn More
                     </a>
                 </div>
@@ -130,7 +130,7 @@
                 <div class="tw-h-2/3">
                     <p class="tw-font-semibold tw-text-lg tw-mb-2">Podcast Advertising</p>
                     <p>Reach our engaged audiences as they listen to premium podcast and streaming radio content.</p>
-                    <a href="/ad-solutions/#podcast-advertising" class="tw-mb-16 tw-text-red tw-text-sm tw-underline hover:tw-text-red-dark">
+                    <a target="_blank" href="/ad-solutions/#podcast-advertising" class="tw-mb-16 tw-text-red tw-text-sm tw-underline hover:tw-text-red-dark">
                         Learn More
                     </a>
                 </div>
@@ -142,7 +142,7 @@
                 <div class="tw-h-2/3">
                     <p class="tw-font-semibold tw-text-lg tw-mb-2">Radio Advertising</p>
                     <p>Drive top-of-mind awareness for your business in the markets that matter to you.</p>
-                    <a href="/ad-solutions/#radio-advertising" class="tw-mb-16 tw-text-red tw-text-sm tw-underline hover:tw-text-red-dark">
+                    <a target="_blank" href="/ad-solutions/#radio-advertising" class="tw-mb-16 tw-text-red tw-text-sm tw-underline hover:tw-text-red-dark">
                         Learn More
                     </a>
                 </div>
@@ -154,7 +154,7 @@
                 <div class="tw-h-2/3">
                     <p class="tw-font-semibold tw-text-lg tw-mb-2">Streaming Video Advertising</p>
                     <p>Reach audiences engaged in the best streaming and video content in Canada.</p>
-                    <a href="/ad-solutions/#streaming-video-advertising" class="tw-mb-16 tw-text-red tw-text-sm tw-underline hover:tw-text-red-dark">
+                    <a target="_blank" href="/ad-solutions/#streaming-video-advertising" class="tw-mb-16 tw-text-red tw-text-sm tw-underline hover:tw-text-red-dark">
                         Learn More
                     </a>
                 </div>
