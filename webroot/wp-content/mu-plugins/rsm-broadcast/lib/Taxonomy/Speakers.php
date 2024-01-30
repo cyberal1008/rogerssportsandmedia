@@ -108,7 +108,7 @@ class Speakers {
 	}
 
 	public function render_speakers() {
-		$speakers = get_terms( 'speaker' );
+		$speakers = get_the_terms(get_the_id(), 'speaker');
 		$output = "<div class='speakers'>
 			<h1>Meet Your Speakers</h1>";
 
