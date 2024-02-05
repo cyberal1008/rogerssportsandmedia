@@ -20,9 +20,12 @@ define( 'WP_SITEURL', 'http://' . DOMAIN_CURRENT_SITE );
 define( 'WP_HOME', 'http://' . DOMAIN_CURRENT_SITE );
 define( 'DISABLE_WP_CRON', true );
 
-define( 'WP_REDIS_HOST', getenv( 'REDIS_HOST' ) );
-define( 'WP_REDIS_PORT', getenv( 'RDM_REDIS_PORT' ) );
-define( 'WP_REDIS_DATABASE', getenv( 'RDM_REDIS_DATABASE' ) );
+$redis_server = array(
+	'host'     => getenv( 'RDM_ELASTICACHE_URL' ),
+	'port'     => getenv( 'RDM_ELASTICACHE_PORT' ),
+	'database' => getenv( 'RDM_ELASTICACHE_DATABASE' ),
+);
+
 define( 'WP_CACHE_KEY_SALT', 'RSM' );
 
 $table_prefix = 'rsm_wp_';
