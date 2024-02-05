@@ -19,9 +19,12 @@ define( 'WP_SITEURL', 'https://' . DOMAIN_CURRENT_SITE );
 define( 'WP_HOME', 'https://' . DOMAIN_CURRENT_SITE );
 define( 'DISABLE_WP_CRON', true );
 
-define( 'WP_REDIS_HOST', '127.0.0.1' );
-define( 'WP_REDIS_PORT', '6379' );
-define( 'WP_REDIS_DATABASE', '2' );
+$redis_server = array(
+	'host'     => '127.0.0.1',
+	'port'     => '6379',
+	'database' => '2',
+);
+
 define( 'WP_CACHE_KEY_SALT', 'RSM' );
 
 define('SCRIPT_DEBUG', true);
