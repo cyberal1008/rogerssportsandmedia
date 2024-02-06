@@ -33,6 +33,9 @@
 	get_header();
 ?>
 <main class="tw-bg-gray">
+    <?php
+		$buyers_guide_url = get_field('buyers_guide_url');
+	?>
     <div class="tw-w-full">
         <img class="tw-hidden md:tw-block" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/snplus_hero_dt.jpg" />
         <img class="md:tw-hidden" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/snplus_hero_mb.jpg" />
@@ -59,7 +62,7 @@
         </div>
         <div class="tw-px-4 md:tw-px-0 tw-w-5/6 tw-border-t tw-border-gray-dark tw-py-6 tw-mb-16">
             <div class="tw-text-4xl tw-text-gray-dark tw-font-bold tw-mb-8">Reach your favourite fan with Sportsnet+ Advertising</div>
-            <a target="_blank" href="https://go.rogerssportsandmedia.com" class="tw-text-white tw-border-red tw-bg-red tw-py-3 tw-px-6 tw-font-semibold tw-cursor-pointer hover:tw-no-underline hover:tw-text-white hover:tw-bg-red-dark">
+            <a target="_blank" href="<?php echo $buyers_guide_url; ?>" class="tw-text-white tw-border-red tw-bg-red tw-py-3 tw-px-6 tw-font-semibold tw-cursor-pointer hover:tw-no-underline hover:tw-text-white hover:tw-bg-red-dark">
                 Download Our Buyers Guide
             </a>
         </div>
