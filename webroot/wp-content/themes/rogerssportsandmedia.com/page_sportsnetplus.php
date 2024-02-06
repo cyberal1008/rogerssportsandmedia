@@ -34,6 +34,7 @@
 ?>
 <main class="tw-bg-gray">
     <?php
+        $featured_video = get_field('featured_video');
 		$buyers_guide_url = get_field('buyers_guide_url');
 	?>
     <div class="tw-w-full">
@@ -56,7 +57,7 @@
         </div>
         <div class="tw-px-8 md:tw-px-0 tw-mb-16">
             <video controls>
-                <source src="https://www.rogerssportsandmedia.com/wp-content/uploads/2024/02/Sportsnet-Brand-Sizzle.mp4" type="video/mp4">
+                <source src="<?php echo $featured_video['url']; ?>" type="video/mp4">
                 Your browser does not support the video tag.
             </video> 
         </div>
