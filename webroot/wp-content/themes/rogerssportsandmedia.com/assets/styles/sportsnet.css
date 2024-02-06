@@ -830,19 +830,9 @@ video {
     padding-right: 4rem;
   }
 
-  .md\:tw-px-72 {
-    padding-left: 18rem;
-    padding-right: 18rem;
-  }
-
   .md\:tw-px-8 {
     padding-left: 2rem;
     padding-right: 2rem;
-  }
-
-  .md\:tw-px-96 {
-    padding-left: 24rem;
-    padding-right: 24rem;
   }
 
   .md\:tw-py-12 {
@@ -853,5 +843,36 @@ video {
   .md\:tw-py-24 {
     padding-top: 6rem;
     padding-bottom: 6rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .lg\:tw-px-24 {
+    padding-left: 6rem;
+    padding-right: 6rem;
+  }
+
+  .lg\:tw-px-32 {
+    padding-left: 8rem;
+    padding-right: 8rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .xl\:tw-px-48 {
+    padding-left: 12rem;
+    padding-right: 12rem;
+  }
+}
+
+@media (min-width: 1536px) {
+  .\32xl\:tw-px-72 {
+    padding-left: 18rem;
+    padding-right: 18rem;
+  }
+
+  .\32xl\:tw-px-96 {
+    padding-left: 24rem;
+    padding-right: 24rem;
   }
 }

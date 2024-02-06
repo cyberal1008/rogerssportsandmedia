@@ -37,7 +37,7 @@
         <img class="tw-hidden md:tw-block" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/snplus_hero_dt.jpg" />
         <img class="md:tw-hidden" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/snplus_hero_mb.jpg" />
     </div>
-    <div class="md:tw-px-96">
+    <div class="md:tw-px-16 lg:tw-px-32 xl:tw-px-48 2xl:tw-px-96">
         <div class="tw-relative tw-bg-white tw-px-8 md:tw-px-16 tw-py-12 -tw-mt-10 tw-mb-16">
             <div class="tw-text-4xl tw-text-gray-dark tw-font-bold tw-mb-8">Home of the most exciting live sports content in the country</div>
             <p class="tw-text-base tw-leading-7">We're changing the game with premium, live streaming sports content that drives impact.</p>
@@ -65,7 +65,7 @@
         </div>
     </div>
     <div class="tw-w-full" style="background-image: url('<?php echo get_stylesheet_directory_uri(); ?>/assets/images/red_bg.jpg'); background-size: cover; background-position: center;">
-        <div class="tw-px-12 md:tw-px-72 tw-py-12 md:tw-py-24">
+        <div class="tw-px-12 lg:tw-px-24 xl:tw-px-48 2xl:tw-px-72 tw-py-12 md:tw-py-24">
             <div class="tw-flex tw-flex-col md:tw-flex-row tw-w-full tw-text-white tw-space-y-10 md:tw-space-y-0 md:tw-space-x-16">
                 <div class="tw-full md:tw-w-1/4">
                     <div class="tw-text-7xl tw-font-bold tw-text-transparent tw-mb-1" style="-webkit-text-stroke: 2px white;">2.5M</div>
@@ -87,7 +87,7 @@
         </div>
     </div>
     <div class="tw-w-full tw-py-0 md:tw-py-12" style="background-image: url('<?php echo get_stylesheet_directory_uri(); ?>/assets/images/snplus_signup_bg.jpg'); background-size: cover; background-position: center;">
-        <div class="md:tw-px-96 tw-relative">
+        <div class="lg:tw-px-32 xl:tw-px-48 2xl:tw-px-96 tw-relative">
             <div class="tw-bg-white tw-flex tw-flex-col md:tw-flex-row tw-px-8 md:tw-space-x-12">
                 <div class="tw-full md:tw-w-2/5 tw-mt-12 tw-px-2 md:tw-px-8">
                     <div class="tw-text-4xl tw-font-bold tw-mb-8">Partner With Us Today</div>
