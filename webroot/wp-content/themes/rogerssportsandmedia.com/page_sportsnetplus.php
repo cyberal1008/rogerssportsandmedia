@@ -32,14 +32,14 @@
 <?php
 	get_header();
 ?>
-<main>
+<main class="tw-bg-gray">
     <div class="tw-w-full">
         <img class="tw-hidden md:tw-block" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/snplus_hero_dt.jpg" />
         <img class="md:tw-hidden" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/snplus_hero_mb.jpg" />
     </div>
     <div class="md:tw-px-96">
         <div class="tw-relative tw-bg-white tw-px-8 md:tw-px-16 tw-py-12 -tw-mt-10 tw-mb-16">
-            <div class="tw-text-4xl tw-font-bold tw-mb-8">Home of the most exciting live sports content in the country</div>
+            <div class="tw-text-4xl tw-text-gray-dark tw-font-bold tw-mb-8">Home of the most exciting live sports content in the country</div>
             <p class="tw-text-base tw-leading-7">We're changing the game with premium, live streaming sports content that drives impact.</p>
             <p class="tw-text-base tw-leading-7">
                 Our partnerships with the most popular professional sports leagues enables us to connect
@@ -58,7 +58,7 @@
             </video> 
         </div>
         <div class="tw-px-4 md:tw-px-0 tw-w-5/6 tw-border-t tw-border-gray-dark tw-py-6 tw-mb-16">
-            <div class="tw-text-4xl tw-font-bold tw-mb-8">Reach your favourite fan with Sportsnet+ Advertising</div>
+            <div class="tw-text-4xl tw-text-gray-dark tw-font-bold tw-mb-8">Reach your favourite fan with Sportsnet+ Advertising</div>
             <a target="_blank" href="https://go.rogerssportsandmedia.com" class="tw-text-white tw-border-red tw-bg-red tw-py-3 tw-px-6 tw-font-semibold tw-cursor-pointer hover:tw-no-underline hover:tw-text-white hover:tw-bg-red-dark">
                 Download Our Buyers Guide
             </a>
@@ -94,7 +94,7 @@
                     <p class="tw-font-semibold">Your success is our success. We are partners you can count on, today and in the future. Let's get started!</p>
                 </div>
                 <div class="tw-full md:tw-w-3/5">
-                    <iframe src="https://mcdjql80kmghrjj6lg68bbtqbgv1.pub.sfmc-content.com/r2bks1awm2k" width="100%" height="950" allowfullscreen sandbox="allow-same-origin allow-scripts allow-popups allow-forms" title="Partner with us today by filling out the form below">
+                    <iframe src="https://mcdjql80kmghrjj6lg68bbtqbgv1.pub.sfmc-content.com/r2bks1awm2k" width="100%" height="940" allowfullscreen sandbox="allow-same-origin allow-scripts allow-popups allow-forms" title="Partner with us today by filling out the form below">
                         <p>Sorry, your browser does not support iframes.</p>
                     </iframe>
                 </div>
