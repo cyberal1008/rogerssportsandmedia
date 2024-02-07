@@ -108,7 +108,7 @@ class Speakers {
 	}
 
 	public function render_speakers() {
-		$speakers = get_terms( 'speaker' );
+		$speakers = get_the_terms(get_the_id(), 'speaker');
 		$output = "<div class='speakers'>
 			<h1>Meet Your Speakers</h1>";
 
@@ -130,7 +130,7 @@ class Speakers {
 			$job_title = isset( $speaker_meta['speaker-job-title'] ) ? $speaker_meta['speaker-job-title'][0] : '';
 
 			$output .= "<div class='speaker'>
-				<image src='" . esc_attr( $image ) . "'/>
+				<image style='width: 150px; height: 150px;' src='" . esc_attr( $image ) . "'/>
 				<div>
 					<p class='name'>" . esc_html( $speaker->name ) . "</p>
 					<p>" . esc_html( $company ) . "</p>
