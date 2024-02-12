@@ -11,7 +11,7 @@
     <div class="tw-hidden md:tw-flex tw-flex-row tw-items-center tw-space-x-16 tw-font-semibold">
         <a target="_blank" href="https://go.rogerssportsandmedia.com/contact-us" class="hover:tw-no-underline hover:tw-text-black">Support</a>
         <a target="_blank" href="https://go.rogerssportsandmedia.com" class="hover:tw-no-underline hover:tw-text-black ">Log in</a>
-        <a target="_blank" href="https://go.rogerssportsandmedia.com" class="tw-text-white tw-border-red tw-bg-red tw-py-3 tw-px-6 tw-font-semibold tw-cursor-pointer hover:tw-no-underline hover:tw-text-white hover:tw-bg-red-dark">
+        <a target="_blank" href="https://go.rogerssportsandmedia.com/sign-up/with-email" class="tw-text-white tw-border-red tw-bg-red tw-py-3 tw-px-6 tw-font-semibold tw-cursor-pointer hover:tw-no-underline hover:tw-text-white hover:tw-bg-red-dark">
             Get started
         </a>
     </div>

@@ -18,8 +18,8 @@ get_header(); ?>
 				<div class="contactus-form-text">
 					<p>Want to advertise with Rogers Sports & Media?</p>
 					<p>Complete the form below and a sales representative will be in touch.</p>
-					<p>If you're looking for our self serve platform RSM Ad Manager click <a target="_blank" href="https://www.rogerssportsandmedia.com/ad-manager">here</a>.
-					For press/media inquiries contact <a href="mailto:rsm.media@rci.rogers.com">rsm.media@rci.rogers.com</a>, and for Sportsnet+ contact <a href="mailto:sportsnetplus@sportsnet.ca">sportsnetplus@sportsnet.ca</a>.</p>
+					<p>If you're looking for our self-serve ad buying platform, RSM Ad Manager click <a target="_blank" href="https://www.rogerssportsandmedia.com/ad-manager">here</a>
+					 and for Sportsnet+ contact <a href="mailto:sportsnetplus@sportsnet.ca">sportsnetplus@sportsnet.ca</a>.</p>
 				</div> 
 				<iframe src="https://mcdjql80kmghrjj6lg68bbtqbgv1.pub.sfmc-content.com/drlrqqp5mtl"></iframe>
 			</div>

@@ -62,7 +62,10 @@
             </video> 
         </div>
         <div class="tw-px-4 md:tw-px-0 tw-w-5/6 tw-border-t tw-border-gray-dark tw-py-6 tw-mb-16">
-            <div class="tw-text-4xl tw-text-gray-dark tw-font-bold tw-mb-8">Reach your favourite fan with Sportsnet+ Advertising</div>
+            <div class="tw-text-4xl tw-text-gray-dark tw-font-bold tw-mb-8">
+                <p>Reach your favourite fan with</p>
+                <p>Sportsnet+ Advertising</p>
+            </div>
             <a target="_blank" href="<?php echo $buyers_guide_url; ?>" class="tw-text-white tw-border-red tw-bg-red tw-py-3 tw-px-6 tw-font-semibold tw-cursor-pointer hover:tw-no-underline hover:tw-text-white hover:tw-bg-red-dark">
                 Download Our Buyers Guide
             </a>
