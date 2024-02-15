@@ -50,7 +50,7 @@ get_header(); ?>
             <iframe class = "single-event-iframe <?php echo $classes; ?>" src="https://mcdjql80kmghrjj6lg68bbtqbgv1.pub.sfmc-content.com/vuog3325cb2"></iframe>
           <?php
         } 
-        else if( strpos( $_SERVER["REQUEST_URI"], "2024-fantasy-mlb" ) !== false ){
+        else if( strpos( $_SERVER["REQUEST_URI"], "2024-baseballfantasy" ) !== false ){
           ?>
             <iframe class = "single-event-iframe <?php echo $classes; ?>" src="https://mcdjql80kmghrjj6lg68bbtqbgv1.pub.sfmc-content.com/0bpct1vs2i5"></iframe>
           <?php
