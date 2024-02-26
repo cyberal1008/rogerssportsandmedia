@@ -4,7 +4,7 @@ Tags: security, access, admin, Loginizer, login, logs, ban ip, failed login, ip,
 Requires at least: 3.0
 Tested up to: 6.4
 Requires PHP: 5.5
-Stable tag: 1.8.2
+Stable tag: 1.8.3
 License: LGPLv2.1
 License URI: http://www.gnu.org/licenses/lgpl-2.1.html
 
@@ -79,6 +79,9 @@ That's it. You're done!
 3. Loginizer Brute Force Settings page
 
 == Changelog ==
+
+= 1.8.3 =
+* [Task] We have removed unwanted code.
 
 = 1.8.2 =
 * [Task] Tested on WordPress 6.4.
