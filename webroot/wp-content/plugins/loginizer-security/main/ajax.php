@@ -11,8 +11,6 @@ add_action('wp_ajax_loginizer_dismiss_backuply', 'loginizer_dismiss_backuply');
 add_action('wp_ajax_loginizer_dismiss_newsletter', 'loginizer_dismiss_newsletter');
 add_action('wp_ajax_loginizer_failed_login_export', 'loginizer_failed_login_export');
 add_action('wp_ajax_loginizer_export', 'loginizer_export');
-add_action('wp_ajax_loginizer_generate_sso', 'loginizer_generate_sso');
-add_action('wp_ajax_loginizer_delete_sso', 'loginizer_delete_sso');
 
 
 // ----- FUNCTIONS ------//
@@ -158,48 +156,4 @@ function loginizer_export(){
 	fclose($file);
 	
 	wp_die();
-}
-
-function loginizer_generate_sso(){
-	
-	if(!wp_verify_nonce($_POST['security'], 'loginizer_nonce')){
-		wp_send_json_error(__('Security Check Failed!', 'loginizer'));
-	}
-	
-}
-
-function loginizer_delete_sso(){
-	
-	if(!wp_verify_nonce($_POST['security'], 'loginizer_nonce')){
-		wp_send_json_error(__('Security Check Failed!', 'loginizer'));
-	}
-	
-	if(empty($_POST['sso_ids'])){
-		wp_send_json_error(__('Please select a SSO to delete.', 'loginizer'));
-	}
-	
-	$sso_ids = map_deep($_POST['sso_ids'], 'sanitize_text_field');
-	
-	if(empty($_POST['sso_ids'])){
-		wp_send_json_error(__('SSO IDs were malformed', 'loginizer'));
-	}
-	
-	$sso_links = get_option('loginizer_sso_links', []);
-	$update_sso_links = false;
-
-	foreach($sso_ids as $sso_id){
-		delete_user_meta($sso_id, 'loginizer_sso_' . $sso_id);
-		delete_user_meta($sso_id, 'loginizer_sso_' . $sso_id . '_expires');
-		
-		if(!empty($sso_links)){
-			unset($sso_links[$sso_id]);
-			$update_sso_links = true;
-		}
-	}
-	
-	if(!empty($update_sso_links)){
-		update_option('loginizer_sso_links', $sso_links);
-	}
-	
-	wp_send_json_success(__('SSO Links deleted successfully!', 'loginizer'));
 }

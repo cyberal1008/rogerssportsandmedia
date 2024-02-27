@@ -5,7 +5,7 @@ if(!function_exists('add_action')){
 	exit;
 }
 
-define('LOGINIZER_VERSION', '1.8.2');
+define('LOGINIZER_VERSION', '1.8.3');
 define('LOGINIZER_DIR', dirname(LOGINIZER_FILE));
 define('LOGINIZER_URL', plugins_url('', LOGINIZER_FILE));
 define('LOGINIZER_PRO_URL', 'https://loginizer.com/features#compare');
@@ -469,45 +469,47 @@ $site_name';
 	// Its the free version
 	}else{
 		
-		// The promo time
-		$loginizer['promo_time'] = get_option('loginizer_promo_time');
-		if(empty($loginizer['promo_time'])){
-			$loginizer['promo_time'] = time();
-			update_option('loginizer_promo_time', $loginizer['promo_time']);
-		}
-		
-		// Are we to show the loginizer promo
-		if(!empty($loginizer['promo_time']) && $loginizer['promo_time'] > 0 && $loginizer['promo_time'] < (time() - (30*24*3600))){
-		
-			add_action('admin_notices', 'loginizer_promo');
-		
-		}
-		
-		if(!file_exists(LOGINIZER_DIR.'/premium.php') && current_user_can('activate_plugins') && !empty($loginizer['csrf_promo']) && $loginizer['csrf_promo'] > 0 && $loginizer['csrf_promo'] < (time() - 86400)){
+		if(current_user_can('activate_plugins')){
+			// The promo time
+			$loginizer['promo_time'] = get_option('loginizer_promo_time');
+			if(empty($loginizer['promo_time'])){
+				$loginizer['promo_time'] = time();
+				update_option('loginizer_promo_time', $loginizer['promo_time']);
+			}
 			
-			add_action('admin_notices', 'loginizer_csrf_promo');
+			// Are we to show the loginizer promo
+			if(!empty($loginizer['promo_time']) && $loginizer['promo_time'] > 0 && $loginizer['promo_time'] < (time() - (30*24*3600))){
 			
-		}
-		
-		// Are we to disable the promo
-		if(isset($_GET['loginizer_promo']) && (int)$_GET['loginizer_promo'] == 0){
-			update_option('loginizer_promo_time', (0 - time()) );
-			die('DONE');
-		}
-		
-		$loginizer['backuply_promo'] = get_option('loginizer_backuply_promo_time');
-		
-		if(empty($loginizer['backuply_promo'])){
-			$loginizer['backuply_promo'] = abs($loginizer['promo_time']);
-			update_option('loginizer_backuply_promo_time', $loginizer['backuply_promo']);
-		}
-		
-		// Setting CSRF Promo time
-		$loginizer['csrf_promo'] = get_option('loginizer_csrf_promo_time');
-		
-		if(empty($loginizer['csrf_promo'])){
-			$loginizer['csrf_promo'] = abs($loginizer['promo_time']);
-			update_option('loginizer_csrf_promo_time', $loginizer['csrf_promo']);
+				add_action('admin_notices', 'loginizer_promo');
+			
+			}
+			
+			if(!file_exists(LOGINIZER_DIR.'/premium.php') && current_user_can('activate_plugins') && !empty($loginizer['csrf_promo']) && $loginizer['csrf_promo'] > 0 && $loginizer['csrf_promo'] < (time() - 86400)){
+				
+				add_action('admin_notices', 'loginizer_csrf_promo');
+				
+			}
+			
+			// Are we to disable the promo
+			if(isset($_GET['loginizer_promo']) && (int)$_GET['loginizer_promo'] == 0){
+				update_option('loginizer_promo_time', (0 - time()) );
+				die('DONE');
+			}
+			
+			$loginizer['backuply_promo'] = get_option('loginizer_backuply_promo_time');
+			
+			if(empty($loginizer['backuply_promo'])){
+				$loginizer['backuply_promo'] = abs($loginizer['promo_time']);
+				update_option('loginizer_backuply_promo_time', $loginizer['backuply_promo']);
+			}
+			
+			// Setting CSRF Promo time
+			$loginizer['csrf_promo'] = get_option('loginizer_csrf_promo_time');
+			
+			if(empty($loginizer['csrf_promo'])){
+				$loginizer['csrf_promo'] = abs($loginizer['promo_time']);
+				update_option('loginizer_csrf_promo_time', $loginizer['csrf_promo']);
+			}
 		}
 	}
 
