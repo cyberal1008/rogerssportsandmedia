@@ -15,29 +15,13 @@
     <link rel="shortcut icon" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/landing/images/favicon.png" />
     <title><?php echo get_the_title(); ?> | Rogers Sports & Media</title>
     <?php wp_head(); ?>
-    <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/main.min.css">
-	<style>
-		.hero:before {
-			background: none;
-		}
-		@media (min-width: 1024px) {
-			.grid.four {
-				grid-template-columns:repeat(4,1fr) !important;
-			}
-			.grid.five {
-				grid-template-columns:repeat(5,1fr) !important;
-			}
-		}
-	</style>
+    <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/styles/reskin.css">
 </head>
 <?php
 	get_header();
 ?>
 
-<!-- SKIP -->
-<a role="banner" href="#content" class="skip-to-content button" aria-label="Skip to main content" tabindex="0">Skip to main content</a>
-
-<main id="content" role="main">
+<main id="content" role="main" class="tw-bg-gray" >
 
 	<!-- HERO -->
 	<?php
@@ -50,13 +34,10 @@
 		$hero_mobile_image = get_field('hero_mobile_image');
 	endif; 
 	?>
-	<section class="hero">
-		<picture>
-			<source srcset="<?php echo $hero_image['url']; ?>"
-					media="(min-width: 640px)">
-			<img src="<?php echo $hero_mobile_image['url']; ?>" class="bg" alt="<?php echo $hero_image['alt']; ?>" />
-		</picture>
-	</section>
+    <section class="tw-w-full">
+        <img class="tw-hidden md:tw-block" src="<?php echo $hero_image['url']; ?>" />
+        <img class="md:tw-hidden" src="<?php echo $hero_mobile_image['url']; ?>" alt="<?php echo $hero_image['alt']; ?>" />
+    </section>
 
 	<!-- INTRO -->
 	<?php
@@ -64,16 +45,19 @@
 		$intro_title_two = get_field('intro_title_two');
 		$intro_content = get_field('intro_content');
 	?>
-	<section class="our-difference alt nomargin">
-		<div class="wrapper">
-			<div class="top">
-				<?php if ($intro_title) : ?>
-					<h2 class="title"><?php echo $intro_title; ?> <div><?php echo $intro_title_two; ?></div></h2>
-				<?php endif; ?>
-				<?php echo $intro_content; ?>
-			</div>
-		</div>
-	</section>
+    <section class="md:tw-px-16 lg:tw-px-32 xl:tw-px-40 2xl:tw-px-96">
+        <div class="tw-relative -tw-mt-10">
+            <div class="tw-bg-white tw-px-4 md:tw-px-16 tw-py-6 tw-mb-8">
+                <?php if ($intro_title) : ?>
+                    <p class="tw-text-3xl md:tw-text-4xl tw-text-gray-dark tw-font-bold"><?php echo $intro_title; ?></p>
+                    <p class="tw-text-3xl md:tw-text-4xl tw-text-gray-dark tw-font-bold tw-mb-6"><?php echo $intro_title_two; ?></p>
+                    <p class="tw-text-base tw-leading-7">
+                        <?php echo $intro_content; ?>
+                    </p>
+                <?php endif; ?>
+            </div>
+        </div>
+    </section>
 	
 	<!--- SHOWS SECTION -->
 	<?php if( have_rows('shows') ) : ?>
@@ -81,60 +65,47 @@
 		$shows_section_title = get_field('shows_section_title');
 		$show_section_content = get_field('shows_content_copy');
 	?>
-		<section style="margin-top: 32px;">
-			<div class="wrapper">
-				<div style="margin-bottom: 32px;">
-					<h2 class="title"><?php echo $shows_section_title; ?></h2>
-					<?php echo $show_section_content; ?>
-				</div>
-				<div class="grid five">
-					<?php while( have_rows('shows') ) : the_row(); 
-						$show_title = get_sub_field('show_title');
-						$show_image = get_sub_field('show_image');
-					?>
-						<div class="item mx-auto">
-							<img height="296" src="<?php echo $show_image['url']; ?>" alt="<?php echo $show_image['alt']; ?>" loading="lazy">
-							<p class="text-center"><?php echo $show_title; ?></p>
-						</div>
-					<?php endwhile; ?>
-				</div>
-			</div>
-		</section>
+        <section class="tw-bg-white tw-px-8 md:tw-px-16 lg:tw-px-32 xl:tw-px-40 2xl:tw-px-96 tw-py-12">
+            <div class="tw-text-3xl md:tw-text-4xl tw-font-bold tw-mb-4"><?php echo $shows_section_title; ?></div>
+            <div class="tw-mb-6">
+                <?php echo $show_section_content; ?>
+            </div>
+            <div class="tw-grid tw-grid-cols-2 sm:tw-grid-cols-3 md:tw-grid-cols-5 tw-gap-8">
+                <?php while( have_rows('shows') ) : the_row(); 
+                    $show_title = get_sub_field('show_title');
+                    $show_image = get_sub_field('show_image');
+                ?>
+                    <div>
+                        <img class="tw-mb-1" src="<?php echo $show_image['url']; ?>" alt="<?php echo $show_image['alt']; ?>" loading="lazy">
+                        <div class="tw-text-center tw-text-base md:tw-text-lg"><?php echo $show_title; ?></div>
+                    </div>
+                <?php endwhile; ?>
+            </div>
+        </section>
 	<?php endif; ?>
-
-	<div style="margin-top: 140px;"></div>
 
 	<!-- COUNTERS -->
-	<?php if( have_rows('highlights') ) : ?>
-		<section id="highlights" class="highlights">
-			<div class="wrapper">
-				<div class="grid four circle-stats">
-					<?php while( have_rows('highlights') ) : the_row(); 
-						$number = get_sub_field('number');
-						$number_text = get_sub_field('number_text');
-						$text = get_sub_field('text');
-						$circle_color = get_sub_field('circle_color');
-						?>
-						<div class="item">
-							<?php if ($number) : ?> 
-								<div class="stat <?php echo $circle_color ? $circle_color : ''; ?>">
-									<span class="num scroll-counter" data-counter-time="1200"><?php echo $number; ?></span>
-									<?php if ($number_text) : ?>
-										<span class="sign bold"><?php echo $number_text; ?></span>
-									<?php endif; ?>
-								</div>
-							<?php endif; ?>
-							<?php if ($text) : ?>
-								<p class="desc"><?php echo $text; ?></p>
-							<?php endif; ?>
-						</div>
-					<?php endwhile; ?>
-				</div>
-			</div>
-		</section>
-	<?php endif; ?>
-
-	<div style="margin-top: 32px; margin-bottom: 140px;"></div>
+    <?php if( have_rows('highlights') ) : ?>
+        <section id="highlights" class="tw-w-full" style="background-image: url('<?php echo get_stylesheet_directory_uri(); ?>/assets/images/red_bkg.jpg'); background-size: cover; background-position: center;">
+            <div class="tw-px-12 md:tw-py-24 lg:tw-px-24 xl:tw-px-40 2xl:tw-px-60 tw-py-12">
+                <div class="tw-flex tw-flex-col md:tw-flex-row tw-w-full tw-text-white tw-space-y-10 md:tw-space-y-0 md:tw-space-x-16">
+                    <?php while( have_rows('highlights') ) : the_row();
+                        $number = get_sub_field('number');
+                        $number_text = get_sub_field('number_text');
+                        $text = get_sub_field('text');
+                        $circle_color = get_sub_field('circle_color');
+                    ?>
+                        <div class="tw-full md:tw-w-1/4">
+                        <div class="tw-text-7xl tw-font-bold tw-text-transparent tw-mb-1" style="-webkit-text-stroke: 2px white;">
+                            <span class="num scroll-counter" data-counter-time="1200"><?php echo $number; ?></span><?php if ($number_text) : ?><span class="sign bold"><?php echo $number_text; ?></span><?php endif; ?>
+                        </div>
+                            <div><?php echo $text; ?></div>
+                        </div>
+                    <?php endwhile; ?>
+                </div>
+            </div>
+        </section>
+    <?php endif; ?>
 
 	<!-- PARTNER -->
 	<?php get_template_part('template-parts/section-partner'); ?>
@@ -143,7 +114,7 @@
 <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 <script src="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/main.min.js"></script>
 <?php
-get_footer();
+    get_footer();
 ?>
 </html>
 <?php
