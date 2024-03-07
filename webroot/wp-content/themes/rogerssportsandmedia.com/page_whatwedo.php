@@ -63,7 +63,7 @@
 				?>
 					<div class="tw-flex tw-flex-col">
 						<?php if ($image) : ?>
-							<a href="<?php echo $link['url']; ?>" aria-label="<?php echo $link_arialabel ? $link_arialabel : ''; ?>"><img src="https://www.rogerssportsandmedia.com/wp-content/uploads/2023/02/exp-shopping.jpg"  class="tw-mb-4 tw-object-cover tw-object-center tw-h-[350px] tw-w-full" alt="<?php echo $image['alt']; ?>" loading="lazy"></a>
+							<a href="<?php echo $link['url']; ?>" aria-label="<?php echo $link_arialabel ? $link_arialabel : ''; ?>"><img src="<?php echo $image['sizes']['large']; ?>"  class="tw-mb-4 tw-object-cover tw-object-center tw-h-[350px] tw-w-full" alt="<?php echo $image['alt']; ?>" loading="lazy"></a>
 						<?php endif; ?>
 						<?php if ($title) : ?>
 							<div class="tw-text-3xl tw-mb-4 tw-font-bold tw-text-gray-dark"><?php echo $title; ?></div>
@@ -88,7 +88,7 @@
 					$link = get_sub_field('link');
 					$link_arialabel = get_sub_field('link_arialabel');
 				?>
-					<div class="tw-text-white tw-px-6 md:tw-px-16 tw-py-24 md:tw-py-0 tw-flex tw-flex-col tw-justify-center" style="background-image: url('<?php echo get_stylesheet_directory_uri(); ?>/assets/images/red_bkg.jpg'); background-size: cover; background-position: center;">
+					<div class="tw-text-white tw-px-6 md:tw-px-16 tw-py-24 md:tw-py-0 tw-flex tw-flex-col tw-justify-center" style="background-image: url('<?php echo get_stylesheet_directory_uri(); ?>/assets/images/bkg_red_03.jpg'); background-size: cover; background-position: center;">
 						<?php if ($title) : ?>	
 							<div class="tw-text-3xl tw-mb-6 tw-font-bold" aria-label="<?php echo $link_arialabel ? $link_arialabel : ''; ?>"><?php echo $title; ?></div>
 						<?php endif; ?>
