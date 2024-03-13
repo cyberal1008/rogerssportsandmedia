@@ -151,10 +151,29 @@
 				</div>
 			</section>
 
+			<section id="stations-podcasts" class="stations-podcasts">
+				<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/audio-landing/images/curve-yellow.svg" alt="" class="bg" loading="lazy">
+				<div class="wrapper">
+					<div class="tw-text-gray-dark tw-text-4xl md:tw-text-5xl tw-font-bold tw-mb-10">Stations & Podcasts</div>
+					<div class="portfolio-page">
+							<?php
+								$page_id = get_the_ID();
+								get_template_part(
+									'template-parts/portfolio',
+									'radio',
+									array(
+										'page_id' => get_the_ID()
+									)
+								); 
+							?>
+					</div>
+				</div>
+			</section>
+
 			<?php
-				$diff_section_title = get_field('diff_section_title');
-				$diff_content = get_field('diff_content');
-				$diff_button = get_field('diff_button');
+				$diff_section_title = get_field('diff_section_title', $page_id);
+				$diff_content = get_field('diff_content', $page_id);
+				$diff_button = get_field('diff_button', $page_id);
 			?>
 			<section id="our-difference" class="our-difference">
 				<div class="wrapper">
@@ -166,7 +185,7 @@
 					</div>
 					<div class="grid four">
 
-						<?php if( have_rows('diff_column_1') ) : while( have_rows('diff_column_1') ) : the_row(); 
+						<?php if( have_rows('diff_column_1', $page_id) ) : while( have_rows('diff_column_1', $page_id) ) : the_row(); 
 							$title = get_sub_field('title');
 							$image = get_sub_field('image');
 							$content = get_sub_field('content');
@@ -187,7 +206,7 @@
 							</div>
 						<?php endwhile; endif; ?>
 
-						<?php if( have_rows('diff_column_2') ) : while( have_rows('diff_column_2') ) : the_row(); 
+						<?php if( have_rows('diff_column_2', $page_id) ) : while( have_rows('diff_column_2', $page_id) ) : the_row(); 
 							$title = get_sub_field('title');
 							$image = get_sub_field('image');
 							$content = get_sub_field('content');
@@ -208,7 +227,7 @@
 							</div>
 						<?php endwhile; endif; ?>
 
-						<?php if( have_rows('diff_column_3') ) : while( have_rows('diff_column_3') ) : the_row(); 
+						<?php if( have_rows('diff_column_3', $page_id) ) : while( have_rows('diff_column_3', $page_id) ) : the_row(); 
 							$title = get_sub_field('title');
 							$image = get_sub_field('image');
 							$content = get_sub_field('content');
@@ -229,7 +248,7 @@
 							</div>
 						<?php endwhile; endif; ?>
 
-						<?php if( have_rows('diff_column_4') ) : while( have_rows('diff_column_4') ) : the_row(); 
+						<?php if( have_rows('diff_column_4', $page_id) ) : while( have_rows('diff_column_4', $page_id) ) : the_row(); 
 							$title = get_sub_field('title');
 							$image = get_sub_field('image');
 							$content = get_sub_field('content');
@@ -253,23 +272,6 @@
 				</div>
 			</section>
 
-			<section id="stations-podcasts" class="stations-podcasts">
-				<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/audio-landing/images/curve-yellow.svg" alt="" class="bg" loading="lazy">
-				<div class="wrapper">
-					<h2 class="section-title">STATIONS AND PODCASTS</h2>
-					<div class="portfolio-page">
-							<?php
-							get_template_part(
-							'template-parts/portfolio',
-							'radio',
-							array(
-								'page_id'       => get_the_ID()
-							)
-						); ?>
-					</div>
-				</div>
-			</section>
-\
 			<!-- WHAT'S HAPPENING -->
 			<?php
 				get_template_part(
