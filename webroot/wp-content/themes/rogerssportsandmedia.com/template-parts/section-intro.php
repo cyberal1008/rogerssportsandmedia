@@ -2,7 +2,8 @@
     $intro_title = get_field('intro_title');
     $intro_content = get_field('intro_content');
 ?>
-<section class="tw-px-4 md:tw-px-16 lg:tw-px-32 xl:tw-px-40 2xl:tw-px-96">
+<section class="tw-bg-gray tw-px-4 md:tw-px-16 lg:tw-px-32 xl:tw-px-40 2xl:tw-px-80">
+    <div>&nbsp;</div>
     <div class="tw-relative -tw-mt-16">
         <div class="tw-bg-white tw-px-6 md:tw-px-16 tw-py-6 md:tw-py-10 tw-mb-8">
             <?php if ($intro_title) : ?>

@@ -89,6 +89,7 @@ $tv_posts = new WP_Query(
 			<?php
 			// js var for programming grid modal
 			$jsvar = array();
+			$prog_ctr = 0;
 			foreach ( $tv_posts->posts as $post ) : $prog_ctr++;
 				$post_meta = get_post_meta( $post->ID, Shows::METADATA_SLUG, true );
 					$tmpjsvar = array(
@@ -143,11 +144,13 @@ $tv_posts = new WP_Query(
 					data-networks="<?php echo get_data_items( $post->ID, Networks::TAXONOMY ); ?>"
 					>
 					<?php
-					$video_embed_code = get_field('video_embed_code', $post->ID);
-					$network_id = get_post_meta( $post->ID, '_yoast_wpseo_primary_rsm_network');
-					$network = get_term($network_id[0])->name;
-					$day_id = get_post_meta( $post->ID, '_yoast_wpseo_primary_rsm_day');
-					$day = get_term($day_id[0])->name;
+						$video_embed_code = get_field('video_embed_code', $post->ID);
+						$network_id = get_post_meta( $post->ID, '_yoast_wpseo_primary_rsm_network');
+						$network = get_term($network_id[0])->name;
+						$day_id = get_post_meta( $post->ID, '_yoast_wpseo_primary_rsm_day');
+						if(count($day_id) > 0) {
+							$day = get_term($day_id[0])->name;
+						}
 					?>
 					<div class="inner">
 						<div class="imgbox">
@@ -164,7 +167,7 @@ $tv_posts = new WP_Query(
 							<div class="meta">
 								<?php echo $network ? $network : ''; ?>
 								<?php echo $network && $day ? '<span class="divider">/</span>' : ''; ?>
-								<?php echo $day ? $day : ''; ?>
+								<?php echo isset($day) ? $day : ''; ?>
 							</div>
 
 							<p class="title h2"><?php echo esc_html( $post->post_title ); ?></p>

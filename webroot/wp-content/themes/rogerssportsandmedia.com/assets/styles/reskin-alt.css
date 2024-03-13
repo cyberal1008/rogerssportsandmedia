@@ -1379,7 +1379,7 @@ video {
   }
 }
 
-@media (min-width: 80px) {
+@media (min-width: 1280px) {
   .xl\:tw-px-40 {
     padding-left: 160px;
     padding-right: 160px;
