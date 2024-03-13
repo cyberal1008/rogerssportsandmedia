@@ -1,0 +1,12 @@
+main h2 {
+    font-family: var(--body-font);
+}
+
+.portfolio-main h2 {
+    text-transform: none;
+}
+
+.our-difference .accordion .accordion-trigger {
+    font-family: var(--body-font);
+    font-size: 32px;
+}

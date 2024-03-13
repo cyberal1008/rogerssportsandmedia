@@ -38,9 +38,9 @@ $happening_content = get_field('happening_content');
 					<p class="date" style="margin: 0px; padding-bottom: 8px;"><?php echo get_the_date( get_option( 'date_format' ) ); ?> / <?php echo $categories ? $categories[0]->name : ''; ?></p>
 					<a href="<?php the_permalink(); ?>" aria-label="read <?php echo $title_formatted; ?>"><img src="<?php echo $featured_img_url; ?>" alt="<?php echo $alt; ?>" loading="lazy"></a>
 					<h3 class="post-title"><a href="<?php the_permalink(); ?>" aria-label="read <?php echo $title_formatted; ?>"><?php echo $title_formatted; ?></a></h3>
-					<div class="btn-wrap">
+					<div class="tw-text-right tw-mt-4">
 						<a class="tw-text-gray-dark tw-font-bold tw-border-b-[3px] tw-py-1 tw-border-gray-light hover:tw-border-red tw-no-underline hover:tw-no-underline focus:tw-no-underline hover:tw-text-black visited:tw-text-black" 
-                        	href="<?php the_permalink(); ?>" aria-label="Read More about <?php echo $title_formatted; ?>">Read More</a>
+						href="<?php the_permalink(); ?>" aria-label="Read More about <?php echo $title_formatted; ?>">Read More</a>
 					</div>
 				</div>
 			<?php endwhile; endif; ?>
