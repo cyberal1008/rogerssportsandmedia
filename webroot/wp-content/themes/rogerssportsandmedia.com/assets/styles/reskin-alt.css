@@ -1051,6 +1051,14 @@ video {
   line-height: 28px;
 }
 
+.tw-leading-8 {
+  line-height: 32px;
+}
+
+.tw-leading-9 {
+  line-height: 36px;
+}
+
 .tw-text-black {
   --tw-text-opacity: 1;
   color: rgb(33 37 41 / var(--tw-text-opacity));
@@ -1068,6 +1076,11 @@ video {
 .tw-text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.tw-text-red {
+  --tw-text-opacity: 1;
+  color: rgb(217 41 28 / var(--tw-text-opacity));
 }
 
 .tw-no-underline {
