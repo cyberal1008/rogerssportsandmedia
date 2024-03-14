@@ -54,6 +54,11 @@ get_header(); ?>
           ?>
             <iframe class = "single-event-iframe <?php echo $classes; ?>" src="https://mcdjql80kmghrjj6lg68bbtqbgv1.pub.sfmc-content.com/0bpct1vs2i5"></iframe>
           <?php
+        }
+        else if( strpos( $_SERVER["REQUEST_URI"], "sn-summit-gsoc" ) !== false ){
+          ?>
+            <iframe class = "single-event-iframe <?php echo $classes; ?>" src="https://mcdjql80kmghrjj6lg68bbtqbgv1.pub.sfmc-content.com/ny1obyzutnc"></iframe>
+          <?php
         } else {
           ?>
             <iframe class = "single-event-iframe <?php echo $classes; ?>" src="https://mcdjql80kmghrjj6lg68bbtqbgv1.pub.sfmc-content.com/fjvu0tj21uh?campaign=<?php echo $event_id . $address_parameter; ?>"></iframe>
