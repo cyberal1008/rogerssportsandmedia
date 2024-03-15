@@ -149,7 +149,7 @@
 	<section class="tw-bg-white">
 		<!-- HIGHLIGHTS -->
 		<?php if( have_rows('highlights') ) : ?>
-			<section id="highlights" class="tw-py-12 tw-px-4 md:tw-px-16 lg:tw-px-32 xl:tw-px-40 2xl:tw-px-96 md:tw-py-24" style="background-image: url('<?php echo get_stylesheet_directory_uri(); ?>/assets/images/red_bkg.jpg'); background-size: cover; background-position: center;">
+			<section id="highlights" class="tw-py-12 tw-px-4 md:tw-px-16 lg:tw-px-32 xl:tw-px-40 2xl:tw-px-96 md:tw-py-28" style="background-image: url('<?php echo get_stylesheet_directory_uri(); ?>/assets/images/bkg_red_04.png'); background-size: cover; background-position: center;">
 				<div class="tw-grid tw-grid-cols-1 md:tw-grid-cols-3 tw-text-white tw-gap-y-10 md:tw-gap-x-16 tw-mb-6">
 					<?php while( have_rows('highlights') ) : the_row();
 						$number = get_sub_field('number');
