@@ -35,3 +35,7 @@ main h2 {
 .solutions .item .name {
     font-family: var(--body-font);
 }
+
+.solutions ul {
+    list-style-type: disc;
+}
