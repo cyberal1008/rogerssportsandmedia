@@ -864,10 +864,6 @@ video {
   border-bottom-width: 3px;
 }
 
-.tw-border-r {
-  border-right-width: 1px;
-}
-
 .tw-border-t-2 {
   border-top-width: 2px;
 }
@@ -1314,6 +1310,10 @@ video {
     margin-bottom: calc(0px * var(--tw-space-y-reverse));
   }
 
+  .md\:tw-border-r {
+    border-right-width: 1px;
+  }
+
   .md\:tw-px-0 {
     padding-left: 0px;
     padding-right: 0px;
@@ -1327,6 +1327,11 @@ video {
   .md\:tw-px-16 {
     padding-left: 4rem;
     padding-right: 4rem;
+  }
+
+  .md\:tw-px-2 {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
   }
 
   .md\:tw-px-8 {

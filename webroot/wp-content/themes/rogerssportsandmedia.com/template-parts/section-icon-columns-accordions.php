@@ -5,16 +5,16 @@ if( have_rows('icon_columns') ) :
 	$icon_number_of_columns = get_field('icon_number_of_columns');
 	?>
 	<section id="our-difference" class="our-difference">
-		<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/images/diamond-dots-green.svg" alt="decorative green diamond beside dot pattern" class="deco top-right" loading="lazy">
 		<div class="wrapper">
+			<hr class="tw-mb-6 tw-bg-gray tw-w-3/4 md:tw-w-3/5" />
 			<div class="topblock">
 				<?php if ($icon_section_title) : ?>
-					<h2 class="title"><?php echo $icon_section_title; ?></h2>
+					<h2 class="title tw-text-4xl md:tw-text-5xl"><?php echo $icon_section_title; ?></h2>
 				<?php endif; ?>
 				<?php echo $icon_section_intro; ?>
 			</div>
 			<div class="grid <?php echo $icon_number_of_columns; ?>">
-				<?php while( have_rows('icon_columns') ) : the_row(); $acc_ctr++;
+				<?php $acc_ctr = 0; while( have_rows('icon_columns') ) : the_row(); $acc_ctr++;
 					$image = get_sub_field('image');
 					$title = get_sub_field('title');
 					$description = get_sub_field('description');
@@ -27,7 +27,7 @@ if( have_rows('icon_columns') ) :
 									<img src="<?php echo $image['sizes']['medium']; ?>" alt="<?php echo $image['alt']; ?>" class="mobile" loading="lazy">
 								<?php endif; ?>
 
-								<?php echo $title ? $title : ''; ?>
+								<span class="tw-text-2xl"><?php echo $title ? $title : ''; ?></span>
 								<i class="fa-sharp fa-solid fa-plus-large status plus"></i>
 								<i class="fa-sharp fa-solid fa-minus status minus"></i>
 							</button>

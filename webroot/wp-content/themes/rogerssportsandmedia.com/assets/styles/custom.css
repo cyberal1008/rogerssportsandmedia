@@ -31,3 +31,7 @@ main h2 {
         font-size: 48px;
     }
 }
+
+.solutions .item .name {
+    font-family: var(--body-font);
+}
