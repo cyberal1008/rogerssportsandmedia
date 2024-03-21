@@ -2,8 +2,8 @@
     $happening_section_title = get_field('happening_section_title');
     $happening_content = get_field('happening_content');
 ?>
-<section id="trends" class="tw-bg-white tw-py-8 tw-px-4 md:tw-px-16 lg:tw-px-32 xl:tw-px-40 2xl:tw-px-96">
-    <hr class="tw-mb-6 tw-bg-gray-dark tw-w-3/4 md:tw-w-3/5" />
+<section id="trends" class="tw-bg-white tw-py-8 tw-px-4 md:tw-px-16 lg:tw-px-32 xl:tw-px-40 2xl:tw-px-80">
+    <hr class="tw-mb-6 tw-bg-gray-light tw-w-3/4 md:tw-w-3/5" />
     <div class="tw-text-gray-dark tw-text-3xl md:tw-text-4xl tw-font-bold tw-mb-3"><?php echo $happening_section_title ? $happening_section_title : "What's Happening"; ?></div>
     <div class="tw-mb-10 tw-text-xl"><?php echo $happening_content ? $happening_content : 'Get the latest news from Rogers Sports & Media'; ?></div>
 
@@ -46,7 +46,7 @@
                     <a class="tw-no-underline hover:tw-no-underline focus:tw-no-underline hover:tw-text-black visited:tw-text-black" href="<?php the_permalink(); ?>" aria-label="read <?php echo $title_formatted; ?>"><?php echo $title_formatted; ?></a>
                 </div>
                 <div class="tw-text-right">
-                    <a class="tw-text-gray-dark tw-font-semibold tw-border-b-[3px] tw-py-1 tw-border-gray-light hover:tw-border-red tw-no-underline hover:tw-no-underline focus:tw-no-underline hover:tw-text-black visited:tw-text-black" 
+                    <a class="tw-text-gray-dark tw-font-bold tw-border-b-[3px] tw-py-1 tw-border-gray-light hover:tw-border-red tw-no-underline hover:tw-no-underline focus:tw-no-underline hover:tw-text-black visited:tw-text-black" 
                         href="<?php the_permalink(); ?>" aria-label="Read More about <?php echo $title_formatted; ?>">Read More</a>
                 </div>
             </div>
