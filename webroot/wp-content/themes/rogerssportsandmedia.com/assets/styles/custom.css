@@ -39,3 +39,26 @@ main h2 {
 .solutions ul {
     list-style-type: disc;
 }
+
+/** Home */
+.explore .tabs .tablist .trigger {
+    font-family: var(--body-font);
+    text-transform: none;
+}
+
+.explore .accordion .accordion-trigger {
+    font-family: var(--body-font);
+    text-transform: none;
+}
+
+main .lined {
+    border-bottom: 3px solid #e6e6e6;
+}
+
+main .lined:hover {
+    border-bottom: 3px solid var(--link-color);
+}
+
+.trends .section-title {
+    text-transform: none;
+}
