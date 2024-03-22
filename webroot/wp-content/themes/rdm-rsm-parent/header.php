@@ -158,7 +158,7 @@ if ( is_home() ) {
 							?>
 					</div>
 				</div>
-				<div class="nav-social">
+				<!-- <div class="nav-social">
 					<ul class="social-icons">
 						<li><a class="header-social" target="_blank" href="https://twitter.com/RogersMediaPR" aria-label="View Rogers Sports and Media on Twitter">
 							<i class="icon fa-brands fa-square-twitter"></i>
@@ -170,7 +170,7 @@ if ( is_home() ) {
 							<i class="icon fa-brands fa-square-instagram"></i>
 						</a></li>
 					</ul>
-				</div>
+				</div> -->
 
 			</nav>
 	</header>
