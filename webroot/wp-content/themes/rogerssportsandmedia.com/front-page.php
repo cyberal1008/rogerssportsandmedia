@@ -23,19 +23,6 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 ?>
 
 <main id="content" role="main">
-
-	<!-- ANCHORS -->
-	<section class="anchors">
-		<div class="wrapper">
-			<div class="anchor-list">
-				<a href="#our-difference" aria-label="go to Our Difference content">Our Difference</a>
-				<a href="#products" aria-label="go to Our Products content">Our Products</a>
-				<a href="#trends" aria-label="go to What's Happening content">What's Happening</a>
-				<a href="#partner" aria-label="go to Partner With Us content">Partner With Us</a>
-			</div>
-		</div>
-	</section>
-
 	<!-- INTRO -->
 	<?php
 	$intro_title = get_field('intro_title');
@@ -47,7 +34,7 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 	$intro_column_3 = get_field('intro_column_3');
 	$intro_column_4 = get_field('intro_column_4');
 	?>
-	<section id="our-difference" class="our-difference">
+	<section id="our-difference" class="our-difference" style="margin-top: 4rem;">
 		<div class="wrapper">
 			<div class="top">
 				<?php if ($intro_title) : ?>
@@ -338,8 +325,8 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 					?>
 					<div class="item">
 						<?php $title_formatted = ucwords(strtolower(get_the_title())); ?>
+						<p class="date" style="margin-bottom: 6px;"><?php echo get_the_date( get_option( 'date_format' ) ); ?> / <?php echo $categories ? $categories[0]->name : ''; ?></p>
 						<a href="<?php the_permalink(); ?>" aria-label="read <?php echo $title_formatted; ?>"><img src="<?php echo $featured_img_url; ?>" alt="" loading="lazy"></a>
-						<p class="date"><?php echo get_the_date( get_option( 'date_format' ) ); ?> / <?php echo $categories ? $categories[0]->name : ''; ?></p>
 						<h3 class="post-title"><a href="<?php the_permalink(); ?>" aria-label="read <?php echo $title_formatted; ?>"><?php echo $title_formatted; ?></a></h3>
 						<div class="btn-wrap">
 							<a href="<?php the_permalink(); ?>" class="lined" aria-label="Read More about <?php echo $title_formatted; ?>">Read More</a>
