@@ -2,3 +2,7 @@
 	path = webroot/wp-content/plugins/rdm-dynamic-tag-management
 	url = git@github.com:digitalmedia/platform_wordpress_plugins.git
 	branch = rdm-dynamic-tag-management
+[submodule "webroot/wp-content/plugins/rdm-uptime-monitor"]
+	path = webroot/wp-content/plugins/rdm-uptime-monitor
+	url = git@github.com:digitalmedia/platform_wordpress_plugins.git
+	branch = rdm-uptime-monitor
