@@ -131,7 +131,7 @@
 					$circle_color = get_sub_field('circle_color');
 				?>
 					<div class="tw-full">
-						<div class="tw-text-red tw-text-7xl tw-font-bold tw-text-transparent tw-mb-1">
+						<div class="tw-text-red tw-text-7xl tw-font-bold tw-mb-1">
 							<span class="num scroll-counter" data-counter-time="1200"><?php echo $number; ?></span><?php if ($number_text) : ?><span class="sign bold"><?php echo $number_text; ?></span><?php endif; ?>
 						</div>
 						<?php if ($text) : ?>

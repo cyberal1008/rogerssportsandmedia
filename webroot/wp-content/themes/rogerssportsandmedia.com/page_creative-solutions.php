@@ -47,7 +47,7 @@
 	?>
 	<section id="capabilities" class="explore">
 		<div class="wrapper">
-			<div class="intro">
+			<div>
 				<?php if ($exp_section_title) : ?>
 					<h2 class="title"><?php echo $exp_section_title; ?></h2>
 				<?php endif; ?>

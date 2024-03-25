@@ -46,7 +46,7 @@
 		<section class="blog-post-intro">
 			<div class="backwrap">
 				<div class="wrapper">
-					<a href="<?php echo get_home_url(); ?>/whats-happening" class="back-btn" aria-label="Go back to What's Happening"><i class="icon fa-sharp fa-regular fa-arrow-left"></i>What's Happening</a>
+					<a href="<?php echo get_home_url(); ?>/the-latest" class="back-btn" aria-label="Go back to What's Happening"><i class="icon fa-sharp fa-regular fa-arrow-left"></i>The Latest</a>
 				</div>
 			</div>
 				
