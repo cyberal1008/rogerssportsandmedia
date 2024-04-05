@@ -17,6 +17,7 @@
     <?php wp_head(); ?>
     <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/main.min.css">
 	<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/styles/reskin-alt.css">
+	<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/styles/custom.css">
 </head>
 <?php
 	get_header();
@@ -88,68 +89,57 @@
     	</section>
 	<?php endif; ?>
 
-	<!-- STRETCH BOXES-->
-	<?php
-		$tv_section_button = get_field('tv_section_button');
-	?>
-	<section id="featured" class="stretchboxes tw-bg-white">
-		<div class="inner wrapper">
+	<!-- PLATFORMS -->
+	<?php 
+		if( have_rows('brands') ) : 
+			$brands_section_title = get_field('brands_section_title');
+		?>
+		<section id="brands" class="service-grid">
+			<div class="wrapper">
+				<?php if ($brands_section_title) : ?>
+					<h2 class="section-title"><?php echo $brands_section_title; ?></h2>
+				<?php endif; ?>
 
-			<?php if( have_rows('tv_left_box') ) : while( have_rows('tv_left_box') ) : the_row(); 
-				$image = get_sub_field('bg_image');
-				$title = get_sub_field('title');
-				$description = get_sub_field('description');
-				$link = get_sub_field('boxlink');
-				?>
-				<div class="box left">
-					<div tabindex="0" class="boxlink" aria-label="<?php echo $link['title'] ? $link['title'] : 'Learn More'; ?>"></div>
-					<?php if ($image) : ?>
-						<img src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt']; ?>" class="bg">
-					<?php endif; ?>
-					<div class="txt">
-						<?php if ($title) : ?>
-							<p class="title"><?php echo $title; ?></p>
-						<?php endif; ?>
-						<p class="hover">Hover for Details</p>
-						<?php if ($description) : ?>
-							<p class="desc"><?php echo $description; ?></p>
-						<?php endif; ?>
-						<span class="lined white mobile" aria-label="Learn More about <?php echo $title; ?>">Learn More</span>
+				<div class="swiper plat-slider">
+					<div class="swiper-wrapper grid tight">
+
+						<?php while( have_rows('brands') ) : the_row(); 
+							$title = get_sub_field('title');
+							$description = get_sub_field('description');
+							$link = get_sub_field('link');
+							$link_arialabel = get_sub_field('link_arialabel');
+							$image = get_sub_field('image');
+							?>
+							<div class="swiper-slide">
+								<div class="item">
+									<?php if ($image) : ?>
+										<?php if ($link) : ?>
+											<a href="<?php echo $link['url']; ?>" aria-label="<?php echo $link_arialabel ? $link_arialabel : $link['title']; ?>"><img src="<?php echo $image['sizes']['medium_large']; ?>" alt="<?php echo $image['alt']; ?>" loading="lazy"></a>
+										<?php else : ?>
+											<img src="<?php echo $image['sizes']['medium_large']; ?>" alt="<?php echo $image['alt']; ?>" loading="lazy">
+										<?php endif; ?>
+									<?php endif; ?>
+									<div class="txtbox">
+										<?php if ($title) : ?>
+											<?php if ($link) : ?>
+												<p class="title h4"><a href="<?php echo $link['url']; ?>" aria-label="<?php echo $link_arialabel ? $link_arialabel : $link['title']; ?>"><?php echo $title; ?></a></p>
+											<?php else : ?>
+												<p class="title h4"><?php echo $title; ?></p>
+											<?php endif; ?>
+										<?php endif; ?>
+										<?php if ($description) : ?>
+											<div class="excerpt"><?php echo $description; ?></div>
+										<?php endif; ?>
+									</div>
+								</div>
+							</div>
+						<?php endwhile; ?>
 					</div>
+					<div class="swiper-pagination"></div>
 				</div>
-			<?php endwhile; endif; ?>
-
-			<?php if( have_rows('tv_right_box') ) : while( have_rows('tv_right_box') ) : the_row(); 
-				$image = get_sub_field('bg_image');
-				$title = get_sub_field('title');
-				$description = get_sub_field('description');
-				$link = get_sub_field('boxlink');
-				?>
-				<div class="box right">
-					<div tabindex="0" class="boxlink" aria-label="<?php echo $link['title'] ? $link['title'] : 'Learn More'; ?>"></div>
-					<?php if ($image) : ?>
-						<img src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt']; ?>" class="bg">
-					<?php endif; ?>
-					<div class="txt">
-						<?php if ($title) : ?>
-							<p class="title"><?php echo $title; ?></p>
-						<?php endif; ?>
-						<p class="hover">Hover for Details</p>
-						<?php if ($description) : ?>
-							<p class="desc"><?php echo $description; ?></p>
-						<?php endif; ?>
-						<span class="lined white mobile" aria-label="Learn More about <?php echo $title; ?>">Learn More</span>
-					</div>
-				</div>
-			<?php endwhile; endif; ?>
-
-		</div>
-		<?php if ($tv_section_button) : ?>
-			<div class="btn-wrap wrapper">
-				<a href="<?php echo $tv_section_button['url']; ?>" class="button" aria-label="<?php echo $tv_section_button['title'] ? $tv_section_button['title'] : 'Explore Streaming Buyers Guide'; ?>"><?php echo $tv_section_button['title'] ? $tv_section_button['title'] : 'Explore Streaming Buyers Guide'; ?></a>
 			</div>
-		<?php endif; ?>
-	</section>
+		</section>
+	<?php endif; ?>
 
 	<!-- PROGRAMMING -->
 	<?php

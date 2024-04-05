@@ -109,15 +109,20 @@
 					</div>
 					<div class="swiper-pagination"></div>
 				</div>
-
+			</div>
+			<div class="btn-wrap wrapper" style="margin-top: 48px">
+				<a href="#" class="button" aria-label="Explore Streaming Buyers Guide">Download Media Kit</a>
 			</div>
 		</section>
 	<?php endif; ?>
 
-	<!-- ICON COLUMNS - ACCORDIONS -->
+	<!-- WHAT'S HAPPENING -->
 	<?php
 		get_template_part(
-			'template-parts/section-icon-columns-accordions'
+			'template-parts/section-whats-happening', null,
+			array(
+				'zone' => 'whats-happening-ooh',
+			)
 		);
 	?>
 

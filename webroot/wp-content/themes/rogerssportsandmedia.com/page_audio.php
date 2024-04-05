@@ -74,20 +74,7 @@
 					?>
 						<div class="tw-full">
 							<div class="tw-text-7xl tw-font-bold tw-text-transparent tw-mb-1" style="-webkit-text-stroke: 2px white;">
-								<span class="num scroll-counter" data-counter-time="1200"><?php echo $number; ?></span><span class="sign bold"><sup>+</sup></span>
-							</div>
-							<?php if ($caption) : ?>
-								<div class="tw-text-lg"><?php echo $caption; ?></div>
-							<?php endif; ?>
-						</div>
-					<?php endwhile; endif; ?>
-					<?php if( have_rows('green_circle') ) : while( have_rows('green_circle') ) : the_row(); 
-						$number = get_sub_field('number');
-						$caption = get_sub_field('caption');
-					?>
-						<div class="tw-full">
-							<div class="tw-text-7xl tw-font-bold tw-text-transparent tw-mb-1" style="-webkit-text-stroke: 2px white;">
-								<span class="num scroll-counter" data-counter-time="1200"><?php echo $number; ?></span><span class="sign bold"><sup>+</sup></span>
+								<span class="num scroll-counter" data-counter-time="1200"><?php echo $number; ?></span>
 							</div>
 							<?php if ($caption) : ?>
 								<div class="tw-text-lg"><?php echo $caption; ?></div>
@@ -150,124 +137,34 @@
 					<?php endwhile; endif; ?>
 				</div>
 			</section>
-
+			
+			<?php
+				$prog_section_title = get_field('program_section_title');
+				$prog_section_button = get_field('program_section_button');
+			?>
 			<section id="stations-podcasts" class="stations-podcasts">
-				<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/audio-landing/images/curve-yellow.svg" alt="" class="bg" loading="lazy">
 				<div class="wrapper">
-					<div class="tw-text-gray-dark tw-text-4xl md:tw-text-5xl tw-font-bold tw-mb-10">Stations & Podcasts</div>
+					<div class="tw-flex tw-flex-col md:tw-flex-row tw-mb-6 md:tw-mb-4 md:tw-space-x-12">
+						<?php if ($prog_section_title) : ?>
+							<div class="tw-text-gray-dark tw-text-4xl md:tw-text-5xl tw-font-bold tw-mb-3 md:tw-mb-0"><?php echo $prog_section_title; ?></div>
+						<?php endif; ?>
+						<?php if ($prog_section_button) : ?>
+							<div><a href="<?php echo $prog_section_button['url']; ?>" class="button" aria-label="<?php echo $prog_section_button['title'] ? $prog_section_button['title'] : 'Download TV Schedule'; ?>" target="<?php echo $prog_section_button['target'] ? $prog_section_button['target'] : '_self'; ?>"><?php echo $prog_section_button['title'] ? $prog_section_button['title'] : 'Download TV Schedule'; ?></a></div>
+						<?php endif; ?>
+					</div>
 					<div class="portfolio-page">
 							<?php
+								$original_post = $post;
 								$page_id = get_the_ID();
 								get_template_part(
 									'template-parts/portfolio',
 									'radio',
 									array(
-										'page_id' => get_the_ID()
+										'page_id' => $page_id
 									)
-								); 
+								);
+								$post = $original_post;
 							?>
-					</div>
-				</div>
-			</section>
-
-			<?php
-				$diff_section_title = get_field('diff_section_title', $page_id);
-				$diff_content = get_field('diff_content', $page_id);
-				$diff_button = get_field('diff_button', $page_id);
-			?>
-			<section id="our-difference" class="our-difference">
-				<div class="wrapper">
-					<div class="top">
-						<?php if ($diff_section_title) : ?>
-							<h2 class="title tw-text-4xl md:tw-text-5xl"><?php echo $diff_section_title; ?></h2>
-						<?php endif; ?>
-						<?php echo $diff_content; ?>
-					</div>
-					<div class="grid four">
-
-						<?php if( have_rows('diff_column_1', $page_id) ) : while( have_rows('diff_column_1', $page_id) ) : the_row(); 
-							$title = get_sub_field('title');
-							$image = get_sub_field('image');
-							$content = get_sub_field('content');
-							?>
-							<div class="item">
-								<div class="accordion">
-									<button class="accordion-trigger" id="accordion-1" aria-expanded="false" aria-controls="accordion-1-content">
-										<img src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt']; ?>" class="mobile" loading="lazy">
-										<span class="tw-text-2xl"><?php echo $title; ?></span>
-										<i class="fa-sharp fa-solid fa-plus-large status plus"></i>
-										<i class="fa-sharp fa-solid fa-minus status minus"></i>
-									</button>
-									<div class="accordion-content" id="accordion-1-content" aria-labelledby="accordion-1">
-										<img src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt']; ?>" class="desktop" loading="lazy">
-										<?php echo $content; ?>
-									</div>
-								</div>
-							</div>
-						<?php endwhile; endif; ?>
-
-						<?php if( have_rows('diff_column_2', $page_id) ) : while( have_rows('diff_column_2', $page_id) ) : the_row(); 
-							$title = get_sub_field('title');
-							$image = get_sub_field('image');
-							$content = get_sub_field('content');
-							?>
-							<div class="item">
-								<div class="accordion">
-									<button class="accordion-trigger" id="accordion-2" aria-expanded="false" aria-controls="accordion-2-content">
-										<img src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt']; ?>" class="mobile" loading="lazy">
-										<span class="tw-text-2xl"><?php echo $title; ?></span>
-										<i class="fa-sharp fa-solid fa-plus-large status plus"></i>
-										<i class="fa-sharp fa-solid fa-minus status minus"></i>
-									</button>
-									<div class="accordion-content" id="accordion-2-content" aria-labelledby="accordion-2">
-										<img src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt']; ?>" class="desktop" loading="lazy">
-										<?php echo $content; ?>
-									</div>
-								</div>
-							</div>
-						<?php endwhile; endif; ?>
-
-						<?php if( have_rows('diff_column_3', $page_id) ) : while( have_rows('diff_column_3', $page_id) ) : the_row(); 
-							$title = get_sub_field('title');
-							$image = get_sub_field('image');
-							$content = get_sub_field('content');
-							?>
-							<div class="item">
-								<div class="accordion">
-									<button class="accordion-trigger" id="accordion-3" aria-expanded="false" aria-controls="accordion-3-content">
-										<img src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt']; ?>" class="mobile" loading="lazy">
-										<span class="tw-text-2xl"><?php echo $title; ?></span>
-										<i class="fa-sharp fa-solid fa-plus-large status plus"></i>
-										<i class="fa-sharp fa-solid fa-minus status minus"></i>
-									</button>
-									<div class="accordion-content" id="accordion-3-content" aria-labelledby="accordion-3">
-										<img src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt']; ?>" class="desktop" loading="lazy">
-										<?php echo $content; ?>
-									</div>
-								</div>
-							</div>
-						<?php endwhile; endif; ?>
-
-						<?php if( have_rows('diff_column_4', $page_id) ) : while( have_rows('diff_column_4', $page_id) ) : the_row(); 
-							$title = get_sub_field('title');
-							$image = get_sub_field('image');
-							$content = get_sub_field('content');
-							?>
-							<div class="item">
-								<div class="accordion">
-									<button class="accordion-trigger" id="accordion-4" aria-expanded="false" aria-controls="accordion-4-content">
-										<img src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt']; ?>" class="mobile" loading="lazy">
-										<span class="tw-text-2xl"><?php echo $title; ?></span>
-										<i class="fa-sharp fa-solid fa-plus-large status plus"></i>
-										<i class="fa-sharp fa-solid fa-minus status minus"></i>
-									</button>
-									<div class="accordion-content" id="accordion-4-content" aria-labelledby="accordion-4">
-										<img src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt']; ?>" class="desktop" loading="lazy">
-										<?php echo $content; ?>
-									</div>
-								</div>
-							</div>
-						<?php endwhile; endif; ?>
 					</div>
 				</div>
 			</section>
