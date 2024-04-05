@@ -42,7 +42,7 @@
 
 	<div class="tw-bg-gray tw-px-4 tw-py-12 md:tw-px-16 lg:tw-px-32 xl:tw-px-48 2xl:tw-px-80 md:tw-py-24">
 		<video controls>
-			<source src="https://www.rogerssportsandmedia.com/wp-content/uploads/2024/02/streaming-sizzle-sports-cutdown-with-mix.mp4" type="video/mp4">
+			<source src="https://www.rogerssportsandmedia.com/wp-content/uploads/2024/04/OOH_SizzleReel_2023_1.mp4" type="video/mp4">
 			Your browser does not support the video tag.
 		</video> 
 	</div>
@@ -110,9 +110,13 @@
 					<div class="swiper-pagination"></div>
 				</div>
 			</div>
-			<div class="btn-wrap wrapper" style="margin-top: 48px">
-				<a href="#" class="button" aria-label="Explore Streaming Buyers Guide">Download Media Kit</a>
-			</div>
+
+			<?php $sol_section_button = get_field('sol_section_button'); ?>
+			<?php if ($sol_section_button) : ?>
+				<div class="btn-wrap wrapper" style="margin-top: 48px">
+					<a href="<?php echo $sol_section_button['url']; ?>" class="button" aria-label="<?php echo $sol_section_button['title'] ? $sol_section_button['title'] : 'Download Media Kit'; ?>" target="<?php echo $sol_section_button['target'] ? $sol_section_button['target'] : '_self'; ?>"><?php echo $sol_section_button['title'] ? $sol_section_button['title'] : 'Download Media Kit'; ?></a>
+				</div>
+			<?php endif; ?>
 		</section>
 	<?php endif; ?>
 

@@ -41,7 +41,7 @@
 		);
 	?>
     <div class="tw-px-4 md:tw-px-16 lg:tw-px-32 xl:tw-px-40 2xl:tw-px-80">
-        <div class="tw-flex tw-justify-center">
+        <div class="tw-flex tw-justify-center tw-py-12">
             <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/tsc_logo.png" />
         </div>
     </div>
@@ -73,13 +73,13 @@
     <section class="tw-bg-white tw-py-12 tw-px-4 md:tw-px-16 lg:tw-px-32 xl:tw-px-40 2xl:tw-px-80">
         <div class="tw-mb-10 tw-grid tw-grid-cols-1 md:tw-grid-cols-3">
             <div class="tw-flex tw-justify-center md:tw-justify-normal">
-                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/tsc_1.png" alt="Circular Image" class="tw-rounded-full tw-h-52 tw-w-52">
+                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/tsc_1.png" alt="TSC Image 1" class="tw-rounded-full tw-h-52 tw-w-52">
             </div>
             <div class="tw-hidden md:tw-block">
-                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/tsc_1.png" alt="Circular Image" class="tw-rounded-full tw-h-52 tw-w-52">
+                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/tsc_2.png" alt="TSC Image 2" class="tw-rounded-full tw-h-52 tw-w-52">
             </div>
             <div class="tw-hidden md:tw-block">
-                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/tsc_1.png" alt="Circular Image" class="tw-rounded-full tw-h-52 tw-w-52">
+                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/tsc_3.png" alt="TSC Image 3" class="tw-rounded-full tw-h-52 tw-w-52">
             </div>
         </div>
         <div class="tw-text-3xl tw-font-bold tw-mb-2">Your one-stop-shop for top brands & exclusive finds</div>
