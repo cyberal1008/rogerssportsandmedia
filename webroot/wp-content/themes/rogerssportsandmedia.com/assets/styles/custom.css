@@ -62,3 +62,20 @@ main .lined:hover {
 .trends .section-title {
     text-transform: none;
 }
+
+/** Contact us */
+.contactus-main {
+	iframe {
+		border: none;
+		width: 100%;
+		height: 932px;
+	}
+}
+
+@media only screen and (max-width: 767px) {
+	.contactus-main {
+		iframe {
+			height: 1280px;
+		}
+	}
+}

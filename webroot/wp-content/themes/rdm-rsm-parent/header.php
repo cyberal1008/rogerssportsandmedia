@@ -186,6 +186,6 @@ if ( is_home() ) {
 
 <?php if ( is_singular('event') ) { ?>
 	<div class="wrapper pt-5">
-<?php } else if (!is_home() && !is_front_page() && !is_page_template( 'page_whatwedo.php' ) && !is_page_template( 'page_upfront.php' ) && !is_page_template( 'page_sitemap.php' ) && !is_page_template( 'page_advanced-solutions.php' ) && !is_page_template( 'page_creative-solutions.php' ) && !is_page_template( 'page_ooh.php' ) && !is_page_template( 'page_sports.php' ) && !is_page_template( 'page_tvstreaming.php' ) && !is_page_template( 'page_tv.php' ) && !is_page_template( 'page_disneyplus.php' ) && !is_page_template( 'page_tsc.php' ) && !is_page_template( 'page_whoweare.php' ) && !is_singular('post') && !is_category()) { ?>
+<?php } else if (!is_home() && !is_front_page() && !is_page_template( 'page_whatwedo.php' ) && !is_page_template( 'page_upfront.php' ) && !is_page_template( 'page_sitemap.php' ) && !is_page_template( 'page_advanced-solutions.php' ) && !is_page_template( 'page_creative-solutions.php' ) && !is_page_template( 'page_ooh.php' ) && !is_page_template( 'page_sports.php' ) && !is_page_template( 'page_tvstreaming.php' ) && !is_page_template( 'page_tv.php' ) && !is_page_template( 'page_disneyplus.php' ) && !is_page_template( 'page_tsc.php' ) && !is_page_template( 'page_whoweare.php' ) && !is_page_template( 'page_contactus.php' ) &&  !is_singular('post') && !is_category()) { ?>
 	<div class="wrapper ">
 <?php } ?>
