@@ -174,12 +174,6 @@
 		</div>
 	</section>
 
-	<!-- VIDEO SLIDER -->
-	<?php get_template_part('template-parts/section-vidslider'); ?>
-
-	<!-- CASE STUDIES -->
-	<?php get_template_part('template-parts/section-case-studies'); ?>
-
 	<!-- WHAT'S HAPPENING -->
 	<?php
 		get_template_part(

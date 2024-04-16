@@ -38,6 +38,32 @@
 		get_template_part('template-parts/section-intro');
 	?>
 
+	<section class="tw-mt-12">
+		&nbsp;
+	</section>
+
+	<!-- HIGHLIGHTS -->
+	<?php if( have_rows('highlights') ) : ?>
+		<section id="highlights" class="tw-py-12 tw-px-4 md:tw-px-16 lg:tw-px-32 xl:tw-px-40 2xl:tw-px-96 md:tw-py-28" style="background-image: url('<?php echo get_stylesheet_directory_uri(); ?>/assets/images/bkg_red_04.png'); background-size: cover; background-position: center;">
+			<div class="tw-grid tw-grid-cols-1 md:tw-grid-cols-3 tw-text-white tw-gap-y-10 md:tw-gap-x-16 tw-mb-6">
+				<?php while( have_rows('highlights') ) : the_row();
+					$number = get_sub_field('number');
+					$number_text = get_sub_field('number_text');
+					$text = get_sub_field('text');
+				?>
+					<div class="tw-full">
+						<div class="tw-text-7xl tw-font-bold tw-text-transparent tw-mb-1" style="-webkit-text-stroke: 2px white;">
+							<span class="num scroll-counter" data-counter-time="1200"><?php echo $number; ?></span><?php if ($number_text) : ?><span class="sign bold"><?php echo $number_text; ?></span><?php endif; ?>
+						</div>
+						<?php if ($text) : ?>
+							<div class="tw-text-lg"><?php echo $text; ?></div>
+						<?php endif; ?>
+					</div>
+				<?php endwhile; ?>
+			</div>
+		</section>
+	<?php endif; ?>
+
 	<!-- EXPLORE -->
 	<?php
 		$exp_section_title = get_field('exp_section_title');
@@ -147,40 +173,6 @@
 	</section>
 	
 	<section class="tw-bg-white">
-		<!-- HIGHLIGHTS -->
-		<?php if( have_rows('highlights') ) : ?>
-			<section id="highlights" class="tw-py-12 tw-px-4 md:tw-px-16 lg:tw-px-32 xl:tw-px-40 2xl:tw-px-96 md:tw-py-28" style="background-image: url('<?php echo get_stylesheet_directory_uri(); ?>/assets/images/bkg_red_04.png'); background-size: cover; background-position: center;">
-				<div class="tw-grid tw-grid-cols-1 md:tw-grid-cols-3 tw-text-white tw-gap-y-10 md:tw-gap-x-16 tw-mb-6">
-					<?php while( have_rows('highlights') ) : the_row();
-						$number = get_sub_field('number');
-						$number_text = get_sub_field('number_text');
-						$text = get_sub_field('text');
-					?>
-						<div class="tw-full">
-							<div class="tw-text-7xl tw-font-bold tw-text-transparent tw-mb-1" style="-webkit-text-stroke: 2px white;">
-								<span class="num scroll-counter" data-counter-time="1200"><?php echo $number; ?></span><?php if ($number_text) : ?><span class="sign bold"><?php echo $number_text; ?></span><?php endif; ?>
-							</div>
-							<?php if ($text) : ?>
-								<div class="tw-text-lg"><?php echo $text; ?></div>
-							<?php endif; ?>
-						</div>
-					<?php endwhile; ?>
-				</div>
-			</section>
-		<?php endif; ?>
-		
-
-		<!-- WHAT'S HAPPENING -->
-		<?php
-			get_template_part(
-				'template-parts/section-whats-happening', null,
-				array(
-					'zone'		=> 'whats-happening-creative-solutions',
-					'class'     => ''
-				)
-			);
-		?>
-
 
 		<!-- PARTNER -->
 		<?php get_template_part('template-parts/section-partner'); ?>

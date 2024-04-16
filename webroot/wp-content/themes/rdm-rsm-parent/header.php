@@ -179,8 +179,6 @@ if ( is_home() ) {
 	if ( ! is_page() || ! is_page_template( 'page-contactus.php' ) ) { ?>
 		<a href="<?php echo get_home_url(); ?>/contact-us" class="button fixedbtn" role="region" aria-label="Advertise with Us">
 			Advertise With Us
-			<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/images/character.svg" class="char static" alt="yellow square-shaped character" loading="lazy">
-			<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/images/character-alt.svg" class="char hover" alt="yellow square-shaped character waving" loading="lazy">
 		</a>
 	<?php } ?>
 

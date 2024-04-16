@@ -89,15 +89,6 @@
             <img class="md:tw-hidden" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/tsc_logos_mb.jpg" />
         </div>
     </section>
-
-    <!-- WHAT'S HAPPENING -->
-    <section class="tw-bg-white">
-	<?php
-		get_template_part(
-			'template-parts/section-whats-happening'
-		);
-	?>
-    </section>
 </main>
 
 <?php
