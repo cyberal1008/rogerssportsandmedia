@@ -61,9 +61,6 @@
                 <div class="tw-mb-8 md:tw-text-xl">
 					<?php echo $red_content; ?>
                 </div>
-                <button class="tw-bg-white tw-px-6 tw-py-3 tw-text-base tw-font-medium tw-text-black tw-shadow-sm">
-                    Learn More
-                </button>
             </div>
         </div>
     </section>
@@ -102,13 +99,6 @@
 			</div>
 		</section>
 	<?php endif; ?>
-
-	<!-- WHAT'S HAPPENING -->
-	<?php
-		get_template_part(
-			'template-parts/section-whats-happening-reskin'
-		);
-	?>
 
 	<!-- PARTNER -->
 	<?php get_template_part('template-parts/section-partner'); ?>
