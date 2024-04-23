@@ -42,27 +42,27 @@
 			?>
 
 			<?php
-				$intro_title = get_field('intro_title');
-				$intro_content = get_field('intro_content');
-				$button_type = get_field('button_type');
+				$brands_logos = get_field('brand_logos');
 			?>
 			<section class="intro">
 				<div class="wrapper">
+					<?php if ($brands_logos): ?>
 					<div class="swiper logo-slider">
 						<div class="swiper-wrapper">
-							
-							<!-- SINGLE -->
-							<div class="swiper-slide">
-								<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/audio-landing/images/slide1.png" alt="Logos for CityNews 680, 98.1 CHFI, KiSS radio, Sportsnet 590 the Fan, Jack radio, 93.5 Country radio" loading="lazy">
-							</div>
-							<!-- SINGLE -->
-							<div class="swiper-slide">
-								<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/audio-landing/images/slide2.png" alt="Logos for The Big Story podcast, 92.1 CITI, Sonic 102.9, 101.3 Easy radio, K Rock 105.7, Mountain FM" loading="lazy">
-							</div>
-						
+							<?php
+								$logo_chunks = array_chunk($brands_logos, 5);
+							?>
+							<?php foreach ($logo_chunks as $logo_chunk): ?>
+								<div class="swiper-slide">
+									<?php foreach ($logo_chunk as $logo): ?>
+										<img src="<?php echo $logo['url']; ?>" alt="<?php echo $logo['alt']; ?>">
+									<?php endforeach; ?>
+								</div>
+							<?php endforeach; ?>
 						</div>
 						<div class="swiper-pagination"></div>
 					</div>
+					<?php endif; ?>
 				</div>
 			</section>
 

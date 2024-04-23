@@ -56,7 +56,7 @@
 					$small_text = get_sub_field('small_text');
 					$large_text_location = get_sub_field('large_text_location');
 				?>
-					<div class="tw-full md:tw-px-2 <?php if ($row_id < 3) echo "md:tw-border-r" ?> <?php echo ($row_id == 1) ? 'md:tw-w-2/4' : 'md:tw-w-1/4'?>">
+					<div class="tw-full md:tw-px-2 md:tw-w-1/3 <?php if ($row_id < 3) echo "md:tw-border-r" ?>">
 						<div class="tw-text-4xl md:tw-text-5xl tw-font-bold tw-mb-3">
 							<?php if ($large_text) : ?><span class="bold"><?php echo $large_text; ?></span><?php endif; ?>
 						</div>

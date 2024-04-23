@@ -331,7 +331,7 @@ a.fixedbtn img {
     a.fixedbtn {
         bottom: 30px;
         left: unset;
-        padding: 20px 50px 20px 20px;
+        padding: 20px;
         right: 60px;
         width: auto;
     }
