@@ -16,8 +16,14 @@
     <title>Rogers Sports & Media</title>
     <?php wp_head(); ?>
     <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/audio-landing/main.min.css">
+	<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/main.min.css">
 	<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/styles/reskin-alt.css">
 	<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/styles/custom.css">
+	<style>
+		.logo-slider {
+			display: block;
+		}
+	</style>
 </head>
 <?php get_header(); ?>
 
@@ -44,7 +50,7 @@
 			<?php
 				$brands_logos = get_field('brand_logos');
 			?>
-			<section class="intro">
+			<section class="tw-bg-gray tw-py-12">
 				<div class="wrapper">
 					<?php if ($brands_logos): ?>
 					<div class="swiper logo-slider">
