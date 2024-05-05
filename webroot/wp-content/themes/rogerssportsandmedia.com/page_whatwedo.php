@@ -20,14 +20,17 @@
 <?php get_header(); ?>
 
 <main id="content" role="main" class="tw-bg-gray">
+	<?php
+        $hero_title = get_field('hero_title');
+    ?>
 
 	<!-- HERO -->
 	<?php
 		get_template_part(
 			'template-parts/section-hero', null,
 			array(
-				'subtitle'		=> 'What We Do',
-				'title'     => 'Our Products',
+				'subtitle'		=> '',
+				'title'     => isset($hero_title) ? $hero_title : get_the_title(),
 			)
 		);
 	?>
