@@ -41,7 +41,7 @@ add_action( 'wp_enqueue_scripts', function () {
 	if ( is_page() && ( get_post_field( 'post_name' ) === 'television-and-streaming' || get_post_field( 'post_name' ) === 'upfront' ) ) {
 		wp_enqueue_script( 'television-js', get_template_directory_uri() . "/assets/scripts/television.js", "parent-scripts", '', true );
 	}
-	if ( is_page() && get_post_field( 'post_name' ) === 'radio-podcasts' ) {
+	if ( is_page() && ( get_post_field( 'post_name' ) === 'radio-podcasts' || get_post_field( 'post_name' ) === 'podcasts' )) {
 		wp_enqueue_script( 'radio-js', get_template_directory_uri() . "/assets/scripts/radio.js", "parent-scripts", '', true );
 	}
 	if (is_page() && is_page_template( 'page_portfolio.php' )){

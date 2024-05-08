@@ -1,7 +1,7 @@
 <?php
     $intro_title = get_field('intro_title');
     $intro_content = get_field('intro_content');
-    $button_type = get_field('button_type');
+    $button_type = get_field('intro_button_type');
 ?>
 <section class="tw-bg-gray tw-px-4 md:tw-px-16 lg:tw-px-32 xl:tw-px-40 2xl:tw-px-80">
     <div>&nbsp;</div>
