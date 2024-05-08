@@ -91,7 +91,7 @@
 					$link = get_sub_field('link');
 					$link_arialabel = get_sub_field('link_arialabel');
 				?>
-					<div class="tw-text-white tw-px-6 md:tw-px-16 tw-py-24 md:tw-py-0 tw-flex tw-flex-col tw-justify-center" style="background-image: url('<?php echo get_stylesheet_directory_uri(); ?>/assets/images/bkg_red_03.jpg'); background-size: cover; background-position: center;">
+					<div class="tw-text-white tw-px-6 md:tw-px-12 tw-py-12 md:tw-py-24 tw-flex tw-flex-col tw-justify-center" style="background-image: url('<?php echo get_stylesheet_directory_uri(); ?>/assets/images/bkg_red_03.jpg'); background-size: cover; background-position: center;">
 						<?php if ($title) : ?>	
 							<div class="tw-text-3xl tw-mb-6 tw-font-bold" aria-label="<?php echo $link_arialabel ? $link_arialabel : ''; ?>"><?php echo $title; ?></div>
 						<?php endif; ?>
