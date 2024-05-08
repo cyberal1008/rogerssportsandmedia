@@ -52,7 +52,7 @@
         ?>
         <section class="tw-bg-white tw-px-4 md:tw-px-16 lg:tw-px-32 xl:tw-px-40 2xl:tw-px-80 tw-py-12">
                 <div class="tw-mb-16">
-                    <div class="tw-text-3xl md:tw-text-4xl tw-text-gray-dark tw-font-bold tw-mb-6"><?php echo $section_title ?></div>
+                    <div class="tw-text-4xl md:tw-text-5xl tw-text-gray-dark tw-font-bold tw-mb-6"><?php echo $section_title ?></div>
                     <div class="tw-grid tw-grid-cols-2 md:tw-grid-cols-4 tw-gap-x-4 tw-gap-y-6">
                         <?php while( have_rows('podcasts') ) : the_row(); 
                             $image = get_sub_field('show_image');
@@ -87,7 +87,8 @@
             $section_title = get_field('capabilities_section_title');
         ?>
             <section class="tw-bg-white tw-px-4 md:tw-px-16 lg:tw-px-32 xl:tw-px-40 2xl:tw-px-80 tw-py-12">
-                <div class="tw-text-3xl md:tw-text-4xl tw-text-gray-dark tw-font-bold tw-mb-12"><?php echo $section_title ?></div>
+                <hr class="tw-mb-6 tw-bg-gray tw-w-3/4 md:tw-w-3/5" />
+                <div class="tw-text-4xl md:tw-text-5xl tw-text-gray-dark tw-font-bold tw-mb-12"><?php echo $section_title ?></div>
                 <div class="tw-grid tw-grid-cols-2 md:tw-grid-cols-4 tw-gap-12">
                     <?php while( have_rows('capabilities') ) : the_row();
                         $subtitle = get_sub_field('subtitle');
