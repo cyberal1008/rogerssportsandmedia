@@ -56,7 +56,7 @@
 					<div class="swiper logo-slider">
 						<div class="swiper-wrapper">
 							<?php
-								$logo_chunks = array_chunk($brands_logos, 5);
+								$logo_chunks = array_chunk($brands_logos, 4);
 							?>
 							<?php foreach ($logo_chunks as $logo_chunk): ?>
 								<div class="swiper-slide">

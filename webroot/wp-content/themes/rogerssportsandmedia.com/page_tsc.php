@@ -57,16 +57,16 @@
                 <br /><br />TSC is Canada’s only televised retailer, distributed nationally in 10 million households across the country, with over 600,000 viewers per week.</div>
                 <div class="tw-mb-10 tw-grid tw-grid-cols-1 md:tw-grid-cols-4">
                     <div class="tw-flex tw-justify-center md:tw-justify-normal">
-                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/tsc_facebook.png" alt="TSC Facebook" class="tw-rounded-full tw-h-24">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/tsc_facebook.png" alt="TSC Facebook" class="tw-rounded-full tw-h-12">
                     </div>
                     <div class="tw-hidden md:tw-block">
-                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/tsc_instagram.png" alt="TSC Instagram" class="tw-rounded-full tw-h-24">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/tsc_instagram.png" alt="TSC Instagram" class="tw-rounded-full tw-h-12">
                     </div>
                     <div class="tw-hidden md:tw-block">
-                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/tsc_youtube.png" alt="TSC Youtube" class="tw-rounded-full tw-h-24">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/tsc_youtube.png" alt="TSC Youtube" class="tw-rounded-full tw-h-12">
                     </div>
                     <div class="tw-hidden md:tw-block">
-                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/tsc_pinterest.png" alt="TSC Pinterest" class="tw-rounded-full tw-h-24">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/tsc_pinterest.png" alt="TSC Pinterest" class="tw-rounded-full tw-h-12">
                     </div>
                 </div>
             </div>
