@@ -110,12 +110,18 @@
                     <?php while( have_rows('highlights') ) : the_row(); 
                         $number = get_sub_field('number');
                         $number_text = get_sub_field('number_text');
+                        $number_text_position = get_sub_field('number_text_position');
                         $text = get_sub_field('text');
-                        $circle_color = get_sub_field('circle_color');
                     ?>
                         <div class="tw-full">
                             <div class="tw-text-7xl tw-font-bold tw-text-transparent tw-mb-1" style="-webkit-text-stroke: 2px white;">
-                                <span class="num scroll-counter" data-counter-time="1200"><?php echo $number; ?></span><?php if ($number_text) : ?><span class="sign bold"><sup><?php echo $number_text; ?></span></sup><?php endif; ?>
+                                <?php if ($number_text_position == 'prepend'): ?>
+                                    <?php if ($number_text) : ?><span class="sign bold"><?php echo $number_text; ?></span><?php endif; ?><span class="num scroll-counter" data-counter-time="1200"><?php echo $number; ?></span>
+                                <?php elseif ($number_text_position == 'superscript'): ?>
+                                    <span class="num scroll-counter" data-counter-time="1200"><?php echo $number; ?></span><?php if ($number_text) : ?><span class="sign bold"><sup><?php echo $number_text; ?></span></sup><?php endif; ?>
+                                <?php else: ?>
+                                    <span class="num scroll-counter" data-counter-time="1200"><?php echo $number; ?></span><?php if ($number_text) : ?><span class="sign bold"><?php echo $number_text; ?></span><?php endif; ?>
+                                <?php endif; ?>
                             </div>
                             <?php if ($text) : ?>
                                 <div class="tw-text-lg"><?php echo $text; ?></div>

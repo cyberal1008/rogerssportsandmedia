@@ -60,7 +60,11 @@ $(document).ready(function () {
         as per RSMW-117
         @TODO: redesign the programming grid function, give ability to order drop down filter "types" in the programming grid
         */
-        $("input.selectopt#radio-category-featured-stations-and-podcasts").prop('checked', true);
+        if (window.location.href.indexOf("podcast") !== -1) {
+            $("input.selectopt#radio-category-podcast").prop('checked', true);
+        } else {
+            $("input.selectopt#radio-category-featured-stations-and-podcasts").prop('checked', true);
+        }
         $("input.selectopt").trigger('change');
     }
     else{
