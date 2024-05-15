@@ -16,53 +16,36 @@
     <title><?php echo get_the_title(); ?> | Rogers Sports & Media</title>
     <?php wp_head(); ?>
     <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/main.min.css">
+	<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/styles/reskin-alt.css">
+	<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/styles/custom.css">
 </head>
 <?php get_header(); ?>
-
-<!-- SKIP -->
-<a role="banner" href="#content" class="skip-to-content button" aria-label="Skip to main content" tabindex="0">Skip to main content</a>
 
 <main id="content" role="main">
 
 	<!-- HERO -->
 	<?php
-	get_template_part(
-		'template-parts/section-hero', null,
-		array(
-			'subtitle'		=> 'What We Do',
-			'title'     => $hero_title ? $hero_title : get_the_title(),
-		)
-	);
+		get_template_part(
+			'template-parts/section-hero', null,
+			array(
+				'subtitle'		=> '',
+				'title'     => isset($hero_title) ? $hero_title : get_the_title(),
+			)
+		);
 	?>
-
-	<!-- ANCHORS -->
-	<section class="anchors desktop">
-		<div class="wrapper">
-			<div class="anchor-list">
-				<a href="#capabilities" aria-label="Our Capabilities">Our Capabilities</a>
-				<a href="#platforms" aria-label="Platforms">Platforms</a>
-				<a href="#highlights" aria-label="Highlights">Highlights</a>
-				<a href="#trends" aria-label="What's Happening">What's Happening</a>
-				<a href="#partner" aria-label="Partner With Us">Partner With Us</a>
-			</div>
-		</div>
-	</section>
 
 	<!-- INTRO -->
 	<?php
-	$intro_title = get_field('intro_title');
-	$intro_content = get_field('intro_content');
-	$brands_logos = get_field('brands_logos');
+		get_template_part('template-parts/section-intro');
+	?>
+
+
+	<!-- INTRO -->
+	<?php
+		$brands_logos = get_field('brands_logos');
 	?>
 	<section class="our-difference alt nomargin">
-		<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/images/square-lines-spaced-yellow.svg" alt="yellow square beside diagonal lines pattern" class="deco top-right">
 		<div class="wrapper">
-			<div class="topblock">
-				<?php if ($intro_title) : ?>
-					<h2 class="title"><?php echo $intro_title; ?></h2>
-				<?php endif; ?>
-				<?php echo $intro_content; ?>
-			</div>
 			<?php if ($brands_logos) : ?>
 				<div class="swiper logo-slider-mobile">
 					<div class="swiper-wrapper">
@@ -87,8 +70,7 @@
 		$plat_section_title = get_field('plat_section_title');
 		$plat_section_button = get_field('plat_section_button');
 		?>
-		<section id="platforms" class="service-grid alt">
-			<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/images/circles-dots-blue.svg" alt="Decorative blue circles beside a dot pattern" class="deco deco3">
+		<section id="platforms" class="service-grid">
 			<div class="wrapper">
 				<?php if ($plat_section_title) : ?>
 					<h2 class="section-title"><?php echo $plat_section_title; ?></h2>
@@ -132,11 +114,6 @@
 					</div>
 					<div class="swiper-pagination"></div>
 				</div>
-				<?php if ($plat_section_button) : ?>
-					<div class="btn-wrap">
-						<a href="<?php echo $plat_section_button['url']; ?>" class="button" aria-label="<?php echo $plat_section_button['title'] ? $plat_section_button['title'] : 'Learn More'; ?>"><?php echo $plat_section_button['title'] ? $plat_section_button['title'] : 'Learn More'; ?></a>
-					</div>
-				<?php endif; ?>
 			</div>
 		</section>
 	<?php endif; ?>
@@ -145,39 +122,30 @@
 	<?php if( have_rows('highlights') ) : 
 		$highlights_bottom_text = get_field('highlights_bottom_text');
 		?>
-		<section id="highlights" class="highlights">
-			<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/images/circle-white.svg" alt="grey decorative rings" class="deco" loading="lazy">
-			<div class="wrapper">
-				<div class="grid circle-stats">
-					<?php while( have_rows('highlights') ) : the_row(); 
-						$number = get_sub_field('number');
-						$number_text = get_sub_field('number_text');
-						$text = get_sub_field('text');
-						$circle_color = get_sub_field('circle_color');
-						?>
-						<div class="item">
-							<?php if ($number) : ?> 
-								<div class="stat <?php echo $circle_color ? $circle_color : ''; ?>">
-									<span class="num scroll-counter" data-counter-time="1200"><?php echo $number; ?></span>
-									<?php if ($number_text) : ?>
-										<span class="sign bold"><?php echo $number_text; ?></span>
-									<?php endif; ?>
-								</div>
-							<?php endif; ?>
-							<?php if ($text) : ?>
-								<p class="desc"><?php echo $text; ?></p>
-							<?php endif; ?>
+		<section id="highlights" class="tw-bg-gray tw-py-12 tw-px-4 md:tw-px-16 lg:tw-px-32 xl:tw-px-40 2xl:tw-px-96 md:tw-py-24">
+            <div class="tw-grid tw-grid-cols-1 md:tw-grid-cols-3 tw-text-white tw-gap-y-10 md:tw-gap-x-16 tw-mb-6">
+				<?php while( have_rows('highlights') ) : the_row();
+					$number = get_sub_field('number');
+					$number_text = get_sub_field('number_text');
+					$text = get_sub_field('text');
+					$circle_color = get_sub_field('circle_color');
+				?>
+					<div class="tw-full">
+						<div class="tw-text-red tw-text-7xl tw-font-bold tw-mb-1">
+							<span class="num scroll-counter" data-counter-time="1200"><?php echo $number; ?></span><?php if ($number_text) : ?><span class="sign bold"><?php echo $number_text; ?></span><?php endif; ?>
 						</div>
-					<?php endwhile; ?>
-				</div>
-
-				<?php if ($highlights_bottom_text) : ?>
-					<div class="banner-stats inline">
-						<p><?php echo $highlights_bottom_text; ?></p>
+						<?php if ($text) : ?>
+							<div class="tw-text-gray-dark tw-text-lg"><?php echo $text; ?></div>
+						<?php endif; ?>
 					</div>
-				<?php endif; ?>
-			</div>
-		</section>
+				<?php endwhile; ?>
+            </div>
+			<?php if ($highlights_bottom_text) : ?>
+				<div class="tw-font-bold tw-text-gray-dark tw-text-4xl">
+					<?php echo $highlights_bottom_text; ?>
+				</div>
+			<?php endif; ?>
+        </section>
 	<?php endif; ?>
 
 	<!-- WHAT'S HAPPENING -->
@@ -186,7 +154,6 @@
 		'template-parts/section-whats-happening', null,
 		array(
 			'zone'		=> 'whats-happening-sports',
-			'class'     => 'alt',
 		)
 	);
 	?>

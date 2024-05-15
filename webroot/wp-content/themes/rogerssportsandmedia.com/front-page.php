@@ -12,6 +12,8 @@
 <head>
     <?php wp_head(); ?>
     <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/main.min.css">
+	<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/styles/reskin-alt.css">
+	<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/styles/custom.css">
 </head>
 
 <?php 
@@ -21,19 +23,6 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 ?>
 
 <main id="content" role="main">
-
-	<!-- ANCHORS -->
-	<section class="anchors">
-		<div class="wrapper">
-			<div class="anchor-list">
-				<a href="#our-difference" aria-label="go to Our Difference content">Our Difference</a>
-				<a href="#products" aria-label="go to Our Products content">Our Products</a>
-				<a href="#trends" aria-label="go to What's Happening content">What's Happening</a>
-				<a href="#partner" aria-label="go to Partner With Us content">Partner With Us</a>
-			</div>
-		</div>
-	</section>
-
 	<!-- INTRO -->
 	<?php
 	$intro_title = get_field('intro_title');
@@ -45,8 +34,7 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 	$intro_column_3 = get_field('intro_column_3');
 	$intro_column_4 = get_field('intro_column_4');
 	?>
-	<section id="our-difference" class="our-difference">
-		<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/images/circle-red.svg" class="deco" alt="red circle" loading="lazy">
+	<section id="our-difference" class="our-difference" style="margin-top: 4rem;">
 		<div class="wrapper">
 			<div class="top">
 				<?php if ($intro_title) : ?>
@@ -186,27 +174,31 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 
 		<!-- DISCOVER -->
 		<?php
-		$disc_section_title = get_field('disc_section_title');
-		$disc_content = get_field('disc_content');
-		$disc_button = get_field('disc_button');
-		$disc_button_arialabel = get_field('disc_button_arialabel');
-		$disc_image = get_field('disc_image');
+			$disc_section_title = get_field('disc_section_title');
+			$disc_content = get_field('disc_content');
+			$disc_button = get_field('disc_button');
+			$disc_button_arialabel = get_field('disc_button_arialabel');
+			$disc_image = get_field('disc_image');
 		?>
-		<section class="discover">
-			<div class="inner wrapper">
-				<div class="imgbox">
+		<section class="tw-w-full tw-text-white tw-px-4 tw-py-12 md:tw-py-24 md:tw-px-12 lg:tw-px-24 xl:tw-px-40 2xl:tw-px-80" style="background-image: url('<?php echo get_stylesheet_directory_uri(); ?>/assets/images/bkg_red_01.jpg'); background-size: cover; background-position: center;">
+			<div class="tw-flex tw-flex-col md:tw-flex-row md:tw-space-x-20">
+				<div class="tw-w-full md:tw-w-1/3 tw-mb-12 md:tw-mb-0 tw-flex tw-items-center tw-justify-center">
 					<?php if ($disc_image) : ?>
-						<img src="<?php echo $disc_image['sizes']['large']; ?>" alt="<?php echo $disc_image['alt']; ?>" loading="lazy">
+						<img src="<?php echo $disc_image['sizes']['large']; ?>" alt="<?php echo $disc_image['alt']; ?>" loading="lazy" class="tw-h-64">
 					<?php endif; ?>
 				</div>
-				<div class="txtbox">
-					<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/images/triangles.svg" class="deco" alt="triangles" loading="lazy">
+				<div class="tw-w-full md:tw-w-2/3 tw-flex-col tw-justify-center">
+					<hr class="tw-w-5/6 tw-mb-4 tw-border-t-2 tw-border-white" />
 					<?php if ($disc_section_title) : ?>
-						<h2 class="title"><?php echo $disc_section_title; ?></h2>
+						<div class="tw-mb-4 tw-text-4xl md:tw-text-5xl tw-font-semibold"><?php echo $disc_section_title; ?></div>
 					<?php endif; ?>
-					<?php echo $disc_content ? $disc_content : ''; ?>
+					<div class="tw-mb-12 md:tw-text-xl">
+						<?php echo $disc_content; ?>
+					</div>
 					<?php if ($disc_button) : ?>
-						<a href="<?php echo $disc_button['url']; ?>" class="button yellow" aria-label="<?php echo $disc_button_arialabel ? $disc_button_arialabel : ''; ?>"><?php echo $disc_button['title']; ?></a>
+						<a href="<?php echo $disc_button['url']; ?>" class="tw-bg-white tw-px-6 tw-py-3 tw-text-base tw-font-medium tw-text-black tw-shadow-sm tw-no-underline hover:tw-no-underline focus:tw-no-underline hover:tw-text-black visited:tw-text-black" aria-label="<?php echo $disc_button_arialabel ? $disc_button_arialabel : ''; ?>">
+							<?php echo $disc_button['title']; ?>
+						</a>
 					<?php endif; ?>
 				</div>
 			</div>
@@ -220,7 +212,6 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 		$exp_button_arialabel = get_field('exp_button_arialabel');
 		?>
 		<section id="products" class="explore">
-			<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/images/circle-yellow.svg" class="deco" alt="" loading="lazy">
 			<div class="wrapper">
 				<div class="intro">
 					<?php if ($exp_section_title) : ?>
@@ -306,6 +297,7 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 	?>
 	<section id="trends" class="trends">
 		<div class="wrapper">
+			<hr class="tw-bg-gray-light tw-w-3/4 md:tw-w-3/5" />
 			<?php if ($happening_section_title) : ?>
 				<h2 class="section-title"><?php echo $happening_section_title; ?></h2>
 			<?php endif; ?>
@@ -333,8 +325,8 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 					?>
 					<div class="item">
 						<?php $title_formatted = ucwords(strtolower(get_the_title())); ?>
+						<p class="date" style="margin-bottom: 6px;"><?php echo get_the_date( get_option( 'date_format' ) ); ?> / <?php echo $categories ? $categories[0]->name : ''; ?></p>
 						<a href="<?php the_permalink(); ?>" aria-label="read <?php echo $title_formatted; ?>"><img src="<?php echo $featured_img_url; ?>" alt="" loading="lazy"></a>
-						<p class="date"><?php echo get_the_date( get_option( 'date_format' ) ); ?> / <?php echo $categories ? $categories[0]->name : ''; ?></p>
 						<h3 class="post-title"><a href="<?php the_permalink(); ?>" aria-label="read <?php echo $title_formatted; ?>"><?php echo $title_formatted; ?></a></h3>
 						<div class="btn-wrap">
 							<a href="<?php the_permalink(); ?>" class="lined" aria-label="Read More about <?php echo $title_formatted; ?>">Read More</a>
@@ -346,19 +338,7 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 	</section>
 
 	<!-- PARTNER -->
-	<section id="partner" class="partner">
-		<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/audio-landing/images/diamond-green.svg" alt="green diamond" class="bg bg1" loading="lazy">
-		<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/audio-landing/images/circle-white.svg" alt="decorative grey rings" class="bg bg2" loading="lazy">
-		<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/audio-landing/images/group-red.png" alt="red rectangle and yellow triangles" class="bg bg3" loading="lazy">
-		<div class="wrapper">
-			<h2 class="section-title">PARTNER WITH US TODAY</h2>
-
-			<iframe src="https://mcdjql80kmghrjj6lg68bbtqbgv1.pub.sfmc-content.com/r2bks1awm2k" width="100%" height="820" allowfullscreen sandbox="allow-same-origin allow-scripts allow-popups allow-forms" title="partner with us today by filling out the form below">
-				<p>Sorry, your browser does not support iframes.</p>
-			</iframe>
-
-		</div>
-	</section>
+	<?php get_template_part('template-parts/section-partner'); ?>
 
 </main>
 

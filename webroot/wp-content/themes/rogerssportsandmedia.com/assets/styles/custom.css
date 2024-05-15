@@ -1,0 +1,81 @@
+main h2 {
+    font-family: var(--body-font);
+}
+
+.portfolio-main h2 {
+    text-transform: none;
+}
+
+.our-difference .accordion .accordion-trigger {
+    font-family: var(--body-font);
+    font-size: 32px;
+}
+
+.service-grid .item .title {
+    font-family: var(--body-font);
+    text-transform: none;
+}
+
+.vid-slider .swiper-slide .title {
+    font-family: var(--body-font);
+    text-transform: none;
+}
+
+.section-title {
+    font-size: 32px;
+    color: #403e41 !important;
+}
+
+@media screen and (min-width: 768px) {
+    .section-title {
+        font-size: 48px;
+    }
+}
+
+.solutions .item .name {
+    font-family: var(--body-font);
+}
+
+.solutions ul {
+    list-style-type: disc;
+}
+
+/** Home */
+.explore .tabs .tablist .trigger {
+    font-family: var(--body-font);
+    text-transform: none;
+}
+
+.explore .accordion .accordion-trigger {
+    font-family: var(--body-font);
+    text-transform: none;
+}
+
+main .lined {
+    border-bottom: 3px solid #e6e6e6;
+}
+
+main .lined:hover {
+    border-bottom: 3px solid var(--link-color);
+}
+
+.trends .section-title {
+    text-transform: none;
+}
+
+/** Contact us */
+.contactus-main {
+	iframe {
+		border: none;
+		width: 100%;
+		height: 932px;
+	}
+}
+
+@media only screen and (max-width: 767px) {
+	.contactus-main {
+		iframe {
+			height: 1280px;
+		}
+	}
+}

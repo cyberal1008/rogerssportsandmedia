@@ -16,71 +16,47 @@
     <title><?php echo get_the_title(); ?> | Rogers Sports & Media</title>
     <?php wp_head(); ?>
     <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/main.min.css">
+	<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/styles/reskin-alt.css">
 </head>
 <?php get_header(); ?>
 
 	<?php
-	$hero_image = get_field('hero_image', 'category_1');
-	$hero_mobile_image = get_field('hero_mobile_image', 'category_1');
-	?>
-	<section class="hero">
-		<picture>
-			<source srcset="<?php echo $hero_image['url']; ?>"
-					media="(min-width: 640px)">
-			<img src="<?php echo $hero_mobile_image['url']; ?>" class="bg" alt="<?php echo $hero_image['alt']; ?>" />
-		</picture>
-
-		<div class="wrapper">
-			<span>What We Do</span>
-			<h1>THE LATEST FROM RSM</h1>
-		</div>
-	</section>
-
-	<!-- SKIP -->
-	<a role="banner" href="#content" class="skip-to-content button" aria-label="Skip to main content" tabindex="0">Skip to main content</a>
-
-	<main id="content" class="blog-post" role="main">
-
-		<?php
 		$id = get_the_ID();
 		$feat_img_id = get_post_thumbnail_id($id);
         $feat_img = get_the_post_thumbnail_url($id);
         $alt = get_post_meta ( $feat_img_id, '_wp_attachment_image_alt', true );
         $feat_image_caption = get_field('feat_image_caption');
-		$categories = get_the_category();
-		if ( ! empty( $categories ) ) {
-			$category_name = esc_html( $categories[0]->name );
-			$category_link = get_category_link( $categories[0]->cat_ID );
-		}
+	?>
+	<section class="tw-relative tw-h-96">
+		<?php if ($feat_img) : ?>
+			<img src="<?php echo $feat_img; ?>" alt="<?php echo $alt ? $alt : ''; ?>" class="tw-object-cover tw-h-full tw-w-full tw-brightness-50">
+		<?php endif; ?>
+	</section>
+
+	<main id="content" class="blog-post" role="main">
+		<?php
+			$categories = get_the_category();
+			if ( ! empty( $categories ) ) {
+				$category_name = esc_html( $categories[0]->name );
+				$category_link = get_category_link( $categories[0]->cat_ID );
+			}
 		?>
 
 		<!-- INTRO -->
 		<section class="blog-post-intro">
-			<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/images/blog-post-deco.svg" alt="" class="deco">
 			<div class="backwrap">
 				<div class="wrapper">
-					<a href="<?php echo get_home_url(); ?>/whats-happening" class="back-btn" aria-label="Go back to What's Happening"><i class="icon fa-sharp fa-regular fa-arrow-left"></i>What's Happening</a>
+					<a href="<?php echo get_home_url(); ?>/the-latest" class="back-btn" aria-label="Go back to What's Happening"><i class="icon fa-sharp fa-regular fa-arrow-left"></i>The Latest</a>
 				</div>
 			</div>
 				
 			<div class="wrapper">
-
-				<div class="meta">
+				<h1 class="title"><?php the_title(); ?></h1>
+				<div class="meta" style="margin: 0">
 					<div class="date-cat">
 						<?php echo get_the_date('F j, Y'); ?> / <a href="<?php echo $category_link; ?>" aria-label="Read more <?php echo $category_name; ?> posts"><?php echo $category_name; ?></a>
 					</div>
 				</div>
-
-				<h1 class="title"><?php the_title(); ?></h1>
-				<?php if ($feat_img) : ?>
-					<div class="feat-wrap">
-						<img src="<?php echo $feat_img; ?>" class="feat-img" alt="<?php echo $alt ? $alt : ''; ?>">
-						<?php if ($feat_image_caption) : ?>
-							<p class="caption"><?php echo $feat_image_caption; ?></p>
-						<?php endif; ?>
-					</div>
-				<?php endif; ?>
-					
 			</div>
 		</section>
 
@@ -130,7 +106,7 @@
 							if ( $the_query->have_posts() ) : 
 							?>
 								<div class="posts-block widget">
-									<p class="title">Similar Reads</p>
+									<p class="title" style="text-transform: none; font-family: var(--body-font);">Similar Reads</p>
 				
 									<?php while ( $the_query->have_posts() ) : $the_query->the_post(); 
 										$id = get_the_ID();
@@ -141,12 +117,9 @@
 								        $alt = get_post_meta ( $feat_img_id, '_wp_attachment_image_alt', true );
 										?>
 										<div class="item">
+											<p class="date" style="margin-bottom: 4px;"><?php echo get_the_date('F j, Y'); ?></p>
 											<a href="<?php echo $link; ?>" aria-label="read <?php echo $title; ?>"><img src="<?php echo $feat_img; ?>" class="feat-img" alt="<?php echo $alt; ?>" loading="lazy"></a>
 											<p class="item-title"><a href="<?php echo $link; ?>" aria-label="read <?php echo $title; ?>"><?php echo wp_trim_words( $title, 15 ); ?></a></p>
-											<p class="date"><?php echo get_the_date('F j, Y'); ?></p>
-											<div class="btn-wrap">
-												<a href="<?php echo $link; ?>" class="lined" aria-label="read more about <?php echo $title; ?>">Read More</a>
-											</div>
 										</div>
 									<?php endwhile; ?>
 									
@@ -178,8 +151,6 @@
 						<?php the_content(); ?>
 
 						<a href="#" class="backtop" aria-label="back to top">Back to top <i class="icon fa-sharp fa-solid fa-chevron-up"></i></a>
-						<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/images/triangles-green.svg" alt="" class="deco">
-
 					</div>
 
 				</div>

@@ -44,14 +44,12 @@
     <div class="md:tw-px-16 lg:tw-px-32 xl:tw-px-48 2xl:tw-px-96">
         <div class="tw-relative tw-bg-white tw-px-8 md:tw-px-16 tw-py-12 -tw-mt-10 tw-mb-16">
             <div class="tw-text-4xl tw-text-gray-dark tw-font-bold tw-mb-8">Home of the most exciting live sports content in the country</div>
-            <p class="tw-text-base tw-leading-7">We're changing the game with premium, live streaming sports content that drives impact.</p>
-            <p class="tw-text-base tw-leading-7">
+            <p class="tw-text-lg tw-leading-7">
+                We're changing the game with premium, live streaming sports content that drives impact.
                 Our partnerships with the most popular professional sports leagues enables us to connect
-            </p>
-            <p class="tw-text-base tw-leading-7">
                 marketers to engaged and passionate sport fans in the most premier sporting events 365 days a year.
             </p>
-            <p class="tw-text-base tw-leading-7">
+            <p class="tw-text-base tw-leading-7 tw-mt-4">
                 Partner with Rogers Sports & Media to drive advertising impact for your brand on the largest steaming network in Canada.
             </p>
         </div>

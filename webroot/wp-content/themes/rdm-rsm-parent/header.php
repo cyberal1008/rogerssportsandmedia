@@ -158,7 +158,7 @@ if ( is_home() ) {
 							?>
 					</div>
 				</div>
-				<div class="nav-social">
+				<!-- <div class="nav-social">
 					<ul class="social-icons">
 						<li><a class="header-social" target="_blank" href="https://twitter.com/RogersMediaPR" aria-label="View Rogers Sports and Media on Twitter">
 							<i class="icon fa-brands fa-square-twitter"></i>
@@ -170,7 +170,7 @@ if ( is_home() ) {
 							<i class="icon fa-brands fa-square-instagram"></i>
 						</a></li>
 					</ul>
-				</div>
+				</div> -->
 
 			</nav>
 	</header>
@@ -179,13 +179,11 @@ if ( is_home() ) {
 	if ( ! is_page() || ! is_page_template( 'page-contactus.php' ) ) { ?>
 		<a href="<?php echo get_home_url(); ?>/contact-us" class="button fixedbtn" role="region" aria-label="Advertise with Us">
 			Advertise With Us
-			<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/images/character.svg" class="char static" alt="yellow square-shaped character" loading="lazy">
-			<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/images/character-alt.svg" class="char hover" alt="yellow square-shaped character waving" loading="lazy">
 		</a>
 	<?php } ?>
 
 <?php if ( is_singular('event') ) { ?>
 	<div class="wrapper pt-5">
-<?php } else if (!is_home() && !is_front_page() && !is_page_template( 'page_whatwedo.php' ) && !is_page_template( 'page_upfront.php' ) && !is_page_template( 'page_sitemap.php' ) && !is_page_template( 'page_advanced-solutions.php' ) && !is_page_template( 'page_creative-solutions.php' ) && !is_page_template( 'page_ooh.php' ) && !is_page_template( 'page_sports.php' ) && !is_page_template( 'page_tvstreaming.php' ) && !is_page_template( 'page_tv.php' ) && !is_page_template( 'page_disneyplus.php' ) && !is_singular('post') && !is_category()) { ?>
+<?php } else if (!is_home() && !is_front_page() && !is_page_template( 'page_whatwedo.php' ) && !is_page_template( 'page_upfront.php' ) && !is_page_template( 'page_sitemap.php' ) && !is_page_template( 'page_advanced-solutions.php' ) && !is_page_template( 'page_creative-solutions.php' ) && !is_page_template( 'page_ooh.php' ) && !is_page_template( 'page_sports.php' ) && !is_page_template( 'page_tvstreaming.php' ) && !is_page_template( 'page_tv.php' ) && !is_page_template( 'page_disneyplus.php' ) && !is_page_template( 'page_tsc.php' ) && !is_page_template( 'page_whoweare.php' ) && !is_page_template( 'page_contactus.php' ) && !is_page_template( 'page_podcasts.php' ) &&  !is_singular('post') && !is_category()) { ?>
 	<div class="wrapper ">
 <?php } ?>

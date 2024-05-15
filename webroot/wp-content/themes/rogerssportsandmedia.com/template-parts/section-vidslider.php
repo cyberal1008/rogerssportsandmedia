@@ -9,7 +9,7 @@ if ($vidslider_vis == 'Visible') :
 
 			<div class="topblock">
 				<?php if ($vidslider_section_title) : ?>
-					<h2 class="section-title"><?php echo $vidslider_section_title; ?></h2>
+					<h2 class="section-title tw-text-gray-dark"><?php echo $vidslider_section_title; ?></h2>
 				<?php endif; ?>
 				<?php echo $vidslider_intro_content ? $vidslider_intro_content : ''; ?>
 			</div>
@@ -19,7 +19,7 @@ if ($vidslider_vis == 'Visible') :
 					<div class="swiper vid-slider">
 						<div class="swiper-wrapper">
 										
-							<?php while( have_rows('videoslider') ) : the_row(); $vid_ctr++;
+							<?php $vid_ctr = 0; while( have_rows('videoslider') ) : the_row(); $vid_ctr++;
 								$title = get_sub_field('title');
 								$description = get_sub_field('description');
 								$video_embed_code = get_sub_field('video_embed_code');

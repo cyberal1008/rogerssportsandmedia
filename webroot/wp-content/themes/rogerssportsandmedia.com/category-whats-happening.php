@@ -16,29 +16,31 @@
     <link rel="shortcut icon" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/landing/images/favicon.png" />
     <title><?php echo single_cat_title("", false); ?> | Rogers Sports & Media</title>
     <?php wp_head(); ?>
-    <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/main.min.css">
+	<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/main.min.css">
+	<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/styles/reskin-alt.css">
 </head>
 <?php get_header(); ?>
-
-<!-- SKIP -->
-<a role="banner" href="#content" class="skip-to-content button" tabindex=0 aria-label="Skip to main content" tabindex="0">Skip to main content</a>
 
 <!-- MAIN -->
 <main id="content" role="main">
 
 	<!-- HERO -->
 	<?php
-	get_template_part(
-		'template-parts/section-hero', null,
-		array(
-			'subtitle'		=> 'What We Do',
-			'title'     => $hero_title ? $hero_title : 'THE LATEST FROM RSM',
-		)
-	);
+		get_template_part(
+			'template-parts/section-hero', null,
+			array(
+				'subtitle'		=> '',
+				'title'     => isset($hero_title) ? $hero_title : 'The Latest',
+			)
+		);
 	?>
 
 	<?php
-	$searchterm = $_GET["searchterm"];
+	if (isset($_GET["searchterm"])) {
+		$searchterm = $_GET["searchterm"];
+	} else {
+		$searchterm = '';
+	}
 	$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 	$current_cat_id = get_query_var( 'cat' );
 	$current_cat_link = get_category_link($current_cat_id);
@@ -63,29 +65,30 @@
         $alt = get_post_meta ( $feat_img_id, '_wp_attachment_image_alt', true );
 		$categories = get_the_category();
 		?>
-		<section class="splitblock">
-			<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/images/circle-yellow-thin.svg" alt="yellow circle" class="deco">
+		<section class="splitblock" style="background-color: var(--light);" style="font-size: 10px; !important">
 			<div class="wrapper grid two">
 				<div class="imgbox">
 					<a href="<?php echo $link; ?>" arai-label=""><img src="<?php echo $featured_img_url; ?>" alt="<?php echo $alt; ?>"></a>
 				</div>
 				<div class="txtbox">
 					<div class="top">
-						<span class="date"><?php echo get_the_date( get_option( 'date_format' ) ); ?></span>
-						<span class="cat"><?php echo $categories[0]->name; ?></span>
+						<span class="date"><?php echo get_the_date( get_option( 'date_format' ) ); ?> / <?php echo $categories[0]->name; ?></span>
 					</div>
 					<p class="title"><a href="<?php echo $link; ?>" aria-label="<?php echo $title; ?>"><?php echo $title; ?></a></p>
 					<?php if ($excerpt) : ?>
 						<p class="excerpt"><?php echo wp_trim_words( $excerpt, 34); ?></p>
 					<?php endif; ?>
-					<a href="<?php echo $link; ?>" aria-label="Read More about <?php echo $title; ?>" class="button">Read More</a>
+					<div class="tw-mb-2">&nbsp;</div>
+					<a href="<?php echo $link; ?>" aria-label="Read More about <?php echo $title; ?>" class="tw-bg-white tw-px-6 tw-py-3 tw-text-base tw-font-medium tw-text-black tw-shadow-sm tw-no-underline hover:tw-no-underline focus:tw-no-underline hover:tw-text-black visited:tw-text-black">
+						Learn More
+					</a>
 				</div>
 			</div>
 		</section>
 	<?php endwhile; endif; wp_reset_postdata(); ?>
 
 	<!-- FILTERS -->
-	<section class="posts-filters">
+	<section class="posts-filters" style="background-color: var(--light-light); font-size: 10px;">
 		<div class="inner wrapper">
 			<p class="topic-label">Search articles or browse topics:</p>
 
@@ -136,8 +139,6 @@
 
 	<!-- POSTS -->
 	<section class="post-tabs">
-		<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/images/triangles-green1.svg" class="deco" loading="lazy">
-
 		<!-- TAB - ALL -->
 		<div class="tabcontent" tabindex="0" role="tabpanel" id="tab-content-all" aria-labelledby="tab-all">
 			<section class="posts-grid">
