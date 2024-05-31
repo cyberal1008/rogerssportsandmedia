@@ -60,7 +60,7 @@
 		$upfront_link_arialabel = get_field('upfront_link_arialabel');
 		$upfront_image = get_field('upfront_image');
 	?>
-	<section id="upfront" class="tw-mb-16 tw-text-white tw-text-center tw-px-4 md:tw-px-16 lg:tw-px-32 xl:tw-px-40 2xl:tw-px-96 tw-relative tw-py-12 tw-h-[328px] md:tw-h-[500px] xl:tw-h-[612px]" style="background-image: url('<?php echo get_stylesheet_directory_uri(); ?>/assets/images/bkg_red_01.jpg'); background-size: cover; background-position: center;">
+	<section id="upfront" class="tw-text-white tw-text-center tw-px-4 md:tw-px-16 lg:tw-px-32 xl:tw-px-40 2xl:tw-px-96 tw-relative tw-py-12 tw-h-[328px] md:tw-h-[500px] xl:tw-h-[612px]" style="background-image: url('<?php echo get_stylesheet_directory_uri(); ?>/assets/images/bkg_red_01.jpg'); background-size: cover; background-position: center;">
 		<?php if ($upfront_title) : ?>	
 			<div class="tw-font-bold tw-text-4xl md:tw-text-5xl tw-mb-12">
 				<?php echo $upfront_title; ?>
