@@ -134,7 +134,7 @@ if ( is_home() ) {
 				<div class="nav-logo d-flex justify-content-center align-content-center align-items-center"
 					 itemscope itemtype="https://schema.org/Organization">
 					 <a class="navbar-brand" href="<?php echo esc_url( home_url( '/' ) ); ?>">
-						<img src="<?php echo dirname( get_bloginfo( 'stylesheet_url' ) ); ?>/assets/images/Logo-RSM.svg" width="120"  alt="<?php esc_url( bloginfo( 'name' ) ); ?>">
+						<img style="height: 32px;" src="<?php echo dirname( get_bloginfo( 'stylesheet_url' ) ); ?>/assets/images/Logo-RSM-new.png"  alt="<?php esc_url( bloginfo( 'name' ) ); ?>">
 					  </a>
 				</div>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="<?php esc_attr_e( 'Toggle navigation', 'RSM' ); ?>">
