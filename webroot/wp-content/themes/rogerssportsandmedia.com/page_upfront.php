@@ -50,18 +50,6 @@
 	?>
 	<section class="our-difference alt nomargin">
 		<div class="wrapper">
-			<?php if ($brands_logos) : ?>
-				<div class="swiper logo-slider">
-					<div class="swiper-wrapper">
-						<?php foreach ($brands_logos as $logo) : ?>
-							<div class="swiper-slide">
-								<img src="<?php echo $logo['url']; ?>" alt="<?php echo $logo['alt']; ?>">
-							</div>
-						<?php endforeach; ?>
-					</div>
-					<div class="swiper-pagination"></div>
-				</div>
-			<?php endif; ?>
 		</div>
 	</section>
 
@@ -79,19 +67,40 @@
 			</div>
 		<?php endif; ?>
 		<?php if ($upfront_image) : ?>
-			<a href="<?php echo $upfront_link['url']; ?>" aria-label="<?php echo $upfront_link_arialabel ? $upfront_link_arialabel : ''; ?>" target="<?php echo $upfront_link['target'] ? $upfront_link['target'] : '_self'; ?>">
+			<!-- <a href="<?php echo $upfront_link['url']; ?>" aria-label="<?php echo $upfront_link_arialabel ? $upfront_link_arialabel : ''; ?>" target="<?php echo $upfront_link['target'] ? $upfront_link['target'] : '_self'; ?>"> -->
 				<img src="<?php echo $upfront_image['sizes']['large']; ?>" alt="<?php echo $upfront_image['url']; ?>" loading="lazy">
-			</a>
+			<!-- </a> -->
 		<?php endif; ?>
 		<?php if ($upfront_link) : ?>
-			<div style="margin-top: 16px;">
+			<!-- <div style="margin-top: 16px;">
 				<a href="<?php echo $upfront_link['url']; ?>" class="button" aria-label="<?php echo $upfront_link_arialabel ? $upfront_link_arialabel : ''; ?>" target="<?php echo $upfront_link['target'] ? $upfront_link['target'] : '_self'; ?>"><?php echo $upfront_link['title'] ? $upfront_link['title'] : 'Watch Now'; ?></a>
-			<div>
-			<?php endif; ?>
+			<div> -->
+		<?php endif; ?>
 	</section>
 	
-	<div class="tw-mb-16">&nbsp;</div>
-	<div class="tw-mb-10">&nbsp;</div>
+		<!-- INTRO -->
+		<?php
+		$intro_title = get_field('intro_title');
+		$intro_content = get_field('intro_content');
+		$brands_logos = get_field('brands_logos');
+	?>
+	<section class="our-difference alt nomargin">
+		<div class="wrapper">
+			<?php if ($brands_logos) : ?>
+				<div class="swiper logo-slider">
+					<div class="swiper-wrapper">
+						<?php foreach ($brands_logos as $logo) : ?>
+							<div class="swiper-slide">
+								<img src="<?php echo $logo['url']; ?>" alt="<?php echo $logo['alt']; ?>">
+							</div>
+						<?php endforeach; ?>
+					</div>
+					<div class="swiper-pagination"></div>
+				</div>
+			<?php endif; ?>
+		</div>
+	</section>
+
 	<!-- PROGRAMMING -->
 	<?php
 		$prog_section_title = get_field('prog_section_title');
