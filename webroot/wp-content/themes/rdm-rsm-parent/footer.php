@@ -88,7 +88,7 @@
 		<div class="col-md-3 col-lg-2">
 			<div class="footer-logo" itemscope itemtype="https://schema.org/Organization">
 				<a class="footer-brand" href="<?php echo esc_url( home_url( '/' ) ); ?>">
-				<img src="<?php echo dirname( get_bloginfo( 'stylesheet_url' ) ); ?>/assets/images/Logo-RSM.svg" width="120"  alt="<?php esc_url( bloginfo( 'name' ) ); ?>">
+				<img src="<?php echo dirname( get_bloginfo( 'stylesheet_url' ) ); ?>/assets/images/Logo-RSM-new.png" width="120"  alt="<?php esc_url( bloginfo( 'name' ) ); ?>">
 				</a>
 			</div>
 		</div>

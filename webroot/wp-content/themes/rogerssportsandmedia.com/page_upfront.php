@@ -50,6 +50,42 @@
 	?>
 	<section class="our-difference alt nomargin">
 		<div class="wrapper">
+		</div>
+	</section>
+
+	<!-- UPFRONT CTA -->
+	<?php
+		$upfront_title = get_field('upfront_title');
+		$upfront_link = get_field('upfront_link');
+		$upfront_link_arialabel = get_field('upfront_link_arialabel');
+		$upfront_image = get_field('upfront_image');
+	?>
+	<section id="upfront" class="tw-text-white tw-text-center tw-px-4 md:tw-px-16 lg:tw-px-32 xl:tw-px-40 2xl:tw-px-96 tw-relative tw-py-12 tw-h-[328px] md:tw-h-[500px] xl:tw-h-[612px]" style="background-image: url('<?php echo get_stylesheet_directory_uri(); ?>/assets/images/bkg_red_01.jpg'); background-size: cover; background-position: center;">
+		<?php if ($upfront_title) : ?>	
+			<div class="tw-font-bold tw-text-4xl md:tw-text-5xl tw-mb-12">
+				<?php echo $upfront_title; ?>
+			</div>
+		<?php endif; ?>
+		<?php if ($upfront_image) : ?>
+			<!-- <a href="<?php echo $upfront_link['url']; ?>" aria-label="<?php echo $upfront_link_arialabel ? $upfront_link_arialabel : ''; ?>" target="<?php echo $upfront_link['target'] ? $upfront_link['target'] : '_self'; ?>"> -->
+				<img src="<?php echo $upfront_image['sizes']['large']; ?>" alt="<?php echo $upfront_image['url']; ?>" loading="lazy">
+			<!-- </a> -->
+		<?php endif; ?>
+		<?php if ($upfront_link) : ?>
+			<!-- <div style="margin-top: 16px;">
+				<a href="<?php echo $upfront_link['url']; ?>" class="button" aria-label="<?php echo $upfront_link_arialabel ? $upfront_link_arialabel : ''; ?>" target="<?php echo $upfront_link['target'] ? $upfront_link['target'] : '_self'; ?>"><?php echo $upfront_link['title'] ? $upfront_link['title'] : 'Watch Now'; ?></a>
+			<div> -->
+		<?php endif; ?>
+	</section>
+	
+		<!-- INTRO -->
+		<?php
+		$intro_title = get_field('intro_title');
+		$intro_content = get_field('intro_content');
+		$brands_logos = get_field('brands_logos');
+	?>
+	<section class="our-difference alt nomargin">
+		<div class="wrapper">
 			<?php if ($brands_logos) : ?>
 				<div class="swiper logo-slider">
 					<div class="swiper-wrapper">
@@ -65,33 +101,6 @@
 		</div>
 	</section>
 
-	<!-- UPFRONT CTA -->
-	<?php
-		$upfront_title = get_field('upfront_title');
-		$upfront_link = get_field('upfront_link');
-		$upfront_link_arialabel = get_field('upfront_link_arialabel');
-		$upfront_image = get_field('upfront_image');
-	?>
-	<section id="upfront" class="tw-mb-16 tw-text-white tw-text-center tw-px-4 md:tw-px-16 lg:tw-px-32 xl:tw-px-40 2xl:tw-px-96 tw-relative tw-py-12 tw-h-[328px] md:tw-h-[500px] xl:tw-h-[612px]" style="background-image: url('<?php echo get_stylesheet_directory_uri(); ?>/assets/images/bkg_red_01.jpg'); background-size: cover; background-position: center;">
-		<?php if ($upfront_title) : ?>	
-			<div class="tw-font-bold tw-text-4xl md:tw-text-5xl tw-mb-12">
-				<?php echo $upfront_title; ?>
-			</div>
-		<?php endif; ?>
-		<?php if ($upfront_image) : ?>
-			<a href="<?php echo $upfront_link['url']; ?>" aria-label="<?php echo $upfront_link_arialabel ? $upfront_link_arialabel : ''; ?>" target="<?php echo $upfront_link['target'] ? $upfront_link['target'] : '_self'; ?>">
-				<img src="<?php echo $upfront_image['sizes']['large']; ?>" alt="<?php echo $upfront_image['url']; ?>" loading="lazy">
-			</a>
-		<?php endif; ?>
-		<?php if ($upfront_link) : ?>
-			<div style="margin-top: 16px;">
-				<a href="<?php echo $upfront_link['url']; ?>" class="button" aria-label="<?php echo $upfront_link_arialabel ? $upfront_link_arialabel : ''; ?>" target="<?php echo $upfront_link['target'] ? $upfront_link['target'] : '_self'; ?>"><?php echo $upfront_link['title'] ? $upfront_link['title'] : 'Watch Now'; ?></a>
-			<div>
-			<?php endif; ?>
-	</section>
-	
-	<div class="tw-mb-16">&nbsp;</div>
-	<div class="tw-mb-10">&nbsp;</div>
 	<!-- PROGRAMMING -->
 	<?php
 		$prog_section_title = get_field('prog_section_title');

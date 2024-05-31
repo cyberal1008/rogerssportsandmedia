@@ -6,7 +6,7 @@
 		<div class="grid top">
 			<div class="item">
 				<a class="footer-brand" href="<?php echo esc_url( home_url( '/' ) ); ?>">
-					<img src="<?php echo dirname( get_bloginfo( 'stylesheet_url' ) ); ?>/assets/images/Logo-RSM.svg" width="120" class="logo" alt="<?php esc_url( bloginfo( 'name' ) ); ?>">
+					<img style="width: 200px;" src="<?php echo dirname( get_bloginfo( 'stylesheet_url' ) ); ?>/assets/images/Logo-RSM-new.png" width="120" class="logo" alt="<?php esc_url( bloginfo( 'name' ) ); ?>">
 				</a>
 			</div>
 			<div class="item form-item">
