@@ -68,7 +68,7 @@
 		<?php endif; ?>
 		<?php if ($upfront_image) : ?>
 			<a href="<?php echo $upfront_link['url']; ?>" aria-label="<?php echo $upfront_link_arialabel ? $upfront_link_arialabel : ''; ?>" target="<?php echo $upfront_link['target'] ? $upfront_link['target'] : '_self'; ?>">
-				<img src="<?php echo $upfront_image['sizes']['large']; ?>" alt="<?php echo $upfront_image['url']; ?>" loading="lazy">
+				<img style="margin: auto" src="<?php echo $upfront_image['sizes']['large']; ?>" alt="<?php echo $upfront_image['url']; ?>" loading="lazy">
 			</a>
 		<?php endif; ?>
 		<?php if ($upfront_link) : ?>
@@ -79,6 +79,7 @@
 	</section>
 
 	<div class="tw-mb-16">&nbsp;</div>
+	<div class="tw-mb-10">&nbsp;</div>
 	<div class="tw-mb-10">&nbsp;</div>
 	
 		<!-- INTRO -->
