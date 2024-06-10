@@ -67,16 +67,19 @@
 			</div>
 		<?php endif; ?>
 		<?php if ($upfront_image) : ?>
-			<!-- <a href="<?php echo $upfront_link['url']; ?>" aria-label="<?php echo $upfront_link_arialabel ? $upfront_link_arialabel : ''; ?>" target="<?php echo $upfront_link['target'] ? $upfront_link['target'] : '_self'; ?>"> -->
+			<a href="<?php echo $upfront_link['url']; ?>" aria-label="<?php echo $upfront_link_arialabel ? $upfront_link_arialabel : ''; ?>" target="<?php echo $upfront_link['target'] ? $upfront_link['target'] : '_self'; ?>">
 				<img src="<?php echo $upfront_image['sizes']['large']; ?>" alt="<?php echo $upfront_image['url']; ?>" loading="lazy">
-			<!-- </a> -->
+			</a>
 		<?php endif; ?>
 		<?php if ($upfront_link) : ?>
-			<!-- <div style="margin-top: 16px;">
+			<div style="margin-top: 16px;">
 				<a href="<?php echo $upfront_link['url']; ?>" class="button" aria-label="<?php echo $upfront_link_arialabel ? $upfront_link_arialabel : ''; ?>" target="<?php echo $upfront_link['target'] ? $upfront_link['target'] : '_self'; ?>"><?php echo $upfront_link['title'] ? $upfront_link['title'] : 'Watch Now'; ?></a>
-			<div> -->
+			<div>
 		<?php endif; ?>
 	</section>
+
+	<div class="tw-mb-16">&nbsp;</div>
+	<div class="tw-mb-10">&nbsp;</div>
 	
 		<!-- INTRO -->
 		<?php
