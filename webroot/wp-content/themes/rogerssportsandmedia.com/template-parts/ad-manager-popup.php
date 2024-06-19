@@ -76,6 +76,12 @@
 <script>
     function submitNewsletterEmailForm () {
         event.preventDefault();
+
+        // Adobe tracking
+        if (typeof _satellite !== "undefined") {
+            _satellite.track('signup')
+        }
+
         const emailInput = document.getElementById("email-address-input");
         const emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 

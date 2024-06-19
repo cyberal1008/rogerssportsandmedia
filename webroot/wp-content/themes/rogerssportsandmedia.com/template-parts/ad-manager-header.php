@@ -10,9 +10,39 @@
     </div>
     <div class="tw-hidden md:tw-flex tw-flex-row tw-items-center tw-space-x-16 tw-font-semibold">
         <a target="_blank" href="https://go.rogerssportsandmedia.com/contact-us" class="hover:tw-no-underline hover:tw-text-black">Support</a>
-        <a target="_blank" href="https://go.rogerssportsandmedia.com" class="hover:tw-no-underline hover:tw-text-black ">Log in</a>
-        <a target="_blank" href="https://go.rogerssportsandmedia.com/sign-up/with-email" class="tw-text-white tw-border-red tw-bg-red tw-py-3 tw-px-6 tw-font-semibold tw-cursor-pointer hover:tw-no-underline hover:tw-text-white hover:tw-bg-red-dark">
+        <a id="loginNavLink" target="_blank" href="https://go.rogerssportsandmedia.com" class="hover:tw-no-underline hover:tw-text-black ">Log in</a>
+        <a id="getStartedNavLink" target="_blank" href="https://go.rogerssportsandmedia.com/sign-up/with-email" class="tw-text-white tw-border-red tw-bg-red tw-py-3 tw-px-6 tw-font-semibold tw-cursor-pointer hover:tw-no-underline hover:tw-text-white hover:tw-bg-red-dark">
             Get started
         </a>
     </div>
 </nav>
+
+<script>
+    document.addEventListener("DOMContentLoaded", (event) => {
+        document.getElementById("loginNavLink").addEventListener("click", function () {
+            if (typeof _satellite !== "undefined") {
+                _satellite.track('login');
+            }
+        });
+
+        document.getElementById("getStartedNavLink").addEventListener("click", function () {
+            if (typeof _satellite !== "undefined") {
+                _satellite.track('getstarted');
+            }
+        });
+
+        document.getElementById("getStartedTodayBtn").addEventListener("click", function () {
+            if (typeof _satellite !== "undefined") {
+                _satellite.track('getstarted');
+            }
+        });
+
+        const advertiseNowButtons = document.querySelectorAll('.advertise-now-btn');
+        advertiseNowButtons.forEach(el => el.addEventListener('click', event => {
+            console.log("Advertise now click Nav link");
+            if (typeof _satellite !== "undefined") {
+                _satellite.track('advertisenow');
+            }
+        }));
+    });
+</script>
