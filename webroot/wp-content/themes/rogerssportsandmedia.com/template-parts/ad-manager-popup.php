@@ -5,7 +5,7 @@
       <div class="tw-relative tw-transform tw-overflow-hidden tw-rounded-lg tw-bg-white tw-text-left tw-shadow-xl tw-transition-all sm:tw-my-8 sm:tw-w-full sm:tw-max-w-lg">
             <div class="tw-grid tw-grid-cols-12 tw-px-4 tw-py-3 tw-bg-red">
                 <div class="tw-col-start-2 tw-col-span-10">
-                    <img class="tw-h-12 md:tw-h-16 tw-mx-auto" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/logo-landing-white.png" />
+                    <img class="tw-h-12 md:tw-h-16 tw-mx-auto" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/rsm_admanager_logo_red.png" />
                 </div>
                 <div class="tw-col-span-1 tw-flex tw-justify-center tw-items-center">
                     <button

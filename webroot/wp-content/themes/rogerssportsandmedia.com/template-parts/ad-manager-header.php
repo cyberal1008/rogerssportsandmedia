@@ -6,7 +6,7 @@
 </div>
 <nav class="tw-flex tw-flex-row tw-px-16 md:tw-px-32 tw-py-2 md:tw-py-6 tw-justify-between">
     <div>
-        <img class="tw-h-12 md:tw-h-16" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/landing/images/logo-landing.svg" />
+        <img class="tw-h-12 md:tw-h-16" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/rsm_admanager_logo_white.png" />
     </div>
     <div class="tw-hidden md:tw-flex tw-flex-row tw-items-center tw-space-x-16 tw-font-semibold">
         <a target="_blank" href="https://go.rogerssportsandmedia.com/contact-us" class="hover:tw-no-underline hover:tw-text-black">Support</a>
