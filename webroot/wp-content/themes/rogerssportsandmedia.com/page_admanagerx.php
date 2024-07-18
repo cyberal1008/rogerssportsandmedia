@@ -79,7 +79,7 @@
                 <img class="tw-h-8" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/landing/images/FX.png" alt="FX logo" loading="lazy">
             </div>
             <div class="tw-flex tw-justify-center">
-                <a target="_blank" href="https://go.rogerssportsandmedia.com" class="tw-text-black tw-border-yellow tw-bg-yellow tw-py-4 tw-px-8 tw-font-semibold tw-cursor-pointer hover:tw-no-underline hover:tw-text-black hover:tw-bg-yellow-dark">
+                <a id="getStartedTodayBtn" target="_blank" href="https://go.rogerssportsandmedia.com" class="tw-text-black tw-border-yellow tw-bg-yellow tw-py-4 tw-px-8 tw-font-semibold tw-cursor-pointer hover:tw-no-underline hover:tw-text-black hover:tw-bg-yellow-dark">
                     Get Started today
                 </a>
             </div>
@@ -101,7 +101,7 @@
             </div>
         </div>
         <div class="tw-flex tw-justify-center">
-            <a target="_blank" href="https://go.rogerssportsandmedia.com" class="tw-text-white tw-border-red tw-bg-red tw-py-4 tw-px-8 tw-font-semibold tw-cursor-pointer hover:tw-no-underline hover:tw-text-white hover:tw-bg-red-dark">
+            <a target="_blank" href="https://go.rogerssportsandmedia.com" class="advertise-now-btn tw-text-white tw-border-red tw-bg-red tw-py-4 tw-px-8 tw-font-semibold tw-cursor-pointer hover:tw-no-underline hover:tw-text-white hover:tw-bg-red-dark">
                 Advertise Now
             </a>
         </div>
@@ -192,7 +192,7 @@
             </div>
         </div>
         <div class="tw-flex tw-justify-center">
-            <a target="_blank" href="https://go.rogerssportsandmedia.com" class="tw-text-white tw-border-red tw-bg-red tw-py-4 tw-px-8 tw-font-semibold tw-cursor-pointer hover:tw-no-underline hover:tw-text-white hover:tw-bg-red-dark">
+            <a target="_blank" href="https://go.rogerssportsandmedia.com" class="advertise-now-btn tw-text-white tw-border-red tw-bg-red tw-py-4 tw-px-8 tw-font-semibold tw-cursor-pointer hover:tw-no-underline hover:tw-text-white hover:tw-bg-red-dark">
                 Advertise Now
             </a>
         </div>
