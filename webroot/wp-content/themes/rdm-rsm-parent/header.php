@@ -131,7 +131,7 @@ if ( is_home() ) {
 ?>
 <header class="nav-down header-container ">
 			<nav class="navbar navbar-expand-md navbar-light fixed-top nav-bg" role="navigation">
-				<div class="nav-logo d-flex justify-content-center align-content-center align-items-center"
+				<div class="md:tw-w-2/12 nav-logo d-flex align-content-center align-items-center"
 					 itemscope itemtype="https://schema.org/Organization">
 					 <a class="navbar-brand" href="<?php echo esc_url( home_url( '/' ) ); ?>">
 						<img style="height: 60px;" src="<?php echo dirname( get_bloginfo( 'stylesheet_url' ) ); ?>/assets/images/Logo-RSM-new.png"  alt="<?php esc_url( bloginfo( 'name' ) ); ?>">
@@ -140,7 +140,7 @@ if ( is_home() ) {
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="<?php esc_attr_e( 'Toggle navigation', 'RSM' ); ?>">
 					<span class="navbar-toggler-icon"></span>
 				</button>
-				<div class="main-nav d-flex gb-w align-items-center justify-content-center">
+				<div class="md:tw-w-2/3 main-nav d-flex gb-w align-items-center justify-content-center">
 					<div class="navbar-main">
 						<?php
 							wp_nav_menu(
@@ -171,6 +171,7 @@ if ( is_home() ) {
 						</a></li>
 					</ul>
 				</div> -->
+				<div class="tw-hidden md:tw-block md:tw-w-2/12">&nbsp;</div>
 
 			</nav>
 	</header>
