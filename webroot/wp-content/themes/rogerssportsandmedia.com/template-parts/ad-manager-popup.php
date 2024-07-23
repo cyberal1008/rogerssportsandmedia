@@ -19,11 +19,6 @@
                 </div>
             </div>
           <div class="tw-py-6 tw-px-6 sm:tw-px-12">
-                <div class="tw-flex tw-mb-6 tw-justify-center">
-                    <img class="tw-h-12 md:tw-h-24" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/helper-circle.png" />
-                    <img class="tw-h-12 md:tw-h-24" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/helper-triange.png" />
-                    <img class="tw-h-12 md:tw-h-24" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/helper-square.svg" />
-                </div>
                 <p class="tw-text-xl tw-font-semibold tw-text-center tw-mb-6">
                     Get a $250 ad credit to use towards your first campaign of $500 or more*
                 </p>
