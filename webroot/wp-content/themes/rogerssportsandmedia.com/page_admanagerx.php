@@ -87,9 +87,6 @@
     </section>
     <section class="tw-py-12 md:tw-py-20 tw-px-4 md:tw-px-48 tw-bg-gray">
         <div class="tw-flex tw-flex-col md:tw-flex-row-reverse tw-items-center md:tw-justify-center tw-mb-6 md:tw-space-x-8">
-            <div>
-                <img class="tw-w-32 md:tw-w-40 tw--mt-20 md:tw--mt-32" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/helper-circle.png" />
-            </div>
             <div class="tw-text-4xl tw-text-center tw-font-semibold">Drive Impact, Make an Impression</div>
         </div>
         <div class="tw-flex tw-flex-col tw-mb-10 tw-items-center">
@@ -108,10 +105,7 @@
     </section>
     <section class="tw-py-12 md:tw-py-20 tw-px-4 md:tw-px-32 2xl:tw-px-48">
         <div class="tw-flex tw-flex-col md:tw-flex-row tw-mb-8 md:tw-space-x-4 md:tw-px-48">
-            <div class="tw-w-full md:tw-w-1/5 tw-flex tw-flex-row tw-justify-center">
-                <img class="tw-w-32 md:tw-w-40 tw--mt-20 md:tw--mt-32" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/helper-square.svg" />
-            </div>
-            <div class="tw-w-full md:tw-w-4/5 tw-text-3xl md:tw-text-4xl tw-text-center tw-font-semibold">RSM Ad Manager is Your Starting Point for Our Ad Solutions</div>
+            <div class="tw-w-full tw-text-3xl md:tw-text-4xl tw-text-center tw-font-semibold">RSM Ad Manager is Your Starting Point for Our Ad Solutions</div>
         </div>
         <div class="tw-flex tw-flex-col md:tw-flex-row tw-mb-10 tw-items-stretch tw-space-y-8 md:tw-space-y-0 md:tw-space-x-10">
             <div class="tw-w-full md:tw-w-1/4 tw-flex tw-flex-col tw-bg-gray tw-px-8 tw-py-6 tw-text-center tw-items-center tw-rounded-2xl tw-space-y-8">
@@ -199,9 +193,6 @@
     </section>
     <section class="tw-py-12 md:tw-py-20 tw-px-4 md:tw-px-32 2xl:tw-px-48">
         <div class="tw-flex tw-flex-col md:tw-flex-row-reverse tw-items-center md:tw-justify-center tw-mb-6 md:tw-space-x-8">
-            <div>
-                <img class="tw-w-32 md:tw-w-40 tw--mt-20 md:tw--mt-32" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/images/helper-triange.png" />
-            </div>
             <div class="tw-text-4xl tw-text-center tw-font-semibold">The Rogers Sports & Media Difference</div>
         </div>
         <div class="tw-flex tw-flex-col md:tw-flex-row tw-space-y-4 md:tw-space-y-0 md:tw-space-x-16">
