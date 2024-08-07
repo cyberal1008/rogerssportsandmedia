@@ -22,17 +22,20 @@ $(document).ready(function () {
                 .filter(function () {
                     var network = true;
                     if (network_term !== 'all') {
-                        network = $(this).data('networks').indexOf(network_term) > -1;
+                        network_arr = $(this).data('networks').split('|');
+                        network = network_arr.indexOf(network_term) > -1;
                     }
 
                     var day = true;
                     if (day_term !== 'all') {
-                        day = $(this).data('day').indexOf(day_term) > -1;
+                        day_arr = $(this).data('day').split('|');
+                        day = day_arr.indexOf(day_term) > -1;
                     }
 
                     var show = true;
                     if (show_term !== 'all') {
-                        show = $(this).data('show').indexOf(show_term) > -1;
+                        show_arr = $(this).data('show').split('|');
+                        show = show_arr.indexOf(show_term) > -1;
                     }
 
                     return network && day && show;
