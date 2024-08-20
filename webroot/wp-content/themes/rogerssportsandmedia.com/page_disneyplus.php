@@ -15,24 +15,25 @@
     <link rel="shortcut icon" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/landing/images/favicon.png" />
     <title><?php echo get_the_title(); ?> | Rogers Sports & Media</title>
     <?php wp_head(); ?>
-    <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/styles/reskin.css">
+    <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/main.min.css">
+	<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/styles/reskin-alt.css">
 </head>
 <?php
 	get_header();
 ?>
 
-<main id="content" role="main" class="tw-bg-gray" >
+<main id="content" role="main" class="tw-bg-gray">
 
 	<!-- HERO -->
 	<?php
-	if (is_category()) : 
-		$term = get_queried_object();
-		$hero_image = get_field('hero_image', $term);
-		$hero_mobile_image = get_field('hero_mobile_image', $term);
-	else : 
-		$hero_image = get_field('hero_image');
-		$hero_mobile_image = get_field('hero_mobile_image');
-	endif; 
+        if (is_category()) : 
+            $term = get_queried_object();
+            $hero_image = get_field('hero_image', $term);
+            $hero_mobile_image = get_field('hero_mobile_image', $term);
+        else :
+            $hero_image = get_field('hero_image');
+            $hero_mobile_image = get_field('hero_mobile_image');
+        endif; 
 	?>
     <section class="tw-w-full">
         <img class="tw-hidden md:tw-block" src="<?php echo $hero_image['url']; ?>" />
@@ -40,36 +41,29 @@
     </section>
 
 	<!-- INTRO -->
-	<?php
-		$intro_title = get_field('intro_title');
-		$intro_title_two = get_field('intro_title_two');
-		$intro_content = get_field('intro_content');
-	?>
-    <section class="md:tw-px-16 lg:tw-px-32 xl:tw-px-40 2xl:tw-px-96">
-        <div class="tw-relative -tw-mt-10">
-            <div class="tw-bg-white tw-px-4 md:tw-px-16 tw-py-6 tw-mb-8">
-                <?php if ($intro_title) : ?>
-                    <p class="tw-text-3xl md:tw-text-4xl tw-text-gray-dark tw-font-bold"><?php echo $intro_title; ?></p>
-                    <p class="tw-text-3xl md:tw-text-4xl tw-text-gray-dark tw-font-bold tw-mb-6"><?php echo $intro_title_two; ?></p>
-                    <p class="tw-text-base tw-leading-7">
-                        <?php echo $intro_content; ?>
-                    </p>
-                <?php endif; ?>
-            </div>
-        </div>
-    </section>
-	
+    <?php
+        get_template_part('template-parts/section-intro');
+    ?>
+
+    <section class="tw-mt-12">&nbsp;</section>
+
 	<!--- SHOWS SECTION -->
 	<?php if( have_rows('shows') ) : ?>
 	<?php
 		$shows_section_title = get_field('shows_section_title');
 		$show_section_content = get_field('shows_content_copy');
+        $shows_section_button = get_field('shows_section_button');
 	?>
-        <section class="tw-bg-white tw-px-8 md:tw-px-16 lg:tw-px-32 xl:tw-px-40 2xl:tw-px-96 tw-py-12">
+        <section class="tw-bg-white tw-px-8 md:tw-px-16 lg:tw-px-32 xl:tw-px-40 2xl:tw-px-80 tw-py-12">
             <div class="tw-text-3xl md:tw-text-4xl tw-font-bold tw-mb-4"><?php echo $shows_section_title; ?></div>
             <div class="tw-mb-6">
                 <?php echo $show_section_content; ?>
             </div>
+            <?php if ($shows_section_button) : ?>
+                <div class="tw-mb-8">
+                    <a href="<?php echo $shows_section_button['url']; ?>" class="button" aria-label="<?php echo $shows_section_button['title'] ? $shows_section_button['title'] : 'Download Schedule'; ?>" target="<?php echo $shows_section_button['target'] ? $shows_section_button['target'] : '_self'; ?>"><?php echo $shows_section_button['title'] ? $shows_section_button['title'] : 'Download Schedule'; ?></a>
+                </div>
+            <?php endif; ?>
             <div class="tw-grid tw-grid-cols-2 sm:tw-grid-cols-3 md:tw-grid-cols-5 tw-gap-8">
                 <?php while( have_rows('shows') ) : the_row(); 
                     $show_title = get_sub_field('show_title');
