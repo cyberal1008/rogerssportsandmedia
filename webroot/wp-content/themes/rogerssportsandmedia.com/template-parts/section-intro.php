@@ -1,5 +1,6 @@
 <?php
     $intro_title = get_field('intro_title');
+    $intro_title_two = get_field('intro_title_two');
     $intro_content = get_field('intro_content');
     $button_type = get_field('intro_button_type');
 ?>
@@ -8,7 +9,10 @@
     <div class="tw-relative -tw-mt-16">
         <div class="tw-bg-white tw-px-6 md:tw-px-16 tw-py-6 md:tw-py-10 tw-mb-8">
             <?php if ($intro_title) : ?>
-                <div class="tw-text-3xl md:tw-text-4xl tw-text-gray-dark tw-font-bold tw-mb-6"><?php echo $intro_title; ?></div>
+                <div class="tw-text-3xl md:tw-text-4xl tw-text-gray-dark tw-font-bold <?php $intro_title_two ? '' : 'tw-mb-6'; ?>"><?php echo $intro_title; ?></div>
+            <?php endif; ?>
+            <?php if ($intro_title_two) : ?>
+                <div class="tw-text-3xl md:tw-text-4xl tw-text-gray-dark tw-font-bold tw-mb-6"><?php echo $intro_title_two; ?></div>
             <?php endif; ?>
             <p class="tw-text-base tw-leading-7">
                 <?php echo $intro_content; ?>
