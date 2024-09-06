@@ -70,7 +70,7 @@ $lang = 'en';
 	?>
 </head>
 <body <?php body_class(); ?>>
-
+<?php wp_body_open(); ?>
 <?php
 if ( is_home() ) {
 	get_template_part(
