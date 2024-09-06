@@ -1,16 +1,16 @@
 [submodule "webroot/wp-content/plugins/rdm-dynamic-tag-management"]
 	path = webroot/wp-content/plugins/rdm-dynamic-tag-management
-	url = https://github.com/digitalmedia/platform_wordpress_plugins.git
+	url = git@github.com:digitalmedia/platform_wordpress_plugins.git
 	branch = rdm-dynamic-tag-management
 [submodule "webroot/wp-content/plugins/rdm-uptime-monitor"]
 	path = webroot/wp-content/plugins/rdm-uptime-monitor
-	url = https://github.com/digitalmedia/platform_wordpress_plugins.git
+	url = git@github.com:digitalmedia/platform_wordpress_plugins.git
 	branch = rdm-uptime-monitor
 [submodule "webroot/wp-content/plugins/rsm-ad-utility"]
 	path = webroot/wp-content/plugins/rsm-ad-utility
-	url = https://github.com/digitalmedia/platform_wordpress_plugins.git
+	url = git@github.com:digitalmedia/platform_wordpress_plugins.git
 	branch = rsm-ad-utility
 [submodule "webroot/wp-content/plugins/rsm-consent-management"]
 	path = webroot/wp-content/plugins/rsm-consent-management
-	url = https://github.com/digitalmedia/platform_wordpress_plugins.git
+	url = git@github.com:digitalmedia/platform_wordpress_plugins.git
 	branch = rsm-consent-management
