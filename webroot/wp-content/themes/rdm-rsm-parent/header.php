@@ -72,31 +72,7 @@ $lang = 'en';
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 <?php
-if ( is_home() ) {
-	get_template_part(
-		'template-parts/header',
-		'media',
-		array(
-			'image_url'          => get_theme_mod( 'desktop_vid_link_image_url' ),
-			'hero_title'         => get_theme_mod( 'desktop_vid_link_vid_title' ),
-			'hero_desc'          => get_theme_mod( 'desktop_vid_link_vid_desc' ),
-			'home_hero_btn_url'  => get_theme_mod( 'desktop_vid_link_button_url' ),
-			'home_hero_btn_text' => get_theme_mod( 'desktop_vid_link_button_text' ),
-
-			'image_url_2'          => get_theme_mod( 'desktop_2_vid_link_image_url' ),
-			'hero_title_2'         => get_theme_mod( 'desktop_2_vid_link_vid_title' ),
-			'hero_desc_2'          => get_theme_mod( 'desktop_2_vid_link_vid_desc' ),
-			'home_hero_btn_url_2'  => get_theme_mod( 'desktop_2_vid_link_button_url' ),
-			'home_hero_btn_text_2' => get_theme_mod( 'desktop_2_vid_link_button_text' ),
-
-			'image_url_3'          => get_theme_mod( 'desktop_3_vid_link_image_url' ),
-			'hero_title_3'         => get_theme_mod( 'desktop_3_vid_link_vid_title' ),
-			'hero_desc_3'          => get_theme_mod( 'desktop_3_vid_link_vid_desc' ),
-			'home_hero_btn_url_3'  => get_theme_mod( 'desktop_3_vid_link_button_url' ),
-			'home_hero_btn_text_3' => get_theme_mod( 'desktop_3_vid_link_button_text' ),
-		)
-	);
-} elseif ( is_front_page() ) {
+if ( is_front_page() ) {
 	get_template_part(
 		'template-parts/header',
 		'home'
