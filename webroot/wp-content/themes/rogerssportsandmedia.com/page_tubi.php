@@ -112,10 +112,10 @@
 		</section>
 	<?php endif; ?>
 
-	<!-- PROGRAMMING -->
+	<!-- SHOWS -->
 	<?php
-		$prog_section_title = get_field('program_section_title');
-		$prog_section_button = get_field('program_section_button');
+		$prog_section_title = get_field('shows_section_title');
+		$prog_section_button = get_field('shows_section_button');
 	?>
         <section class="tw-bg-gray">
             <section id="programming" class="programming">
@@ -132,15 +132,17 @@
                                 <?php endif; ?>
                             </div>
 
-                            <?php
-                                get_template_part(
-                                    'template-parts/portfolio',
-                                    'program-slider',
-                                    array(
-                                        'page_meta'     => $page_meta,
-                                    )
-                                );
-                            ?>
+							<div class="tw-grid tw-grid-cols-2 sm:tw-grid-cols-3 md:tw-grid-cols-5 tw-gap-8">
+								<?php while( have_rows('shows') ) : the_row(); 
+									$show_title = get_sub_field('show_title');
+									$show_image = get_sub_field('show_image');
+								?>
+									<div>
+										<img class="tw-mb-1" src="<?php echo $show_image['url']; ?>" alt="<?php echo $show_image['alt']; ?>" loading="lazy">
+										<div class="tw-text-center tw-text-base md:tw-text-lg"><?php echo $show_title; ?></div>
+									</div>
+								<?php endwhile; ?>
+							</div>
                         </div>
                     </div>
                 </div>
