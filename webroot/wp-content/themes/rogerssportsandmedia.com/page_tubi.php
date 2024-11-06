@@ -122,16 +122,6 @@
                 <div class="portfolio-main">
                     <div class="portfolio-page">
                         <div class="inner wrapper">
-                            <hr class="tw-mb-6 tw-bg-gray tw-w-3/4 md:tw-w-3/5" />
-                            <div class="top md:tw-space-x-12" style="gap: 0rem; justify-content: start;">
-                                <?php if ($prog_section_title) : ?>
-                                    <div class="tw-text-4xl md:tw-text-5xl tw-text-gray-dark tw-font-bold tw-mb-4 md:tw-mb-4"><?php echo $prog_section_title; ?></div>
-                                <?php endif; ?>
-                                <?php if ($prog_section_button) : ?>
-                                    <a href="<?php echo $prog_section_button['url']; ?>" class="button" aria-label="<?php echo $prog_section_button['title'] ? $prog_section_button['title'] : 'Download TV Schedule'; ?>" target="<?php echo $prog_section_button['target'] ? $prog_section_button['target'] : '_self'; ?>"><?php echo $prog_section_button['title'] ? $prog_section_button['title'] : 'Download TV Schedule'; ?></a>
-                                <?php endif; ?>
-                            </div>
-
 							<div class="tw-grid tw-grid-cols-2 sm:tw-grid-cols-3 md:tw-grid-cols-5 tw-gap-8">
 								<?php while( have_rows('shows') ) : the_row(); 
 									$show_title = get_sub_field('show_title');
