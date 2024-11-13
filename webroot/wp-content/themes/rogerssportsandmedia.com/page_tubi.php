@@ -43,81 +43,12 @@
 		get_template_part('template-parts/section-intro');
 	?>
 
-	<!-- FEATURED VIDEO -->
-	<?php
-		$featured_video_title = get_field('featured_video_title');
-		$featured_video_url = get_field('featured_video_url');
-	?>
-	<div class="tw-bg-gray tw-px-4 tw-py-12 md:tw-px-16 lg:tw-px-32 xl:tw-px-48 2xl:tw-px-80 md:tw-py-24">
-        <?php if ($featured_video_title) : ?>
-            <h2><?php echo $featured_video_title; ?></h2>
-        <?php endif; ?>
-        <?php if ($featured_video_url) : ?>
-            <video controls>
-                <source src="<?php echo $featured_video_url; ?>" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-        <?php endif; ?>
-	</div>
-
-	<!-- PLATFORMS -->
-	<?php 
-		if( have_rows('brands') ) : 
-			$brands_section_title = get_field('brands_section_title');
-		?>
-		<section id="brands" class="service-grid">
-			<div class="wrapper">
-				<?php if ($brands_section_title) : ?>
-					<h2 class="section-title"><?php echo $brands_section_title; ?></h2>
-				<?php endif; ?>
-
-				<div class="swiper plat-slider">
-					<div class="swiper-wrapper grid tight">
-
-						<?php while( have_rows('brands') ) : the_row(); 
-							$title = get_sub_field('title');
-							$description = get_sub_field('description');
-							$link = get_sub_field('link');
-							$link_arialabel = get_sub_field('link_arialabel');
-							$image = get_sub_field('image');
-							?>
-							<div class="swiper-slide">
-								<div class="item">
-									<?php if ($image) : ?>
-										<?php if ($link) : ?>
-											<a href="<?php echo $link['url']; ?>" aria-label="<?php echo $link_arialabel ? $link_arialabel : $link['title']; ?>"><img src="<?php echo $image['sizes']['medium_large']; ?>" alt="<?php echo $image['alt']; ?>" loading="lazy"></a>
-										<?php else : ?>
-											<img src="<?php echo $image['sizes']['medium_large']; ?>" alt="<?php echo $image['alt']; ?>" loading="lazy">
-										<?php endif; ?>
-									<?php endif; ?>
-									<div class="txtbox">
-										<?php if ($title) : ?>
-											<?php if ($link) : ?>
-												<p class="title h4"><a href="<?php echo $link['url']; ?>" aria-label="<?php echo $link_arialabel ? $link_arialabel : $link['title']; ?>"><?php echo $title; ?></a></p>
-											<?php else : ?>
-												<p class="title h4"><?php echo $title; ?></p>
-											<?php endif; ?>
-										<?php endif; ?>
-										<?php if ($description) : ?>
-											<div class="excerpt"><?php echo $description; ?></div>
-										<?php endif; ?>
-									</div>
-								</div>
-							</div>
-						<?php endwhile; ?>
-					</div>
-					<div class="swiper-pagination"></div>
-				</div>
-			</div>
-		</section>
-	<?php endif; ?>
-
 	<!-- SHOWS -->
 	<?php
 		$prog_section_title = get_field('shows_section_title');
 		$prog_section_button = get_field('shows_section_button');
 	?>
-        <section class="tw-bg-gray">
+        <section class="tw-bg-gray tw-py-12">
             <section id="programming" class="programming">
                 <div class="portfolio-main">
                     <div class="portfolio-page">
@@ -137,8 +68,24 @@
                     </div>
                 </div>
             </section>
-            <div class="tw-mb-12">&nbsp;</div>
         </section>
+	
+	<!-- FEATURED VIDEO -->
+	<?php
+		$featured_video_title = get_field('featured_video_title');
+		$featured_video_url = get_field('featured_video_url');
+	?>
+	<div class="tw-bg-gray tw-px-4 tw-py-12 md:tw-px-16 lg:tw-px-32 xl:tw-px-48 2xl:tw-px-80">
+        <?php if ($featured_video_title) : ?>
+            <h2><?php echo $featured_video_title; ?></h2>
+        <?php endif; ?>
+        <?php if ($featured_video_url) : ?>
+            <video controls>
+                <source src="<?php echo $featured_video_url; ?>" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        <?php endif; ?>
+	</div>
 
     <!-- ICON COLUMNS -->
     <?php
