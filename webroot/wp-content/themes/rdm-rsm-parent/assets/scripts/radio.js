@@ -37,12 +37,14 @@ $(document).ready(function () {
                 .filter(function () {
                     var category = true;
                     if (category_term !== 'all') {
-                        category = $(this).data('catetory').indexOf(category_term) > -1;
+                        category_arr = $(this).data('catetory').split('|');
+                        category = category_arr.indexOf(category_term) > -1;
                     }
 
                     var region = true;
                     if (region_term !== 'all') {
-                        region = $(this).data('region').indexOf(region_term) > -1;
+                        region_arr = $(this).data('region').split('|');
+                        region = region_arr.indexOf(region_term) > -1;
                     }
 
                     return category && region;
