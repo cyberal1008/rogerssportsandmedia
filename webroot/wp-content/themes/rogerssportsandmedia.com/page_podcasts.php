@@ -44,7 +44,26 @@
             get_template_part('template-parts/section-intro');
         ?>
 
-        <div class="tw-bg-gray tw-py-12">&nbsp;</div>
+        <!-- INTRO -->
+        <?php
+            $brands_logos = get_field('brands_logos');
+        ?>
+        <section class="our-difference alt nomargin">
+            <div class="wrapper">
+                <?php if ($brands_logos) : ?>
+                    <div class="swiper logo-slider-mobile">
+                        <div class="swiper-wrapper">
+                            <?php foreach ($brands_logos as $logo) : ?>
+                                <div class="swiper-slide">
+                                    <img src="<?php echo $logo['url']; ?>" alt="<?php echo $logo['alt']; ?>">
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                        <div class="swiper-pagination"></div>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </section>
 
         <!-- PODCASTS & TITLES -->
         <?php if( have_rows('podcasts') ) :
@@ -89,27 +108,6 @@
         </section>
         <?php endif; ?>
 
-        <!-- CAPABILITIES -->
-        <?php if( have_rows('capabilities') ) : 
-            $section_title = get_field('capabilities_section_title');
-        ?>
-            <section class="tw-bg-white tw-px-4 md:tw-px-16 lg:tw-px-32 xl:tw-px-40 2xl:tw-px-80 tw-py-12">
-                <hr class="tw-mb-6 tw-bg-gray tw-w-3/4 md:tw-w-3/5" />
-                <div class="tw-text-4xl md:tw-text-5xl tw-text-gray-dark tw-font-bold tw-mb-12"><?php echo $section_title ?></div>
-                <div class="tw-grid tw-grid-cols-2 md:tw-grid-cols-4 tw-gap-12">
-                    <?php while( have_rows('capabilities') ) : the_row();
-                        $subtitle = get_sub_field('subtitle');
-                        $image = get_sub_field('image');
-                    ?>
-                        <div class="tw-flex tw-flex-col tw-space-y-4 tw-items-center tw-px-2">
-                            <img class="tw-w-48" src="<?php echo $image['sizes']['large']; ?>" alt="<?php echo $image['alt']; ?>">
-                            <div class="tw-text-xl tw-text-center tw-font-bold"><?php echo $subtitle ?></div>
-                        </div>
-                    <?php endwhile; ?>
-                </div>
-            </section>
-        <?php endif; ?>
-
         <!-- HIGHLIGHTS -->
         <?php if( have_rows('highlights') ) : ?>
             <section id="highlights" class="tw-py-12 tw-px-4 md:tw-px-16 lg:tw-px-32 xl:tw-px-40 2xl:tw-px-96 md:tw-py-28" style="background-image: url('<?php echo get_stylesheet_directory_uri(); ?>/assets/images/red_bkg.jpg'); background-size: cover; background-position: center;">
@@ -133,6 +131,26 @@
                             <?php if ($text) : ?>
                                 <div class="tw-text-lg"><?php echo $text; ?></div>
                             <?php endif; ?>
+                        </div>
+                    <?php endwhile; ?>
+                </div>
+            </section>
+        <?php endif; ?>
+
+        <!-- CAPABILITIES -->
+        <?php if( have_rows('capabilities') ) : 
+            $section_title = get_field('capabilities_section_title');
+        ?>
+            <section class="tw-bg-white tw-px-4 md:tw-px-16 lg:tw-px-32 xl:tw-px-40 2xl:tw-px-80 tw-py-12">
+                <div class="tw-text-4xl md:tw-text-5xl tw-text-gray-dark tw-font-bold tw-mb-12"><?php echo $section_title ?></div>
+                <div class="tw-grid tw-grid-cols-2 md:tw-grid-cols-4 tw-gap-12">
+                    <?php while( have_rows('capabilities') ) : the_row();
+                        $subtitle = get_sub_field('subtitle');
+                        $image = get_sub_field('image');
+                    ?>
+                        <div class="tw-flex tw-flex-col tw-space-y-4 tw-items-center tw-px-2">
+                            <img class="tw-w-48" src="<?php echo $image['sizes']['large']; ?>" alt="<?php echo $image['alt']; ?>">
+                            <div class="tw-text-xl tw-text-center tw-font-bold"><?php echo $subtitle ?></div>
                         </div>
                     <?php endwhile; ?>
                 </div>
