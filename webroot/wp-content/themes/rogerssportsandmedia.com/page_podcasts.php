@@ -71,11 +71,18 @@
                         <?php while( have_rows('titles') ) : the_row();
                             $title = get_sub_field('show_title');
                             $image = get_sub_field('show_image');
+                            $link = get_sub_field('show_link');
                         ?>
                             <div class="tw-flex tw-flex-col tw-space-y-4 tw-items-center">
-                                <img class="tw-w-36" src="<?php echo $image['sizes']['large']; ?>" alt="<?php echo $image['alt']; ?>">
-                                <div class="tw-text-center tw-font-semibold"><?php echo $title ?></div>
-                            </div>
+                                <?php if ($link) : ?>
+                                    <a href="<?php echo $link; ?>">
+                                <?php endif; ?>
+                                    <img class="tw-w-36" src="<?php echo $image['sizes']['large']; ?>" alt="<?php echo $image['alt']; ?>">
+                                <?php if ($link) : ?>
+                                    </a>
+                                <?php endif; ?>
+                                    <div class="tw-text-center tw-font-semibold"><?php echo $title ?></div>
+                                </div>
                         <?php endwhile; ?>
                     </div>
                 </div>
