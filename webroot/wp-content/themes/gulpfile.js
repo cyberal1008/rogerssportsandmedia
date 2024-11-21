@@ -1,3 +1,4 @@
+
 var gulp = require('gulp'),
     browserSync = require('browser-sync'),
     reload = browserSync.reload,
@@ -6,7 +7,7 @@ var gulp = require('gulp'),
     minifyCSS = require('gulp-minify-css'),
     notify = require('gulp-notify'),
     plumber = require('gulp-plumber'),
-    sass = require('gulp-sass'),
+    sass = require('gulp-sass')(require('sass')),
     sourcemaps = require('gulp-sourcemaps'),
     uglify = require('gulp-uglify'),
     sassGlob = require('gulp-sass-glob')

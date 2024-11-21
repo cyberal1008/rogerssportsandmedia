@@ -1,0 +1,18 @@
+@use 'sass:math';
+
+
+/**
+ * Computes the absolute value of a given number.
+ *
+ * Implemented to resolve deprecattion warning for Boostrap v4.6.x
+ * Deprecation Warning: Passing percentage units to the global abs() function is deprecated.
+ * Remove function when boostrap is updated to v5.x
+ *
+ * @function
+ * @name abs
+ * @param {Number} $value - The number to compute the absolute value for.
+ * @returns {Number} The absolute value of the given number.
+ */
+@function abs($value) {
+  @return math.abs($value);
+}
