@@ -1,1 +1,1 @@
-{"version":3,"sources":["style.scss"],"names":[],"mappings":"AAMA,sBACI,mBAAS,CAAT,mBAAS,CAAT,YAAS","file":"style.css","sourcesContent":["/**\n * RSM css\n *\n * @package rogerssportsandmedia.com\n */\n//@import './bootstrap.min.css';\n.rogerssportsandmedia {\n    display: flex;\n}\n"]}
+{"version":3,"sources":["style.scss"],"names":[],"mappings":"AAMA,sBACI,mBAAA,CAAA,mBAAA,CAAA,YAAA","file":"style.css","sourcesContent":["/**\n * RSM css\n *\n * @package rogerssportsandmedia.com\n */\n//@import './bootstrap.min.css';\n.rogerssportsandmedia {\n    display: flex;\n}\n"]}
