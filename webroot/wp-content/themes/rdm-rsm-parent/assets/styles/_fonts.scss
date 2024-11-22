@@ -1,4 +1,5 @@
- @font-face {
+
+@font-face {
   font-family: 'Ted Next SemiB';
   src: url("styles/ted-next-font/TedNext-Semibold.eot");
   src: url("styles/ted-next-font/TedNext-Semibold.eot") format("embedded-opentype"), url("styles/ted-next-font/TedNext-Semibold.woff2") format("woff2"), url("styles/ted-next-font/TedNext-Semibold.woff") format("woff"), url("styles/ted-next-font/TedNext-Semibold.svg") format("svg");
@@ -15,6 +16,31 @@
 }
  @font-face {
   font-family: 'Ted Next';
+  src: url("styles/ted-next-font/TedNext-Regular.eot");
+  src: url("styles/ted-next-font/TedNext-Regular.eot") format("embedded-opentype"), url("styles/ted-next-font/TedNext-Regular.woff2") format("woff2"), url("styles/ted-next-font/TedNext-Regular.woff") format("woff"), url("styles/ted-next-font/TedNext-Regular.svg") format("svg");
+}
+
+@font-face {
+  font-family: 'Ted Next';
+  font-weight: 600;
+  src: url("styles/ted-next-font/TedNext-Semibold.eot");
+  src: url("styles/ted-next-font/TedNext-Semibold.eot") format("embedded-opentype"), url("styles/ted-next-font/TedNext-Semibold.woff2") format("woff2"), url("styles/ted-next-font/TedNext-Semibold.woff") format("woff"), url("styles/ted-next-font/TedNext-Semibold.svg") format("svg");
+}
+@font-face {
+  font-family: 'Ted Next';
+  font-weight: 700;
+  src: url("styles/ted-next-font/TedNext-Bold.eot");
+  src: url("styles/ted-next-font/TedNext-Bold.eot") format("embedded-opentype"), url("styles/ted-next-font/TedNext-Bold.woff2") format("woff2"), url("styles/ted-next-font/TedNext-Bold.woff") format("woff"), url("styles/ted-next-font/TedNext-Bold.svg") format("svg");
+}
+@font-face {
+  font-family: 'Ted Next';
+  font-weight: 500;
+  src: url("styles/ted-next-font/TedNext-Medium.eot");
+  src: url("styles/ted-next-font/TedNext-Medium.eot") format("embedded-opentype"), url("styles/ted-next-font/TedNext-Medium.woff2") format("woff2"), url("styles/ted-next-font/TedNext-Medium.woff") format("woff"), url("styles/ted-next-font/TedNext-Medium.svg") format("svg");
+}
+@font-face {
+  font-family: 'Ted Next';
+  font-weight: 400;
   src: url("styles/ted-next-font/TedNext-Regular.eot");
   src: url("styles/ted-next-font/TedNext-Regular.eot") format("embedded-opentype"), url("styles/ted-next-font/TedNext-Regular.woff2") format("woff2"), url("styles/ted-next-font/TedNext-Regular.woff") format("woff"), url("styles/ted-next-font/TedNext-Regular.svg") format("svg");
 }

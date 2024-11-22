@@ -46,7 +46,6 @@
     }
     p {
       line-height: 1.6em;
-      font-size: 1.1em;
     }
     ul {
       display: block;
@@ -68,22 +67,61 @@
     ol {
       counter-reset: subsection;
       list-style-type: none;
+
       li {
         text-indent: -1.5em;
+
         &::before {
           content: counter(section) "." counter(subsection) " ";
           counter-increment: subsection;
         }
       }
-    }
-    ol ol {
-      counter-reset: subsection;
-      li {
-        &::before {
-          content: counter(subsection, lower-alpha) ". ";
-          counter-increment: subsection;
+
+      ol {
+        counter-reset: subsection;
+
+        li {
+          &::before {
+            content: counter(subsection, lower-alpha) ". ";
+            counter-increment: subsection;
+          }
+        }
+      }
+
+      /* Reset to default styling for ordered lists with a type attribute */
+      &[type] {
+        list-style-type: initial; 
+
+        li {
+          text-indent: initial;
+
+          &::before {
+            content: none; /* Remove the custom counter for default list style */
+          }
+        }
+
+        &[type="1"] {
+          list-style-type: decimal;
+        }
+    
+        &[type="A"] {
+          list-style-type: upper-alpha;
+        }
+    
+        &[type="a"] {
+          list-style-type: lower-alpha;
+        }
+    
+        &[type="I"] {
+          list-style-type: upper-roman;
+        }
+    
+        &[type="i"] {
+          list-style-type: lower-roman;
         }
       }
     }
+
   }
 }
+
