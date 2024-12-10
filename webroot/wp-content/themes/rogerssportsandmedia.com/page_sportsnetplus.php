@@ -15,106 +15,94 @@
     <link rel="shortcut icon" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/landing/images/favicon.png" />
     <title><?php echo get_the_title(); ?> | Rogers Sports & Media</title>
     <?php wp_head(); ?>
-    <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/styles/sportsnet.css">
-    <style>
-        .wrapper {
-            width: auto !important;
-            max-width: none !important;
-            margin: initial;
-        }
-        footer .wrapper {
-            width: calc(100% - 10vw) !important;
-            max-width: 1110px !important;
-            margin: 0 auto !important;
-        }
-    </style>
+    <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/main.min.css">
+	<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/styles/reskin-alt.css">
+	<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/styles/custom.css">
 </head>
 <?php
 	get_header();
+	global $post;
+	$page_meta = get_post_meta( $post->ID, RSM\Broadcast\PageMeta::METADATA_SLUG, true );
 ?>
-<main class="tw-bg-gray">
-    <?php
-        $featured_video = get_field('featured_video');
-		$buyers_guide_url = get_field('buyers_guide_url');
+
+<main id="content" role="main" class="">
+
+	<!-- HERO -->
+	<?php
+		get_template_part(
+			'template-parts/section-hero', null,
+			array(
+				'subtitle'		=> '',
+				'title'     => ' ',
+			)
+		);
 	?>
-    <div class="tw-w-full">
-        <img class="tw-hidden md:tw-block" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/snplus_hero_dt.jpg" />
-        <img class="md:tw-hidden" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/snplus_hero_mb.jpg" />
-    </div>
-    <div class="md:tw-px-16 lg:tw-px-32 xl:tw-px-48 2xl:tw-px-96">
-        <div class="tw-relative tw-bg-white tw-px-8 md:tw-px-16 tw-py-12 -tw-mt-10 tw-mb-16">
-            <div class="tw-text-4xl tw-text-gray-dark tw-font-bold tw-mb-8">Home of the most exciting live sports content in the country</div>
-            <p class="tw-text-lg tw-leading-7">
-                We're changing the game with premium, live streaming sports content that drives impact.
-                Our partnerships with the most popular professional sports leagues enables us to connect
-                marketers to engaged and passionate sport fans in the most premier sporting events 365 days a year.
-            </p>
-            <p class="tw-text-base tw-leading-7 tw-mt-4">
-                Partner with Rogers Sports & Media to drive advertising impact for your brand on the largest steaming network in Canada.
-            </p>
-        </div>
-        <div class="tw-px-8 md:tw-px-0 tw-mb-16">
+	
+	<!-- INTRO -->
+	<?php
+		get_template_part('template-parts/section-intro');
+	?>
+
+	<!-- FEATURED VIDEO -->
+	<?php
+		$featured_video = get_field('featured_video');
+        $buyers_guide_section_title = get_field('buyers_guide_section_title');
+        $buyers_guide_button = get_field('buyers_guide_button');
+	?>
+	<div class="tw-bg-gray tw-px-4 tw-py-12 md:tw-px-16 lg:tw-px-32 xl:tw-px-48 2xl:tw-px-80">
+        <?php if ($featured_video) : ?>
             <video controls>
-                <source src="<?php echo $featured_video['url']; ?>" type="video/mp4">
+                <source src="https://staging-www.rogerssportsandmedia.com/wp-content/uploads/2024/02/streaming-sizzle-sports-cutdown-with-mix.mp4" type="video/mp4">
                 Your browser does not support the video tag.
-            </video> 
-        </div>
-        <div class="tw-px-4 md:tw-px-0 tw-w-5/6 tw-border-t tw-border-gray-dark tw-py-6 tw-mb-16">
+            </video>
+        <?php endif; ?>
+
+        <div class="tw-mt-12 tw-w-5/6 tw-mb-16">
+            <hr />
             <div class="tw-text-4xl tw-text-gray-dark tw-font-bold tw-mb-8">
-                <p>Reach your favourite fan with</p>
-                <p>Sportsnet+ advertising</p>
+                <?php echo $buyers_guide_section_title; ?>
             </div>
-            <a target="_blank" href="<?php echo $buyers_guide_url; ?>" class="tw-text-white tw-border-red tw-bg-red tw-py-3 tw-px-6 tw-font-semibold tw-cursor-pointer hover:tw-no-underline hover:tw-text-white hover:tw-bg-red-dark">
-                Download Our Buyers Guide
-            </a>
+            <?php if ($buyers_guide_button) : ?>
+                <div><a href="<?php echo $buyers_guide_button['url']; ?>" class="button" aria-label="<?php echo $buyers_guide_button['title'] ? $buyers_guide_button['title'] : 'Download Buyers Guide'; ?>" target="<?php echo $buyers_guide_button['target'] ? $buyers_guide_button['target'] : '_self'; ?>"><?php echo $buyers_guide_button['title'] ? $buyers_guide_button['title'] : 'Download Buyers Guide'; ?></a></div>
+            <?php endif; ?>
         </div>
-    </div>
-    <div class="tw-w-full" style="background-image: url('<?php echo get_stylesheet_directory_uri(); ?>/assets/images/red_bg.jpg'); background-size: cover; background-position: center;">
-        <div class="tw-px-12 lg:tw-px-24 xl:tw-px-48 2xl:tw-px-72 tw-py-12 md:tw-py-24">
-            <div class="tw-flex tw-flex-col md:tw-flex-row tw-w-full tw-text-white tw-space-y-10 md:tw-space-y-0 md:tw-space-x-16">
-                <div class="tw-full md:tw-w-1/4">
-                    <div class="tw-text-7xl tw-font-bold tw-text-transparent tw-mb-1" style="-webkit-text-stroke: 2px white;">2.5M</div>
-                    <div>Canadians streamed a live event on Sportsnet+</div>
-                </div>
-                <div class="tw-full md:tw-w-1/4">
-                    <div class="tw-text-7xl tw-font-bold tw-text-transparent tw-mb-1" style="-webkit-text-stroke: 2px white;">70%</div>
-                    <div>of Sportsnet+ audiences are exclusive streamers</div>
-                </div>
-                <div class="tw-full md:tw-w-1/4">
-                    <div class="tw-text-7xl tw-font-bold tw-text-transparent tw-mb-1" style="-webkit-text-stroke: 2px white;">1B</div>
-                    <div>dynamically inserted ads delivered in 2023</div>
-                </div>
-                <div class="tw-full md:tw-w-1/4">
-                    <div class="tw-text-7xl tw-font-bold tw-text-transparent tw-mb-1" style="-webkit-text-stroke: 2px white;">#1</div>
-                    <div>sports streaming platform in Canada</div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="tw-w-full tw-py-0 md:tw-py-12" style="background-image: url('<?php echo get_stylesheet_directory_uri(); ?>/assets/images/snplus_signup_bg.jpg'); background-size: cover; background-position: center;">
-        <div class="lg:tw-px-32 xl:tw-px-48 2xl:tw-px-96 tw-relative">
-            <div class="tw-bg-white tw-flex tw-flex-col md:tw-flex-row tw-px-8 md:tw-space-x-12">
-                <div class="tw-full md:tw-w-2/5 tw-mt-12 tw-px-2 md:tw-px-8">
-                    <div class="tw-text-4xl tw-font-bold tw-mb-8">Partner With Us Today</div>
-                    <p class="tw-font-semibold">Your success is our success. We are partners you can count on, today and in the future. Let's get started!</p>
-                </div>
-                <div class="tw-full md:tw-w-3/5">
-                    <iframe src="https://mcdjql80kmghrjj6lg68bbtqbgv1.pub.sfmc-content.com/r2bks1awm2k" width="100%" height="940" allowfullscreen sandbox="allow-same-origin allow-scripts allow-popups allow-forms" title="Partner with us today by filling out the form below">
-                        <p>Sorry, your browser does not support iframes.</p>
-                    </iframe>
-                </div>
-            </div>
-            <div class="tw-hidden md:tw-absolute tw-top-0 tw-right-0 tw-mt-4 tw-mr-16">
-                <a target="_blank" href="https://go.rogerssportsandmedia.com" class="tw-text-white tw-border-red tw-bg-red tw-py-3 tw-px-6 tw-font-semibold tw-cursor-pointer hover:tw-no-underline hover:tw-text-white hover:tw-bg-red-dark">
-                    Advertise With Us
-                </a>
-            </div>
-        </div>
-    </div>
+	</div>
+    
+
+    <!-- COUNTERS -->
+	<?php if( have_rows('highlights') ) : ?>
+		<section id="highlights" class="tw-px-4 tw-py-12 md:tw-px-16 lg:tw-px-32 xl:tw-px-48 2xl:tw-px-80 md:tw-py-24" style="background-image: url('<?php echo get_stylesheet_directory_uri(); ?>/assets/images/red_bkg.jpg'); background-size: cover; background-position: center;">
+			<div class="tw-grid tw-grid-cols-1 md:tw-grid-cols-4 tw-text-white tw-gap-y-10 md:tw-gap-x-16">
+				<?php while( have_rows('highlights') ) : the_row();
+					$number = get_sub_field('number');
+					$number_text = get_sub_field('number_text');
+					$number_text_position = get_sub_field('number_text_position');
+					$text = get_sub_field('text');
+				?>
+					<div class="tw-full">
+						<div class="tw-text-7xl tw-font-bold tw-text-transparent tw-mb-1" style="-webkit-text-stroke: 2px white;">
+							<?php if ($number_text_position == 'left') : ?>
+								<?php if ($number_text) : ?><span class="sign bold"><?php echo $number_text; ?></span><?php endif; ?><?php if ($number) : ?><span class="num scroll-counter" data-counter-time="1200"><?php echo $number; ?></span><?php endif; ?>
+							<?php else: ?>
+								<?php if ($number) : ?><span class="num scroll-counter" data-counter-time="1200"><?php echo $number; ?></span><?php endif; ?><?php if ($number_text) : ?><span class="sign bold"><?php echo $number_text; ?></span><?php endif; ?>
+							<?php endif; ?>
+						</div>
+						<?php if ($text) : ?>
+							<div class="tw-text-lg"><?php echo $text; ?></div>
+						<?php endif; ?>
+					</div>
+				<?php endwhile; ?>
+			</div>
+    	</section>
+	<?php endif; ?>
+
+	<!-- PARTNER -->
+	<?php get_template_part('template-parts/section-partner'); ?>
 </main>
 
+<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+<script src="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/main.min.js"></script>
 <?php
 get_footer();
 ?>
 </html>
-<?php
