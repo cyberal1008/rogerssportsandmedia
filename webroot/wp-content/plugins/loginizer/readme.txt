@@ -2,9 +2,9 @@
 Contributors: softaculous, loginizer, pagelayer
 Tags: security, access, admin, Loginizer, login, logs, ban ip, failed login, ip, whitelist ip, blacklist ip, failed attempts, lockouts, hack, authentication, login, security, rename login url, rename login, rename wp-admin, secure wp-admin, rename admin url, secure admin, brute force protection
 Requires at least: 3.0
-Tested up to: 6.6
+Tested up to: 6.7
 Requires PHP: 5.5
-Stable tag: 1.9.1
+Stable tag: 1.9.4
 License: LGPLv2.1
 License URI: http://www.gnu.org/licenses/lgpl-2.1.html
 
@@ -84,6 +84,17 @@ That's it. You're done!
 3. Loginizer Brute Force Settings page
 
 == Changelog ==
+
+= 1.9.4 =
+* [Task] Tested with WordPress 6.7, fixed translation Notice.
+* [Bug-Fix] HOTP and Base32 caused conflict with some plugins that has been fixed.
+
+= 1.9.3 =
+* [Security] There was a security issue in the Pro version of the plugin which has been fixed, was reported by wesley (wcraft)[Wordfence]
+* [Task] Improved Compatibility with Softaculous Plugin.
+
+= 1.9.2 =
+* [Task] Improved license handling.
 
 = 1.9.1 =
 * [Bug-Fix] Social Login was not working on WooCommerce or registration page, that has been fixed.

@@ -22,12 +22,12 @@ function loginizer_admin_actions(){
 			update_option('loginizer_license_notice', $license_notice);
 		}
 		
-		$loginizer['license'] = get_option('loginizer_license', []);
+		$license = get_option('loginizer_license', []);
 
 		// Here we are making sure that we have a license and it has expiry time and has not been dismissed for 2 months
-		if(!empty($loginizer['license']) && !empty($loginizer['license']['expires']) && ($license_notice > 0 || (abs($license_notice) + MONTH_IN_SECONDS * 2) < time())){
+		if(!empty($license) && !empty($license['expires']) && ($license_notice > 0 || (abs($license_notice) + MONTH_IN_SECONDS * 2) < time())){
 			$current_timestamp = time();
-			$expiration_timestamp = strtotime($loginizer['license']['expires']);
+			$expiration_timestamp = strtotime($license['expires']);
 			$timediff = $expiration_timestamp - $current_timestamp;
 
 			if($timediff <= WEEK_IN_SECONDS){

@@ -1,5 +1,11 @@
 <?php
 /**
+ * BC_Labels class file.
+ *
+ * @package Brightcove_Video_Connect
+ */
+
+/**
  * The BC labels class
  *
  * Class BC_Labels
@@ -30,7 +36,7 @@ class BC_Labels {
 	 * Displays a variety of notices for adding and editing labels
 	 */
 	public function notices() {
-		if ( isset( $_GET['add_label'] ) && 1 === (int) $_GET['add_label'] ) {
+		if ( isset( $_GET['add_label'] ) && 1 === (int) $_GET['add_label'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			BC_Utility::admin_notice_messages(
 				array(
 					array(
@@ -41,7 +47,7 @@ class BC_Labels {
 			);
 		}
 
-		if ( isset( $_GET['refresh_labels'] ) && 1 === (int) $_GET['refresh_labels'] ) {
+		if ( isset( $_GET['refresh_labels'] ) && 1 === (int) $_GET['refresh_labels'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			BC_Utility::admin_notice_messages(
 				array(
 					array(
@@ -52,7 +58,7 @@ class BC_Labels {
 			);
 		}
 
-		if ( isset( $_GET['label_deleted'] ) && 1 === (int) $_GET['label_deleted'] ) {
+		if ( isset( $_GET['label_deleted'] ) && 1 === (int) $_GET['label_deleted'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			BC_Utility::admin_notice_messages(
 				array(
 					array(
@@ -63,7 +69,7 @@ class BC_Labels {
 			);
 		}
 
-		if ( isset( $_GET['label_updated'] ) && 1 === (int) $_GET['label_updated'] ) {
+		if ( isset( $_GET['label_updated'] ) && 1 === (int) $_GET['label_updated'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			BC_Utility::admin_notice_messages(
 				array(
 					array(
@@ -131,8 +137,15 @@ class BC_Labels {
 		) {
 			$label_name = sanitize_text_field( $_POST['label-name'] );
 			$label_path = ! empty( $_POST['label-path'] ) ? $_POST['label-path'] : '';
-			$this->cms_api->add_label( $label_name, $label_path );
-			wp_safe_redirect( admin_url( 'admin.php?page=brightcove-labels&add_label=1&refresh_labels=1' ) );
+
+			$redirect_url = admin_url( 'admin.php?page=brightcove-labels&refresh_labels=1' );
+
+			if ( ! empty( $label_name ) || ! empty( $label_path ) ) {
+				$this->cms_api->add_label( $label_name, $label_path );
+				$redirect_url = add_query_arg( 'add_label', '1', $redirect_url );
+			}
+
+			wp_safe_redirect( $redirect_url );
 			exit;
 		}
 	}
@@ -148,7 +161,7 @@ class BC_Labels {
 				$labels[] = sanitize_text_field( $label );
 			}
 			$this->cms_api->delete_label( $labels );
-			wp_redirect( admin_url( 'admin.php?page=brightcove-labels&label_deleted=1&refresh_labels=1' ) );
+			wp_safe_redirect( admin_url( 'admin.php?page=brightcove-labels&label_deleted=1&refresh_labels=1' ) );
 			exit;
 		}
 	}

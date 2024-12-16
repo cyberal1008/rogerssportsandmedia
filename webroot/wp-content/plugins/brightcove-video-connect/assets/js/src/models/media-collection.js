@@ -50,8 +50,8 @@ var MediaCollection = Backbone.Collection.extend({
 		this.searchTerm = options.searchTerm || '';
 		this.dates = options.dates || 'all';
 		this.tag = options.tag || '';
-		this.folderId = options.folderId || '';
-		this.oldFolderId = options.oldFolderId || '';
+		this.folder_id = options.folder_id || '';
+		this.old_folder_id = options.old_folder_id || '';
 		this.labelPath = options.labelPath || '';
 		this.oldLabelPath = options.oldLabelPath || '';
 
@@ -85,14 +85,14 @@ var MediaCollection = Backbone.Collection.extend({
 			this.fetch();
 		});
 
-		this.listenTo(wpbc.broadcast, 'change:folder', function (folderId) {
-			this.oldFolderId = this.folderId;
+		this.listenTo(wpbc.broadcast, 'change:folder', function (folder_id) {
+			this.old_folder_id = this.folder_id;
 
-			if (folderId === 'all') {
-				folderId = '';
+			if (folder_id === 'all') {
+				folder_id = '';
 			}
 
-			this.folderId = folderId;
+			this.folder_id = folder_id;
 			this.fetch();
 		});
 
@@ -189,8 +189,8 @@ var MediaCollection = Backbone.Collection.extend({
 				labels: this.labels,
 				labelPath: this.labelPath,
 				oldLabelPath: this.oldLabelPath,
-				oldFolderId: this.oldFolderId,
-				folderId: this.folderId,
+				old_folder_id: this.old_folder_id,
+				folder_id: this.folder_id,
 				state: this.state,
 				oldState: this.oldState,
 				tagName: wpbc.preload.tags[this.tag],
@@ -205,7 +205,7 @@ var MediaCollection = Backbone.Collection.extend({
 				'search',
 				'tags',
 				'type',
-				'folderId',
+				'folder_id',
 				'tagName',
 				'state',
 			);
@@ -264,14 +264,14 @@ var MediaCollection = Backbone.Collection.extend({
 		return fallback.sync.apply(this, arguments);
 	},
 
-	fetchFail: function () {
+	fetchFail: function (response, textStatus) {
 		if (this.pageNumber > 1) {
 			this.pageNumber--;
 		}
 		wpbc.broadcast.trigger('fetch:finished');
 		wpbc.broadcast.trigger('spinner:off');
-		wpbc.broadcast.trigger('fetch:apiError');
-		if (status === 'abort') {
+		if (textStatus !== 'abort') {
+			wpbc.broadcast.trigger('fetch:apiError');
 		}
 	},
 

@@ -14,8 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since 1.1.0
  */
 class ALMElementor extends Widget_Base {
-
-	const LOGO_PATH = ALM_ADMIN_URL .'/img/alm-logo-48x48.svg';
+	const LOGO_PATH = ALM_ADMIN_URL .'/img/alm-logo.svg';
 	const CSS = 'cursor: default; height: 120px; width: 100%; background: #f7f7f7 url('. self::LOGO_PATH .') no-repeat center 40%; border: 1px solid #efefef; text-align: center; font-size: 12px; font-weight: 600; padding-top: 85px;"';
 
   /**
@@ -98,7 +97,8 @@ class ALMElementor extends Widget_Base {
 				'label' => __( 'Ajax Load More Shortcode', 'ajax-load-more' ),
 				'type' => Controls_Manager::TEXTAREA,
 				'default' => __( '[ajax_load_more]', 'ajax-load-more' ),
-				'description' => __( 'The shortcode will not render while Elementor is in live edit mode, you must preview the page to view Ajax Load More functionality.', 'ajax-load-more' ) .'<br/><br/>&raquo; '. sprintf(__('%sBuild Shortcode%s', 'ajax-load-more' ), '<a href="admin.php?page=ajax-load-more-shortcode-builder" target="_blank">', '</a>'),
+				/* translators: 1: Shortcode Builder link tag. 2: Shortcode Builder closing link tag. */
+				'description' => __( 'The shortcode will not render while Elementor is in live edit mode, you must preview the page to view Ajax Load More functionality.', 'ajax-load-more' ) .'<br/><br/>&raquo; '. sprintf(__('%1$sBuild Shortcode%2$s', 'ajax-load-more' ), '<a href="admin.php?page=ajax-load-more-shortcode-builder" target="_blank">', '</a>'),
 				'placeholder' => '[ajax_load_more]',
 			]
 		);
@@ -115,7 +115,7 @@ class ALMElementor extends Widget_Base {
    * @access protected
    */
   protected function render() {
-	  	$this->add_inline_editing_attributes( 'alm_shortcode', 'none' );
+		$this->add_inline_editing_attributes( 'alm_shortcode', 'none' );
 		$shortcode = $this->get_settings_for_display( 'alm_shortcode' );
 		$shortcode = do_shortcode( shortcode_unautop( $shortcode ) );
 		if( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {

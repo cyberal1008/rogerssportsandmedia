@@ -5,7 +5,7 @@ if(!function_exists('add_action')){
 	exit;
 }
 
-define('LOGINIZER_VERSION', '1.9.1');
+define('LOGINIZER_VERSION', '1.9.4');
 define('LOGINIZER_DIR', dirname(LOGINIZER_FILE));
 define('LOGINIZER_URL', plugins_url('', LOGINIZER_FILE));
 define('LOGINIZER_PRO_URL', 'https://loginizer.com/features#compare');
@@ -241,51 +241,11 @@ function loginizer_load_plugin(){
 	
 	// Login Success Email Notification.
 	$loginizer['login_mail'] = get_option('loginizer_login_mail', []);
-	$loginizer['login_mail_default_sub'] = __('Login Successful at $sitename', 'loginizer');
-	$loginizer['login_mail_default_msg'] = __('Hello $user_login,
+	add_action('init', 'loginizer_load_translation_vars', 0);
 
-Your account was recently logged in from the IP : $ip
-Time : $date 
-If it was not you who logged in then please report this to us immediately.
+	$loginizer['login_mail_subject'] = empty($loginizer['login_mail']['subject']) ? '' : $loginizer['login_mail']['subject'];
+	$loginizer['login_mail_body'] = empty($loginizer['login_mail']['body']) ? '' : $loginizer['login_mail']['body'];
 
-Regards,
-$sitename','loginizer');
-
-	$loginizer['login_mail_subject'] = empty($loginizer['login_mail']['subject']) ? $loginizer['login_mail_default_sub']: $loginizer['login_mail']['subject'];
-	$loginizer['login_mail_body'] = empty($loginizer['login_mail']['body']) ? $loginizer['login_mail_default_msg'] : $loginizer['login_mail']['body'];
-	
-	// Default messages
-	$loginizer['d_msg']['inv_userpass'] = __('Incorrect Username or Password', 'loginizer');
-	$loginizer['d_msg']['ip_blacklisted'] = __('Your IP has been blacklisted', 'loginizer');
-	$loginizer['d_msg']['attempts_left'] = __('attempt(s) left', 'loginizer');
-	$loginizer['d_msg']['lockout_err'] = __('You have exceeded maximum login retries<br /> Please try after', 'loginizer');
-	$loginizer['d_msg']['minutes_err'] = __('minute(s)', 'loginizer');
-	$loginizer['d_msg']['hours_err'] = __('hour(s)', 'loginizer');
-	
-	// Message Strings
-	$loginizer['msg'] = get_option('loginizer_msg', []);
-	
-	foreach($loginizer['d_msg'] as $lk => $lv){
-		if(empty($loginizer['msg'][$lk])){
-			$loginizer['msg'][$lk] = $loginizer['d_msg'][$lk];
-		}
-	}
-	
-	$loginizer['2fa_d_msg']['otp_app'] = __('Please enter the OTP as seen in your App', 'loginizer');
-	$loginizer['2fa_d_msg']['otp_email'] = __('Please enter the OTP emailed to you', 'loginizer');
-	$loginizer['2fa_d_msg']['otp_field'] = __('One Time Password', 'loginizer');
-	$loginizer['2fa_d_msg']['otp_question'] = __('Please answer your security question', 'loginizer');
-	$loginizer['2fa_d_msg']['otp_answer'] = __('Your Answer', 'loginizer');
-	
-	// Message Strings
-	$loginizer['2fa_msg'] = get_option('loginizer_2fa_msg', []);
-	
-	foreach($loginizer['2fa_d_msg'] as $lk => $lv){
-		if(empty($loginizer['2fa_msg'][$lk])){
-			$loginizer['2fa_msg'][$lk] = $loginizer['2fa_d_msg'][$lk];
-		}
-	}
-		
 	// Load the blacklist and whitelist
 	$loginizer['blacklist'] = get_option('loginizer_blacklist', []);
 	$loginizer['whitelist'] = get_option('loginizer_whitelist', []);
@@ -919,6 +879,61 @@ function loginizer_reset_retries(){
 
 	update_option('loginizer_last_reset', time());
 
+}
+
+function loginizer_load_translation_vars(){
+	global $loginizer;
+	
+	$loginizer['login_mail_default_sub'] = __('Login Successful at $sitename', 'loginizer');
+	$loginizer['login_mail_default_msg'] = __('Hello $user_login,
+
+Your account was recently logged in from the IP : $ip
+Time : $date 
+If it was not you who logged in then please report this to us immediately.
+
+Regards,
+$sitename','loginizer');
+
+	if(empty($loginizer['login_mail_subject'])){
+		$loginizer['login_mail_subject'] = $loginizer['login_mail_default_sub'];
+	}
+	
+	if(empty($loginizer['login_mail_body'])){
+		$loginizer['login_mail_body'] = $loginizer['login_mail_default_msg'];
+	}
+	
+	// Default messages
+	$loginizer['d_msg']['inv_userpass'] = __('Incorrect Username or Password', 'loginizer');
+	$loginizer['d_msg']['ip_blacklisted'] = __('Your IP has been blacklisted', 'loginizer');
+	$loginizer['d_msg']['attempts_left'] = __('attempt(s) left', 'loginizer');
+	$loginizer['d_msg']['lockout_err'] = __('You have exceeded maximum login retries<br /> Please try after', 'loginizer');
+	$loginizer['d_msg']['minutes_err'] = __('minute(s)', 'loginizer');
+	$loginizer['d_msg']['hours_err'] = __('hour(s)', 'loginizer');
+	
+	// Message Strings
+	$loginizer['msg'] = get_option('loginizer_msg', []);
+	
+	foreach($loginizer['d_msg'] as $lk => $lv){
+		if(empty($loginizer['msg'][$lk])){
+			$loginizer['msg'][$lk] = $loginizer['d_msg'][$lk];
+		}
+	}
+	
+	$loginizer['2fa_d_msg']['otp_app'] = __('Please enter the OTP as seen in your App', 'loginizer');
+	$loginizer['2fa_d_msg']['otp_email'] = __('Please enter the OTP emailed to you', 'loginizer');
+	$loginizer['2fa_d_msg']['otp_field'] = __('One Time Password', 'loginizer');
+	$loginizer['2fa_d_msg']['otp_question'] = __('Please answer your security question', 'loginizer');
+	$loginizer['2fa_d_msg']['otp_answer'] = __('Your Answer', 'loginizer');
+	
+	// Message Strings
+	$loginizer['2fa_msg'] = get_option('loginizer_2fa_msg', []);
+	
+	foreach($loginizer['2fa_d_msg'] as $lk => $lv){
+		if(empty($loginizer['2fa_msg'][$lk])){
+			$loginizer['2fa_msg'][$lk] = $loginizer['2fa_d_msg'][$lk];
+		}
+	}
+	
 }
 
 // Sorry to see you going

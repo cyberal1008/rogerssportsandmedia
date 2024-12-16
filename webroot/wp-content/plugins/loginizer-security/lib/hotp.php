@@ -1,4 +1,6 @@
 <?php
+namespace Loginizer;
+
 /**
  * HOTP Class
  * Based on the work of OAuth, and the sample implementation of HMAC OTP
@@ -34,7 +36,7 @@ class HOTP {
         // HMAC
         $hash = hash_hmac('sha1', $bin_counter, $key);
         
-        return new HOTPResult($hash);
+        return new \Loginizer\HOTPResult($hash);
     }
     
     /**
@@ -46,12 +48,12 @@ class HOTP {
      */
     public static function generateByTime($key, $window, $timestamp = false) {
         if (!$timestamp && $timestamp !== 0) {
-            $timestamp = HOTP::getTime();
+            $timestamp = \Loginizer\HOTP::getTime();
         }
         
         $counter = intval($timestamp / $window);
         
-        return HOTP::generateByCounter($key, $counter);
+        return \Loginizer\HOTP::generateByCounter($key, $counter);
     }
     
     /**
@@ -67,7 +69,7 @@ class HOTP {
      */
     public static function generateByTimeWindow($key, $window, $min = -1, $max = 1, $timestamp = false) {
         if (!$timestamp && $timestamp !== 0) {
-            $timestamp = HOTP::getTime();
+            $timestamp = \Loginizer\HOTP::getTime();
         }
         
         $counter = intval($timestamp / $window);
@@ -76,7 +78,7 @@ class HOTP {
         $out = array();
         for ($i = 0; $i < count($window); $i++) {
             $shift_counter = $window[$i];
-            $out[$shift_counter] = HOTP::generateByCounter($key, $counter + $shift_counter);
+            $out[$shift_counter] = \Loginizer\HOTP::generateByCounter($key, $counter + $shift_counter);
         }
         
         return $out;

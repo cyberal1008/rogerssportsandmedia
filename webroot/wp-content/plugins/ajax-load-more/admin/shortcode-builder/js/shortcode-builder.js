@@ -5,7 +5,7 @@ jQuery(document).ready(function ($) {
 		output_div = $('.ajax-load-more.shortcode-builder #shortcode_output'),
 		output = '[ajax_load_more]';
 
-	//Init the shortcode output.
+	// Init the shortcode output.
 	output_div.text(output);
 
 	/**
@@ -185,7 +185,7 @@ jQuery(document).ready(function ($) {
 			output += ' css_classes="' + container_classes + '"';
 
 		// ---------------------------
-		// - Advacned Custom Fields
+		// - Advanced Custom Fields
 		// ---------------------------
 
 		var acf = $('#alm-acf input[name=acf]:checked').val();
@@ -343,9 +343,6 @@ jQuery(document).ready(function ($) {
 				$('#filter-scrollTopOptions').slideUp(250, 'alm_easeInOutQuad');
 			}
 
-			var filters_analytics = $('#alm-filters input[name=filters-analytics]:checked').val().trim();
-			if (filters_analytics !== '' && filters_analytics !== 'true') output += ' filters_analytics="' + filters_analytics + '"';
-
 			var filters_debug = $('#alm-filters input[name=filters-debug]:checked').val().trim();
 			if (filters_debug !== '' && filters_debug !== 'false') output += ' filters_debug="' + filters_debug + '"';
 		} else {
@@ -375,8 +372,8 @@ jQuery(document).ready(function ($) {
 		var nextpage = $('.next-page input[name=next-page]:checked').val();
 		if (nextpage !== 'false' && nextpage !== undefined) {
 			var nextpage_post_id = $('#next-page_post_id').val(),
+				nextpage_type = $('.next-page input[name=next-page-type]:checked').val(),
 				nextpage_url = $('input#next-page-url:checked').val(),
-				nextpage_pageviews = $('input#next-page-pageviews:checked').val(),
 				nextpage_scroll = $('select#next-page-scroll').val(),
 				nextpage_scrolltop = $('input#next-page-scroll-top').val(),
 				nextpage_title_template = $('input#next-page-title-template').val();
@@ -384,19 +381,18 @@ jQuery(document).ready(function ($) {
 			$('.next-page-content').slideDown(250, 'alm_easeInOutQuad');
 
 			output += ' nextpage="' + nextpage + '"';
-			output += ' nextpage_post_id="\'.' + nextpage_post_id + '.\'"';
+			output += nextpage_type !== 'paged' ? ' nextpage_type="' + nextpage_type + '"' : '';
+			output += ' nextpage_post_id="' + nextpage_post_id + '"';
 
 			if (nextpage_url !== 'true') {
 				output += ' nextpage_urls="false"';
 			}
-			if (nextpage_pageviews !== 'true') {
-				output += ' nextpage_pageviews="false"';
-			}
 			if (nextpage_title_template) {
 				output += ' nextpage_title_template="' + nextpage_title_template + '"';
 			}
-
-			output += ' nextpage_scroll="' + nextpage_scroll + ':' + nextpage_scrolltop + '"';
+			if (nextpage_scroll !== 'false' || nextpage_scrolltop !== '30') {
+				output += ' nextpage_scroll="' + nextpage_scroll + ':' + nextpage_scrolltop + '"';
+			}
 		} else {
 			$('.next-page-content').slideUp(250, 'alm_easeInOutQuad');
 		}
@@ -760,7 +756,9 @@ jQuery(document).ready(function ($) {
 		// ---------------------------
 
 		var posts_per_page = $('.posts_per_page input').val();
-		if (posts_per_page > 0 && posts_per_page !== 5) output += ' posts_per_page="' + posts_per_page + '"';
+		if (posts_per_page !== '5') {
+			output += ' posts_per_page="' + posts_per_page + '"';
+		}
 
 		// ---------------------------
 		// - Post Format
@@ -1084,28 +1082,48 @@ jQuery(document).ready(function ($) {
 
 		var search = $('.search-term input').val();
 		search = $.trim(search);
-		if (search !== '') output += ' search="' + search + '"';
+		if (search !== '') {
+			output += ' search="' + search + '"';
+		}
 
 		// ---------------------------
 		// - Ordering
 		// ---------------------------
 		var order = $('select#post-order').val(),
-			orderby = $('select#post-orderby').val();
-		if (order !== 'DESC') output += ' order="' + order + '"';
-		if (orderby !== 'date') output += ' orderby="' + orderby + '"';
+			orderby = $('select#post-orderby').val(),
+			sort_key = $('#sort-key').val();
+		if (order !== 'DESC') {
+			output += ' order="' + order + '"';
+		}
+		if (orderby !== 'date') {
+			output += ' orderby="' + orderby + '"';
+		}
+		// Sort key.
+		if (orderby.search(/meta_value/) !== -1) {
+			$('.sort-key-options').slideDown(250, 'alm_easeInOutQuad');
+			if (sort_key) {
+				output += ' sort_key="' + sort_key + '"';
+			}
+		} else {
+			$('.sort-key-options').slideUp(250, 'alm_easeInOutQuad');
+		}
 
 		// ---------------------------
 		// - Post Status
 		// ---------------------------
 		var post_status = $('select#post-status').val();
-		if (post_status !== 'publish') output += ' post_status="' + post_status + '"';
+		if (post_status !== 'publish') {
+			output += ' post_status="' + post_status + '"';
+		}
 
 		// ---------------------------
 		// - Post Offset
 		// ---------------------------
 
 		var offset = $('.offset input').val();
-		if (offset > 0) output += ' offset="' + offset + '"';
+		if (offset > 0) {
+			output += ' offset="' + offset + '"';
+		}
 
 		// ---------------------------
 		// - Custom Arguments
@@ -1113,7 +1131,9 @@ jQuery(document).ready(function ($) {
 
 		var custom_args = $('.custom-arguments input').val();
 		custom_args = $.trim(custom_args);
-		if (custom_args !== '') output += ' custom_args="' + custom_args + '"';
+		if (custom_args !== '') {
+			output += ' custom_args="' + custom_args + '"';
+		}
 
 		// ---------------------------
 		// - Pause
@@ -1226,6 +1246,14 @@ jQuery(document).ready(function ($) {
 		var transition = $('.transition select[name=transition]').val();
 		if (transition !== 'fade') output += ' transition="' + transition + '"';
 
+		if (transition === 'masonry' || transition === 'none') {
+			$('.transition-options').slideUp(250, 'alm_easeInOutQuad');
+		} else {
+			var transition_delay = $('.transition input[name=transition_delay]').val();
+			output += transition_delay !== '0' ? ' transition_delay="' + transition_delay + '"' : '';
+			$('.transition-options').slideDown(250, 'alm_easeInOutQuad');
+		}
+
 		if (transition === 'masonry') {
 			$('.masonry-options').slideDown(250, 'alm_easeInOutQuad');
 			$('.masonry-options-hide').slideUp(250, 'alm_easeInOutQuad');
@@ -1248,21 +1276,6 @@ jQuery(document).ready(function ($) {
 		} else {
 			$('.masonry-options').slideUp(250, 'alm_easeInOutQuad');
 			$('.masonry-options-hide').slideDown(250, 'alm_easeInOutQuad');
-
-			// Hide transition_container if masonry is selected
-			var transition_container = $('.transition input[name=remove_container]:checked').val();
-			var transition_container_classes = $('.transition input#transition-container-classes').val();
-			if (transition_container === 'f' && seo !== 'true' && previous !== 'true') {
-				output += ' transition_container="false"';
-				$('.transition-container-classes-wrap').slideUp(250, 'alm_easeInOutQuad');
-			} else {
-				$('.transition-container-classes-wrap').slideDown(250, 'alm_easeInOutQuad');
-			}
-
-			// Hide transition_container_classes if Previous Post or Next Page is true.
-			if (transition_container_classes !== '' && transition_container !== 'f' && previous !== 'true' && nextpage !== 'true') {
-				output += ' transition_container_classes="' + transition_container_classes + '"';
-			}
 		}
 
 		// ---------------------------
@@ -1353,6 +1366,7 @@ jQuery(document).ready(function ($) {
 
 	//Select 'post' by default
 	$('.post_types input[type=checkbox]#chk-post').prop('checked', true).addClass('changed');
+
 	//Select SEO 'false' by default
 	$('.seo input[type=radio]#seo-false').prop('checked', true).addClass('changed');
 
@@ -1527,21 +1541,18 @@ jQuery(document).ready(function ($) {
 	});
 
 	/* Table of Contents */
-
 	if ($('.table-of-contents').hasClass('repeaters-toc')) {
 		$('.table-of-contents .toc').append('<option value="#">-- ' + alm_admin_localize.jump_to_template + ' --</option>');
 	} else {
 		$('.table-of-contents .toc').append('<option value="#">-- ' + alm_admin_localize.jump_to_option + ' --</option>');
 	}
-
 	$('.table-of-contents .toc').append(jumpMenuOptions).select2();
-
 	$('.table-of-contents .toc').change(function () {
 		var pos = $(this).val();
 		if (pos !== 'null' && pos !== '#') {
 			$('html,body').animate(
 				{
-					scrollTop: $('#' + pos).offset().top - 46,
+					scrollTop: $('#' + pos).offset().top - 120,
 				},
 				500,
 				'alm_easeInOutQuad'
@@ -1593,7 +1604,7 @@ jQuery(document).ready(function ($) {
 	// Generate Unique Cache ID.
 	_alm.generateUniqueID = function (length, el) {
 		var id = Math.floor(Math.pow(10, length - 1) + Math.random() * 9 * Math.pow(10, length - 1));
-		$(el).val(id);
+		$(el).val('alm_' + id);
 	};
 
 	// Option toggle click events.
@@ -1644,7 +1655,7 @@ jQuery(document).ready(function ($) {
 						if (target) {
 							$('html, body').animate(
 								{
-									scrollTop: target.offset().top - 45,
+									scrollTop: target.offset().top - 120,
 								},
 								350,
 								function () {

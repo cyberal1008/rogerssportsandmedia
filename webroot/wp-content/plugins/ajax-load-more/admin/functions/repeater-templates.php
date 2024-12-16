@@ -15,7 +15,7 @@
 function alm_save_repeater() {
 	$form_data = filter_input_array( INPUT_POST );
 
-	if ( ! current_user_can( 'edit_theme_options' ) || ! isset( $form_data['nonce'] ) ) {
+	if ( ! current_user_can( apply_filters( 'alm_user_role', 'edit_theme_options' ) ) || ! isset( $form_data['nonce'] ) ) {
 		// Bail early if missing WP capabilities or nonce.
 		wp_die( esc_attr__( 'You don\'t belong here.', 'ajax-load-more' ) );
 	}
@@ -31,10 +31,10 @@ function alm_save_repeater() {
 	$options    = get_option( 'alm_settings' );
 
 	// Get form variables.
-	$c = Trim( stripslashes( $form_data['value'] ) ); // Value.
-	$n = Trim( stripslashes( str_replace( '/', '', $form_data['repeater'] ) ) ); // Name.
-	$t = Trim( stripslashes( $form_data['type'] ) ); // Type.
-	$a = Trim( stripslashes( $form_data['alias'] ) ); // Alias.
+	$c = trim( stripslashes( $form_data['value'] ) ); // Value.
+	$n = trim( stripslashes( str_replace( '/', '', $form_data['repeater'] ) ) ); // Name.
+	$t = trim( stripslashes( $form_data['type'] ) ); // Type.
+	$a = trim( stripslashes( $form_data['alias'] ) ); // Alias.
 
 		// Default.
 	if ( $t === 'default' ) {
@@ -81,29 +81,24 @@ function alm_save_repeater() {
 
 	// Save to database.
 	if ( $t === 'default' ) {
-		$data_update = array(
-			'repeaterDefault' => "$c",
-			'pluginVersion'   => ALM_VERSION,
-		);
-		$data_where  = array( 'name' => 'default' );
+		$data_update = [ 'repeaterDefault' => "$c" ];
+		$data_where  = [ 'name' => 'default' ];
 	} elseif ( $t === 'unlimited' ) { // Custom Repeaters v2.
 		$table_name  = $wpdb->prefix . 'alm_unlimited';
-		$data_update = array(
+		$data_update = [
 			'repeaterDefault' => "$c",
 			'alias'           => "$a",
-			'pluginVersion'   => ALM_UNLIMITED_VERSION,
-		);
-		$data_where  = array( 'name' => $n );
+		];
+		$data_where  = [ 'name' => $n ];
 	} else { // Custom Repeaters.
-		$data_update = array(
+		$data_update = [
 			'repeaterDefault' => "$c",
 			'alias'           => "$a",
-			'pluginVersion'   => ALM_REPEATER_VERSION,
-		);
-		$data_where  = array( 'name' => $n );
+		];
+		$data_where  = [ 'name' => $n ];
 	}
 
-	$wpdb->update( $table_name, $data_update, $data_where );
+	$wpdb->update( $table_name, $data_update, $data_where ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
 	// Handle results message.
 	if ( $w ) {
@@ -125,7 +120,7 @@ add_action( 'wp_ajax_alm_save_repeater', 'alm_save_repeater' );
 function alm_update_repeater() {
 	$form_data = filter_input_array( INPUT_POST );
 
-	if ( ! current_user_can( 'edit_theme_options' ) || ! isset( $form_data['nonce'] ) ) {
+	if ( ! current_user_can( apply_filters( 'alm_user_role', 'edit_theme_options' ) ) || ! isset( $form_data['nonce'] ) ) {
 		// Bail early if missing WP capabilities or nonce.
 		wp_die( esc_attr__( 'You don\'t belong here.', 'ajax-load-more' ) );
 	}
@@ -168,7 +163,7 @@ function alm_repeaters_export() {
 	$form_data = filter_input_array( INPUT_POST );
 
 	// Confirm post data and WP capabilities.
-	if ( isset( $form_data['alm_repeaters_export'] ) && ! wp_doing_ajax() && current_user_can( 'edit_theme_options' ) ) {
+	if ( isset( $form_data['alm_repeaters_export'] ) && ! wp_doing_ajax() && current_user_can( apply_filters( 'alm_user_role', 'edit_theme_options' ) ) ) {
 
 		$type = esc_attr( $form_data['alm_repeaters_export_type'] );
 		$name = sanitize_file_name( $form_data['alm_repeaters_export_name'] );
