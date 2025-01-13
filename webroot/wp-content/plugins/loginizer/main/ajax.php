@@ -14,6 +14,7 @@ add_action('wp_ajax_loginizer_failed_login_export', 'loginizer_failed_login_expo
 add_action('wp_ajax_loginizer_export', 'loginizer_export');
 add_action('wp_ajax_loginizer_social_order', 'loginizer_social_order');
 add_action('wp_ajax_loginizer_dismiss_license_alert', 'loginizer_dismiss_license_alert');
+add_action('wp_ajax_loginizer_dismiss_softwp_alert', 'loginizer_dismiss_softwp_alert');
 
 
 // ----- FUNCTIONS ------//
@@ -201,5 +202,17 @@ function loginizer_dismiss_license_alert(){
 	}
 	
 	update_option('loginizer_license_notice', (0 - time()), false);
+	die('DONE');
+}
+
+function loginizer_dismiss_softwp_alert(){
+	// Some AJAX security
+	check_ajax_referer('loginizer_softwp_notice', 'security');
+
+	if(!current_user_can('activate_plugins')){
+		wp_die(__('Sorry, but you do not have permissions to change settings.', 'loginizer'));
+	}
+
+	update_option('loginizer_softwp_upgrade', (0 - time()), false);
 	die('DONE');
 }

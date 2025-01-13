@@ -634,7 +634,7 @@ function lz_show_rewrite_rule(e){
 			<table class="form-table">
 				<tr>
 					<td scope="row" valign="top" colspan="2">
-						<i><?php esc_html_e('This helps in preventing CSRF attacks as it updates the admin URLS with a session string which make it difficult and nearly impossible for the attacker to predict the URL', 'loginizer'); ?></i>
+						<i><?php esc_html_e('This prevents CSRF attacks by adding a session string to admin URLs, making them nearly impossible for attackers to predict.', 'loginizer'); ?></i>
 					</td>
 				</tr>
 				<tr>

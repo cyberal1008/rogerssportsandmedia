@@ -4,7 +4,7 @@ Tags: security, access, admin, Loginizer, login, logs, ban ip, failed login, ip,
 Requires at least: 3.0
 Tested up to: 6.7
 Requires PHP: 5.5
-Stable tag: 1.9.4
+Stable tag: 1.9.6
 License: LGPLv2.1
 License URI: http://www.gnu.org/licenses/lgpl-2.1.html
 
@@ -84,6 +84,12 @@ That's it. You're done!
 3. Loginizer Brute Force Settings page
 
 == Changelog ==
+
+= 1.9.6 =
+* [Task] Removed wpCentral Promo from Loginizer.
+
+= 1.9.5 =
+* [Task] A few typos in description of features have been fixed.
 
 = 1.9.4 =
 * [Task] Tested with WordPress 6.7, fixed translation Notice.

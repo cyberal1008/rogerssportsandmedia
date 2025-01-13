@@ -5,7 +5,7 @@ if(!function_exists('add_action')){
 	exit;
 }
 
-define('LOGINIZER_VERSION', '1.9.4');
+define('LOGINIZER_VERSION', '1.9.6');
 define('LOGINIZER_DIR', dirname(LOGINIZER_FILE));
 define('LOGINIZER_URL', plugins_url('', LOGINIZER_FILE));
 define('LOGINIZER_PRO_URL', 'https://loginizer.com/features#compare');
@@ -46,7 +46,12 @@ function loginizer_activation(){
 	add_option('loginizer_whitelist', array());
 	add_option('loginizer_blacklist', array());
 	add_option('loginizer_2fa_whitelist', array());
-
+	
+	// TODO:: REMOVE THIS AFTER MARCH 2025
+	$softwp_upgrade = get_option('loginizer_softwp_upgrade', 0);
+	if(!defined('SITEPAD') && empty($softwp_upgrade)){
+		loginizer_check_softaculous();
+	}
 }
 
 /**
@@ -85,7 +90,7 @@ global $wpdb;
 		$version = (int) str_replace('.', '', LOGINIZER_VERSION);
 		
 	}
-	
+
 	// Is it less than 1.0.1 ?
 	if($version < 101){
 		
@@ -185,6 +190,12 @@ global $wpdb;
 	
 	// Save the new Version
 	update_option('loginizer_version', LOGINIZER_VERSION);
+	
+	// TODO:: REMOVE THIS AFTER MARCH 2025
+	$softwp_upgrade = get_option('loginizer_softwp_upgrade', 0);
+	if(!defined('SITEPAD') && empty($softwp_upgrade)){
+		loginizer_check_softaculous();
+	}
 	
 	// In Sitepad Math Captcha is enabled by default
 	if(defined('SITEPAD') && get_option('loginizer_captcha') === false){
@@ -934,6 +945,54 @@ $sitename','loginizer');
 		}
 	}
 	
+}
+
+// Checks if softaculous is installed on the server.
+function loginizer_check_softaculous(){
+
+	// Checking if we have Softaculous installed?
+	if(!preg_match('/^\/home(?:\d+)?\/.*\//U', ABSPATH, $matches)){
+		return false;
+	}
+
+	if(empty($matches) || empty($matches[0])){
+		return false;
+	}
+
+	$softaculous_path = $matches[0] . '.softaculous/installations.php';
+	if(!file_exists($softaculous_path)){
+		return false;
+	}
+	
+	// Checking if users has changed the branding of Softaculous.
+	$universal_file = '';
+	// Plesk, ISPManager, ISPConfig, InterWorx, H-Sphere, CentOS Web Panel, Softaculous Remote and Softaculous Enterprise
+	if(file_exists('/usr/local/softaculous/enduser/universal.php')){
+		$universal_file = '/usr/local/softaculous/enduser/universal.php';
+	}else if(file_exists('/usr/local/cpanel/whostmgr/docroot/cgi/softaculous/enduser/universal.php')){
+		$universal_file = '/usr/local/cpanel/whostmgr/docroot/cgi/softaculous/enduser/universal.php';
+	}else if(file_exists('/usr/local/directadmin/plugins/softaculous/enduser/universal.php')){
+		$universal_file = '/usr/local/directadmin/plugins/softaculous/enduser/universal.php';
+	}else if(file_exists('/usr/local/vesta/softaculous/enduser/universal.php')){
+		$universal_file = '/usr/local/vesta/softaculous/enduser/universal.php';
+	}
+
+	if(empty($universal_file)){
+		return false;
+	}
+
+	$universal = file_get_contents($universal_file);
+
+	if(empty($universal)){
+		return false;
+	}
+
+	// Checking if Softaculous is being whitelabeled
+	if(preg_match('/\$globals\[["\']sn["\']\]\s.?=\s.?["\']Softaculous["\']/', $universal)){
+		update_option('loginizer_softwp_upgrade', time());
+	}
+
+	return false;
 }
 
 // Sorry to see you going

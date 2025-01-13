@@ -164,54 +164,80 @@ function loginizer_updater_check_link($final_link){
 }
 
 function loginizer_pro_load_license($parent = 0){
-	global $loginizer;
+	global $loginizer, $lic_resp;
 	
-	// Load license
-	if(!empty($parent)){
+	$license_field = 'loginizer_license';
+	$license_api_url = LOGINIZER_API;
+	
+	// Save license
+	if(!empty($parent) && is_string($parent) && strlen($parent) > 5){		
+		$lic['license'] = $parent;
+	
+	// Load license of Soft Pro
+	}elseif(!empty($parent)){
+		$license_field = 'softaculous_pro_license';
+		$lic = get_option('softaculous_pro_license', []);
+	
+	// My license
+	}else{
+		$lic = get_option($license_field, []);
+	}
+	
+	// Loaded license is a Soft Pro
+	if(!empty($lic['license']) && preg_match('/^softwp/is', $lic['license'])){
 		$license_field = 'softaculous_pro_license';
 		$license_api_url = 'https://a.softaculous.com/softwp/';
 		$prods = apply_filters('softaculous_pro_products', []);
 	}else{
-		$license_field = 'loginizer_license';
-		$license_api_url = LOGINIZER_API;
 		$prods = [];
 	}
 
-	$loginizer['license'] = get_option($license_field, []);
+	if(empty($lic['last_update'])){
+		$lic['last_update'] = time() - 86600;
+	}
 	
 	// Update license details as well
-	if(!empty($loginizer['license']) && !empty($loginizer['license']['license']) && (time() - @$loginizer['license']['last_update']) >= 86400){
+	if(!empty($lic) && !empty($lic['license']) && (time() - @$lic['last_update']) >= 86400){
 		
-		$resp = wp_remote_get($license_api_url.'license.php?license='.$loginizer['license']['license'].'&prods='.implode(',', $prods).'&url='.rawurlencode(site_url()));
+		$url = $license_api_url.'/license.php?license='.$lic['license'].'&prods='.implode(',', $prods).'&url='.rawurlencode(site_url());
+		$resp = wp_remote_get($url);
+		$lic_resp = $resp;
 
-		// Did we get a response ?
+		//Did we get a response ?
 		if(is_array($resp)){
+			
 			$tosave = json_decode($resp['body'], true);
-
-			// Is it the license ?
+			
+			//Is it the license ?
 			if(!empty($tosave['license'])){
 				$tosave['last_update'] = time();
 				update_option($license_field, $tosave);
+				$lic = $tosave;
 			}
 		}
 	}
-
+	
 	// If the license is Free or Expired check for Softaculous Pro license
-	if(empty($loginizer['license']) || empty($loginizer['license']['active'])){
+	if(empty($lic) || empty($lic['active'])){
+		
 		if(function_exists('softaculous_pro_load_license')){
 			$softaculous_license = softaculous_pro_load_license();
 			if(!empty($softaculous_license['license']) && 
-				(!empty($softaculous_license['active']) || empty($loginizer['license']))
+				(!empty($softaculous_license['active']) || empty($lic['license']))
 			){
-				$loginizer['license'] = $softaculous_license;
+				$lic = $softaculous_license;
 			}
 		}elseif(empty($parent)){
-			$loginizer['license'] = get_option('softaculous_pro_license', []);
+			$lic = get_option('softaculous_pro_license', []);
 			
-			if(!empty($loginizer['license'])){
-				loginizer_pro_load_license(1);
+			if(!empty($lic)){
+				return loginizer_pro_load_license(1);
 			}
 		}
+	}
+	
+	if(!empty($lic['license'])){
+		$loginizer['license'] = $lic;
 	}
 }
 

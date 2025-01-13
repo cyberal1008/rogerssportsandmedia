@@ -35,6 +35,18 @@ function loginizer_admin_actions(){
 			}
 		}
 	}
+	
+	// Notice to let user know about SoftWP.
+	if(
+		!defined('LOGINIZER_PREMIUM') && 
+		!defined('BACKUPLY_PRO') && 
+		!defined('SPEEDYCACHE_PRO') && 
+		!defined('PAGELAYER_PREMIUM') && 
+		!defined('GOSMTP_PREMIUM') && 
+		!defined('SITESEO_PREMIUM')
+	){
+		add_action('admin_notices', 'loginizer_softwp_upgrader_notice');
+	}
 }
 
 
@@ -351,29 +363,6 @@ function loginizer_page_footer(){
 					<li>'.__('And many more ...','loginizer').'</li>
 				</ul>
 				<center><a class="button button-primary" target="_blank" href="https://wordpress.org/plugins/pagelayer/">'.__('Visit Pagelayer','loginizer').'</a></center>
-			</div>
-		</div>';
-		
-		echo '
-		<div class="postbox" style="min-width:0px !important;">
-			<div class="postbox-header">
-			<h2 class="hndle ui-sortable-handle">
-				<span><a target="_blank" href="https://wpcentral.co/?from=loginizer-plugin"><img src="'.LOGINIZER_URL.'/assets/images/wpcentral_product.png" width="100%" /></a></span>
-			</h2>
-			</div>
-			<div class="inside">
-				<i>'.__('Manage all your WordPress sites from <b>1 dashboard</b> ','loginizer').'</i>:<br>
-				<ul class="lz-right-ul">
-					<li>'.__('1-click Admin Access','loginizer').'</li>
-					<li>'.__('Update WordPress','loginizer').'</li>
-					<li>'.__('Update Themes','loginizer').'</li>
-					<li>'.__('Update Plugins','loginizer').'</li>
-					<li>'.__('Backup your WordPress Site','loginizer').'</li>
-					<li>'.__('Plugins & Theme Management','loginizer').'</li>
-					<li>'.__('Post Management','loginizer').'</li>
-					<li>'.__('And many more ...','loginizer').'</li>
-				</ul>
-				<center><a class="button button-primary" target="_blank" href="https://wpcentral.co/?from=loginizer-plugin">'.__('Visit wpCentral','loginizer').'</a></center>
 			</div>
 		</div>';
 	
@@ -781,6 +770,53 @@ function loginizer_social_login_url_alert(){
 		});');
 }
 
+function loginizer_softwp_upgrader_notice(){
+	
+	// We want to show this error to user which has sufficient privilage
+	if(!current_user_can('activate_plugins')){
+		return;
+	}
+
+	/*$notice_end_time = strtotime('31 March 2025');
+	if(!empty($notice_end_time) && time() > $notice_end_time){
+		return;
+	}*/
+
+	$softwp_upgrade = get_option('loginizer_softwp_upgrade', 0);
+
+	if(empty($softwp_upgrade) || $softwp_upgrade < 0){
+		return;
+	}
+
+	if(empty($_GET['page']) || !preg_match('/loginizer/is', $_GET['page'])){
+		return;
+	}
+	
+	echo '<style>.loginizer_promo-close{float:right;text-decoration:none;margin: 5px 10px 0px 0px;}.loginizer_promo-close:hover{color: red;}</style>
+	<div class="notice notice-warning" id="loginizer_softwp_notice">
+		<a class="loginizer_promo-close" id="loginizer-softwp-promo-close" href="javascript:" aria-label="Dismiss Forever">
+			<span class="dashicons dashicons-dismiss"></span> '.esc_html__('Dismiss Forever', 'loginizer').'
+		</a>
+		<p>' . esc_html__('Hey, you might be eligible to access Premium plugins provided by Softaculous for Free ! Please refer to these documents for details on how to avail them.', 'loginizer').'
+		<a href="https://softwp.net/docs/admin/generate-softwp-license" target="_blank">' . esc_html__('Generate SoftWP License', 'loginizer') . '</a> | <a href="https://softwp.net/docs/admin/installing-plugins" target="_blank">' . esc_html__('How to Install the Pro plugins', 'loginizer') . '</a></p>
+		</div>';
+
+	wp_register_script('loginizer_softwp_alert', '', ['jquery'], LOGINIZER_VERSION, true);
+	wp_enqueue_script('loginizer_softwp_alert');
+	wp_add_inline_script('loginizer_softwp_alert', '
+		jQuery("#loginizer-softwp-promo-close").on("click", function(){
+			jQuery(this).closest("#loginizer_softwp_notice").slideToggle();
+
+			var data = new Object();
+			data["action"] = "loginizer_dismiss_softwp_alert";
+			data["security"] = "'.wp_create_nonce('loginizer_softwp_notice').'";
+			
+			var admin_url = "'.admin_url().'"+"admin-ajax.php";
+			jQuery.post(admin_url, data, function(response){
+			});
+		});');
+}
+
 function loginizer_check_expires(){
 	global $loginizer;
 
@@ -830,6 +866,5 @@ function loginizer_check_expires(){
 			var admin_url = "'.admin_url().'"+"admin-ajax.php";
 			jQuery.post(admin_url, data, function(response){
 			});
-		});');
-	
+		});');	
 } 

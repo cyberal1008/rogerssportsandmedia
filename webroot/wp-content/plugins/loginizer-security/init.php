@@ -163,17 +163,7 @@ $site_name';
 			$license =	trim(file_get_contents(__DIR__.'/license.key'));
 		 
 			if(!empty($license)){
-				$resp = wp_remote_get(LOGINIZER_API.'license.php?license='.$license.'&url='.rawurlencode(site_url()), array('timeout' => 30));
-			
-				if(is_array($resp)){
-					$json = json_decode($resp['body'], true);
-					//print_r($json);
-				}
-				
-				// Save the License
-				if(!empty($json['license'])){
-					update_option('loginizer_license', $json);			
-				}
+				loginizer_pro_load_license($license);
 			}
 
 			unlink(__DIR__.'/license.key');
@@ -575,7 +565,7 @@ function loginizer_premium_system_info(){
 
 function loginizer_premium_page_dashboard(){
 	
-	global $loginizer, $lz_error;
+	global $loginizer, $lz_error, $lic_resp;
 
 	// Is there a license key ?
 	if(isset($_POST['save_lz'])){
@@ -588,14 +578,14 @@ function loginizer_premium_page_dashboard(){
 			return loginizer_page_dashboard_T();
 		}
 		
-		$resp = wp_remote_get(LOGINIZER_API.'license.php?license='.$license.'&url='.rawurlencode(site_url()), array('timeout' => 30));
+		loginizer_pro_load_license($license);
 
-		if(is_array($resp)){
-			$json = json_decode($resp['body'], true);
+		if(is_array($lic_resp)){
+			$json = json_decode($lic_resp['body'], true);
 			//print_r($json);
 		}else{
 		
-			$lz_error['resp_invalid'] = __('The response was malformed<br>'.var_export($resp, true), 'loginizer');
+			$lz_error['resp_invalid'] = __('The response was malformed<br>'.var_export($lic_resp, true), 'loginizer');
 			return loginizer_page_dashboard_T();
 			
 		}
@@ -608,11 +598,9 @@ function loginizer_premium_page_dashboard(){
 			
 		}else{
 			
-			update_option('loginizer_license', $json);
-			
 			// Mark as saved
 			$GLOBALS['lz_saved'] = true;
-			$loginizer['license'] = get_option('loginizer_license');
+			
 		}
 		
 	}
