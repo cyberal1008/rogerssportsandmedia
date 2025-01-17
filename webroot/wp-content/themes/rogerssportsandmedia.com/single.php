@@ -35,6 +35,7 @@
 
 	<main id="content" class="blog-post" role="main">
 		<?php
+			$category_link = "";
 			$categories = get_the_category();
 			if ( ! empty( $categories ) ) {
 				$category_name = esc_html( $categories[0]->name );
@@ -71,6 +72,7 @@
 						<div class="sidebar__inner">
 
 							<!-- SHARE BLOCK-->
+							<?php $pagelink = get_the_permalink(); ?>
 							<div class="share-block widget">
 								<span class="title">Share to:</span>
 								<div class="icons">
@@ -83,7 +85,6 @@
 			
 							<!-- COPY LINK BLOCK-->
 							<?php 
-							$pagelink = get_the_permalink();
 							$req_uri = $_SERVER['REQUEST_URI'];
 							$path = substr($req_uri,0,strrpos($req_uri,'/'));
 							$display_url = 'https://rogerssportsandmedia.com' . $path;
