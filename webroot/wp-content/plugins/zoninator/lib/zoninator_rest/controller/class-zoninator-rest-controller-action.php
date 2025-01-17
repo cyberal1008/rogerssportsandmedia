@@ -12,7 +12,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class Zoninator_REST_Controller_Action
  */
-class Zoninator_REST_Controller_Action {
+#[AllowDynamicProperties]
+ class Zoninator_REST_Controller_Action {
 	/**
 	 * Permitted actions
 	 *
