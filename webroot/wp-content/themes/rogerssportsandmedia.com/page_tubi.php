@@ -97,6 +97,19 @@
     	</section>
 	<?php endif; ?>
 
+	<!-- FEATURED VIDEO -->
+	<?php
+		$featured_video = get_field('featured_video');
+	?>
+	<div class="tw-px-4 tw-py-12 md:tw-px-16 lg:tw-px-32 xl:tw-px-48 2xl:tw-px-80">
+        <?php if ($featured_video) : ?>
+            <video controls>
+                <source src="<?php echo $featured_video['url']; ?>" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        <?php endif; ?>
+	</div>
+
     <!-- ICON COLUMNS -->
     <?php
 		if( have_rows('icon_columns') ) : 
