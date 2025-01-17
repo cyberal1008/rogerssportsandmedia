@@ -64,13 +64,13 @@
           </div>
         </div>
           <div class="tw:hidden tw:md:flex tw:flex-col tw:justify-end tw:items-start">
-            <a class="tw:hover:no-underline tw:cursor-pointer" href="#advertise">
+            <a class="tw:hover:no-underline tw:cursor-pointer" href="#advertise-brands">
               <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/arrow-down.png" class="tw:h-20">
             </a>
           </div>
       </div>
     </section>
-    <section id="advertise" class="tw:px-4 tw:md:px-32 tw:lg:px-32 tw:xl:px-40 tw:2xl:px-48 tw:py-12 tw:bg-white">
+    <section id="advertise-brands" class="tw:px-4 tw:md:px-32 tw:lg:px-32 tw:xl:px-40 tw:2xl:px-48 tw:py-12 tw:bg-white">
       <h2 class="tw:text-primary tw:text-center tw:mb-12">Advertise in Canada's most loved content.</h2>
       <div class="tw:grid tw:grid-cols-4 tw:gap-6 tw:md:grid-cols-6">
           <div class="tw:flex tw:justify-center tw:items-center">
