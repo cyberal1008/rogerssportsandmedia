@@ -45,10 +45,10 @@
         </div>
       </div>
     </section>
-    <section class="tw:px-4 tw:md:px-32 tw:lg:px-32 tw:xl:px-40 tw:2xl:px-48 tw:py-12 tw:bg-primary tw:text-white" style="background-image: url('/src/images/red-block-bg.png'); background-size: cover; background-position: center;">
+    <section class="tw:px-4 tw:md:px-32 tw:lg:px-32 tw:xl:px-40 tw:2xl:px-48 tw:py-12 tw:text-white" style="background-image: url('<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/mobius-red-on-red-bg.jpg'); background-size: cover; background-position: center;">
       <div class="tw:grid tw:grid-cols-1 tw:md:grid-cols-2">
         <div>
-          <h2>Rogers Sports & Media Ad Buying Platform</h2>
+          <h2>Rogers Sports & Media <br />Ad Buying Platform</h2>
           <p class="tw:text-3xl tw:font-semibold tw:!mb-12">
             Businesses of all sizes can harness our
             ad buying platform to reach customers
@@ -74,37 +74,37 @@
       <h2 class="tw:text-primary tw:text-center tw:mb-12">Advertise in Canada's most loved content.</h2>
       <div class="tw:grid tw:grid-cols-4 tw:gap-6 tw:md:grid-cols-6">
           <div class="tw:flex tw:justify-center tw:items-center">
-          <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/logo-citynews.png" alt="CityNews logo" class="tw:h-auto">
+            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/logo-sportsnet-plus.png" alt="Sportsnet+ logo" class="tw:h-auto">
           </div>
           <div class="tw:flex tw:justify-center tw:items-center">
-          <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/logo-citytv.png" alt="Citytv logo" class="tw:h-auto">
+            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/logo-citytv.png" alt="Citytv logo" class="tw:h-auto">
           </div>
           <div class="tw:flex tw:justify-center tw:items-center">
-          <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/logo-bt.png" alt="BT logo" class="tw:h-auto">
+            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/logo-chfi.png" alt="CHFI logo" class="tw:h-auto">
           </div>
           <div class="tw:flex tw:justify-center tw:items-center">
-          <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/logo-chfi.png" alt="CHFI logo" class="tw:h-auto">
+            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/logo-kiss-radio.png" alt="KiSS Radio logo" class="tw:h-auto">
           </div>
           <div class="tw:flex tw:justify-center tw:items-center">
-          <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/logo-kiss-radio.png" alt="KiSS Radio logo" class="tw:h-auto">
+            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/logo-rock-radio.png" alt="Rock Radio logo" class="tw:h-auto">
           </div>
           <div class="tw:flex tw:justify-center tw:items-center">
-          <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/logo-rock-radio.png" alt="Rock Radio logo" class="tw:h-auto">
+            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/logo-citynews.png" alt="CityNews logo" class="tw:h-auto">
           </div>
           <div class="tw:flex tw:justify-center tw:items-center">
-          <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/logo-sonic.png" alt="SONiC logo" class="tw:h-auto">
+            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/logo-sn-the-fan.png" alt="SN The Fan logo" class="tw:h-auto">
           </div>
           <div class="tw:flex tw:justify-center tw:items-center">
-          <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/logo-92.3.png" alt="92.3 logo" class="tw:h-auto">
+            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/logo-bt.png" alt="BT logo" class="tw:h-auto">
           </div>
           <div class="tw:flex tw:justify-center tw:items-center">
-          <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/logo-sn-the-fan.png" alt="SN The Fan logo" class="tw:h-auto">
+            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/logo-jack-radio.png" alt="Jack Radio logo" class="tw:h-auto">
           </div>
           <div class="tw:flex tw:justify-center tw:items-center">
-          <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/logo-jack-radio.png" alt="Jack Radio logo" class="tw:h-auto">
+            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/logo-sonic.png" alt="SONiC logo" class="tw:h-auto">
           </div>
           <div class="tw:flex tw:justify-center tw:items-center">
-          <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/logo-sportsnet-plus.png" alt="Sportsnet+ logo" class="tw:h-auto">
+            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/logo-92.3.png" alt="92.3 logo" class="tw:h-auto">
           </div>
       </div>
     </section>
