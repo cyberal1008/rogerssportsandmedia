@@ -24,9 +24,10 @@
     <nav class="tw:px-4 tw:md:px-32 tw:lg:px-32 tw:xl:px-40 tw:2xl:px-48 tw:py-4 tw:bg-black">
       <div class="tw:flex tw:justify-between tw:items-center">
         <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/logo.png" class="tw:h-12" />
-        <ul class="tw:hidden tw:md:flex tw:gap-x-24 tw:text-white">
-          <li><a class="tw:text-lg tw:md:text-xl tw:font-semibold" target="_blank" href="https://go.rogerssportsandmedia.com/contact-us">Support</a></li>
-          <li><a class="tw:text-lg tw:md:text-xl tw:font-semibold" target="_blank" href="https://go.rogerssportsandmedia.com">Log in</a></li>
+        <ul class="tw:hidden tw:md:flex tw:justify-center tw:items-center tw:gap-x-24 tw:text-white">
+          <li><a class="tw:text-base tw:md:text-lg tw:font-semibold" target="_blank" href="https://rogers-help-center.scrollhelp.site/docs">Help Center</a></li>
+          <li><a class="tw:text-base tw:md:text-lg tw:font-semibold" target="_blank" href="https://go.rogerssportsandmedia.com/contact-us">Contact Us</a></li>
+          <li><a class="tw:text-base tw:md:text-lg tw:font-semibold" target="_blank" href="https://go.rogerssportsandmedia.com">Log in</a></li>
           <li><a class="tw:btn-primary" target="_blank" href="https://go.rogerssportsandmedia.com/sign-up/with-email" >Get started</a></li>
         </ul>
       </div>
@@ -34,14 +35,14 @@
     <section class="tw:px-4 tw:md:px-32 tw:lg:px-32 tw:xl:px-40 tw:2xl:px-48 tw:py-4 tw:bg-white">
       <div class="tw:flex tw:flex-col tw:md:flex-row tw:md:gap-x-6 tw:gap-y-2">
         <div class="tw:flex tw:flex-row tw:gap-x-6">
-          <span class="tw:font-bold tw:text-xl">Explore our Ad Solutions</span>
-          <span class="tw:text-primary tw:text-xl">&#8594;</span>
+          <span class="tw:font-bold tw:text-lg">Explore our Ad Solutions</span>
+          <span class="tw:text-primary tw:text-lg">&#8594;</span>
         </div>
         <div class="tw:flex tw:flex-row tw:gap-x-8 tw:md:gap-x-16">
-          <a class="tw:font-semibold tw:text-lg tw:md:text-xl tw:hover-no-underline tw:hover:border-b-2" href="#podcast-streaming-radio">Podcast</a>
-          <a class="tw:font-semibold tw:text-lg tw:md:text-xl tw:hover-no-underline tw:hover:border-b-2" href="#radio">Radio</a>
-          <a class="tw:font-semibold tw:text-lg tw:md:text-xl tw:hover-no-underline tw:hover:border-b-2" href="#streaming">Streaming</a>
-          <a class="tw:font-semibold tw:text-lg tw:md:text-xl tw:hover-no-underline tw:hover:border-b-2" href="#display">Display</a>
+          <a class="tw:font-semibold tw:text-base tw:md:text-lg tw:hover-no-underline tw:hover:border-b-2" href="#podcast-streaming-radio">Podcast</a>
+          <a class="tw:font-semibold tw:text-base tw:md:text-lg tw:hover-no-underline tw:hover:border-b-2" href="#radio">Radio</a>
+          <a class="tw:font-semibold tw:text-base tw:md:text-lg tw:hover-no-underline tw:hover:border-b-2" href="#streaming">Streaming</a>
+          <a class="tw:font-semibold tw:text-base tw:md:text-lg tw:hover-no-underline tw:hover:border-b-2" href="#display">Display</a>
         </div>
       </div>
     </section>
@@ -49,7 +50,7 @@
       <div class="tw:grid tw:grid-cols-1 tw:md:grid-cols-2">
         <div>
           <h2>Rogers Sports & Media <br />Ad Buying Platform</h2>
-          <p class="tw:text-3xl tw:font-semibold tw:!mb-12">
+          <p class="tw:text-2xl tw:font-semibold tw:!mb-12">
             Businesses of all sizes can harness our
             ad buying platform to reach customers
             and drive advertising impact.
@@ -86,7 +87,7 @@
             <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/logo-kiss-radio.png" alt="KiSS Radio logo" class="tw:h-auto">
           </div>
           <div class="tw:flex tw:justify-center tw:items-center">
-            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/logo-rock-radio.png" alt="Rock Radio logo" class="tw:h-auto">
+            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/logo-frequency.png" alt="Frequency logo" class="tw:h-auto">
           </div>
           <div class="tw:flex tw:justify-center tw:items-center">
             <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/logo-citynews.png" alt="CityNews logo" class="tw:h-auto">
@@ -95,7 +96,10 @@
             <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/logo-sn-the-fan.png" alt="SN The Fan logo" class="tw:h-auto">
           </div>
           <div class="tw:flex tw:justify-center tw:items-center">
-            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/logo-bt.png" alt="BT logo" class="tw:h-auto">
+            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/logo-wondery.png" alt="Wondery logo" class="tw:h-auto">
+          </div>
+          <div class="tw:flex tw:justify-center tw:items-center">
+            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/logo-tubi.png" alt="Tubi logo" class="tw:h-auto">
           </div>
           <div class="tw:flex tw:justify-center tw:items-center">
             <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/logo-jack-radio.png" alt="Jack Radio logo" class="tw:h-auto">
@@ -104,7 +108,7 @@
             <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/logo-sonic.png" alt="SONiC logo" class="tw:h-auto">
           </div>
           <div class="tw:flex tw:justify-center tw:items-center">
-            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/logo-92.3.png" alt="92.3 logo" class="tw:h-auto">
+            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/logo-news-radio.png" alt="News Radio logo" class="tw:h-auto">
           </div>
       </div>
     </section>
@@ -124,7 +128,7 @@
         </div>
         <div class="tw:py-12">
           <h2>Podcast & Streaming Radio</h2>
-          <p class="tw:text-3xl tw:font-semibold tw:!mb-12">
+          <p class="tw:text-2xl tw:font-semibold tw:!mb-12">
             With over 8M Canadians listening every
             month, drive impact when you advertise
             in chart-topping podcasts and the most
@@ -142,7 +146,7 @@
             <a target="_blank" href="https://go.rogerssportsandmedia.com/sign-up/with-email" class="tw:bg-transparent tw:border-2 tw:px-4 tw:py-3 tw:text-white tw:text-lg tw:font-semibold tw:rounded-full tw:hover:cursor-pointer tw:hover:text-white">$250 ad credit</a>
           </div>
           <br />
-          <p class="tw:text-lg tw:font-medium">Source: Medium Moves The Message, Sounds Profitable, Feb 2023</p>
+          <p class="tw:text-base tw:font-medium">Source: Medium Moves The Message, Sounds Profitable, Feb 2023</p>
         </div>
       </div>
     </section>
@@ -150,7 +154,7 @@
       <div class="tw:grid tw:grid-cols-1 tw:md:grid-cols-2 tw:gap-x-12 tw:gap-y-12 tw:md:gap-y-0">
         <div>
           <h2>Radio Advertising</h2>
-          <p class="tw:text-3xl tw:font-semibold tw:!mb-12">
+          <p class="tw:text-2xl tw:font-semibold tw:!mb-12">
             In big cities and small communities, radio
             reaches the widest audiences. We boast some
             of the most popular music, news and sports
@@ -168,7 +172,7 @@
             <a class="tw:btn-secondary" target="_blank" href="https://go.rogerssportsandmedia.com/sign-up/with-email">$250 ad credit</a>
           </div>
           <br />
-          <p class="tw:text-lg tw:font-medium">Source: Radio Connects, Rediscover the Power of Live Radio, 2024</p>
+          <p class="tw:text-base tw:font-medium">Source: Radio Connects, Rediscover the Power of Live Radio, 2024</p>
         </div>
         <div class="tw:grid tw:grid-cols-2 tw:gap-6">
           <div class="tw:flex tw:flex-col tw:gap-8">
@@ -196,7 +200,7 @@
         </div>
         <div>
           <h2>Streaming</h2>
-          <p class="tw:text-3xl tw:font-semibold tw:!mb-12">
+          <p class="tw:text-2xl tw:font-semibold tw:!mb-12">
             As the home of Sportsnet+, Citytv and Tubi,
             <span class="tw:font-bold">18M Canadians trust us</span> to deliver the biggest
             moments in live sports and entertainment
@@ -214,10 +218,10 @@
           </p>
           <div class="tw:flex tw:gap-x-6 tw:mb-8">
             <a class="tw:btn-primary" target="_blank" href="https://go.rogerssportsandmedia.com">Advertise now</button>
-            <a target="_blank" href="https://go.rogerssportsandmedia.com/sign-up/with-email" class="tw:bg-transparent tw:border-2 tw:px-4 tw:py-3 tw:text-white tw:text-lg tw:font-semibold tw:rounded-full tw:hover:cursor-pointer tw:hover:text-white">$250 ad credit</a>
+            <a target="_blank" href="https://go.rogerssportsandmedia.com/sign-up/with-email" class="tw:bg-transparent tw:border-2 tw:px-4 tw:py-3 tw:text-white tw:text-base tw:font-semibold tw:rounded-full tw:hover:cursor-pointer tw:hover:text-white">$250 ad credit</a>
           </div>
           <br />
-          <p class="tw:text-lg tw:font-medium">Source: RSM Full Stream Ahead 2024 Survey, April 2024</p>
+          <p class="tw:text-base tw:font-medium">Source: RSM Full Stream Ahead 2024 Survey, April 2024</p>
         </div>
       </div>
     </section>
@@ -225,7 +229,7 @@
       <div class="tw:grid tw:grid-cols-1 tw:md:grid-cols-5 tw:gap-y-12 tw:md:gap-y-0">
         <div class="tw:md:col-span-2">
           <h2>Display</h2>
-          <p class="tw:text-3xl tw:font-semibold tw:!mb-12">
+          <p class="tw:text-2xl tw:font-semibold tw:!mb-12">
             With <span class="tw:font-bold">over 26M visitors monthly,</span> reach
             customers locally or nationally across our
             sites and apps.
@@ -254,18 +258,18 @@
       <div class="tw:grid tw:grid-cols-1 tw:md:grid-cols-3 tw:gap-y-12 tw:md:gap-y-0 tw:[&>*:nth-child(even)]:md:border-x">
         <div>
           <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/GRAPHICS-02.png" class="tw:h-16 tw:mb-6" />
-          <p class="tw:text-2xl tw:font-bold tw:mb-6">Drive positive impact for your brand</p>
-          <p class="tw:text-2xl tw:font-semibold">Drive impact for your brand when it appears within the most trusted and consumed content in Canada</p>
+          <p class="tw:text-xl tw:font-bold tw:mb-6">Drive positive impact for your brand</p>
+          <p class="tw:text-xl tw:font-semibold">Drive impact for your brand when it appears within the most trusted and consumed content in Canada</p>
         </div>
         <div class="tw:md:px-8">
           <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/GRAPHICS-03.png" class="tw:h-16 tw:mb-6" />
-          <p class="tw:text-2xl tw:font-bold tw:mb-6">Reach the audience that matters most</p>
-          <p class="tw:text-2xl tw:font-semibold">Target the locations, demographics and content that best aligns with your business</p>
+          <p class="tw:text-xl tw:font-bold tw:mb-6">Reach the audience that matters most</p>
+          <p class="tw:text-xl tw:font-semibold">Target the locations, demographics and content that best aligns with your business</p>
         </div>
         <div class="tw:md:px-8">
           <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/GRAPHICS-04.png" class="tw:h-16 tw:mb-6" />
-          <p class="tw:text-2xl tw:font-bold tw:mb-6">Getting started is easy & support is available</p>
-          <p class="tw:text-2xl tw:font-semibold">Start with entry-level budgets, produce your ad for free and trust that support is a click away</p>
+          <p class="tw:text-xl tw:font-bold tw:mb-6">Getting started is easy & support is available</p>
+          <p class="tw:text-xl tw:font-semibold">Start with entry-level budgets, produce your ad for free and trust that support is a click away</p>
         </div>
       </div>
     </section>
@@ -279,34 +283,34 @@
           <div class="tw:grid tw:grid-cols-1 tw:gap-y-8 tw:mb-12">
             <div class="tw:flex tw:items-center tw:gap-x-8 tw:md:gap-x-6">
               <div class="tw:w-1/12">
-                <span class="tw:flex tw:items-center tw:justify-center tw:w-12 tw:h-12 tw:bg-black tw:text-white tw:text-3xl tw:font-bold tw:rounded-full">1</span>
+                <span class="tw:flex tw:items-center tw:justify-center tw:w-12 tw:h-12 tw:bg-black tw:text-white tw:text-xl tw:font-bold tw:rounded-full">1</span>
               </div>
               <div class="tw:w-11/12">
-                <span class="tw:text-2xl tw:font-semibold">Select where your ads will run and who they will reach</span>
+                <span class="tw:text-xl tw:font-semibold">Select where your ads will run and who they will reach</span>
               </div>
             </div>
             <div class="tw:flex tw:items-center tw:gap-x-8 tw:md:gap-x-6">
               <div class="tw:w-1/12">
-                <span class="tw:flex tw:items-center tw:justify-center tw:w-12 tw:h-12 tw:bg-black tw:text-white tw:text-3xl tw:font-bold tw:rounded-full">2</span>
+                <span class="tw:flex tw:items-center tw:justify-center tw:w-12 tw:h-12 tw:bg-black tw:text-white tw:text-xl tw:font-bold tw:rounded-full">2</span>
               </div>
               <div class="tw:w-11/12">
-                <span class="tw:text-2xl tw:font-semibold">Set your schedule and budget</span>
+                <span class="tw:text-xl tw:font-semibold">Set your schedule and budget</span>
               </div>
             </div>
             <div class="tw:flex tw:items-center tw:gap-x-8 tw:md:gap-x-6">
               <div class="tw:w-1/12">
-                <span class="tw:flex tw:items-center tw:justify-center tw:w-12 tw:h-12 tw:bg-black tw:text-white tw:text-3xl tw:font-bold tw:rounded-full">3</span>
+                <span class="tw:flex tw:items-center tw:justify-center tw:w-12 tw:h-12 tw:bg-black tw:text-white tw:text-xl tw:font-bold tw:rounded-full">3</span>
               </div>
               <div class="tw:w-11/12">
-                <span class="tw:text-2xl tw:font-semibold">Produce or upload your ad creative</span>
+                <span class="tw:text-xl tw:font-semibold">Produce or upload your ad creative</span>
               </div>
             </div>
             <div class="tw:flex tw:items-center tw:gap-x-8 tw:md:gap-x-6">
               <div class="tw:w-1/12">
-                <span class="tw:flex tw:items-center tw:justify-center tw:w-12 tw:h-12 tw:bg-black tw:text-white tw:text-3xl tw:font-bold tw:rounded-full">4</span>
+                <span class="tw:flex tw:items-center tw:justify-center tw:w-12 tw:h-12 tw:bg-black tw:text-white tw:text-xl tw:font-bold tw:rounded-full">4</span>
               </div>
               <div class="tw:w-11/12">
-                <span class="tw:text-2xl tw:font-semibold">Pay for, launch and monitor your campaign</span>
+                <span class="tw:text-xl tw:font-semibold">Pay for, launch and monitor your campaign</span>
               </div>
             </div>
           </div>
