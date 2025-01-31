@@ -1,6 +1,6 @@
 <div class="tw-w-full tw-flex tw-flex-row tw-justify-center tw-items-center tw-py-3 tw-text-white tw-bg-red tw-space-x-1 md:tw-space-x-16 tw-px-2 md:tw-px-0">
     <span class="tw-w-3/4 md:tw-w-fit tw-text-sm md:tw-text-base tw-mb-1 md:tw-mb-0">Get a $250 ad credit to use towards your first campaign of $500 or more.*</span>
-    <a id="signupNowNavButton" target="_blank" href="https://mcdjql80kmghrjj6lg68bbtqbgv1.pub.sfmc-content.com/rvs5ls1u4zg" class="tw-w-1/4 md:tw-w-fit tw-text-xs tw-text-red tw-border tw-bg-white tw-py-3 tw-px-3 md:tw-px-4 tw-font-semibold tw-cursor-pointer hover:tw-no-underline hover:tw-text-red-dark">
+    <a id="signupNowNavButton" target="_blank" href="https://web.rogerssportsandmedia.com/250credit" class="tw-w-1/4 md:tw-w-fit tw-text-xs tw-text-red tw-border tw-bg-white tw-py-3 tw-px-3 md:tw-px-4 tw-font-semibold tw-cursor-pointer hover:tw-no-underline hover:tw-text-red-dark">
         Sign Up Now
     </a>
 </div>
