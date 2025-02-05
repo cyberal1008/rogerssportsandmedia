@@ -6,6 +6,7 @@ $(document).ready(function () {
 
         var progsubmit = document.querySelector('#progsubmit');
         var progsliderWrap = document.querySelector('.programming .slider');
+        var progSwiper = document.querySelector('.prog-slider').swiper;
 
         $("#progsubmit").click(function () {
 
@@ -49,6 +50,7 @@ $(document).ready(function () {
                     $('.no-shows').hide();
                     prog_navi.style.opacity = 1;
                     program_slider.fadeIn();
+                    progSwiper.update();
                 } else {
                     $('.no-shows').show();
                     prog_navi.style.opacity = 0;
