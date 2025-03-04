@@ -29,7 +29,7 @@
                               </svg>
                           </div>
                           <p class="tw:font-semibold tw:mb-4">
-                              Check your email for your $250 ad credit!
+                                Your promocode is: GET250. Keep an eye out in your inbox for more information.
                           </p>
                           <button onclick="closeNewsletterModal()" type="button" class="tw:inline-flex tw:w-full tw:justify-center tw:bg-primary tw:px-3 tw:py-3 tw:text-base tw:font-semibold tw:text-white tw:shadow-sm tw:hover:bg-primary-light">Close</button>
                       </div>
@@ -62,7 +62,7 @@
                       </form>
                   </div>
                 <div class="tw:text-xs tw:bg-gray tw:px-4 tw:py-3 tw:sm:px-6 tw:italic">
-                    *GET250 promo code is valid until 12/31/2025 and can be used on orders of $500CAD or more (before taxes) placed on RSM Ad Manager. Promo code valid for one-time use per account.
+                    *This promo code is valid until 12/31/2025 and can be used on orders of $500CAD or more (before taxes) placed on RSM Ad Manager. Promo code valid for one-time use per account.
                 </div>
             </div>
           </div>

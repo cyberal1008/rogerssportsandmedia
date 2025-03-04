@@ -47,7 +47,7 @@
         </div>
       </div>
     </section>
-    <section class="tw:px-4 tw:md:px-32 tw:lg:px-32 tw:xl:px-40 tw:2xl:px-48 tw:py-12 tw:text-white" style="background-image: url('<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/mobius-red-on-red-bg.jpg'); background-size: cover; background-position: center;">
+    <section class="tw:px-4 tw:md:px-32 tw:lg:px-32 tw:xl:px-40 tw:2xl:px-48 tw:py-12 tw:text-white" style="background-image: url('<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/rogers-red-ad-manager-hero-bg.jpg'); background-size: cover; background-position: center;">
       <div class="tw:grid tw:grid-cols-1 tw:md:grid-cols-2">
         <div>
           <h2>Rogers Sports & Media <br />Ad Buying Platform</h2>
