@@ -595,6 +595,15 @@
   .tw\:h-20 {
     height: calc(var(--tw-spacing) * 20);
   }
+  .tw\:h-\[220px\] {
+    height: 220px;
+  }
+  .tw\:h-\[390px\] {
+    height: 390px;
+  }
+  .tw\:h-\[432px\] {
+    height: 432px;
+  }
   .tw\:h-auto {
     height: auto;
   }
@@ -615,6 +624,9 @@
   }
   .tw\:w-16 {
     width: calc(var(--tw-spacing) * 16);
+  }
+  .tw\:w-48 {
+    width: calc(var(--tw-spacing) * 48);
   }
   .tw\:w-full {
     width: 100%;
@@ -668,9 +680,6 @@
   .tw\:gap-8 {
     gap: calc(var(--tw-spacing) * 8);
   }
-  .tw\:gap-12 {
-    gap: calc(var(--tw-spacing) * 12);
-  }
   .tw\:gap-x-6 {
     column-gap: calc(var(--tw-spacing) * 6);
   }
@@ -679,9 +688,6 @@
   }
   .tw\:gap-x-12 {
     column-gap: calc(var(--tw-spacing) * 12);
-  }
-  .tw\:gap-x-24 {
-    column-gap: calc(var(--tw-spacing) * 24);
   }
   .tw\:gap-y-2 {
     row-gap: calc(var(--tw-spacing) * 2);
@@ -722,9 +728,6 @@
   }
   .tw\:bg-white {
     background-color: var(--tw-color-white);
-  }
-  .tw\:object-cover {
-    object-fit: cover;
   }
   .tw\:p-4 {
     padding: calc(var(--tw-spacing) * 4);
@@ -929,9 +932,24 @@
       grid-column: span 3 / span 3;
     }
   }
+  .tw\:md\:mb-0 {
+    @media (width >= 48rem) {
+      margin-bottom: calc(var(--tw-spacing) * 0);
+    }
+  }
   .tw\:md\:flex {
     @media (width >= 48rem) {
       display: flex;
+    }
+  }
+  .tw\:md\:hidden {
+    @media (width >= 48rem) {
+      display: none;
+    }
+  }
+  .tw\:md\:inline {
+    @media (width >= 48rem) {
+      display: inline;
     }
   }
   .tw\:md\:h-16 {
@@ -962,6 +980,21 @@
   .tw\:md\:flex-row {
     @media (width >= 48rem) {
       flex-direction: row;
+    }
+  }
+  .tw\:md\:items-center {
+    @media (width >= 48rem) {
+      align-items: center;
+    }
+  }
+  .tw\:md\:justify-between {
+    @media (width >= 48rem) {
+      justify-content: space-between;
+    }
+  }
+  .tw\:md\:justify-center {
+    @media (width >= 48rem) {
+      justify-content: center;
     }
   }
   .tw\:md\:gap-x-6 {
@@ -997,6 +1030,12 @@
   .tw\:md\:px-32 {
     @media (width >= 48rem) {
       padding-inline: calc(var(--tw-spacing) * 32);
+    }
+  }
+  .tw\:md\:text-lg {
+    @media (width >= 48rem) {
+      font-size: var(--tw-text-lg);
+      line-height: var(--tw-leading, var(--tw-text-lg--line-height));
     }
   }
   .tw\:md\:text-xl {

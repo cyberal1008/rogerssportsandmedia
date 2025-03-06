@@ -23,13 +23,18 @@
 <body>
     <?php get_template_part('template-parts/ad-manager-popup-new'); ?>
     <nav class="tw:px-4 tw:md:px-32 tw:lg:px-32 tw:xl:px-40 tw:2xl:px-48 tw:py-4 tw:bg-black">
-      <div class="tw:flex tw:justify-between tw:items-center">
-        <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/logo.png" class="tw:h-12" />
-        <ul class="tw:hidden tw:md:flex tw:justify-center tw:items-center tw:gap-x-24 tw:text-white">
-          <li><a class="tw:text-base tw:md:text-lg tw:font-semibold" target="_blank" href="https://rogers-help-center.scrollhelp.site/docs">Help Centre</a></li>
+      <div class="tw:flex tw:flex-col tw:md:flex-row tw:md:justify-between">
+        <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/logo.png" class="tw:h-12 tw:mb-4 tw:md:mb-0 tw:w-48" />
+        <ul class="tw:flex tw:flex-row tw:md:justify-center tw:md:items-center tw:justify-between tw:md:gap-x-16 tw:text-white">
+          <li><a class="tw:text-base tw:md:text-lg tw:font-semibold" target="_blank" href="https://rogers-help-center.scrollhelp.site/docs">Help Center</a></li>
           <li><a class="tw:text-base tw:md:text-lg tw:font-semibold" target="_blank" href="https://go.rogerssportsandmedia.com/contact-us">Contact Us</a></li>
           <li><a class="tw:text-base tw:md:text-lg tw:font-semibold" target="_blank" href="https://go.rogerssportsandmedia.com">Log in</a></li>
-          <li><a class="tw:btn-primary" target="_blank" href="https://go.rogerssportsandmedia.com/sign-up/with-email" >Get started</a></li>
+          <li class="tw:md:hidden">
+            <a class="tw:text-base tw:md:text-lg tw:font-semibold" target="_blank" href="https://go.rogerssportsandmedia.com/sign-up/with-email">Get started</a>
+          </li>
+          <li class="tw:hidden tw:md:inline">
+            <a class="tw:btn-primary" target="_blank" href="https://go.rogerssportsandmedia.com/sign-up/with-email">Get started</a>
+          </li>
         </ul>
       </div>
     </nav>
@@ -47,7 +52,7 @@
         </div>
       </div>
     </section>
-    <section class="tw:px-4 tw:md:px-32 tw:lg:px-32 tw:xl:px-40 tw:2xl:px-48 tw:py-12 tw:text-white" style="background-image: url('<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/rogers-red-ad-manager-hero-bg.jpg'); background-size: cover; background-position: center;">
+    <section class="tw:px-4 tw:md:px-32 tw:lg:px-32 tw:xl:px-40 tw:2xl:px-48 tw:py-12 tw:text-white" style="background-image: url('<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/mobius-red-on-red-bg.jpg'); background-size: cover; background-position: center;">
       <div class="tw:grid tw:grid-cols-1 tw:md:grid-cols-2">
         <div>
           <h2>Rogers Sports & Media <br />Ad Buying Platform</h2>
@@ -116,29 +121,47 @@
     <section id="podcast-streaming-radio" class="tw:px-4 tw:md:px-32 tw:lg:px-32 tw:xl:px-40 tw:2xl:px-48 tw:bg-black tw:text-white tw:overflow-hidden">
       <div class="tw:grid tw:grid-cols-1 tw:md:grid-cols-2 tw:gap-x-12 tw:gap-y-12 tw:md:gap-y-0">
         <div class="tw:grid tw:grid-cols-2 tw:gap-6">
-          <div class="tw:flex tw:flex-col tw:gap-12 tw:pt-12">
-            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/AbbeySharp_BiteBack_FINAL_3000x3000-scaled.jpg" alt="Image 1" class="tw:w-full tw:h-auto tw:rounded-xl tw:object-cover">
-            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/TheBigStory.png" alt="Image 2" class="tw:w-full tw:h-auto tw:rounded-xl tw:object-cover">
-            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/DATELINE.jpeg" alt="Image 2" class="tw:w-full tw:h-auto tw:rounded-xl tw:object-cover">
+          <div class="tw:flex tw:flex-col tw:gap-6 tw:pt-12">
+            <div>
+              <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/AbbeySharp_BiteBack_FINAL_3000x3000-scaled.jpg" alt="Image 1" class="tw:w-full tw:h-[220px] tw:rounded-xl">
+            </div>
+            <div>
+              <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/TheBigStory.png" alt="Image 2" class="tw:w-full tw:h-[220px] tw:rounded-xl">
+            </div>
+            <div>
+              <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/DATELINE.jpeg" alt="Image 2" class="tw:w-full tw:h-[220px] tw:rounded-xl">
+            </div>
           </div>
-          <div class="tw:flex tw:flex-col tw:gap-12 tw:translate-y-[-3%]">
-            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/RAPS_SHOW24_1x1_logo.jpg" alt="Image 3" class="tw:w-full tw:h-auto tw:rounded-xl tw:object-cover">
-            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/APPLE_Hero-Cover_1920x1920.jpg" alt="Image 4" class="tw:w-full tw:h-auto tw:rounded-xl tw:object-cover">
-            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/ArmchairExpert.jpeg" alt="Image 4" class="tw:w-full tw:h-auto tw:rounded-xl tw:object-cover">
+          <div class="tw:flex tw:flex-col tw:gap-6 tw:translate-y-[-3%]">
+            <div>
+              <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/RAPS_SHOW24_1x1_logo.jpg" alt="Image 3" class="tw:w-full tw:h-[220px] tw:rounded-xl">
+            </div>
+            <div>
+              <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/APPLE_Hero-Cover_1920x1920.jpg" alt="Image 4" class="tw:w-full tw:h-[220px] tw:rounded-xl">
+            </div>
+            <div>
+              <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/ArmchairExpert.jpeg" alt="Image 4" class="tw:w-full tw:h-[220px] tw:rounded-xl">
+            </div>
           </div>
         </div>
         <div class="tw:py-12">
-          <h2>Podcast Advertising</h2>
+          <h2>Podcast & Streaming Radio</h2>
           <p class="tw:text-2xl tw:font-semibold tw:!mb-12">
-            With over <span class="tw:font-bold">8M Canadians</span> listening every month, drive impact when you advertise on our chart-topping podcasts and streaming radio stations.
+            With over 8M Canadians listening every
+            month, drive impact when you advertise
+            in chart-topping podcasts and the most
+            popular streaming radio stations.
             <br /><br />
-            <span class="tw:font-bold">68% of consumers are more likely to consider a product or service after hearing it on a podcast.*</span>
+            <span class="tw:font-bold">68% of consumers are more willing
+              to consider a product or service after
+              hearing it on a podcast*</span>
             <br /><br />
-            Get results with premium audio ad creative, produced for you at no extra cost.
+            Get results with best-in-class audio ad creative,
+            produced for you by us, at no extra cost.
           </p>
           <div class="tw:flex tw:gap-x-6 tw:mb-8">
             <a class="tw:btn-primary" target="_blank" href="https://go.rogerssportsandmedia.com">Advertise now</a>
-            <a target="_blank" href="https://web.rogerssportsandmedia.com/250credit" class="tw:bg-transparent tw:border-2 tw:px-4 tw:py-3 tw:text-white tw:text-lg tw:font-semibold tw:rounded-full tw:hover:cursor-pointer tw:hover:text-white">$250 ad credit</a>
+            <a target="_blank" href="https://go.rogerssportsandmedia.com/sign-up/with-email" class="tw:bg-transparent tw:border-2 tw:px-4 tw:py-3 tw:text-white tw:text-lg tw:font-semibold tw:rounded-full tw:hover:cursor-pointer tw:hover:text-white">$250 ad credit</a>
           </div>
           <br />
           <p class="tw:text-base tw:font-medium">Source: Medium Moves The Message, Sounds Profitable, Feb 2023</p>
@@ -150,29 +173,33 @@
         <div>
           <h2>Radio Advertising</h2>
           <p class="tw:text-2xl tw:font-semibold tw:!mb-12">
-            In big cities and small communities, we boast some of the most popular music, news and sports radio stations, 
-            reaching over <span class="tw:font-bold">59% of Canadians every month.</span>
+            In big cities and small communities, radio
+            reaches the widest audiences. We boast some
+            of the most popular music, news and sports
+            radio stations in the country, <span class="tw:font-bold">reaching over
+            59% of Canadians every month.</span>
             <br /><br />
             <span class="tw:font-bold">4-in-10 Canadians have taken some sort
               of action after hearing an ad on radio*</span>
             <br /><br />
-            Get results with premium radio ad creative, produced for you at no extra cost.
+            Get results with best-in-class radio ad creative,
+            produced for you by us, at no extra cost
           </p>
           <div class="tw:flex tw:gap-x-6 tw:mb-8">
             <a class="tw:btn-primary" target="_blank" href="https://go.rogerssportsandmedia.com">Advertise now</a>
-            <a class="tw:btn-secondary" target="_blank" href="https://web.rogerssportsandmedia.com/250credit">$250 ad credit</a>
+            <a class="tw:btn-secondary" target="_blank" href="https://go.rogerssportsandmedia.com/sign-up/with-email">$250 ad credit</a>
           </div>
           <br />
           <p class="tw:text-base tw:font-medium">Source: Radio Connects, Rediscover the Power of Live Radio, 2024</p>
         </div>
         <div class="tw:grid tw:grid-cols-2 tw:gap-6">
           <div class="tw:flex tw:flex-col tw:gap-8">
-            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/KiSS_925_RM_Fall2024_Astral_TSA_47x68_RGB_B.jpg" alt="Image 1" class="tw:w-full tw:h-auto tw:rounded-xl tw:object-cover">
-            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/SONIC1029_Fall2024Campaign_Social_1080x1080_02.jpg" alt="Image 2" class="tw:w-full tw:h-auto tw:rounded-xl tw:object-cover">
+            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/KiSS_925_RM_Fall2024_Astral_TSA_47x68_RGB_B.jpg" alt="Image 1" class="tw:w-full tw:h-[432px] tw:rounded-xl tw:object-cover">
+            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/SONIC1029_Fall2024Campaign_Social_1080x1080_02.jpg" alt="Image 2" class="tw:w-full tw:h-[220px] tw:rounded-xl tw:object-cover">
           </div>
           <div class="tw:flex tw:flex-col tw:gap-8">
-            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/SONIC1029_Fall2024Campaign_Social_1080x1080_02.jpg" alt="Image 3" class="tw:w-full tw:h-auto tw:rounded-xl tw:object-cover">
-            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/CHFI_Spring2024_SocialFeed_PoojaGurdeep.jpg" alt="Image 4" class="tw:w-full tw:h-auto tw:rounded-xl tw:object-cover">
+            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/SONIC1029_Fall2024Campaign_Social_1080x1080_02.jpg" alt="Image 3" class="tw:w-full tw:h-[220px] tw:rounded-xl tw:object-cover">
+            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/CHFI_Spring2024_SocialFeed_PoojaGurdeep.jpg" alt="Image 4" class="tw:w-full tw:h-[432px] tw:rounded-xl tw:object-cover">
           </div>
         </div>
       </div>
@@ -181,26 +208,35 @@
       <div class="tw:grid tw:grid-cols-1 tw:md:grid-cols-2 tw:gap-x-12 tw:gap-y-12 tw:md:gap-y-0">
         <div class="tw:grid tw:grid-cols-2 tw:gap-6">
           <div class="tw:flex tw:flex-col tw:gap-8">
-            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/GoldenBachelorette_V2.jpg" alt="Image 1" class="tw:w-full tw:h-auto tw:rounded-xl tw:object-cover">
-            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/Sportsnet.jpg" alt="Image 2" class="tw:w-full tw:h-auto tw:rounded-xl tw:object-cover">
+            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/GoldenBachelorette_V2.jpg" alt="Image 1" class="tw:w-full tw:h-[390px] tw:rounded-xl">
+            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/Sportsnet.jpg" alt="Image 2" class="tw:w-full tw:h-[220px] tw:rounded-xl">
           </div>
           <div class="tw:flex tw:flex-col tw:gap-8">
-            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/TUBI.png" alt="Image 3" class="tw:w-full tw:h-auto tw:rounded-xl tw:object-cover">
-            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/LO_S24_Rogers_630x945.jpg" alt="Image 4" class="tw:w-full tw:h-auto tw:rounded-xl tw:object-cover">
+            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/TUBI.png" alt="Image 3" class="tw:w-full tw:h-[220px] tw:rounded-xl">
+            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/LO_S24_Rogers_630x945.jpg" alt="Image 4" class="tw:w-full tw:h-[390px] tw:rounded-xl">
           </div>
         </div>
         <div>
-          <h2>Streaming TV Advertising</h2>
+          <h2>Streaming</h2>
           <p class="tw:text-2xl tw:font-semibold tw:!mb-12">
-            <span class="tw:font-bold">18M Canadians trust us</span> to deliver the biggest moments in sports and entertainment every month.
+            As the home of Sportsnet+, Citytv and Tubi,
+            <span class="tw:font-bold">18M Canadians trust us</span> to deliver the biggest
+            moments in live sports and entertainment
+            every month.
             <br /><br />
-            <span class="tw:font-bold">RSM streamers are 33% more likely to purchase a product after seeing an ad vs. all other streamers*</span>
+            <span class="tw:font-bold">RSM streamers are 33% more likely to
+            purchase a product after seeing an ad
+            vs. all other streamers*</span>
             <br /><br />
-            Our premier streaming experience offers high impact with non-skippable ads and 90% of our audience streaming on the big TV screen.
+            Our premier streaming experience delivers
+            positive impact for your video advertising.
+            90% of our audience stream on the big TV
+            screen and our non-skippable ad formats
+            mean high completion rates for your ads.
           </p>
           <div class="tw:flex tw:gap-x-6 tw:mb-8">
             <a class="tw:btn-primary" target="_blank" href="https://go.rogerssportsandmedia.com">Advertise now</button>
-            <a target="_blank" href="https://web.rogerssportsandmedia.com/250credit" class="tw:bg-transparent tw:border-2 tw:px-4 tw:py-3 tw:text-white tw:text-base tw:font-semibold tw:rounded-full tw:hover:cursor-pointer tw:hover:text-white">$250 ad credit</a>
+            <a target="_blank" href="https://go.rogerssportsandmedia.com/sign-up/with-email" class="tw:bg-transparent tw:border-2 tw:px-4 tw:py-3 tw:text-white tw:text-base tw:font-semibold tw:rounded-full tw:hover:cursor-pointer tw:hover:text-white">$250 ad credit</a>
           </div>
           <br />
           <p class="tw:text-base tw:font-medium">Source: RSM Full Stream Ahead 2024 Survey, April 2024</p>
@@ -210,17 +246,24 @@
     <section id="display" class="tw:px-4 tw:md:px-32 tw:lg:pl-32 tw:xl:pl-40 tw:2xl:pl-48 tw:py-12 tw:bg-gray">
       <div class="tw:grid tw:grid-cols-1 tw:md:grid-cols-5 tw:gap-y-12 tw:md:gap-y-0">
         <div class="tw:md:col-span-2">
-          <h2>Display Advertising</h2>
+          <h2>Display</h2>
           <p class="tw:text-2xl tw:font-semibold tw:!mb-12">
-            Get access to the <span class="tw:font-bold">26M+ Canadians</span> who visit our sites and apps every month.
+            With <span class="tw:font-bold">over 26M visitors monthly,</span> reach
+            customers locally or nationally across our
+            sites and apps.
             <br /><br />
-            Your ad appears in a brand-safe environment within premium sports, news, and entertainment content.
+            Trust that your ads are in a brand-safe
+            environment, appearing within premium
+            sports, news and entertainment content.
             <br /><br />
-            Getting started is easy! Access display ads with entry-level budgets and use our free ad builder tool to produce your ads.
+            Getting started is easy! Access our display
+            ad inventory with entry-level budgets. Use
+            your existing creatives or our ad builder
+            tool to create ads at no extra cost.
           </p>
           <div class="tw:flex tw:gap-x-6">
             <a class="tw:btn-primary" target="_blank" href="https://go.rogerssportsandmedia.com">Create an ad</a>
-            <a class="tw:btn-secondary" target="_blank" href="https://web.rogerssportsandmedia.com/250credit">$250 ad credit</a>
+            <a class="tw:btn-secondary" target="_blank" href="https://go.rogerssportsandmedia.com/sign-up/with-email">$250 ad credit</a>
           </div>
         </div>
         <div class="tw:md:col-span-3 tw:flex tw:justify-center tw:items-center">
