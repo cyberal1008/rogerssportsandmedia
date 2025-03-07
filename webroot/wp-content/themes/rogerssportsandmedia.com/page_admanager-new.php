@@ -25,7 +25,7 @@
     <nav class="tw:px-4 tw:md:px-32 tw:lg:px-32 tw:xl:px-40 tw:2xl:px-48 tw:py-4 tw:bg-black">
       <div class="tw:flex tw:flex-col tw:md:flex-row tw:md:justify-between">
         <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/logo.png" class="tw:h-12 tw:mb-4 tw:md:mb-0 tw:w-48" />
-        <ul class="tw:flex tw:flex-row tw:md:justify-center tw:md:items-center tw:justify-between tw:md:gap-x-16 tw:text-white">
+        <ul class="tw:flex tw:flex-row tw:md:justify-center tw:md:items-center tw:justify-between tw:md:gap-x-16 tw:text-white tw:mb-0!">
           <li><a class="tw:text-base tw:md:text-lg tw:font-semibold" target="_blank" href="https://rogers-help-center.scrollhelp.site/docs">Help Center</a></li>
           <li><a class="tw:text-base tw:md:text-lg tw:font-semibold" target="_blank" href="https://go.rogerssportsandmedia.com/contact-us">Contact Us</a></li>
           <li><a class="tw:text-base tw:md:text-lg tw:font-semibold" target="_blank" href="https://go.rogerssportsandmedia.com">Log in</a></li>
@@ -123,24 +123,24 @@
         <div class="tw:grid tw:grid-cols-2 tw:gap-6">
           <div class="tw:flex tw:flex-col tw:gap-6 tw:pt-12">
             <div>
-              <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/AbbeySharp_BiteBack_FINAL_3000x3000-scaled.jpg" alt="Image 1" class="tw:w-full tw:h-[220px] tw:rounded-xl">
+              <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/AbbeySharp_BiteBack_FINAL_3000x3000-scaled.jpg" alt="Image 1" class="tw:md:w-[200px] tw:h-auto tw:rounded-xl">
             </div>
             <div>
-              <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/TheBigStory.png" alt="Image 2" class="tw:w-full tw:h-[220px] tw:rounded-xl">
+              <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/TheBigStory.png" alt="Image 2" class="tw:md:w-[200px] tw:h-auto tw:rounded-xl">
             </div>
             <div>
-              <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/DATELINE.jpeg" alt="Image 2" class="tw:w-full tw:h-[220px] tw:rounded-xl">
+              <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/DATELINE.jpeg" alt="Image 2" class="tw:md:w-[200px] tw:h-auto tw:rounded-xl">
             </div>
           </div>
           <div class="tw:flex tw:flex-col tw:gap-6 tw:translate-y-[-3%]">
             <div>
-              <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/RAPS_SHOW24_1x1_logo.jpg" alt="Image 3" class="tw:w-full tw:h-[220px] tw:rounded-xl">
+              <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/RAPS_SHOW24_1x1_logo.jpg" alt="Image 3" class="tw:md:w-[200px] tw:h-auto tw:rounded-xl">
             </div>
             <div>
-              <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/APPLE_Hero-Cover_1920x1920.jpg" alt="Image 4" class="tw:w-full tw:h-[220px] tw:rounded-xl">
+              <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/APPLE_Hero-Cover_1920x1920.jpg" alt="Image 4" class="tw:md:w-[200px] tw:h-auto tw:rounded-xl">
             </div>
             <div>
-              <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/ArmchairExpert.jpeg" alt="Image 4" class="tw:w-full tw:h-[220px] tw:rounded-xl">
+              <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/ArmchairExpert.jpeg" alt="Image 4" class="tw:md:w-[200px] tw:h-auto tw:rounded-xl">
             </div>
           </div>
         </div>
@@ -194,12 +194,12 @@
         </div>
         <div class="tw:grid tw:grid-cols-2 tw:gap-6">
           <div class="tw:flex tw:flex-col tw:gap-8">
-            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/KiSS_925_RM_Fall2024_Astral_TSA_47x68_RGB_B.jpg" alt="Image 1" class="tw:w-full tw:h-[432px] tw:rounded-xl tw:object-cover">
-            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/SONIC1029_Fall2024Campaign_Social_1080x1080_02.jpg" alt="Image 2" class="tw:w-full tw:h-[220px] tw:rounded-xl tw:object-cover">
+            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/KiSS_925_RM_Fall2024_Astral_TSA_47x68_RGB_B.jpg" alt="Image 1" class="tw:md:w-[252px] tw:h-auto tw:rounded-xl tw:object-cover">
+            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/JACK_969_Calgary_Spring2024_Digital_iAB_300x600.jpg" alt="Image 2" class="tw:md:w-[252px] tw:h-auto tw:rounded-xl tw:object-cover">
           </div>
           <div class="tw:flex tw:flex-col tw:gap-8">
-            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/SONIC1029_Fall2024Campaign_Social_1080x1080_02.jpg" alt="Image 3" class="tw:w-full tw:h-[220px] tw:rounded-xl tw:object-cover">
-            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/CHFI_Spring2024_SocialFeed_PoojaGurdeep.jpg" alt="Image 4" class="tw:w-full tw:h-[432px] tw:rounded-xl tw:object-cover">
+            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/SONIC1029_Fall2024Campaign_Social_1080x1080_02.jpg" alt="Image 3" class="tw:md:w-[252px] tw:h-auto tw:rounded-xl tw:object-cover">
+            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/CHFI_Spring2024_SocialFeed_PoojaGurdeep.jpg" alt="Image 4" class="tw:md:w-[252px] tw:h-auto tw:rounded-xl tw:object-cover">
           </div>
         </div>
       </div>
@@ -208,12 +208,12 @@
       <div class="tw:grid tw:grid-cols-1 tw:md:grid-cols-2 tw:gap-x-12 tw:gap-y-12 tw:md:gap-y-0">
         <div class="tw:grid tw:grid-cols-2 tw:gap-6">
           <div class="tw:flex tw:flex-col tw:gap-8">
-            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/GoldenBachelorette_V2.jpg" alt="Image 1" class="tw:w-full tw:h-[390px] tw:rounded-xl">
-            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/Sportsnet.jpg" alt="Image 2" class="tw:w-full tw:h-[220px] tw:rounded-xl">
+            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/GoldenBachelorette_V2.jpg" alt="Image 1" class="tw:md:w-[252px] tw:h-auto tw:rounded-xl">
+            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/Sportsnet.jpg" alt="Image 2" class="tw:md:w-[252px] tw:h-auto tw:rounded-xl">
           </div>
           <div class="tw:flex tw:flex-col tw:gap-8">
-            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/TUBI.png" alt="Image 3" class="tw:w-full tw:h-[220px] tw:rounded-xl">
-            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/LO_S24_Rogers_630x945.jpg" alt="Image 4" class="tw:w-full tw:h-[390px] tw:rounded-xl">
+            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/TUBI.png" alt="Image 3" class="tw:md:w-[252px] tw:h-auto tw:rounded-xl">
+            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/LO_S24_Rogers_630x945.jpg" alt="Image 4" class="tw:md:w-[252px] tw:h-auto tw:rounded-xl">
           </div>
         </div>
         <div>

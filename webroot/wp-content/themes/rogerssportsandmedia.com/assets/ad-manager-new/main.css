@@ -595,15 +595,6 @@
   .tw\:h-20 {
     height: calc(var(--tw-spacing) * 20);
   }
-  .tw\:h-\[220px\] {
-    height: 220px;
-  }
-  .tw\:h-\[390px\] {
-    height: 390px;
-  }
-  .tw\:h-\[432px\] {
-    height: 432px;
-  }
   .tw\:h-auto {
     height: auto;
   }
@@ -955,6 +946,16 @@
   .tw\:md\:h-16 {
     @media (width >= 48rem) {
       height: calc(var(--tw-spacing) * 16);
+    }
+  }
+  .tw\:md\:w-\[200px\] {
+    @media (width >= 48rem) {
+      width: 200px;
+    }
+  }
+  .tw\:md\:w-\[252px\] {
+    @media (width >= 48rem) {
+      width: 252px;
     }
   }
   .tw\:md\:grid-cols-2 {
