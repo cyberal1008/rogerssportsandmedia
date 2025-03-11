@@ -123,6 +123,14 @@ class Loginizer_Social_Login{
 				$adapter = $hybridauth->getAdapter($provider);
 				$userProfile = $adapter->getUserProfile();
 				$accessToken = $adapter->getAccessToken();
+				
+				// Check if the user have account which is verified
+				if(empty($userProfile->emailVerified)){
+					self::$error['login_failed'] = __('The social account you are using does not have a verified email.', 'loginizer');
+					$adapter->disconnect();
+					self::trigger_error();
+					return;
+				}
 
 				$data = [
 					'access_token' => $accessToken,

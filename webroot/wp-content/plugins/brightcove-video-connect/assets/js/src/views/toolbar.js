@@ -33,7 +33,7 @@ var ToolbarView = BrightcoveView.extend({
 			folders: wpbc.preload.folders,
 			labels: wpbc.preload.labels,
 			labelPath: this.model.get('labelPath'),
-			folderId: this.model.get('folderId'),
+			folder_id: this.model.get('folder_id'),
 			account: this.model.get('account'),
 		};
 
@@ -76,6 +76,9 @@ var ToolbarView = BrightcoveView.extend({
 	toggleToolbar: function () {
 		var template = wp.template('brightcove-tooltip-notice');
 
+		// Remove any existing tooltip notice
+		$('#js-tooltip-notice').remove();
+
 		// Throw a notice to the user that the file is not the correct format
 		$('.brightcove.media-frame-router').before(template);
 		// Allow the user to dismiss the notice
@@ -108,8 +111,11 @@ var ToolbarView = BrightcoveView.extend({
 	},
 
 	foldersChanged: function (event) {
-		this.model.set('oldFolderId', this.model.get('folderId'));
-		this.model.set('folderId', event.target.value);
+		this.model.set('old_folder_id', this.model.get('folder_id'));
+		this.model.set('folder_id', event.target.value);
+		// hide search field if video folder is selected
+		this.$el.find('#media-search-input, #media-search').toggle(event.target.value === 'all');
+
 		wpbc.broadcast.trigger('change:folder', event.target.value);
 	},
 

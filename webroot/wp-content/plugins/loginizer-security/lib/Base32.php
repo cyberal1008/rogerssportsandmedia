@@ -1,5 +1,5 @@
 <?php
-//namespace Base32;
+namespace Loginizer;
 
 /**
  * Base32 encoder and decoder

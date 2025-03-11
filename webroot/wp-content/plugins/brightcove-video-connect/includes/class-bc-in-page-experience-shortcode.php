@@ -1,4 +1,9 @@
 <?php
+/**
+ * BC_In_Page_Experience_Shortcode file.
+ *
+ * @package Brightcove Video Connect
+ */
 
 /**
  * BC_In_Page_Experience_Shortcode Class
@@ -59,13 +64,13 @@ class BC_In_Page_Experience_Shortcode {
 			<!-- Start of Brightcove In-Page Experience Player -->
 			<?php if ( $is_in_page_embed ) : ?>
 				<div data-experience="<?php echo esc_attr( $atts['in_page_experience_id'] ); ?>"></div>
-				<script src="<?php echo esc_url( $published_url ); ?>"></script>
+				<script src="<?php echo esc_url( $published_url ); // phpcs:ignore ?>"></script>
 			<?php else : ?>
-				<iframe 
-				src="<?php echo esc_url( $published_url ); ?>" 
-				allow="autoplay; fullscreen; geolocation; encrypted-media" 
-				allowfullscreen 
-				webkitallowfullscreen 
+				<iframe
+				src="<?php echo esc_url( $published_url ); ?>"
+				allow="autoplay; fullscreen; geolocation; encrypted-media"
+				allowfullscreen
+				webkitallowfullscreen
 				mozallowfullscreen
 				style="<?php echo esc_attr( $style ); ?>">
 				</iframe>
@@ -75,6 +80,6 @@ class BC_In_Page_Experience_Shortcode {
 
 		$html = ob_get_clean();
 
-		return apply_filters( 'brightcove_in_page_experience_html', $html, $atts['experience_id'] );
+		return apply_filters( 'brightcove_in_page_experience_html', $html, $atts['in_page_experience_id'] );
 	}
 }

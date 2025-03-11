@@ -5,7 +5,7 @@ if(!function_exists('add_action')){
 	exit;
 }
 
-define('LOGINIZER_VERSION', '1.9.1');
+define('LOGINIZER_VERSION', '1.9.6');
 define('LOGINIZER_DIR', dirname(LOGINIZER_FILE));
 define('LOGINIZER_URL', plugins_url('', LOGINIZER_FILE));
 define('LOGINIZER_PRO_URL', 'https://loginizer.com/features#compare');
@@ -46,7 +46,12 @@ function loginizer_activation(){
 	add_option('loginizer_whitelist', array());
 	add_option('loginizer_blacklist', array());
 	add_option('loginizer_2fa_whitelist', array());
-
+	
+	// TODO:: REMOVE THIS AFTER MARCH 2025
+	$softwp_upgrade = get_option('loginizer_softwp_upgrade', 0);
+	if(!defined('SITEPAD') && empty($softwp_upgrade)){
+		loginizer_check_softaculous();
+	}
 }
 
 /**
@@ -85,7 +90,7 @@ global $wpdb;
 		$version = (int) str_replace('.', '', LOGINIZER_VERSION);
 		
 	}
-	
+
 	// Is it less than 1.0.1 ?
 	if($version < 101){
 		
@@ -186,6 +191,12 @@ global $wpdb;
 	// Save the new Version
 	update_option('loginizer_version', LOGINIZER_VERSION);
 	
+	// TODO:: REMOVE THIS AFTER MARCH 2025
+	$softwp_upgrade = get_option('loginizer_softwp_upgrade', 0);
+	if(!defined('SITEPAD') && empty($softwp_upgrade)){
+		loginizer_check_softaculous();
+	}
+	
 	// In Sitepad Math Captcha is enabled by default
 	if(defined('SITEPAD') && get_option('loginizer_captcha') === false){
 		$option['captcha_no_google'] = 1;
@@ -241,51 +252,11 @@ function loginizer_load_plugin(){
 	
 	// Login Success Email Notification.
 	$loginizer['login_mail'] = get_option('loginizer_login_mail', []);
-	$loginizer['login_mail_default_sub'] = __('Login Successful at $sitename', 'loginizer');
-	$loginizer['login_mail_default_msg'] = __('Hello $user_login,
+	add_action('init', 'loginizer_load_translation_vars', 0);
 
-Your account was recently logged in from the IP : $ip
-Time : $date 
-If it was not you who logged in then please report this to us immediately.
+	$loginizer['login_mail_subject'] = empty($loginizer['login_mail']['subject']) ? '' : $loginizer['login_mail']['subject'];
+	$loginizer['login_mail_body'] = empty($loginizer['login_mail']['body']) ? '' : $loginizer['login_mail']['body'];
 
-Regards,
-$sitename','loginizer');
-
-	$loginizer['login_mail_subject'] = empty($loginizer['login_mail']['subject']) ? $loginizer['login_mail_default_sub']: $loginizer['login_mail']['subject'];
-	$loginizer['login_mail_body'] = empty($loginizer['login_mail']['body']) ? $loginizer['login_mail_default_msg'] : $loginizer['login_mail']['body'];
-	
-	// Default messages
-	$loginizer['d_msg']['inv_userpass'] = __('Incorrect Username or Password', 'loginizer');
-	$loginizer['d_msg']['ip_blacklisted'] = __('Your IP has been blacklisted', 'loginizer');
-	$loginizer['d_msg']['attempts_left'] = __('attempt(s) left', 'loginizer');
-	$loginizer['d_msg']['lockout_err'] = __('You have exceeded maximum login retries<br /> Please try after', 'loginizer');
-	$loginizer['d_msg']['minutes_err'] = __('minute(s)', 'loginizer');
-	$loginizer['d_msg']['hours_err'] = __('hour(s)', 'loginizer');
-	
-	// Message Strings
-	$loginizer['msg'] = get_option('loginizer_msg', []);
-	
-	foreach($loginizer['d_msg'] as $lk => $lv){
-		if(empty($loginizer['msg'][$lk])){
-			$loginizer['msg'][$lk] = $loginizer['d_msg'][$lk];
-		}
-	}
-	
-	$loginizer['2fa_d_msg']['otp_app'] = __('Please enter the OTP as seen in your App', 'loginizer');
-	$loginizer['2fa_d_msg']['otp_email'] = __('Please enter the OTP emailed to you', 'loginizer');
-	$loginizer['2fa_d_msg']['otp_field'] = __('One Time Password', 'loginizer');
-	$loginizer['2fa_d_msg']['otp_question'] = __('Please answer your security question', 'loginizer');
-	$loginizer['2fa_d_msg']['otp_answer'] = __('Your Answer', 'loginizer');
-	
-	// Message Strings
-	$loginizer['2fa_msg'] = get_option('loginizer_2fa_msg', []);
-	
-	foreach($loginizer['2fa_d_msg'] as $lk => $lv){
-		if(empty($loginizer['2fa_msg'][$lk])){
-			$loginizer['2fa_msg'][$lk] = $loginizer['2fa_d_msg'][$lk];
-		}
-	}
-		
 	// Load the blacklist and whitelist
 	$loginizer['blacklist'] = get_option('loginizer_blacklist', []);
 	$loginizer['whitelist'] = get_option('loginizer_whitelist', []);
@@ -919,6 +890,109 @@ function loginizer_reset_retries(){
 
 	update_option('loginizer_last_reset', time());
 
+}
+
+function loginizer_load_translation_vars(){
+	global $loginizer;
+	
+	$loginizer['login_mail_default_sub'] = __('Login Successful at $sitename', 'loginizer');
+	$loginizer['login_mail_default_msg'] = __('Hello $user_login,
+
+Your account was recently logged in from the IP : $ip
+Time : $date 
+If it was not you who logged in then please report this to us immediately.
+
+Regards,
+$sitename','loginizer');
+
+	if(empty($loginizer['login_mail_subject'])){
+		$loginizer['login_mail_subject'] = $loginizer['login_mail_default_sub'];
+	}
+	
+	if(empty($loginizer['login_mail_body'])){
+		$loginizer['login_mail_body'] = $loginizer['login_mail_default_msg'];
+	}
+	
+	// Default messages
+	$loginizer['d_msg']['inv_userpass'] = __('Incorrect Username or Password', 'loginizer');
+	$loginizer['d_msg']['ip_blacklisted'] = __('Your IP has been blacklisted', 'loginizer');
+	$loginizer['d_msg']['attempts_left'] = __('attempt(s) left', 'loginizer');
+	$loginizer['d_msg']['lockout_err'] = __('You have exceeded maximum login retries<br /> Please try after', 'loginizer');
+	$loginizer['d_msg']['minutes_err'] = __('minute(s)', 'loginizer');
+	$loginizer['d_msg']['hours_err'] = __('hour(s)', 'loginizer');
+	
+	// Message Strings
+	$loginizer['msg'] = get_option('loginizer_msg', []);
+	
+	foreach($loginizer['d_msg'] as $lk => $lv){
+		if(empty($loginizer['msg'][$lk])){
+			$loginizer['msg'][$lk] = $loginizer['d_msg'][$lk];
+		}
+	}
+	
+	$loginizer['2fa_d_msg']['otp_app'] = __('Please enter the OTP as seen in your App', 'loginizer');
+	$loginizer['2fa_d_msg']['otp_email'] = __('Please enter the OTP emailed to you', 'loginizer');
+	$loginizer['2fa_d_msg']['otp_field'] = __('One Time Password', 'loginizer');
+	$loginizer['2fa_d_msg']['otp_question'] = __('Please answer your security question', 'loginizer');
+	$loginizer['2fa_d_msg']['otp_answer'] = __('Your Answer', 'loginizer');
+	
+	// Message Strings
+	$loginizer['2fa_msg'] = get_option('loginizer_2fa_msg', []);
+	
+	foreach($loginizer['2fa_d_msg'] as $lk => $lv){
+		if(empty($loginizer['2fa_msg'][$lk])){
+			$loginizer['2fa_msg'][$lk] = $loginizer['2fa_d_msg'][$lk];
+		}
+	}
+	
+}
+
+// Checks if softaculous is installed on the server.
+function loginizer_check_softaculous(){
+
+	// Checking if we have Softaculous installed?
+	if(!preg_match('/^\/home(?:\d+)?\/.*\//U', ABSPATH, $matches)){
+		return false;
+	}
+
+	if(empty($matches) || empty($matches[0])){
+		return false;
+	}
+
+	$softaculous_path = $matches[0] . '.softaculous/installations.php';
+	if(!file_exists($softaculous_path)){
+		return false;
+	}
+	
+	// Checking if users has changed the branding of Softaculous.
+	$universal_file = '';
+	// Plesk, ISPManager, ISPConfig, InterWorx, H-Sphere, CentOS Web Panel, Softaculous Remote and Softaculous Enterprise
+	if(file_exists('/usr/local/softaculous/enduser/universal.php')){
+		$universal_file = '/usr/local/softaculous/enduser/universal.php';
+	}else if(file_exists('/usr/local/cpanel/whostmgr/docroot/cgi/softaculous/enduser/universal.php')){
+		$universal_file = '/usr/local/cpanel/whostmgr/docroot/cgi/softaculous/enduser/universal.php';
+	}else if(file_exists('/usr/local/directadmin/plugins/softaculous/enduser/universal.php')){
+		$universal_file = '/usr/local/directadmin/plugins/softaculous/enduser/universal.php';
+	}else if(file_exists('/usr/local/vesta/softaculous/enduser/universal.php')){
+		$universal_file = '/usr/local/vesta/softaculous/enduser/universal.php';
+	}
+
+	if(empty($universal_file)){
+		return false;
+	}
+
+	$universal = file_get_contents($universal_file);
+
+	if(empty($universal)){
+		return false;
+	}
+
+	// Checking if Softaculous is being whitelabeled
+	if(preg_match('/\$globals\[["\']sn["\']\]\s.?=\s.?["\']Softaculous["\']/', $universal)){
+		update_option('loginizer_softwp_upgrade', time());
+	}
+
+	return false;
 }
 
 // Sorry to see you going

@@ -31,7 +31,7 @@ function loginizer_page_passwordless(){
 		$option['passwordless_msg'] = @stripslashes($_POST['lz_passwordless_msg']);
 		$option['passwordless_html'] = (int) lz_optpost('lz_passwordless_html');
 		$option['passwordless_redirect'] = esc_url_raw($_POST['lz_passwordless_redirect']);
-		$option['passwordless_redirect_for'] = map_deep($_POST['lz_passwordless_redirect_for'], 'sanitize_text_field');
+		$option['passwordless_redirect_for'] = !empty($_POST['lz_passwordless_redirect_for']) ? map_deep($_POST['lz_passwordless_redirect_for'], 'sanitize_text_field') : [];
 
 		// Is there an error ?
 		if(!empty($lz_error)){

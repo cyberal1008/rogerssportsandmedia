@@ -723,7 +723,7 @@ function loginizer_page_brute_force(){
 				<th scope="row" valign="top"><label for="blocked_screen"><?php echo __('Blocked Screen','loginizer') . ((time() < strtotime('30 May 2024')) ? ' <span style="color:red;">New</span>' : '') ?></label></th>
 				<td>
 					<input type="checkbox" <?php echo lz_POSTchecked('blocked_screen', (empty($loginizer['blocked_screen']) ? false : true)); ?> name="blocked_screen" id="blocked_screen"/>
-					<?php _e('Shows a error page in place of login page if the user gets locked out or is blacklisted, to prevent attacker from trying to login when locked out which saves resources.', 'loginizer'); ?>
+					<?php _e('Shows an error page in place of the login page if the user is locked out or blacklisted, to prevent attackers from attempting to log in when locked out, which saves resources', 'loginizer'); ?>
 				</td>
 			</tr>
 		</table><br />

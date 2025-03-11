@@ -4,53 +4,21 @@ if(!defined('ABSPATH')){
 	die('HACKING ATTEMPT!');
 }
 
-define('LOGINIZER_PRO_VERSION', '1.9.1');
-define('LOGINIZER_API', 'https://api.loginizer.com/');
-define('LOGINIZER_PRO_DIR', plugin_dir_path(__FILE__));
-define('LOGINIZER_PRO_DIR_URL', plugin_dir_url(__FILE__));
+// Prevent update of loginizer free
+// This also work for auto update
+add_filter('site_transient_update_plugins', 'loginizer_pro_disable_manual_update_for_plugin');
+add_filter('pre_site_transient_update_plugins', 'loginizer_pro_disable_manual_update_for_plugin');
+
+// Auto update free version after update pro version
+add_action('upgrader_process_complete', 'loginizer_pro_update_free_after_pro', 10, 2);
 
 register_activation_hook(__FILE__, 'loginizer_pro_activation');
-function loginizer_pro_activation(){
-	update_option('loginizer_pro_version', LOGINIZER_PRO_VERSION);
-}
-
 register_deactivation_hook(__FILE__, 'loginizer_pro_deactivate');
 function loginizer_pro_deactivate(){
 	delete_option('loginizer_pro_version');
 	delete_option('loginizer_free_installed');
 	delete_option('loginizer_version_free_nag');
 	delete_option('loginizer_version_pro_nag');
-}
-
-function loginizer_pro_update_checker(){
-	$current_version = get_option('loginizer_pro_version', '0.0');
-	$version = (int) str_replace('.', '', $current_version);
-
-	// No update required
-	if($current_version == LOGINIZER_PRO_VERSION){
-		return true;
-	}
-	
-	$is_network_wide = loginizer_pro_is_network_active('loginizer-security');
-	
-	if($is_network_wide){
-		$free_ins = get_site_option('loginizer_free_installed');
-	}else{
-		$free_ins = get_option('loginizer_free_installed');
-	}
-	
-	// If plugin reached here it means Loginizer free installed
-	if(empty($free_ins)){
-		if($is_network_wide){
-			update_site_option('loginizer_free_installed', time());
-		}else{
-			update_option('loginizer_free_installed', time());
-		}
-	}
-	
-	update_option('loginizer_version_pro_nag', time());
-	update_option('loginizer_version_free_nag', time());
-	update_option('loginizer_pro_version', LOGINIZER_PRO_VERSION);
 }
 
 add_action('plugins_loaded', 'loginizer_security_init');
@@ -64,34 +32,14 @@ function loginizer_security_init(){
 	
 	loginizer_pro_update_checker();
 	
-	if(wp_doing_ajax()){
-		include_once LOGINIZER_PRO_DIR . 'main/ajax.php';
-	}
-	
-	if(current_user_can('activate_plugins')){
-		add_action('admin_notices', 'loginizer_pro_free_version_nag');
-	}
-	
 	$loginizer['social_settings'] = get_option('loginizer_social_settings', []);
+	add_action('init', 'loginizer_security_load_translation_vars', 0);
 
 	// Email to Login
 	$options = get_option('loginizer_epl', []);
-	$loginizer['pl_d_sub'] = __('Login at $site_name','loginizer');
-	$loginizer['pl_d_msg'] = __('Hi,
-
-A login request was submitted for your account $email at :
-$site_name - $site_url
-
-Login at $site_name by visiting this url : 
-$login_url
-
-If you have not requested for the Login URL, please ignore this email.
-
-Regards,
-$site_name','loginizer');
 	$loginizer['email_pass_less'] = empty($options['email_pass_less']) ? 0 : $options['email_pass_less'];
-	$loginizer['passwordless_sub'] = empty($options['passwordless_sub']) ? $loginizer['pl_d_sub'] : $options['passwordless_sub'];
-	$loginizer['passwordless_msg'] = empty($options['passwordless_msg']) ? $loginizer['pl_d_msg'] : $options['passwordless_msg'];
+	$loginizer['passwordless_sub'] = empty($options['passwordless_sub']) ? '' : $options['passwordless_sub'];
+	$loginizer['passwordless_msg'] = empty($options['passwordless_msg']) ? '' : $options['passwordless_msg'];
 	$loginizer['passwordless_msg_is_custom'] = empty($options['passwordless_msg']) ? 0 : 1;
 	$loginizer['passwordless_html'] = empty($options['passwordless_html']) ? 0 : $options['passwordless_html'];
 	$loginizer['passwordless_redirect'] = empty($options['passwordless_redirect']) ? 0 : $options['passwordless_redirect'];
@@ -148,7 +96,7 @@ $site_name';
 	$loginizer['captcha_no_google'] =  !isset($options['captcha_no_google']) ? 0 : $options['captcha_no_google'];
 	$loginizer['captcha_domain'] = empty($options['captcha_domain']) ? 'www.google.com' : $options['captcha_domain'];
 	
-	$loginizer['captcha_text'] =  empty($options['captcha_text']) ? __('Math Captcha', 'loginizer') : $options['captcha_text'];
+	$loginizer['captcha_text'] =  empty($options['captcha_text']) ? '' : $options['captcha_text'];
 	$loginizer['captcha_time'] =  empty($options['captcha_time']) ? 300 : $options['captcha_time'];
 	$loginizer['captcha_words'] =  !isset($options['captcha_words']) ? 0 : $options['captcha_words'];
 	$loginizer['captcha_add'] =  !isset($options['captcha_add']) ? 1 : $options['captcha_add'];
@@ -201,8 +149,6 @@ $site_name';
 	
 	$loginizer['domains_blacklist'] = get_option('loginizer_domains_blacklist');
 	
-	$loginizer['wp_admin_d_msg'] = __('LZ : Not allowed via WP-ADMIN. Please access over the new Admin URL', 'loginizer');
-	
 	// CSRF Protection
 	$loginizer['enable_csrf_protection'] = get_option('loginizer_csrf_protection');
 	$loginizer['2fa_custom_login_redirect'] = get_option('loginizer_2fa_custom_redirect');
@@ -210,34 +156,25 @@ $site_name';
 
 	// Load license
 	if(!defined('SITEPAD')){
-	
+
 		// Check if there is a license file and update it in the database
 		if(file_exists(__DIR__.'/license.key')){
 			
 			$license =	trim(file_get_contents(__DIR__.'/license.key'));
 		 
 			if(!empty($license)){
-				$resp = wp_remote_get(LOGINIZER_API.'license.php?license='.$license, array('timeout' => 30));
-			
-				if(is_array($resp)){
-					$json = json_decode($resp['body'], true);
-					//print_r($json);
-				}
-				
-				// Save the License
-				if(!empty($json['license'])){
-					update_option('loginizer_license', $json);			
-				}
+				loginizer_pro_load_license($license);
 			}
-			
+
 			unlink(__DIR__.'/license.key');
 		}
 		
-		$loginizer['license'] = get_option('loginizer_license');
+		// Load license
+		loginizer_pro_load_license();
 		
 		// Check for updates
 		include_once('updater/plugin-update-checker.php');
-		$loginizer_updater = Loginizer_PucFactory::buildUpdateChecker(LOGINIZER_API.'updates.php?version='.LOGINIZER_PRO_VERSION, LOGINIZER_PRO_FILE);
+		$loginizer_updater = Loginizer_PucFactory::buildUpdateChecker(loginizer_pro_api_url().'/updates.php?version='.LOGINIZER_PRO_VERSION, LOGINIZER_PRO_FILE);
 		
 		// Add the license key to query arguments
 		$loginizer_updater->addQueryArgFilter('loginizer_updater_filter_args');
@@ -246,26 +183,7 @@ $site_name';
 		add_filter('puc_manual_final_check_link-loginizer-security', 'loginizer_updater_check_link', 10, 1);
 
 		add_filter('plugin_row_meta', 'loginizer_plugin_row_links', 10, 2);
-		
-		// Update license details as well
-		if(!empty($loginizer['license']) && (time() - @$loginizer['license']['last_update']) >= 86400){
-			
-			$resp = wp_remote_get(LOGINIZER_API.'license.php?license='.$loginizer['license']['license']);
-			
-			// Did we get a response ?
-			if(is_array($resp)){
-				
-				$tosave = json_decode($resp['body'], true);
-				
-				// Is it the license ?
-				if(!empty($tosave['license'])){
-					$tosave['last_update'] = time();
-					update_option('loginizer_license', $tosave);
-				}
-				
-			}
-			
-		}
+
 	}
 	
 	// Checking For SSO
@@ -285,9 +203,6 @@ $site_name';
 		add_action('set_auth_cookie', 'loginizer_admin_url_cookie'); // Creates session key and handles cookies
 		add_action('wp_logout', 'loginizer_destroy_csrf_session', 10, 1);
 	}
-	
-	// Ajax handler for updating htaccess for rename admin and CSRF
-	add_action('wp_ajax_loginizer_update_csrf_mod', 'loginizer_update_csrf_mod');
 	
 	// Handles Concurrent Sessions
 	if(!empty($loginizer['limit_session']) && !empty($loginizer['limit_session']['enable'])){
@@ -357,9 +272,6 @@ $site_name';
 		}
 		
 	}
-	
-	// WP-Admin Test AJAX handler
-	add_action('wp_ajax_loginizer_wp_admin', 'loginizer_wp_admin_ajax');
 	
 	// Are we to rename the xmlrpc ?
 	if(!defined('SITEPAD') && !empty($loginizer['xmlrpc_slug']) && empty($loginizer['xmlrpc_disable'])){
@@ -523,9 +435,6 @@ $site_name';
 		// Shows the Question / 2fa field
 		add_action('login_form_loginizer_security', 'loginizer_user_security');
 		
-		// Ajax handler
-		add_action('wp_ajax_loginizer_ajax', 'loginizer_user_page_ajax');
-		
 		$cur_user = wp_get_current_user();
 		
 		//Add the Loginizer Security Settings Page for WooCommerce
@@ -597,6 +506,15 @@ $site_name';
 		}
 		
 	}
+	
+	if(wp_doing_ajax()){
+		include_once LOGINIZER_PRO_DIR . 'main/ajax.php';
+		return;
+	}
+
+	if(is_admin()){
+		include_once LOGINIZER_PRO_DIR . 'main/admin.php';
+	}
 
 }
 
@@ -647,7 +565,7 @@ function loginizer_premium_system_info(){
 
 function loginizer_premium_page_dashboard(){
 	
-	global $loginizer, $lz_error;
+	global $loginizer, $lz_error, $lic_resp;
 
 	// Is there a license key ?
 	if(isset($_POST['save_lz'])){
@@ -660,14 +578,14 @@ function loginizer_premium_page_dashboard(){
 			return loginizer_page_dashboard_T();
 		}
 		
-		$resp = wp_remote_get(LOGINIZER_API.'license.php?license='.$license, array('timeout' => 30));
+		loginizer_pro_load_license($license);
 
-		if(is_array($resp)){
-			$json = json_decode($resp['body'], true);
+		if(is_array($lic_resp)){
+			$json = json_decode($lic_resp['body'], true);
 			//print_r($json);
 		}else{
 		
-			$lz_error['resp_invalid'] = __('The response was malformed<br>'.var_export($resp, true), 'loginizer');
+			$lz_error['resp_invalid'] = __('The response was malformed<br>'.var_export($lic_resp, true), 'loginizer');
 			return loginizer_page_dashboard_T();
 			
 		}
@@ -680,39 +598,13 @@ function loginizer_premium_page_dashboard(){
 			
 		}else{
 			
-			update_option('loginizer_license', $json);
-			
 			// Mark as saved
 			$GLOBALS['lz_saved'] = true;
-			$loginizer['license'] = get_option('loginizer_license');
+			
 		}
 		
 	}
 	
-}
-
-// Add our license key if ANY
-function loginizer_updater_filter_args($queryArgs) {
-
-	global $loginizer;
-	
-	if ( !empty($loginizer['license']['license']) ) {
-		$queryArgs['license'] = $loginizer['license']['license'];
-	}
-	
-	return $queryArgs;
-}
-
-// Handle the Check for update link and ask to install license key
-function loginizer_updater_check_link($final_link){
-	
-	global $loginizer;
-	
-	if(empty($loginizer['license']['license'])){
-		return '<a href="'.admin_url('admin.php?page=loginizer').'">Install License Key to Update</a>';
-	}
-	
-	return $final_link;
 }
 
 // Change the Admin URL
@@ -2641,10 +2533,10 @@ function loginizer_2fa_app_key($settings, $length = 6, $counter = 0){
 	if($type == 'hotp'){
 		$stored_in_db = 1;
 		$counter = !empty($counter) ? $counter : $stored_in_db;
-		$res = HOTP::generateByCounter($key, $counter);
+		$res = \Loginizer\HOTP::generateByCounter($key, $counter);
 	}else{		
 		$time = !empty($counter) ? $counter : time();
-		$res = HOTP::generateByTime($key, 30, $time);
+		$res = \Loginizer\HOTP::generateByTime($key, 30, $time);
 	}
 	
 	return $res->toHotp($length);
@@ -2677,12 +2569,12 @@ function loginizer_2fa_app($uid = 0){
 	}
 	
 	// Base32 Key
-	$settings['2fa_key_32'] = Base32::encode($settings['2fa_key']);
+	$settings['2fa_key_32'] = \Loginizer\Base32::encode($settings['2fa_key']);
 	
 	// The QR Code text
 	$url = preg_replace('/^https?:\/\//', '', site_url());
 	$site_name = get_bloginfo('name');
-	$settings['2fa_qr'] = 'otpauth://'.(empty($settings['2fa_type']) ? 'totp' : $settings['2fa_type']).'/'.rawurlencode($url).':'.@$user->user_login.'?secret='.Base32::encode($settings['2fa_key']).'&issuer='.rawurlencode($site_name).'&counter=';
+	$settings['2fa_qr'] = 'otpauth://'.(empty($settings['2fa_type']) ? 'totp' : $settings['2fa_type']).'/'.rawurlencode($url).':'.@$user->user_login.'?secret='.\Loginizer\Base32::encode($settings['2fa_key']).'&issuer='.rawurlencode($site_name).'&counter=';
 	
 	// Time now
 	$settings['2fa_server_time'] = get_date_from_gmt(gmdate('Y-m-d H:i:s'), 'Y-m-d H:i:s');
@@ -3172,50 +3064,6 @@ jQuery(document).ready(function(){
 	
 	
 	echo '</form>';
-	
-}
-
-
-// AJAX callback function used to generate new secret
-function loginizer_user_page_ajax(){
-	
-	global $user_id;
-
-	// Some AJAX security
-	check_ajax_referer('loginizer_ajax', 'nonce');
-	
-	header('Content-Type: application/json');
-	
-	// Data
-	$result = loginizer_2fa_app();
-	
-	// Echo JSON and die
-	echo json_encode($result);
-	die(); 
-	
-}
-
-
-// AJAX callback function used to TEST the new SLUG
-function loginizer_wp_admin_ajax(){
-	
-	global $user_id;
-
-	// Some AJAX security
-	check_ajax_referer('loginizer_admin_ajax', 'nonce');
-	 
-	if(!current_user_can('manage_options')){
-		wp_die(__('Sorry, but you do not have permissions to change settings.', 'loginizer'));
-	}
-	
-	header('Content-Type: application/json');
-	
-	// Data
-	$result['result'] = '1';
-	
-	// Echo JSON and die
-	echo json_encode($result);
-	die(); 
 	
 }
 
@@ -3719,60 +3567,6 @@ function loginizer_login_csrf_redirect($redirect, $request, $user){
 	return $redirect;
 }
 
-// Updates the .htaccess for the CSRF session
-function loginizer_update_csrf_mod(){
-
-	global $loginizer;
-	
-	check_ajax_referer('loginizer_admin_ajax', 'nonce');
-	
-	$home_root = parse_url(home_url());
-
-	if(isset($home_root['path'])){
-		$home_root = trailingslashit($home_root['path']);
-	} else {
-		$home_root = '/';
-	}
-	
-	$admin_slug = 'wp-admin';
-	
-	if(!empty($loginizer['admin_slug'])){
-		$admin_slug = $loginizer['admin_slug'];
-	}
-	
-	if(!empty(lz_optpost('admin_name'))){
-		$admin_slug = lz_optpost('admin_name');
-	}
-	
-	// Setting the rule
-	$rule = '# BEGIN Loginizer' . "\n";
-	$rule .= '<IfModule mod_rewrite.c>' . "\n";
-	$rule .= 'RewriteEngine On' . "\n";
-	$rule .= 'RewriteBase ' . $home_root . "\n\n";
-	$rule .= 'RewriteRule ^' . $admin_slug . '(-lzs.{20})?(/?)(.*) wp-admin/$3 [L]' . "\n";
-	$rule .= '</IfModule>' . "\n";
-	$rule .= '# END Loginizer';
-
-	$htaccess_file = ABSPATH . '/.htaccess';
-	
-	if(!file_exists($htaccess_file)){
-		wp_send_json_error(0);
-	}
-	
-	$contents = file_get_contents($htaccess_file);
-	
-	if(strpos($contents, '# BEGIN Loginizer') !== FALSE){
-		$contents = preg_replace('/# BEGIN Loginizer.*# END Loginizer/ms', '', $contents);
-	}
-
-	if(!file_put_contents($htaccess_file, trim($rule . "\n" . $contents))){
-		wp_send_json_error(0);
-	}
-	
-	wp_send_json(array('success' => true));
-
-}
-
 // Updates the url if required with the CSRF string
 function loginizer_csrf_change_url($url, $uid){
 	
@@ -4230,63 +4024,34 @@ function loginizer_social_update_avatar($avatar, $id_or_email, $size, $default, 
 	return $avatar;
 }
 
-function loginizer_pro_free_version_nag(){
+function loginizer_security_load_translation_vars(){
+	global $loginizer;
 	
-	if(!defined('LOGINIZER_VERSION')){
-		return;
-	}
+	$loginizer['pl_d_sub'] = __('Login at $site_name', 'loginizer');
+	$loginizer['pl_d_msg'] = __('Hi,
 
-	$dismissed_free = (int) get_option('loginizer_version_free_nag');
-	$dismissed_pro = (int) get_option('loginizer_version_pro_nag');
+A login request was submitted for your account $email at :
+$site_name - $site_url
 
-	// Checking if time has passed since the dismiss.
-	if(!empty($dismissed_free) && time() < $dismissed_pro && !empty($dismissed_pro) && time() < $dismissed_pro){
-		return;
-	}
+Login at $site_name by visiting this url : 
+$login_url
 
-	$showing_error = false;
-	if(version_compare(LOGINIZER_VERSION, LOGINIZER_PRO_VERSION) > 0 && (empty($dismissed_pro) || time() > $dismissed_pro)){
-		$showing_error = true;
+If you have not requested for the Login URL, please ignore this email.
 
-		echo '<div class="notice notice-warning is-dismissible" id="loginizer-pro-version-notice" onclick="loginizer_pro_dismiss_notice(event)" data-type="pro">
-		<p style="font-size:16px;">'.esc_html__('You are using an older version of Loginizer Security. We recommend updating to the latest version to ensure seamless and uninterrupted use of the application.', 'loginizer').'</p>
-	</div>';
-	}elseif(version_compare(LOGINIZER_VERSION, LOGINIZER_PRO_VERSION) < 0 && (empty($dismissed_free) || time() > $dismissed_free)){
-		$showing_error = true;
+Regards,
+$site_name', 'loginizer');
 
-		echo '<div class="notice notice-warning is-dismissible" id="loginizer-pro-version-notice" onclick="loginizer_pro_dismiss_notice(event)" data-type="free">
-		<p style="font-size:16px;">'.esc_html__('You are using an older version of Loginizer. We recommend updating to the latest free version to ensure smooth and uninterrupted use of the application.', 'loginizer').'</p>
-	</div>';
+	if(empty($loginizer['passwordless_sub'])){
+		$loginizer['passwordless_sub'] = $loginizer['pl_d_sub'];
 	}
 	
-	if(!empty($showing_error)){
-		wp_register_script('loginizer-pro-version-notice', '', array('jquery'), LOGINIZER_PRO_VERSION, true );
-		wp_enqueue_script('loginizer-pro-version-notice');
-		wp_add_inline_script('loginizer-pro-version-notice', '
-	function loginizer_pro_dismiss_notice(e){
-		e.preventDefault();
-		let target = jQuery(e.target);
-
-		if(!target.hasClass("notice-dismiss")){
-			return;
-		}
-
-		let jEle = target.closest("#loginizer-pro-version-notice"),
-		type = jEle.data("type");
-
-		jEle.slideUp();
-		
-		jQuery.post("'.admin_url('admin-ajax.php').'", {
-			security : "'.wp_create_nonce('loginizer_version_notice').'",
-			action: "loginizer_pro_version_notice",
-			type: type
-		}, function(res){
-			if(!res["success"]){
-				alert(res["data"]);
-			}
-		}).fail(function(data){
-			alert("There seems to be some issue dismissing this alert");
-		});
-	}');
+	if(empty($loginizer['passwordless_msg'])){
+		$loginizer['passwordless_msg'] = $loginizer['pl_d_msg'];
+	}
+	
+	$loginizer['wp_admin_d_msg'] = __('LZ : Not allowed via WP-ADMIN. Please access over the new Admin URL', 'loginizer');
+	
+	if(empty($loginizer['captcha_text'])){
+		$loginizer['captcha_text'] = __('Math Captcha', 'loginizer');
 	}
 }

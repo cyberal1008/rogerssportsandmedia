@@ -1,6 +1,18 @@
 <?php
+/**
+ * BC_Admin_Settings_Page class file.
+ *
+ * @package Brightcove_Video_Connect
+ */
+
+/**
+ * BC_Admin_Settings_Page class
+ */
 class BC_Admin_Templates {
 
+	/**
+	 * Constructor method.
+	 */
 	public function __construct() {
 		add_action( 'admin_footer', array( $this, 'add_templates' ) );
 	}
@@ -9,11 +21,24 @@ class BC_Admin_Templates {
 	 * Adds all templates for Backbone application
 	 */
 	public function add_templates() {
+		global $pagenow;
 		?>
 
 		<?php /* Used by views/media-manager.js */ ?>
 		<script type="text/html" id="tmpl-brightcove-media">
-			<div id="brightcove-media-frame-router" class="brightcove media-frame-router"></div>
+			<?php if ( 'admin.php' === $pagenow ) : ?>
+				<div class="brightcove brightcove-notices">
+					<# if( data.mediaType === 'playlists' ) { #>
+						<div class="notice notice-warning">
+							<p>
+								<?php esc_html_e( 'Please note that you can create new playlists only from Brightcove.', 'brightcove' ); ?>
+							</p>
+						</div>
+					<# } #>
+				</div>
+			<?php endif; ?>
+			<div id="brightcove-media-frame-router" class="brightcove media-frame-router">
+			</div>
 			<div class="brightcove-message message hidden"></div>
 			<div id="brightcove-media-frame-content" class="brightcove media-frame-content">
 				<span id="js-media-loading" class="spinner"></span>
@@ -220,8 +245,8 @@ class BC_Admin_Templates {
 						<span class="name"><?php esc_html_e( 'Folder', 'brightcove' ); ?></span>
 						<select class="brightcove-folder">
 							<option value="">None</option>
-							<# _.each(data.folders, function (folderName, folderId) { #>
-							<option value="{{ folderId }}" <# if ( data.folder_id === folderId ) { #>selected<# } #>>
+							<# _.each(data.folders, function (folderName, folder_id) { #>
+							<option value="{{ folder_id }}" <# if ( data.folder_id === folder_id ) { #>selected<# } #>>
 							{{ folderName }}
 							</option>
 							<# }); #>
@@ -234,34 +259,30 @@ class BC_Admin_Templates {
 					<div class="setting labels">
 						<span class="name"><?php esc_html_e( 'Labels', 'brightcove' ); ?></span>
 						<div class="setting-content">
-							<div>
-								<button class="button-secondary add-bc-label">
+							<div class="bc-labels-container">
+								<input type="hidden" class="bc-labels-value" value="{{data.labels}}">
+								<ul class="bc-labels-list">
+									<# _.each( data.labels, function( label ) { #>
+									<li>
+										<button class="remove-label" aria-label="<?php esc_html_e( 'Remove label: ', 'brightcove' ); ?>{{label}}" data-label="{{label}}"><span aria-hidden="true">×</span></button>
+										<span class="label-name">{{label}}</span>
+									</li>
+									<# }); #>
+								</ul>
+							<div class="add-labels-container">
+								<select class="brightcove-labels" name="labels" aria-label="<?php esc_html_e( 'Select Label', 'brightcove' ); ?>">
+									<option><?php esc_html_e( 'Select Label', 'brightcove' ); ?></option>
+									<# _.each( wpbc.preload.labels, function( label ) { #>
+									<option
+										<# if ( (data.labels)?.includes(label) ) { #>disabled<# } #>
+										value="{{label}}">{{label}}
+									</option>
+									<# }); #>
+								</select>
+								<button class="button-secondary bc-add-label">
 									<?php esc_html_e( 'Add Label', 'brightcove' ); ?>
 								</button>
-								<a class="button-secondary" href="<?php echo esc_url( admin_url() . 'admin.php?page=brightcove-labels' ); ?>">
-									<?php esc_html_e( 'Create New Label', 'brightcove' ); ?>
-								</a>
 							</div>
-							<div id="js-bc-labels">
-								<# _.each( data.labels, function( label ) { #>
-								<div id="js-caption-fields" class="bc-label-repeater repeater-row">
-									<input type="text" class="brightcove-labels" value="{{label}}">
-
-									<div class="bc-label-secondary-fields">
-										<div class="action-row">
-											<a href="#" class="delete"><?php esc_html_e( 'Remove Label', 'brightcove' ); ?></a>
-										</div>
-									</div>
-								</div>
-								<# }); #>
-								<div id="js-bc-label-empty-row" class="bc-label-repeater repeater-row empty-row">
-									<input id="" type="text" class="brightcove-labels" value=""/>
-									<div class="bc-label-secondary-fields">
-										<div class="action-row">
-											<a href="#" class="delete"><?php esc_html_e( 'Remove Label', 'brightcove' ); ?></a>
-										</div>
-									</div>
-								</div>
 							</div>
 						</div>
 					</div>
@@ -454,7 +475,7 @@ class BC_Admin_Templates {
 		<?php /* Used by views/video-preview.js */ ?>
 		<script type="text/html" id="tmpl-brightcove-video-preview">
 			<!-- Start of Brightcove Player -->
-			 <iframe src="//players.brightcove.net/{{data.account_id}}/default_default/index.html?videoId={{data.id}}" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe>
+			<iframe src="//players.brightcove.net/{{data.account_id}}/default_default/index.html?videoId={{data.id}}" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe>
 			<!-- End of Brightcove Player -->
 		</script>
 
@@ -462,58 +483,55 @@ class BC_Admin_Templates {
 		<script type="text/html" id="tmpl-brightcove-media-modal">
 			<div class="media-modal wp-core-ui">
 				<button type="button" class="button-link media-modal-close"><span class="brightcove media-modal-icon"><span class="screen-reader-text"><?php esc_html_e( 'Close media panel', 'brightcove' ); ?></span></span></button>
-			  <div class="media-modal-content">
-				<div class="media-frame mode-select wp-core-ui" id="__wp-uploader-id-0">
-				  <div class="media-frame-title">
-					<h1>
-						<img class="bc-page-icon" src="<?php echo esc_url( BRIGHTCOVE_URL . 'images/menu-icon.svg' ); ?>"> <?php esc_html_e( 'Brightcove', 'brightcove' ); ?>
-					</h1>
-				  </div>
-				  <div class="media-frame-router">
-					<div class="media-router">
-						<a href="#" class="brightcove upload media-menu-item"><?php esc_html_e( 'Upload Files', 'brightcove' ); ?></a>
-						<a href="#" class="brightcove videos media-menu-item active"><?php esc_html_e( 'Videos', 'brightcove' ); ?></a>
-						<a href="#" class="brightcove playlists media-menu-item"><?php esc_html_e( 'Playlists', 'brightcove' ); ?></a>
-						<a href="#" class="brightcove in-page-experiences media-menu-item"><?php esc_html_e( 'In-Page Experiences', 'brightcove' ); ?></a>
-						<a href="#" class="brightcove video-experience media-menu-item"><?php esc_html_e( 'Video Experience', 'brightcove' ); ?></a>
-						<a href="#" class="brightcove playlist-experience media-menu-item"><?php esc_html_e( 'Playlist Experience', 'brightcove' ); ?></a>
-					</div>
-				  </div>
-				  <div class="media-frame-content">
-				  </div>
-				  <div class="media-frame-toolbar">
-					<div class="media-toolbar">
-					  <div class="media-toolbar-secondary">
-						  <a href="#" class="button button-secondary button-large media-button brightcove back" style="display:none;"><?php esc_html_e( 'Back', 'brightcove' ); ?></a>
-						<div class="media-selection empty">
-						  <div class="selection-info">
-							<span class="count">0 <?php esc_html_e( 'selected', 'brightcove' ); ?></span> <a class="edit-selection" href="#"><?php esc_html_e( 'Edit Selection', 'brightcove' ); ?></a> <a class="clear-selection" href="#"><?php esc_html_e( 'Clear', 'brightcove' ); ?></a>
-						  </div>
-						  <div class="selection-view">
-							<ul tabindex="-1" class="attachments" id="__attachments-view-71"></ul>
-						  </div>
+				<div class="media-modal-content">
+					<div class="media-frame mode-select wp-core-ui" id="__wp-uploader-id-0">
+						<div class="media-frame-title">
+							<h1>
+								<img class="bc-page-icon" src="<?php echo esc_url( BRIGHTCOVE_URL . 'images/menu-icon.svg' ); ?>"> <?php esc_html_e( 'Brightcove', 'brightcove' ); ?>
+							</h1>
 						</div>
-					  </div>
-					  <div class="media-toolbar-primary search-form">
-						  <a href="#" class="button button-primary button-large media-button brightcove save-sync" style="display:none;"><?php esc_html_e( 'Save and Sync Changes', 'brightcove' ); ?></a>
-						  <a href="#" class="button media-button button-primary button-large media-button-insert brightcove" disabled="disabled"><?php esc_html_e( 'Insert Into Post', 'brightcove' ); ?></a>
-					  </div>
+						<div class="media-frame-router">
+							<div class="media-router">
+								<a href="#" class="brightcove upload media-menu-item"><?php esc_html_e( 'Upload Files', 'brightcove' ); ?></a>
+								<a href="#" class="brightcove videos media-menu-item active"><?php esc_html_e( 'Videos', 'brightcove' ); ?></a>
+								<a href="#" class="brightcove playlists media-menu-item"><?php esc_html_e( 'Playlists', 'brightcove' ); ?></a>
+								<a href="#" class="brightcove in-page-experiences media-menu-item"><?php esc_html_e( 'In-Page Experiences', 'brightcove' ); ?></a>
+								<a href="#" class="brightcove video-experience media-menu-item"><?php esc_html_e( 'Video Experience', 'brightcove' ); ?></a>
+								<a href="#" class="brightcove playlist-experience media-menu-item"><?php esc_html_e( 'Playlist Experience', 'brightcove' ); ?></a>
+							</div>
+						</div>
+						<div class="media-frame-content"></div>
+						<div class="media-frame-toolbar">
+							<div class="media-toolbar">
+								<div class="media-toolbar-secondary">
+									<a href="#" class="button button-secondary button-large media-button brightcove back" style="display:none;"><?php esc_html_e( 'Back', 'brightcove' ); ?></a>
+									<div class="media-selection empty">
+										<div class="selection-info">
+											<span class="count">0 <?php esc_html_e( 'selected', 'brightcove' ); ?></span> <a class="edit-selection" href="#"><?php esc_html_e( 'Edit Selection', 'brightcove' ); ?></a> <a class="clear-selection" href="#"><?php esc_html_e( 'Clear', 'brightcove' ); ?></a>
+										</div>
+										<div class="selection-view">
+											<ul tabindex="-1" class="attachments" id="__attachments-view-71"></ul>
+										</div>
+									</div>
+								</div>
+								<div class="media-toolbar-primary search-form">
+									<a href="#" class="button button-primary button-large media-button brightcove save-sync" style="display:none;"><?php esc_html_e( 'Save and Sync Changes', 'brightcove' ); ?></a>
+									<a href="#" class="button media-button button-primary button-large media-button-insert brightcove" disabled="disabled"><?php esc_html_e( 'Insert Into Post', 'brightcove' ); ?></a>
+								</div>
+							</div>
+						</div>
+						<div class="media-frame-uploader">
+							<div class="uploader-window">
+								<div class="uploader-window-content">
+									<h3><?php esc_html_e( 'Drop files to upload', 'brightcove' ); ?></h3>
+								</div>
+							</div>
+						</div>
+						<div id="html5_19jecn1m2eteuqiud64df15595_container" class="moxie-shim moxie-shim-html5" style="position: absolute; top: 0px; left: 0px; width: 0px; height: 0px; overflow: hidden; z-index: 0;">
+							<input id="html5_19jecn1m2eteuqiud64df15595" type="file" style="font-size: 999px; opacity: 0; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;" multiple accept="">
+						</div>
 					</div>
-				  </div>
-				  <div class="media-frame-uploader">
-					<div class="uploader-window">
-					  <div class="uploader-window-content">
-						<h3>
-							<?php esc_html_e( 'Drop files to upload', 'brightcove' ); ?>
-						</h3>
-					  </div>
-					</div>
-				  </div>
-				  <div id="html5_19jecn1m2eteuqiud64df15595_container" class="moxie-shim moxie-shim-html5" style="position: absolute; top: 0px; left: 0px; width: 0px; height: 0px; overflow: hidden; z-index: 0;">
-					<input id="html5_19jecn1m2eteuqiud64df15595" type="file" style="font-size: 999px; opacity: 0; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;" multiple accept="">
-				  </div>
 				</div>
-			  </div>
 			</div>
 			<div class="media-modal-backdrop"></div>
 		</script>
@@ -607,7 +625,7 @@ class BC_Admin_Templates {
 				<?php else : ?>
 					<div class="upload-ui">
 						<h3 class="upload-instructions drop-instructions"><?php esc_html_e( 'Drop files anywhere to upload', 'brightcove' ); ?></h3>
-						<p class="upload-instructions drop-instructions"><?php _ex( 'or', 'Uploader: Drop files here - or - Select Files', 'brightcove' ); ?></p>
+						<p class="upload-instructions drop-instructions"><?php esc_html_x( 'or', 'Uploader: Drop files here - or - Select Files', 'brightcove' ); ?></p>
 						<a href="#" id="brightcove-select-files-button" class="browser button button-hero"><?php esc_html_e( 'Select Files', 'brightcove' ); ?></a>
 					</div>
 
@@ -676,8 +694,8 @@ class BC_Admin_Templates {
 					<# } #>
 				</div>
 				<div class="media-actions">
-					<a href="#" class="button media-button brightcove edit"><?php esc_html_e( 'Edit', 'brightcove' ); ?></a>
-					<a href="#" class="button media-button brightcove preview"><?php esc_html_e( 'Preview', 'brightcove' ); ?></a>
+					<button class="button media-button brightcove edit"><?php esc_html_e( 'Edit', 'brightcove' ); ?></button>
+					<button class="button media-button brightcove preview"><?php esc_html_e( 'Preview', 'brightcove' ); ?></button>
 				</div>
 			</div>
 		</script>
@@ -715,14 +733,14 @@ class BC_Admin_Templates {
 
 				<div class="media-actions">
 					<# if ('preview' === data.detailsMode) { #>
-					<a href="#" class="button media-button brightcove back"><?php esc_html_e( 'Back', 'brightcove' ); ?></a>
+					<button class="button media-button brightcove back"><?php esc_html_e( 'Back', 'brightcove' ); ?></button>
 					<# } else { #>
 					<# if ( data.images && data.images.thumbnail && data.images.thumbnail.src ) { #>
-					<a href="#" class="button media-button brightcove edit"><?php esc_html_e( 'Edit', 'brightcove' ); ?></a>
-					<a href="#" class="button media-button brightcove preview"><?php esc_html_e( 'Preview', 'brightcove' ); ?></a>
+					<button class="button media-button brightcove edit"><?php esc_html_e( 'Edit', 'brightcove' ); ?></button>
+					<button class="button media-button brightcove preview"><?php esc_html_e( 'Preview', 'brightcove' ); ?></button>
 					<# } else { #>
-					<a href="#" class="button media-button brightcove edit" disabled><?php esc_html_e( 'Edit', 'brightcove' ); ?></a>
-					<a href="#" class="button media-button brightcove preview" disabled><?php esc_html_e( 'Preview', 'brightcove' ); ?></a>
+					<button class="button media-button brightcove edit" disabled><?php esc_html_e( 'Edit', 'brightcove' ); ?></button>
+					<button class="button media-button brightcove preview" disabled><?php esc_html_e( 'Preview', 'brightcove' ); ?></button>
 					<# } #>
 					<# } #>
 				</div>
@@ -762,17 +780,19 @@ class BC_Admin_Templates {
 							<?php esc_html_e( 'Video Player: ', 'brightcove' ); ?>
 						</label>
 						<select name="video-player" id="video-player" class="right-col">
-							<#
-                                var default_player_id = "default"; 
-                                if ( typeof(window.rdm_video_cloud) !== 'undefined' && typeof(window.rdm_video_cloud.default_player_id) !== "undefined" ) {
-                                    default_player_id = window.rdm_video_cloud.default_player_id; 
-                                }                                                                                                
-								_.each( wpbc.players[data.account_id], function ( player ) { #>
+							<# _.each( wpbc.players[data.account_id], function ( player ) { #>
 								<# if ( ! player.is_playlist ) { #>
-									<option value="{{ player.id }}" <# if ( default_player_id === player.id ) { #>selected <# } #>>{{ player.name }}</option>
+									<option value="{{ player.id }}">{{ player.name }}</option>
 								<# } #>
 							<# }); #>
 						</select>
+
+						<label for="applicationid">
+							<?php esc_html_e( 'Application Id: ', 'brightcove' ); ?>
+						</label>
+						<div class="right-col">
+							<input type="text" id="applicationid" name="applicationid">
+						</div>
 
 						<label for="autoplay">
 							<?php esc_html_e( 'Autoplay: ', 'brightcove' ); ?>
@@ -897,7 +917,7 @@ class BC_Admin_Templates {
 							<?php esc_html_e( 'Embed Style: ', 'brightcove' ); ?>
 						</label>
 						<div class="right-col">
-							<input type="radio" value="javascript" id="embed-style-in-page" checked name="embed-style"><?php esc_html_e( 'JavaScript', 'brightcove' ); ?>
+							<input type="radio" value="in-page" id="embed-style-in-page" checked name="embed-style"><?php esc_html_e( 'JavaScript', 'brightcove' ); ?>
 							<input type="radio" value="iframe" id="embed-style-iframe" name="embed-style"><?php esc_html_e( 'iFrame', 'brightcove' ); ?>
 						</div>
 
@@ -975,7 +995,7 @@ class BC_Admin_Templates {
 							<?php esc_html_e( 'Embed Style: ', 'brightcove' ); ?>
 						</label>
 						<div class="right-col">
-							<input type="radio" value="javascript" id="embed-style-in-page" checked name="embed-style"><?php esc_html_e( 'JavaScript', 'brightcove' ); ?>
+							<input type="radio" value="in-page" id="embed-style-in-page" checked name="embed-style"><?php esc_html_e( 'JavaScript', 'brightcove' ); ?>
 							<input type="radio" value="iframe" id="embed-style-iframe" name="embed-style"><?php esc_html_e( 'iFrame', 'brightcove' ); ?>
 						</div>
 
@@ -1241,8 +1261,8 @@ class BC_Admin_Templates {
 					<label for="media-attachment-folders-filters" class="screen-reader-text"><?php esc_html_e( 'Filter by folder', 'brightcove' ); ?></label>
 					<select id="media-attachment-folders-filters" class="brightcove-media-folders attachment-filters">
 						<option value="all"><?php esc_html_e( 'All folders', 'brightcove' ); ?></option>
-						<# _.each(data.folders, function (folderName, folderId) { #>
-						<option value="{{ folderId }}" <# if ( data.folderId === folderId ) { #>selected<# } #>>
+						<# _.each(data.folders, function (folderName, folder_id) { #>
+						<option value="{{ folder_id }}" <# if ( data.folder_id === folder_id ) { #>selected<# } #>>
 							{{ folderName }}
 						</option>
 						<# }); #>
@@ -1264,34 +1284,37 @@ class BC_Admin_Templates {
 							<# }); #>
 					</select>
 					<# }#>
-
-					<# if( data.mediaType === 'videoexperience' ) { #>
-					<div class="notice notice-warning">
-						<p>
-							<?php esc_html_e( 'Please note that you can create new Experiences only from Brightcove.', 'brightcove' ); ?>
-						</p>
-					</div>
-					<div class="notice notice-warning">
-						<p>
-							<?php esc_html_e( 'Leave videos unselected for default Experience behavior.', 'brightcove' ); ?>
-						</p>
-					</div>
-					<# } #>
-
-					<# if ( data.mediaType === 'playlistexperience' ) { #>
-					<div class="notice notice-warning">
-						<p>
-							<?php esc_html_e( 'Please note that you can create new Experiences only from Brightcove.', 'brightcove' ); ?>
-						</p>
-					</div>
-					<# } #>
-
-					<# if( data.mediaType === 'playlists' || data.mediaType === 'playlistexperience' ) { #>
+					<?php if ( in_array( $pagenow, array( 'post.php', 'post-new.php' ), true ) ) : ?>
+						<# if( data.mediaType === 'videoexperience' ) { #>
 						<div class="notice notice-warning">
 							<p>
-								<?php esc_html_e( 'Please note that you can create new playlists only from Brightcove.', 'brightcove' ); ?>
+								<?php esc_html_e( 'Please note that you can create new Experiences only from Brightcove.', 'brightcove' ); ?>
 							</p>
 						</div>
+						<div class="notice notice-warning">
+							<p>
+								<?php esc_html_e( 'Leave videos unselected for default Experience behavior.', 'brightcove' ); ?>
+							</p>
+						</div>
+						<# } #>
+
+						<# if ( data.mediaType === 'playlistexperience' ) { #>
+						<div class="notice notice-warning">
+							<p>
+								<?php esc_html_e( 'Please note that you can create new Experiences only from Brightcove.', 'brightcove' ); ?>
+							</p>
+						</div>
+						<# } #>
+
+						<# if( data.mediaType === 'playlists' ) { #>
+							<div class="notice notice-warning">
+								<p>
+									<?php esc_html_e( 'Please note that you can create new playlists only from Brightcove.', 'brightcove' ); ?>
+								</p>
+							</div>
+						<# } #>
+					<?php endif; ?>
+					<# if( data.mediaType === 'playlists' || data.mediaType === 'playlistexperience' ) { #>
 						<p>
 							<input type="checkbox" name="brightcove-empty-playlists" id="brightcove-empty-playlists" class="brightcove-empty-playlists attachment-filters">
 							<label for="brightcove-empty-playlists"><?php esc_html_e( 'Hide Empty Playlists', 'brightcove' ); ?></label>
