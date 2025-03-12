@@ -202,7 +202,7 @@
         <div class="tw:grid tw:grid-cols-2 tw:gap-6">
           <div class="tw:flex tw:flex-col tw:gap-8">
             <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/KiSS_925_RM_Fall2024_Astral_TSA_47x68_RGB_B.jpg" alt="Image 1" class="tw:md:w-[252px] tw:h-auto tw:rounded-xl tw:object-cover">
-            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/JACK_969_Calgary_Spring2024_Digital_iAB_300x600.jpg" alt="Image 2" class="tw:md:w-[252px] tw:h-auto tw:rounded-xl tw:object-cover">
+            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/jack_969.jpg" alt="Image 2" class="tw:md:w-[252px] tw:h-auto tw:rounded-xl tw:object-cover">
           </div>
           <div class="tw:flex tw:flex-col tw:gap-8">
             <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/photos/SONIC1029_Fall2024Campaign_Social_1080x1080_02.jpg" alt="Image 3" class="tw:md:w-[252px] tw:h-auto tw:rounded-xl tw:object-cover">
