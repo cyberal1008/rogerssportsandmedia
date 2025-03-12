@@ -523,6 +523,9 @@
   }
 }
 @layer utilities {
+  .tw\:absolute {
+    position: absolute;
+  }
   .tw\:fixed {
     position: fixed;
   }
@@ -531,6 +534,12 @@
   }
   .tw\:inset-0 {
     inset: calc(var(--tw-spacing) * 0);
+  }
+  .tw\:top-0 {
+    top: calc(var(--tw-spacing) * 0);
+  }
+  .tw\:left-0 {
+    left: calc(var(--tw-spacing) * 0);
   }
   .tw\:z-10 {
     z-index: 10;
@@ -595,8 +604,14 @@
   .tw\:h-20 {
     height: calc(var(--tw-spacing) * 20);
   }
+  .tw\:h-\[672px\] {
+    height: 672px;
+  }
   .tw\:h-auto {
     height: auto;
+  }
+  .tw\:h-full {
+    height: 100%;
   }
   .tw\:min-h-full {
     min-height: 100%;
@@ -708,6 +723,9 @@
   .tw\:bg-black {
     background-color: var(--tw-color-black);
   }
+  .tw\:bg-black\/50 {
+    background-color: color-mix(in oklab, var(--tw-color-black) 50%, transparent);
+  }
   .tw\:bg-gray {
     background-color: var(--tw-color-gray);
   }
@@ -719,6 +737,9 @@
   }
   .tw\:bg-white {
     background-color: var(--tw-color-white);
+  }
+  .tw\:object-cover {
+    object-fit: cover;
   }
   .tw\:p-4 {
     padding: calc(var(--tw-spacing) * 4);
@@ -946,6 +967,11 @@
   .tw\:md\:h-16 {
     @media (width >= 48rem) {
       height: calc(var(--tw-spacing) * 16);
+    }
+  }
+  .tw\:md\:h-\[532px\] {
+    @media (width >= 48rem) {
+      height: 532px;
     }
   }
   .tw\:md\:w-\[200px\] {

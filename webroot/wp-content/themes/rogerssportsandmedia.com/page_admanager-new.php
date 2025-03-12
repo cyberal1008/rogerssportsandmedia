@@ -52,29 +52,36 @@
         </div>
       </div>
     </section>
-    <section class="tw:px-4 tw:md:px-32 tw:lg:px-32 tw:xl:px-40 tw:2xl:px-48 tw:py-12 tw:text-white" style="background-image: url('<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/mobius-red-on-red-bg.jpg'); background-size: cover; background-position: center;">
-      <div class="tw:grid tw:grid-cols-1 tw:md:grid-cols-2">
-        <div>
-          <h2>Rogers Sports & Media <br />Ad Buying Platform</h2>
-          <p class="tw:text-2xl tw:font-semibold tw:!mb-12">
-            Businesses of all sizes can harness our
-            ad buying platform to reach customers
-            and drive advertising impact.
-            <br /><br />
-            Connect with millions of Canadians who
-            trust Rogers Sports & Media to deliver
-            the best streaming, audio and digital
-            content in the game.
-          </p>
-          <div class="tw:flex tw:gap-x-6">
-            <a class="tw:btn-black" target="_blank" href="https://go.rogerssportsandmedia.com/sign-up/with-email">Advertise now</a>
+    <section class="tw:relative tw:overflow-hidden tw:h-[672px] tw:md:h-[532px]">
+      <video autoplay muted loop class="tw:absolute tw:top-0 tw:left-0 tw:w-full tw:h-full tw:object-cover">
+        <source src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/videos/mobius-animation.mp4" type="video/mp4">
+      </video>
+      <div class="tw:absolute tw:top-0 tw:left-0 tw:w-full tw:h-full tw:bg-black/50">
+        <div class="tw:px-4 tw:md:px-32 tw:lg:px-32 tw:xl:px-40 tw:2xl:px-48 tw:py-12 tw:text-white">
+          <div class="tw:grid tw:grid-cols-1 tw:md:grid-cols-2">
+            <div>
+              <h2>Rogers Sports & Media <br />Ad Buying Platform</h2>
+              <p class="tw:text-2xl tw:font-semibold tw:!mb-12">
+                Businesses of all sizes can harness our
+                ad buying platform to reach customers
+                and drive advertising impact.
+                <br /><br />
+                Connect with millions of Canadians who
+                trust Rogers Sports & Media to deliver
+                the best streaming, audio and digital
+                content in the game.
+              </p>
+              <div class="tw:flex tw:gap-x-6">
+                <a class="tw:btn-black" target="_blank" href="https://go.rogerssportsandmedia.com/sign-up/with-email">Advertise now</a>
+              </div>
+            </div>
+              <div class="tw:hidden tw:md:flex tw:flex-col tw:justify-end tw:items-start">
+                <a class="tw:hover:no-underline tw:cursor-pointer" href="#advertise-brands">
+                  <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/arrow-down.png" class="tw:h-20">
+                </a>
+              </div>
           </div>
         </div>
-          <div class="tw:hidden tw:md:flex tw:flex-col tw:justify-end tw:items-start">
-            <a class="tw:hover:no-underline tw:cursor-pointer" href="#advertise-brands">
-              <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/arrow-down.png" class="tw:h-20">
-            </a>
-          </div>
       </div>
     </section>
     <section id="advertise-brands" class="tw:px-4 tw:md:px-32 tw:lg:px-32 tw:xl:px-40 tw:2xl:px-48 tw:py-12 tw:bg-white">
