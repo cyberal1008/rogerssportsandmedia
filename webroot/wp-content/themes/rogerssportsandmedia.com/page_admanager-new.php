@@ -152,12 +152,9 @@
           </div>
         </div>
         <div class="tw:py-12">
-          <h2>Podcast & Streaming Radio</h2>
+          <h2>Podcast Advertising</h2>
           <p class="tw:text-2xl tw:font-semibold tw:!mb-12">
-            With over 8M Canadians listening every
-            month, drive impact when you advertise
-            in chart-topping podcasts and the most
-            popular streaming radio stations.
+            With over 8M Canadians listening every month, drive impact when you advertise in chart-topping Canadian and global podcasts.
             <br /><br />
             <span class="tw:font-bold">68% of consumers are more willing
               to consider a product or service after
@@ -168,7 +165,7 @@
           </p>
           <div class="tw:flex tw:gap-x-6 tw:mb-8">
             <a class="tw:btn-primary" target="_blank" href="https://go.rogerssportsandmedia.com">Advertise now</a>
-            <a target="_blank" href="https://go.rogerssportsandmedia.com/sign-up/with-email" class="tw:bg-transparent tw:border-2 tw:px-4 tw:py-3 tw:text-white tw:text-lg tw:font-semibold tw:rounded-full tw:hover:cursor-pointer tw:hover:text-white">$250 ad credit</a>
+            <a target="_blank" href="https://web.rogerssportsandmedia.com/250credit" class="tw:bg-transparent tw:border-2 tw:px-4 tw:py-3 tw:text-white tw:text-lg tw:font-semibold tw:rounded-full tw:hover:cursor-pointer tw:hover:text-white">$250 ad credit</a>
           </div>
           <br />
           <p class="tw:text-base tw:font-medium">Source: Medium Moves The Message, Sounds Profitable, Feb 2023</p>
@@ -194,7 +191,7 @@
           </p>
           <div class="tw:flex tw:gap-x-6 tw:mb-8">
             <a class="tw:btn-primary" target="_blank" href="https://go.rogerssportsandmedia.com">Advertise now</a>
-            <a class="tw:btn-secondary" target="_blank" href="https://go.rogerssportsandmedia.com/sign-up/with-email">$250 ad credit</a>
+            <a class="tw:btn-secondary" target="_blank" href="https://web.rogerssportsandmedia.com/250credit">$250 ad credit</a>
           </div>
           <br />
           <p class="tw:text-base tw:font-medium">Source: Radio Connects, Rediscover the Power of Live Radio, 2024</p>
@@ -224,7 +221,7 @@
           </div>
         </div>
         <div>
-          <h2>Streaming</h2>
+          <h2>Streaming Video Advertising</h2>
           <p class="tw:text-2xl tw:font-semibold tw:!mb-12">
             As the home of Sportsnet+, Citytv and Tubi,
             <span class="tw:font-bold">18M Canadians trust us</span> to deliver the biggest
@@ -243,7 +240,7 @@
           </p>
           <div class="tw:flex tw:gap-x-6 tw:mb-8">
             <a class="tw:btn-primary" target="_blank" href="https://go.rogerssportsandmedia.com">Advertise now</button>
-            <a target="_blank" href="https://go.rogerssportsandmedia.com/sign-up/with-email" class="tw:bg-transparent tw:border-2 tw:px-4 tw:py-3 tw:text-white tw:text-base tw:font-semibold tw:rounded-full tw:hover:cursor-pointer tw:hover:text-white">$250 ad credit</a>
+            <a target="_blank" href="https://web.rogerssportsandmedia.com/250credit" class="tw:bg-transparent tw:border-2 tw:px-4 tw:py-3 tw:text-white tw:text-base tw:font-semibold tw:rounded-full tw:hover:cursor-pointer tw:hover:text-white">$250 ad credit</a>
           </div>
           <br />
           <p class="tw:text-base tw:font-medium">Source: RSM Full Stream Ahead 2024 Survey, April 2024</p>
@@ -253,7 +250,7 @@
     <section id="display" class="tw:px-4 tw:md:px-32 tw:lg:pl-32 tw:xl:pl-40 tw:2xl:pl-48 tw:py-12 tw:bg-gray">
       <div class="tw:grid tw:grid-cols-1 tw:md:grid-cols-5 tw:gap-y-12 tw:md:gap-y-0">
         <div class="tw:md:col-span-2">
-          <h2>Display</h2>
+          <h2>Display Advertising</h2>
           <p class="tw:text-2xl tw:font-semibold tw:!mb-12">
             With <span class="tw:font-bold">over 26M visitors monthly,</span> reach
             customers locally or nationally across our
@@ -269,8 +266,8 @@
             tool to create ads at no extra cost.
           </p>
           <div class="tw:flex tw:gap-x-6">
-            <a class="tw:btn-primary" target="_blank" href="https://go.rogerssportsandmedia.com">Create an ad</a>
-            <a class="tw:btn-secondary" target="_blank" href="https://go.rogerssportsandmedia.com/sign-up/with-email">$250 ad credit</a>
+            <a class="tw:btn-primary" target="_blank" href="https://go.rogerssportsandmedia.com">Advertise now</a>
+            <a class="tw:btn-secondary" target="_blank" href="https://web.rogerssportsandmedia.com/250credit">$250 ad credit</a>
           </div>
         </div>
         <div class="tw:md:col-span-3 tw:flex tw:justify-center tw:items-center">
