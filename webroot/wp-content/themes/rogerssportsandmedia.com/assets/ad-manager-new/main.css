@@ -683,9 +683,6 @@
   .tw\:gap-6 {
     gap: calc(var(--tw-spacing) * 6);
   }
-  .tw\:gap-8 {
-    gap: calc(var(--tw-spacing) * 8);
-  }
   .tw\:gap-x-6 {
     column-gap: calc(var(--tw-spacing) * 6);
   }
@@ -697,6 +694,9 @@
   }
   .tw\:gap-y-2 {
     row-gap: calc(var(--tw-spacing) * 2);
+  }
+  .tw\:gap-y-6 {
+    row-gap: calc(var(--tw-spacing) * 6);
   }
   .tw\:gap-y-8 {
     row-gap: calc(var(--tw-spacing) * 8);
@@ -1079,6 +1079,11 @@
   .tw\:lg\:pl-32 {
     @media (width >= 64rem) {
       padding-left: calc(var(--tw-spacing) * 32);
+    }
+  }
+  .tw\:xl\:grid-cols-3 {
+    @media (width >= 80rem) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
   .tw\:xl\:px-40 {
