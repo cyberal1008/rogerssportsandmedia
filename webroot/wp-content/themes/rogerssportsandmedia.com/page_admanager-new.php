@@ -21,6 +21,9 @@
 </head>
 
 <body>
+    <a id="backToTopBtn" class="tw:hidden tw:xl:block tw:fixed tw:bottom-8 tw:right-8 tw:btn-primary tw:opacity-0">
+      Back to top
+    </a>
     <?php get_template_part('template-parts/ad-manager-popup-new'); ?>
     <nav class="tw:px-4 tw:md:px-32 tw:lg:px-32 tw:xl:px-40 tw:2xl:px-48 tw:py-4 tw:bg-black">
       <div class="tw:flex tw:flex-col tw:md:flex-row tw:md:justify-between">
@@ -340,6 +343,25 @@
         </div>
       </div>
     </section>
+
+    <script>
+      const scrollToTopButton = document.getElementById('backToTopBtn');
+      window.addEventListener('scroll', function() {
+        if (window.scrollY > 200) {  // Show button when scrolling past 200px
+          scrollToTopButton.classList.remove('tw:opacity-0');
+          scrollToTopButton.classList.add('tw:opacity-100');
+        } else {
+          scrollToTopButton.classList.remove('tw:opacity-100');
+          scrollToTopButton.classList.add('tw:opacity-0');
+        }
+      });
+      scrollToTopButton.addEventListener('click', function() {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+  </script>
 </body>
 
 <?php
