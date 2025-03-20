@@ -93,7 +93,7 @@
           <div class="tw:flex tw:justify-center tw:items-center">
             <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/logo-sportsnet-plus.png" alt="Sportsnet+ logo" class="tw:h-auto">
           </div>
-          <div class="tw:flex tw:justify-center tw:items-center">
+          <div class="tw:flex tw:justify-end tw:items-center">
             <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/logo-citytv-plus.png" alt="Citytv logo" class="tw:h-auto">
           </div>
           <div class="tw:flex tw:justify-center tw:items-center">
