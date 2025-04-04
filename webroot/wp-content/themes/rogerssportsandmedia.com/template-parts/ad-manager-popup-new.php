@@ -20,7 +20,7 @@
                   </div>
                 <div class="tw:py-6 tw:px-6 tw:sm:px-12">
                       <p class="tw:text-xl tw:font-semibold tw:text-center tw:mb-6">
-                        Sign up to save up to $500 on your first campaign*
+                        Save up to $500 on your first campaign. Sign up to receive your discount code.
                       </p>
                       <div id="newsletter-modal-success-section" class="tw:flex-col tw:text-center tw:hidden">
                           <div class="tw:flex tw:justify-center">
