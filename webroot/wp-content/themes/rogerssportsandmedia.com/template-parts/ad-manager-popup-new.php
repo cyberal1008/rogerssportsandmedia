@@ -20,7 +20,7 @@
                   </div>
                 <div class="tw:py-6 tw:px-6 tw:sm:px-12">
                       <p class="tw:text-xl tw:font-semibold tw:text-center tw:mb-6">
-                          Get a $250 ad credit to use towards your first campaign of $500 or more*
+                        Save up to $500 on your first campaign. Sign up to receive your discount code.
                       </p>
                       <div id="newsletter-modal-success-section" class="tw:flex-col tw:text-center tw:hidden">
                           <div class="tw:flex tw:justify-center">
@@ -28,9 +28,7 @@
                               <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                               </svg>
                           </div>
-                          <p class="tw:font-semibold tw:mb-4">
-                                Your promocode is: GET250. Keep an eye out in your inbox for more information.
-                          </p>
+                          <br />
                           <button onclick="closeNewsletterModal()" type="button" class="tw:inline-flex tw:w-full tw:justify-center tw:bg-primary tw:px-3 tw:py-3 tw:text-base tw:font-semibold tw:text-white tw:shadow-sm tw:hover:bg-primary-light">Close</button>
                       </div>
                       <div id="newsletter-modal-error-section" class="tw:flex-col tw:text-center tw:hidden">
@@ -62,7 +60,7 @@
                       </form>
                   </div>
                 <div class="tw:text-xs tw:bg-gray tw:px-4 tw:py-3 tw:sm:px-6 tw:italic">
-                    *This promo code is valid until 12/31/2025 and can be used on orders of $500CAD or more (before taxes) placed on RSM Ad Manager. Promo code valid for one-time use per account.
+                    *Promo codes are valid until 12/31/2025 and can be used on orders placed on RSM Ad Manager. Promo codes are valid for one-time use only. To redeem, enter your Promo Code on the final checkout page and hit apply.
                 </div>
             </div>
           </div>
