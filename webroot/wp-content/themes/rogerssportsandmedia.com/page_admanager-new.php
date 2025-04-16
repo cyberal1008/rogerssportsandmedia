@@ -27,7 +27,9 @@
     <?php get_template_part('template-parts/ad-manager-popup-new'); ?>
     <nav class="tw:px-4 tw:md:px-32 tw:lg:px-32 tw:xl:px-40 tw:2xl:px-48 tw:py-4 tw:bg-black">
       <div class="tw:flex tw:flex-col tw:md:flex-row tw:md:justify-between">
-        <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/logo.png" class="tw:h-12 tw:mb-4 tw:md:mb-0 tw:w-48" />
+        <a href="<?php echo esc_url( home_url( '/' ) ); ?>">
+          <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/logo.png" class="tw:h-12 tw:mb-4 tw:md:mb-0 tw:w-48" />
+        </a>
         <ul class="tw:flex tw:flex-row tw:md:justify-center tw:md:items-center tw:justify-between tw:md:gap-x-16 tw:text-white tw:mb-0!">
           <li><a class="tw:text-base tw:md:text-lg tw:font-semibold" target="_blank" href="https://rogers-help-center.scrollhelp.site/docs">Help Center</a></li>
           <li><a class="tw:text-base tw:md:text-lg tw:font-semibold" target="_blank" href="https://go.rogerssportsandmedia.com/contact-us">Contact Us</a></li>
