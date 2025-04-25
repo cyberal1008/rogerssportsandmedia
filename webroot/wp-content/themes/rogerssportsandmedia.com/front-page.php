@@ -55,9 +55,9 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 								<?php if ($icon) : ?>
 									<img src="<?php echo $icon['url']; ?>" class="mobile" alt="<?php echo $icon['alt']; ?>" loading="lazy">
 								<?php endif; ?>
-								<?php echo $title ? $title : ''; ?>
-								<i class="fa-sharp fa-solid fa-plus-large status plus"></i>
-								<i class="fa-sharp fa-solid fa-minus status minus"></i>
+								<span class="tw-text-white"><?php echo $title ? $title : ''; ?></span>
+								<i class="fa-sharp fa-solid fa-plus-large status plus tw-text-white"></i>
+								<i class="fa-sharp fa-solid fa-minus status minus tw-text-white"></i>
 							</button>
 							<div class="accordion-content" id="accordion-1-content" aria-labelledby="accordion-1">
 								<?php if ($icon) : ?>
@@ -80,9 +80,9 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 								<?php if ($icon) : ?>
 									<img src="<?php echo $icon['url']; ?>" class="mobile" alt="<?php echo $icon['alt']; ?>" loading="lazy">
 								<?php endif; ?>
-								<?php echo $title ? $title : ''; ?>
-								<i class="fa-sharp fa-solid fa-plus-large status plus"></i>
-								<i class="fa-sharp fa-solid fa-minus status minus"></i>
+								<span class="tw-text-white"><?php echo $title ? $title : ''; ?></span>
+								<i class="fa-sharp fa-solid fa-plus-large status plus tw-text-white"></i>
+								<i class="fa-sharp fa-solid fa-minus status minus tw-text-white"></i>
 							</button>
 							<div class="accordion-content" id="accordion-2-content" aria-labelledby="accordion-2">
 								<?php if ($icon) : ?>
@@ -105,9 +105,9 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 								<?php if ($icon) : ?>
 									<img src="<?php echo $icon['url']; ?>" class="mobile" alt="<?php echo $icon['alt']; ?>" loading="lazy">
 								<?php endif; ?>
-								<?php echo $title ? $title : ''; ?>
-								<i class="fa-sharp fa-solid fa-plus-large status plus"></i>
-								<i class="fa-sharp fa-solid fa-minus status minus"></i>
+								<span class="tw-text-white"><?php echo $title ? $title : ''; ?></span>
+								<i class="fa-sharp fa-solid fa-plus-large status plus tw-text-white"></i>
+								<i class="fa-sharp fa-solid fa-minus status minus tw-text-white"></i>
 							</button>
 							<div class="accordion-content" id="accordion-3-content" aria-labelledby="accordion-3">
 								<?php if ($icon) : ?>
@@ -129,9 +129,9 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 								<?php if ($icon) : ?>
 									<img src="<?php echo $icon['url']; ?>" class="mobile" alt="<?php echo $icon['alt']; ?>" loading="lazy">
 								<?php endif; ?>
-								<?php echo $title ? $title : ''; ?>
-								<i class="fa-sharp fa-solid fa-plus-large status plus"></i>
-								<i class="fa-sharp fa-solid fa-minus status minus"></i>
+								<span class="tw-text-white"><?php echo $title ? $title : ''; ?></span>
+								<i class="fa-sharp fa-solid fa-plus-large status plus tw-text-white"></i>
+								<i class="fa-sharp fa-solid fa-minus status minus tw-text-white"></i>
 							</button>
 							<div class="accordion-content" id="accordion-4-content" aria-labelledby="accordion-4">
 								<?php if ($icon) : ?>
@@ -161,7 +161,7 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 					<div class="swiper-wrapper">
 						<?php foreach ($brands_logos as $logo) : ?>
 							<div class="swiper-slide">
-								<img style="max-width: 186px;" src="https://www.rogerssportsandmedia.com/wp-content/uploads/2023/02/Logo_FXNOW.png" alt="<?php echo $logo['alt']; ?>">
+								<img style="max-width: 186px;" src="<?php echo $logo['url']; ?>" alt="<?php echo $logo['alt']; ?>">
 							</div>
 						<?php endforeach; ?>
 					</div>
