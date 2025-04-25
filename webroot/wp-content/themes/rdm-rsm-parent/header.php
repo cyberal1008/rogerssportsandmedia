@@ -105,7 +105,7 @@ if ( is_front_page() ) {
 	get_template_part( 'template-parts/header', 'nomedia-blog' );
 }
 ?>
-<header class="nav-down header-container ">
+<header class="nav-down header-container " style="background-color: #000;">
 			<nav class="navbar navbar-expand-md navbar-light fixed-top nav-bg" role="navigation">
 				<div class="md:tw-w-2/12 nav-logo d-flex align-content-center align-items-center"
 					 itemscope itemtype="https://schema.org/Organization">

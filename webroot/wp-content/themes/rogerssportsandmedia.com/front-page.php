@@ -22,7 +22,7 @@ $home_hero_btn_url  = get_theme_mod( 'desktop_vid_link_button_url' );
 $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 ?>
 
-<main id="content" role="main">
+<main id="content" role="main" class="tw-bg-gray">
 	<!-- INTRO -->
 	<?php
 	$intro_title = get_field('intro_title');
@@ -34,11 +34,12 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 	$intro_column_3 = get_field('intro_column_3');
 	$intro_column_4 = get_field('intro_column_4');
 	?>
-	<section id="our-difference" class="our-difference" style="margin-top: 4rem;">
+	<section style="background-color: #000; padding-bottom: 2rem;" class="tw-text-white">
+		<section id="our-difference" class="our-difference">
 		<div class="wrapper">
 			<div class="top">
 				<?php if ($intro_title) : ?>
-					<h2 class="title"><?php echo $intro_title; ?></h2>
+					<h2 style="color: white" class="title"><?php echo $intro_title; ?></h2>
 				<?php endif; ?>
 				<?php echo $intro_content ? $intro_content : ''; ?>
 			</div>
@@ -143,31 +144,27 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 				<?php endwhile; endif; ?>
 				</div>
 			</div>
-		</section>
+			</section>
+	</section>
 
 		<!-- BRAND -->
-		<?php 
-		$brands_section_title = get_field('brands_section_title'); 
-		$brands_logos = get_field('brands_logos');
-		if ($brands_logos) :
+		<?php
+			$brands_section_title = get_field('brands_section_title');
+			$brands_logos = get_field('brands_logos');
+			if ($brands_logos) :
 		?>
 			<section class="logos">
-				<div class="wrapper">
-					<?php if ($brands_section_title) : ?>
-						<h2 class="title"><?php echo $brands_section_title; ?></h2>
-					<?php endif; ?>
-					<div class="swiper logo-slider">
-						<div class="swiper-wrapper">
-							
-							<?php foreach ($brands_logos as $logo) : ?>
-								<div class="swiper-slide">
-									<img src="<?php echo $logo['url']; ?>" alt="<?php echo $logo['alt']; ?>">
-								</div>
-							<?php endforeach; ?>
-						</div>
-						<div class="swiper-pagination"></div>
+				<?php if ($brands_section_title) : ?>
+					<h2 class="title"><?php echo $brands_section_title; ?></h2>
+				<?php endif; ?>
+				<div class="swiper logo-slider">
+					<div class="swiper-wrapper">
+						<?php foreach ($brands_logos as $logo) : ?>
+							<div class="swiper-slide">
+								<img style="max-width: 186px;" src="https://www.rogerssportsandmedia.com/wp-content/uploads/2023/02/Logo_FXNOW.png" alt="<?php echo $logo['alt']; ?>">
+							</div>
+						<?php endforeach; ?>
 					</div>
-
 				</div>
 			</section>
 		<?php endif; ?>
@@ -292,14 +289,14 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 		</section>
 
 	<?php
-	$happening_section_title = get_field('happening_section_title');
-	$happening_content = get_field('happening_content');
+		$happening_section_title = get_field('happening_section_title');
+		$happening_content = get_field('happening_content');
 	?>
-	<section id="trends" class="trends">
+	<section style="background-color: #000; padding-top: 4rem; padding-bottom: 4rem;">
+		<section id="trends" class="trends tw-text-white">
 		<div class="wrapper">
-			<hr class="tw-bg-gray-light tw-w-3/4 md:tw-w-3/5" />
 			<?php if ($happening_section_title) : ?>
-				<h2 class="section-title"><?php echo $happening_section_title; ?></h2>
+				<h2 style="color: white !important" class="section-title"><?php echo $happening_section_title; ?></h2>
 			<?php endif; ?>
 			<?php echo $happening_content; ?>
 			<?php
@@ -325,16 +322,17 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 					?>
 					<div class="item">
 						<?php $title_formatted = ucwords(strtolower(get_the_title())); ?>
-						<p class="date" style="margin-bottom: 6px;"><?php echo get_the_date( get_option( 'date_format' ) ); ?> / <?php echo $categories ? $categories[0]->name : ''; ?></p>
+						<p class="date" style="color: white; margin-bottom: 6px;"><?php echo get_the_date( get_option( 'date_format' ) ); ?> / <?php echo $categories ? $categories[0]->name : ''; ?></p>
 						<a href="<?php the_permalink(); ?>" aria-label="read <?php echo $title_formatted; ?>"><img src="<?php echo $featured_img_url; ?>" alt="" loading="lazy"></a>
-						<h3 class="post-title"><a href="<?php the_permalink(); ?>" aria-label="read <?php echo $title_formatted; ?>"><?php echo $title_formatted; ?></a></h3>
+						<h3 class="post-title"><a style="color: white;" href="<?php the_permalink(); ?>" aria-label="read <?php echo $title_formatted; ?>"><?php echo $title_formatted; ?></a></h3>
 						<div class="btn-wrap">
-							<a href="<?php the_permalink(); ?>" class="lined" aria-label="Read More about <?php echo $title_formatted; ?>">Read More</a>
+							<a class="tw-text-white" href="<?php the_permalink(); ?>" class="lined" aria-label="Read More about <?php echo $title_formatted; ?>">Read More</a>
 						</div>
 					</div>
 				<?php endwhile; endif; ?>
 			</div>
 		</div>
+	</section>
 	</section>
 
 	<!-- PARTNER -->
