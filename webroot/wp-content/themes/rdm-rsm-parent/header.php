@@ -52,6 +52,7 @@ $lang = 'en';
 	<script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/assets/scripts/popper.min.js"></script>
 
 	<link rel="stylesheet" href="https://use.typekit.net/aws7pih.css">
+	<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/main-alt.css">
 	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 
 	<?php facebook_pixel_code(); ?>
@@ -71,6 +72,70 @@ $lang = 'en';
 </head>
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
+<header class="nav-down header-container ">
+	<nav class="tw:px-4 tw:md:px-32 tw:lg:px-32 tw:xl:px-40 tw:2xl:px-48 tw:py-4 tw:bg-black fixed-top">
+		<div class="tw:flex tw:flex-col tw:md:flex-row tw:md:justify-between">
+			<a href="<?php echo esc_url( home_url( '/' ) ); ?>">
+				<img src="<?php echo dirname( get_bloginfo( 'stylesheet_url' ) ); ?>/assets/images/RSM_Logo_Stacked_White.png" class="tw:h-12 tw:mb-4 tw:md:mb-0 tw:w-48" />
+			</a>
+			<ul class="tw:flex tw:flex-row tw:md:justify-center tw:md:items-center tw:justify-between tw:md:gap-x-16 tw:text-white tw:mb-0!">
+			<li><a class="tw:text-base tw:md:text-lg tw:font-semibold" target="_blank" href="https://rogers-help-center.scrollhelp.site/docs">About Us</a></li>
+			<li><a class="tw:text-base tw:md:text-lg tw:font-semibold" target="_blank" href="https://go.rogerssportsandmedia.com/contact-us">The Latest</a></li>
+			<li><a class="tw:text-base tw:md:text-lg tw:font-semibold" target="_blank" href="https://go.rogerssportsandmedia.com/contact-us">Contact Us</a></li>
+			<li class="tw:md:hidden">
+				<a class="tw:text-base tw:md:text-lg tw:font-semibold" target="_blank" href="https://go.rogerssportsandmedia.com/sign-up/with-email">Advertise with Us</a>
+			</li>
+			<li class="tw:hidden tw:md:inline">
+				<a class="tw:btn-primary" target="_blank" href="https://go.rogerssportsandmedia.com/sign-up/with-email">Advertise with Us</a>
+			</li>
+			</ul>
+		</div>
+	</nav>
+	<nav class="navbar navbar-expand-md" role="navigation">
+		<div class="md:tw-w-2/12 nav-logo d-flex align-content-center align-items-center"
+				itemscope itemtype="https://schema.org/Organization">
+				<a class="navbar-brand" href="<?php echo esc_url( home_url( '/' ) ); ?>">
+				<img style="height: 60px;" src="<?php echo dirname( get_bloginfo( 'stylesheet_url' ) ); ?>/assets/images/Logo-RSM-new.png"  alt="<?php esc_url( bloginfo( 'name' ) ); ?>">
+				</a>
+		</div>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="<?php esc_attr_e( 'Toggle navigation', 'RSM' ); ?>">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="md:tw-w-2/3 main-nav d-flex gb-w align-items-center justify-content-center">
+			<div class="navbar-main">
+				<?php
+					wp_nav_menu(
+						array(
+							'theme_location'  => 'primary',
+							'depth'           => 2,
+							'container'       => 'div',
+							'container_class' => 'collapse navbar-collapse bg-mob',
+							'container_id'    => 'navbarSupportedContent',
+							'menu_class'      => 'nav navbar-nav',
+							'fallback_cb'     => 'WP_Bootstrap_Navwalker::fallback',
+							'walker'          => new WP_Bootstrap_Navwalker(),
+						)
+					);
+					?>
+			</div>
+		</div>
+		<!-- <div class="nav-social">
+			<ul class="social-icons">
+				<li><a class="header-social" target="_blank" href="https://twitter.com/RogersMediaPR" aria-label="View Rogers Sports and Media on Twitter">
+					<i class="icon fa-brands fa-square-twitter"></i>
+				</a></li>
+				<li><a class="header-social" target="_blank" href="https://ca.linkedin.com/company/rogers-sports-and-media" aria-label="View Rogers Sports and Media on LinkedIn">
+					<i class="icon fa-brands fa-linkedin"></i>
+				</a></li>
+				<li><a class="header-social" target="_blank" href="https://www.instagram.com/rogerssportsandmedia/" aria-label="View Rogers Sports and Media on Instagram">
+					<i class="icon fa-brands fa-square-instagram"></i>
+				</a></li>
+			</ul>
+		</div> -->
+		<div class="tw-hidden md:tw-block md:tw-w-2/12">&nbsp;</div>
+
+	</nav>
+</header>
 <?php
 if ( is_front_page() ) {
 	get_template_part(
@@ -105,53 +170,6 @@ if ( is_front_page() ) {
 	get_template_part( 'template-parts/header', 'nomedia-blog' );
 }
 ?>
-<header class="nav-down header-container ">
-			<nav class="navbar navbar-expand-md navbar-light fixed-top nav-bg" role="navigation">
-				<div class="md:tw-w-2/12 nav-logo d-flex align-content-center align-items-center"
-					 itemscope itemtype="https://schema.org/Organization">
-					 <a class="navbar-brand" href="<?php echo esc_url( home_url( '/' ) ); ?>">
-						<img style="height: 60px;" src="<?php echo dirname( get_bloginfo( 'stylesheet_url' ) ); ?>/assets/images/Logo-RSM-new.png"  alt="<?php esc_url( bloginfo( 'name' ) ); ?>">
-					  </a>
-				</div>
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="<?php esc_attr_e( 'Toggle navigation', 'RSM' ); ?>">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="md:tw-w-2/3 main-nav d-flex gb-w align-items-center justify-content-center">
-					<div class="navbar-main">
-						<?php
-							wp_nav_menu(
-								array(
-									'theme_location'  => 'primary',
-									'depth'           => 2,
-									'container'       => 'div',
-									'container_class' => 'collapse navbar-collapse bg-mob',
-									'container_id'    => 'navbarSupportedContent',
-									'menu_class'      => 'nav navbar-nav',
-									'fallback_cb'     => 'WP_Bootstrap_Navwalker::fallback',
-									'walker'          => new WP_Bootstrap_Navwalker(),
-								)
-							);
-							?>
-					</div>
-				</div>
-				<!-- <div class="nav-social">
-					<ul class="social-icons">
-						<li><a class="header-social" target="_blank" href="https://twitter.com/RogersMediaPR" aria-label="View Rogers Sports and Media on Twitter">
-							<i class="icon fa-brands fa-square-twitter"></i>
-						</a></li>
-						<li><a class="header-social" target="_blank" href="https://ca.linkedin.com/company/rogers-sports-and-media" aria-label="View Rogers Sports and Media on LinkedIn">
-							<i class="icon fa-brands fa-linkedin"></i>
-						</a></li>
-						<li><a class="header-social" target="_blank" href="https://www.instagram.com/rogerssportsandmedia/" aria-label="View Rogers Sports and Media on Instagram">
-							<i class="icon fa-brands fa-square-instagram"></i>
-						</a></li>
-					</ul>
-				</div> -->
-				<div class="tw-hidden md:tw-block md:tw-w-2/12">&nbsp;</div>
-
-			</nav>
-	</header>
-
 	<?php 
 	if ( ! is_page() || ! is_page_template( 'page-contactus.php' ) ) { ?>
 		<a href="<?php echo get_home_url(); ?>/contact-us" class="button fixedbtn" role="region" aria-label="Advertise with Us">
