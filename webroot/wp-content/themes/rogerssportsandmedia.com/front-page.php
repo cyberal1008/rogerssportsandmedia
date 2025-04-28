@@ -34,118 +34,119 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 	$intro_column_3 = get_field('intro_column_3');
 	$intro_column_4 = get_field('intro_column_4');
 	?>
-	<section style="background-color: #000; padding-bottom: 2rem;" class="tw-text-white">
-		<section id="our-difference" class="our-difference">
-		<div class="wrapper">
-			<div class="top">
-				<?php if ($intro_title) : ?>
-					<h2 style="color: white" class="title"><?php echo $intro_title; ?></h2>
-				<?php endif; ?>
-				<?php echo $intro_content ? $intro_content : ''; ?>
-			</div>
-			<div class="grid four">
-				<?php if( have_rows('intro_column_1') ) : while( have_rows('intro_column_1') ): the_row(); 
-					$icon = get_sub_field('icon');
-					$title = get_sub_field('title');
-					$blurb = get_sub_field('blurb');
-					?>
-					<div class="item">
-						<div class="accordion">
-							<button class="accordion-trigger" id="accordion-1" aria-expanded="false" aria-controls="accordion-1-content">
-								<?php if ($icon) : ?>
-									<img src="<?php echo $icon['url']; ?>" class="mobile" alt="<?php echo $icon['alt']; ?>" loading="lazy">
-								<?php endif; ?>
-								<span class="tw-text-white"><?php echo $title ? $title : ''; ?></span>
-								<i class="fa-sharp fa-solid fa-plus-large status plus tw-text-white"></i>
-								<i class="fa-sharp fa-solid fa-minus status minus tw-text-white"></i>
-							</button>
-							<div class="accordion-content" id="accordion-1-content" aria-labelledby="accordion-1">
-								<?php if ($icon) : ?>
-									<img src="<?php echo $icon['url']; ?>" class="desktop" alt="<?php echo $icon['alt']; ?>" loading="lazy">
-								<?php endif; ?>
-								<?php echo $blurb ? $blurb : ''; ?>
-							</div>
-						</div>
-					</div>
-				<?php endwhile; endif; ?>
-
-				<?php if( have_rows('intro_column_2') ) : while( have_rows('intro_column_2') ): the_row(); 
-					$icon = get_sub_field('icon');
-					$title = get_sub_field('title');
-					$blurb = get_sub_field('blurb');
-					?>
-					<div class="item">
-						<div class="accordion">
-							<button class="accordion-trigger" id="accordion-2" aria-expanded="false" aria-controls="accordion-2-content">
-								<?php if ($icon) : ?>
-									<img src="<?php echo $icon['url']; ?>" class="mobile" alt="<?php echo $icon['alt']; ?>" loading="lazy">
-								<?php endif; ?>
-								<span class="tw-text-white"><?php echo $title ? $title : ''; ?></span>
-								<i class="fa-sharp fa-solid fa-plus-large status plus tw-text-white"></i>
-								<i class="fa-sharp fa-solid fa-minus status minus tw-text-white"></i>
-							</button>
-							<div class="accordion-content" id="accordion-2-content" aria-labelledby="accordion-2">
-								<?php if ($icon) : ?>
-									<img src="<?php echo $icon['url']; ?>" class="desktop" alt="<?php echo $icon['alt']; ?>" loading="lazy">
-								<?php endif; ?>
-								<?php echo $blurb ? $blurb : ''; ?>
-							</div>
-						</div>
-					</div>
-				<?php endwhile; endif; ?>
-
-				<?php if( have_rows('intro_column_3') ) : while( have_rows('intro_column_3') ): the_row(); 
-					$icon = get_sub_field('icon');
-					$title = get_sub_field('title');
-					$blurb = get_sub_field('blurb');
-					?>
-					<div class="item">
-						<div class="accordion">
-							<button class="accordion-trigger" id="accordion-3" aria-expanded="false" aria-controls="accordion-3-content">
-								<?php if ($icon) : ?>
-									<img src="<?php echo $icon['url']; ?>" class="mobile" alt="<?php echo $icon['alt']; ?>" loading="lazy">
-								<?php endif; ?>
-								<span class="tw-text-white"><?php echo $title ? $title : ''; ?></span>
-								<i class="fa-sharp fa-solid fa-plus-large status plus tw-text-white"></i>
-								<i class="fa-sharp fa-solid fa-minus status minus tw-text-white"></i>
-							</button>
-							<div class="accordion-content" id="accordion-3-content" aria-labelledby="accordion-3">
-								<?php if ($icon) : ?>
-									<img src="<?php echo $icon['url']; ?>" class="desktop" alt="<?php echo $icon['alt']; ?>" loading="lazy">
-								<?php endif; ?>
-								<?php echo $blurb ? $blurb : ''; ?>
-							</div>
-						</div>
-					</div>
-				<?php endwhile; endif; ?>
-				<?php if( have_rows('intro_column_4') ) : while( have_rows('intro_column_4') ): the_row(); 
-					$icon = get_sub_field('icon');
-					$title = get_sub_field('title');
-					$blurb = get_sub_field('blurb');
-					?>
-					<div class="item">
-						<div class="accordion">
-							<button class="accordion-trigger" id="accordion-4" aria-expanded="false" aria-controls="accordion-4-content">
-								<?php if ($icon) : ?>
-									<img src="<?php echo $icon['url']; ?>" class="mobile" alt="<?php echo $icon['alt']; ?>" loading="lazy">
-								<?php endif; ?>
-								<span class="tw-text-white"><?php echo $title ? $title : ''; ?></span>
-								<i class="fa-sharp fa-solid fa-plus-large status plus tw-text-white"></i>
-								<i class="fa-sharp fa-solid fa-minus status minus tw-text-white"></i>
-							</button>
-							<div class="accordion-content" id="accordion-4-content" aria-labelledby="accordion-4">
-								<?php if ($icon) : ?>
-									<img src="<?php echo $icon['url']; ?>" class="desktop" alt="<?php echo $icon['alt']; ?>" loading="lazy">
-								<?php endif; ?>
-								<?php echo $blurb ? $blurb : ''; ?>
-							</div>
-						</div>
-					</div>
-				<?php endwhile; endif; ?>
+	<section style="background-color: #000" class="tw-text-white">
+		<section style="padding-bottom: 2rem;" >
+			<section id="our-difference" class="our-difference">
+			<div class="wrapper">
+				<div class="top">
+					<?php if ($intro_title) : ?>
+						<h2 style="color: white" class="title"><?php echo $intro_title; ?></h2>
+					<?php endif; ?>
+					<?php echo $intro_content ? $intro_content : ''; ?>
 				</div>
-			</div>
-			</section>
-	</section>
+				<div class="grid four">
+					<?php if( have_rows('intro_column_1') ) : while( have_rows('intro_column_1') ): the_row(); 
+						$icon = get_sub_field('icon');
+						$title = get_sub_field('title');
+						$blurb = get_sub_field('blurb');
+						?>
+						<div class="item">
+							<div class="accordion">
+								<button class="accordion-trigger" id="accordion-1" aria-expanded="false" aria-controls="accordion-1-content">
+									<?php if ($icon) : ?>
+										<img src="<?php echo $icon['url']; ?>" class="mobile" alt="<?php echo $icon['alt']; ?>" loading="lazy">
+									<?php endif; ?>
+									<span class="tw-text-white"><?php echo $title ? $title : ''; ?></span>
+									<i class="fa-sharp fa-solid fa-plus-large status plus tw-text-white"></i>
+									<i class="fa-sharp fa-solid fa-minus status minus tw-text-white"></i>
+								</button>
+								<div class="accordion-content" id="accordion-1-content" aria-labelledby="accordion-1">
+									<?php if ($icon) : ?>
+										<img src="<?php echo $icon['url']; ?>" class="desktop" alt="<?php echo $icon['alt']; ?>" loading="lazy">
+									<?php endif; ?>
+									<?php echo $blurb ? $blurb : ''; ?>
+								</div>
+							</div>
+						</div>
+					<?php endwhile; endif; ?>
+
+					<?php if( have_rows('intro_column_2') ) : while( have_rows('intro_column_2') ): the_row(); 
+						$icon = get_sub_field('icon');
+						$title = get_sub_field('title');
+						$blurb = get_sub_field('blurb');
+						?>
+						<div class="item">
+							<div class="accordion">
+								<button class="accordion-trigger" id="accordion-2" aria-expanded="false" aria-controls="accordion-2-content">
+									<?php if ($icon) : ?>
+										<img src="<?php echo $icon['url']; ?>" class="mobile" alt="<?php echo $icon['alt']; ?>" loading="lazy">
+									<?php endif; ?>
+									<span class="tw-text-white"><?php echo $title ? $title : ''; ?></span>
+									<i class="fa-sharp fa-solid fa-plus-large status plus tw-text-white"></i>
+									<i class="fa-sharp fa-solid fa-minus status minus tw-text-white"></i>
+								</button>
+								<div class="accordion-content" id="accordion-2-content" aria-labelledby="accordion-2">
+									<?php if ($icon) : ?>
+										<img src="<?php echo $icon['url']; ?>" class="desktop" alt="<?php echo $icon['alt']; ?>" loading="lazy">
+									<?php endif; ?>
+									<?php echo $blurb ? $blurb : ''; ?>
+								</div>
+							</div>
+						</div>
+					<?php endwhile; endif; ?>
+
+					<?php if( have_rows('intro_column_3') ) : while( have_rows('intro_column_3') ): the_row(); 
+						$icon = get_sub_field('icon');
+						$title = get_sub_field('title');
+						$blurb = get_sub_field('blurb');
+						?>
+						<div class="item">
+							<div class="accordion">
+								<button class="accordion-trigger" id="accordion-3" aria-expanded="false" aria-controls="accordion-3-content">
+									<?php if ($icon) : ?>
+										<img src="<?php echo $icon['url']; ?>" class="mobile" alt="<?php echo $icon['alt']; ?>" loading="lazy">
+									<?php endif; ?>
+									<span class="tw-text-white"><?php echo $title ? $title : ''; ?></span>
+									<i class="fa-sharp fa-solid fa-plus-large status plus tw-text-white"></i>
+									<i class="fa-sharp fa-solid fa-minus status minus tw-text-white"></i>
+								</button>
+								<div class="accordion-content" id="accordion-3-content" aria-labelledby="accordion-3">
+									<?php if ($icon) : ?>
+										<img src="<?php echo $icon['url']; ?>" class="desktop" alt="<?php echo $icon['alt']; ?>" loading="lazy">
+									<?php endif; ?>
+									<?php echo $blurb ? $blurb : ''; ?>
+								</div>
+							</div>
+						</div>
+					<?php endwhile; endif; ?>
+					<?php if( have_rows('intro_column_4') ) : while( have_rows('intro_column_4') ): the_row(); 
+						$icon = get_sub_field('icon');
+						$title = get_sub_field('title');
+						$blurb = get_sub_field('blurb');
+						?>
+						<div class="item">
+							<div class="accordion">
+								<button class="accordion-trigger" id="accordion-4" aria-expanded="false" aria-controls="accordion-4-content">
+									<?php if ($icon) : ?>
+										<img src="<?php echo $icon['url']; ?>" class="mobile" alt="<?php echo $icon['alt']; ?>" loading="lazy">
+									<?php endif; ?>
+									<span class="tw-text-white"><?php echo $title ? $title : ''; ?></span>
+									<i class="fa-sharp fa-solid fa-plus-large status plus tw-text-white"></i>
+									<i class="fa-sharp fa-solid fa-minus status minus tw-text-white"></i>
+								</button>
+								<div class="accordion-content" id="accordion-4-content" aria-labelledby="accordion-4">
+									<?php if ($icon) : ?>
+										<img src="<?php echo $icon['url']; ?>" class="desktop" alt="<?php echo $icon['alt']; ?>" loading="lazy">
+									<?php endif; ?>
+									<?php echo $blurb ? $blurb : ''; ?>
+								</div>
+							</div>
+						</div>
+					<?php endwhile; endif; ?>
+					</div>
+				</div>
+				</section>
+		</section>
 
 		<!-- BRAND -->
 		<?php
@@ -200,6 +201,7 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 				</div>
 			</div>
 		</section>
+	</section>
 
 		<!-- EXPLORE -->
 		<?php
