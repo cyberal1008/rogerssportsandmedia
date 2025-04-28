@@ -72,30 +72,25 @@ $lang = 'en';
 </head>
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
-<header class="nav-down header-container ">
-	<nav class="tw:px-4 tw:md:px-32 tw:lg:px-32 tw:xl:px-40 tw:2xl:px-48 tw:py-4 tw:bg-black fixed-top">
-		<div class="tw:flex tw:flex-col tw:md:flex-row tw:md:justify-between">
-			<a href="<?php echo esc_url( home_url( '/' ) ); ?>">
-				<img src="<?php echo dirname( get_bloginfo( 'stylesheet_url' ) ); ?>/assets/images/RSM_Logo_Stacked_White.png" class="tw:h-12 tw:mb-4 tw:md:mb-0 tw:w-48" />
-			</a>
-			<ul class="tw:flex tw:flex-row tw:md:justify-center tw:md:items-center tw:justify-between tw:md:gap-x-16 tw:text-white tw:mb-0!">
-			<li><a class="tw:text-base tw:md:text-lg tw:font-semibold" target="_blank" href="https://rogers-help-center.scrollhelp.site/docs">About Us</a></li>
-			<li><a class="tw:text-base tw:md:text-lg tw:font-semibold" target="_blank" href="https://go.rogerssportsandmedia.com/contact-us">The Latest</a></li>
-			<li><a class="tw:text-base tw:md:text-lg tw:font-semibold" target="_blank" href="https://go.rogerssportsandmedia.com/contact-us">Contact Us</a></li>
-			<li class="tw:md:hidden">
-				<a class="tw:text-base tw:md:text-lg tw:font-semibold" target="_blank" href="https://go.rogerssportsandmedia.com/sign-up/with-email">Advertise with Us</a>
-			</li>
+<div class="tw:px-4 tw:md:px-32 tw:lg:px-32 tw:xl:px-40 tw:2xl:px-48 tw:py-4 tw:bg-black">
+	<div class="tw:flex tw:flex-col tw:md:flex-row tw:md:justify-between">
+		<div>&nbsp;</div>
+		<ul class="tw:flex tw:flex-row tw:md:justify-center tw:md:items-center tw:justify-between tw:md:gap-x-16 tw:text-white tw:mb-0!">
+			<li><a class="tw:text-base tw:font-semibold" target="_blank" href="https://www.rogerssportsandmedia.com/who-we-are-2/">About Us</a></li>
+			<li><a class="tw:text-base tw:font-semibold" target="_blank" href="/the-latest">The Latest</a></li>
+			<li><a class="tw:text-base tw:font-semibold" target="_blank" href="/contact-us">Contact Us</a></li>
 			<li class="tw:hidden tw:md:inline">
-				<a class="tw:btn-primary" target="_blank" href="https://go.rogerssportsandmedia.com/sign-up/with-email">Advertise with Us</a>
+				<a style="border-radius: 0px;" class="tw:btn-primary" target="_blank" href="https://go.rogerssportsandmedia.com/sign-up/with-email">Advertise with Us</a>
 			</li>
-			</ul>
-		</div>
-	</nav>
+		</ul>
+	</div>
+</div>
+<header class="nav-down header-container ">
 	<nav class="navbar navbar-expand-md" role="navigation">
 		<div class="md:tw-w-2/12 nav-logo d-flex align-content-center align-items-center"
 				itemscope itemtype="https://schema.org/Organization">
 				<a class="navbar-brand" href="<?php echo esc_url( home_url( '/' ) ); ?>">
-				<img style="height: 60px;" src="<?php echo dirname( get_bloginfo( 'stylesheet_url' ) ); ?>/assets/images/Logo-RSM-new.png"  alt="<?php esc_url( bloginfo( 'name' ) ); ?>">
+				<img style="height: 60px;" src="<?php echo dirname( get_bloginfo( 'stylesheet_url' ) ); ?>/assets/images/RSM_Logo_Stacked_White.png"  alt="<?php esc_url( bloginfo( 'name' ) ); ?>">
 				</a>
 		</div>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="<?php esc_attr_e( 'Toggle navigation', 'RSM' ); ?>">
