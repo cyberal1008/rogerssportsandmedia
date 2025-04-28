@@ -61,9 +61,6 @@
 		</div>
 	</section>
 
-	<!-- VIDEO SLIDER -->
-	<?php get_template_part('template-parts/section-vidslider'); ?>
-
 	<!-- PLATFORMS -->
 	<?php 
 	if( have_rows('platforms') ) : 
