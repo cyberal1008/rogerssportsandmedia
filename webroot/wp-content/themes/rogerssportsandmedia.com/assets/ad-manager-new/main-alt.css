@@ -759,6 +759,12 @@
   .tw\:px-6 {
     padding-inline: calc(var(--tw-spacing) * 6);
   }
+  .tw\:py-1 {
+    padding-block: calc(var(--tw-spacing) * 1);
+  }
+  .tw\:py-2 {
+    padding-block: calc(var(--tw-spacing) * 2);
+  }
   .tw\:py-3 {
     padding-block: calc(var(--tw-spacing) * 3);
   }
@@ -959,6 +965,11 @@
   .tw\:md\:mb-0 {
     @media (width >= 768px) {
       margin-bottom: calc(var(--tw-spacing) * 0);
+    }
+  }
+  .tw\:md\:block {
+    @media (width >= 768px) {
+      display: block;
     }
   }
   .tw\:md\:flex {

@@ -39,9 +39,11 @@ header {
   .navbar-light .navbar-nav .nav-link,
   .menu-item a span {
     font-family: $ted-next-sb;
-    color: #fff !important;
     font-size: 16px !important;
     font-weight: 400;
+    @media (min-width: 768px) {
+      color: #fff !important;
+    }
   }
   .dropdown-menu .menu-item a span {
     font-family: $ted-next-sb;
@@ -92,7 +94,7 @@ header {
     width: 24px;
     position: absolute;
     height: 1px;
-    background-color: #000;
+    background-color: #fff;
     background-image: none;
     top: 0;
     left: 0;
@@ -181,6 +183,7 @@ header {
     }
     #menu-primary {
       max-width: 769px;
+      color: #fff;
     }
     .nav-bg:not(li) {
       background: #da291c !important;
