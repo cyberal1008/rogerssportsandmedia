@@ -87,7 +87,7 @@ $lang = 'en';
 	</div>
 </div>
 <header class="nav-down header-container ">
-	<nav class="navbar navbar-expand-md" role="navigation">
+	<nav class="navbar navbar-expand-md navbar-light nav-bg" role="navigation">
 		<div class="md:tw-w-1/3 nav-logo d-flex align-content-center align-items-center"
 				itemscope itemtype="https://schema.org/Organization">
 				<a class="navbar-brand" href="<?php echo esc_url( home_url( '/' ) ); ?>">
