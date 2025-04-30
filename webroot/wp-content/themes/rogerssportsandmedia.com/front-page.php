@@ -203,96 +203,10 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 		</section>
 	</section>
 
-		<!-- EXPLORE -->
-		<?php
-		$exp_section_title = get_field('exp_section_title');
-		$exp_content = get_field('exp_content');
-		$exp_button = get_field('exp_button');
-		$exp_button_arialabel = get_field('exp_button_arialabel');
-		?>
-		<section id="products" class="explore">
-			<div class="wrapper">
-				<div class="intro">
-					<?php if ($exp_section_title) : ?>
-						<h2 class="title"><?php echo $exp_section_title; ?></h2>
-					<?php endif; ?>
-					<?php echo $exp_content ? $exp_content : ''; ?>
-					<?php if ($exp_button) : ?>
-						<a href="<?php echo $exp_button['url']; ?>" aria-label="<?php echo $exp_button_arialabel ? $exp_button_arialabel : ''; ?>" class="button"><?php echo $exp_button['title']; ?></a>
-					<?php endif; ?>
-				</div>
-
-				<!-- DESKTOP -->
-				<?php if( have_rows('exp_tabs') ): ?>
-					<div class="tabs">
-						<div class="tablist" role="tablist" aria-label="">
-							<?php $tab_ctr=0; while( have_rows('exp_tabs') ): the_row(); $tab_ctr++;
-								$title = get_sub_field('title');
-								?>
-								<button class="trigger exp" role="tab" aria-selected="<?php echo $tab_ctr == 1 ? 'true' : 'false'; ?>" aria-controls="tab-content-<?php echo $tab_ctr; ?>" id="tab-<?php echo $tab_ctr; ?>" tabindex="<?php echo $tab_ctr == 1 ? '' : '-1'; ?>">
-									<?php echo $title; ?>
-								</button>
-							<?php endwhile; ?>
-						</div>
-						<div class="content">
-							<?php $con_ctr=0; while( have_rows('exp_tabs') ): the_row(); $con_ctr++;
-								$content = get_sub_field('content');
-								$button = get_sub_field('button');
-								$button_arialabel = get_sub_field('button_arialabel');
-								$image = get_sub_field('image');
-								?>
-								<div class="tabcontent" tabindex="0" role="tabpanel" id="tab-content-<?php echo $con_ctr; ?>" aria-labelledby="tab-<?php echo $con_ctr; ?>" <?php echo $con_ctr == 1 ? '' : 'hidden'; ?>>
-									<?php if ($image) : ?>
-										<img src="<?php echo $image['sizes']['medium_large']; ?>" alt="<?php echo $image['alt']; ?>">
-									<?php endif; ?>
-									<?php echo $content ? $content : ''; ?>
-									<?php if ($button) : ?>
-										<a href="<?php echo $button['url']; ?>" class="lined" aria-label="<?php echo $button_arialabel ? $button_arialabel : ''; ?>"><?php echo $button['title'] ? $button['title'] : 'Learn More'; ?></a>
-									<?php endif; ?>
-								</div>
-							<?php endwhile; ?>
-						</div>
-						
-					</div>
-
-					<!-- MOBILE -->
-					<div class="mobile">
-						<?php 
-						$mobtab_ctr = 20;
-						while( have_rows('exp_tabs') ): the_row(); $mobtab_ctr++;
-							$title = get_sub_field('title');
-							$content = get_sub_field('content');
-							$button = get_sub_field('button');
-							$button_arialabel = get_sub_field('button_arialabel');
-							$image = get_sub_field('image');
-							?>
-							<div class="accordion">
-								<button class="accordion-trigger" id="accordion-<?php echo $mobtab_ctr; ?>" aria-expanded="false" aria-controls="accordion-<?php echo $mobtab_ctr; ?>-content">
-									<?php echo $title; ?>
-									<i class="fa-sharp fa-solid fa-plus-large status"></i>
-								</button>
-								<div class="accordion-content" id="accordion-<?php echo $mobtab_ctr; ?>-content" aria-labelledby="accordion-<?php echo $mobtab_ctr; ?>">
-									<?php if ($image) : ?>
-										<img src="<?php echo $image['sizes']['medium_large']; ?>" alt="<?php echo $image['alt']; ?>" loading="lazy">
-									<?php endif; ?>
-									<div class="txtbox">
-										<?php echo $content ? $content : ''; ?>
-										<?php if ($button) : ?>
-											<a href="<?php echo $button['url']; ?>" class="lined" aria-label="<?php echo $button_arialabel ? $button_arialabel : ''; ?>"><?php echo $button['title'] ? $button['title'] : 'Learn More'; ?></a>
-										<?php endif; ?>
-									</div>
-								</div>
-							</div>
-						<?php endwhile; ?>
-					</div>
-				<?php endif; ?>
-
-			</div>
-		</section>
-
 	<?php
 		$happening_section_title = get_field('happening_section_title');
 		$happening_content = get_field('happening_content');
+		$post_id = get_the_ID();
 	?>
 	<section style="background-color: #000; padding-top: 4rem; padding-bottom: 4rem;">
 		<section id="trends" class="trends tw-text-white">
@@ -311,16 +225,16 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 						'post_type'      => 'post',
 						'posts_per_page' => 3,
 						'post_status'    => 'publish',
-						'post__not_in'   => array( get_the_ID() ),
+						'post__not_in'   => array( $post_id ),
 					)
 				);
 			}
 			?>
 			<div class="grid">
 				<?php if ( $the_query->have_posts() ) : while ( $the_query->have_posts() ) : $the_query->the_post();
-					$featured_img_url   = get_the_post_thumbnail_url( get_the_ID(), 'wide-577' );
+					$featured_img_url   = get_the_post_thumbnail_url( $post_id, 'wide-577' );
 					$categories         = get_the_category();
-					$post_meta          = get_post_meta( get_the_ID(), 'blog', true );
+					$post_meta          = get_post_meta( $post_id, 'blog', true );
 					?>
 					<div class="item">
 						<?php $title_formatted = ucwords(strtolower(get_the_title())); ?>
@@ -336,6 +250,94 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 		</div>
 	</section>
 	</section>
+
+	<!-- EXPLORE -->
+	<?php
+		$exp_section_title = get_field('exp_section_title', $post_id);
+		$exp_content = get_field('exp_content', $post_id);
+		$exp_button = get_field('exp_button', $post_id);
+		$exp_button_arialabel = get_field('exp_button_arialabel', $post_id);
+	?>
+	<section id="products" class="explore">
+		<div class="wrapper">
+			<div class="intro">
+				<?php if ($exp_section_title) : ?>
+					<h2 class="title"><?php echo $exp_section_title; ?></h2>
+				<?php endif; ?>
+				<?php echo $exp_content ? $exp_content : ''; ?>
+				<?php if ($exp_button) : ?>
+					<a href="<?php echo $exp_button['url']; ?>" aria-label="<?php echo $exp_button_arialabel ? $exp_button_arialabel : ''; ?>" class="button"><?php echo $exp_button['title']; ?></a>
+				<?php endif; ?>
+			</div>
+
+			<!-- DESKTOP -->
+			<?php if( have_rows('exp_tabs', $post_id) ): ?>
+				<div class="tabs">
+					<div class="tablist" role="tablist" aria-label="">
+						<?php $tab_ctr=0; while( have_rows('exp_tabs', $post_id) ): the_row(); $tab_ctr++;
+							$title = get_sub_field('title');
+							?>
+							<button class="trigger exp" role="tab" aria-selected="<?php echo $tab_ctr == 1 ? 'true' : 'false'; ?>" aria-controls="tab-content-<?php echo $tab_ctr; ?>" id="tab-<?php echo $tab_ctr; ?>" tabindex="<?php echo $tab_ctr == 1 ? '' : '-1'; ?>">
+								<?php echo $title; ?>
+							</button>
+						<?php endwhile; ?>
+					</div>
+					<div class="content">
+						<?php $con_ctr=0; while( have_rows('exp_tabs', $post_id) ): the_row(); $con_ctr++;
+							$content = get_sub_field('content');
+							$button = get_sub_field('button');
+							$button_arialabel = get_sub_field('button_arialabel');
+							$image = get_sub_field('image');
+							?>
+							<div class="tabcontent" tabindex="0" role="tabpanel" id="tab-content-<?php echo $con_ctr; ?>" aria-labelledby="tab-<?php echo $con_ctr; ?>" <?php echo $con_ctr == 1 ? '' : 'hidden'; ?>>
+								<?php if ($image) : ?>
+									<img src="<?php echo $image['sizes']['medium_large']; ?>" alt="<?php echo $image['alt']; ?>">
+								<?php endif; ?>
+								<?php echo $content ? $content : ''; ?>
+								<?php if ($button) : ?>
+									<a href="<?php echo $button['url']; ?>" class="lined" aria-label="<?php echo $button_arialabel ? $button_arialabel : ''; ?>"><?php echo $button['title'] ? $button['title'] : 'Learn More'; ?></a>
+								<?php endif; ?>
+							</div>
+						<?php endwhile; ?>
+					</div>
+					
+				</div>
+
+				<!-- MOBILE -->
+				<div class="mobile">
+					<?php 
+					$mobtab_ctr = 20;
+					while( have_rows('exp_tabs', $post_id) ): the_row(); $mobtab_ctr++;
+						$title = get_sub_field('title');
+						$content = get_sub_field('content');
+						$button = get_sub_field('button');
+						$button_arialabel = get_sub_field('button_arialabel');
+						$image = get_sub_field('image');
+						?>
+						<div class="accordion">
+							<button class="accordion-trigger" id="accordion-<?php echo $mobtab_ctr; ?>" aria-expanded="false" aria-controls="accordion-<?php echo $mobtab_ctr; ?>-content">
+								<?php echo $title; ?>
+								<i class="fa-sharp fa-solid fa-plus-large status"></i>
+							</button>
+							<div class="accordion-content" id="accordion-<?php echo $mobtab_ctr; ?>-content" aria-labelledby="accordion-<?php echo $mobtab_ctr; ?>">
+								<?php if ($image) : ?>
+									<img src="<?php echo $image['sizes']['medium_large']; ?>" alt="<?php echo $image['alt']; ?>" loading="lazy">
+								<?php endif; ?>
+								<div class="txtbox">
+									<?php echo $content ? $content : ''; ?>
+									<?php if ($button) : ?>
+										<a href="<?php echo $button['url']; ?>" class="lined" aria-label="<?php echo $button_arialabel ? $button_arialabel : ''; ?>"><?php echo $button['title'] ? $button['title'] : 'Learn More'; ?></a>
+									<?php endif; ?>
+								</div>
+							</div>
+						</div>
+					<?php endwhile; ?>
+				</div>
+			<?php endif; ?>
+
+		</div>
+	</section>
+
 
 	<!-- PARTNER -->
 	<?php get_template_part('template-parts/section-partner'); ?>
