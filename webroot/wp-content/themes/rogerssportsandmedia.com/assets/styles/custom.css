@@ -79,3 +79,12 @@ main .lined:hover {
 		}
 	}
 }
+
+@media screen and (max-width: 1024px) {
+    .homehero #header-slide-prev {
+        display: none !important;
+    }
+    .homehero #header-slide-next {
+        display: none !important;
+    }
+}
