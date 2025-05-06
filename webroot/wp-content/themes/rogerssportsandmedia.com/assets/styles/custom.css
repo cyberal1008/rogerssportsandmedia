@@ -79,3 +79,7 @@ main .lined:hover {
 		}
 	}
 }
+
+#hero-carousel .slide:before {
+    background: none;
+}
