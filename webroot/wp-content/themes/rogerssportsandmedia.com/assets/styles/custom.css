@@ -83,3 +83,19 @@ main .lined:hover {
 #hero-carousel .slide:before {
     background: none;
 }
+
+#hero-carousel .slide {
+    align-items: end;
+}
+
+@media (min-width: 640px) {
+    #hero-carousel .slide {
+        padding: 8rem 0;
+    }
+}
+
+#hero-carousel .slide .txtbox {
+    max-width: none;
+    padding: 0px 80px 0px;
+    text-align: center;
+}
