@@ -88,3 +88,9 @@ main .lined:hover {
         display: none !important;
     }
 }
+
+@media (min-width: 640px) {
+    #hero-carousel .slide {
+        height: auto;
+    }
+}
