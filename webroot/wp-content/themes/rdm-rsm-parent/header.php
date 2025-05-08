@@ -88,16 +88,16 @@ $lang = 'en';
 </div>
 <header class="nav-down header-container ">
 	<nav class="navbar navbar-expand-md navbar-light nav-bg" role="navigation">
-		<div class="md:tw-w-1/3 nav-logo d-flex align-content-center align-items-center"
+		<div class="md:tw-w-1/4 nav-logo d-flex align-content-center align-items-center"
 				itemscope itemtype="https://schema.org/Organization">
 				<a class="navbar-brand" href="<?php echo esc_url( home_url( '/' ) ); ?>">
-				<img style="height: 60px;" src="<?php echo dirname( get_bloginfo( 'stylesheet_url' ) ); ?>/assets/images/RSM_Logo_Stacked_White.png"  alt="<?php esc_url( bloginfo( 'name' ) ); ?>">
+				<img style="height: 48px;" src="<?php echo dirname( get_bloginfo( 'stylesheet_url' ) ); ?>/assets/images/RSM_Logo_Stacked_White.png"  alt="<?php esc_url( bloginfo( 'name' ) ); ?>">
 				</a>
 		</div>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="<?php esc_attr_e( 'Toggle navigation', 'RSM' ); ?>">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-		<div class="md:tw-w-2/3 main-nav d-flex gb-w align-items-center">
+		<div class="main-nav d-flex gb-w align-items-center">
 			<div class="navbar-main">
 				<?php
 					wp_nav_menu(
@@ -115,21 +115,6 @@ $lang = 'en';
 					?>
 			</div>
 		</div>
-		<!-- <div class="nav-social">
-			<ul class="social-icons">
-				<li><a class="header-social" target="_blank" href="https://twitter.com/RogersMediaPR" aria-label="View Rogers Sports and Media on Twitter">
-					<i class="icon fa-brands fa-square-twitter"></i>
-				</a></li>
-				<li><a class="header-social" target="_blank" href="https://ca.linkedin.com/company/rogers-sports-and-media" aria-label="View Rogers Sports and Media on LinkedIn">
-					<i class="icon fa-brands fa-linkedin"></i>
-				</a></li>
-				<li><a class="header-social" target="_blank" href="https://www.instagram.com/rogerssportsandmedia/" aria-label="View Rogers Sports and Media on Instagram">
-					<i class="icon fa-brands fa-square-instagram"></i>
-				</a></li>
-			</ul>
-		</div> -->
-		<div class="tw-hidden md:tw-block md:tw-w-2/12">&nbsp;</div>
-
 	</nav>
 </header>
 </div>
