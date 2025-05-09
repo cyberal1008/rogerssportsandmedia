@@ -26,12 +26,21 @@
         $feat_img = get_the_post_thumbnail_url($id);
         $alt = get_post_meta ( $feat_img_id, '_wp_attachment_image_alt', true );
         $feat_image_caption = get_field('feat_image_caption');
+
+		$banner_image_id = get_post_meta($id, '_banner_image_id', true);
+		$banner_image_url = wp_get_attachment_image_url($banner_image_id, 'full');
 	?>
-	<section class="tw-relative tw-h-96">
-		<?php if ($feat_img) : ?>
-			<img src="<?php echo $feat_img; ?>" alt="<?php echo $alt ? $alt : ''; ?>" class="tw-object-cover tw-h-full tw-w-full tw-brightness-50">
-		<?php endif; ?>
-	</section>
+	<?php if ($banner_image_url) : ?>
+		<section class="tw-relative tw-flex tw-flex-col tw-justify-center tw-overflow-hidden" style="max-height: 384px;">
+			<img src="<?php echo $banner_image_url; ?>" alt="<?php echo $alt ? $alt : ''; ?>" class="tw-w-full">
+		</section>
+	<?php else: ?>
+		<section class="tw-relative tw-h-96">
+			<?php if ($feat_img) : ?>
+				<img src="<?php echo $feat_img; ?>" alt="<?php echo $alt ? $alt : ''; ?>" class="tw-object-cover tw-h-full tw-w-full tw-brightness-50">
+			<?php endif; ?>
+		</section>
+	<?php endif; ?>
 
 	<main id="content" class="blog-post" role="main">
 		<?php

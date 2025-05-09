@@ -438,3 +438,59 @@ function submit_ad_manager_email_signup_form() {
 }
 add_action('wp_ajax_submit_ad_manager_email_signup_form', 'submit_ad_manager_email_signup_form');
 add_action('wp_ajax_nopriv_submit_ad_manager_email_signup_form', 'submit_ad_manager_email_signup_form');
+
+// Add banner image metabox to post edit screen
+add_action( 'add_meta_boxes', 'banner_image_add_metabox' );
+function banner_image_add_metabox () {
+    add_meta_box( 'bannerimagediv', 'Banner Image', 'banner_image_metabox', 'post', 'side', 'low');
+}
+
+function banner_image_metabox ( $post ) {
+    global $content_width, $_wp_additional_image_sizes;
+
+    $image_id = get_post_meta( $post->ID, '_banner_image_id', true );
+
+    $old_content_width = $content_width;
+    $content_width = 254;
+
+    if ( $image_id && get_post( $image_id ) ) {
+
+        if ( ! isset( $_wp_additional_image_sizes['post-thumbnail'] ) ) {
+            $thumbnail_html = wp_get_attachment_image( $image_id, array( $content_width, $content_width ) );
+        } else {
+            $thumbnail_html = wp_get_attachment_image( $image_id, 'post-thumbnail' );
+        }
+
+        if ( ! empty( $thumbnail_html ) ) {
+            $content = $thumbnail_html;
+            $content .= '<p class="hide-if-no-js"><a href="javascript:;" id="remove_banner_image_button" >Remove banner image</a></p>';
+            $content .= '<input type="hidden" id="upload_banner_image" name="_banner_cover_image" value="' . esc_attr( $image_id ) . '" />';
+        }
+
+        $content_width = $old_content_width;
+    } else {
+
+        $content = '<img src="" style="width:' . esc_attr( $content_width ) . 'px;height:auto;border:0;display:none;" />';
+        $content .= '<p class="hide-if-no-js"><a title="Set banner image" href="javascript:;" id="upload_banner_image_button" id="set-banner-image" data-uploader_title="Choose an image" data-uploader_button_text="Set banner image">Set banner image</a></p>';
+        $content .= '<input type="hidden" id="upload_banner_image" name="_banner_cover_image" value="" />';
+
+    }
+
+    echo $content;
+}
+
+add_action( 'save_post', 'banner_image_save', 10, 1 );
+function banner_image_save ( $post_id ) {
+    if( isset( $_POST['_banner_cover_image'] ) ) {
+        $image_id = (int) $_POST['_banner_cover_image'];
+        update_post_meta( $post_id, '_banner_image_id', $image_id );
+    }
+}
+
+function enqueue_banner_image_script( $hook ) {
+    if ( 'post.php' != $hook ) {
+        return;
+    }
+    wp_enqueue_script( 'banner-image', get_template_directory_uri() . '/assets/scripts/banner-image.js' );
+}
+add_action( 'admin_enqueue_scripts', 'enqueue_banner_image_script' );
