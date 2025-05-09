@@ -110,6 +110,12 @@ main .lined:hover {
     }
 }
 
+@media (min-width: 768px) {
+    #hero-carousel {
+        padding-top: 105px;
+    }
+}
+
 #hero-carousel .slide .txtbox {
     max-width: none;
     padding: 0px 80px 0px;
