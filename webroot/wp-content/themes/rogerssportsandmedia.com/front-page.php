@@ -40,7 +40,7 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 			<div class="wrapper">
 				<div class="top">
 					<?php if ($intro_title) : ?>
-						<h2 class="title"><?php echo $intro_title; ?></h2>
+						<h2 class="title tw-text-black"><?php echo $intro_title; ?></h2>
 					<?php endif; ?>
 					<?php echo $intro_content ? $intro_content : ''; ?>
 				</div>
