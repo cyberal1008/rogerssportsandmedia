@@ -89,3 +89,18 @@ main .lined:hover {
         max-width: none;
     }
 }
+
+@media screen and (max-width: 1024px) {
+    .homehero #header-slide-prev {
+        display: none !important;
+    }
+    .homehero #header-slide-next {
+        display: none !important;
+    }
+}
+
+@media (min-width: 640px) {
+    #hero-carousel .slide {
+        height: auto;
+    }
+}
