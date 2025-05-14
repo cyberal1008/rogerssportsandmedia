@@ -1,14 +1,32 @@
 header {
-  min-width: 320px;
   top: 0;
   transition: top 0.2s ease-in-out;
   width: 100%;
   z-index: 999999999;
-  min-height: 50px;
+  height: 66px;
+  @media (min-width: 768px) {
+    height: 98px;
+  }
+  @media (min-width: 1024px) {
+    height: 106px;
+  }
+  .nav-link, .navbar {
+    padding: 8px 0px;
+  }
+  .nav-down .navbar {
+    @media screen and (max-width: 1024px) {
+      padding-top: 8px;
+    }
+    height: 66px;
+    justify-content: space-between;
+  }
+  .nav-down .navbar.nav-bg-active {
+    width: 100%;
+  }
 }
 .navbar-brand {
-  padding-top: 0;
-  padding-bottom: 0;
+  padding-top: 6px;
+  padding-bottom: 6px;
 }
 .navbar-custom-scroll {
   @media (max-width: 767px) {
@@ -19,6 +37,7 @@ header {
   }
 }
 .header-container {
+  background-color: #da291c;
   .active > a,
   .active > a > span {
     text-shadow: 0 0 0.5px black;
@@ -130,6 +149,9 @@ header {
     .navbar-nav > li {
       margin-left: 20px;
       margin-right: 20px;
+      &:last-child {
+        margin-right: 0;
+      }
     }
   }
   @media (max-width: 1024px) {
@@ -153,10 +175,6 @@ header {
     .nav-bg-active {
       //margin: 10px;
       background: rgba(255, 255, 255, 1) !important;
-    }
-    .nav-bg {
-      background: #da291c !important;
-      border-bottom: 1px solid #da291c;
     }
     #menu-primary {
       position: absolute;
@@ -215,15 +233,7 @@ header {
     padding-inline-start: 0px;
   }
 }
-@include media-breakpoint-down(sm) {
-  .header-container {
-    height: 76px;
-  }
-}
 @include media-breakpoint-up(md) {
-  .header-container {
-    height: 74px;
-  }
   .head-container {
     margin-left: 10%;
   }

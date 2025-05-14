@@ -72,52 +72,55 @@ $lang = 'en';
 </head>
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
-<div class="fixed-top">
-<div class="tw:hidden tw:md:block tw:px-4 tw:lg:px-32 tw:xl:px-40 tw:2xl:px-48 tw:py-2 tw:bg-black">
-	<div class="tw:flex tw:flex-row tw:justify-between">
-		<div>&nbsp;</div>
-		<ul class="tw:flex tw:flex-row tw:md:justify-center tw:md:items-center tw:justify-between tw:md:gap-x-16 tw:text-white tw:mb-0!">
-			<li><a class="tw:text-sm tw:font-semibold" target="_blank" href="https://www.rogerssportsandmedia.com/who-we-are-2/">About Us</a></li>
-			<li><a class="tw:text-sm tw:font-semibold" target="_blank" href="/the-latest">The Latest</a></li>
-			<li><a class="tw:text-sm tw:font-semibold" target="_blank" href="/contact-us">Contact Us</a></li>
-			<li class="tw:hidden tw:md:inline">
-				<a style="border-radius: 0px; padding-top: 8px; padding-bottom: 8px; font-size: var(--tw-text-sm)" class="tw:btn-primary tw:text-sm" target="_blank" href="https://go.rogerssportsandmedia.com/sign-up/with-email">Advertise with Us</a>
-			</li>
-		</ul>
-	</div>
-</div>
-<header class="nav-down header-container ">
-	<nav class="navbar navbar-expand-md navbar-light nav-bg" role="navigation">
-		<div class="md:tw-w-1/4 nav-logo d-flex align-content-center align-items-center"
-				itemscope itemtype="https://schema.org/Organization">
-				<a class="navbar-brand" href="<?php echo esc_url( home_url( '/' ) ); ?>">
-				<img style="height: 48px;" src="<?php echo dirname( get_bloginfo( 'stylesheet_url' ) ); ?>/assets/images/RSM_Logo_Stacked_White.png"  alt="<?php esc_url( bloginfo( 'name' ) ); ?>">
-				</a>
-		</div>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="<?php esc_attr_e( 'Toggle navigation', 'RSM' ); ?>">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="main-nav d-flex gb-w align-items-center">
-			<div class="navbar-main">
-				<?php
-					wp_nav_menu(
-						array(
-							'theme_location'  => 'primary',
-							'depth'           => 2,
-							'container'       => 'div',
-							'container_class' => 'collapse navbar-collapse bg-mob',
-							'container_id'    => 'navbarSupportedContent',
-							'menu_class'      => 'nav navbar-nav',
-							'fallback_cb'     => 'WP_Bootstrap_Navwalker::fallback',
-							'walker'          => new WP_Bootstrap_Navwalker(),
-						)
-					);
-					?>
+<header>
+	<div class="fixed-top">
+		<div class="tw:bg-black">
+			<div class="tw:hidden tw:md:block tw:py-2 wrapper">
+				<div class="tw:flex tw:flex-row tw:justify-between">
+					<div>&nbsp;</div>
+					<ul class="tw:flex tw:flex-row tw:md:justify-center tw:md:items-center tw:justify-between tw:md:gap-x-16 tw:text-white tw:mb-0!">
+						<li><a class="tw:text-sm tw:font-semibold" target="_blank" href="https://www.rogerssportsandmedia.com/who-we-are-2/">About Us</a></li>
+						<li><a class="tw:text-sm tw:font-semibold" target="_blank" href="/the-latest">The Latest</a></li>
+						<li><a class="tw:text-sm tw:font-semibold" target="_blank" href="/contact-us">Contact Us</a></li>
+						<li class="tw:hidden tw:md:inline">
+							<a style="border-radius: 0px; padding-top: 8px; padding-bottom: 8px; font-size: var(--tw-text-sm)" class="tw:btn-primary tw:text-sm" target="_blank" href="https://go.rogerssportsandmedia.com/sign-up/with-email">Advertise with Us</a>
+						</li>
+					</ul>
+				</div>
 			</div>
 		</div>
-	</nav>
+		<div class="nav-down header-container nav-bg">
+			<nav class="navbar navbar-expand-md navbar-light wrapper" role="navigation">
+				<div class="md:tw-w-1/4 nav-logo d-flex align-content-center align-items-center" itemscope itemtype="https://schema.org/Organization">
+					<a class="navbar-brand" href="<?php echo esc_url( home_url( '/' ) ); ?>">
+						<img src="<?php echo dirname( get_bloginfo( 'stylesheet_url' ) ); ?>/assets/images/rsmlogostackedwhite.png"  alt="<?php esc_url( bloginfo( 'name' ) ); ?>" height="36" width="136" />
+					</a>
+				</div>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="<?php esc_attr_e( 'Toggle navigation', 'RSM' ); ?>">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="main-nav d-flex gb-w justify-content-end">
+					<div class="navbar-main">
+						<?php
+							wp_nav_menu(
+								array(
+									'theme_location'  => 'primary',
+									'depth'           => 2,
+									'container'       => 'div',
+									'container_class' => 'collapse navbar-collapse bg-mob',
+									'container_id'    => 'navbarSupportedContent',
+									'menu_class'      => 'nav navbar-nav',
+									'fallback_cb'     => 'WP_Bootstrap_Navwalker::fallback',
+									'walker'          => new WP_Bootstrap_Navwalker(),
+								)
+							);
+							?>
+					</div>
+				</div>
+			</nav>
+		</div>
+	</div>
 </header>
-</div>
 <?php
 if ( is_front_page() ) {
 	get_template_part(

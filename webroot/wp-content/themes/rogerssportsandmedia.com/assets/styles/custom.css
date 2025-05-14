@@ -101,23 +101,38 @@ main .lined:hover {
 
 #hero-carousel .slide {
     align-items: end;
-}
-
-@media (min-width: 640px) {
-    #hero-carousel .slide {
-        height: auto;
-        padding: 8rem 0;
-    }
-}
-
-@media (min-width: 768px) {
-    #hero-carousel {
-        padding-top: 105px;
-    }
+    min-height: unset;
+    height: fit-content;
+    position: relative;
+    padding: 0;
 }
 
 #hero-carousel .slide .txtbox {
     max-width: none;
     padding: 0px 80px 0px;
     text-align: center;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#hero-carousel .slide .txtbox a.button {
+    position: absolute;
+    bottom: 13%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: block;
+}
+
+#hero-carousel .slide .bg {
+    position: static;
+}
+
+#hero-carousel .slide .wrapper {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
 }
