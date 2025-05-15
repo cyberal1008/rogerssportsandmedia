@@ -55,8 +55,8 @@
 
 	<!-- HIGHLIGHTS -->
 	<?php if( have_rows('highlights') ) : ?>
-		<section id="highlights" class="tw-px-4 tw-py-12 md:tw-px-16 lg:tw-px-32 xl:tw-px-48 2xl:tw-px-80 md:tw-py-24" style="background-image: url('<?php echo get_stylesheet_directory_uri(); ?>/assets/images/red_bkg.jpg'); background-size: cover; background-position: center;">
-			<div class="tw-flex tw-flex-col md:tw-flex-row tw-w-full tw-text-white tw-space-y-10 md:tw-space-y-0 md:tw-space-x-12">
+		<section id="highlights" class="tw-bg-black tw-px-4 tw-py-12 md:tw-px-16 lg:tw-px-32 xl:tw-px-48 2xl:tw-px-80 md:tw-py-24">
+			<div class="tw-flex tw-flex-col md:tw-flex-row tw-w-full tw-text-red tw-space-y-10 md:tw-space-y-0 md:tw-space-x-12">
 				<?php $row_id = 0; while( have_rows('highlights') ) : the_row(); $row_id++;
 					$large_text = get_sub_field('large_text');
 					$small_text = get_sub_field('small_text');
@@ -67,7 +67,7 @@
 							<?php if ($large_text) : ?><span class="bold"><?php echo $large_text; ?></span><?php endif; ?>
 						</div>
 						<?php if ($small_text) : ?>
-							<div class="tw-text-lg"><?php echo $small_text; ?></div>
+							<div class="tw-text-lg tw-text-white"><?php echo $small_text; ?></div>
 						<?php endif; ?>
 						<hr class="md:tw-hidden tw-mt-4 tw-w-1/3">
 					</div>

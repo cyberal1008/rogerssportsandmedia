@@ -40,11 +40,6 @@
 			'template-parts/section-intro'
 		);
 	?>
-    <div class="tw-px-4 md:tw-px-16 lg:tw-px-32 xl:tw-px-40 2xl:tw-px-80">
-        <div class="tw-flex tw-justify-center tw-py-12">
-            <img class="tw-w-80" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/tsc_tagline_logo.png" />
-        </div>
-    </div>
     <section class="tw-px-4 tw-py-12 md:tw-px-16 lg:tw-px-32 xl:tw-px-40 2xl:tw-px-60 md:tw-py-10" style="background-image: url('<?php echo get_stylesheet_directory_uri(); ?>/assets/images/bkg_red_01.jpg'); background-size: cover; background-position: center;">
         <div class="tw-flex tw-flex-col md:tw-flex-row tw-w-full tw-text-white tw-space-y-10 md:tw-space-y-0 md:tw-space-x-24">
             <div class="tw-full md:tw-px-2 md:tw-w-1/2">
@@ -72,26 +67,26 @@
             </div>
         </div>
     </section>
-    <section class="tw-w-full tw-bg-red tw-px-4 tw-py-12 md:tw-py-24 md:tw-px-10 lg:tw-px-24">
+    <section class="tw-w-full tw-bg-black tw-px-4 tw-py-12 md:tw-py-24 md:tw-px-10 lg:tw-px-24">
         <div class="tw-grid tw-grid-cols-1 md:tw-grid-cols-5 tw-w-full tw-text-white md:tw-gap-x-8 tw-gap-y-12 md:tw-gap-y-0">
             <div>
-                <div class="tw-text-7xl tw-font-bold tw-text-transparent tw-mb-2" style="-webkit-text-stroke: 2px white;">35+</div>
+                <div class="tw-text-7xl tw-font-bold tw-text-red tw-mb-2">35+</div>
                 <div class="tw-text-xl">TSC was born in 1987</div>
             </div>
             <div>
-                <div class="tw-text-7xl tw-font-bold tw-text-transparent tw-mb-2" style="-webkit-text-stroke: 2px white;">10M</div>
+                <div class="tw-text-7xl tw-font-bold tw-text-red tw-mb-2">10M</div>
                 <div class="tw-text-xl">Distributed nationally in 10M households</div>
             </div>
             <div>
-                <div class="tw-text-7xl tw-font-bold tw-text-transparent tw-mb-2" style="-webkit-text-stroke: 2px white;">630K</div>
+                <div class="tw-text-7xl tw-font-bold tw-text-red tw-mb-2">630K</div>
                 <div class="tw-text-xl">Weekly viewers</div>
             </div>
             <div>
-                <div class="tw-text-7xl tw-font-bold tw-text-transparent tw-mb-2" style="-webkit-text-stroke: 2px white;">4.2M</div>
+                <div class="tw-text-7xl tw-font-bold tw-text-red tw-mb-2">4.2M</div>
                 <div class="tw-text-xl">Web visits per month & Over 70% of sales online</div>
             </div>
             <div>
-                <div class="tw-text-7xl tw-font-bold tw-text-transparent tw-mb-2" style="-webkit-text-stroke: 2px white;">10K</div>
+                <div class="tw-text-7xl tw-font-bold tw-text-red tw-mb-2">10K</div>
                 <div class="tw-text-xl">Orders shipped everyday</div>
             </div>
         </div>

@@ -72,14 +72,14 @@
 				</div>
 			</section>
 
-			<section id="highlights" class="tw-px-4 tw-py-12 md:tw-px-16 lg:tw-px-32 xl:tw-px-48 2xl:tw-px-80 md:tw-py-24" style="background-image: url('<?php echo get_stylesheet_directory_uri(); ?>/assets/images/red_bkg.jpg'); background-size: cover; background-position: center;">
+			<section id="highlights" class="tw-bg-black tw-px-4 tw-py-12 md:tw-px-16 lg:tw-px-32 xl:tw-px-48 2xl:tw-px-80 md:tw-py-24">
 				<div class="tw-grid tw-grid-cols-1 md:tw-grid-cols-3 tw-text-white tw-gap-y-10 md:tw-gap-x-16">
 					<?php if( have_rows('yellow_circle') ) : while( have_rows('yellow_circle') ) : the_row(); 
 						$number = get_sub_field('number');
 						$caption = get_sub_field('caption');
 					?>
 						<div class="tw-full">
-							<div class="tw-text-7xl tw-font-bold tw-text-transparent tw-mb-1" style="-webkit-text-stroke: 2px white;">
+							<div class="tw-text-7xl tw-font-bold tw-text-red tw-mb-1">
 								<span class="num scroll-counter" data-counter-time="1200"><?php echo $number; ?></span>
 							</div>
 							<?php if ($caption) : ?>
@@ -92,7 +92,7 @@
 						$caption = get_sub_field('caption');
 					?>
 						<div class="tw-full">
-							<div class="tw-text-7xl tw-font-bold tw-text-transparent tw-mb-1" style="-webkit-text-stroke: 2px white;">
+							<div class="tw-text-7xl tw-font-bold tw-text-red tw-mb-1">
 								<span class="num scroll-counter" data-counter-time="1200"><?php echo $number; ?></span><span class="sign bold"><sup>%</sup></span>
 							</div>
 							<?php if ($caption) : ?>
@@ -105,7 +105,7 @@
 						$caption = get_sub_field('caption');
 					?>
 						<div class="tw-full">
-							<div class="tw-text-7xl tw-font-bold tw-text-transparent tw-mb-1" style="-webkit-text-stroke: 2px white;">
+							<div class="tw-text-7xl tw-font-bold tw-text-red tw-mb-1">
 								<span class="sign bold">#</span><span class="num scroll-counter" data-counter-time="1200"><?php echo $number; ?></span>
 							</div>
 							<?php if ($caption) : ?>
@@ -119,7 +119,7 @@
 						$caption = get_sub_field('caption');
 					?>
 						<div class="tw-full">
-							<div class="tw-text-7xl tw-font-bold tw-text-transparent tw-mb-1" style="-webkit-text-stroke: 2px white;">
+							<div class="tw-text-7xl tw-font-bold tw-text-red tw-mb-1">
 								<span class="num scroll-counter" data-counter-time="1200"><?php echo $number; ?></span><span class="sign bold"><?php echo $number_text; ?></span>
 							</div>
 							<?php if ($caption) : ?>
@@ -133,7 +133,7 @@
 						$caption = get_sub_field('caption');
 					?>
 						<div class="tw-full">
-							<div class="tw-text-7xl tw-font-bold tw-text-transparent tw-mb-1" style="-webkit-text-stroke: 2px white;">
+							<div class="tw-text-7xl tw-font-bold tw-text-red tw-mb-1">
 								<span class="num scroll-counter" data-counter-time="1200"><?php echo $number; ?></span><span class="sign bold"><?php echo $number_text; ?></span>
 							</div>
 							<?php if ($caption) : ?>
