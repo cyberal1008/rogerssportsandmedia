@@ -83,7 +83,7 @@ $lang = 'en';
 						<li><a class="tw:text-sm tw:font-semibold" target="_blank" href="/the-latest">The Latest</a></li>
 						<li><a class="tw:text-sm tw:font-semibold" target="_blank" href="/contact-us">Contact Us</a></li>
 						<li class="tw:hidden tw:md:inline">
-							<a style="border-radius: 0px; padding-top: 8px; padding-bottom: 8px; font-size: var(--tw-text-sm); background-color: #fff; color: #000" class="tw:btn-primary tw:bg-white tw:text-sm" target="_blank" href="https://go.rogerssportsandmedia.com/sign-up/with-email">Advertise with Us</a>
+							<a style="border-radius: 0px; padding-top: 8px; padding-bottom: 8px; font-size: var(--tw-text-sm); background-color: #fff; color: #000" class="tw:btn-secondary tw:text-sm" target="_blank" href="https://go.rogerssportsandmedia.com/sign-up/with-email">Advertise with Us</a>
 						</li>
 					</ul>
 				</div>
