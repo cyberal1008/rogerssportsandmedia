@@ -35,7 +35,7 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 	$intro_column_4 = get_field('intro_column_4');
 	?>
 	<section>
-		<section style="padding: 100px 0 0" >
+		<section style="padding: 50px 0 0" >
 			<section id="our-difference" class="our-difference">
 			<div class="wrapper">
 				<div class="top">

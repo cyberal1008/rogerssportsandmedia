@@ -157,9 +157,25 @@ if ( is_front_page() ) {
 ?>
 	<?php 
 	if ( ! is_page() || ! is_page_template( 'page-contactus.php' ) ) { ?>
-		<a href="<?php echo get_home_url(); ?>/contact-us" class="button fixedbtn" role="region" aria-label="Advertise with Us">
+		<a href="<?php echo get_home_url(); ?>/contact-us" class="button fixedbtn" role="region" id="advertise-btn" aria-label="Advertise with Us">
 			Advertise With Us
 		</a>
+		<script>
+			const target = document.getElementById("hero-carousel");
+			const trigger = document.getElementById("advertise-btn");
+			function toggleAdvertiseBtn() {
+				const rect = target.getBoundingClientRect();
+				const distanceFromBottom = window.innerHeight - rect.bottom;
+
+				if (distanceFromBottom >= 100) {
+					trigger.style.display = "block";
+				} else {
+					trigger.style.display = "none";
+				}
+			}
+			window.addEventListener("scroll", toggleAdvertiseBtn);
+			window.addEventListener("load", toggleAdvertiseBtn);
+		</script>
 	<?php } ?>
 
 <?php if ( is_singular('event') ) { ?>
