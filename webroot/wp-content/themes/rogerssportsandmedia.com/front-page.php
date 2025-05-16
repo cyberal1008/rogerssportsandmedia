@@ -180,7 +180,7 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 			$disc_button_arialabel = get_field('disc_button_arialabel');
 			$disc_image = get_field('disc_image');
 		?>
-		<section class="tw-w-full tw-text-white tw-px-4 tw-py-12 md:tw-py-24 md:tw-px-12 lg:tw-px-24 xl:tw-px-40 2xl:tw-px-80" style="background-image: url('<?php echo get_stylesheet_directory_uri(); ?>/assets/images/bkg_red_01.jpg'); background-size: cover; background-position: center;">
+		<section class="tw-w-full tw-bg-black tw-text-white tw-px-4 tw-py-12 md:tw-py-24 md:tw-px-12 lg:tw-px-24 xl:tw-px-40 2xl:tw-px-80">
 			<div class="tw-flex tw-flex-col md:tw-flex-row md:tw-space-x-20">
 				<div class="tw-w-full md:tw-w-1/3 tw-mb-12 md:tw-mb-0 tw-flex tw-items-center tw-justify-center">
 					<?php if ($disc_image) : ?>
