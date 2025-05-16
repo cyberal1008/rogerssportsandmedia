@@ -9,7 +9,7 @@
     <div class="tw-relative">
         <div class="tw-px-6 md:tw-px-16 tw-py-6 md:tw-py-10 tw-mb-8">
             <?php if ($intro_title) : ?>
-                <div class="tw-text-3xl md:tw-text-4xl tw-font-bold <?php $intro_title_two ? '' : 'tw-mb-6'; ?>"><?php echo $intro_title; ?></div>
+                <div class="tw-text-3xl md:tw-text-4xl tw-font-bold <?php echo isset($intro_title_two) ? '' : 'tw-mb-6'; ?>"><?php echo $intro_title; ?></div>
             <?php endif; ?>
             <?php if ($intro_title_two) : ?>
                 <div class="tw-text-3xl md:tw-text-4xl tw-font-bold tw-mb-6"><?php echo $intro_title_two; ?></div>
