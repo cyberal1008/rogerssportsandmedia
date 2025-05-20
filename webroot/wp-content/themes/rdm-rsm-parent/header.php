@@ -83,7 +83,7 @@ $lang = 'en';
 						<li><a class="tw:text-sm tw:font-semibold" target="_blank" href="/the-latest">The Latest</a></li>
 						<li><a class="tw:text-sm tw:font-semibold" target="_blank" href="/contact-us">Contact Us</a></li>
 						<li class="tw:hidden tw:md:inline">
-							<a style="border-radius: 0px; padding-top: 8px; padding-bottom: 8px; font-size: var(--tw-text-sm); background-color: #fff; color: #000" class="tw:btn-primary tw:bg-white tw:text-sm" target="_blank" href="https://go.rogerssportsandmedia.com/sign-up/with-email">Advertise with Us</a>
+							<a style="border-radius: 0px; padding-top: 8px; padding-bottom: 8px; font-size: var(--tw-text-sm)" class="tw:btn-primary tw:text-sm" target="_blank" href="https://go.rogerssportsandmedia.com/sign-up/with-email">Advertise with Us</a>
 						</li>
 					</ul>
 				</div>
@@ -180,6 +180,6 @@ if ( is_front_page() ) {
 
 <?php if ( is_singular('event') ) { ?>
 	<div class="wrapper pt-5">
-<?php } else if (!is_home() && !is_front_page() && !is_page_template( 'page_whatwedo.php' ) && !is_page_template( 'page_upfront.php' ) && !is_page_template( 'page_sitemap.php' ) && !is_page_template( 'page_advanced-solutions.php' ) && !is_page_template( 'page_creative-solutions.php' ) && !is_page_template( 'page_ooh.php' ) && !is_page_template( 'page_sports.php' ) && !is_page_template( 'page_tvstreaming.php' ) && !is_page_template( 'page_tv.php' ) && !is_page_template( 'page_disneyplus.php' ) && !is_page_template( 'page_tsc.php' ) && !is_page_template( 'page_whoweare.php' ) && !is_page_template( 'page_contactus.php' ) && !is_page_template( 'page_podcasts.php' ) && !is_page_template( 'page_citytv.php' ) && !is_page_template( 'page_tubi.php' ) && !is_page_template( 'page_sportsnetplus.php' ) && !is_page_template( 'page_aboutus.php' ) && !is_singular('post') && !is_category()) { ?>
+<?php } else if (!is_home() && !is_front_page() && !is_page_template( 'page_whatwedo.php' ) && !is_page_template( 'page_upfront.php' ) && !is_page_template( 'page_sitemap.php' ) && !is_page_template( 'page_advanced-solutions.php' ) && !is_page_template( 'page_creative-solutions.php' ) && !is_page_template( 'page_ooh.php' ) && !is_page_template( 'page_sports.php' ) && !is_page_template( 'page_tvstreaming.php' ) && !is_page_template( 'page_tv.php' ) && !is_page_template( 'page_disneyplus.php' ) && !is_page_template( 'page_tsc.php' ) && !is_page_template( 'page_whoweare.php' ) && !is_page_template( 'page_contactus.php' ) && !is_page_template( 'page_podcasts.php' ) && !is_page_template( 'page_tubi.php' ) && !is_page_template( 'page_sportsnetplus.php' ) && !is_singular('post') && !is_category()) { ?>
 	<div class="wrapper ">
 <?php } ?>
