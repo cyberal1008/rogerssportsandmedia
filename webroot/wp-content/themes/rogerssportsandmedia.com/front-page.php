@@ -234,9 +234,8 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 			?>
 			<div class="grid">
 				<?php if ( $the_query->have_posts() ) : while ( $the_query->have_posts() ) : $the_query->the_post();
-					$featured_img_url   = get_the_post_thumbnail_url( $post_id, 'wide-577' );
+					$featured_img_url   = get_the_post_thumbnail_url( null, 'wide-577' );
 					$categories         = get_the_category();
-					$post_meta          = get_post_meta( $post_id, 'blog', true );
 					?>
 					<div class="item">
 						<?php $title_formatted = ucwords(strtolower(get_the_title())); ?>
