@@ -1,14 +1,32 @@
 header {
-  min-width: 320px;
   top: 0;
   transition: top 0.2s ease-in-out;
   width: 100%;
   z-index: 999999999;
-  min-height: 50px;
+  height: 66px;
+  @media (min-width: 768px) {
+    height: 98px;
+  }
+  @media (min-width: 1024px) {
+    height: 106px;
+  }
+  .nav-link, .navbar {
+    padding: 8px 0px;
+  }
+  .nav-down .navbar {
+    @media screen and (max-width: 1024px) {
+      padding-top: 8px;
+    }
+    height: 66px;
+    justify-content: space-between;
+  }
+  .nav-down .navbar.nav-bg-active {
+    width: 100%;
+  }
 }
 .navbar-brand {
-  padding-top: 0;
-  padding-bottom: 0;
+  padding-top: 6px;
+  padding-bottom: 6px;
 }
 .navbar-custom-scroll {
   @media (max-width: 767px) {
@@ -19,6 +37,7 @@ header {
   }
 }
 .header-container {
+  background-color: #da291c;
   .active > a,
   .active > a > span {
     text-shadow: 0 0 0.5px black;
@@ -38,7 +57,18 @@ header {
   }
   .navbar-light .navbar-nav .nav-link,
   .menu-item a span {
-    font-family: $ted-next;
+    font-family: $ted-next-sb;
+    font-size: 14px !important;
+    font-weight: 400;
+    @media (min-width: 768px) {
+      color: #fff !important;
+    }
+    @media (min-width: 941px) {
+      font-size: 16px !important;
+    }
+  }
+  .dropdown-menu .menu-item a span {
+    font-family: $ted-next-sb;
     color: #333333 !important;
     font-size: 16px !important;
     font-weight: 400;
@@ -78,7 +108,7 @@ header {
     height: 17px;
     background-image: none !important;
     position: relative;
-    border-bottom: 1px solid #000;
+    border-bottom: 1px solid #fff;
     transition: all 300ms linear;
   }
   .navbar-light .navbar-toggler-icon:after,
@@ -96,6 +126,12 @@ header {
   }
   .navbar-light .navbar-toggler-icon:after {
     top: 8px;
+  }
+  .navbar-toggler[aria-expanded="false"] .navbar-toggler-icon:before {
+    background-color: #fff;
+  }
+  .navbar-toggler[aria-expanded="false"] .navbar-toggler-icon:after {
+    background-color: #fff;
   }
   .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon:after {
     transform: rotate(45deg);
@@ -116,6 +152,9 @@ header {
     .navbar-nav > li {
       margin-left: 20px;
       margin-right: 20px;
+      &:last-child {
+        margin-right: 0;
+      }
     }
   }
   @media (max-width: 1024px) {
@@ -140,10 +179,6 @@ header {
       //margin: 10px;
       background: rgba(255, 255, 255, 1) !important;
     }
-    .nav-bg {
-      background: #fff !important;
-      border-bottom: 1px solid #e6e6e6;
-    }
     #menu-primary {
       position: absolute;
       top: 0px;
@@ -164,6 +199,7 @@ header {
       font-family: $ted-next-sb;
       font-size: 24px !important;
       font-weight: 800;
+      color: #333;
     }
     .dropdown-mob li a span {
       color: #666 !important;
@@ -175,10 +211,11 @@ header {
     }
     #menu-primary {
       max-width: 769px;
+      color: #fff;
     }
     .nav-bg:not(li) {
-      background: #fff !important;
-      border-bottom: 1px solid #e6e6e6;
+      background: #da291c !important;
+      border-bottom: 1px solid #da291c;
     }
     .dropdown-menu {
       left: 50% !important;
@@ -199,15 +236,7 @@ header {
     padding-inline-start: 0px;
   }
 }
-@include media-breakpoint-down(sm) {
-  .header-container {
-    height: 76px;
-  }
-}
 @include media-breakpoint-up(md) {
-  .header-container {
-    height: 74px;
-  }
   .head-container {
     margin-left: 10%;
   }
