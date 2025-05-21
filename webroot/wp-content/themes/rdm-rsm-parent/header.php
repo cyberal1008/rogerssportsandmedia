@@ -75,15 +75,15 @@ $lang = 'en';
 <header>
 	<div class="fixed-top">
 		<div class="tw:bg-black">
-			<div class="tw:hidden tw:md:block tw:py-2 wrapper">
+			<div class="tw:hidden tw:md:block wrapper">
 				<div class="tw:flex tw:flex-row tw:justify-between">
 					<div>&nbsp;</div>
-					<ul class="tw:flex tw:flex-row tw:md:justify-center tw:md:items-center tw:justify-between tw:md:gap-x-16 tw:text-white tw:mb-0!">
+					<ul class="tw:flex tw:flex-row tw:md:justify-center tw:md:items-center tw:justify-between tw:md:gap-x-16 tw:text-white" style="padding: 8px; min-height: 40px;">
 						<li><a class="tw:text-sm tw:font-semibold" target="_blank" href="https://www.rogerssportsandmedia.com/who-we-are-2/">About Us</a></li>
 						<li><a class="tw:text-sm tw:font-semibold" target="_blank" href="/the-latest">The Latest</a></li>
 						<li><a class="tw:text-sm tw:font-semibold" target="_blank" href="/contact-us">Contact Us</a></li>
 						<li class="tw:hidden tw:md:inline">
-							<a style="border-radius: 0px; padding-top: 8px; padding-bottom: 8px; font-size: var(--tw-text-sm)" class="tw:btn-primary tw:text-sm" target="_blank" href="https://go.rogerssportsandmedia.com/sign-up/with-email">Advertise with Us</a>
+							<a style="border-radius: 0px; padding-top: 8px; padding-bottom: 8px; font-size: 14px" class="tw:btn-primary tw:text-sm" target="_blank" href="https://go.rogerssportsandmedia.com/sign-up/with-email">Advertise with Us</a>
 						</li>
 					</ul>
 				</div>
