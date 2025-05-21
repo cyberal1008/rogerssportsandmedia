@@ -61,11 +61,11 @@
 		</div>
 	</section>
 
-		<!-- HIGHLIGHTS -->
+	<!-- HIGHLIGHTS -->
 	<?php if( have_rows('highlights') ) : 
 		$highlights_bottom_text = get_field('highlights_bottom_text');
-	?>
-		<section id="highlights" class="tw-bg-gray tw-py-12 tw-px-4 md:tw-px-16 lg:tw-px-32 xl:tw-px-40 2xl:tw-px-96">
+		?>
+		<section id="highlights" class="tw-py-12 tw-px-4 md:tw-px-16 lg:tw-px-32 xl:tw-px-40 2xl:tw-px-96 md:tw-py-24" style="background: #000;">
             <div class="tw-grid tw-grid-cols-1 md:tw-grid-cols-3 tw-text-white tw-gap-y-10 md:tw-gap-x-16 tw-mb-6">
 				<?php while( have_rows('highlights') ) : the_row();
 					$number = get_sub_field('number');
@@ -78,13 +78,13 @@
 							<span class="num scroll-counter" data-counter-time="1200"><?php echo $number; ?></span><?php if ($number_text) : ?><span class="sign bold"><?php echo $number_text; ?></span><?php endif; ?>
 						</div>
 						<?php if ($text) : ?>
-							<div class="tw-text-gray-dark tw-text-lg"><?php echo $text; ?></div>
+							<div class="tw-text-white tw-text-lg"><?php echo $text; ?></div>
 						<?php endif; ?>
 					</div>
 				<?php endwhile; ?>
             </div>
 			<?php if ($highlights_bottom_text) : ?>
-				<div class="tw-font-bold tw-text-gray-dark tw-text-4xl">
+				<div class="tw-font-bold tw-text-white tw-text-4xl">
 					<?php echo $highlights_bottom_text; ?>
 				</div>
 			<?php endif; ?>

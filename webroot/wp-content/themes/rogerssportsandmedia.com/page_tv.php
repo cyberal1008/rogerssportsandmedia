@@ -68,7 +68,7 @@
 
 	<!-- COUNTERS -->
 	<?php if( have_rows('highlights') ) : ?>
-		<section id="highlights" class="tw-px-4 tw-py-12 md:tw-px-16 lg:tw-px-32 xl:tw-px-48 2xl:tw-px-80 md:tw-py-24" style="background-image: url('<?php echo get_stylesheet_directory_uri(); ?>/assets/images/red_bkg.jpg'); background-size: cover; background-position: center;">
+		<section id="highlights" class="tw-bg-black tw-px-4 tw-py-12 md:tw-px-16 lg:tw-px-32 xl:tw-px-48 2xl:tw-px-80 md:tw-py-24">
 			<div class="tw-grid tw-grid-cols-1 md:tw-grid-cols-3 tw-text-white tw-gap-y-10 md:tw-gap-x-16">
 				<?php while( have_rows('highlights') ) : the_row(); 
 					$number = get_sub_field('number');
@@ -77,7 +77,7 @@
 					$circle_color = get_sub_field('circle_color');
 				?>
 					<div class="tw-full">
-						<div class="tw-text-7xl tw-font-bold tw-text-transparent tw-mb-1" style="-webkit-text-stroke: 2px white;">
+						<div class="tw-text-red tw-text-7xl tw-font-bold tw-mb-1">
 							<span class="num scroll-counter" data-counter-time="1200"><?php echo $number; ?></span><?php if ($number_text) : ?><span class="sign bold"><?php echo $number_text; ?></span><?php endif; ?>
 						</div>
 						<?php if ($text) : ?>
