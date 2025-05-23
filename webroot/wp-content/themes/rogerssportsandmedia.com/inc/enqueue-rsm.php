@@ -14,7 +14,6 @@ if ( ! function_exists( 'load_rsm_stylesheet' ) ) {
 	 * Load theme's CSS & script sources.
 	 */
 	function load_rsm_stylesheet() {
-
 		// Get the theme data.
 		$the_theme     = wp_get_theme();
 		$theme_version = $the_theme->get( 'Version' );
@@ -24,13 +23,22 @@ if ( ! function_exists( 'load_rsm_stylesheet' ) ) {
 
 		wp_enqueue_style( $parent_connect, get_template_directory_uri() . '/style.css', array(), $css_version );
 		wp_enqueue_style( 'child-connect', get_stylesheet_directory_uri() . '/style.css', array(), $css_version );
-		wp_enqueue_style( 'child-styles', get_stylesheet_directory_uri() . '/assets/style.css', array(), $css_version );
-
+		wp_enqueue_style( 'child-styles-1', get_stylesheet_directory_uri() . '/assets/style.css', array(), $css_version );
+		wp_enqueue_style( 'child-styles-2', get_stylesheet_directory_uri() . '/assets/home/main.min.css', array('parent-styles'), $css_version );
+		wp_enqueue_style( 'child-styles-3', get_stylesheet_directory_uri() . '/assets/styles/reskin-alt.css', array('parent-styles'), $css_version );
+		
 		$js_version = $theme_version . '.' . filemtime( get_stylesheet_directory() . '/assets/rsm.min.js' );
 		wp_enqueue_script( 'child-scripts', get_stylesheet_directory_uri() . '/assets/rsm.min.js', array(), $js_version, true );
-
-		if ( is_page() && ( is_page_template( 'page_upfront.php' ) || is_page_template( 'page_tv.php' ) || is_page_template( 'page_tubi.php' ) ) ) {
+		if ( is_page() && (
+			is_page_template( 'page_upfront.php' ) ||
+			is_page_template( 'page_tv.php' ) ||
+			is_page_template( 'page_tubi.php' )
+		)) {
 			wp_enqueue_script( 'programslider-js', get_stylesheet_directory_uri() . "/assets/home/scripts/programslider.js", array(), $js_version, true );
+		}
+
+		if ( is_page_template( 'page_hgtv.php' ) ) {
+			wp_enqueue_script( 'showsslider-js', get_stylesheet_directory_uri() . "/assets/home/scripts/showsslider.js", array(), $js_version, true );
 		}
 	}
 } // endif function_exists( 'load_rsm_stylesheet' ).

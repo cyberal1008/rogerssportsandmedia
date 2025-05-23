@@ -76,7 +76,7 @@ $tv_posts = new WP_Query(
 					'shows-category'    => $shows_category,
 					'days-category'     => $days,
 				),
-				'slug'		=> $program_default_category->slug
+				'slug'		=> !empty( $program_default_category ) ? $program_default_category->slug : null
 			)
 		);
 		?>
@@ -146,10 +146,18 @@ $tv_posts = new WP_Query(
 					<?php
 						$video_embed_code = get_field('video_embed_code', $post->ID);
 						$network_id = get_post_meta( $post->ID, '_yoast_wpseo_primary_rsm_network');
-						$network = get_term($network_id[0])->name;
+						if( !empty( $network_id[0] ) ) {
+							$network_term = get_term($network_id[0]);
+							if( !empty( $network_term ) ) {
+								$network = $network_term->name;
+							}
+						}
 						$day_id = get_post_meta( $post->ID, '_yoast_wpseo_primary_rsm_day');
-						if(count($day_id) > 0) {
-							$day = get_term($day_id[0])->name;
+						if( !empty( $day_id[0] ) ) {
+							$day_term = get_term($day_id[0]);
+							if( !empty( $day_term ) ) {
+								$day = $day_term->name;
+							}
 						}
 					?>
 					<div class="inner">
