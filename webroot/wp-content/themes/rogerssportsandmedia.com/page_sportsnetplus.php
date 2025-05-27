@@ -29,13 +29,7 @@
 
 	<!-- HERO -->
 	<?php
-		get_template_part(
-			'template-parts/section-hero', null,
-			array(
-				'subtitle'		=> '',
-				'title'     => ' ',
-			)
-		);
+		get_template_part('template-parts/section-hero');
 	?>
 	
 	<!-- INTRO -->

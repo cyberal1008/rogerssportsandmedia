@@ -14,24 +14,8 @@ get_header();
 
 	<!-- HERO -->
 	<?php
-        if (is_category()) : 
-            $term = get_queried_object();
-            $hero_image = get_field('hero_image', $term);
-            $hero_mobile_image = get_field('hero_mobile_image', $term);
-        else :
-            $hero_image = get_field('hero_image');
-            $hero_mobile_image = get_field('hero_mobile_image');
-        endif;
-        
-        if ( $hero_image && $hero_mobile_image ) {
-            ?>
-            <section class="tw-w-full">
-                <img class="tw-hidden md:tw-block" src="<?php echo $hero_image['url']; ?>" />
-                <img class="md:tw-hidden" src="<?php echo $hero_mobile_image['url']; ?>" alt="<?php echo $hero_image['alt']; ?>" />
-            </section>
-            <?php
-        }
-    ?>
+	get_template_part('template-parts/section-hero');
+	?>
 
 	<!-- INTRO -->
     <?php
