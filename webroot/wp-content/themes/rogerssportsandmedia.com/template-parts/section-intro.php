@@ -4,9 +4,8 @@
     $intro_content = get_field('intro_content');
     $button_type = get_field('intro_button_type');
 ?>
-<section class="tw-bg-gray tw-px-4 md:tw-px-16 lg:tw-px-32 xl:tw-px-40 2xl:tw-px-80">
-    <div>&nbsp;</div>
-    <div class="tw-relative">
+<section class="tw-bg-gray">
+    <div class="tw-relative wrapper">
         <div class="tw-py-6 md:tw-py-10 tw-mb-8">
             <?php if ($intro_title) : ?>
                 <div class="tw-text-3xl md:tw-text-4xl tw-font-bold <?php echo isset($intro_title_two) ? '' : 'tw-mb-6'; ?>"><?php echo $intro_title; ?></div>

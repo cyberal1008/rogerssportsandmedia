@@ -33,8 +33,7 @@
             get_template_part(
                 'template-parts/section-hero', null,
                 array(
-                    'subtitle'		=> '',
-                    'title'     => isset($hero_title) ? $hero_title : get_the_title(),
+                    'title' => get_the_title(),
                 )
             );
         ?>
