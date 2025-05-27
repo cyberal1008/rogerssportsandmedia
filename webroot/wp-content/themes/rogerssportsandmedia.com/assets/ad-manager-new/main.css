@@ -1001,6 +1001,11 @@
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
+  .tw\:md\:grid-cols-2 {
+    @media (width >= 48rem) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
   .tw\:md\:grid-cols-3 {
     @media (width >= 48rem) {
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1093,6 +1098,11 @@
       padding-left: calc(var(--tw-spacing) * 32);
     }
   }
+  .tw\:lg\:grid-cols-3 {
+    @media (width >= 64rem) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
   .tw\:xl\:block {
     @media (width >= 80rem) {
       display: block;
@@ -1101,6 +1111,11 @@
   .tw\:xl\:grid-cols-3 {
     @media (width >= 80rem) {
       grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  .tw\:xl\:grid-cols-4 {
+    @media (width >= 80rem) {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
     }
   }
   .tw\:xl\:px-40 {
@@ -1121,6 +1136,11 @@
   .tw\:2xl\:pl-48 {
     @media (width >= 96rem) {
       padding-left: calc(var(--tw-spacing) * 48);
+    }
+  }
+  .tw\:2xl\:grid-cols-5 {
+    @media (width >= 96rem) {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
     }
   }
   .tw\:\[\&\>\*\:nth-child\(even\)\]\:md\:border-x {

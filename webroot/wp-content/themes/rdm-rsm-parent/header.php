@@ -201,6 +201,7 @@ if ( is_front_page() ) {
 		!is_page_template( 'page_podcasts.php' ) &&
 		!is_page_template( 'page_tubi.php' ) &&
 		!is_page_template( 'page_sportsnetplus.php' ) &&
+		!is_page_template( 'page_aboutus.php' ) &&
 		!is_page_template( 'page_hgtv.php' ) &&
 		!is_singular('post') && !is_category()
 	) { ?>
