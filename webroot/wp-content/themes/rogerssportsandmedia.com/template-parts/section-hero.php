@@ -14,12 +14,12 @@ endif;
 	<?php
 	if ( $hero_image ) {
 		?>
-		<img src="<?php echo $hero_mobile_image['url']; ?>" alt="<?php echo $hero_image['alt']; ?>" class="md:tw-hidden tw-brightness-50" style="width: 100%;">
+		<img src="<?php echo $hero_mobile_image['url']; ?>" alt="<?php echo $hero_image['alt']; ?>" class="md:tw-hidden" style="width: 100%;">
 		<?php
 	}
 	if ( $hero_mobile_image ) {
 		?>
-		<img src="<?php echo $hero_image['url']; ?>" alt="<?php echo $hero_image['alt']; ?>" class="tw-hidden md:tw-block tw-brightness-50" style="width: 100%;">
+		<img src="<?php echo $hero_image['url']; ?>" alt="<?php echo $hero_image['alt']; ?>" class="tw-hidden md:tw-block" style="width: 100%;">
 		<?php
 	}
 	if ( !empty( $args['title'] ) ) {

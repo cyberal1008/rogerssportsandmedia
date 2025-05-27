@@ -22,8 +22,6 @@ get_header();
         get_template_part('template-parts/section-intro');
     ?>
 
-    <section class="tw-mt-12">&nbsp;</section>
-
     <!-- Show Sliders -->
 	<?php
 	$show_sliders = get_field( 'show_sliders' );
@@ -41,7 +39,7 @@ get_header();
 			$slider_shows = $slider['shows'];
 
 			?>
-			<section class="programming" style="background-color: <?php echo $slider_background_color; ?>; color: <?php echo $slider_text_color; ?>; margin: 0; padding: 100px 0;">
+			<section class="programming" style="background-color: <?php echo $slider_background_color; ?>; color: <?php echo $slider_text_color; ?>; margin: 0; padding: 50px 0;">
 				<div class="portfolio-main">
 					<div class="portfolio-page">
 						<div class="inner wrapper">
