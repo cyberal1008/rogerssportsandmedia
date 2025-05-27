@@ -54,7 +54,7 @@
 		$show_section_content = get_field('shows_content_copy');
         $shows_section_button = get_field('shows_section_button');
 	?>
-        <section class="tw-bg-white tw-px-8 md:tw-px-16 lg:tw-px-32 xl:tw-px-40 2xl:tw-px-80 tw-py-12">
+        <section class="tw-bg-black tw-text-white tw-px-4 md:tw-px-16 lg:tw-px-32 xl:tw-px-40 2xl:tw-px-80 tw-py-12">
             <div class="tw-text-3xl md:tw-text-4xl tw-font-bold tw-mb-4"><?php echo $shows_section_title; ?></div>
             <div class="tw-mb-6">
                 <?php echo $show_section_content; ?>
@@ -64,24 +64,32 @@
                     <a href="<?php echo $shows_section_button['url']; ?>" class="button" aria-label="<?php echo $shows_section_button['title'] ? $shows_section_button['title'] : 'Download Schedule'; ?>" target="<?php echo $shows_section_button['target'] ? $shows_section_button['target'] : '_self'; ?>"><?php echo $shows_section_button['title'] ? $shows_section_button['title'] : 'Download Schedule'; ?></a>
                 </div>
             <?php endif; ?>
-            <div class="tw-grid tw-grid-cols-2 sm:tw-grid-cols-3 md:tw-grid-cols-5 tw-gap-8">
-                <?php while( have_rows('shows') ) : the_row(); 
-                    $show_title = get_sub_field('show_title');
-                    $show_image = get_sub_field('show_image');
-                ?>
-                    <div>
-                        <img class="tw-mb-1" src="<?php echo $show_image['url']; ?>" alt="<?php echo $show_image['alt']; ?>" loading="lazy">
-                        <div class="tw-text-center tw-text-base md:tw-text-lg"><?php echo $show_title; ?></div>
+            <div class="programming slider">
+                <div class="swiper prog-slider">
+                    <div class="swiper-wrapper">
+                        <?php while( have_rows('shows') ) : the_row(); 
+                            $show_title = get_sub_field('show_title');
+                            $show_image = get_sub_field('show_image');
+                        ?>
+                            <div class="swiper-slide">
+                                <img class="tw-mb-1" src="<?php echo esc_attr($show_image['url']); ?>" alt="<?php echo esc_attr($show_image['alt']); ?>" loading="lazy">
+                                <div class="tw-text-center tw-text-base md:tw-text-lg"><?php echo esc_html($show_title); ?></div>
+                            </div>
+                        <?php endwhile; ?>
                     </div>
-                <?php endwhile; ?>
+                </div>
+                <div class="navi">
+                    <div class="swiper-button-prev prog-prev"><i class="icon fa-solid fa-sharp fa-chevron-left"></i></div>
+                    <div class="swiper-button-next prog-next"><i class="icon fa-solid fa-sharp fa-chevron-right"></i></div>
+                </div>
             </div>
         </section>
 	<?php endif; ?>
 
 	<!-- COUNTERS -->
     <?php if( have_rows('highlights') ) : ?>
-        <section id="highlights" class="tw-w-full" style="background-image: url('<?php echo get_stylesheet_directory_uri(); ?>/assets/images/red_bkg.jpg'); background-size: cover; background-position: center;">
-            <div class="tw-px-12 md:tw-py-24 lg:tw-px-24 xl:tw-px-40 2xl:tw-px-60 tw-py-12">
+        <section id="highlights" class="tw-w-full tw-bg-red">
+            <div class="tw-px-4 md:tw-px-16 lg:tw-px-32 xl:tw-px-40 2xl:tw-px-80 tw-py-12">
                 <div class="tw-flex tw-flex-col md:tw-flex-row tw-w-full tw-text-white tw-space-y-10 md:tw-space-y-0 md:tw-space-x-16">
                     <?php while( have_rows('highlights') ) : the_row();
                         $number = get_sub_field('number');
@@ -89,10 +97,10 @@
                         $text = get_sub_field('text');
                         $circle_color = get_sub_field('circle_color');
                     ?>
-                        <div class="tw-full md:tw-w-1/4">
-                        <div class="tw-text-7xl tw-font-bold tw-text-transparent tw-mb-1" style="-webkit-text-stroke: 2px white;">
-                            <span class="num scroll-counter" data-counter-time="1200"><?php echo $number; ?></span><?php if ($number_text) : ?><span class="sign bold"><?php echo $number_text; ?></span><?php endif; ?>
-                        </div>
+                        <div class="tw-full md:tw-w-1/<?php echo count(get_field('highlights')); ?>">
+                            <div class="tw-text-7xl tw-font-bold tw-text-white tw-mb-1">
+                                <span class="num scroll-counter" data-counter-time="1200"><?php echo $number; ?></span><?php if ($number_text) : ?><span class="sign bold"><?php echo $number_text; ?></span><?php endif; ?>
+                            </div>
                             <div><?php echo $text; ?></div>
                         </div>
                     <?php endwhile; ?>
