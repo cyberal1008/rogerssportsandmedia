@@ -45,7 +45,7 @@ get_header();
 						<div class="inner wrapper">
 							<div class="top md:tw-space-x-12" style="gap: 0rem; justify-content: start;">
 								<?php if ($slider_title) : ?>
-									<div class="tw-text-4xl md:tw-text-5xl tw-font-bold tw-mb-4 md:tw-mb-4" style="color: <?php echo $slider_text_color; ?>"><?php echo $slider_title; ?></div>
+									<div class="tw-text-3xl md:tw-text-4xl tw-font-bold tw-mb-4 md:tw-mb-4" style="color: <?php echo $slider_text_color; ?>"><?php echo $slider_title; ?></div>
 								<?php endif; ?>
 								<?php if ($slider_button_link) : ?>
 									<a href="<?php echo $slider_button_link['url']; ?>" class="button" aria-label="<?php echo $slider_button_link['title'] ? $slider_button_link['title'] : 'Download TV Schedule'; ?>" target="<?php echo $slider_button_link['target'] ? $slider_button_link['target'] : '_self'; ?>"><?php echo $slider_button_link['title'] ? $slider_button_link['title'] : 'Download TV Schedule'; ?></a>
