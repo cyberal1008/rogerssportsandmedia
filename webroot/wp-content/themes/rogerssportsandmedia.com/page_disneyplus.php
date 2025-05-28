@@ -6,46 +6,21 @@
  * @subpackage rdm-rsm-parent
  * @since Ver 1.0
  */
-?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/landing/images/favicon.png" />
-    <title><?php echo get_the_title(); ?> | Rogers Sports & Media</title>
-    <?php wp_head(); ?>
-    <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/main.min.css">
-	<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/styles/reskin-alt.css">
-</head>
-<?php
-	get_header();
+
+ get_header();
 ?>
 
 <main id="content" role="main" class="tw-bg-gray">
 
 	<!-- HERO -->
 	<?php
-        if (is_category()) : 
-            $term = get_queried_object();
-            $hero_image = get_field('hero_image', $term);
-            $hero_mobile_image = get_field('hero_mobile_image', $term);
-        else :
-            $hero_image = get_field('hero_image');
-            $hero_mobile_image = get_field('hero_mobile_image');
-        endif; 
+	    get_template_part('template-parts/section-hero');
 	?>
-    <section class="tw-w-full">
-        <img class="tw-hidden md:tw-block" src="<?php echo $hero_image['url']; ?>" />
-        <img class="md:tw-hidden" src="<?php echo $hero_mobile_image['url']; ?>" alt="<?php echo $hero_image['alt']; ?>" />
-    </section>
 
 	<!-- INTRO -->
     <?php
         get_template_part('template-parts/section-intro');
     ?>
-
-    <section class="tw-mt-12">&nbsp;</section>
 
 	<!--- SHOWS SECTION -->
 	<?php if( have_rows('shows') ) : ?>
@@ -115,8 +90,6 @@
 
 <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 <script src="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/main.min.js"></script>
+
 <?php
     get_footer();
-?>
-</html>
-<?php
