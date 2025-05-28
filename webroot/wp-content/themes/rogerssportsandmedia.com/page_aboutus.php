@@ -6,33 +6,22 @@
  * @subpackage rdm-rsm-parent
  * @since Ver 1.0
  */
+ get_header();
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/landing/images/favicon.png" />
-    <title><?php echo get_the_title(); ?> | Rogers Sports & Media</title>
-    <?php wp_head(); ?>
-	<?php google_tracking_code(); ?>
-	<?php facebook_pixel_code(); ?>
-</head>
-<?php get_header(); ?>
-<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/main.css">
 
-<style>
-    .brand-box {
-        border: 1px solid #fff;
-        height: 220px;
-        padding: 30px;
-        @media screen and (max-width: 768px) {
-            height: 160px;
-            padding: 10px;
+<main>
+    <style>
+        .brand-box {
+            border: 1px solid #fff;
+            height: 220px;
+            padding: 30px;
+            @media screen and (max-width: 768px) {
+                height: 160px;
+                padding: 10px;
+            }
         }
-    }
-</style>
-<body>
+    </style>
+
     <?php
         $headline = get_field('headline');
         $headline_content = get_field('content');
@@ -96,8 +85,7 @@
             </div>
         </div>
     </section>
-
-</body>
+</main>
 
 <?php
 get_footer();

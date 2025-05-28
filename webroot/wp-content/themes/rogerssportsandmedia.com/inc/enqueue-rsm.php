@@ -24,8 +24,16 @@ if ( ! function_exists( 'load_rsm_stylesheet' ) ) {
 		wp_enqueue_style( $parent_connect, get_template_directory_uri() . '/style.css', array(), $css_version );
 		wp_enqueue_style( 'child-connect', get_stylesheet_directory_uri() . '/style.css', array(), $css_version );
 		wp_enqueue_style( 'child-styles-1', get_stylesheet_directory_uri() . '/assets/style.css', array(), $css_version );
-		wp_enqueue_style( 'child-styles-2', get_stylesheet_directory_uri() . '/assets/home/main.min.css', array('parent-styles'), $css_version );
-		wp_enqueue_style( 'child-styles-3', get_stylesheet_directory_uri() . '/assets/styles/reskin-alt.css', array('parent-styles'), $css_version );
+
+		if ( is_page() && (
+			is_page_template('page_admanager-new.php') ||
+			is_page_template('page_aboutus.php')
+		)) {
+			wp_enqueue_style( 'child-styles-2', get_stylesheet_directory_uri() . '/assets/ad-manager-new/main.css', array('parent-styles'), $css_version );
+		} else {
+			wp_enqueue_style( 'child-styles-2', get_stylesheet_directory_uri() . '/assets/home/main.min.css', array('parent-styles'), $css_version );
+			wp_enqueue_style( 'child-styles-3', get_stylesheet_directory_uri() . '/assets/styles/reskin-alt.css', array('parent-styles'), $css_version );
+		}
 		
 		$js_version = $theme_version . '.' . filemtime( get_stylesheet_directory() . '/assets/rsm.min.js' );
 		wp_enqueue_script( 'child-scripts', get_stylesheet_directory_uri() . '/assets/rsm.min.js', array(), $js_version, true );
