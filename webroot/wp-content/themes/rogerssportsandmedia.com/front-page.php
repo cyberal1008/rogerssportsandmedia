@@ -321,12 +321,12 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 	?>
 	<section class="tw-w-full tw-bg-red tw-text-white tw-px-4 tw-py-12 md:tw-px-12 lg:tw-px-24 xl:tw-px-40 2xl:tw-px-80">
 		<div class="tw-flex tw-flex-col md:tw-flex-row md:tw-space-x-20">
-			<div class="tw-w-full md:tw-w-1/3 tw-mb-12 md:tw-mb-0 tw-flex tw-items-center tw-justify-center">
+			<div class="tw-w-full md:tw-w-2/5 tw-mb-12 md:tw-mb-0 tw-flex tw-items-center tw-justify-center">
 				<?php if ($disc_image) : ?>
 					<img src="<?php echo $disc_image['sizes']['large']; ?>" alt="<?php echo $disc_image['alt']; ?>" loading="lazy" class="tw-h-64">
 				<?php endif; ?>
 			</div>
-			<div class="tw-w-full md:tw-w-2/3 tw-flex-col tw-justify-center">
+			<div class="tw-w-full md:tw-w-3/5 tw-flex-col tw-justify-center">
 				<hr class="tw-w-5/6 tw-border-t-2 tw-border-white" />
 				<?php if ($disc_section_title) : ?>
 					<h2 class="title2 tw-text-white"><?php echo $disc_section_title; ?></h2>
