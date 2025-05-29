@@ -73,8 +73,6 @@ $tv_posts = new WP_Query(
 				'unit-text' => 'Shows',
 				'filters'   => array(
 					'networks-category' => $networks_category,
-					'shows-category'    => $shows_category,
-					'days-category'     => $days,
 				),
 				'slug'		=> !empty( $program_default_category ) ? $program_default_category->slug : null
 			)
