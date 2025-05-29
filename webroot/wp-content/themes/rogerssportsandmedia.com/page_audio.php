@@ -151,7 +151,7 @@
 				<div class="wrapper">
 					<div class="tw-flex tw-flex-col md:tw-flex-row tw-mb-6 md:tw-mb-4 md:tw-space-x-12">
 						<?php if ($prog_section_title) : ?>
-							<div class="tw-text-gray-dark tw-text-4xl md:tw-text-5xl tw-font-bold tw-mb-3 md:tw-mb-0"><?php echo $prog_section_title; ?></div>
+							<h2 class="title2 tw-text-black tw-mb-3 md:tw-mb-0"><?php echo $prog_section_title; ?></h2>
 						<?php endif; ?>
 						<?php if ($prog_section_button) : ?>
 							<div><a href="<?php echo $prog_section_button['url']; ?>" class="button" aria-label="<?php echo $prog_section_button['title'] ? $prog_section_button['title'] : 'Download Buyers Guide'; ?>" target="<?php echo $prog_section_button['target'] ? $prog_section_button['target'] : '_self'; ?>"><?php echo $prog_section_button['title'] ? $prog_section_button['title'] : 'Download Buyers Guide'; ?></a></div>

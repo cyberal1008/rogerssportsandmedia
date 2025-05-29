@@ -83,7 +83,7 @@
 		<section id="solutions" class="solutions tw-bg-white">
 			<div class="inner wrapper">
 				<?php if ($sol_section_title) : ?>
-					<h2 class="title"><?php echo $sol_section_title; ?></h2>
+					<h2 class="title2 tw-text-black"><?php echo $sol_section_title; ?></h2>
 				<?php endif; ?>
 
 				<div class="swiper sol-slider">

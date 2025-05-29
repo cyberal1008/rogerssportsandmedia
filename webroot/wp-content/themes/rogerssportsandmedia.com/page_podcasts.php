@@ -70,7 +70,7 @@
         ?>
         <section class="tw-bg-white tw-px-4 md:tw-px-16 lg:tw-px-32 xl:tw-px-40 2xl:tw-px-80 tw-py-12">
                 <div class="tw-mb-16">
-                    <div class="tw-text-4xl md:tw-text-5xl tw-text-gray-dark tw-font-bold tw-mb-6"><?php echo $section_title ?></div>
+                    <h2 class="title2 tw-text-black"><?php echo $section_title ?></h2>
                     <div class="tw-grid tw-grid-cols-2 md:tw-grid-cols-4 tw-gap-x-4 tw-gap-y-6">
                         <?php while( have_rows('podcasts') ) : the_row(); 
                             $image = get_sub_field('show_image');
@@ -84,7 +84,7 @@
                 $section_title = get_field('titles_section_title');
             ?>
                 <div>
-                    <div class="tw-text-2xl md:tw-text-3xl tw-text-gray-dark tw-font-bold tw-mb-6"><?php echo $section_title ?></div>
+                    <div class="tw-text-2xl md:tw-text-3xl tw-text-black tw-font-bold tw-mb-6"><?php echo $section_title ?></div>
                     <div class="tw-grid tw-grid-cols-3 md:tw-grid-cols-6 tw-gap-x-4 tw-gap-y-6">
                         <?php while( have_rows('titles') ) : the_row();
                             $title = get_sub_field('show_title');
@@ -141,7 +141,7 @@
             $section_title = get_field('capabilities_section_title');
         ?>
             <section class="tw-bg-white tw-px-4 md:tw-px-16 lg:tw-px-32 xl:tw-px-40 2xl:tw-px-80 tw-py-12">
-                <div class="tw-text-4xl md:tw-text-5xl tw-text-gray-dark tw-font-bold tw-mb-12"><?php echo $section_title ?></div>
+                <h2 class="title2 tw-text-black"><?php echo $section_title ?></h2>
                 <div class="tw-grid tw-grid-cols-2 md:tw-grid-cols-4 tw-gap-12">
                     <?php while( have_rows('capabilities') ) : the_row();
                         $subtitle = get_sub_field('subtitle');
@@ -164,7 +164,7 @@
             <div class="wrapper">
                 <div class="tw-flex tw-flex-col md:tw-flex-row tw-mb-6 md:tw-mb-4 md:tw-space-x-12">
                     <?php if ($prog_section_title) : ?>
-                        <div class="tw-text-gray-dark tw-text-4xl md:tw-text-5xl tw-font-bold tw-mb-3 md:tw-mb-0"><?php echo $prog_section_title; ?></div>
+                        <h2 class="title2 tw-text-black tw-font-bold tw-mb-3 md:tw-mb-0"><?php echo $prog_section_title; ?></h2>
                     <?php endif; ?>
                     <?php if ($prog_section_button) : ?>
                         <div><a href="<?php echo $prog_section_button['url']; ?>" class="button" aria-label="<?php echo $prog_section_button['title'] ? $prog_section_button['title'] : 'Download Buyers Guide'; ?>" target="<?php echo $prog_section_button['target'] ? $prog_section_button['target'] : '_self'; ?>"><?php echo $prog_section_button['title'] ? $prog_section_button['title'] : 'Download Buyers Guide'; ?></a></div>
