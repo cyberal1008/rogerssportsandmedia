@@ -43,9 +43,9 @@ get_header();
 				<div class="portfolio-main">
 					<div class="portfolio-page">
 						<div class="inner wrapper">
-							<div class="top md:tw-space-x-12" style="gap: 0rem; justify-content: start;">
+							<div class="top md:tw-space-x-12" style="gap: 10px 30px; justify-content: start;">
 								<?php if ($slider_title) : ?>
-									<div class="tw-text-4xl md:tw-text-5xl tw-font-bold tw-mb-4 md:tw-mb-4" style="color: <?php echo $slider_text_color; ?>"><?php echo $slider_title; ?></div>
+									<div class="tw-text-3xl md:tw-text-4xl tw-font-bold tw-mb-4 md:tw-mb-4" style="color: <?php echo $slider_text_color; ?>"><?php echo $slider_title; ?></div>
 								<?php endif; ?>
 								<?php if ($slider_button_link) : ?>
 									<a href="<?php echo $slider_button_link['url']; ?>" class="button" aria-label="<?php echo $slider_button_link['title'] ? $slider_button_link['title'] : 'Download TV Schedule'; ?>" target="<?php echo $slider_button_link['target'] ? $slider_button_link['target'] : '_self'; ?>"><?php echo $slider_button_link['title'] ? $slider_button_link['title'] : 'Download TV Schedule'; ?></a>
@@ -83,7 +83,7 @@ get_header();
 		?>
         <section id="highlights" class="tw-w-full" style="background-color: <?php echo $highlights_background_color ?>">
             <div class="wrapper" style="padding: 60px 0;">
-                <div class="tw-flex tw-flex-col md:tw-flex-row tw-w-full tw-text-white tw-space-y-10 md:tw-space-y-0 md:tw-space-x-16">
+                <div class="tw-flex tw-flex-col md:tw-flex-row tw-w-full tw-text-white tw-space-y-10 md:tw-space-y-0 md:tw-space-x-16 tw-justify-center">
                     <?php while( have_rows('highlights') ) : the_row();
                         $number = get_sub_field('number');
                         $number_text = get_sub_field('number_text');

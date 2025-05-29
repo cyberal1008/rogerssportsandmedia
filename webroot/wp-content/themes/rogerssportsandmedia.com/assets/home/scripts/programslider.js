@@ -11,8 +11,8 @@ $(document).ready(function () {
         $("#progsubmit").click(function () {
 
             var network_term = $('input[name="networks-category"]:checked').val();
-            var day_term = $('input[name="days-category"]:checked').val();
-            var show_term = $('input[name="shows-category"]:checked').val();
+            var day_term = 'all';
+            var show_term = 'all';
             var prog_navi = document.querySelector('.programming .navi');
             var nextBtn = prog_navi.querySelector('.swiper-button-next');
             $('.grid-filters .select').blur();
