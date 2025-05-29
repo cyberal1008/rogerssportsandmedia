@@ -172,13 +172,60 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 			</section>
 		<?php endif; ?>
 
+		<?php
+			$happening_section_title = get_field('happening_section_title');
+			$happening_content = get_field('happening_content');
+			$post_id = get_the_ID();
+		?>
+		<section style="background-color: #000; padding-top: 4rem; padding-bottom: 4rem;">
+			<section id="trends" class="trends tw-text-white">
+				<div class="wrapper">
+					<?php if ($happening_section_title) : ?>
+						<h2 style="color: white !important" class="section-title"><?php echo $happening_section_title; ?></h2>
+					<?php endif; ?>
+					<?php echo $happening_content; ?>
+					<?php
+					$zone = 'happening-home';
+					if ( function_exists( 'z_get_posts_in_zone' ) && ! empty( $zone ) ) {
+						$the_query = z_get_zone_query( $zone );
+					} else {
+						$the_query = new WP_Query(
+							array(
+								'post_type'      => 'post',
+								'posts_per_page' => 3,
+								'post_status'    => 'publish',
+								'post__not_in'   => array( $post_id ),
+							)
+						);
+					}
+					?>
+					<div class="grid">
+						<?php if ( $the_query->have_posts() ) : while ( $the_query->have_posts() ) : $the_query->the_post();
+							$featured_img_url   = get_the_post_thumbnail_url( null, 'wide-577' );
+							$categories         = get_the_category();
+							?>
+							<div class="item">
+								<?php $title_formatted = ucwords(strtolower(get_the_title())); ?>
+								<p class="date" style="color: white; margin-bottom: 6px;"><?php echo get_the_date( get_option( 'date_format' ) ); ?> / <?php echo $categories ? $categories[0]->name : ''; ?></p>
+								<a href="<?php the_permalink(); ?>" aria-label="read <?php echo $title_formatted; ?>"><img src="<?php echo $featured_img_url; ?>" alt="" loading="lazy"></a>
+								<h3 class="post-title"><a style="color: white;" href="<?php the_permalink(); ?>" aria-label="read <?php echo $title_formatted; ?>"><?php echo $title_formatted; ?></a></h3>
+								<div class="btn-wrap">
+									<a class="tw-text-white" href="<?php the_permalink(); ?>" class="lined" aria-label="Read More about <?php echo $title_formatted; ?>">Read More</a>
+								</div>
+							</div>
+						<?php endwhile; endif; ?>
+					</div>
+				</div>
+			</section>
+		</section>
+
 		<!-- DISCOVER -->
 		<?php
-			$disc_section_title = get_field('disc_section_title');
-			$disc_content = get_field('disc_content');
-			$disc_button = get_field('disc_button');
-			$disc_button_arialabel = get_field('disc_button_arialabel');
-			$disc_image = get_field('disc_image');
+			$disc_section_title = get_field('disc_section_title', $post_id);
+			$disc_content = get_field('disc_content', $post_id);
+			$disc_button = get_field('disc_button', $post_id);
+			$disc_button_arialabel = get_field('disc_button_arialabel', $post_id);
+			$disc_image = get_field('disc_image', $post_id);
 		?>
 		<section class="tw-w-full tw-bg-red tw-text-white tw-px-4 tw-py-12 md:tw-py-24 md:tw-px-12 lg:tw-px-24 xl:tw-px-40 2xl:tw-px-80">
 			<div class="tw-flex tw-flex-col md:tw-flex-row md:tw-space-x-20">
@@ -203,53 +250,6 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 				</div>
 			</div>
 		</section>
-	</section>
-
-	<?php
-		$happening_section_title = get_field('happening_section_title');
-		$happening_content = get_field('happening_content');
-		$post_id = get_the_ID();
-	?>
-	<section style="background-color: #000; padding-top: 4rem; padding-bottom: 4rem;">
-		<section id="trends" class="trends tw-text-white">
-		<div class="wrapper">
-			<?php if ($happening_section_title) : ?>
-				<h2 style="color: white !important" class="section-title"><?php echo $happening_section_title; ?></h2>
-			<?php endif; ?>
-			<?php echo $happening_content; ?>
-			<?php
-			$zone = 'happening-home';
-			if ( function_exists( 'z_get_posts_in_zone' ) && ! empty( $zone ) ) {
-				$the_query = z_get_zone_query( $zone );
-			} else {
-				$the_query = new WP_Query(
-					array(
-						'post_type'      => 'post',
-						'posts_per_page' => 3,
-						'post_status'    => 'publish',
-						'post__not_in'   => array( $post_id ),
-					)
-				);
-			}
-			?>
-			<div class="grid">
-				<?php if ( $the_query->have_posts() ) : while ( $the_query->have_posts() ) : $the_query->the_post();
-					$featured_img_url   = get_the_post_thumbnail_url( null, 'wide-577' );
-					$categories         = get_the_category();
-					?>
-					<div class="item">
-						<?php $title_formatted = ucwords(strtolower(get_the_title())); ?>
-						<p class="date" style="color: white; margin-bottom: 6px;"><?php echo get_the_date( get_option( 'date_format' ) ); ?> / <?php echo $categories ? $categories[0]->name : ''; ?></p>
-						<a href="<?php the_permalink(); ?>" aria-label="read <?php echo $title_formatted; ?>"><img src="<?php echo $featured_img_url; ?>" alt="" loading="lazy"></a>
-						<h3 class="post-title"><a style="color: white;" href="<?php the_permalink(); ?>" aria-label="read <?php echo $title_formatted; ?>"><?php echo $title_formatted; ?></a></h3>
-						<div class="btn-wrap">
-							<a class="tw-text-white" href="<?php the_permalink(); ?>" class="lined" aria-label="Read More about <?php echo $title_formatted; ?>">Read More</a>
-						</div>
-					</div>
-				<?php endwhile; endif; ?>
-			</div>
-		</div>
-	</section>
 	</section>
 
 	<!-- EXPLORE -->
