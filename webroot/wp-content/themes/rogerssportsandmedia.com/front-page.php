@@ -219,37 +219,6 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 			</section>
 		</section>
 
-		<!-- DISCOVER -->
-		<?php
-			$disc_section_title = get_field('disc_section_title', $post_id);
-			$disc_content = get_field('disc_content', $post_id);
-			$disc_button = get_field('disc_button', $post_id);
-			$disc_button_arialabel = get_field('disc_button_arialabel', $post_id);
-			$disc_image = get_field('disc_image', $post_id);
-		?>
-		<section class="tw-w-full tw-bg-red tw-text-white tw-px-4 tw-py-12 md:tw-py-24 md:tw-px-12 lg:tw-px-24 xl:tw-px-40 2xl:tw-px-80">
-			<div class="tw-flex tw-flex-col md:tw-flex-row md:tw-space-x-20">
-				<div class="tw-w-full md:tw-w-1/3 tw-mb-12 md:tw-mb-0 tw-flex tw-items-center tw-justify-center">
-					<?php if ($disc_image) : ?>
-						<img src="<?php echo $disc_image['sizes']['large']; ?>" alt="<?php echo $disc_image['alt']; ?>" loading="lazy" class="tw-h-64">
-					<?php endif; ?>
-				</div>
-				<div class="tw-w-full md:tw-w-2/3 tw-flex-col tw-justify-center">
-					<hr class="tw-w-5/6 tw-mb-4 tw-border-t-2 tw-border-white" />
-					<?php if ($disc_section_title) : ?>
-						<div class="tw-mb-4 tw-text-4xl md:tw-text-5xl tw-font-semibold"><?php echo $disc_section_title; ?></div>
-					<?php endif; ?>
-					<div class="tw-mb-12 md:tw-text-xl">
-						<?php echo $disc_content; ?>
-					</div>
-					<?php if ($disc_button) : ?>
-						<a href="<?php echo $disc_button['url']; ?>" class="tw-bg-white tw-px-6 tw-py-3 tw-text-base tw-font-medium tw-text-black tw-shadow-sm tw-no-underline hover:tw-no-underline focus:tw-no-underline hover:tw-text-black visited:tw-text-black" aria-label="<?php echo $disc_button_arialabel ? $disc_button_arialabel : ''; ?>">
-							<?php echo $disc_button['title']; ?>
-						</a>
-					<?php endif; ?>
-				</div>
-			</div>
-		</section>
 	</section>
 
 	<!-- EXPLORE -->
@@ -261,7 +230,7 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 	?>
 	<section id="products" class="explore">
 		<div class="wrapper">
-			<div class="intro">
+			<div class="intro md:tw-hidden">
 				<?php if ($exp_section_title) : ?>
 					<h2 class="title"><?php echo $exp_section_title; ?></h2>
 				<?php endif; ?>
@@ -275,6 +244,9 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 			<?php if( have_rows('exp_tabs', $post_id) ): ?>
 				<div class="tabs">
 					<div class="tablist" role="tablist" aria-label="">
+						<?php if ($exp_section_title) : ?>
+							<h2 class="title"><?php echo $exp_section_title; ?></h2>
+						<?php endif; ?>
 						<?php $tab_ctr=0; while( have_rows('exp_tabs', $post_id) ): the_row(); $tab_ctr++;
 							$title = get_sub_field('title');
 							?>
@@ -339,6 +311,37 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 		</div>
 	</section>
 
+	<!-- DISCOVER -->
+	<?php
+		$disc_section_title = get_field('disc_section_title', $post_id);
+		$disc_content = get_field('disc_content', $post_id);
+		$disc_button = get_field('disc_button', $post_id);
+		$disc_button_arialabel = get_field('disc_button_arialabel', $post_id);
+		$disc_image = get_field('disc_image', $post_id);
+	?>
+	<section class="tw-w-full tw-bg-red tw-text-white tw-px-4 tw-py-12 md:tw-px-12 lg:tw-px-24 xl:tw-px-40 2xl:tw-px-80">
+		<div class="tw-flex tw-flex-col md:tw-flex-row md:tw-space-x-20">
+			<div class="tw-w-full md:tw-w-1/3 tw-mb-12 md:tw-mb-0 tw-flex tw-items-center tw-justify-center">
+				<?php if ($disc_image) : ?>
+					<img src="<?php echo $disc_image['sizes']['large']; ?>" alt="<?php echo $disc_image['alt']; ?>" loading="lazy" class="tw-h-64">
+				<?php endif; ?>
+			</div>
+			<div class="tw-w-full md:tw-w-2/3 tw-flex-col tw-justify-center">
+				<hr class="tw-w-5/6 tw-border-t-2 tw-border-white" />
+				<?php if ($disc_section_title) : ?>
+					<h2 class="title tw-text-white"><?php echo $disc_section_title; ?></h2>
+				<?php endif; ?>
+				<div class="tw-mb-12 md:tw-text-xl">
+					<?php echo $disc_content; ?>
+				</div>
+				<?php if ($disc_button) : ?>
+					<a href="<?php echo $disc_button['url']; ?>" class="tw-bg-white tw-px-6 tw-py-3 tw-text-base tw-font-medium tw-text-black tw-shadow-sm tw-no-underline hover:tw-no-underline focus:tw-no-underline hover:tw-text-black visited:tw-text-black" aria-label="<?php echo $disc_button_arialabel ? $disc_button_arialabel : ''; ?>">
+						<?php echo $disc_button['title']; ?>
+					</a>
+				<?php endif; ?>
+			</div>
+		</div>
+	</section>
 
 	<!-- PARTNER -->
 	<?php get_template_part('template-parts/section-partner'); ?>
