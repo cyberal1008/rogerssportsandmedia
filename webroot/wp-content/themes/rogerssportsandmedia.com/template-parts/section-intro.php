@@ -8,10 +8,10 @@
     <div class="tw-relative wrapper">
         <div class="tw-py-6 md:tw-py-10 tw-mb-8">
             <?php if ($intro_title) : ?>
-                <div class="tw-text-3xl md:tw-text-4xl tw-font-bold <?php echo isset($intro_title_two) ? '' : 'tw-mb-6'; ?>"><?php echo $intro_title; ?></div>
+                <div class="tw-text-3xl md:tw-text-4xl tw-font-bold <?php echo isset($intro_title_two) ? '' : 'tw-mb-6'; ?>" style="color: #000"><?php echo $intro_title; ?></div>
             <?php endif; ?>
             <?php if ($intro_title_two) : ?>
-                <div class="tw-text-3xl md:tw-text-4xl tw-font-bold tw-mb-6"><?php echo $intro_title_two; ?></div>
+                <div class="tw-text-3xl md:tw-text-4xl tw-font-bold tw-mb-6" style="color: #000"><?php echo $intro_title_two; ?></div>
             <?php endif; ?>
             <p class="tw-text-base tw-leading-7">
                 <?php echo $intro_content; ?>
