@@ -26,8 +26,13 @@ main h2 {
     color: #403e41 !important;
 }
 
+.title2 {
+    font-size: 32px;
+}
+
 @media screen and (min-width: 768px) {
-    .section-title {
+    .section-title,
+    .title2 {
         font-size: 48px;
     }
 }

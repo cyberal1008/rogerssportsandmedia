@@ -40,7 +40,7 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 			<div class="wrapper">
 				<div class="top">
 					<?php if ($intro_title) : ?>
-						<h2 class="title tw-text-black"><?php echo $intro_title; ?></h2>
+						<h2 class="title2 tw-text-black"><?php echo $intro_title; ?></h2>
 					<?php endif; ?>
 					<?php echo $intro_content ? $intro_content : ''; ?>
 				</div>
@@ -157,7 +157,7 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 			<section class="logos">
 				<div class="wrapper">
 					<?php if ($brands_section_title) : ?>
-						<h2 class="title"><?php echo $brands_section_title; ?></h2>
+						<h2 class="title2"><?php echo $brands_section_title; ?></h2>
 					<?php endif; ?>
 					<div class="swiper logo-slider">
 						<div class="swiper-wrapper">
@@ -232,7 +232,7 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 		<div class="wrapper">
 			<div class="intro md:tw-hidden">
 				<?php if ($exp_section_title) : ?>
-					<h2 class="title"><?php echo $exp_section_title; ?></h2>
+					<h2 class="title2"><?php echo $exp_section_title; ?></h2>
 				<?php endif; ?>
 				<?php echo $exp_content ? $exp_content : ''; ?>
 				<?php if ($exp_button) : ?>
@@ -245,7 +245,7 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 				<div class="tabs">
 					<div class="tablist" role="tablist" aria-label="">
 						<?php if ($exp_section_title) : ?>
-							<h2 class="title"><?php echo $exp_section_title; ?></h2>
+							<h2 class="title2 tw-text-black"><?php echo $exp_section_title; ?></h2>
 						<?php endif; ?>
 						<?php $tab_ctr=0; while( have_rows('exp_tabs', $post_id) ): the_row(); $tab_ctr++;
 							$title = get_sub_field('title');
@@ -329,7 +329,7 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 			<div class="tw-w-full md:tw-w-2/3 tw-flex-col tw-justify-center">
 				<hr class="tw-w-5/6 tw-border-t-2 tw-border-white" />
 				<?php if ($disc_section_title) : ?>
-					<h2 class="title tw-text-white"><?php echo $disc_section_title; ?></h2>
+					<h2 class="title2 tw-text-white"><?php echo $disc_section_title; ?></h2>
 				<?php endif; ?>
 				<div class="tw-mb-12 md:tw-text-xl">
 					<?php echo $disc_content; ?>
