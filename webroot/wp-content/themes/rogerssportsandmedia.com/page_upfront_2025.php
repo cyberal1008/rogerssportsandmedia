@@ -19,16 +19,18 @@ get_header();
 
 	<!-- Upfront CTA -->
 	<?php
+	$upfront_cta_background_color = get_field( 'upfront_cta_background_color' );
+	$upfront_cta_text_color = get_field( 'upfront_cta_text_color' );
 	$upfront_cta_title = get_field( 'upfront_cta_title' );
 	$upfront_cta_link = get_field( 'upfront_cta_link' );
 	$upfront_cta_image = get_field( 'upfront_cta_image' );
 	
 	if( $upfront_cta_link && $upfront_cta_image ) :
 		?>
-		<section class="upfront-cta-section">
+		<section class="upfront-cta-section" style="background-color: <?php echo $upfront_cta_background_color ? $upfront_cta_background_color : '#000'; ?>">
             <div class="wrapper">
 				<?php if ( $upfront_cta_title ) : ?>
-					<h2 class="upfront-cta-title tw-text-3xl md:tw-text-4xl tw-font-bold"><?php echo $upfront_cta_title; ?></h2>
+					<h2 class="upfront-cta-title tw-text-3xl md:tw-text-4xl tw-font-bold" style="color: <?php echo $upfront_cta_text_color ? $upfront_cta_text_color : '#fff'; ?>"><?php echo $upfront_cta_title; ?></h2>
 				<?php endif ?>
 				<a href="<?php echo $upfront_cta_link['url']; ?>">
 					<img src="<?php echo $upfront_cta_image['url']; ?>" width="800"/>
