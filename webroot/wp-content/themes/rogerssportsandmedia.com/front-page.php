@@ -249,10 +249,11 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 						<?php endif; ?>
 						<?php $tab_ctr=0; while( have_rows('exp_tabs', $post_id) ): the_row(); $tab_ctr++;
 							$title = get_sub_field('title');
+							$button = get_sub_field('button');
 							?>
-							<button class="trigger exp" role="tab" aria-selected="<?php echo $tab_ctr == 1 ? 'true' : 'false'; ?>" aria-controls="tab-content-<?php echo $tab_ctr; ?>" id="tab-<?php echo $tab_ctr; ?>" tabindex="<?php echo $tab_ctr == 1 ? '' : '-1'; ?>">
+							<a href="<?php echo $button['url']; ?>" class="trigger exp tw-text-black hover:tw-text-black" role="tab" aria-selected="<?php echo $tab_ctr == 1 ? 'true' : 'false'; ?>" aria-controls="tab-content-<?php echo $tab_ctr; ?>" id="tab-<?php echo $tab_ctr; ?>" tabindex="<?php echo $tab_ctr == 1 ? '' : '-1'; ?>">
 								<?php echo $title; ?>
-							</button>
+							</a>
 						<?php endwhile; ?>
 					</div>
 					<div class="content">
