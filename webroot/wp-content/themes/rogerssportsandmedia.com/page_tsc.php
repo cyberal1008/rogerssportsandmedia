@@ -79,7 +79,7 @@
                 <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/tsc_3.png" alt="TSC Image 4" class="tw-rounded-full tw-h-52 tw-w-52">
             </div>
         </div>
-        <div class="tw-text-3xl tw-font-bold tw-mb-2">Your one-stop-shop for top brands & products</div>
+        <h2 class="title2 tw-text-black">Your one-stop-shop for top brands & products</h2>
         <div class="tw-mb-12 tw-text-lg">TSC is home to hundreds of amazing brands and products. From favourites like Apple, Dyson, KitchenAid, L’Occitane and Clarks, to exclusive brands like Elizabeth Grant, Brian Bailey & Evera Diamonds. With thousands of incredible products there’s always something new to discover at TSC.</div>
         <div>
             <img class="md:tw-block" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/tsc_logos_dt.jpg" />
