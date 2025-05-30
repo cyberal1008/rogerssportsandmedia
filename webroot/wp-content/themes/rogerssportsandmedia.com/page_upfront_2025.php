@@ -129,13 +129,6 @@ get_header();
 		<?php
 	}
 	?>
-
-	<section class="upfront-calendar">
-		<div class="wrapper">
-			<h2 class="upfront-calendar-title">Hightlights from Upfront 2025</h2>
-			<img class="upfront-calendar-image" src="/wp-content/themes/rogerssportsandmedia.com/assets/images/upfront_calender.png"/>
-		</div>
-	</section>
 </main>
 
 <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
