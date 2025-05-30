@@ -36,7 +36,7 @@ if ( ! function_exists( 'load_rsm_stylesheet' ) ) {
 		}
 
 		if ( is_page_template('page_upfront_2025.php') ) {
-			wp_enqueue_style( 'upfront-2025', get_stylesheet_directory_uri() . '/assets/upfront-2025.css', array('parent-styles'), '1.0' );
+			wp_enqueue_style( 'upfront-2025', get_stylesheet_directory_uri() . '/assets/upfront-2025.css', array('parent-styles'), '1.1.0' );
 		}
 		
 		$js_version = $theme_version . '.' . filemtime( get_stylesheet_directory() . '/assets/rsm.min.js' );

@@ -1,4 +1,20 @@
+.upfront-cta-section {
+    background-color: #da291c;
+    padding: 60px 0;
 
+    h2.upfront-cta-title {
+        text-align: center;
+        margin-bottom: 70px;
+        color: #fff;
+        margin-bottom: 25px;
+        font-family: inherit;
+    }
+
+    img {
+        display: block;
+        margin: 0 auto;
+    }
+}
 
 .upfront-highlights-section {
     .wrapper {
@@ -8,8 +24,7 @@
     h2.upfront-highlights-title {
         text-align: center;
         margin-bottom: 70px;
-        font-size: 40px;
-        line-height: 40px;
+        font-family: inherit;
     }
 
     .upfront-highlights {
@@ -46,33 +61,12 @@
     }
 }
 
-.upfront-cta-section {
-    background-color: #da291c;
-    padding: 60px 0;
-
-    h2.upfront-cta-title {
-        text-align: center;
-        margin-bottom: 70px;
-        font-size: 40px;
-        line-height: 40px;
-        color: #fff;
-        margin-bottom: 25px;
-    }
-
-    img {
-        display: block;
-        margin: 0 auto;
-    }
-}
-
 .programming {
     h2 {
-        margin-bottom: 70px;
-        font-size: 40px;
-        line-height: 40px;
         text-align: center!important;
         width: 100%;
         margin-bottom: 0;
+        font-family: inherit;
     }
 }
 
@@ -83,9 +77,8 @@
     h2.upfront-calendar-title {
         text-align: center;
         margin-bottom: 70px;
-        font-size: 40px;
-        line-height: 40px;
         color: #fff;
         margin-bottom: 30px;
+        font-family: inherit;
     }
 }

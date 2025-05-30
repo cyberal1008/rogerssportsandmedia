@@ -28,7 +28,7 @@ get_header();
 		<section class="upfront-cta-section">
             <div class="wrapper">
 				<?php if ( $upfront_cta_title ) : ?>
-					<h2 class="upfront-cta-title"><?php echo $upfront_cta_title; ?></h2>
+					<h2 class="upfront-cta-title tw-text-3xl md:tw-text-4xl tw-font-bold"><?php echo $upfront_cta_title; ?></h2>
 				<?php endif ?>
 				<a href="<?php echo $upfront_cta_link['url']; ?>">
 					<img src="<?php echo $upfront_cta_image['url']; ?>" width="800"/>
@@ -48,7 +48,7 @@ get_header();
 		?>
         <section class="upfront-highlights-section" style="background-color: <?php echo $highlights_background_color ?>">
             <div class="wrapper">
-				<h2 class="upfront-highlights-title" style="color: <?php echo $highlights_descriptions_text_color ?>"><?php echo $highlights_title; ?></h2>
+				<h2 class="upfront-highlights-title tw-text-3xl md:tw-text-4xl tw-font-bold" style="color: <?php echo $highlights_descriptions_text_color ?>"><?php echo $highlights_title; ?></h2>
                 <div class="upfront-highlights">
                     <?php while( have_rows('upfront_highlights') ) : the_row();
                         $thumbnail = get_sub_field('thumbnail');
@@ -86,7 +86,7 @@ get_header();
 						<div class="inner wrapper">
 							<div class="top md:tw-space-x-12" style="gap: 0rem; justify-content: start;">
 								<?php if ($slider_title) : ?>
-									<h2 style="color: <?php echo $slider_text_color; ?>"><?php echo $slider_title; ?></h2>
+									<h2 class="tw-text-3xl md:tw-text-4xl tw-font-bold" style="color: <?php echo $slider_text_color; ?>"><?php echo $slider_title; ?></h2>
 								<?php endif; ?>
 								<?php if ($slider_button_link) : ?>
 									<a href="<?php echo $slider_button_link['url']; ?>" class="button" aria-label="<?php echo $slider_button_link['title'] ? $slider_button_link['title'] : 'Download TV Schedule'; ?>" target="<?php echo $slider_button_link['target'] ? $slider_button_link['target'] : '_self'; ?>"><?php echo $slider_button_link['title'] ? $slider_button_link['title'] : 'Download TV Schedule'; ?></a>
@@ -120,7 +120,7 @@ get_header();
 		?>
 		<section class="upfront-calendar">
 			<?php if ( $upfront_calendar_title ) : ?>
-				<h2 class="upfront-calendar-title"><?php echo $upfront_calendar_title; ?></h2>
+				<h2 class="upfront-calendar-title tw-text-3xl md:tw-text-4xl tw-font-bold"><?php echo $upfront_calendar_title; ?></h2>
 			<?php endif; ?>
 			<div class="wrapper">
 				<img class="calendar-image" src="<?php echo $upfront_calendar_image['url']; ?>"/>
