@@ -56,7 +56,9 @@ get_header();
                         $description = get_sub_field('description');
                     ?>
                         <div class="upfront-highlight-card">
-                            <img src="<?php echo $thumbnail['url']; ?>" alt="<?php echo $thumbnail['alt']; ?>" width="80">
+                            <div class="upfront-highlight-image-wrap">
+								<img src="<?php echo $thumbnail['url']; ?>" alt="<?php echo $thumbnail['alt']; ?>">
+							</div>
 							<hr/>
 							<h3 class="tw-text-2xl md:tw-text-3xl" style="color: <?php echo $highlights_descriptions_text_color ?>"><?php echo $title; ?></h3>
 							<p style="color: <?php echo $highlights_descriptions_text_color ?>"><?php echo $description; ?></p>
