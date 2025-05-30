@@ -61,8 +61,8 @@ $(document).ready(function () {
 
             progsubmit.on('click', function () {
                 var network_term = $container.find('input[name="networks-category"]:checked').val();
-                var day_term = $container.find('input[name="days-category"]:checked').val();
-                var show_term = $container.find('input[name="shows-category"]:checked').val();
+                var day_term = 'all';
+                var show_term = 'all';
                 var prog_navi = $container.find('.navi')[0];
                 var nextBtn = $container.find('.swiper-button-next')[0];
 

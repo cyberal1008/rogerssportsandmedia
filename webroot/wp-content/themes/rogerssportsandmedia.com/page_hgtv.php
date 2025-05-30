@@ -26,10 +26,6 @@ get_header();
 	<?php
 	$show_sliders = get_field( 'show_sliders' );
 	if ( !empty($show_sliders) ) {
-		// echo '<pre>';
-		// print_r($show_sliders);
-		// echo '</pre>';
-		// exit;
 		$count = 1;
 		foreach ( $show_sliders as $slider ) {
 			$slider_title = $slider['title'];

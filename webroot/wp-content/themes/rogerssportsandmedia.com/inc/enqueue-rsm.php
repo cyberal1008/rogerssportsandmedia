@@ -42,8 +42,7 @@ if ( ! function_exists( 'load_rsm_stylesheet' ) ) {
 		$js_version = $theme_version . '.' . filemtime( get_stylesheet_directory() . '/assets/rsm.min.js' );
 		wp_enqueue_script( 'child-scripts', get_stylesheet_directory_uri() . '/assets/rsm.min.js', array(), $js_version, true );
 		if ( is_page() && (
-			is_page_template( 'page_upfront_2024.php' ) ||
-			is_page_template( 'page_tv.php' ) ||
+			is_page_template( 'page_upfront.php' ) ||
 			is_page_template( 'page_tubi.php' )
 		)) {
 			wp_enqueue_script( 'programslider-js', get_stylesheet_directory_uri() . "/assets/home/scripts/programslider.js", array(), $js_version, true );
@@ -51,6 +50,7 @@ if ( ! function_exists( 'load_rsm_stylesheet' ) ) {
 
 		if (
 			is_page_template( 'page_hgtv.php' ) ||
+			is_page_template( 'page_tv.php' ) ||
 			is_page_template( 'page_upfront_2025.php' )
 		) {
 			wp_enqueue_script( 'showsslider-js', get_stylesheet_directory_uri() . "/assets/home/scripts/showsslider.js", array(), $js_version, true );
