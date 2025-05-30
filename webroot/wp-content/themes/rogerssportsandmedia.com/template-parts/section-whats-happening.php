@@ -8,7 +8,7 @@ $happening_content = get_field('happening_content');
 	style="background-color: #000; padding-top: 4rem; padding-bottom: 4rem; margin: unset;"
 >
 	<div class="wrapper tw-text-white">
-		<div class="tw-text-white tw-text-4xl md:tw-text-5xl tw-font-bold tw-mb-3"><?php echo $happening_section_title ? $happening_section_title : "The Latest"; ?></div>
+		<div class="title2 tw-text-white tw-font-bold tw-mb-3"><?php echo $happening_section_title ? $happening_section_title : "The Latest"; ?></div>
 		<?php echo $happening_content ? $happening_content : '<p>Get the latest news from Rogers Sports & Media</p>'; ?>
 		<?php
 		$zone = isset($args['zone']) ? $args['zone'] : 'whats-happening-television';

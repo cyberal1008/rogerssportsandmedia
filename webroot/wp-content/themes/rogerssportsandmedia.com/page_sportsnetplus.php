@@ -53,7 +53,7 @@
 
         <div class="tw-mt-12 tw-w-5/6 tw-mb-16">
             <hr />
-            <div class="tw-text-4xl tw-text-gray-dark tw-font-bold tw-mb-8">
+            <div class="tw-text-4xl tw-text-black tw-font-bold tw-mb-8">
                 <?php echo $buyers_guide_section_title; ?>
             </div>
             <?php if ($buyers_guide_button) : ?>

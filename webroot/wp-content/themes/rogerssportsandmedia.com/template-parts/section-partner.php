@@ -3,7 +3,7 @@
 		<div class="tw-bg-white tw-flex tw-flex-col md:tw-flex-row tw-px-4 md:tw-px-8 md:tw-space-x-12">
 			<div class="tw-full md:tw-w-2/5 tw-mt-12 ">
 				<div>&nbsp;</div>
-				<div class="tw-text-4xl md:tw-text-5xl tw-font-bold tw-mb-4 md:tw-mb-8">Partner With Us Today</div>
+				<div class="tw-text-black tw-text-4xl md:tw-text-5xl tw-font-bold tw-mb-4 md:tw-mb-8">Partner With Us Today</div>
 				<p class="tw-font-semibold md:tw-text-xl">Your success is our success. We are partners you can count on, today and in the future. Let's get started!</p>
 			</div>
 			<div class="tw-full md:tw-w-3/5">
