@@ -99,7 +99,7 @@
 		<section id="platforms" class="service-grid">
 			<div class="wrapper">
 				<?php if ($plat_section_title) : ?>
-					<h2 class="section-title"><?php echo $plat_section_title; ?></h2>
+					<h2 class="title2 tw-text-black"><?php echo $plat_section_title; ?></h2>
 				<?php endif; ?>
 
 				<div class="swiper plat-slider">
@@ -124,9 +124,9 @@
 									<div class="txtbox">
 										<?php if ($title) : ?>
 											<?php if ($link) : ?>
-												<p class="title h4"><a href="<?php echo $link['url']; ?>" aria-label="<?php echo $link_arialabel ? $link_arialabel : $link['title']; ?>"><?php echo $title; ?></a></p>
+												<p class="title h4 tw-text-black"><a href="<?php echo $link['url']; ?>" aria-label="<?php echo $link_arialabel ? $link_arialabel : $link['title']; ?>"><?php echo $title; ?></a></p>
 											<?php else : ?>
-												<p class="title h4"><?php echo $title; ?></p>
+												<p class="title h4 tw-text-black"><?php echo $title; ?></p>
 											<?php endif; ?>
 										<?php endif; ?>
 										<?php if ($description) : ?>
