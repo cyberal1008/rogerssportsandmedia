@@ -320,7 +320,7 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 		$disc_button_arialabel = get_field('disc_button_arialabel', $post_id);
 		$disc_image = get_field('disc_image', $post_id);
 	?>
-	<section class="tw-w-full tw-bg-red tw-text-white tw-px-4 tw-py-12 md:tw-px-12 lg:tw-px-24 xl:tw-px-40 2xl:tw-px-80">
+	<section class="tw-w-full tw-bg-black tw-text-white tw-px-4 tw-py-12 md:tw-px-12 lg:tw-px-24 xl:tw-px-40 2xl:tw-px-80">
 		<div class="tw-flex tw-flex-col md:tw-flex-row md:tw-space-x-20">
 			<div class="tw-w-full md:tw-w-2/5 tw-mb-12 md:tw-mb-0 tw-flex tw-items-center tw-justify-center">
 				<?php if ($disc_image) : ?>

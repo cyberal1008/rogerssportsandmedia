@@ -49,6 +49,7 @@ main h2 {
 .explore .tabs .tablist .trigger {
     font-family: var(--body-font);
     text-transform: none;
+    font-size: 20px;
 }
 
 .explore .accordion .accordion-trigger {

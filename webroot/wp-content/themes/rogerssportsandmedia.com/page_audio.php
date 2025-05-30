@@ -174,16 +174,6 @@
 				</div>
 			</section>
 
-			<!-- WHAT'S HAPPENING -->
-			<?php
-				get_template_part(
-					'template-parts/section-whats-happening', null,
-					array(
-						'zone' => 'whats-happening-radio',
-					)
-				);
-			?>
-
 			<!-- PARTNER -->
 			<?php get_template_part('template-parts/section-partner'); ?>
 
