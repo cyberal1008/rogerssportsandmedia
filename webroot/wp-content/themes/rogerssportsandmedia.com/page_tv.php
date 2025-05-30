@@ -140,38 +140,53 @@
 		</section>
 	<?php endif; ?>
 
-	<!-- PROGRAMMING -->
+	<!-- Show Sliders -->
 	<?php
-		$prog_section_title = get_field('program_section_title');
-		$prog_section_button = get_field('program_section_button');
-	?>	
-	<section id="programming" class="programming">
-		<div class="portfolio-main">
-			<div class="portfolio-page">
-				<div class="inner wrapper">
-					<hr class="tw-mb-6 tw-bg-gray tw-w-3/4 md:tw-w-3/5" />
-					<div class="top md:tw-space-x-12" style="gap: 0rem; justify-content: start;">
-						<?php if ($prog_section_title) : ?>
-							<div class="tw-text-4xl md:tw-text-5xl tw-text-gray-dark tw-font-bold tw-mb-4 md:tw-mb-4"><?php echo $prog_section_title; ?></div>
-						<?php endif; ?>
-						<?php if ($prog_section_button) : ?>
-							<a href="<?php echo $prog_section_button['url']; ?>" class="button" aria-label="<?php echo $prog_section_button['title'] ? $prog_section_button['title'] : 'Download TV Schedule'; ?>" target="<?php echo $prog_section_button['target'] ? $prog_section_button['target'] : '_self'; ?>"><?php echo $prog_section_button['title'] ? $prog_section_button['title'] : 'Download TV Schedule'; ?></a>
-						<?php endif; ?>
-					</div>
+	$show_sliders = get_field( 'show_sliders' );
+	if ( !empty($show_sliders) ) {
+		$count = 1;
+		foreach ( $show_sliders as $slider ) {
+			$slider_title = $slider['title'];
+			$slider_button_link = $slider['button_link'];
+			$slider_background_color = $slider['background_color'];
+			$slider_text_color = $slider['text_color'];
+			$slider_shows = $slider['shows'];
 
-					<?php
-						get_template_part(
-							'template-parts/portfolio',
-							'program-slider',
-							array(
-								'page_meta'     => $page_meta,
-							)
-						);
-					?>
+			?>
+			<section class="programming" style="background-color: <?php echo $slider_background_color; ?>; color: <?php echo $slider_text_color; ?>; margin: 0; padding: 50px 0;">
+				<div class="portfolio-main">
+					<div class="portfolio-page">
+						<div class="inner wrapper">
+							<div class="top md:tw-space-x-12" style="gap: 10px 30px; justify-content: start;">
+								<?php if ($slider_title) : ?>
+									<div class="tw-text-3xl md:tw-text-4xl tw-font-bold tw-mb-4 md:tw-mb-4" style="color: <?php echo $slider_text_color; ?>"><?php echo $slider_title; ?></div>
+								<?php endif; ?>
+								<?php if ($slider_button_link) : ?>
+									<a href="<?php echo $slider_button_link['url']; ?>" class="button" aria-label="<?php echo $slider_button_link['title'] ? $slider_button_link['title'] : 'Download TV Schedule'; ?>" target="<?php echo $slider_button_link['target'] ? $slider_button_link['target'] : '_self'; ?>"><?php echo $slider_button_link['title'] ? $slider_button_link['title'] : 'Download TV Schedule'; ?></a>
+								<?php endif; ?>
+							</div>
+
+							<?php
+								get_template_part(
+									'template-parts/shows',
+									'slider',
+									array(
+										'slider_name'  => 'shows-slider-'.$count,
+										'filter'       => true,	
+										'slider_shows' => $slider_shows,
+										'text_color'   => $slider_text_color
+									)
+								);
+							?>
+						</div>
+					</div>
 				</div>
-			</div>
-		</div>
-	</section>
+			</section>
+			<?php
+			$count++;
+		}
+	}
+	?>
 
 	<!-- WHAT'S HAPPENING -->
 	<?php

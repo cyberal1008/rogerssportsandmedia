@@ -34,7 +34,7 @@ if(isset($args['filters']) ) :
     endforeach;
     ?>
     <div class="input-wrap">
-		<button id="progsubmit" type="submit" class="button" value="Apply" role="button" aria-label="Apply">Apply</button>
+		<button id="progsubmit" type="submit" class="button progsubmit" value="Apply" role="button" aria-label="Apply">Apply</button>
 	</div>
 </div>
 <?php
