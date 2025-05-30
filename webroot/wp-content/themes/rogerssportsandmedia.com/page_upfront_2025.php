@@ -14,7 +14,7 @@ get_header();
 
 	<!-- HERO -->
 	<?php
-	// get_template_part('template-parts/section-hero');
+		get_template_part('template-parts/section-hero');
 	?>
 
 	<!-- Upfront CTA -->
@@ -120,15 +120,22 @@ get_header();
 		?>
 		<section class="upfront-calendar">
 			<?php if ( $upfront_calendar_title ) : ?>
-				<h2><?php echo $upfront_calendar_title; ?></h2>
+				<h2 class="upfront-calendar-title"><?php echo $upfront_calendar_title; ?></h2>
 			<?php endif; ?>
 			<div class="wrapper">
-				<img class="calendar-image" src="<?php echo $upfront_calendar_image; ?>"/>
+				<img class="calendar-image" src="<?php echo $upfront_calendar_image['url']; ?>"/>
 			</div>
 		</section>
 		<?php
 	}
 	?>
+
+	<section class="upfront-calendar">
+		<div class="wrapper">
+			<h2 class="upfront-calendar-title">Hightlights from Upfront 2025</h2>
+			<img class="upfront-calendar-image" src="/wp-content/themes/rogerssportsandmedia.com/assets/images/upfront_calender.png"/>
+		</div>
+	</section>
 </main>
 
 <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
