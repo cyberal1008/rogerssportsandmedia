@@ -1114,6 +1114,11 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
+  .tw\:xl\:grid-cols-4 {
+    @media (width >= 80rem) {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
   .tw\:xl\:px-40 {
     @media (width >= 80rem) {
       padding-inline: calc(var(--tw-spacing) * 40);
@@ -1122,6 +1127,11 @@
   .tw\:xl\:pl-40 {
     @media (width >= 80rem) {
       padding-left: calc(var(--tw-spacing) * 40);
+    }
+  }
+  .tw\:2xl\:grid-cols-5 {
+    @media (width >= 96rem) {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
     }
   }
   .tw\:2xl\:px-48 {
