@@ -9,11 +9,14 @@
 
 get_header();
 global $post;
+?>
+<div style="height: 40px"></div>
+<?php
 get_template_part(
 	'template-parts/content',
 	'header',
 	array(
-		'title' => 'Legal',
+		'title' => '    ',
 		'subtitle' => get_the_title(),
 	) );
 
