@@ -324,7 +324,7 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 		<div class="tw-flex tw-flex-col md:tw-flex-row md:tw-space-x-20">
 			<div class="tw-w-full md:tw-w-2/5 tw-mb-12 md:tw-mb-0 tw-flex tw-items-center tw-justify-center">
 				<?php if ($disc_image) : ?>
-					<img src="<?php echo $disc_image['sizes']['large']; ?>" alt="<?php echo $disc_image['alt']; ?>" loading="lazy" class="tw-h-64">
+					<img src="<?php echo $disc_image['sizes']['large']; ?>" alt="<?php echo $disc_image['alt']; ?>" loading="lazy">
 				<?php endif; ?>
 			</div>
 			<div class="tw-w-full md:tw-w-3/5 tw-flex-col tw-justify-center">
