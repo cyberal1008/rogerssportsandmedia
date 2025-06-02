@@ -54,26 +54,7 @@
 	</section>
 
 	<!-- HIGHLIGHTS -->
-	<?php if( have_rows('highlights') ) : ?>
-		<section id="highlights" class="tw-bg-black tw-px-4 tw-py-12 md:tw-px-16 lg:tw-px-32 xl:tw-px-48 2xl:tw-px-80 md:tw-py-24">
-			<div class="tw-flex tw-flex-col md:tw-flex-row tw-w-full tw-text-red tw-space-y-10 md:tw-space-y-0 md:tw-space-x-12">
-				<?php $row_id = 0; while( have_rows('highlights') ) : the_row(); $row_id++;
-					$large_text = get_sub_field('large_text');
-					$small_text = get_sub_field('small_text');
-					$large_text_location = get_sub_field('large_text_location');
-				?>
-					<div class="tw-full md:tw-px-2 md:tw-w-1/3">
-						<div class="tw-text-4xl md:tw-text-5xl tw-font-bold tw-mb-3">
-							<?php if ($large_text) : ?><span class="bold"><?php echo $large_text; ?></span><?php endif; ?>
-						</div>
-						<?php if ($small_text) : ?>
-							<div class="tw-text-lg tw-text-white"><?php echo $small_text; ?></div>
-						<?php endif; ?>
-					</div>
-				<?php endwhile; ?>
-			</div>
-		</section>
-	<?php endif; ?>
+	<?php get_template_part('template-parts/section-highlights'); ?>
 
 	<!-- SOLUTIONS -->
 	<?php
@@ -124,16 +105,6 @@
 			<?php endif; ?>
 		</section>
 	<?php endif; ?>
-
-	<!-- WHAT'S HAPPENING -->
-	<?php
-		get_template_part(
-			'template-parts/section-whats-happening', null,
-			array(
-				'zone' => 'whats-happening-ooh',
-			)
-		);
-	?>
 
 	<!-- PARTNER -->
 	<?php get_template_part('template-parts/section-partner'); ?>

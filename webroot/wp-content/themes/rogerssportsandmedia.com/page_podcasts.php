@@ -64,6 +64,9 @@
             </div>
         </section>
 
+        <!-- HIGHLIGHTS -->
+        <?php get_template_part('template-parts/section-highlights'); ?>
+
         <!-- PODCASTS & TITLES -->
         <?php if( have_rows('podcasts') ) :
             $section_title = get_field('podcasts_section_title');
@@ -105,35 +108,6 @@
                     </div>
                 </div>
         </section>
-        <?php endif; ?>
-
-        <!-- HIGHLIGHTS -->
-        <?php if( have_rows('highlights') ) : ?>
-            <section id="highlights" class="tw-py-12 tw-px-4 md:tw-px-16 lg:tw-px-32 xl:tw-px-40 2xl:tw-px-96 md:tw-py-28" style="background-image: url('<?php echo get_stylesheet_directory_uri(); ?>/assets/images/red_bkg.jpg'); background-size: cover; background-position: center;">
-                <div class="tw-grid tw-grid-cols-1 md:tw-grid-cols-3 tw-text-white tw-gap-y-10 md:tw-gap-x-16">
-                    <?php while( have_rows('highlights') ) : the_row(); 
-                        $number = get_sub_field('number');
-                        $number_text = get_sub_field('number_text');
-                        $number_text_position = get_sub_field('number_text_position');
-                        $text = get_sub_field('text');
-                    ?>
-                        <div class="tw-full">
-                            <div class="tw-text-7xl tw-font-bold tw-text-transparent tw-mb-1" style="-webkit-text-stroke: 2px white;">
-                                <?php if ($number_text_position == 'prepend'): ?>
-                                    <?php if ($number_text) : ?><span class="sign bold"><?php echo $number_text; ?></span><?php endif; ?><span class="num scroll-counter" data-counter-time="1200"><?php echo $number; ?></span>
-                                <?php elseif ($number_text_position == 'superscript'): ?>
-                                    <span class="num scroll-counter" data-counter-time="1200"><?php echo $number; ?></span><?php if ($number_text) : ?><span class="sign bold"><sup><?php echo $number_text; ?></span></sup><?php endif; ?>
-                                <?php else: ?>
-                                    <span class="num scroll-counter" data-counter-time="1200"><?php echo $number; ?></span><?php if ($number_text) : ?><span class="sign bold"><?php echo $number_text; ?></span><?php endif; ?>
-                                <?php endif; ?>
-                            </div>
-                            <?php if ($text) : ?>
-                                <div class="tw-text-lg"><?php echo $text; ?></div>
-                            <?php endif; ?>
-                        </div>
-                    <?php endwhile; ?>
-                </div>
-            </section>
         <?php endif; ?>
 
         <!-- CAPABILITIES -->
@@ -186,16 +160,6 @@
                 </div>
             </div>
         </section>
-
-        <!-- WHAT'S HAPPENING -->
-        <?php
-            get_template_part(
-                'template-parts/section-whats-happening', null,
-                array(
-                    'zone' => 'whats-happening-podcasts',
-                )
-            );
-        ?>
 
         <!-- PARTNER -->
         <?php get_template_part('template-parts/section-partner'); ?>

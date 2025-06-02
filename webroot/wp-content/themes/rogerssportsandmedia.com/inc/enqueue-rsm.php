@@ -25,15 +25,15 @@ if ( ! function_exists( 'load_rsm_stylesheet' ) ) {
 		wp_enqueue_style( 'child-connect', get_stylesheet_directory_uri() . '/style.css', array(), $css_version );
 		wp_enqueue_style( 'child-styles-1', get_stylesheet_directory_uri() . '/assets/style.css', array(), $css_version );
 
-		if ( is_page() && (
-			is_page_template('page_admanager-new.php') ||
-			is_page_template('page_aboutus.php')
-		)) {
-			wp_enqueue_style( 'child-styles-2', get_stylesheet_directory_uri() . '/assets/ad-manager-new/main.css', array('parent-styles'), $css_version );
-		} else {
+		if (!is_page_template('page_admanager-new.php')) {
 			wp_enqueue_style( 'child-styles-2', get_stylesheet_directory_uri() . '/assets/home/main.min.css', array('parent-styles'), $css_version );
-			wp_enqueue_style( 'child-styles-3', get_stylesheet_directory_uri() . '/assets/styles/reskin-alt.css', array('parent-styles'), $css_version );
+			if (!is_page_template('page_aboutus.php')) {
+				wp_enqueue_style( 'child-styles-3', get_stylesheet_directory_uri() . '/assets/styles/reskin-alt.css', array('parent-styles'), $css_version );
+			}
 		}
+		
+		wp_enqueue_style( 'child-styles-4', get_stylesheet_directory_uri() . '/assets/ad-manager-new/main-alt.css', array('parent-styles'), $css_version );
+		wp_enqueue_style( 'child-styles-5', get_stylesheet_directory_uri() . '/assets/styles/custom.css', array('parent-styles'), $css_version );
 
 		if ( is_page_template('page_upfront_2025.php') ) {
 			wp_enqueue_style( 'upfront-2025', get_stylesheet_directory_uri() . '/assets/upfront-2025.css', array('parent-styles'), '1.0.2' );

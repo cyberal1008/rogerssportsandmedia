@@ -71,77 +71,8 @@
 				</div>
 			</section>
 
-			<section id="highlights" class="tw-bg-black tw-px-4 tw-py-12 md:tw-px-16 lg:tw-px-32 xl:tw-px-48 2xl:tw-px-80 md:tw-py-24">
-				<div class="tw-grid tw-grid-cols-1 md:tw-grid-cols-3 tw-text-white tw-gap-y-10 md:tw-gap-x-16">
-					<?php if( have_rows('yellow_circle') ) : while( have_rows('yellow_circle') ) : the_row(); 
-						$number = get_sub_field('number');
-						$caption = get_sub_field('caption');
-					?>
-						<div class="tw-full">
-							<div class="tw-text-7xl tw-font-bold tw-text-red tw-mb-1">
-								<span class="num scroll-counter" data-counter-time="1200"><?php echo $number; ?></span>
-							</div>
-							<?php if ($caption) : ?>
-								<div class="tw-text-lg"><?php echo $caption; ?></div>
-							<?php endif; ?>
-						</div>
-					<?php endwhile; endif; ?>
-					<?php if( have_rows('red_circle') ) : while( have_rows('red_circle') ) : the_row(); 
-						$number = get_sub_field('number');
-						$caption = get_sub_field('caption');
-					?>
-						<div class="tw-full">
-							<div class="tw-text-7xl tw-font-bold tw-text-red tw-mb-1">
-								<span class="num scroll-counter" data-counter-time="1200"><?php echo $number; ?></span><span class="sign bold"><sup>%</sup></span>
-							</div>
-							<?php if ($caption) : ?>
-								<div class="tw-text-lg"><?php echo $caption; ?></div>
-							<?php endif; ?>
-						</div>
-					<?php endwhile; endif; ?>
-					<?php if( have_rows('blue_circle') ) : while( have_rows('blue_circle') ) : the_row(); 
-						$number = get_sub_field('number');
-						$caption = get_sub_field('caption');
-					?>
-						<div class="tw-full">
-							<div class="tw-text-7xl tw-font-bold tw-text-red tw-mb-1">
-								<span class="sign bold">#</span><span class="num scroll-counter" data-counter-time="1200"><?php echo $number; ?></span>
-							</div>
-							<?php if ($caption) : ?>
-								<div class="tw-text-lg"><?php echo $caption; ?></div>
-							<?php endif; ?>
-						</div>
-					<?php endwhile; endif; ?>
-					<?php if( have_rows('banner_1') ) : while( have_rows('banner_1') ) : the_row(); 
-						$number = get_sub_field('number');
-						$number_text = get_sub_field('number_text');
-						$caption = get_sub_field('caption');
-					?>
-						<div class="tw-full">
-							<div class="tw-text-7xl tw-font-bold tw-text-red tw-mb-1">
-								<span class="num scroll-counter" data-counter-time="1200"><?php echo $number; ?></span><span class="sign bold"><?php echo $number_text; ?></span>
-							</div>
-							<?php if ($caption) : ?>
-								<div class="tw-text-lg"><?php echo $caption; ?></div>
-							<?php endif; ?>
-						</div>
-					<?php endwhile; endif; ?>
-					<?php if( have_rows('banner_2') ) : while( have_rows('banner_2') ) : the_row(); 
-						$number = get_sub_field('number');
-						$number_text = get_sub_field('number_text');
-						$caption = get_sub_field('caption');
-					?>
-						<div class="tw-full">
-							<div class="tw-text-7xl tw-font-bold tw-text-red tw-mb-1">
-								<span class="num scroll-counter" data-counter-time="1200"><?php echo $number; ?></span><span class="sign bold"><?php echo $number_text; ?></span>
-							</div>
-							<?php if ($caption) : ?>
-								<div class="tw-text-lg"><?php echo $caption; ?></div>
-							<?php endif; ?>
-						</div>
-					<?php endwhile; endif; ?>
-				</div>
-			</section>
+			<!-- HIGHLIGHTS -->
+			<?php get_template_part('template-parts/section-highlights'); ?>
 			
 			<?php
 				$prog_section_title = get_field('program_section_title');
@@ -173,16 +104,6 @@
 					</div>
 				</div>
 			</section>
-
-			<!-- WHAT'S HAPPENING -->
-			<?php
-				get_template_part(
-					'template-parts/section-whats-happening', null,
-					array(
-						'zone' => 'whats-happening-radio',
-					)
-				);
-			?>
 
 			<!-- PARTNER -->
 			<?php get_template_part('template-parts/section-partner'); ?>

@@ -52,7 +52,6 @@ $lang = 'en';
 	<script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/assets/scripts/popper.min.js"></script>
 
 	<link rel="stylesheet" href="https://use.typekit.net/aws7pih.css">
-	<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/main-alt.css">
 	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 
 	<?php facebook_pixel_code(); ?>
@@ -78,7 +77,7 @@ $lang = 'en';
 			<div class="tw:hidden tw:md:block wrapper">
 				<div class="tw:flex tw:flex-row tw:justify-between">
 					<div>&nbsp;</div>
-					<ul class="tw:flex tw:flex-row tw:md:justify-center tw:md:items-center tw:justify-between tw:md:gap-x-16 tw:text-white" style="padding: 8px; min-height: 40px;">
+					<ul class="tw:flex tw:flex-row tw:md:justify-center tw:md:items-center tw:justify-between tw:md:gap-x-16 tw:text-white" style="padding: 8px; height: 40px; margin-bottom: 0px;">
 						<li><a class="tw:text-sm tw:font-semibold" href="/about-us">About Us</a></li>
 						<li><a class="tw:text-sm tw:font-semibold" href="/the-latest">The Latest</a></li>
 						<li><a class="tw:text-sm tw:font-semibold" href="/contact-us">Contact Us</a></li>
@@ -149,7 +148,7 @@ if ( is_front_page() ) {
 			'hero_title' => $hero_title,
 		)
 	);
-} elseif ( is_category() || is_page() || is_404() ) {
+} elseif ( is_page_template( 'page-legal.php' ) || is_404() ) {
 	get_template_part( 'template-parts/header', 'nomedia' );
 } elseif ( is_single() ) {
 	get_template_part( 'template-parts/header', 'nomedia-blog' );

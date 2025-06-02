@@ -36,7 +36,7 @@
                 <div class="tw:grid tw:grid-cols-1 tw:md:grid-cols-2">
                     <div style="margin-top: 30px;">
                         <?php if ($headline): ?>
-                            <h2><?php echo $headline; ?></h2>
+                            <h2 class="title2 tw:text-white" style="color: #fff;"><?php echo $headline; ?></h2>
                         <?php endif; ?>
                         <?php if ($headline_content): ?>
                             <div class="tw:text-2xl tw:font-semibold tw:!mb-12">
@@ -67,7 +67,7 @@
         ?>
         <div style="margin-top: 80px;">
             <?php if ($brands_section_title): ?>
-                <h2 class="tw:text-center" style="font-size: 52px; margin-bottom: 48px;"><?php echo $brands_section_title; ?></h2>
+                <h2 class="tw:text-center tw:text-white" style="font-size: 52px; margin-bottom: 48px; color: #fff;"><?php echo $brands_section_title; ?></h2>
             <?php endif; ?>
             <div class="tw:grid tw:grid-cols-2 tw:md:grid-cols-2 tw:lg:grid-cols-3 tw:xl:grid-cols-4 tw:2xl:grid-cols-5 tw:gap-x-12 tw:gap-y-12">
                 <?php if (!empty($brand_logos)): ?>
