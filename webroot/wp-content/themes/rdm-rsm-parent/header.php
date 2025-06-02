@@ -206,6 +206,6 @@ if ( is_front_page() ) {
 		!is_page_template( 'page_upfront_2025.php' ) &&
 		!is_singular('post') && !is_category()
 	) { ?>
-		<div class="wrapper ">
+		<div class="wrapper">
 <?php
 	} ?>
