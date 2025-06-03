@@ -205,7 +205,7 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 							$categories         = get_the_category();
 							?>
 							<div class="item">
-								<?php $title_formatted = ucwords(strtolower(get_the_title())); ?>
+								<?php $title_formatted = get_the_title(); ?>
 								<p class="date" style="color: white; margin-bottom: 6px;"><?php echo get_the_date( get_option( 'date_format' ) ); ?> / <?php echo $categories ? $categories[0]->name : ''; ?></p>
 								<a href="<?php the_permalink(); ?>" aria-label="read <?php echo $title_formatted; ?>"><img src="<?php echo $featured_img_url; ?>" alt="" loading="lazy"></a>
 								<h3 class="post-title"><a style="color: white;" href="<?php the_permalink(); ?>" aria-label="read <?php echo $title_formatted; ?>"><?php echo $title_formatted; ?></a></h3>
