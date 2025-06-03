@@ -88,15 +88,9 @@ get_header();
 				<div class="portfolio-main">
 					<div class="portfolio-page">
 						<div class="inner wrapper">
-							<div class="top md:tw-space-x-12" style="gap: 0rem; justify-content: start;">
-								<?php if ($slider_title) : ?>
-									<h2 class="tw-text-3xl md:tw-text-4xl tw-font-bold" style="color: <?php echo $slider_text_color; ?>"><?php echo $slider_title; ?></h2>
-								<?php endif; ?>
-								<?php if ($slider_button_link) : ?>
-									<a href="<?php echo $slider_button_link['url']; ?>" class="button" aria-label="<?php echo $slider_button_link['title'] ? $slider_button_link['title'] : 'Download TV Schedule'; ?>" target="<?php echo $slider_button_link['target'] ? $slider_button_link['target'] : '_self'; ?>"><?php echo $slider_button_link['title'] ? $slider_button_link['title'] : 'Download TV Schedule'; ?></a>
-								<?php endif; ?>
-							</div>
-
+							<?php if ($slider_title) : ?>
+								<h2 class="tw-text-3xl md:tw-text-4xl tw-font-bold" style="color: <?php echo $slider_text_color; ?>"><?php echo $slider_title; ?></h2>
+							<?php endif; ?>
 							<?php
 								get_template_part(
 									'template-parts/shows',
@@ -109,6 +103,9 @@ get_header();
 									)
 								);
 							?>
+							<?php if ($slider_button_link) : ?>
+								<a class="tv-schedule-btn button" href="<?php echo $slider_button_link['url']; ?>" aria-label="<?php echo $slider_button_link['title'] ? $slider_button_link['title'] : 'Download TV Schedule'; ?>" target="<?php echo $slider_button_link['target'] ? $slider_button_link['target'] : '_self'; ?>"><?php echo $slider_button_link['title'] ? $slider_button_link['title'] : 'Download TV Schedule'; ?></a>
+							<?php endif; ?>
 						</div>
 					</div>
 				</div>
