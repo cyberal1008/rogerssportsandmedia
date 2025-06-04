@@ -63,6 +63,23 @@
 	<!-- HIGHLIGHTS -->
 	<?php get_template_part('template-parts/section-highlights'); ?>
 
+
+	<!-- FEATURED VIDEO -->
+	<?php
+		$featured_video = get_field('featured_video');
+		if ($featured_video) :
+	?>
+	<section>
+		<div class="wrapper">
+			<div class="tw:mb-4">&nbsp;</div>
+			<video class="tw:w-full" controls>
+				<source src="<?php echo $featured_video['url']; ?>" type="video/mp4">
+				Your browser does not support the video tag.
+			</video>
+		</div>
+	</section>
+	<?php endif; ?>
+
 	<!-- PLATFORMS -->
 	<?php 
 	if( have_rows('platforms') ) : 
