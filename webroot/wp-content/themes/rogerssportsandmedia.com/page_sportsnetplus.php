@@ -37,34 +37,36 @@
 		get_template_part('template-parts/section-intro');
 	?>
 
+    <!-- HIGHLIGHTS -->
+	<?php get_template_part('template-parts/section-highlights'); ?>
+
 	<!-- FEATURED VIDEO -->
 	<?php
 		$featured_video = get_field('featured_video');
         $buyers_guide_section_title = get_field('buyers_guide_section_title');
         $buyers_guide_button = get_field('buyers_guide_button');
 	?>
-	<div class="tw-bg-gray tw-px-4 tw-py-12 md:tw-px-16 lg:tw-px-32 xl:tw-px-48 2xl:tw-px-80">
-        <?php if ($featured_video) : ?>
-            <video controls>
-                <source src="<?php echo $featured_video['url']; ?>" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-        <?php endif; ?>
-
-        <div class="tw-mt-12 tw-w-5/6 tw-mb-16">
-            <hr />
-            <div class="tw-text-4xl tw-text-black tw-font-bold tw-mb-8">
-                <?php echo $buyers_guide_section_title; ?>
-            </div>
-            <?php if ($buyers_guide_button) : ?>
-                <div><a href="<?php echo $buyers_guide_button['url']; ?>" class="button" aria-label="<?php echo $buyers_guide_button['title'] ? $buyers_guide_button['title'] : 'Download Buyers Guide'; ?>" target="<?php echo $buyers_guide_button['target'] ? $buyers_guide_button['target'] : '_self'; ?>"><?php echo $buyers_guide_button['title'] ? $buyers_guide_button['title'] : 'Download Buyers Guide'; ?></a></div>
+    <section class="tw-bg-gray">
+		<div class="wrapper">
+			<div class="tw:mb-4">&nbsp;</div>
+            <?php if ($featured_video) : ?>
+                <video controls>
+                    <source src="<?php echo $featured_video['url']; ?>" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
             <?php endif; ?>
+            <div class="tw-mt-12 tw-w-5/6 tw-mb-16">
+                <hr />
+                <div class="tw-text-4xl tw-text-black tw-font-bold tw-mb-8">
+                    <?php echo $buyers_guide_section_title; ?>
+                </div>
+                <?php if ($buyers_guide_button) : ?>
+                    <div><a href="<?php echo $buyers_guide_button['url']; ?>" class="button" aria-label="<?php echo $buyers_guide_button['title'] ? $buyers_guide_button['title'] : 'Download Buyers Guide'; ?>" target="<?php echo $buyers_guide_button['target'] ? $buyers_guide_button['target'] : '_self'; ?>"><?php echo $buyers_guide_button['title'] ? $buyers_guide_button['title'] : 'Download Buyers Guide'; ?></a></div>
+                <?php endif; ?>
+            </div>
         </div>
-	</div>
-    
-
-    <!-- HIGHLIGHTS -->
-	<?php get_template_part('template-parts/section-highlights'); ?>
+        <div class="tw:mb-6">&nbsp;</div>
+	</section>
 
 	<!-- PARTNER -->
 	<?php get_template_part('template-parts/section-partner'); ?>
