@@ -41,17 +41,10 @@
 
 	<!-- FEATURED VIDEO -->
 	<?php
-		$featured_video = get_field('featured_video');
+		get_template_part(
+			'template-parts/section-featured-video'
+		);
 	?>
-	<section class="tw-bg-gray tw-px-4 md:tw-px-16 lg:tw-px-32 xl:tw-px-48 2xl:tw-px-80">
-		<?php if ($featured_video) : ?>
-			<video controls>
-				<source src="<?php echo $featured_video['url']; ?>" type="video/mp4">
-				Your browser does not support the video tag.
-			</video>
-			<div style="padding-bottom: 32px;">&nbsp;</div>
-		<?php endif; ?>
-	</section>
 
 	<!-- HIGHLIGHTS -->
 	<?php get_template_part('template-parts/section-highlights'); ?>

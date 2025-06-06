@@ -22,6 +22,11 @@
         get_template_part('template-parts/section-intro');
     ?>
 
+    <!-- FEATURED VIDEO -->
+    <?php
+        get_template_part('template-parts/section-featured-video');
+    ?>
+
 	<!--- SHOWS SECTION -->
 	<?php if( have_rows('shows') ) : ?>
 	<?php

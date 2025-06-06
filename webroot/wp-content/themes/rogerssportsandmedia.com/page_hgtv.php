@@ -22,6 +22,13 @@ get_header();
         get_template_part('template-parts/section-intro');
     ?>
 
+	<div class="tw-mb-4">&nbsp;</div>
+
+	<!-- FEATURED VIDEO -->
+    <?php
+        get_template_part('template-parts/section-featured-video');
+    ?>
+
     <!-- Show Sliders -->
 	<?php
 	$show_sliders = get_field( 'show_sliders' );

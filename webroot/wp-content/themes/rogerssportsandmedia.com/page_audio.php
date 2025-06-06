@@ -23,6 +23,9 @@
 		.logo-slider {
 			display: block;
 		}
+		.card-body .card-subtitle {
+			color: white;
+		}
 	</style>
 </head>
 <?php get_header(); ?>
@@ -71,6 +74,9 @@
 				</div>
 			</section>
 
+			<!-- FEATURED VIDEO -->
+			<?php get_template_part('template-parts/section-featured-video'); ?>
+
 			<!-- HIGHLIGHTS -->
 			<?php get_template_part('template-parts/section-highlights'); ?>
 			
@@ -78,11 +84,11 @@
 				$prog_section_title = get_field('program_section_title');
 				$prog_section_button = get_field('program_section_button');
 			?>
-			<section id="stations-podcasts" class="stations-podcasts">
+			<section id="stations-podcasts" class="stations-podcasts tw-bg-black">
 				<div class="wrapper">
 					<div class="tw-flex tw-flex-col md:tw-flex-row tw-mb-6 md:tw-mb-4 md:tw-space-x-12">
 						<?php if ($prog_section_title) : ?>
-							<h2 class="title2 tw-text-black tw-mb-3 md:tw-mb-0"><?php echo $prog_section_title; ?></h2>
+							<h2 class="title2 tw-text-white tw-mb-3 md:tw-mb-0"><?php echo $prog_section_title; ?></h2>
 						<?php endif; ?>
 						<?php if ($prog_section_button) : ?>
 							<div><a href="<?php echo $prog_section_button['url']; ?>" class="button" aria-label="<?php echo $prog_section_button['title'] ? $prog_section_button['title'] : 'Download Buyers Guide'; ?>" target="<?php echo $prog_section_button['target'] ? $prog_section_button['target'] : '_self'; ?>"><?php echo $prog_section_button['title'] ? $prog_section_button['title'] : 'Download Buyers Guide'; ?></a></div>
