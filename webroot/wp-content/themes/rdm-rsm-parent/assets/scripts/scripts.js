@@ -20,3 +20,22 @@ $(".navbar-toggler").click(function() {
         $('.navbar').toggleClass("nav-bg nav-bg-active");
     }
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+  const toggler = document.querySelector('.navbar-toggler');
+
+  toggler.addEventListener('click', () => {
+    // Small delay to wait for Bootstrap's internal update
+    setTimeout(() => {
+      const isOpen = toggler.getAttribute('aria-expanded') === 'true';
+
+      if (isOpen) {
+        console.log('Navbar is open');
+        document.body.classList.add('no-scroll');
+      } else {
+        console.log('Navbar is closed');
+        document.body.classList.remove('no-scroll');
+      }
+    }, 100); // ~instant; Bootstrap updates aria-expanded synchronously
+  });
+});

@@ -96,7 +96,10 @@ header {
     float: right;
     border: none;
     padding-right: 0;
-    z-index: 1000;
+    z-index: 1051;
+    &[aria-expanded=true] {
+      padding-right: 20px;
+    }
   }
   .navbar-toggler:active,
   .navbar-toggler:focus {
@@ -121,7 +124,7 @@ header {
     top: 0;
     left: 0;
     content: "";
-    z-index: 2;
+    z-index: 1051;
     transition: all 300ms linear;
   }
   .navbar-light .navbar-toggler-icon:after {
@@ -485,4 +488,21 @@ header {
 		width: 100%;
 		right: 0px;
 	}
+}
+
+.navbar-collapse.show {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow-y: auto;
+  background: white;
+  z-index: 1050; /* Above most Bootstrap elements */
+}
+
+body.no-scroll {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
 }
