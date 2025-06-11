@@ -26,7 +26,9 @@ get_header();
 
 	<!-- FEATURED VIDEO -->
     <?php
+	if( !get_field('featured_video_at_page_bottom') ) {
         get_template_part('template-parts/section-featured-video');
+	}
     ?>
 
     <!-- Show Sliders -->
@@ -107,6 +109,13 @@ get_header();
             </div>
         </section>
     <?php endif; ?>
+
+	<!-- Bottom FEATURED VIDEO -->
+	<?php
+	if( get_field('featured_video_at_page_bottom') ) {
+		get_template_part('template-parts/section-featured-video');
+	}
+    ?>
 </main>
 
 <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
