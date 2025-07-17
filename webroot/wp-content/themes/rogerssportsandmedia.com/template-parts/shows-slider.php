@@ -158,13 +158,13 @@ if ( $filter ) {
 					?>
 					<div class="inner">
 						<div class="imgbox">
-							<a href="#prog-popup-<?php echo $prog_ctr; ?>" aria-label="read about <?php echo esc_html( $post->post_title ); ?>" data-fancybox>
+							<a href="#prog-popup-<?php echo $post->ID; ?>" aria-label="read about <?php echo esc_html( $post->post_title ); ?>" data-fancybox>
 								<?php echo $img_tag; ?>
 							</a>
 						</div>
 						<p class="title h4"><a style="color: <?php echo $text_color; ?>" href="#prog-popup-<?php echo $prog_ctr; ?>" aria-label="read about <?php echo esc_html( $post->post_title ); ?>" data-fancybox><?php echo esc_html( $post->post_title ); ?></a></p>
 					</div>
-					<div id="prog-popup-<?php echo $prog_ctr; ?>" class="prog-popup popup">
+					<div id="prog-popup-<?php echo $post->ID; ?>" class="prog-popup popup">
 						<div class="inner">
 							<a href="#" class="back" data-fancybox-close aria-label="Back to content">Back</a>
 
