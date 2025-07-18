@@ -169,9 +169,9 @@ if ( $filter ) {
 							<a href="#" class="back" data-fancybox-close aria-label="Back to content">Back</a>
 
 							<div class="meta">
-								<?php echo $network ? $network : ''; ?>
-								<?php echo $network && $day ? '<span class="divider">/</span>' : ''; ?>
-								<?php echo isset($day) ? $day : ''; ?>
+								<?php echo !empty( $network ) ? $network : ''; ?>
+								<?php echo !empty( $network ) && !empty( $day ) ? '<span class="divider">/</span>' : ''; ?>
+								<?php echo !empty( $day ) ? $day : ''; ?>
 							</div>
 
 							<p class="title h2"><?php echo esc_html( $post->post_title ); ?></p>
