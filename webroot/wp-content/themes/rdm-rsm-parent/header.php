@@ -156,7 +156,7 @@ if ( is_front_page() ) {
 ?>
 	<?php 
 	if ( ! is_page() || ! is_page_template( 'page-contactus.php' ) ) { ?>
-		<a href="<?php echo get_home_url(); ?>/contact-us" class="button fixedbtn" role="region" id="advertise-btn" aria-label="Advertise with Us">Contact Us</a>
+		<a href="<?php echo get_home_url(); ?>/contact-us" class="button fixedbtn" role="region" id="advertise-btn" aria-label="Contact Us">Contact Us</a>
 		<script>
 			const target = document.getElementById("hero-carousel");
 			const trigger = document.getElementById("advertise-btn");
