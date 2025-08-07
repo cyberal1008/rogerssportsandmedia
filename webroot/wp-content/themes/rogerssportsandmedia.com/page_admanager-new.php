@@ -51,6 +51,59 @@
         font-size: var(--tw-text-lg);
         line-height: var(--tw-leading, var(--tw-text-lg--line-height));
       }
+      .tw\:ad-nav-custom-width\:flex-row {
+        flex-direction: row;
+      }
+
+      .tw\:ad-nav-custom-width\:gap-x-6 {
+        column-gap: calc(var(--tw-spacing) * 6);
+      }
+
+      .tw\:ad-nav-custom-width\:block {
+        display: block;
+      }
+
+      .tw\:ad-nav-custom-width\:flex {
+        display: flex;
+      }
+    }
+    .burger {
+      width: 30px;
+      height: 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      background: none;
+      padding: 0;
+      z-index: 1000;
+      position: absolute;
+      right: 0;
+    }
+
+    .burger span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background: #000;
+      border-radius: 2px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      transform-origin: center; /* important */
+    }
+
+    @media (min-width: 1072px) {
+      .burger { display: none; }
+    }
+
+    /* Correct neat X */
+    .burger.active span:nth-child(1) {
+      transform: translateY(10px) rotate(45deg);
+    }
+    .burger.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .burger.active span:nth-child(3) {
+      transform: translateY(-10px) rotate(-45deg);
     }
   </style>
 </head>
@@ -60,7 +113,7 @@
       Back to top
     </a>
     <?php get_template_part('template-parts/ad-manager-popup-new'); ?>
-    <nav class="tw:px-4 tw:ad-nav-custom-width:px-32 tw:lg:px-32 tw:xl:px-40 tw:2xl:px-48 tw:py-4 tw:bg-black">
+    <nav class="tw:px-4 tw:md:px-32 tw:lg:px-32 tw:xl:px-40 tw:2xl:px-48 tw:py-4 tw:bg-black">
       <div class="tw:flex tw:flex-col tw:ad-nav-custom-width:flex-row tw:ad-nav-custom-width:justify-between">
         <a href="<?php echo esc_url( home_url( '/' ) ); ?>">
           <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/logo.png" class="tw:h-12 tw:mb-4 tw:ad-nav-custom-width:mb-0 tw:w-48" />
@@ -79,17 +132,32 @@
       </div>
     </nav>
     <section class="tw:px-4 tw:md:px-32 tw:lg:px-32 tw:xl:px-40 tw:2xl:px-48 tw:py-4 tw:bg-white">
-      <div class="tw:flex tw:flex-col tw:md:flex-row tw:md:gap-x-6 tw:gap-y-2">
-        <div class="tw:flex tw:flex-row tw:gap-x-6">
+      <div class="tw:flex tw:flex-col tw:gap-y-2 tw:ad-nav-custom-width:flex-row tw:ad-nav-custom-width:gap-x-6">
+        <div class="tw:flex tw:flex-row tw:gap-x-6" style="position: relative;">
           <span class="tw:font-bold tw:text-lg">Explore our Ad Solutions</span>
-          <span class="tw:text-primary tw:text-lg">&#8594;</span>
+          <span class="tw:text-primary tw:text-lg tw:hidden tw:ad-nav-custom-width:block">&#8594;</span>
+          <button class="burger" id="burger-btn" aria-label="Toggle solutions menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
         </div>
-        <div class="tw:flex tw:flex-row tw:gap-x-8 tw:md:gap-x-16">
+        <div id="solution-menu" class="tw:hidden tw:ad-nav-custom-width:flex tw:flex-row tw:gap-x-8 tw:md:gap-x-16">
           <a class="tw:font-semibold tw:text-base tw:md:text-lg tw:hover-no-underline tw:hover:border-b-2" href="#podcast-streaming-radio">Podcast</a>
           <a class="tw:font-semibold tw:text-base tw:md:text-lg tw:hover-no-underline tw:hover:border-b-2" href="#radio">Radio</a>
           <a class="tw:font-semibold tw:text-base tw:md:text-lg tw:hover-no-underline tw:hover:border-b-2" href="#streaming">Streaming</a>
           <a class="tw:font-semibold tw:text-base tw:md:text-lg tw:hover-no-underline tw:hover:border-b-2" href="#display">Display</a>
         </div>
+        <script>
+          const burgerBtn = document.getElementById('burger-btn');
+          const solutionMenu = document.getElementById('solution-menu');
+
+          burgerBtn.addEventListener('click', () => {
+            burgerBtn.classList.toggle('active');
+            solutionMenu.classList.toggle('tw:flex');
+            solutionMenu.classList.toggle('tw:hidden');
+          });
+        </script>
       </div>
     </section>
     <section class="tw:relative tw:overflow-hidden tw:h-[672px] tw:md:h-[532px]">
