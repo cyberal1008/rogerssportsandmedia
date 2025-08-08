@@ -101,6 +101,5 @@
 </div>
 </footer>
 <?php wp_footer(); ?>
-<?php linkedin_pixel_code(); ?>
 </body>
 </html>

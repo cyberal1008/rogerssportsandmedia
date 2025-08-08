@@ -17,7 +17,6 @@
     <?php wp_head(); ?>
     <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/main.css">
 	<?php google_tracking_code(); ?>
-	<?php facebook_pixel_code(); ?>
   <style>
     @media (min-width: 1072px) {
       .tw\:ad-nav-custom-width\:mb-0 {
