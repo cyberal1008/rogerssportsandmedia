@@ -16,7 +16,6 @@
     <title>Rogers Sports & Media</title>
     <?php wp_head(); ?>
     <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager/main.min.css">
-	<?php google_tracking_code(); ?>
 </head>
 
 <body>

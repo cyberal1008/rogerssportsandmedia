@@ -16,7 +16,6 @@
     <title>Rogers Sports & Media</title>
     <?php wp_head(); ?>
     <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/landing/main.min.css">
-	<?php google_tracking_code(); ?>
 </head>
 
 	<body>
@@ -323,15 +322,6 @@
 		</main>
 
 	    <script src="<?php echo get_stylesheet_directory_uri(); ?>/assets/landing/main.min.js"></script>
-		<script type="text/javascript">
-			window.addEventListener('message', function (event) {
-				if(event.data == "MetaCompleteRegistration") {
-					fbq('track', 'CompleteRegistration');
-					gtag('event', 'conversion', {'send_to': 'AW-11083871196/4ADyCP_a8ZEYENznmaUp'});
-				}
-			});
-		</script>
-
 	</body>
 <?php
 wp_footer();

@@ -260,26 +260,6 @@ add_filter(
 	4
 );
 
-function google_tracking_code() {
-	?>
-	<!-- Global site tag (gtag.js) - Google Ads: 11083871196 -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=AW-11083871196"></script>
-
-	<script>
-  		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
-		gtag('set', 'linker', {
-			'domains': ['rogerssportsandmedia.com','sfmc-content.com'],
-			'accept_incoming': true,
-			'decorate_forms': true
-		});
-		gtag('js', new Date());
-		
-		gtag('config', 'AW-11083871196');
-	</script>
-	<?php
-}
-
 function submit_single_event_form() {
     global $wpdb;
 
