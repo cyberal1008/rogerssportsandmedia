@@ -54,8 +54,6 @@ $lang = 'en';
 	<link rel="stylesheet" href="https://use.typekit.net/aws7pih.css">
 	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 
-	<?php facebook_pixel_code(); ?>
-
 	<?php wp_head(); ?>
 
 	<?php require_once 'views/portfolio-chapters.html'; ?>
