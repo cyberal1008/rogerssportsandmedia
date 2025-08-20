@@ -8,10 +8,6 @@ if ( ! isset( $args ) || empty( $args['slider_videos'] ) || empty( $args['slider
 $slider_videos = $args['slider_videos'];
 $slider_name = $args['slider_name'];
 $text_color = empty( $args['text_color'] ) ? '#000' : $args['text_color'];
-
-// echo '<pre>';
-// print_r($slider_videos);
-// echo '</pre>';
 ?>
 <div class="slider" style="opacity: 1;">
 	<div class="swiper <?php echo $slider_name; ?>-slider show-slider">
@@ -21,11 +17,6 @@ $text_color = empty( $args['text_color'] ) ? '#000' : $args['text_color'];
 			$jsvar = array();
 			$prog_ctr = 0;
 			foreach ( $slider_videos as $video ) : $prog_ctr++;
-				// echo '<pre>';
-				// print_r($video);
-				// echo '</pre>';
-				// exit;
-
 				$video_title = $video['title'];
 				$video_description = $video['description'];
 				$video_image = $video['image']; //size 214 x 120px
