@@ -67,10 +67,6 @@ $(document).ready(function () {
             centeredSlides: false,
             slidesPerView: 3,
             spaceBetween: 30
-            },
-            1024: {
-            centeredSlides: false,
-            slidesPerView: 5
             }
         }
     });
