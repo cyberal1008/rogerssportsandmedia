@@ -49,6 +49,27 @@ $(document).ready(function () {
             }
         }
     });
+    // Initialize "hgtv-videos-slider" Swiper
+    new Swiper(".videos-slider-1-slider", {
+        slidesPerView: "auto",
+        centeredSlides: true,
+        spaceBetween: 10,
+        speed: 500,
+        preventClicks: true,
+        a11y: false,
+        threshold: 20,
+        navigation: {
+            nextEl: ".videos-slider-1-next",
+            prevEl: ".videos-slider-1-prev"
+        },
+        breakpoints: {
+            768: {
+            centeredSlides: false,
+            slidesPerView: 3,
+            spaceBetween: 30
+            }
+        }
+    });
     $('.programming').each(function () {
         var $container = $(this);
         var $slider = $container.find('.show-slider');
