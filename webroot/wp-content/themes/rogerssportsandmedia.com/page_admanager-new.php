@@ -215,7 +215,7 @@
             <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/logo-sn-the-fan.png" alt="SN The Fan logo" class="tw:h-auto">
           </div>
           <div class="tw:flex tw:justify-center tw:items-center">
-            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/logo-wondery.png" alt="Wondery logo" class="tw:h-auto">
+            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/audioboom-wordmark-black.png" alt="Audioboom logo" class="tw:h-auto">
           </div>
           <div class="tw:flex tw:justify-center tw:items-center">
             <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/logo-tubi.png" alt="Tubi logo" class="tw:h-auto">
