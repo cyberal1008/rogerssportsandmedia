@@ -126,7 +126,7 @@ main .lined:hover {
 
 #hero-carousel .slide .txtbox a.button {
     position: absolute;
-    bottom: 13%;
+    bottom: 10%;
     left: 50%;
     transform: translateX(-50%);
     display: block;

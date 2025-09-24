@@ -6,17 +6,7 @@
 	 * @subpackage rdm-rsm-parent
 	 * @since Ver 1.0
 	 */
-?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <?php wp_head(); ?>
-    <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/main.min.css">
-	<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/styles/reskin-alt.css">
-	<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/styles/custom.css">
-</head>
 
-<?php 
 get_header();
 $home_hero_btn_url  = get_theme_mod( 'desktop_vid_link_button_url' );
 $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
