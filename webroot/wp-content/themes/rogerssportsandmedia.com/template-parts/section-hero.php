@@ -22,10 +22,10 @@ endif;
 		<img src="<?php echo $hero_image['url']; ?>" alt="<?php echo $hero_image['alt']; ?>" class="tw-hidden md:tw-block" style="width: 100%;">
 		<?php
 	}
-	if ( !empty( $args['title'] ) ) {
+	if ( !empty( $hero_title ) ) {
 		?>
 		<div class="tw-absolute tw-inset-0 tw-flex tw-items-center tw-justify-center tw-text-center">
-			<div class="tw-text-white tw-text-4xl md:tw-text-5xl tw-font-bold"><?php echo $args['title']; ?></div>
+			<div class="tw-text-white tw-text-4xl md:tw-text-5xl tw-font-bold"><?php echo $hero_title; ?></div>
 		</div>
 		<?php
 	}
