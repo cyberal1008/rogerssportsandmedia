@@ -55,6 +55,12 @@ if ( ! function_exists( 'load_rsm_stylesheet' ) ) {
 		) {
 			wp_enqueue_script( 'showsslider-js', get_stylesheet_directory_uri() . "/assets/home/scripts/showsslider.js", array(), '1.0.2', true );
 		}
+
+		if (
+			is_page_template( 'page_2025-mlb-world-series.php' )
+		) {
+			wp_enqueue_script( 'presentationslider-js', get_stylesheet_directory_uri() . "/assets/home/scripts/presentationslider.js", array(), '1.0.0', true );
+		}
 	}
 } // endif function_exists( 'load_rsm_stylesheet' ).
 
