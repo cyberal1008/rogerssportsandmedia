@@ -15,7 +15,8 @@ get_header();
 		color: #fff;
 	}
 	.intro-section-text {
-		padding-bottom: 0;
+		padding-top: 60px;
+		padding-bottom: 20px;
 	}
 	.intro-section-text p:nth-child(4) {
 		margin-bottom: 0;
