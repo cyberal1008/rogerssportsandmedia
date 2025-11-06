@@ -9,7 +9,33 @@
 
 get_header();
 ?>
-
+<style>
+	.intro-section {
+		background-color: #000;
+		color: #fff;
+	}
+	.intro-section-text {
+		padding-bottom: 0;
+	}
+	.intro-section-text p:nth-child(4) {
+		margin-bottom: 0;
+	}
+	.intro-section-text p:nth-child(5) {
+		display: none;
+	}
+	.intro-title {
+		color: #fff!important;
+	}
+	.programming {
+		padding-top: 0!important;
+	}
+	.programming a.button {
+		margin-top: 40px;
+	}
+	.programming .wrapper {
+		text-align: center;
+	}
+</style>
 <main id="content" role="main" class="tw-bg-gray">
 
 	<!-- HERO -->
@@ -21,8 +47,6 @@ get_header();
     <?php
         get_template_part('template-parts/section-intro');
     ?>
-
-	<div class="tw-mb-4">&nbsp;</div>
 
     <!-- Presentation Sliders -->
 	<?php
@@ -45,9 +69,6 @@ get_header();
 								<?php if ($slider_title) : ?>
 									<div class="tw-text-3xl md:tw-text-4xl tw-font-bold tw-mb-4 md:tw-mb-4" style="color: <?php echo $slider_text_color; ?>"><?php echo $slider_title; ?></div>
 								<?php endif; ?>
-								<?php if ($slider_button_link) : ?>
-									<a href="<?php echo $slider_button_link['url']; ?>" class="button" aria-label="<?php echo $slider_button_link['title'] ? $slider_button_link['title'] : 'Download TV Schedule'; ?>" target="<?php echo $slider_button_link['target'] ? $slider_button_link['target'] : '_self'; ?>"><?php echo $slider_button_link['title'] ? $slider_button_link['title'] : 'Download TV Schedule'; ?></a>
-								<?php endif; ?>
 							</div>
 
 							<?php
@@ -62,6 +83,10 @@ get_header();
 									)
 								);
 							?>
+
+							<?php if ($slider_button_link) : ?>
+								<a href="<?php echo $slider_button_link['url']; ?>" class="button" aria-label="<?php echo $slider_button_link['title'] ? $slider_button_link['title'] : 'Download TV Schedule'; ?>" target="<?php echo $slider_button_link['target'] ? $slider_button_link['target'] : '_self'; ?>"><?php echo $slider_button_link['title'] ? $slider_button_link['title'] : 'Download TV Schedule'; ?></a>
+							<?php endif; ?>
 						</div>
 					</div>
 				</div>
