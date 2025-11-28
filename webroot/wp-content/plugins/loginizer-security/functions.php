@@ -132,6 +132,11 @@ function loginizer_pro_update_checker(){
 		}
 	}
 	
+	// To show the notice of Loginizer Social Auth
+	if($current_version < 201){
+		update_option('loginizer_pro_less_than_201', true);
+	}
+
 	update_option('loginizer_version_pro_nag', time());
 	update_option('loginizer_version_free_nag', time());
 	update_option('loginizer_pro_version', LOGINIZER_PRO_VERSION);
@@ -164,7 +169,7 @@ function loginizer_updater_check_link($final_link){
 }
 
 function loginizer_pro_load_license($parent = 0){
-	global $loginizer, $lic_resp;
+	global $loginizer, $lic_resp, $sitepad;
 	
 	$license_field = 'loginizer_license';
 	$license_api_url = LOGINIZER_API;
@@ -191,7 +196,7 @@ function loginizer_pro_load_license($parent = 0){
 	}else{
 		$prods = [];
 	}
-
+	
 	if(empty($lic['last_update'])){
 		$lic['last_update'] = time() - 86600;
 	}
@@ -201,13 +206,14 @@ function loginizer_pro_load_license($parent = 0){
 		
 		$url = $license_api_url.'/license.php?license='.$lic['license'].'&prods='.implode(',', $prods).'&url='.rawurlencode(site_url());
 		$resp = wp_remote_get($url);
+
 		$lic_resp = $resp;
 
 		//Did we get a response ?
 		if(is_array($resp)){
 			
 			$tosave = json_decode($resp['body'], true);
-			
+
 			//Is it the license ?
 			if(!empty($tosave['license'])){
 				$tosave['last_update'] = time();
@@ -228,9 +234,9 @@ function loginizer_pro_load_license($parent = 0){
 				$lic = $softaculous_license;
 			}
 		}elseif(empty($parent)){
-			$lic = get_option('softaculous_pro_license', []);
+			$soft_lic = get_option('softaculous_pro_license', []);
 			
-			if(!empty($lic)){
+			if(!empty($soft_lic)){
 				return loginizer_pro_load_license(1);
 			}
 		}
@@ -239,6 +245,19 @@ function loginizer_pro_load_license($parent = 0){
 	if(!empty($lic['license'])){
 		$loginizer['license'] = $lic;
 	}
+	
+	// For sitepad users
+	if(defined('SITEPAD') && empty($loginizer['license']) && !empty($sitepad)){
+		
+		$license = !empty($sitepad['license']) ? $sitepad['license'] : (!empty($sitepad['server_license']) ? $sitepad['server_license'] : array());
+		
+		if (!isset($license['active']) && isset($license['status'])) {
+			$license['active'] = $license['status'];
+		}
+
+		$loginizer['license'] = $license;
+	}
+			
 }
 
 add_filter('softaculous_pro_products', 'loginizer_softaculous_pro_products', 10, 1);
@@ -277,4 +296,9 @@ function loginizer_pro_api_url($main_server = 0, $suffix = 'loginizer'){
 
 	return $mirror;
 	
+}
+
+// List of Social Providers which suppports Loginizers keyless Social Auth.
+function loginizer_pro_social_auth_providers(){
+	return ['Google', 'GitHub', 'LinkedInOpenID', 'Twitter'];
 }

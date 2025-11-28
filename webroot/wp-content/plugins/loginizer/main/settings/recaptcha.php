@@ -83,6 +83,11 @@ function loginizer_page_recaptcha(){
 	// Sizes
 	$lz_env['size']['normal'] = 'Normal';
 	$lz_env['size']['compact'] = 'Compact';
+	
+	// Size cloudflare (turnstile)
+	$lz_env['turnstile_size']['normal'] = 'Normal';
+	$lz_env['turnstile_size']['compact'] = 'Compact';
+	$lz_env['turnstile_size']['flexible'] = 'Flexible';
 
 	// reCAPTCHA Domains
 	$lz_env['captcha_domains']['www.google.com'] = 'google.com';
@@ -118,6 +123,12 @@ function loginizer_page_recaptcha(){
 			$option['captcha_size'] = lz_optpost('captcha_size');
 			$option['captcha_lang'] = lz_optpost('captcha_lang');
 			$option['captcha_domain'] = lz_optpost('captcha_domain');
+			$option['captcha_score_threshold'] = lz_optpost('captcha_score_threshold');
+			if(!is_numeric($option['captcha_score_threshold']) || $option['captcha_score_threshold'] > '1.0' || $option['captcha_score_threshold'] < '0.0'){
+				$option['captcha_score_threshold'] = '0.5';
+			}
+			
+			$option['captcha_disable_btn'] = lz_optpost('captcha_disable_btn'); // Only for v2 reCaptcha Checkbox
 			
 			// Cloudflare Turnstil Captcha
 			$option['turn_captcha_key'] = lz_optpost('turn_captcha_key');
@@ -126,7 +137,7 @@ function loginizer_page_recaptcha(){
 			$option['turn_captcha_size'] = lz_optpost('turn_captcha_size');
 			$option['turn_captcha_lang'] = lz_optpost('turn_captcha_lang');
 			
-			// No Google Captcha
+			// Math Captcha
 			$option['captcha_text'] = lz_optpost('captcha_text');
 			$option['captcha_time'] = (int) lz_optpost('captcha_time');
 			$option['captcha_words'] = (int) lz_optpost('captcha_words');
@@ -143,6 +154,7 @@ function loginizer_page_recaptcha(){
 			$option['captcha_register'] = (int) lz_optpost('captcha_register');
 			$option['captcha_comment'] = (int) lz_optpost('captcha_comment');
 			$option['captcha_wc_checkout'] = (int) lz_optpost('captcha_wc_checkout');
+			$option['captcha_wc_checkout_pos'] = lz_optpost('captcha_wc_checkout_pos');
 			
 			// Are we to use Math Captcha ?
 			if(!empty($_POST['captcha_status']) && $_POST['captcha_status'] == 2){
@@ -197,7 +209,7 @@ function loginizer_page_recaptcha(){
 				}
 				
 				// Is size valid ?
-				if(empty($lz_env['size'][$option['turn_captcha_size']])){
+				if(empty($lz_env['turnstile_size'][$option['turn_captcha_size']])){
 					$lz_error['turn_captcha_size'] = __('The Turnstile size is invalid', 'loginizer');
 				}
 				
@@ -406,7 +418,7 @@ input[type="text"], textarea, select {
 					<select name="captcha_theme" id="captcha_theme">
 						<?php
 							foreach($lz_env['theme'] as $k => $v){
-								echo '<option '.lz_POSTselect('captcha_theme', $k, ((!empty($loginizer['captcha_theme']) && $loginizer['captcha_theme'] == $k) ? true : false)).' value="'.esc_attr($k).'">'.esc_html($v).'</value>';								
+								echo '<option '.lz_POSTselect('captcha_theme', $k, ((!empty($loginizer['captcha_theme']) && $loginizer['captcha_theme'] == $k) ? true : false)).' value="'.esc_attr($k).'">'.esc_html($v).'</option>';								
 							}
 						?>
 					</select>
@@ -418,7 +430,7 @@ input[type="text"], textarea, select {
 					<select name="captcha_lang" id="captcha_lang">
 						<?php
 							foreach($lz_env['lang'] as $k => $v){
-								echo '<option '.lz_POSTselect('captcha_lang', $k, ((!empty($loginizer['captcha_lang']) && $loginizer['captcha_lang'] == $k) ? true : false)).' value="'.esc_attr($k).'">'.esc_html($v).'</value>';								
+								echo '<option '.lz_POSTselect('captcha_lang', $k, ((!empty($loginizer['captcha_lang']) && $loginizer['captcha_lang'] == $k) ? true : false)).' value="'.esc_attr($k).'">'.esc_html($v).'</option>';								
 							}
 						?>
 					</select>
@@ -430,7 +442,7 @@ input[type="text"], textarea, select {
 					<select name="captcha_size" id="captcha_size">
 						<?php
 							foreach($lz_env['size'] as $k => $v){
-								echo '<option '.lz_POSTselect('captcha_size', $k, ((!empty($loginizer['captcha_size']) && $loginizer['captcha_size'] == $k) ? true : false)).' value="'.esc_attr($k).'">'.esc_html($v).'</value>';
+								echo '<option '.lz_POSTselect('captcha_size', $k, ((!empty($loginizer['captcha_size']) && $loginizer['captcha_size'] == $k) ? true : false)).' value="'.esc_attr($k).'">'.esc_html($v).'</option>';
 							}
 						?>
 					</select>
@@ -445,9 +457,20 @@ input[type="text"], textarea, select {
 					<select name="captcha_domain" id="captcha_domain">
 						<?php
 							foreach($lz_env['captcha_domains'] as $k => $v){
-								echo '<option '.lz_POSTselect('captcha_domain', $k, ((!empty($loginizer['captcha_domain']) && $loginizer['captcha_domain'] == $k) ? true : false)).' value="'.$k.'">'.$v.($k == 'www.google.com' ? ' '.__('(Default)', 'loginizer') : '').'</value>';								
+								echo '<option '.lz_POSTselect('captcha_domain', $k, ((!empty($loginizer['captcha_domain']) && $loginizer['captcha_domain'] == $k) ? true : false)).' value="'.$k.'">'.$v.($k == 'www.google.com' ? ' '.__('(Default)', 'loginizer') : '').'</option>';								
 							}
 						?>
+					</select>
+				</td>
+			</tr>
+			
+			<tr class="lz_google_cap lz_google_cap_v3">
+				<td scope="row" valign="top">
+					<label for="captcha_domain"><b><?php echo __('reCaptcha threshold', 'loginizer'); ?></b></label><br>
+					<?php echo __('Google returns a score between 0.0 and 1.0 — with 0.0 meaning it\'s likely a bot and 1.0 meaning it\'s likely a human. The default threshold is 0.5, but you can change it based on your needs.', 'loginizer'); ?>
+				</td>
+				<td>
+					<input type="number" max="1.0" min="0.0" step="0.1" name="captcha_score_threshold" id="captcha_score_threshold" value="<?php echo (!empty($loginizer['captcha_score_threshold']) ? esc_attr($loginizer['captcha_score_threshold']) : '0.5'); ?>">
 					</select>
 				</td>
 			</tr>
@@ -472,7 +495,7 @@ input[type="text"], textarea, select {
 					<select name="turn_captcha_theme" id="turn_captcha_theme">
 						<?php
 							foreach($lz_env['theme'] as $k => $v){
-								echo '<option '.lz_POSTselect('turn_captcha_theme', $k, ((!empty($loginizer['turn_captcha_theme']) && $loginizer['turn_captcha_theme'] == $k) ? true : false)).' value="'.esc_attr($k).'">'.esc_html($v).'</value>';								
+								echo '<option '.lz_POSTselect('turn_captcha_theme', $k, ((!empty($loginizer['turn_captcha_theme']) && $loginizer['turn_captcha_theme'] == $k) ? true : false)).' value="'.esc_attr($k).'">'.esc_html($v).'</option>';								
 							}
 						?>
 					</select>
@@ -485,19 +508,19 @@ input[type="text"], textarea, select {
 					<select name="turn_captcha_lang" id="turn_captcha_lang">
 						<?php
 							foreach($lz_env['lang'] as $k => $v){
-								echo '<option '.lz_POSTselect('turn_captcha_lang', $k, ((!empty($loginizer['turn_captcha_lang']) && $loginizer['turn_captcha_lang'] == $k) ? true : false)).' value="'.$k.'">'.$v.'</value>';								
+								echo '<option '.lz_POSTselect('turn_captcha_lang', $k, ((!empty($loginizer['turn_captcha_lang']) && $loginizer['turn_captcha_lang'] == $k) ? true : false)).' value="'.$k.'">'.$v.'</option>';								
 							}
 						?>
 					</select>
 				</td>
 			</tr>
-			<tr class="lz_turnstile_cap lz_google_cap_size">
+			<tr class="lz_turnstile_cap">
 				<td scope="row" valign="top"><label for="turn_captcha_size"><b><?php echo __('Size', 'loginizer'); ?></b></label></td>
 				<td>
 					<select name="turn_captcha_size" id="turn_captcha_size">
 						<?php
-							foreach($lz_env['size'] as $k => $v){
-								echo '<option '.lz_POSTselect('turn_captcha_size', $k, ((!empty($loginizer['turn_captcha_size']) && $loginizer['turn_captcha_size'] == $k) ? true : false)).' value="'.$k.'">'.$v.'</value>';								
+							foreach($lz_env['turnstile_size'] as $k => $v){
+								echo '<option '.lz_POSTselect('turn_captcha_size', $k, ((!empty($loginizer['turn_captcha_size']) && $loginizer['turn_captcha_size'] == $k) ? true : false)).' value="'.$k.'">'.$v.'</option>';								
 							}
 						?>
 					</select>
@@ -590,12 +613,27 @@ input[type="text"], textarea, select {
 						echo '<tr>
 							<td><label for="captcha_wc_checkout">'.__('WooCommerce Checkout', 'loginizer').'</label></td>
 							<td><input type="checkbox" value="1" name="captcha_wc_checkout" id="captcha_wc_checkout" '.lz_POSTchecked('captcha_wc_checkout', (empty($loginizer['captcha_wc_checkout']) ? false : true)).' /></td>
-						</tr>';
+						</tr>
 						
+						<tr>
+							<td><label for="captcha_wc_checkout_pos">'.__('WooCommerce Checkout Position', 'loginizer').'</label></td>
+							<td>
+								<select value="'.lz_optpost('captcha_wc_checkout_pos').'" name="captcha_wc_checkout_pos" id="captcha_wc_checkout_pos"  />
+									<option value="" '.(isset($loginizer['captcha_wc_checkout_pos']) ? selected($loginizer['captcha_wc_checkout_pos'], '', false) : '').'>'.__('Before Payment', 'loginizer').'</option>
+									<option value="before_submit" '.(isset($loginizer['captcha_wc_checkout_pos']) ? selected($loginizer['captcha_wc_checkout_pos'], 'before_submit', false) : '').'>'.__('Before Order Button', 'loginizer').'</option>
+								</select>
+							</td>
+						</tr>';
 						}
 						
 						?>
 					</table>
+				</td>
+			</tr>
+			<tr class="lz_google_cap lz_google_cap_size">
+				<td scope="row" valign="top"><label for="captcha_disable_btn"><b><?php echo __('Disable Login Button', 'loginizer'); ?></b></label></td>
+				<td>
+					<input type="checkbox" value="1" name="captcha_disable_btn" id="captcha_disable_btn" <?php echo lz_POSTchecked('captcha_disable_btn', (empty($loginizer['captcha_disable_btn']) ? false : true)); ?> />
 				</td>
 			</tr>
 			<tr class="lz_cap">
@@ -660,9 +698,17 @@ function google_recaptcha_type(){
 	var cur_captcha_type = jQuery("input:radio[name='captcha_type']:checked").val();
 	
 	if(cur_captcha_type == 'v3' || cur_captcha_type == 'v2_invisible'){
+		if(cur_captcha_type == 'v3'){
+			jQuery(".lz_google_cap_v3").show();
+		} else {
+			jQuery(".lz_google_cap_v3").hide();
+		}
+		
 		jQuery(".lz_google_cap_size").hide();
 	}else{
 		jQuery(".lz_google_cap_size").show();
+		jQuery(".lz_google_cap_v3").hide();
+		
 	}
 	
 }

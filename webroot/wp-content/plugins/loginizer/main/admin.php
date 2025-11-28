@@ -4,12 +4,79 @@ if(!defined('ABSPATH')){
 	die('Hacking Attempt!');
 }
 
-// HOOKS
-add_action('admin_menu', 'loginizer_admin_menu');
-add_action('admin_notices', 'loginizer_social_login_url_alert');
-add_action('admin_footer', 'loginizer_social_interim_js');
-add_action('admin_init', 'loginizer_admin_actions');
-//add_filter("plugin_action_links_plugin_loginizer", 'loginizer_plugin_action_links');
+function loginizer_admin_hooks(){
+	add_action('admin_menu', 'loginizer_admin_menu');
+	add_action('admin_notices', 'loginizer_social_login_url_alert');
+	add_action('admin_footer', 'loginizer_social_interim_js');
+	add_action('admin_init', 'loginizer_admin_actions');
+	// add_filter("plugin_action_links_plugin_loginizer", 'loginizer_plugin_action_links');
+	
+	loginizer_admin_promo_hooks();
+}
+
+function loginizer_admin_promo_hooks(){
+	global $loginizer;
+	
+	if(!current_user_can('activate_plugins') || defined('SITEPAD')){
+		return;
+	}
+
+	// Is the premium features there ?
+	if(!defined('LOGINIZER_PREMIUM')){
+		// The promo time
+		$loginizer['promo_time'] = get_option('loginizer_promo_time');
+		if(empty($loginizer['promo_time'])){
+			$loginizer['promo_time'] = time();
+			update_option('loginizer_promo_time', $loginizer['promo_time']);
+		}
+
+		// Are we to show the loginizer promo
+		if(!empty($loginizer['promo_time']) && $loginizer['promo_time'] > 0 && $loginizer['promo_time'] < (time() - (30*24*3600))){
+			add_action('admin_notices', 'loginizer_promo');
+		}
+
+		if(!empty($loginizer['csrf_promo']) && $loginizer['csrf_promo'] > 0 && $loginizer['csrf_promo'] < (time() - 86400)){
+			add_action('admin_notices', 'loginizer_csrf_promo');
+		}
+
+		// Are we to disable the promo
+		if(isset($_GET['loginizer_promo']) && (int)$_GET['loginizer_promo'] == 0){
+			update_option('loginizer_promo_time', (0 - time()) );
+			die('DONE');
+		}
+
+		$loginizer['backuply_promo'] = get_option('loginizer_backuply_promo_time');
+		if(empty($loginizer['backuply_promo'])){
+			$loginizer['backuply_promo'] = abs($loginizer['promo_time']);
+			update_option('loginizer_backuply_promo_time', $loginizer['backuply_promo']);
+		}
+
+		// Setting CSRF Promo time
+		$loginizer['csrf_promo'] = get_option('loginizer_csrf_promo_time');
+
+		if(empty($loginizer['csrf_promo'])){
+			$loginizer['csrf_promo'] = abs($loginizer['promo_time']);
+			update_option('loginizer_csrf_promo_time', $loginizer['csrf_promo']);
+		}
+	}
+
+	// === Plugin Update Notice === //
+	$plugin_update_notice = get_option('softaculous_plugin_update_notice', []);
+	$available_update_list = get_site_transient('update_plugins'); 
+
+	if(
+		!empty($available_update_list) &&
+		is_object($available_update_list) &&
+		!empty($available_update_list->response) &&
+		!empty($available_update_list->response['loginizer/loginizer.php']) && 
+		(empty($plugin_update_notice) || empty($plugin_update_notice['loginizer/loginizer.php']) || (!empty($plugin_update_notice['loginizer/loginizer.php']) &&
+		version_compare($plugin_update_notice['loginizer/loginizer.php'], $available_update_list->response['loginizer/loginizer.php']->new_version, '<')))
+	){
+		add_action('admin_notices', 'loginizer_plugin_update_notice');
+		add_filter('softaculous_plugin_update_notice', 'loginizer_update_notice_filter');
+	}
+	// === Plugin Update Notice === //
+}
 
 function loginizer_admin_actions(){
 	global $loginizer;
@@ -504,7 +571,7 @@ function loginizer_admin_menu() {
 	add_submenu_page('loginizer', __($loginizer['prefix'].'SSO', 'loginizer'), __('Single Sign On', 'loginizer'). ((time() < strtotime('30 November 2023')) ? ' <span style="color:yellow;">Update</span>' : ''), 'activate_plugins', 'loginizer_sso', 'loginizer_sso_settings');
 	
 	// Social Login
-	$hook_name =  add_submenu_page('loginizer', __($loginizer['prefix'].'social_login', 'loginizer'), __('Social Login', 'loginizer') . ((time() < strtotime('30 July 2024')) ? ' <span style="color:red;">New</span>' : ''), 'activate_plugins', 'loginizer_social_login', 'loginizer_social_login_settings');
+	$hook_name =  add_submenu_page('loginizer', __($loginizer['prefix'].'social_login', 'loginizer'), __('Social Login', 'loginizer') . (defined('LOGINIZER_PREMIUM') && (time() < strtotime('30 June 2025')) ? ' <span style="color:yellow;font-size:12px;">Updated</span>' : ''), 'activate_plugins', 'loginizer_social_login', 'loginizer_social_login_settings');
 	
 	// Security Settings
 	if(!defined('SITEPAD')){
@@ -682,7 +749,6 @@ function loginizer_checksums_settings(){
 
 function loginizer_dashboard(){
 	include_once LOGINIZER_DIR . '/main/settings/dashboard.php';
-	
 	loginizer_page_dashboard();
 }
 
@@ -717,8 +783,9 @@ function loginizer_social_login_url_alert(){
 	if(!current_user_can('activate_plugins')){
 		return;
 	}
-
-	if(get_option('loginizer_social_login_url', '') === wp_login_url()){
+	
+	$set_login_url = get_option('loginizer_social_login_url', '');
+	if(empty($set_login_url) || $set_login_url === wp_login_url()){
 		return;
 	}
 
@@ -731,11 +798,20 @@ function loginizer_social_login_url_alert(){
 	}
 
 	$has_enabled = false;
+	$has_non_login_auth = false;
 	foreach($provider_settings as $provider){
-		if($provider['enabled']){
-			$has_enabled = true;
-			break;
+		if(empty($provider['loginizer_social_key']) && !empty($provider['enabled'])){
+			$has_non_login_auth = true;
 		}
+		
+		if(!empty($provider['enabled'])){
+			$has_enabled = true;
+		}
+	}
+	
+	// We will only show this error if the user is using key based config
+	if(empty($has_non_login_auth)){
+		return;
 	}
 
 	// If we have no Provider enabled then just show the warning on the social login page.
@@ -744,7 +820,7 @@ function loginizer_social_login_url_alert(){
 	}
 	
 	echo '<div class="notice notice-error">
-		<h4>'.esc_html__('Your changed login slug!', 'loginizer').'</h4>
+		<h4>'.esc_html__('You changed login slug!', 'loginizer').'</h4>
 		<p>'.esc_html__('You changed the login slug and have some social login apps enabled. These social login apps use the login URL as the redirect URI. This means that since the login URL has changed, the social login will now break.', 'loginizer').'</p>
 
 		<h4>'.esc_html__('How to fix:', 'loginizer').'</h4>
@@ -819,6 +895,11 @@ function loginizer_softwp_upgrader_notice(){
 
 function loginizer_check_expires(){
 	global $loginizer;
+	
+	// We do not want to show the expiry notice if the license is by SoftWP.
+	if(!empty($loginizer['license']) && !empty($loginizer['license']['has_plid'])){
+	    return;
+	}
 
 	$current_timestamp = time();
 	$expiration_timestamp = strtotime($loginizer['license']['expires']);
@@ -867,4 +948,52 @@ function loginizer_check_expires(){
 			jQuery.post(admin_url, data, function(response){
 			});
 		});');	
-} 
+}
+
+function loginizer_update_notice_filter($plugins = []){
+	$plugins['loginizer/loginizer.php'] = 'Loginizer';
+	
+	return $plugins;
+}
+
+function loginizer_plugin_update_notice(){
+	if(defined('SOFTACULOUS_PLUGIN_UPDATE_NOTICE')){
+		return;
+	}
+
+	$to_update_plugins = apply_filters('softaculous_plugin_update_notice', []);
+
+	if(empty($to_update_plugins)){
+		return;
+	}
+
+	/* translators: %1$s is replaced with a "string" of name of plugins, and %2$s is replaced with "string" which can be "is" or "are" based on the count of the plugin */
+	$msg = sprintf(__('New versions of %1$s %2$s available. Updating ensures better performance, security, and access to the latest features.', 'loginizer'), '<b>'.esc_html(implode(', ', $to_update_plugins)).'</b>', (count($to_update_plugins) > 1 ? 'are' : 'is')) . ' <a class="button button-primary" href='.esc_url(admin_url('plugins.php?plugin_status=upgrade')).'>Update Now</a>';
+
+	define('SOFTACULOUS_PLUGIN_UPDATE_NOTICE', true); // To make sure other plugins don't return a Notice
+	echo '<div class="notice notice-info is-dismissible" id="loginizer-plugin-update-notice">
+		<p>'.$msg. '</p>
+	</div>';
+
+	wp_register_script('loginizer-update-notice', '', ['jquery'], '', true);
+	wp_enqueue_script('loginizer-update-notice');
+	wp_add_inline_script('loginizer-update-notice', 'jQuery("#loginizer-plugin-update-notice").on("click", function(e){
+		let target = jQuery(e.target);
+
+		if(!target.hasClass("notice-dismiss")){
+			return;
+		}
+
+		var data;
+		
+		// Hide it
+		jQuery("#loginizer-plugin-update-notice").hide();
+		
+		// Save this preference
+		jQuery.post("'.admin_url('admin-ajax.php?action=loginizer_close_update_notice').'&security='.wp_create_nonce('loginizer_promo_nonce').'", data, function(response) {
+			//alert(response);
+		});
+	});');
+}
+
+loginizer_admin_hooks();
