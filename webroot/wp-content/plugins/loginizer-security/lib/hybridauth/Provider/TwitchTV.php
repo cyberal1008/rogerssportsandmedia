@@ -20,7 +20,7 @@ class TwitchTV extends OAuth2
     /**
      * {@inheritdoc}
      */
-    protected $scope = 'user:read:email';
+    protected $scope = 'user:read:email openid';
 
     /**
      * {@inheritdoc}
@@ -50,6 +50,17 @@ class TwitchTV extends OAuth2
         parent::initialize();
 
         $this->apiRequestHeaders['Client-ID'] = $this->clientId;
+        
+	$this->AuthorizeUrlParameters += [
+		'claims' => json_encode([
+			'id_token' => [
+				'email_verified' => null
+			],
+			'userinfo' => [
+				'email_verified' => null,
+			]
+		])
+	];
     }
 
     /**
@@ -76,6 +87,12 @@ class TwitchTV extends OAuth2
         $userProfile->email = $user->get('email');
         $userProfile->description = strip_tags($user->get('description'));
         $userProfile->profileURL = "https://www.twitch.tv/{$userProfile->displayName}";
+
+	// Fetch OIDC userinfo for email_verified
+	$oidc = $this->apiRequest('https://id.twitch.tv/oauth2/userinfo');
+	if(!empty($oidc) && !empty($oidc->email_verified)){
+		$userProfile->emailVerified = true;    
+	}
 
         return $userProfile;
     }

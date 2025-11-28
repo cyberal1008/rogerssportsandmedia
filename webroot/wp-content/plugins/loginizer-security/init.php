@@ -44,6 +44,7 @@ function loginizer_security_init(){
 	$loginizer['passwordless_html'] = empty($options['passwordless_html']) ? 0 : $options['passwordless_html'];
 	$loginizer['passwordless_redirect'] = empty($options['passwordless_redirect']) ? 0 : $options['passwordless_redirect'];
 	$loginizer['passwordless_redirect_for'] = empty($options['passwordless_redirect_for']) ? 0 : $options['passwordless_redirect_for'];
+	$loginizer['passwordless_disabled_for'] = empty($options['passwordless_disabled_for']) ? 0 : $options['passwordless_disabled_for'];
 
 	// 2FA OTP Email to Login
 	$options = get_option('loginizer_2fa_email_template');
@@ -65,6 +66,7 @@ $site_name';
 
 	$loginizer['2fa_email_sub'] = empty($options['2fa_email_sub']) ? $loginizer['2fa_email_d_sub'] : $options['2fa_email_sub'];
 	$loginizer['2fa_email_msg'] = empty($options['2fa_email_msg']) ? $loginizer['2fa_email_d_msg'] : $options['2fa_email_msg'];
+	$loginizer['2fa_email_html'] = !empty($options['2fa_email_html']);
 	
 	// For SitePad its always on
 	if(defined('SITEPAD')){
@@ -79,6 +81,7 @@ $site_name';
 	$loginizer['captcha_theme'] = empty($options['captcha_theme']) ? 'light' : $options['captcha_theme'];
 	$loginizer['captcha_size'] = empty($options['captcha_size']) ? 'normal' : $options['captcha_size'];
 	$loginizer['captcha_lang'] = empty($options['captcha_lang']) ? '' : $options['captcha_lang'];
+	$loginizer['captcha_disable_btn'] = empty($options['captcha_disable_btn']) ? '' : $options['captcha_disable_btn'];
 	$loginizer['turn_captcha_key'] = empty($options['turn_captcha_key']) ? '' : $options['turn_captcha_key'];
 	$loginizer['turn_captcha_secret'] = empty($options['turn_captcha_secret']) ? '' : $options['turn_captcha_secret'];
 	$loginizer['turn_captcha_theme'] = empty($options['turn_captcha_theme']) ? 'light' : $options['turn_captcha_theme'];
@@ -92,9 +95,12 @@ $site_name';
 	$loginizer['captcha_register'] = !isset($options['captcha_register']) ? 1 : $options['captcha_register'];
 	$loginizer['captcha_comment'] = !isset($options['captcha_comment']) ? 1 : $options['captcha_comment'];
 	$loginizer['captcha_wc_checkout'] = !isset($options['captcha_wc_checkout']) ? 1 : $options['captcha_wc_checkout'];
+	$loginizer['captcha_wc_checkout_pos'] = isset($options['captcha_wc_checkout_pos']) ? $options['captcha_wc_checkout_pos'] : '';
 	
 	$loginizer['captcha_no_google'] =  !isset($options['captcha_no_google']) ? 0 : $options['captcha_no_google'];
 	$loginizer['captcha_domain'] = empty($options['captcha_domain']) ? 'www.google.com' : $options['captcha_domain'];
+	// We are setting default to low to prevent anything from breaking for users who already have v3 enabled
+	$loginizer['captcha_score_threshold'] = isset($options['captcha_score_threshold']) ? $options['captcha_score_threshold'] : '';
 	
 	$loginizer['captcha_text'] =  empty($options['captcha_text']) ? '' : $options['captcha_text'];
 	$loginizer['captcha_time'] =  empty($options['captcha_time']) ? 300 : $options['captcha_time'];
@@ -126,6 +132,8 @@ $site_name';
 	$options = get_option('loginizer_security');
 	$loginizer['login_slug'] = empty($options['login_slug']) ? '' : $options['login_slug'];
 	$loginizer['rename_login_secret'] = empty($options['rename_login_secret']) ? '' : $options['rename_login_secret'];
+	$loginizer['hide_wp_admin'] = empty($options['hide_wp_admin']) ? '' : $options['hide_wp_admin'];
+	$loginizer['login_redirect_url'] = empty($options['login_redirect_url']) ? '' : $options['login_redirect_url'];
 	$loginizer['xmlrpc_slug'] = empty($options['xmlrpc_slug']) ? '' : $options['xmlrpc_slug'];
 	$loginizer['xmlrpc_disable'] = empty($options['xmlrpc_disable']) ? '' : $options['xmlrpc_disable'];// Disable XML-RPC
 	$loginizer['pingbacks_disable'] = empty($options['pingbacks_disable']) ? '' : $options['pingbacks_disable'];// Disable Pingbacks
@@ -153,24 +161,36 @@ $site_name';
 	$loginizer['enable_csrf_protection'] = get_option('loginizer_csrf_protection');
 	$loginizer['2fa_custom_login_redirect'] = get_option('loginizer_2fa_custom_redirect');
 	$loginizer['limit_session'] = get_option('loginizer_limit_session');
+	
+	// Checking if Ultimate Member plugins is active
+	if(!isset($loginizer['ultimate-member-active'])){
+		$um_is_active = in_array('ultimate-member/ultimate-member.php', apply_filters('active_plugins', get_option('active_plugins', [])));
+		
+		$loginizer['ultimate-member-active'] = !empty($um_is_active) ? true : false;
+	}
+	
+	// Blocking access to wp-admin if user is not logged in.
+	if(!empty($loginizer['login_slug']) && !empty($loginizer['hide_wp_admin'])){
+		add_action('wp_loaded', 'loginizer_hide_wp_admin');
+	}
+	
+	// Check if there is a license file and update it in the database
+	if(file_exists(__DIR__.'/license.key')){
+		
+		$license =	trim(file_get_contents(__DIR__.'/license.key'));
+	 
+		if(!empty($license)){
+			loginizer_pro_load_license($license);
+		}
 
+		unlink(__DIR__.'/license.key');
+	}
+	
+	// Load license
+	loginizer_pro_load_license();
+	
 	// Load license
 	if(!defined('SITEPAD')){
-
-		// Check if there is a license file and update it in the database
-		if(file_exists(__DIR__.'/license.key')){
-			
-			$license =	trim(file_get_contents(__DIR__.'/license.key'));
-		 
-			if(!empty($license)){
-				loginizer_pro_load_license($license);
-			}
-
-			unlink(__DIR__.'/license.key');
-		}
-		
-		// Load license
-		loginizer_pro_load_license();
 		
 		// Check for updates
 		include_once('updater/plugin-update-checker.php');
@@ -207,7 +227,9 @@ $site_name';
 	// Handles Concurrent Sessions
 	if(!empty($loginizer['limit_session']) && !empty($loginizer['limit_session']['enable'])){
 		add_filter('wp_authenticate_user', 'loginizer_limit_sessions');
+		add_action('wp_login', 'loginizer_limit_sessions_wp_login');
 		add_filter('check_password', 'loginizer_limit_destroy_sessions_handler', 10, 4);
+		add_filter('loginizer_pro_limit_sessions', 'loginizer_limit_sessions', 10);
 	}
 
 	// MasterStudy Login filter
@@ -219,6 +241,7 @@ $site_name';
 	// A way to remove the settings
 	if(file_exists(LOGINIZER_PRO_DIR.'/reset_admin.txt')){
 		update_option('loginizer_wp_admin', array());
+		delete_option('loginizer_csrf_protection');
 	}
 	
 	// Are we to ban user emails ?
@@ -253,7 +276,7 @@ $site_name';
 		add_filter('wp_redirect', 'loginizer_rl_wp_redirect', 10, 2);
 		add_filter('register', 'loginizer_rl_register');
 		add_action('wp_loaded', 'loginizer_rl_wp_loaded');
-		
+
 	}
 	
 	// Rename the WP-ADMIN folder
@@ -298,13 +321,19 @@ $site_name';
 		add_filter('xmlrpc_methods', 'loginizer_pingbacks_disable');
 
 	}
+	
+	if(!empty($loginizer['ultimate-member-active']) && class_exists('UM')){
+		add_action('um_user_edit_profile', 'loginizer_user_page_post', 10, 1);
+		remove_action('template_redirect', array(UM()->account(), 'account_submit'), 10002);
+		remove_action( 'um_before_form', 'um_add_update_notice', 500 );
+	}
 
 	//-----------------------------------
 	// Add the captcha filters / actions
 	//-----------------------------------
 	if(!empty($loginizer['social_settings']) && !loginizer_is_blacklisted()){
 
-		// Shortcode has options shape|divider|type
+		// Shortcode has options shape|divide|container_alignment|button_alignment
 		add_shortcode('loginizer_social', 'loginizer_social_shortcode');
 		
 		if(!empty($_COOKIE['lz_social_error'])){
@@ -318,14 +347,27 @@ $site_name';
 		if(!empty($loginizer['social_settings']['login']['registration_form'])){
 			add_action('register_form', 'loginizer_social_btn_login', 100);
 		}
+		
+		$lz_active_plugins = apply_filters('active_plugins', get_option('active_plugins'));
 
-		if(in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))){
+		if(in_array('woocommerce/woocommerce.php', $lz_active_plugins)){
 			if(!empty($loginizer['social_settings']['woocommerce']['login_form'])){
 				add_action('woocommerce_login_form', 'loginizer_social_btn_woocommerce', 100);
 			}
 
 			if(!empty($loginizer['social_settings']['woocommerce']['registration_form'])){
 				add_action('woocommerce_register_form', 'loginizer_social_btn_woocommerce');
+			}
+		}
+		
+		// Social Login for Ultimate Member plugin
+		if(in_array('ultimate-member/ultimate-member.php', $lz_active_plugins)){
+			if(!empty($loginizer['social_settings']['ultimate_member']['enable_buttons'])){
+				if(strpos($loginizer['social_settings']['ultimate_member']['button_position'], 'below') !== FALSE){
+					add_action('um_after_form', 'loginizer_social_btn_um', 100);
+				} else {
+					add_action('um_before_form', 'loginizer_social_btn_um', 100);
+				}
 			}
 		}
 		
@@ -344,6 +386,11 @@ $site_name';
 			add_filter('authenticate', 'loginizer_cap_login_verify', 10000);
 			add_action('login_form', 'loginizer_cap_form_login', 100);
 			add_action('woocommerce_login_form', 'loginizer_cap_form_login', 100);
+			add_action('login_form_middle', 'loginizer_cap_wp_login_form', 100); // https://developer.wordpress.org/reference/functions/wp_login_form/
+			
+			if(!empty($loginizer['ultimate-member-active']) && class_exists('UM')){
+				add_action('um_after_login_fields', 'loginizer_cap_form_um_login', 100);
+			}
 			
 			// Need to make more room for login form
 			if(empty($loginizer['captcha_remove_css'])){
@@ -367,7 +414,7 @@ $site_name';
 		}
 
 		// Is reCaptcha on for registration ?
-		if(!empty($loginizer['captcha_register'])){			
+		if(!empty($loginizer['captcha_register'])){
 			add_filter('registration_errors', 'loginizer_cap_register_verify', 10, 3);
 			add_action('register_form', 'loginizer_cap_form_login', 100);
 			
@@ -381,7 +428,12 @@ $site_name';
 			add_filter('woocommerce_registration_errors', 'loginizer_cap_register_verify', 10, 3);
 			
 			if(!empty($loginizer['captcha_wc_checkout'])){
-				add_action('woocommerce_checkout_order_review', 'loginizer_cap_form_ecommerce');
+				if(isset($loginizer['captcha_wc_checkout_pos']) && $loginizer['captcha_wc_checkout_pos'] == 'before_submit'){
+					add_action('woocommerce_review_order_before_submit', 'loginizer_cap_form_ecommerce', 10);
+				} else {
+					// This is before payment position
+					add_action('woocommerce_checkout_order_review', 'loginizer_cap_form_ecommerce');
+				}
 			}
 		}
 		
@@ -397,7 +449,12 @@ $site_name';
 			// Is reCaptcha on for WooCommerce Logout utility ?
 			if(!empty($loginizer['captcha_wc_checkout'])){
 				add_action('woocommerce_after_checkout_validation', 'loginizer_wc_checkout_verify');
-				add_action('woocommerce_checkout_order_review', 'loginizer_cap_form_ecommerce');
+				if(isset($loginizer['captcha_wc_checkout_pos']) && $loginizer['captcha_wc_checkout_pos'] == 'before_submit'){
+					add_action('woocommerce_review_order_before_submit', 'loginizer_cap_form_ecommerce', 10);
+				} else {
+					// This is before payment position
+					add_action('woocommerce_checkout_order_review', 'loginizer_cap_form_ecommerce');
+				}
 			}
 		
 		}
@@ -443,6 +500,12 @@ $site_name';
 			add_filter( 'query_vars', 'loginizer_premium_security_query_vars', 0 );
 			add_filter( 'woocommerce_account_menu_items', 'loginizer_add_premium_security_link_my_account' );
 			add_action( 'woocommerce_account_loginizer-security_endpoint', 'loginizer_user_page' );
+		}
+
+		//Add the Loginizer Security Settings Page for ultimate member plugin
+		if(!empty($loginizer['ultimate-member-active']) && class_exists('UM') && loginizer_is_2fa_applicable($cur_user)){
+			add_filter('um_account_content_hook_loginizer-security', 'loginizer_ultimatemember_security_tab_content');
+			add_filter('um_account_page_default_tabs_hook', 'loginizer_ultimatemember_security_tab', 100 );
 		}
 		
 		// Is the user logged in ?
@@ -507,6 +570,11 @@ $site_name';
 		
 	}
 	
+	if(!empty($_GET['lz_api'])){
+		add_action('init', 'loginizer_pro_social_auth_load');
+		return;
+	}
+	
 	if(wp_doing_ajax()){
 		include_once LOGINIZER_PRO_DIR . 'main/ajax.php';
 		return;
@@ -540,22 +608,47 @@ function loginizer_premium_system_info(){
 	
 	global $loginizer;
 	
+	$license_key = '';
+
+	if(!empty($loginizer['license'])){
+		if(isset($loginizer['license']['plan']) && $loginizer['license']['plan'] == 'business'){
+			$license_parts = explode('-', $loginizer['license']['license']);
+			$license_parts[1] = $license_parts[2] = $license_parts[3] = 'XXXXX';
+			$license_parts[4] = 'XX' . substr($license_parts[4], 2);
+			
+			$license_key = implode('-', $license_parts);
+		} else {
+			$license_key = $loginizer['license']['license'];
+		}
+	}
+
 	echo '
 	<tr>			
 		<th align="left" valign="top">'.__('Loginizer License', 'loginizer').'</th>
 		<td align="left">
-			'.(empty($loginizer['license']) ? '<span style="color:red">Unlicensed</span> &nbsp; &nbsp;' : '').' 
-			<input type="text" name="lz_license" value="'.(empty($loginizer['license']) ? '' : $loginizer['license']['license']).'" size="30" placeholder="e.g. WXCSE-SFJJX-XXXXX-AAAAA-BBBBB" style="width:300px;" /> &nbsp; 
+			'.(empty($loginizer['license']) ? '<span style="color:red">Unlicensed</span> &nbsp; &nbsp;' : '').'
+			<input type="text" name="lz_license" value="'.esc_attr($license_key).'" size="30" placeholder="e.g. WXCSE-SFJJX-XXXXX-AAAAA-BBBBB" style="width:300px;" /> &nbsp; 
 			<input name="save_lz" class="button button-primary" value="Update License" type="submit" />';
-			
+			if(!empty($loginizer['license'])){
+				echo '&nbsp;<input name="delete_lz" class="button" value="Delete License" type="submit"/>';
+			}
+
 			if(!empty($loginizer['license'])){
 				
 				$expires = $loginizer['license']['expires'];
 				$expires = substr($expires, 0, 4).'/'.substr($expires, 4, 2).'/'.substr($expires, 6);
 				
-				echo '<div style="margin-top:10px;">License Active : '.(empty($loginizer['license']['active']) ? '<span style="color:red">No</span>' : '<span style="color:green">Yes</span>').' &nbsp; &nbsp; &nbsp; 
-				License Expires : '.($loginizer['license']['expires'] <= date('Ymd') ? '<span style="color:red">'.$expires.'</span>' : $expires).'
-				</div>';
+				echo '<div style="margin-top:10px;">License Active : '.(empty($loginizer['license']['active']) ? '<span style="color:red">No</span>' : '<span style="color:green">Yes</span>').' &nbsp; &nbsp; &nbsp;';
+				
+				if(empty($loginizer['license']['has_plid']) || $loginizer['license']['expires'] <= date('Ymd')){
+					echo 'License Expires : '.($loginizer['license']['expires'] <= date('Ymd') ? '<span style="color:red">'.$expires.'</span>' : $expires);
+				}
+				echo '</div>';
+				
+				if(!empty($loginizer['license']['status_txt']) && !empty($loginizer['license']['status_msg'])){
+					echo '<div>'.wp_kses_post($loginizer['license']['status_txt']).'</div>';
+					echo '<div>'.wp_kses_post($loginizer['license']['status_msg']).'</div>';
+				}
 			}
 		echo 
 		'</td>
@@ -603,6 +696,14 @@ function loginizer_premium_page_dashboard(){
 			
 		}
 		
+	}
+	
+	// Deleting the License
+	if(isset($_POST['delete_lz']) && isset($_POST['lz_license'])){
+		$license = sanitize_text_field(wp_unslash($_POST['lz_license']));
+		if(strpos($license, 'LOGIN') === 0){
+			delete_option('loginizer_license');
+		}
 	}
 	
 }
@@ -658,10 +759,12 @@ function loginizer_admin_url_cookie($auth_cookie, $expire = 0, $expiration = '',
 		}
 
 		$session = get_user_meta($user->ID, 'loginizer_csrf_session', true);
-		$admin_slug = 'wp-admin-' . $session;
-		
-		if(!empty($loginizer['admin_slug'])){
-			$admin_slug = $loginizer['admin_slug'] . '-' . $session;
+		if(!empty($session)){
+			$admin_slug = 'wp-admin-' . $session;
+
+			if(!empty($loginizer['admin_slug'])){
+				$admin_slug = $loginizer['admin_slug'] . '-' . $session;
+			}
 		}
 	}
 
@@ -729,7 +832,7 @@ function loginizer_epl_verify(){
 				}
 			}
 		}
-					
+
 		$redirect_to = !empty($redirect) ? $redirect : admin_url();
 		$redirect_to = loginizer_csrf_change_url($redirect_to, $uid);
 		
@@ -746,7 +849,14 @@ function loginizer_epl_verify(){
 }
 
 // Hides the password field for the password less email login
-function loginizer_epl_hide_pass() { 
+function loginizer_epl_hide_pass() {
+	global $loginizer;
+	
+	// We do not need to do it for the admin login page.
+	if(!empty($loginizer['passwordless_disabled_for']) && is_array($loginizer['passwordless_disabled_for']) && in_array('admin', $loginizer['passwordless_disabled_for'])){
+		return;
+	}
+
 	?>
 	<style type="text/css">
 	label[for="user_pass"], .user-pass-wrap {
@@ -757,14 +867,32 @@ function loginizer_epl_hide_pass() {
 }
 
 // Hides the password field for the password less email login (WooCommerce)
-function loginizer_epl_hide_woocommerce_pass() { 
+function loginizer_epl_hide_woocommerce_pass(){
+	global $loginizer;
+
+	// We do not need to do it for the WooCommerce Login page.
+	if(!empty($loginizer['passwordless_disabled_for']) && is_array($loginizer['passwordless_disabled_for']) && in_array('woocommerce', $loginizer['passwordless_disabled_for'])){
+		return;
+	}
+
 	?>
 	<style type="text/css">
 	label[for="password"], .password-input, .lost_password{
 	display:none !important;
 	}
 	</style>
-	<?php 
+	<?php
+	
+	// In WooCommerce the password input is required which prevents the login from Working.
+	wp_register_script('lz-disable-login-pass', '', ['jquery'], '', true);
+	wp_enqueue_script('lz-disable-login-pass');
+	wp_add_inline_script('lz-disable-login-pass', "jQuery(document).ready(function(){
+		let pass_input = jQuery('form.login [name=\"password\"]');
+		if(pass_input.length){
+			pass_input.attr('required', false);
+			pass_input.attr('value', '');
+		}
+	})");
 }
 
 // Handles the error of the password not being there
@@ -787,6 +915,10 @@ function loginizer_epl_wp_authenticate($user, $username, $password){
 	global $loginizer;
 	
 	//echo 'loginizer_epl_wp_authenticate : '; print_r($user).'<br>';
+	// Checking which page made the request to login.
+	if(loginizer_is_epl_disabled()){
+		return $user;
+	}
 	
 	if(is_wp_error($user)){
 
@@ -879,7 +1011,7 @@ function loginizer_epl_wp_authenticate($user, $username, $password){
 		$email_sent_msg = __('An email has been sent with the Login URL', 'loginizer');
 		return new WP_Error('email_sent', $email_sent_msg, 'message');
 	}
-	
+
 }
 
 
@@ -940,8 +1072,14 @@ function loginizer_set_404(){
 	
 	global $wp_query;
 	
+	// To prevent WordPress from redirecting to login page.
+	remove_action('template_redirect', 'wp_redirect_admin_locations', 1000); 
+	
 	status_header(404);	
 	$wp_query->set_404();
+	
+	// Some page builders have registered shortcodes on this hook.
+	do_action('template_redirect');
 	
 	if( (($template = get_404_template()) || ($template = get_index_template()))
 		&& ($template = apply_filters('template_include', $template))
@@ -1160,7 +1298,12 @@ function loginizer_cap_login_verify($user){
 	}
 	
 	if(!loginizer_cap_verify()){
-		$captcha_fail_msg = __('The CAPTCHA verification failed. Please try again.', 'loginizer');
+		$captcha_fail_msg = __('The CAPTCHA verification failed. Please try again.', 'loginizer-security');
+		
+		if(!empty($loginizer['ultimate-member-active']) && class_exists('UM')){ 
+			\UM()->form()->add_error('blocked_msg', $captcha_fail_msg);
+		}
+		
 		return new WP_Error('loginizer_cap_login_error', $captcha_fail_msg, 'loginizer_cap');
 	}
 	
@@ -1328,7 +1471,7 @@ function loginizer_cap_encode_op($string){
 
 // Get the session key. If not there create one
 function loginizer_cap_session_key(){
-	
+
 	if(isset($_COOKIE['lz_math_sess']) && preg_match('/[a-z0-9]/is', $_COOKIE['lz_math_sess']) && strlen($_COOKIE['lz_math_sess']) == 40){
 		return $_COOKIE['lz_math_sess'];
 	}
@@ -1490,7 +1633,7 @@ function loginizer_cap_phrase($form = 'default'){
 	//loginizer_cap_cookie_set(sha1(AUTH_KEY . $number[$rnd_input] . $session_id, false));
 	
 	// In some themes the input field does not look fine if it is not in a div it used to take full page height for the input text tag
-	$return = '<div>'.$return.'</div>';
+	$return = '<div style="display:flex;align-items: center;gap: 3px;">'.$return.'</div>';
 	
 	return $return;
 }
@@ -1504,6 +1647,16 @@ function loginizer_cap_form_ecommerce($return = false, $id = ''){
 function loginizer_cap_form_login($return = false, $id = ''){
 	return loginizer_cap_form($return, $id, 'login');
 }
+
+function loginizer_cap_wp_login_form($content = '', $id = ''){
+	return loginizer_cap_form(true, $id, 'login');
+}
+
+// Captcha form for ultimate member
+function loginizer_cap_form_um_login(){
+    return loginizer_cap_form_login();
+}
+
 
 // Captcha form for comments/social
 function loginizer_cap_form_social($return = false, $id = ''){
@@ -1547,8 +1700,11 @@ function loginizer_cap_form($return = false, $id = '', $page_type = 'login'){
 		}
 
 		wp_enqueue_script('loginizer_turnstil_script');
+		if(function_exists('is_checkout') && is_checkout()){
+			wp_enqueue_script('loginizer-turnstil-woo', LOGINIZER_PRO_DIR_URL . '/assets/js/woocommerce.js', ['loginizer_turnstil_script', 'wp-data'], LOGINIZER_PRO_VERSION, ['strategy' => 'defer']);
+		}
 
-		$field = '<div class="cf-turnstile" id="lz-turnstile-div" data-sitekey="'.esc_attr($loginizer['turn_captcha_key']).'" data-theme="'.esc_attr($loginizer['turn_captcha_theme']).'" data-language="'.esc_attr($loginizer['turn_captcha_lang']).'" data-size="'.esc_attr($loginizer['turn_captcha_size']).'"></div>';
+		$field = '<div class="cf-turnstile" id="lz-turnstile-div" data-sitekey="'.esc_attr($loginizer['turn_captcha_key']).'" data-theme="'.esc_attr($loginizer['turn_captcha_theme']).'" data-language="'.esc_attr($loginizer['turn_captcha_lang']).'" data-size="'.esc_attr($loginizer['turn_captcha_size']).'" style="margin-bottom:10px;"></div>';
 
 	// Google reCaptcha
 	} else {
@@ -1606,6 +1762,10 @@ function loginizer_cap_form($return = false, $id = '', $page_type = 'login'){
 			}
 
 			wp_register_script('loginizer_cap_script', "https://".$loginizer['captcha_domain']."/recaptcha/api.js?".http_build_query($query_string), array('jquery'), $captcha_js_ver, true);
+
+			if(function_exists('is_checkout') && is_checkout()){
+				wp_enqueue_script('loginizer-gcaptcha-woo', LOGINIZER_PRO_DIR_URL . '/assets/js/woocommerce.js', ['loginizer_cap_script', 'wp-data'], LOGINIZER_PRO_VERSION, ['strategy' => 'defer']);
+			}
 			
 		// We need to load multiple times
 		}else{
@@ -1622,11 +1782,29 @@ function loginizer_cap_form($return = false, $id = '', $page_type = 'login'){
 		}
 
 		wp_enqueue_script('loginizer_cap_script');
-		
+
 		// For v3 everything is done in javascript
 		if(empty($invisible)){
+
+			if(!empty($loginizer['captcha_disable_btn'])){
+				// This disables the Login button and undo that when the captcha succeed
+				wp_add_inline_script('loginizer_cap_script', '
+					jQuery(document).ready(function(){
+						let form = jQuery(".lz-recaptcha").closest("form");
+						button = form.find("[type=\"submit\"]");
+						button.attr("disabled", true);
+					});
+					
+					function lz_recaptcha_callback(){
+						let form = jQuery(".lz-recaptcha").closest("form");
+
+						button = form.find("[type=\"submit\"]");
+						button.attr("disabled", false);
+					}
+				');
+			}
 		
-			$field .= "<div ".(!empty($id) ? 'id="'.$id.'"' : '')." class='g-recaptcha lz-recaptcha' data-sitekey='$site_key' data-theme='$theme' data-size='$size'></div>";
+			$field .= "<div ".(!empty($id) ? 'id="'.$id.'"' : '')." class='g-recaptcha lz-recaptcha' data-sitekey='$site_key' data-theme='$theme' data-size='$size' ".(!empty($loginizer['captcha_disable_btn']) ? 'data-callback="lz_recaptcha_callback"' : '')."></div>";
 			
 			if($no_js == 1){
 				
@@ -1779,7 +1957,7 @@ function loginizer_cap_verify(){
 			return true;
 		}
 
-	// Google Captcha
+	// Turnstile Captcha
 	} elseif(!empty($loginizer['turn_captcha_secret']) && !empty($loginizer['captcha_status']) && $loginizer['captcha_status'] == 4){
 
 		$response = (!empty($_POST['cf-turnstile-response']) ? $_POST['cf-turnstile-response'] : '');
@@ -1855,10 +2033,10 @@ function loginizer_cap_verify(){
 			$GLOBALS['called_loginizer_cap_verify'] = false;
 			return false;
 		}
-		
+
 		// Process the post response
 		$resp = wp_remote_retrieve_body($req);
-			
+
 		// Is the body valid
 		if(empty($resp)){
 			$GLOBALS['called_loginizer_cap_verify'] = false;
@@ -1868,6 +2046,12 @@ function loginizer_cap_verify(){
 		$json = json_decode($resp, true);
 		
 		if(!empty($json['success'])){
+			if(!empty($json['score']) && !empty($loginizer['captcha_score_threshold']) && $json['score'] <= $loginizer['captcha_score_threshold']){
+				// The user is likely a bot
+				$GLOBALS['called_loginizer_cap_verify'] = false;
+				return false;
+			}
+
 			return true;
 		}
 	
@@ -1931,12 +2115,12 @@ function loginizer_user_redirect($user, $username, $password){
 	global $loginizer;
 	
 	// Is the post set ?
-	if(count($_POST) < 1){
+	if(count($_POST) < 1 && empty($_GET['lz_social_provider'])){
 		return $user;
 	}
-	
+
 	//print_r($user);die();
-	
+
 	// Is it a valid user ?
 	if(!is_a($user, 'WP_User')){
 		return $user;
@@ -2009,9 +2193,22 @@ function loginizer_user_redirect($user, $username, $password){
 		$subject = lz_lang_vars_name($loginizer['2fa_email_sub'], $vars);
 		$message = lz_lang_vars_name($loginizer['2fa_email_msg'], $vars);
 		
+		$headers = [];
+		// Do we need to send the email as HTML ? 
+		if(!empty($loginizer['2fa_email_html'])){
+			$headers[] = 'Content-Type: text/html; charset=UTF-8';
+			
+			if(!empty($loginizer['2fa_email_msg'])){
+				$message = html_entity_decode($message);
+			}else{
+				$message = preg_replace("/\<br\s*\/\>/i", "<br/>", $message);
+				$message = preg_replace('/(?<!<br\/>)\n/i', "<br/>\n", $message);
+			}
+		}
+		
 		//echo $user->data->user_email.'<br>'.$message;die();
 		
-		$sent = wp_mail($user->data->user_email, $subject, $message);
+		$sent = wp_mail($user->data->user_email, $subject, $message, $headers);
 	
 		if(empty($sent)){
 			// For plugins that login using AJAX
@@ -2052,7 +2249,7 @@ function loginizer_user_redirect($user, $username, $password){
 			$redirect_to = '&redirect_to='.urlencode($_REQUEST['redirect_to']);
 		} elseif(!empty($_REQUEST['redirect'])){
 			$redirect_to = '&redirect_to='.urlencode($_REQUEST['redirect']);
-		} elseif(!empty(wp_validate_redirect($_SERVER['HTTP_REFERER']))){
+		} elseif(empty($_REQUEST['lz_social_provider']) && !empty(wp_validate_redirect($_SERVER['HTTP_REFERER']))){
 			$redirect_to = '&redirect_to='.urlencode(wp_validate_redirect($_SERVER['HTTP_REFERER']));
 		}
 
@@ -2069,11 +2266,31 @@ function loginizer_user_redirect($user, $username, $password){
 		// Lets redirect
 		wp_safe_redirect($url);
 		die();
-		
+
+	}
+
+	return $ret;
+}
+
+function loginizer_is_epl_disabled(){
+	global $loginizer;
+
+	$page_from = '';
+	$is_wordpress_login = isset($_POST['log']) && isset($_POST['pwd']) && isset($_POST['wp-submit']);
+	$is_woocommerce_login = isset($_POST['username']) && isset($_POST['password']) && isset($_POST['woocommerce-login-nonce']);
+
+	if(!empty($is_woocommerce_login)){
+		$page_from = 'woocommerce';
+	}elseif(!empty($is_wordpress_login)){
+		$page_from = 'admin';
+	}
+
+	// We do not want to use Password less login auth if it is disabled.
+	if(!empty($page_from) && !empty($loginizer['passwordless_disabled_for']) && is_array($loginizer['passwordless_disabled_for']) && in_array($page_from, $loginizer['passwordless_disabled_for'])){
+		return true;
 	}
 	
-	return $ret;
-	
+	return false;
 }
 
 // Creates a one time token
@@ -2265,6 +2482,8 @@ function loginizer_user_security(){
 			
 			// Redirect and exit
 			
+			$user = get_user_by('ID', $uid);
+			loginizer_login_success($user->user_login, $user);
 			// Interim Login is used when session times out due to inactivity and login form is opened in a popup iframe
 			if ( $interim_login ) {
 				
@@ -2286,6 +2505,16 @@ function loginizer_user_security(){
 				<?php
 			}else{
 				$redirect_to = loginizer_csrf_change_url($redirect_to, $uid);
+
+				if(isset($_REQUEST['lus_is_popup'])){
+					echo '<script>
+					if(window.opener && window.opener !== window){
+						window.opener.location.href="'.wp_validate_redirect(wp_sanitize_redirect($redirect_to)).'";
+						window.close();
+					}
+					</script>';
+				}
+
 				wp_safe_redirect($redirect_to);
 			}
 			exit;
@@ -2386,7 +2615,24 @@ function loginizer_user_security_form(){
 		echo '<p class="submit">
 			<input type="submit" id="lus_submit" name="lus_submit" class="button button-primary button-large" value="'.__('Log In', 'loginizer').'" />
 		</p>
-		</form>';
+		</form>
+		<script>
+		// To handle condition when 2fa is opened in a popup
+		if(window.opener && window.opener !== window){
+			// Create the hidden input element
+			const hiddenInput = document.createElement("input");
+			hiddenInput.type = "hidden";
+			hiddenInput.name = "lus_is_popup";
+			hiddenInput.value = "true";
+
+			const submitParagraph = document.querySelector("p.submit");
+
+			if(submitParagraph){
+				// Insert input after submit input
+				submitParagraph.insertAdjacentElement("afterend", hiddenInput);
+			}
+		}
+		</script>';
 	
 	}
 	
@@ -2590,6 +2836,7 @@ function loginizer_2fa_app($uid = 0){
 function loginizer_user_page_post(&$error = array()){
 	
 	global $loginizer, $loginizer_allowed;
+	
 
 	/* Make sure post was from this page */
 	if(count($_POST) > 0){
@@ -2852,6 +3099,7 @@ function loginizer_user_page(){
 <script>
 
 var loginizer_nonce = "'.wp_create_nonce('loginizer_ajax').'";
+var loginizer_req_ajax = "'.admin_url('admin-ajax.php').'";
 	
 // Handle on change
 function loginizer_pref_handle(){
@@ -2892,7 +3140,7 @@ function loginizer_2fa_app_load(reset){
 		data["nonce"]	= loginizer_nonce;
 		
 		// AJAX and on success function
-		jQuery.post(ajaxurl, data, function(response){
+		jQuery.post(loginizer_req_ajax, data, function(response){
 			jQuery("#loginizer_2fa_app_time").html(response["2fa_server_time"]);
 			jQuery("#loginizer_2fa_app_key").val(response["2fa_key"]);
 			jQuery("#loginizer_2fa_app_key_32").val(response["2fa_key_32"]);
@@ -2916,7 +3164,7 @@ function loginizer_2fa_app_load(reset){
 			data["reset_2fa_key"]	= 1;
 			
 			// AJAX and on success function
-			jQuery.post(ajaxurl, data, function(response){
+			jQuery.post(loginizer_req_ajax, data, function(response){
 				jQuery("#loginizer_2fa_app_time").html(response["2fa_server_time"]);
 				jQuery("#loginizer_2fa_app_key").val(response["2fa_key"]);
 				jQuery("#loginizer_2fa_app_key_32").val(response["2fa_key_32"]);
@@ -3200,7 +3448,7 @@ $site_name";
 
 // Is the Username blacklisted
 function loginizer_user_blacklisted($username){
-		
+
 	global $wpdb, $loginizer, $lz_error;
 	
 	$username_blacklist = $loginizer['username_blacklist'];
@@ -3359,6 +3607,28 @@ function loginizer_premium_security_query_vars( $vars ) {
 function loginizer_add_premium_security_link_my_account( $items ) {
     $items['loginizer-security'] = 'Security';
     return $items;
+}
+
+function loginizer_ultimatemember_security_tab($tabs){
+
+	$tabs[800]['loginizer-security']['icon'] = 'um-faicon-key';
+	$tabs[800]['loginizer-security']['title'] = 'Security';
+	$tabs[800]['loginizer-security']['show_button'] = false;
+	$tabs[800]['loginizer-security']['custom'] = true;
+	return $tabs;
+}
+
+function loginizer_ultimatemember_security_tab_content(){
+	
+	global $output;
+	ob_start();
+	
+	echo'<div class="um-field">';
+	loginizer_user_page();
+	echo'</div>';			
+	$output .= ob_get_contents();
+	ob_end_clean();
+	return $output;
 }
 
 // Rewrite rules
@@ -3539,7 +3809,9 @@ function loginizer_csrf_admin_redirects($url, $path, $scheme){
 	}
 	
 	$url = preg_replace('/(?:-?lzs.{20})/U', '/', $url);
-	$url = str_replace($admin_slug, $admin_slug . '-' . $session_key, $url);
+	if(!empty($session_key)){
+		$url = str_replace($admin_slug, $admin_slug . '-' . $session_key, $url);
+	}
 
 	return $url;
 	
@@ -3561,7 +3833,9 @@ function loginizer_login_csrf_redirect($redirect, $request, $user){
 		}
 
 		$redirect = preg_replace('/(?:-?lzs.{20})/U', '/', $redirect);
-		$redirect = str_replace($admin_slug, $admin_slug . '-' . $session_key, $redirect);
+		if(!empty($session_key)){
+			$redirect = str_replace($admin_slug, $admin_slug . '-' . $session_key, $redirect);
+		}
 	}
 
 	return $redirect;
@@ -3581,10 +3855,10 @@ function loginizer_csrf_change_url($url, $uid){
 		
 		$session_key = get_user_meta($uid, 'loginizer_csrf_session', true);
 
-		if(strpos($url, $session_key) !== FALSE){
+		if(strpos($url, $session_key) !== FALSE || empty($session_key)){
 			return $url;
 		}
-		
+
 		$url = str_replace($admin_slug, $admin_slug . '-' . $session_key, $url);
 	}
 
@@ -3615,6 +3889,13 @@ function loginizer_limit_sessions($user){
 	if(is_wp_error($user)){
 		return $user;
 	}
+	
+	// To prevent session check from happening twice, as we have set the check on wp_login as well 
+	if(!empty($GLOBALS['loginizer_pro_limit_session_happened'])){
+		return $user;
+	}
+
+	$GLOBALS['loginizer_pro_limit_session_happened'] = true;
 
 	$concurrent_sessions = get_option('loginizer_limit_session');
 
@@ -3630,7 +3911,8 @@ function loginizer_limit_sessions($user){
 	}
 
 	$concurrent_sessions['count'] = empty($concurrent_sessions['count']) ? $concurrent_sessions['count'] : 1; // if limit is not set then default it to 1
-
+	
+	// Blocking the user
 	if(!empty($concurrent_sessions['type']) && $concurrent_sessions['type'] == 'block'){
 		$session = WP_Session_Tokens::get_instance($user->ID);
 		$count = count($session->get_all());
@@ -3641,9 +3923,46 @@ function loginizer_limit_sessions($user){
 		
 		return $user;
 	}
+	
+	// Destroying all session
+	if(!empty($concurrent_sessions['type']) && $concurrent_sessions['type'] == 'destroy'){
+		$session = WP_Session_Tokens::get_instance($user->ID);
+		$count = count($session->get_all());
+		
+		if($count >= $concurrent_sessions['count']){
+			$session->destroy_all();
+		}
+		
+		return $user;
+	}
 
 	return $user;
 	
+}
+
+function loginizer_limit_sessions_wp_login($user_login = '', $user = null){
+	
+	if(!empty($GLOBALS['loginizer_pro_limit_session_happened'])){
+		return $user;
+	}
+
+	if(empty($user) && empty($user_login)){
+		return;
+	}
+
+	if(empty($user) && !empty($user_login)){
+		$user = get_user_by('login', $user_login);
+	}
+	
+	if(empty($user) || is_wp_error($user)){
+		return;
+	}
+
+	$error = loginizer_limit_sessions($user);
+
+	if(is_wp_error($error)){
+		wp_die($error->get_error_message());
+	}
 }
 
 // Destroys session when concurrent limit is reached
@@ -3782,26 +4101,45 @@ function loginizer_create_sso($uid, $ttl = 600, $attempts = 1){
 	update_option('loginizer_sso_links', $sso_links);
 
 	if(!empty($_POST['sso_email'])){
-		loginizer_sso_send_mail($url, sanitize_email($_POST['sso_email']));
+		loginizer_sso_send_mail($url, sanitize_email($_POST['sso_email']), $ttl);
 	}
 
 	return $url;
 }
 	
-function loginizer_sso_send_mail($url, $email){
+function loginizer_sso_send_mail($url, $email, $ttl = 600){
+	
+	$ttl = (int) $ttl;
+	
+	$defined_ttl_duration = [
+		300 => __('5 minutes', 'loginizer'),
+		600 => __('10 minutes', 'loginizer'),
+		1800 => __('30 minutes', 'loginizer'),
+		3600 => __('1 hour', 'loginizer'),
+		21600 => __('6 hours', 'loginizer'),
+		43200 => __('12 hours', 'loginizer'),
+		86400 => __('24 hours', 'loginizer'),
+		172800 => __('2 days', 'loginizer'),
+	];
+	
+	if(!empty($defined_ttl_duration[$ttl])){
+		$ttl_duration = $defined_ttl_duration[$ttl];
+	} else {
+		$ttl_duration = $defined_ttl_duration[600];
+	}
 
 	$site_name = get_bloginfo('name');
 	$sub = sprintf(__('Login at %s', 'loginizer'), $site_name);
 	$msg = sprintf(__('Hi,
 
 Please find below the Single Sign-On (SSO) link for our platform:
-%s
-This link will allow you to access the platform securely without needing to enter your login credentials, this link is valid for 10 minutes.
+%1$s
+This link will allow you to access the platform securely without needing to enter your login credentials, this link is valid for %2$s.
 
 Thank you for using our platform.
 
 Best regards,
-%s', 'loginizer'), $url, $site_name);
+%3$s', 'loginizer'), $url, $ttl_duration, $site_name);
 	
 	wp_mail($email, $sub, $msg);
 
@@ -3925,9 +4263,14 @@ function loginizer_social_btn_comment($post_id){
 	loginizer_social_btn(false, 'comment');
 }
 
+// For Ultimate Member plugin
+function loginizer_social_btn_um($return = false, $id = ''){
+	loginizer_social_btn(false, 'ultimate_member');
+}
+
 function loginizer_social_shortcode($atts){
 	global $loginizer;
-	
+
 	if(is_user_logged_in()){
 		return;
 	}
@@ -3935,23 +4278,25 @@ function loginizer_social_shortcode($atts){
 	$atts = shortcode_atts([
 		'type' => 'icon',
 		'divider' => 'above',
-		'shape' => 'square'
+		'shape' => 'square',
+		'container_alignment' => 'left',
+		'button_alignment' => 'left'
 	], $atts);
-	
+
 	$errors = loginizer_social_login_error_handler();
-	
+
 	if(!empty($errors) || is_wp_error($errors)){
 		$error = '<style>.notice{background: #fff;border: 1px solid #c3c4c7;border-left-width: 4px;box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);margin: 5px 15px 2px;padding: 1px 12px;}.notice p,.notice-title {margin: 0.5em 0;padding: 2px;}.notice-error{border-left-color: #d63638;}.login-error-list{list-style: none;}</style><div class="loginizer-social-shortcode-error">';
 
 		$args = [
 			'type' => 'error',
 		];
-		
+
 		// Add the number of retires left as well
 		if(count($errors->get_error_codes()) > 0 && isset($loginizer['retries_left'])){
 			$errors->add('retries_left', loginizer_retries_left());
 		}
-		
+
 		$messages = $errors->get_error_messages();
 		$notice = '';
 		if(count($messages) == 1){
@@ -4013,7 +4358,7 @@ function loginizer_social_update_avatar($avatar, $id_or_email, $size, $default, 
 	}
 	
 	$avatar_url = wp_get_attachment_image_src($avatar_id, $avatar_size);
-	
+
 	if(empty($avatar_url) || empty($avatar_url[0])){
 		return $avatar;
 	}
@@ -4054,4 +4399,30 @@ $site_name', 'loginizer');
 	if(empty($loginizer['captcha_text'])){
 		$loginizer['captcha_text'] = __('Math Captcha', 'loginizer');
 	}
+}
+
+function loginizer_hide_wp_admin(){
+	global $loginizer;
+	
+	if(function_exists('wp_doing_ajax') && wp_doing_ajax()){
+		return;
+	}
+
+	if(!is_admin() || is_user_logged_in()){
+		return;
+	}
+
+	$redirect_slug = !empty($loginizer['login_redirect_url']) ? $loginizer['login_redirect_url'] : '';
+
+	if(get_option('permalink_structure')){
+		wp_safe_redirect(trailingslashit(home_url() . '/' . $redirect_slug));
+		die();
+	}
+
+	wp_safe_redirect(home_url() . '?' . $redirect_slug);
+	die();
+}
+
+function loginizer_pro_social_auth_load(){
+	include_once LOGINIZER_PRO_DIR .'/main/social-api-login.php';
 }
