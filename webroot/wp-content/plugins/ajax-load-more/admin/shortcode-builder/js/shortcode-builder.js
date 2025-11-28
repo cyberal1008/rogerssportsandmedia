@@ -1,9 +1,10 @@
 jQuery(document).ready(function ($) {
 	('use strict');
 
-	var _alm = {},
+	var alm = {},
 		output_div = $('.ajax-load-more.shortcode-builder #shortcode_output'),
-		output = '[ajax_load_more]';
+		output = '[ajax_load_more]',
+		previewBtn = document.querySelector('#shortcode-preview');
 
 	// Init the shortcode output.
 	output_div.text(output);
@@ -13,7 +14,7 @@ jQuery(document).ready(function ($) {
 	 *
 	 * @since 2.5.0
 	 */
-	_alm.select2 = function () {
+	alm.select2 = function () {
 		// Default Select2
 		$('.row select, .cnkt-main select, select.jump-menu').not('.multiple, .meta-compare, .meta-type, .alm-filter-select').select2({});
 
@@ -22,14 +23,14 @@ jQuery(document).ready(function ($) {
 			placeholder: '-- ' + alm_admin_localize.select + ' --',
 		});
 	};
-	_alm.select2();
+	alm.select2();
 
 	// Reset all selects
-	_alm.reset_select2 = function () {
+	alm.reset_select2 = function () {
 		// Default Select2
 		$('.row select, .cnkt-main select, select.jump-menu').not('.multiple').select2();
 
-		// multiple
+		// Multiple
 		$('.ajax-load-more .categories select.multiple').select2();
 		$('.ajax-load-more .tags select.multiple').select2();
 		$('.ajax-load-more .authors select.multiple').select2();
@@ -38,8 +39,9 @@ jQuery(document).ready(function ($) {
 	};
 
 	// Taxonomy Query
-	var total_tax_query = 0,
-		max_tax_query = 2;
+	var total_tax_query = 0;
+	var max_tax_query = 2;
+
 	$('#add-tax-query').on('click', function (e) {
 		e.preventDefault();
 
@@ -69,7 +71,7 @@ jQuery(document).ready(function ($) {
 		total_tax_query--;
 		parent.addClass('removing');
 		parent.fadeOut(250, function () {
-			_alm.buildShortcode();
+			alm.buildShortcode();
 			parent.removeClass('removing');
 		});
 
@@ -122,7 +124,7 @@ jQuery(document).ready(function ($) {
 		el.parent('.meta-query-wrap').addClass('removing');
 		el.parent('.meta-query-wrap').fadeOut(250, function () {
 			el.parent('.meta-query-wrap').remove();
-			_alm.buildShortcode();
+			alm.buildShortcode();
 		});
 		if ($('.meta-query-wrap').length > 3) {
 			// Show "Add" button if less than 4 $('.meta-query-wrap')
@@ -131,13 +133,13 @@ jQuery(document).ready(function ($) {
 	});
 
 	/*
-	 *  _alm.buildShortcode
+	 *  alm.buildShortcode
 	 *  Loop sections and build the shortcode
 	 *
 	 *  @since 1.0
 	 */
 
-	_alm.buildShortcode = function () {
+	alm.buildShortcode = function () {
 		output = '[ajax_load_more';
 
 		// ---------------------------
@@ -156,8 +158,9 @@ jQuery(document).ready(function ($) {
 		var loading_style_target = $('select#loading-style').parent().find('.ajax-load-more-wrap');
 		if (loading_style_target) {
 			var loading_style_base = loading_style_target.data('base');
+			var inverse = loading_style.indexOf('inverse') !== -1 ? ' is-inverse' : '';
 			loading_style_target.removeAttr('class');
-			loading_style_target.attr('class', loading_style_base + loading_style);
+			loading_style_target.attr('class', loading_style_base + loading_style + inverse);
 			if (loading_style.indexOf('infinite') !== -1) {
 				$('.ajax-load-more-wrap button').addClass('loading');
 			} else {
@@ -220,17 +223,7 @@ jQuery(document).ready(function ($) {
 
 		var cache = $('#alm-cache input[name=cache]:checked').val();
 		if (cache !== 'false' && cache !== undefined) {
-			if ($('input#cache-id').val() === '') {
-				_alm.generateUniqueID(10); // Generate unique ID on first load
-			}
-			$('.cache_id').slideDown(250, 'alm_easeInOutQuad');
 			output += ' cache="' + cache + '"';
-			var cache_id = $('input#cache-id').val();
-			if (cache_id) {
-				output += ' cache_id="' + cache_id + '"';
-			}
-		} else {
-			$('.cache_id').slideUp(250, 'alm_easeInOutQuad');
 		}
 
 		// ---------------------------
@@ -241,22 +234,15 @@ jQuery(document).ready(function ($) {
 		var cta = $('input[name=cta]:checked', cta_container).val();
 		var cta_position = $('input[name=cta-position]', cta_container).val();
 		var cta_before_after = $('select[name=cta-before-after]', cta_container).val();
-		var cta_repeater = $('select[name=cta-repeater-select]', cta_container).val();
-		var cta_theme_repeater = $('select[name=theme-repeater-select]', cta_container).val();
+		var cta_template = $('select[name=cta-template-select]', cta_container).val();
 
 		if (cta !== 'false' && cta !== undefined) {
 			$('.cta_template_wrap').slideDown(250, 'alm_easeInOutQuad');
-			// Standard repeater
-			if (cta_repeater !== '' && cta_repeater !== undefined && cta_position !== '' && cta_position !== null) {
+			// Get template.
+			if (cta_template !== '' && cta_template !== undefined && cta_position !== '' && cta_position !== null) {
 				output += ' cta="' + cta + '"';
 				output += ' cta_position="' + cta_before_after + ':' + cta_position + '"';
-				output += ' cta_repeater="' + cta_repeater + '"';
-			}
-			// Theme repeater
-			if (cta_theme_repeater !== '' && cta_theme_repeater !== undefined && cta_position !== '' && cta_position !== null) {
-				output += ' cta="' + cta + '"';
-				output += ' cta_position="' + cta_before_after + ':' + cta_position + '"';
-				output += ' cta_theme_repeater="' + cta_theme_repeater + '"';
+				output += ' cta_template="' + cta_template + '"';
 			}
 			$('#sequence-update').text(cta_position);
 			$('#sequence-update-before-after').text(cta_before_after);
@@ -286,7 +272,9 @@ jQuery(document).ready(function ($) {
 			}
 
 			output += ' comments="' + comments + '"';
-			output += ' comments_post_id="\'.' + comments_post_id + '.\'"';
+			if (comments_post_id) {
+				output += ' comments_post_id="' + comments_post_id + '"';
+			}
 
 			if (comments_type !== 'comment') output += ' comments_type="' + comments_type + '"';
 
@@ -294,7 +282,7 @@ jQuery(document).ready(function ($) {
 
 			if (comments_style !== 'ol') output += ' comments_style="' + comments_style + '"';
 
-			if (comments_template !== 'none') output += ' comments_template="' + comments_template + '"';
+			if (comments_template !== 'none' && comments_template !== 'null') output += ' comments_template="' + comments_template + '"';
 
 			if (comments_callback !== '') output += ' comments_callback="' + comments_callback + '"';
 
@@ -547,7 +535,9 @@ jQuery(document).ready(function ($) {
 			$('#pp-term-exclude').attr('disabled', false);
 
 			output += ' single_post="' + previous + '"';
-			output += ' single_post_id="\'.' + pp_id + '.\'"';
+			if (pp_id) {
+				output += ' single_post_id="' + pp_id + '"';
+			}
 
 			if (pp_order === '') {
 				output += ' single_post_order="previous"';
@@ -699,15 +689,9 @@ jQuery(document).ready(function ($) {
 		// - Repeater Templates
 		// ---------------------------
 
-		var repeater = $('#alm-repeaters select[name=repeater-select]').val(),
-			theme_repeater = $('#alm-repeaters .select-theme-repeater select[name=theme-repeater-select]').val();
-
-		if (theme_repeater !== 'null' && theme_repeater !== '' && theme_repeater !== undefined) {
-			output += ' theme_repeater="' + theme_repeater + '"';
-		} else {
-			if (repeater !== '' && repeater !== undefined && repeater !== 'default') {
-				output += ' repeater="' + repeater + '"';
-			}
+		var template = $('#alm-template select[name=template-select]').val();
+		if (template && template !== 'default') {
+			output += ' template="' + template + '"';
 		}
 
 		// ---------------------------
@@ -715,25 +699,29 @@ jQuery(document).ready(function ($) {
 		// ---------------------------
 
 		if ((users === 'false' || users === undefined || !users) && (comments === 'false' || !comments || comments === undefined)) {
-			// Hide post_types if comments is active
+			// Hide post_types if comments or users is active.
 
-			var post_type_count = 0,
-				selected_post_type = '';
-			$('ul.alm-post-type-list input[type=checkbox]').each(function (e) {
+			var post_type_count = 0;
+			var selected_post_type = '';
+			var pt_output = '';
+			$('ul.alm-post-type-list input[type=checkbox]').each(function () {
 				if ($(this).is(':checked')) {
 					post_type_count++;
 					if (post_type_count > 1) {
-						output += ', ' + $(this).data('type');
+						pt_output += ', ' + $(this).data('type');
 					} else {
 						if ($(this).hasClass('changed')) {
-							output += ' post_type="' + $(this).data('type') + '';
+							pt_output += 'post_type="' + $(this).data('type') + '';
 						}
 					}
 					selected_post_type = $(this).data('type');
 				}
 			});
 			if (post_type_count > 0) {
-				output += '"';
+				pt_output += '"';
+			}
+			if (pt_output && pt_output !== 'post_type="post"') {
+				output += ' ' + pt_output;
 			}
 		}
 
@@ -1196,7 +1184,6 @@ jQuery(document).ready(function ($) {
 
 			var scroll_distance = $('.scroll_distance input').val();
 			var scroll_distance_toggle_btns = $('.scroll_distance .builder-option-toggle--buttons');
-			var scroll_distance_px = $('button.pixels', scroll_distance_toggle_btns);
 			var scroll_distance_perc = $('button.perc', scroll_distance_toggle_btns);
 			var scroll_distance_type = '';
 
@@ -1299,19 +1286,15 @@ jQuery(document).ready(function ($) {
 		}
 
 		// ---------------------------
-		// - Button Label
+		// - Button Labels
 		// ---------------------------
 
-		var button_label = $('.btn-label input#button-label').val().trim(),
-			button_loading_label = $('.btn-label input#button-loading-label').val().trim(),
-			button_done_label = $('.btn-label input#button-done-label').val().trim();
+		var button_label = $('.btn-label input#button-label').val().trim();
+		var button_done_label = $('.btn-label input#button-done-label').val().trim();
 
+		// Button Label
 		if (button_label !== '' && button_label !== 'Load More') {
 			output += ' button_label="' + button_label + '"';
-		}
-		// Loading Label
-		if (button_loading_label !== '') {
-			output += ' button_loading_label="' + button_loading_label + '"';
 		}
 		// Done Label
 		if (button_done_label !== '') {
@@ -1354,20 +1337,27 @@ jQuery(document).ready(function ($) {
 		output += ']'; //Close shortcode
 		output_div.text(output);
 
-		if (output !== '[ajax_load_more]') $('.reset-shortcode-builder').show();
-		else $('.reset-shortcode-builder').hide();
+		// Preview button.
+		if (previous === 'true' || nextpage === 'true') {
+			previewBtn.style.display = 'none';
+		} else {
+			previewBtn.removeAttribute('style');
+		}
+
+		var previewBaseUrl = previewBtn.dataset.homeUrl || '/';
+		previewBtn.href = previewBaseUrl + '?alm_preview=' + encodeURIComponent(output);
+
+		if (output !== '[ajax_load_more]') {
+			$('.reset-shortcode-builder').show();
+		} else {
+			$('.reset-shortcode-builder').hide();
+		}
 	};
 
-	/*
-	 *  On change events
-	 *
-	 *  @since 2.0.0
-	 */
-
-	//Select 'post' by default
+	// Select 'post' by default
 	$('.post_types input[type=checkbox]#chk-post').prop('checked', true).addClass('changed');
 
-	//Select SEO 'false' by default
+	// Select SEO 'false' by default
 	$('.seo input[type=radio]#seo-false').prop('checked', true).addClass('changed');
 
 	$(document).on('change keyup', '.alm_element', function () {
@@ -1424,7 +1414,7 @@ jQuery(document).ready(function ($) {
 			$('#tax-operator-select input[type=radio]#tax-in-radio').prop('checked', true);
 		}
 
-		_alm.buildShortcode();
+		alm.buildShortcode();
 	});
 
 	// Allow only alphanumeric and underscores only.
@@ -1595,30 +1585,31 @@ jQuery(document).ready(function ($) {
 	};
 
 	// Reset shortcode builder.
-	$(document).on('click', '.reset-shortcode-builder a', function () {
+	$(document).on('click', '.reset-shortcode-builder', function () {
 		$('#alm-shortcode-builder-form').trigger('reset');
-		_alm.reset_select2();
-		_alm.buildShortcode();
+		alm.reset_select2();
+		alm.buildShortcode();
 	});
 
 	// Generate Unique Cache ID.
-	_alm.generateUniqueID = function (length, el) {
+	alm.generateUniqueID = function (length, el) {
 		var id = Math.floor(Math.pow(10, length - 1) + Math.random() * 9 * Math.pow(10, length - 1));
 		$(el).val('alm_' + id);
+		alm.buildShortcode();
 	};
 
 	// Option toggle click events.
 	$('.builder-option-toggle--buttons button').on('click', function () {
-		var siblings = $(this).siblings('button').removeClass('active');
+		$(this).siblings('button').removeClass('active');
 		$(this).addClass('active');
-		_alm.buildShortcode();
+		alm.buildShortcode();
 	});
 
 	// Generate Unique/Cache ID.
 	$(document).on('click', '.generate-id a', function () {
 		var id = $(this).data('id'),
 			el = $('#' + id);
-		_alm.generateUniqueID(10, el);
+		alm.generateUniqueID(10, el);
 	});
 
 	// Button loader preview.
@@ -1669,4 +1660,9 @@ jQuery(document).ready(function ($) {
 			}
 		}
 	});
+
+	// Trigger shortcode build on page load.
+	if ($('#alm-shortcode-builder-form').length) {
+		alm.buildShortcode();
+	}
 });

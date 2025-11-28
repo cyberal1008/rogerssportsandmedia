@@ -10,6 +10,7 @@
  * Include these files.
  */
 require_once ALM_PATH . 'core/functions/addons.php';
+require_once ALM_PATH . 'core/functions/loaders.php';
 require_once ALM_PATH . 'core/functions/masonry.php';
 require_once ALM_PATH . 'core/functions/deprecated.php';
 
@@ -43,8 +44,7 @@ add_filter( 'alm_progress_css', 'alm_progress_css', 10, 3 );
  * @since 3.3.1
  */
 function alm_css_disabled( $setting ) {
-	$options  = get_option( 'alm_settings' );
-	$disabled = true;
+	$options = get_option( 'alm_settings' );
 	return ! isset( $options[ $setting ] ) || $options[ $setting ] !== '1' ? false : true;
 }
 
@@ -64,10 +64,18 @@ function alm_do_inline_css( $setting ) {
 }
 
 /**
+ * Check if the current request is a block editor request.
+ *
+ * @return boolean
+ */
+function alm_is_block_editor() {
+	return defined( 'REST_REQUEST' ) && REST_REQUEST;
+}
+
+/**
  * This function will return HTML of a looped item.
  *
  * @param string  $repeater        The repeater name.
- * @param string  $type            Type of template.
  * @param string  $theme_repeater  Theme repeater name.
  * @param string  $alm_found_posts Total posts found.
  * @param string  $alm_page        The page number.
@@ -78,7 +86,7 @@ function alm_do_inline_css( $setting ) {
  * @return string
  * @since 3.7
  */
-function alm_loop( $repeater, $type, $theme_repeater, $alm_found_posts = '', $alm_page = '', $alm_item = '', $alm_current = '', $args = [], $ob = true ) {
+function alm_loop( $repeater, $theme_repeater, $alm_found_posts = '', $alm_page = '', $alm_item = '', $alm_current = '', $args = [], $ob = true ) {
 	if ( $ob ) { // If Output Buffer is true.
 		ob_start();
 	}
@@ -88,8 +96,8 @@ function alm_loop( $repeater, $type, $theme_repeater, $alm_found_posts = '', $al
 		do_action( 'alm_get_theme_repeater', $theme_repeater, $alm_found_posts, $alm_page, $alm_item, $alm_current, $args );
 
 	} else {
-		// Standard Repeater Template.
-		$file = alm_get_current_repeater( $repeater, $type );
+		// Standard Template.
+		$file = alm_get_current_repeater( $repeater, alm_get_repeater_type( $repeater ) );
 		include $file;
 	}
 
@@ -103,26 +111,25 @@ function alm_loop( $repeater, $type, $theme_repeater, $alm_found_posts = '', $al
 /**
  * Get the current repeater template file.
  *
- * @param string $repeater current repater name.
+ * @param string $template The current template name.
  * @param string $type     Type of template.
  * @return string          The template file path.
  * @since 2.5.0
  */
-function alm_get_current_repeater( $repeater, $type ) {
-	$template = $repeater;
-	$include  = '';
+function alm_get_current_repeater( $template, $type ) {
+	$include = '';
+
 	// $content = get_the_content(null, null, 8879);
 	// $new_html = preg_replace("/(^<div[^>]*>|<\/div>$)/i", "", $content);
-	//echo apply_filters( 'the_content', $new_html );
+	// echo apply_filters( 'the_content', $new_html );
 
-	if ( $type === 'repeater' && has_action( 'alm_repeater_installed' ) ) {
-		// Custom Repeaters v1.
-		$include = ALM_REPEATER_PATH . 'repeaters/' . $template . '.php';
-		if ( ! file_exists( $include ) ) {
-			alm_get_default_repeater(); // Confirm file exists.
-		}
-	} elseif ( $type === 'template_' && has_action( 'alm_unlimited_installed' ) ) {
-		// Custom Repeaters 2.5+.
+	if ( $type === 'template_' && class_exists( 'ALMTemplates' ) ) {
+		// Templates add-on.
+		$base_dir = AjaxLoadMore::alm_get_repeater_path();
+		$include  = $base_dir . '/' . $template . '.php';
+
+	} elseif ( $type === 'template_' && defined( 'ALM_UNLIMITED_VERSION' ) ) {
+		// Custom Repeaters v2 add-on.
 		if ( ALM_UNLIMITED_VERSION >= '2.5' ) {
 			// Get path to repeater (alm_templates).
 			$base_dir = AjaxLoadMore::alm_get_repeater_path();
@@ -133,16 +140,17 @@ function alm_get_current_repeater( $repeater, $type ) {
 			$include = ( $blog_id > 1 ) ? ALM_UNLIMITED_PATH . 'repeaters/' . $blog_id . '/' . $template . '.php' : ALM_UNLIMITED_PATH . 'repeaters/' . $template . '.php';
 		}
 
-		if ( ! file_exists( $include ) ) {
-			$include = alm_get_default_repeater(); // Confirm file exists.
-		}
+	} elseif ( $type === 'repeater' && has_action( 'alm_repeater_installed' ) ) {
+		// Custom Repeaters v1 add-on.
+		$include = ALM_REPEATER_PATH . 'repeaters/' . $template . '.php';
+
 	} else {
-		// Default repeater.
+		// Default.
 		$include = alm_get_default_repeater();
 	}
 
-	// Security check.
-	if ( ! alm_is_valid_path( $template ) ) {
+	// Confirm file exists and run security check.
+	if ( ! file_exists( $include ) || ! alm_is_valid_path( $include ) ) {
 		$include = alm_get_default_repeater();
 	}
 
@@ -156,29 +164,27 @@ function alm_get_current_repeater( $repeater, $type ) {
  * @since 2.5.0
  */
 function alm_get_default_repeater() {
-	$file         = null;
-	$dir = apply_filters( 'alm_template_path', 'alm_templates' );
+	$file = null;
+	$dir  = apply_filters( 'alm_template_path', 'alm_templates' );
 
 	// Allow user to load template from theme directory.
 
 	// Load repeater template from current theme folder.
 	if ( is_child_theme() ) {
-		$template_theme_file = get_stylesheet_directory() . '/' . $dir . '/default.php';
+		$template = get_stylesheet_directory() . '/' . $dir . '/default.php';
 		// If child theme does not have repeater template, then use the parent theme dir.
-		if ( ! file_exists( $template_theme_file ) ) {
-			$template_theme_file = get_template_directory() . '/' . $dir . '/default.php';
+		if ( ! file_exists( $template ) ) {
+			$template = get_template_directory() . '/' . $dir . '/default.php';
 		}
 	} else {
-		$template_theme_file = get_template_directory() . '/' . $dir . '/default.php';
+		$template = get_template_directory() . '/' . $dir . '/default.php';
 	}
 
 	// If theme or child theme contains the template, use that file.
-	if ( file_exists( $template_theme_file ) ) {
-		$file = $template_theme_file;
+	if ( file_exists( $template ) ) {
+		$file = $template;
 	}
 
-	// @since 2.0.
-	// @updated 3.5.
 	if ( $file === null ) {
 		$file = AjaxLoadMore::alm_get_repeater_path() . '/default.php';
 	}
@@ -198,6 +204,94 @@ function alm_is_valid_path( $path ) {
 		return false;
 	}
 	return false !== strpos( $path, './' ) || false !== strpos( $path, '.\\' ) ? false : true;
+}
+
+/**
+ * Construct a date query before/after query.
+ *
+ * @see https://developer.wordpress.org/reference/classes/wp_query/#date-parameters
+ * @param array  $args The WP_Query args.
+ * @param string $before The before date.
+ * @param string $after The after date.
+ * @param string $inclusive The inclusive value.
+ * @return void
+ */
+function alm_get_date_query_before_after( array $args = [], string $before = '', string $after = '', string $inclusive = '' ) {
+	if ( empty( $before ) && empty( $after ) ) {
+		return $args; // Exit early if no date query.
+	}
+	$array = [];
+	if ( $before ) {
+		$array['before'] = $before;
+	}
+	if ( $after ) {
+		$array['after'] = $after;
+	}
+	if ( $inclusive ) {
+		$array['inclusive'] = $inclusive === 'true';
+	}
+	$args['date_query'][] = $array;
+
+	return $args;
+}
+
+/**
+ * Build and parse a date query.
+ *
+ * @see https://developer.wordpress.org/reference/classes/wp_query/#date-parameters
+ * @param string $data    The date query data.
+ * @param string $compare The date query compare.
+ * @param string $columm  The date query columm.
+ * @param array  $args    The WP_Query args.
+ * @return array          The modified args.
+ */
+function alm_get_date_query( $data = '', $compare = '', $columm = '', $args = [] ) {
+	if ( ! $data ) {
+		return $args;
+	}
+
+	// Explode the date query params.
+	$data    = explode( ';', $data );
+	$compare = explode( ';', $compare );
+	$columm  = explode( ';', $columm );
+
+	// Loop each date query.
+	foreach ( $data as $key => $value ) {
+		$params       = explode( '-', $value );
+		$date_compare = isset( $compare[ $key ] ) ? alm_parse_query_compare( $compare[ $key ] ) : '';
+		$date_columm  = isset( $columm[ $key ] ) ? $columm[ $key ] : '';
+
+		$array = [];
+		if ( isset( $params[0] ) && $params[0] ) {
+			$array['year'] = $params[0];
+		}
+		if ( isset( $params[1] ) && $params[1] ) {
+			$array['month'] = $params[1];
+		}
+		if ( isset( $params[2] ) && $params[2] ) {
+			$array['day'] = $params[2];
+		}
+		if ( isset( $params[3] ) && $params[3] ) {
+			$array['hour'] = $params[3];
+		}
+		if ( isset( $params[4] ) && $params[4] ) {
+			$array['minute'] = $params[4];
+		}
+		if ( isset( $params[5] ) && $params[5] ) {
+			$array['second'] = $params[5];
+		}
+		if ( isset( $params[6] ) && $params[6] ) {
+			$array['week'] = $params[6];
+		}
+		if ( $date_compare ) {
+			$array['compare'] = $date_compare;
+		}
+		if ( $date_columm ) {
+			$array['column'] = $date_columm;
+		}
+		$args['date_query'][] = $array;
+	}
+	return $args;
 }
 
 /**
@@ -281,6 +375,23 @@ function alm_parse_tax_terms( $terms ) {
 }
 
 /**
+ * do_shortcode fix (shortcode renders as HTML when using < OR  <==).
+ *
+ * @param string $compare The compare operator.
+ * @return void
+ */
+function alm_parse_query_compare( $compare ) {
+	if ( ! $compare ) {
+		return;
+	}
+	$compare = 'lessthan' === $compare ? '<' : $compare;
+	$compare = 'lessthanequalto' === $compare ? '<=' : $compare;
+	$compare = 'greaterthan' === $compare ? '>' : $compare;
+	$compare = 'greaterthanequalto' === $compare ? '>=' : $compare;
+	return $compare;
+}
+
+/**
  * Query by custom field values.
  *
  * @since 2.5.0
@@ -294,11 +405,7 @@ function alm_get_meta_query( $params ) {
 	$meta_type    = esc_sql( $params['type'] );
 
 	if ( ! empty( $meta_key ) ) {
-		// do_shortcode fix (shortcode was rendering as HTML when using < OR  <==).
-		$meta_compare = 'lessthan' === $meta_compare ? '<' : $meta_compare;
-		$meta_compare = 'lessthanequalto' === $meta_compare ? '<=' : $meta_compare;
-		$meta_compare = 'greaterthan' === $meta_compare ? '>' : $meta_compare;
-		$meta_compare = 'greaterthanequalto' === $meta_compare ? '>=' : $meta_compare;
+		$meta_compare = alm_parse_query_compare( $meta_compare );
 
 		// Get optimized `meta_value` parameter.
 		$meta_values = alm_parse_meta_value( $meta_value, $meta_compare );
@@ -333,7 +440,6 @@ function alm_get_meta_query( $params ) {
  * eg. `Country Code` = `country_code_clause`
  *
  * @see https://wordpress.stackexchange.com/questions/246355/order-by-multiple-meta-key-and-meta-value/246358#246358
- *
  * @param string $key The meta key name.
  * @return string     Formatted meta name.
  */
@@ -366,7 +472,25 @@ function alm_parse_meta_value( $meta_value, $meta_compare ) {
 }
 
 /**
- * Get type of repeater.
+ * Get the template type by the name.
+ * Note: The function is used to parse the new `template` and `cta_template` parameters to
+ * determine if the template is a theme repeater or a custom repeater.
+ *
+ * @since 7.2.0
+ * @param  string $template The template name.
+ * @return string           The template type.
+ */
+function alm_get_template_by_type( $template = '' ) {
+	// If template is a Theme Repeater.
+	if ( strpos( $template, '.php' ) || strpos( $template, '.html' ) ) {
+		return 'theme_repeater';
+	}
+	return 'repeater';
+}
+
+/**
+ * Get type of custom repeater template.
+ * Value should be 'default', 'repeater' or 'template_'.
  *
  * @since 2.9
  * @param string $repeater The Repeater Template name.
@@ -627,6 +751,19 @@ function alm_print( $query = '', $title = '' ) {
 		echo esc_html( $title );
 	}
 	alm_pretty_print( $query );
+}
+
+/**
+ * Debug helper for printing to error log.
+ *
+ * @param object|array $data The data to log.
+ */
+function alm_log( $data ) {
+	if ( is_array( $data ) || is_object( $data ) ) {
+		error_log( print_r( $data, true ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
+	} else {
+		error_log( $data ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
+	}
 }
 
 /**
