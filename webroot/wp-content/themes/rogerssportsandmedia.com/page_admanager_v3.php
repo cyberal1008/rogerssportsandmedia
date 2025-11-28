@@ -11,6 +11,7 @@ get_header();
 	$headline = get_field('headline');
 	$headline_content = get_field('content');
 	$headline_button = get_field('headline_button');
+	$hero_scrolling_target_id = get_field('hero_scrolling_target_id');
 	?>
 	<section class="tw:relative tw:overflow-hidden tw:h-[672px] tw:md:h-[532px]">
 		<video autoplay muted loop class="tw:absolute tw:top-0 tw:left-0 tw:w-full tw:h-full tw:object-cover">
@@ -34,9 +35,9 @@ get_header();
 							</div>
 						<?php endif; ?>
 					</div>
-					<?php if ($headline && $headline_content): ?>
+					<?php if ($headline && $headline_content && !empty($hero_scrolling_target_id)): ?>
 						<div class="tw:hidden tw:md:flex tw:flex-col tw:justify-end tw:items-start">
-							<a class="tw:hover:no-underline tw:cursor-pointer" href="#brands">
+							<a class="tw:hover:no-underline tw:cursor-pointer" href="<?php echo esc_url($hero_scrolling_target_id); ?>">
 								<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/ad-manager-new/images/arrow-down.png" class="tw:h-20">
 							</a>
 						</div>
