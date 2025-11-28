@@ -27,6 +27,7 @@ foreach ( $parent_includes as $file ) {
 register_nav_menus(
 	array(
 		'primary' => __( 'Primary Menu', 'rdm-rsm-parent' ),
+		'ad-manager-menu' => __( 'Ad Manager Menu', 'rdm-rsm-parent' ),
 	)
 );
 
