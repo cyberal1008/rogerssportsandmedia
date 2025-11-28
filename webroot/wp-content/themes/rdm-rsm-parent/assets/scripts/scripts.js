@@ -15,27 +15,64 @@ $(window).on("load resize",function(e){
     }
 })
 
-$(".navbar-toggler").click(function() {
+$(".navbar-toggler").on('click', function() {
     if ( $('.navbar').hasClass('navbar') ) {
         $('.navbar').toggleClass("nav-bg nav-bg-active");
     }
 });
 
+$(".nav-link").on('click', function() {
+  if ( $('#navbarSupportedContent').hasClass('show') ) {
+      $('#navbarSupportedContent').toggleClass("show");
+  }
+      
+  if ( $('.navbar-toggler').hasClass('collapsed') ) {
+      $('.navbar-toggler').toggleClass("collapsed");
+  }
+
+  const toggler = document.querySelector('.navbar-toggler');
+  if (window.getComputedStyle(toggler).display !== 'none') {
+    let expanded = $('.navbar-toggler').attr('aria-expanded') === 'true';
+    $('.navbar-toggler').attr('aria-expanded', expanded ? 'false' : 'true');
+    $('.navbar').toggleClass("nav-bg nav-bg-active");
+  }
+});
+
 document.addEventListener('DOMContentLoaded', () => {
   const toggler = document.querySelector('.navbar-toggler');
+  toggler.addEventListener('click', toggleScroll);
 
-  toggler.addEventListener('click', () => {
-    // Small delay to wait for Bootstrap's internal update
-    setTimeout(() => {
-      const isOpen = toggler.getAttribute('aria-expanded') === 'true';
-
-      if (isOpen) {
-        console.log('Navbar is open');
-        document.body.classList.add('no-scroll');
-      } else {
-        console.log('Navbar is closed');
-        document.body.classList.remove('no-scroll');
+  document.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', function(e) {
+      const href = link.getAttribute('href');
+      if (href.startsWith('#')) {
+        e.preventDefault();
+        toggleScroll(this);
       }
-    }, 100); // ~instant; Bootstrap updates aria-expanded synchronously
+    });
   });
 });
+
+function toggleScroll(link) {
+  // Small delay to wait for Bootstrap's internal update
+  setTimeout(() => {
+    const toggler = document.querySelector('.navbar-toggler');
+    const isOpen = toggler.getAttribute('aria-expanded') === 'true';
+    if (isOpen) {
+      document.body.classList.add('no-scroll');
+    } else {
+      document.body.classList.remove('no-scroll');
+      if(link){
+        const target = document.querySelector(link.getAttribute('href'));
+        const offset = window.innerWidth >= 768 ? 106 : 66; // your offset amount
+
+        const y = target.getBoundingClientRect().top + window.pageYOffset - offset;
+
+        window.scrollTo({
+          top: y,
+          behavior: 'smooth'
+        });
+      }
+    }
+  }, 100); // ~instant; Bootstrap updates aria-expanded synchronously
+}

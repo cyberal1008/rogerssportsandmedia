@@ -69,6 +69,11 @@ $lang = 'en';
 </head>
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
+<?php
+	if ( is_page_template( 'page_admanager_v3.php' ) ) {
+		get_template_part('template-parts/ad-manager-popup-new');
+	}
+?>
 <header>
 	<div class="fixed-top">
 		<div class="tw:bg-black">
@@ -76,12 +81,25 @@ $lang = 'en';
 				<div class="tw:flex tw:flex-row tw:justify-between">
 					<div>&nbsp;</div>
 					<ul class="tw:flex tw:flex-row tw:md:justify-center tw:md:items-center tw:justify-between tw:md:gap-x-16 tw:text-white" style="padding: 8px; height: 40px; margin-bottom: 0px;">
-						<li><a class="tw:text-sm tw:font-semibold" href="/about-us">About Us</a></li>
-						<li><a class="tw:text-sm tw:font-semibold" href="/the-latest">The Latest</a></li>
-						<li><a class="tw:text-sm tw:font-semibold" href="/contact-us">Contact Us</a></li>
-						<li class="tw:hidden tw:md:inline">
-							<a style="border-radius: 0px; padding-top: 8px; padding-bottom: 8px; font-size: 14px" class="tw:btn-primary tw:text-sm" href="https://go.rogerssportsandmedia.com/sign-up/with-email">Advertise with Us</a>
-						</li>
+						<?php if ( is_page_template( 'page_admanager_v3.php' ) ) {
+							?>
+							<li><a class="tw:text-sm tw:font-semibold" href="https://rogers-help-center.scrollhelp.site/docs/1/">Help</a></li>
+							<li><a class="tw:text-sm tw:font-semibold" href="https://go.rogerssportsandmedia.com/contact-us">Contact Us</a></li>
+							<li><a class="tw:text-sm tw:font-semibold" href="https://go.rogerssportsandmedia.com/login​">Log In</a></li>
+							<li class="tw:hidden tw:md:inline">
+								<a style="border-radius: 0px; padding-top: 8px; padding-bottom: 8px; font-size: 14px" class="tw:btn-primary tw:text-sm" href="https://go.rogerssportsandmedia.com/sign-up/with-email">Sign Up</a>
+							</li>
+						<?php } else {
+							?>
+							<li><a class="tw:text-sm tw:font-semibold" href="/about-us">About Us</a></li>
+							<li><a class="tw:text-sm tw:font-semibold" href="/the-latest">The Latest</a></li>
+							<li><a class="tw:text-sm tw:font-semibold" href="/contact-us">Contact Us</a></li>
+							<li class="tw:hidden tw:md:inline">
+								<a style="border-radius: 0px; padding-top: 8px; padding-bottom: 8px; font-size: 14px" class="tw:btn-primary tw:text-sm" href="https://go.rogerssportsandmedia.com/sign-up/with-email">Advertise with Us</a>
+							</li>
+						<?php
+						}
+						?>
 					</ul>
 				</div>
 			</div>
@@ -98,7 +116,31 @@ $lang = 'en';
 				</button>
 				<div class="main-nav d-flex gb-w justify-content-end">
 					<div class="navbar-main">
-						<?php
+						<?php if ( is_page_template( 'page_admanager_v3.php' ) ) {
+							?>
+							<div id="navbarSupportedContent" class="collapse navbar-collapse bg-mob">
+								<ul id="menu-ad-manager-menu" class="nav navbar-nav" itemscope itemtype="http://www.schema.org/SiteNavigationElement">
+									<li class="menu-item menu-item-type-custom menu-item-object-custom nav-item mobile-only"><a itemprop="url" href="https://rogers-help-center.scrollhelp.site/docs/1/" class="nav-link"><span itemprop="name">Help</span></a></li>
+									<li class="menu-item menu-item-type-custom menu-item-object-custom nav-item mobile-only"><a itemprop="url" href="https://go.rogerssportsandmedia.com/contact-us" class="nav-link"><span itemprop="name">Contact Us</span></a></li>
+									<li class="menu-item menu-item-type-custom menu-item-object-custom nav-item mobile-only"><a itemprop="url" href="https://go.rogerssportsandmedia.com/login" class="nav-link"><span itemprop="name">Log In</span></a></li>
+									<li class="menu-item menu-item-type-custom menu-item-object-custom nav-item mobile-only"><a itemprop="url" href="https://go.rogerssportsandmedia.com/sign-up/with-email" class="nav-link"><span itemprop="name">Sign Up</span></a></li>
+									<hr/>
+									<li class="menu-sub-title">Explore our Ad Solutions<span>&#8594;</span></li>
+									<?php
+									wp_nav_menu(
+										array(
+											'theme_location'  => 'ad-manager-menu',
+											'depth'           => 2,
+											'container'       => false,
+											'items_wrap'      => '%3$s',
+											'fallback_cb'     => 'WP_Bootstrap_Navwalker::fallback',
+											'walker'          => new WP_Bootstrap_Navwalker(),
+										)
+									);
+									?>
+							</div>
+							<?php
+						} else {
 							wp_nav_menu(
 								array(
 									'theme_location'  => 'primary',
@@ -110,8 +152,8 @@ $lang = 'en';
 									'fallback_cb'     => 'WP_Bootstrap_Navwalker::fallback',
 									'walker'          => new WP_Bootstrap_Navwalker(),
 								)
-							);
-							?>
+							);	
+						} ?>
 					</div>
 				</div>
 			</nav>
@@ -200,6 +242,7 @@ if ( is_front_page() ) {
 		!is_page_template( 'page_tubi.php' ) &&
 		!is_page_template( 'page_sportsnetplus.php' ) &&
 		!is_page_template( 'page_aboutus.php' ) &&
+		!is_page_template( 'page_admanager_v3.php' ) &&
 		!is_page_template( 'page_hgtv.php' ) &&
 		!is_page_template( 'page_2025-mlb-world-series.php' ) &&
 		!is_page_template( 'page_upfront_2025.php' ) &&

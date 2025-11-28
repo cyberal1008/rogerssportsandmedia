@@ -27,7 +27,7 @@ if ( ! function_exists( 'load_rsm_stylesheet' ) ) {
 
 		if (!is_page_template('page_admanager-new.php')) {
 			wp_enqueue_style( 'child-styles-2', get_stylesheet_directory_uri() . '/assets/home/main.min.css', array('parent-styles'), $css_version );
-			if (!is_page_template('page_aboutus.php')) {
+			if (!is_page_template('page_aboutus.php') && !is_page_template( 'page_admanager_v3.php' )) {
 				wp_enqueue_style( 'child-styles-3', get_stylesheet_directory_uri() . '/assets/styles/reskin-alt.css', array('parent-styles'), $css_version );
 			}
 		}
@@ -54,6 +54,12 @@ if ( ! function_exists( 'load_rsm_stylesheet' ) ) {
 			is_page_template( 'page_upfront_2025.php' )
 		) {
 			wp_enqueue_script( 'showsslider-js', get_stylesheet_directory_uri() . "/assets/home/scripts/showsslider.js", array(), '1.0.2', true );
+		}
+
+		if (
+			is_page_template( 'page_admanager_v3.php' )
+		) {
+			wp_enqueue_script( 'ad-manager-v3-js', get_stylesheet_directory_uri() . "/assets/ad-manager-v3/ad-manager-v3.js", array(), '1.0.0', true );
 		}
 
 		if (
