@@ -1,10 +1,10 @@
-=== Loginizer Security ===
+=== Loginizer Pro ===
 Contributors: softaculous, loginizer, pagelayer
 Tags: security, access, admin, Loginizer, login, logs, ban ip, failed login, ip, whitelist ip, blacklist ip, failed attempts, lockouts, hack, authentication, login, security, rename login url, rename login, rename wp-admin, secure wp-admin, rename admin url, secure admin, brute force protection
 Requires at least: 3.0
-Tested up to: 6.7
+Tested up to: 6.8
 Requires PHP: 5.5
-Stable tag: 1.9.6
+Stable tag: 2.0.3
 License: LGPLv2.1
 License URI: http://www.gnu.org/licenses/lgpl-2.1.html
 
@@ -56,7 +56,8 @@ Pro Features :
 * Disable Pingbacks - Simple way to disable PingBacks.
 * SSO - Single Sign-on, let any user access to your WordPress Dashboard without the need to share username or password.
 * Limit Concurrent Logins - It prevents user to login from different devices concurrently, you can define how many devices you want to allow, and how you want to restrict the user when concurrent limit is reached.
-* Social Login - Users can login or register with their Google, Github, Facebook, X (Twitter), Discord, Twitch, LinkedIn with support for WooCommerce.
+* Social Login - Users can login or register with their Google, Github, Facebook, X (Twitter), Discord, Twitch, LinkedIn, Microsoft with support for WooCommerce and Ultimate Member.
+* Key Less Social Login - Use Loginizer's Social Auth for easy key less Social login configuration, now supports Google, GitHub, X, LinkedIn more to be added later
 
 Features in Loginizer include:
 
@@ -84,6 +85,48 @@ That's it. You're done!
 3. Loginizer Brute Force Settings page
 
 == Changelog ==
+
+= 2.0.3 =
+* [Improvement Pro] 2FA via Email now supports HTML content type for the content of the email.
+* [Improvement Pro] Added an option to choose the location of Captcha on WooCommerce checkout page.
+* [Improvement Pro] Trunstile captcha now supports Flexible size.
+* [Bug-Fix Pro] There was an issue with TwitchTV social login, that has been fixed.
+* [Bug-Fix] There was an issue with redirection if redirect_to was set on login, this has been fixed.
+* [Bug-Fix] There was a notice with a Promo notice that has been fixed.
+
+= 2.0.2 =
+* [Improvement Pro] reCAPTCHA v3 now supports score based threshold, making the v3 reCAPTCHA even more effective in blocking bots.
+* [Task Pro] Limit concurrent attempts is now compatible with miniOrange Social login plugin.
+* [Bug Fix Pro] Social Login now works with Limit concurrent attempts.
+* [Bug Fix] There was an issue with social login where in some cases after Social login verification redirection back to the host site was getting blocked by the server's firewall, this has been fixed.
+
+= 2.0.1 =
+* [Feature Pro] Ultimate Member is now compatible with Loginizer's Bruteforce, Social Login, Captcha and Two-Factor Auth.
+* [Feature Pro] Social Login using Loginizer's Login Keys, making Social Login single click setup.
+* [Feature Pro] Support for Microsoft Social Login.
+* [Bug Fix] [Pro] There was an issue with Hide WP-Admin in rename login, that has been fixed.
+* [Bug Fix] [Pro] There was an issue with refresh button of 2FA App QR Code when it was displays on a page other than WP-Admin, that has been fixed.
+* [Bug Fix] [Pro] Login Notification was not working with 2FA login this has been fixed.
+* [Task] Social Login restructured and refactored.
+
+= 2.0.0 =
+* [Task] Tested with WordPress 6.8.
+* [Bug-Fix] A minor issue has been fixed which was reported by HedgeByte Security.
+
+= 1.9.9 =
+* [Task] There was a warning on PHP 8.2, that has been fixed.
+* [Bug-Fix] In some cases the session in Social Login was breaking that has been fixed.
+* [Bug-Fix Pro] For some page builders, changing the login slug caused the wp-login.php 404 error page to not load shortcodes properly. This issue has now been fixed.
+
+= 1.9.8 =
+* [Feature] Now you can hide the wp-admin totally from non logged in users.
+* [Improvement] Option to Disable Passwordless login for specific login page.
+* [Task] There was a Typo in X Social Login button which has been fixed and X buttons won't have Formerly Twitter text.
+* [Bug Fix] There was an issue with Passwordless login for WooCommerce login page, that has been fixed.
+* [Task] The Plugin name has been changed from Loginizer Security to Loginizer Pro.
+
+= 1.9.7 =
+* [Task] A notice has been tweaked to prevent user confusion among users.
 
 = 1.9.6 =
 * [Task] Removed wpCentral Promo from Loginizer.
@@ -118,7 +161,7 @@ That's it. You're done!
 = 1.8.7 =
 * [Feature] Social Login: Now you can let the users login through LinkedIn Login.
 * [Feature] Send Login Notification as HTML email.
-* [Pro Feature] Supports social login with Google, GitHub, Facebook, X(Formly Twitter) and more Login Providers.
+* [Pro Feature] Supports social login with Google, GitHub, Facebook, X(Formerly Twitter) and more Login Providers.
 
 = 1.8.6 =
 * [Bug-Fix] There was an issue with Login Notification body and subject, it was adding \(slashes) if "(double-quotes) where being used. This has been fixed.
