@@ -67,15 +67,40 @@
 	<!-- FEATURED VIDEO -->
 	<?php
 		$featured_video = get_field('featured_video');
-		if ($featured_video) :
+		$featured_video_2 = get_field('featured_video_2');
+		$featured_video_title = get_field('featured_video_title');
+		$featured_video_title_2 = get_field('featured_video_title_2');
+
+		if ($featured_video || $featured_video_2) :
 	?>
 	<section>
 		<div class="wrapper">
 			<div class="tw:mb-4">&nbsp;</div>
-			<video class="tw:w-full" controls>
-				<source src="<?php echo $featured_video['url']; ?>" type="video/mp4">
-				Your browser does not support the video tag.
-			</video>
+			<div class="tw:grid tw:grid-cols-1 <?php echo ($featured_video && $featured_video_2) ? 'tw:md:grid-cols-2 tw:gap-x-12' : ''; ?> tw:gap-y-12">
+				<?php if ($featured_video) : ?>
+					<div>
+						<?php if ($featured_video_title) : ?>
+							<h2 class="title2 tw-text-black tw:mb-6"><?php echo $featured_video_title; ?></h2>
+						<?php endif; ?>
+						<video class="tw:w-full" controls>
+							<source src="<?php echo $featured_video['url']; ?>" type="video/mp4">
+							Your browser does not support the video tag.
+						</video>
+					</div>
+				<?php endif; ?>
+
+				<?php if ($featured_video_2) : ?>
+					<div>
+						<?php if ($featured_video_title_2) : ?>
+							<h2 class="title2 tw-text-black tw:mb-6"><?php echo $featured_video_title_2; ?></h2>
+						<?php endif; ?>
+						<video class="tw:w-full" controls>
+							<source src="<?php echo $featured_video_2['url']; ?>" type="video/mp4">
+							Your browser does not support the video tag.
+						</video>
+					</div>
+				<?php endif; ?>
+			</div>
 		</div>
 	</section>
 	<?php endif; ?>
