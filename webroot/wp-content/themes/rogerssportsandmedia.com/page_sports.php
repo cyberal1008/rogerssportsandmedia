@@ -60,10 +60,6 @@
 		</div>
 	</section>
 
-	<!-- HIGHLIGHTS -->
-	<?php get_template_part('template-parts/section-highlights'); ?>
-
-
 	<!-- FEATURED VIDEO -->
 	<?php
 		$featured_video = get_field('featured_video');
@@ -73,14 +69,14 @@
 
 		if ($featured_video || $featured_video_2) :
 	?>
-	<section>
+	<section style="background-color: #000;">
 		<div class="wrapper">
 			<div class="tw:mb-4">&nbsp;</div>
 			<div class="tw:grid tw:grid-cols-1 <?php echo ($featured_video && $featured_video_2) ? 'tw:md:grid-cols-2 tw:gap-x-12' : ''; ?> tw:gap-y-12">
 				<?php if ($featured_video) : ?>
 					<div>
 						<?php if ($featured_video_title) : ?>
-							<h2 class="title2 tw-text-black tw:mb-6"><?php echo $featured_video_title; ?></h2>
+							<h2 class="title2 tw:mb-6" style="color: #fff;"><?php echo $featured_video_title; ?></h2>
 						<?php endif; ?>
 						<video class="tw:w-full" controls>
 							<source src="<?php echo $featured_video['url']; ?>" type="video/mp4">
@@ -92,7 +88,7 @@
 				<?php if ($featured_video_2) : ?>
 					<div>
 						<?php if ($featured_video_title_2) : ?>
-							<h2 class="title2 tw-text-black tw:mb-6"><?php echo $featured_video_title_2; ?></h2>
+							<h2 class="title2 tw:mb-6" style="color: #fff;"><?php echo $featured_video_title_2; ?></h2>
 						<?php endif; ?>
 						<video class="tw:w-full" controls>
 							<source src="<?php echo $featured_video_2['url']; ?>" type="video/mp4">
@@ -104,6 +100,9 @@
 		</div>
 	</section>
 	<?php endif; ?>
+
+	<!-- HIGHLIGHTS -->
+	<?php get_template_part('template-parts/section-highlights'); ?>
 
 	<!-- PLATFORMS -->
 	<?php 
