@@ -63,7 +63,8 @@ if ( ! function_exists( 'load_rsm_stylesheet' ) ) {
 		}
 
 		if (
-			is_page_template( 'page_2025-mlb-world-series.php' )
+			is_page_template( 'page_2025-mlb-world-series.php' ) ||
+			is_page_template( 'page_banner-preso-video.php' )
 		) {
 			wp_enqueue_script( 'presentationslider-js', get_stylesheet_directory_uri() . "/assets/home/scripts/presentationslider.js", array(), '1.0.0', true );
 		}
