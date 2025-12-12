@@ -245,6 +245,7 @@ if ( is_front_page() ) {
 		!is_page_template( 'page_admanager_v3.php' ) &&
 		!is_page_template( 'page_hgtv.php' ) &&
 		!is_page_template( 'page_2025-mlb-world-series.php' ) &&
+		!is_page_template( 'page_banner-preso-video.php' ) &&
 		!is_page_template( 'page_upfront_2025.php' ) &&
 		!is_singular('post') && !is_category()
 	) { ?>
