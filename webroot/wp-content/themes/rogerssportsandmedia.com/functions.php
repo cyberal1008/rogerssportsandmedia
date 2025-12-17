@@ -21,6 +21,59 @@ foreach ( $parent_includes as $file ) {
 	require_once $filepath;
 }
 
+/**
+ * Helper function to add query string to specific URLs
+ * Only appends query parameters to URLs containing web.rogerssportsandmedia.com/250credit
+ * with proper sanitization and security measures
+ */
+function add_query_string_to_credit_url($url) {
+	if (empty($url)) {
+		return $url;
+	}
+
+	if (strpos($url, 'web.rogerssportsandmedia.com/250credit') === false) {
+		return $url;
+	}
+
+	$blocked_keys = [
+		'redirect',
+		'redirect_to',
+		'redirect_url',
+		'url',
+		'next',
+		'return',
+		'return_to',
+	];
+
+	$params = [];
+
+	foreach ($_GET as $key => $value) {
+		$sanitized_key = sanitize_key($key);
+
+		// Skip empty or blocked keys
+		if (empty($sanitized_key) || in_array($sanitized_key, $blocked_keys, true)) {
+			continue;
+		}
+
+		if (is_array($value)) {
+			$params[$sanitized_key] = array_map(
+				static function ($v) {
+					return sanitize_text_field(wp_unslash($v));
+				},
+				$value
+			);
+		} else {
+			$params[$sanitized_key] = sanitize_text_field(wp_unslash($value));
+		}
+	}
+
+	if (empty($params)) {
+		return $url;
+	}
+
+	return add_query_arg($params, $url);
+}
+
 function config_vars_menu() {
 	add_submenu_page(
 		'options-general.php',

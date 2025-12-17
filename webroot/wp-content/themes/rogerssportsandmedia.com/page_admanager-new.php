@@ -271,7 +271,7 @@
           </p>
           <div class="tw:flex tw:gap-x-6 tw:mb-8">
             <a class="tw:btn-primary" target="_blank" href="https://go.rogerssportsandmedia.com">Advertise now</a>
-            <a target="_blank" href="https://web.rogerssportsandmedia.com/250credit" class="tw:bg-transparent tw:border-2 tw:px-4 tw:py-3 tw:text-white tw:text-lg tw:font-semibold tw:rounded-full tw:hover:cursor-pointer tw:hover:text-white">Save up to $500</a>
+            <a target="_blank" href="<?php echo esc_url( add_query_string_to_credit_url( 'https://web.rogerssportsandmedia.com/250credit' ) ); ?>" class="tw:bg-transparent tw:border-2 tw:px-4 tw:py-3 tw:text-white tw:text-lg tw:font-semibold tw:rounded-full tw:hover:cursor-pointer tw:hover:text-white">Save up to $500</a>
           </div>
           <br />
           <p class="tw:text-base tw:font-medium">Source: Medium Moves The Message, Sounds Profitable, Feb 2023</p>
@@ -297,7 +297,7 @@
           </p>
           <div class="tw:flex tw:gap-x-6 tw:mb-8">
             <a class="tw:btn-primary" target="_blank" href="https://go.rogerssportsandmedia.com">Advertise now</a>
-            <a class="tw:btn-secondary" target="_blank" href="https://web.rogerssportsandmedia.com/250credit">Save up to $500</a>
+            <a class="tw:btn-secondary" target="_blank" href="<?php echo esc_url( add_query_string_to_credit_url( 'https://web.rogerssportsandmedia.com/250credit' ) ); ?>">Save up to $500</a>
           </div>
           <br />
           <p class="tw:text-base tw:font-medium">Source: Radio Connects, Rediscover the Power of Live Radio, 2024</p>
@@ -346,7 +346,7 @@
           </p>
           <div class="tw:flex tw:gap-x-6 tw:mb-8">
             <a class="tw:btn-primary" target="_blank" href="https://go.rogerssportsandmedia.com">Advertise now</button>
-            <a target="_blank" href="https://web.rogerssportsandmedia.com/250credit" class="tw:bg-transparent tw:border-2 tw:px-4 tw:py-3 tw:text-white tw:text-base tw:font-semibold tw:rounded-full tw:hover:cursor-pointer tw:hover:text-white">Save up to $500</a>
+            <a target="_blank" href="<?php echo esc_url( add_query_string_to_credit_url( 'https://web.rogerssportsandmedia.com/250credit' ) ); ?>" class="tw:bg-transparent tw:border-2 tw:px-4 tw:py-3 tw:text-white tw:text-base tw:font-semibold tw:rounded-full tw:hover:cursor-pointer tw:hover:text-white">Save up to $500</a>
           </div>
           <br />
           <p class="tw:text-base tw:font-medium">Source: RSM Full Stream Ahead 2024 Survey, April 2024</p>
@@ -373,7 +373,7 @@
           </p>
           <div class="tw:flex tw:gap-x-6">
             <a class="tw:btn-primary" target="_blank" href="https://go.rogerssportsandmedia.com">Advertise now</a>
-            <a class="tw:btn-secondary" target="_blank" href="https://web.rogerssportsandmedia.com/250credit">Save up to $500</a>
+            <a class="tw:btn-secondary" target="_blank" href="<?php echo esc_url( add_query_string_to_credit_url( 'https://web.rogerssportsandmedia.com/250credit' ) ); ?>">Save up to $500</a>
           </div>
         </div>
         <div class="tw:md:col-span-3 tw:flex tw:justify-center tw:items-center">

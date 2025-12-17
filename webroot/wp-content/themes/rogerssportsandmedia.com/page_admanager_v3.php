@@ -4,6 +4,7 @@
  * Template Name: Ad Manager V3
  *
  */
+
 get_header();
 ?>
 <main>
@@ -31,7 +32,7 @@ get_header();
 						<?php endif; ?>
 						<?php if ($headline_button): ?>
 							<div class="tw:flex tw:gap-x-6">
-								<a class="tw:btn-primary" target="_blank" href="<?php echo $headline_button['url'] ?>"><?php echo $headline_button['title'] ?></a>
+								<a class="tw:btn-primary" target="_blank" href="<?php echo esc_url(add_query_string_to_credit_url($headline_button['url'])) ?>"><?php echo $headline_button['title'] ?></a>
 							</div>
 						<?php endif; ?>
 					</div>
@@ -299,13 +300,13 @@ get_header();
 				<?php if($button_1 || $button_2): ?>
 				<div class="tw:flex tw:gap-x-6 tw:mb-8">
 					<?php if($button_1): ?>
-					<a target="<?php echo esc_attr($button_1['target'] ?: '_self'); ?>" href="<?php echo esc_url($button_1['url']); ?>" class="tw:border-2 tw:px-4 tw:py-3 tw:text-lg tw:font-semibold tw:rounded-full tw:hover:cursor-pointer" style="background-color: rgb(218, 41, 28); color: white; border-color: rgb(218, 41, 28);">
+					<a target="<?php echo esc_attr($button_1['target'] ?: '_self'); ?>" href="<?php echo esc_url(add_query_string_to_credit_url($button_1['url'])); ?>" class="tw:border-2 tw:px-4 tw:py-3 tw:text-lg tw:font-semibold tw:rounded-full tw:hover:cursor-pointer" style="background-color: rgb(218, 41, 28); color: white; border-color: rgb(218, 41, 28);">
 						<?php echo esc_html($button_1['title']); ?>
 					</a>
 					<?php endif; ?>
-					
+
 					<?php if($button_2): ?>
-					<a target="<?php echo esc_attr($button_2['target'] ?: '_self'); ?>" href="<?php echo esc_url($button_2['url']); ?>" class="tw:bg-transparent tw:border-2 tw:px-4 tw:py-3 tw:text-lg tw:font-semibold tw:rounded-full tw:hover:cursor-pointer" style="color: <?php echo esc_attr($text_color); ?>; border-color: <?php echo esc_attr($text_color); ?>;">
+					<a target="<?php echo esc_attr($button_2['target'] ?: '_self'); ?>" href="<?php echo esc_url(add_query_string_to_credit_url($button_2['url'])); ?>" class="tw:bg-transparent tw:border-2 tw:px-4 tw:py-3 tw:text-lg tw:font-semibold tw:rounded-full tw:hover:cursor-pointer" style="color: <?php echo esc_attr($text_color); ?>; border-color: <?php echo esc_attr($text_color); ?>;">
 						<?php echo esc_html($button_2['title']); ?>
 					</a>
 					<?php endif; ?>
@@ -384,8 +385,8 @@ get_header();
 				<?php endif; ?>
 				
 				<?php if($bottom_cta): ?>
-					<a class="tw:border-2 tw:px-4 tw:py-3 tw:text-lg tw:font-semibold tw:rounded-full tw:hover:cursor-pointer" 
-					href="<?php echo esc_url($bottom_cta['url']); ?>" 
+					<a class="tw:border-2 tw:px-4 tw:py-3 tw:text-lg tw:font-semibold tw:rounded-full tw:hover:cursor-pointer"
+					href="<?php echo esc_url(add_query_string_to_credit_url($bottom_cta['url'])); ?>"
 					target="<?php echo esc_attr($bottom_cta['target'] ?: '_self'); ?>"
 					style="background-color: rgb(218, 41, 28); color: white; border-color: rgb(218, 41, 28); display: inline-block;">
 						<?php echo esc_html($bottom_cta['title']); ?>
