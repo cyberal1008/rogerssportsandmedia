@@ -51,19 +51,20 @@ get_header();
 	<?php
 	$intro_title = get_field('intro_title');
 	$intro_content = get_field('intro_content');
-	$intro_button = get_field('intro_button');
-	$intro_button_arialabel = get_field('intro_button_arialabel');
 	$intro_column_1 = get_field('intro_column_1');
 	$intro_column_2 = get_field('intro_column_2');
 	$intro_column_3 = get_field('intro_column_3');
 	$intro_column_4 = get_field('intro_column_4');
+	$intro_background_color = get_field('intro_background_color');
+	$intro_heading_color = get_field('intro_heading_color');
+	$intro_text_color = get_field('intro_text_color');
 	?>
-	<section style="padding: 50px 0 0">
+	<section style="padding: 50px 0 0;<?php echo $intro_background_color ? ' background-color: ' . esc_attr($intro_background_color) . ';' : ''; ?>">
 		<section id="our-difference" class="our-difference">
-			<div class="wrapper">
+			<div class="wrapper"<?php echo $intro_text_color ? ' style="color: ' . esc_attr($intro_text_color) . ';"' : ''; ?>>
 				<div class="top">
 					<?php if ($intro_title) : ?>
-						<h2 class="title2 tw-text-black"><?php echo $intro_title; ?></h2>
+						<h2 class="title2 tw-text-black"<?php echo $intro_heading_color ? ' style="color: ' . esc_attr($intro_heading_color) . ';"' : ''; ?>><?php echo $intro_title; ?></h2>
 					<?php endif; ?>
 					<?php echo $intro_content ? $intro_content : ''; ?>
 				</div>
@@ -75,7 +76,7 @@ get_header();
 					?>
 							<div class="item">
 								<div class="accordion">
-									<button class="accordion-trigger" id="accordion-1" aria-expanded="false" aria-controls="accordion-1-content">
+									<button class="accordion-trigger" id="accordion-1" aria-expanded="false" aria-controls="accordion-1-content"<?php echo $intro_text_color ? ' style="color: ' . esc_attr($intro_text_color) . ';"' : ''; ?>>
 										<?php if ($icon) : ?>
 											<img src="<?php echo $icon['url']; ?>" class="mobile" alt="<?php echo $icon['alt']; ?>" loading="lazy">
 										<?php endif; ?>
@@ -101,7 +102,7 @@ get_header();
 					?>
 							<div class="item">
 								<div class="accordion">
-									<button class="accordion-trigger" id="accordion-2" aria-expanded="false" aria-controls="accordion-2-content">
+									<button class="accordion-trigger" id="accordion-2" aria-expanded="false" aria-controls="accordion-2-content"<?php echo $intro_text_color ? ' style="color: ' . esc_attr($intro_text_color) . ';"' : ''; ?>>
 										<?php if ($icon) : ?>
 											<img src="<?php echo $icon['url']; ?>" class="mobile" alt="<?php echo $icon['alt']; ?>" loading="lazy">
 										<?php endif; ?>
@@ -127,7 +128,7 @@ get_header();
 					?>
 							<div class="item">
 								<div class="accordion">
-									<button class="accordion-trigger" id="accordion-3" aria-expanded="false" aria-controls="accordion-3-content">
+									<button class="accordion-trigger" id="accordion-3" aria-expanded="false" aria-controls="accordion-3-content"<?php echo $intro_text_color ? ' style="color: ' . esc_attr($intro_text_color) . ';"' : ''; ?>>
 										<?php if ($icon) : ?>
 											<img src="<?php echo $icon['url']; ?>" class="mobile" alt="<?php echo $icon['alt']; ?>" loading="lazy">
 										<?php endif; ?>
@@ -152,7 +153,7 @@ get_header();
 					?>
 							<div class="item">
 								<div class="accordion">
-									<button class="accordion-trigger" id="accordion-4" aria-expanded="false" aria-controls="accordion-4-content">
+									<button class="accordion-trigger" id="accordion-4" aria-expanded="false" aria-controls="accordion-4-content"<?php echo $intro_text_color ? ' style="color: ' . esc_attr($intro_text_color) . ';"' : ''; ?>>
 										<?php if ($icon) : ?>
 											<img src="<?php echo $icon['url']; ?>" class="mobile" alt="<?php echo $icon['alt']; ?>" loading="lazy">
 										<?php endif; ?>
@@ -179,12 +180,14 @@ get_header();
 	<?php
 	$brands_section_title = get_field('brands_section_title');
 	$brands_logos = get_field('brands_logos');
+	$brands_background_color = get_field('brands_background_color');
+	$brands_heading_color = get_field('brands_heading_color');
 	if ($brands_logos) :
 	?>
-		<section id="brands" class="logos">
+		<section id="brands" class="logos"<?php echo $brands_background_color ? ' style="background-color: ' . esc_attr($brands_background_color) . ';"' : ''; ?>>
 			<div class="wrapper">
 				<?php if ($brands_section_title) : ?>
-					<h2 class="title2"><?php echo $brands_section_title; ?></h2>
+					<h2 class="title2"<?php echo $brands_heading_color ? ' style="color: ' . esc_attr($brands_heading_color) . ';"' : ''; ?>><?php echo $brands_section_title; ?></h2>
 				<?php endif; ?>
 				<div class="swiper logo-slider">
 					<div class="swiper-wrapper">
