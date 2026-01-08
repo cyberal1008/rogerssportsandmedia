@@ -60,7 +60,7 @@
                       </form>
                   </div>
                 <div class="tw:text-xs tw:bg-gray tw:px-4 tw:py-3 tw:sm:px-6 tw:italic">
-                    *Promo codes are valid until 12/31/2025 and can be used on orders placed on RSM Ad Manager. Promo codes are valid for one-time use only. To redeem, enter your Promo Code on the final checkout page and hit apply.
+                    *Promo codes are valid until 12/31/2026 and can be used on orders placed on RSM Ad Manager. Promo codes are valid for one-time use only. To redeem, enter your Promo Code on the final checkout page and hit apply.
                 </div>
             </div>
           </div>
