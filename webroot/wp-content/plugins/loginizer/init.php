@@ -5,7 +5,7 @@ if(!function_exists('add_action')){
 	exit;
 }
 
-define('LOGINIZER_VERSION', '1.9.6');
+define('LOGINIZER_VERSION', '2.0.3');
 define('LOGINIZER_DIR', dirname(LOGINIZER_FILE));
 define('LOGINIZER_URL', plugins_url('', LOGINIZER_FILE));
 define('LOGINIZER_PRO_URL', 'https://loginizer.com/features#compare');
@@ -188,6 +188,27 @@ global $wpdb;
 	
 	}
 	
+	// Setting alignment to left in social login ?
+	if($version < 201){
+		$social_settings = get_option('loginizer_social_settings', []);
+
+		if(!empty($social_settings)){		
+			if(!empty($social_settings['login']) && (!empty($social_settings['login']['login_form']) || !empty($social_settings['login']['registration_form']))){
+				$social_settings['login']['button_alignment'] = 'left';
+			}
+
+			if(!empty($social_settings['woocommerce']) && (!empty($social_settings['woocommmerce']['login_form']) || !empty($social_settings['woocommerce']['registration_form']))){
+				$social_settings['woocommerce']['button_alignment'] = 'left';
+			}
+
+			if(!empty($social_settings['comment']) && !empty($social_settings['comment']['enable_buttons'])){
+				$social_settings['comment']['button_alignment'] = 'left';
+			}
+
+			update_option('loginizer_social_settings', $social_settings);	
+		}
+	}
+	
 	// Save the new Version
 	update_option('loginizer_version', LOGINIZER_VERSION);
 	
@@ -269,6 +290,12 @@ function loginizer_load_plugin(){
 	
 	// When was the database cleared last time
 	$loginizer['last_reset']  = get_option('loginizer_last_reset');
+
+	if(!isset($loginizer['ultimate-member-active'])){
+		$um_is_active = in_array('ultimate-member/ultimate-member.php', apply_filters('active_plugins', get_option('active_plugins', [])));
+		
+		$loginizer['ultimate-member-active'] = !empty($um_is_active) ? true : false;
+	}
 	
 	//print_r($loginizer);
 	
@@ -307,6 +334,10 @@ function loginizer_load_plugin(){
 		add_action('wp_login_errors', 'loginizer_error_handler', 10001, 2);
 		add_action('woocommerce_login_failed', 'loginizer_woocommerce_error_handler', 10001);
 		add_action('wp_login', 'loginizer_login_success', 10, 2);
+		
+		if(!empty($loginizer['ultimate-member-active'])){
+			add_action('wp_login_failed', 'loginizer_ultimatemember_error_handler', 10001);
+		}
 
 		if(!empty($_COOKIE['lz_social_error']) && !empty($loginizer['social_settings']) && !loginizer_is_blacklisted()){
 			add_filter('wp_login_errors', 'loginizer_social_login_error_handler', 10000, 2);
@@ -327,61 +358,14 @@ function loginizer_load_plugin(){
 	if(is_admin()){
 		include_once LOGINIZER_DIR . '/main/admin.php';
 	}
-
+	
 	// ----------------
 	// PRO INIT END
 	// ----------------
 	
-	// Is the premium features there ?
-	if(!defined('LOGINIZER_PREMIUM')){
-		
-		if(current_user_can('activate_plugins')){
-			// The promo time
-			$loginizer['promo_time'] = get_option('loginizer_promo_time');
-			if(empty($loginizer['promo_time'])){
-				$loginizer['promo_time'] = time();
-				update_option('loginizer_promo_time', $loginizer['promo_time']);
-			}
-			
-			// Are we to show the loginizer promo
-			if(!empty($loginizer['promo_time']) && $loginizer['promo_time'] > 0 && $loginizer['promo_time'] < (time() - (30*24*3600))){
-			
-				add_action('admin_notices', 'loginizer_promo');
-			
-			}
-			
-			if(!empty($loginizer['csrf_promo']) && $loginizer['csrf_promo'] > 0 && $loginizer['csrf_promo'] < (time() - 86400)){
-				
-				add_action('admin_notices', 'loginizer_csrf_promo');
-				
-			}
-			
-			// Are we to disable the promo
-			if(isset($_GET['loginizer_promo']) && (int)$_GET['loginizer_promo'] == 0){
-				update_option('loginizer_promo_time', (0 - time()) );
-				die('DONE');
-			}
-			
-			$loginizer['backuply_promo'] = get_option('loginizer_backuply_promo_time');
-			
-			if(empty($loginizer['backuply_promo'])){
-				$loginizer['backuply_promo'] = abs($loginizer['promo_time']);
-				update_option('loginizer_backuply_promo_time', $loginizer['backuply_promo']);
-			}
-			
-			// Setting CSRF Promo time
-			$loginizer['csrf_promo'] = get_option('loginizer_csrf_promo_time');
-			
-			if(empty($loginizer['csrf_promo'])){
-				$loginizer['csrf_promo'] = abs($loginizer['promo_time']);
-				update_option('loginizer_csrf_promo_time', $loginizer['csrf_promo']);
-			}
-		}
-	}
-	
 	// Secuity checks for social login.
-	if(!empty($_GET['lz_social_provider']) && loginizer_can_login()){
-		include_once LOGINIZER_DIR . '/main/social-login.php';
+	if(!empty($_GET['lz_social_provider']) && loginizer_can_login() && empty($_GET['lz_api'])){
+		add_action('init', 'loginizer_social_login_load');
 		return;
 	}
 }
@@ -492,6 +476,9 @@ function loginizer_can_login(){
 			
 			$lz_error['ip_blocked'] = $loginizer['msg']['lockout_err'].' '.$_time;
 			
+			if(!empty($loginizer['ultimate-member-active']) && class_exists('UM')){ 
+				\UM()->form()->add_error('blocked_msg', $lz_error['ip_blocked']);
+			}
 			return false;
 		}
 	}
@@ -844,6 +831,13 @@ function loginizer_woocommerce_error_handler(){
 	}
 }
 
+function loginizer_ultimatemember_error_handler(){
+	
+	if(class_exists('UM')){ 
+		\UM()->form()->add_error('remaining_tries', loginizer_retries_left());
+	}
+}
+
 // Handles social login URL
 function loginizer_social_login_error_handler($errors = '', $redirect_to = ''){
 	global $loginizer;
@@ -945,6 +939,10 @@ $sitename','loginizer');
 		}
 	}
 	
+}
+
+function loginizer_social_login_load(){
+	include_once LOGINIZER_DIR . '/main/social-login.php';
 }
 
 // Checks if softaculous is installed on the server.

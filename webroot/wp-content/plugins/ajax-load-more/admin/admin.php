@@ -9,11 +9,15 @@
 /**
  * Include these files.
  */
-require_once ALM_PATH . 'admin/functions/layouts.php';
-require_once ALM_PATH . 'admin/functions/licensing.php';
-require_once ALM_PATH . 'admin/functions/plugin-updates.php';
-require_once ALM_PATH . 'admin/functions/repeater-templates.php';
-require_once ALM_PATH . 'admin/functions/settings.php';
+if ( ! class_exists( 'ALM_Notices' ) ) {
+	require_once plugin_dir_path( __FILE__ ) . 'classes/notices.php';
+}
+require_once plugin_dir_path( __FILE__ ) . 'functions/layouts.php';
+require_once plugin_dir_path( __FILE__ ) . 'functions/plugin-updates.php';
+require_once plugin_dir_path( __FILE__ ) . 'functions/templates.php';
+require_once plugin_dir_path( __FILE__ ) . 'functions/settings.php';
+require_once plugin_dir_path( __FILE__ ) . 'classes/licensing.php';
+( new ALM_Licensing() )->register();
 
 /**
  * Setup the admin hooks
@@ -22,7 +26,8 @@ require_once ALM_PATH . 'admin/functions/settings.php';
  * @deprecated 5.6
  */
 function alm_admin_hooks() {
-	require_once plugin_dir_path( __FILE__ ) . '/classes/class-nag.php';
+	require_once plugin_dir_path( __FILE__ ) . 'classes/nag.php';
+	( new ALM_Nag() )->register();
 }
 add_action( 'admin_init', 'alm_admin_hooks' );
 
@@ -33,7 +38,8 @@ add_action( 'admin_init', 'alm_admin_hooks' );
  */
 function alm_pro_transient_notification() {
 	if ( ! has_action( 'alm_pro_installed' ) ) {
-		$msg = '🔥&nbsp; <strong><a href="https://connekthq.com/plugins/ajax-load-more/pro/" target="_blank">Ajax Load More Pro</a></strong>: Get instant access to all 15 add-ons in a single installation! &nbsp; <strong><a href="https://connekthq.com/plugins/ajax-load-more/pro/" target="_blank" class="button button-primary">Upgrade Now</a></strong>';
+		$msg  = '🔥&nbsp; <strong><a href="https://connekthq.com/plugins/ajax-load-more/pro/" target="_blank">Ajax Load More Pro</a></strong> &rarr; ';
+		$msg .= 'Get access to all 15+ add-ons in a single installation! &nbsp; <strong><a href="https://connekthq.com/plugins/ajax-load-more/pro/" target="_blank" class="button button-primary">Upgrade Now</a></strong>';
 		alm_transient_notification( $msg, 'alm_pro_upgrade', 'YEAR_IN_SECONDS', true );
 	}
 }
@@ -41,24 +47,25 @@ function alm_pro_transient_notification() {
 /**
  * Display a notification on pages with transients.
  *
- * @param string  $message The message to display.
- * @param string  $transient The transient name.
- * @param string  $duration The length to store transient.
- * @param boolean $dismissible Is this dissmissable.
- * @param string  $type The tpe of notification.
+ * @param string  $message        The message to display.
+ * @param string  $transient_name The transient name.
+ * @param string  $duration       The length to store transient.
+ * @param boolean $dismissible    Is this dissmissable.
+ * @param string  $type           The tpe of notification.
  * @since 4.0
  */
-function alm_transient_notification( $message = '', $transient = '', $duration = 'YEAR_IN_SECONDS', $dismissible = true, $type = 'info' ) {
-	if ( ! empty( $transient ) ) {
-		$transient_value = get_transient( $transient );
-		$dismissible     = $dismissible ? ' is-dismissible' : '';
-		if ( ! isset( $transient_value ) || empty( $transient_value ) && ! empty( $message ) ) {
-			?>
-		<div class="alm-admin-notice notice-<?php echo esc_html( $type ); ?> notice<?php echo esc_html( $dismissible ); ?> alm-transient" data-transient="<?php echo esc_html( $transient ); ?>" data-duration="<?php echo esc_html( $duration ); ?>">
-			<p><?php echo wp_kses_post( $message ); ?></p>
-		</div>
-			<?php
-		}
+function alm_transient_notification( $message = '', $transient_name = '', $duration = 'YEAR_IN_SECONDS', $dismissible = true, $type = 'info' ) {
+	if ( empty( $transient_name ) ) {
+		return; // Bail early if transient is empty.
+	}
+	$transient   = get_transient( $transient_name );
+	$dismissible = $dismissible ? ' is-dismissible' : '';
+	if ( ! isset( $transient ) || empty( $transient ) && ! empty( $message ) ) {
+		?>
+	<div class="notice-<?php echo esc_html( $type ); ?> notice<?php echo esc_html( $dismissible ); ?> alm-transient" data-transient="<?php echo esc_html( $transient_name ); ?>" data-duration="<?php echo esc_html( $duration ); ?>">
+		<p><?php echo wp_kses_post( $message ); ?></p>
+	</div>
+		<?php
 	}
 }
 
@@ -68,26 +75,18 @@ function alm_transient_notification( $message = '', $transient = '', $duration =
  * @since 4.0
  */
 function alm_set_transient() {
-	$form_data = filter_input_array( INPUT_POST );
-
-	if ( ! current_user_can( 'edit_theme_options' ) || ! isset( $form_data['nonce'] ) ) {
-		// Bail early if missing WP capabilities or nonce.
-		wp_die( esc_attr__( 'You don\'t belong here.', 'ajax-load-more' ) );
+	$data = filter_input_array( INPUT_POST );
+	if ( ! current_user_can( 'edit_theme_options' ) || ! isset( $data['nonce'] ) ) {
+		wp_die( esc_attr__( 'You don\'t belong here.', 'ajax-load-more' ) ); // Bail early if missing WP capabilities or nonce.
 	}
-
-	if ( ! wp_verify_nonce( $form_data['nonce'], 'alm_repeater_nonce' ) ) {
-		// Verify nonce.
-		wp_die( esc_attr__( 'Error - unable to verify nonce, please try again.', 'ajax-load-more' ) );
+	if ( ! wp_verify_nonce( $data['nonce'], 'alm_repeater_nonce' ) ) {
+		wp_die( esc_attr__( 'Error - unable to verify nonce, please try again.', 'ajax-load-more' ) ); // Verify nonce.
 	}
-
-	$transient = $form_data['transient_name'];
-	$duration  = ! isset( $form_data['duration'] ) ? 'YEAR_IN_SECONDS' : $form_data['duration'];
-
+	$transient = $data['transient_name'];
+	$duration  = ! isset( $data['duration'] ) ? 'YEAR_IN_SECONDS' : $data['duration'];
 	if ( $transient ) {
 		set_transient( $transient, 'true', constant( $duration ) );
-		echo esc_html__( 'Transient set successfully', 'ajax-load-more' );
 	}
-
 	wp_die();
 }
 add_action( 'wp_ajax_alm_set_transient', 'alm_set_transient' ); // Set transient.
@@ -99,13 +98,12 @@ add_action( 'wp_ajax_alm_set_transient', 'alm_set_transient' ); // Set transient
  */
 function alm_admin_menu() {
 	global $alm_menu_items;
-	$icon            = ALM_ADMIN_URL . '/img/alm-icon-menu.svg';
 	$before_link     = '<span style="display:block; border-top: 1px solid #555; padding-top: 8px;">';
 	$after_link      = '</span>';
 	$style_link_icon = 'style="opacity: 0.6; font-size: 18px; height: 18px; width: 18px; position: relative; left: -2px;"';
 	$license_title   = has_action( 'alm_pro_installed' ) ? __( 'License', 'ajax-load-more' ) : __( 'Licenses', 'ajax-load-more' );
 
-	$alm_page = add_menu_page(
+	add_menu_page(
 		'Ajax Load More',
 		'Ajax Load More',
 		apply_filters( 'alm_user_role', 'edit_theme_options' ),
@@ -180,22 +178,9 @@ function alm_admin_menu() {
 
 	// Cache.
 	if ( has_action( 'alm_cache_installed' ) ) {
-		$alm_cache_page = add_submenu_page(
-			'ajax-load-more',
-			__( 'Cache', 'ajax-load-more' ),
-			__( 'Cache', 'ajax-load-more' ),
-			apply_filters( 'alm_user_role', 'edit_theme_options' ),
-			'ajax-load-more-cache',
-			'alm_cache_page'
-		);
-		add_action( 'load-' . $alm_cache_page, 'alm_load_admin_js' );
-		add_action( 'load-' . $alm_cache_page, 'alm_load_cache_admin_js' );
-
-		// Add to custom admin menu.
-		$alm_menu_items[] = [
-			'label' => __( 'Cache', 'ajax-load-more' ),
-			'slug'  => 'ajax-load-more-cache',
-		];
+		// Load cache admin js/css.
+		add_action( 'load-' . $alm_settings_page, 'alm_load_admin_js' );
+		add_action( 'load-' . $alm_settings_page, 'alm_load_cache_admin_js' );
 	}
 
 	// WooCommerce.
@@ -351,12 +336,12 @@ function alm_settings_page() {
 }
 
 /**
- *  Custom Repeaters.
+ *  Custom Repeaters v1.
  *
  *  @since 2.0.0
  */
 function alm_repeater_page() {
-	include_once ALM_PATH . 'admin/views/repeater-templates.php';
+	include_once ALM_PATH . 'admin/views/templates.php';
 }
 
 /**
@@ -423,23 +408,12 @@ function alm_licenses_page() {
 }
 
 /**
- *  Cache Add-on page
+ *  Pro Add-on page
  *
  *  @since 3.6.0
  */
 function alm_pro_page() {
 	include_once ALM_PRO_ADMIN_PATH . 'admin/views/pro.php';
-}
-
-/**
- * Cache Add-on page
- *
- * @since 2.6.0
- */
-function alm_cache_page() {
-	if ( defined( 'ALM_CACHE_ADMIN_PATH' ) && file_exists( ALM_CACHE_ADMIN_PATH . 'admin/views/cache.php' ) ) {
-		include_once ALM_CACHE_ADMIN_PATH . 'admin/views/cache.php';
-	}
 }
 
 /**
@@ -551,27 +525,30 @@ function alm_enqueue_admin_scripts() {
 		'alm-admin',
 		'alm_admin_localize',
 		[
-			'ajax_admin_url'   => admin_url( 'admin-ajax.php' ),
-			'ajax_load_more'   => __( 'Ajax Load More', 'ajax-load-more' ),
-			'active'           => __( 'Active', 'ajax-load-more' ),
-			'inactive'         => __( 'Inactive', 'ajax-load-more' ),
-			'applying_layout'  => __( 'Applying Layout', 'ajax-load-more' ),
-			'template_updated' => __( 'Template Updated', 'ajax-load-more' ),
-			'alm_admin_nonce'  => wp_create_nonce( 'alm_repeater_nonce' ),
-			'select_authors'   => __( 'Select Author(s)', 'ajax-load-more' ),
-			'select_cats'      => __( 'Select Categories', 'ajax-load-more' ),
-			'select_tags'      => __( 'Select Tags', 'ajax-load-more' ),
-			'select'           => __( 'Select', 'ajax-load-more' ),
-			'jump_to_option'   => __( 'Jump to Option', 'ajax-load-more' ),
-			'jump_to_template' => __( 'Jump to Template', 'ajax-load-more' ),
-			'install_now'      => __( 'Are you sure you want to install this Ajax Load More extension?', 'ajax-load-more' ),
-			'install_btn'      => __( 'Install Now', 'ajax-load-more' ),
-			'activate_btn'     => __( 'Activate', 'ajax-load-more' ),
-			'settings_saving'  => '<i class="fa fa-spinner fa-spin" aria-hidden="true"></i> ' . __( 'Saving Settings', 'ajax-load-more' ),
-			'settings_saved'   => '<i class="fa fa-check" aria-hidden="true"></i> ' . __( 'Settings Saved Successfully', 'ajax-load-more' ),
-			'settings_error'   => '<i class="fa fa-exclamation-circle" aria-hidden="true"></i> ' . __( 'Error Saving Settings', 'ajax-load-more' ),
-			'shortcode_max'    => __( 'There is a maximum of 3 tax_query objects while using the shortcode builder', 'ajax-load-more' ),
-			'restapi'          => [
+			'ajax_admin_url'       => admin_url( 'admin-ajax.php' ),
+			'ajax_load_more'       => __( 'Ajax Load More', 'ajax-load-more' ),
+			'active'               => __( 'Active', 'ajax-load-more' ),
+			'inactive'             => __( 'Inactive', 'ajax-load-more' ),
+			'applying_layout'      => __( 'Applying Layout', 'ajax-load-more' ),
+			'template_updated'     => __( 'Template Updated', 'ajax-load-more' ),
+			'updating_template'    => __( 'Updating Template...', 'ajax-load-more' ),
+			'saving_template'      => __( 'Saving template...', 'ajax-load-more' ),
+			'something_went_wrong' => __( 'Something went wrong and the data could not be saved.', 'ajax-load-more' ),
+			'alm_admin_nonce'      => wp_create_nonce( 'alm_repeater_nonce' ),
+			'select_authors'       => __( 'Select Author(s)', 'ajax-load-more' ),
+			'select_cats'          => __( 'Select Categories', 'ajax-load-more' ),
+			'select_tags'          => __( 'Select Tags', 'ajax-load-more' ),
+			'select'               => __( 'Select', 'ajax-load-more' ),
+			'jump_to_option'       => __( 'Jump to Option', 'ajax-load-more' ),
+			'jump_to_template'     => __( 'Jump to Template', 'ajax-load-more' ),
+			'install_now'          => __( 'Are you sure you want to install this Ajax Load More extension?', 'ajax-load-more' ),
+			'install_btn'          => __( 'Install Now', 'ajax-load-more' ),
+			'activate_btn'         => __( 'Activate', 'ajax-load-more' ),
+			'settings_saving'      => '<i class="fa fa-spinner fa-spin" aria-hidden="true"></i> ' . __( 'Saving Settings', 'ajax-load-more' ),
+			'settings_saved'       => '<i class="fa fa-check" aria-hidden="true"></i> ' . __( 'Settings Saved Successfully', 'ajax-load-more' ),
+			'settings_error'       => '<i class="fa fa-exclamation-circle" aria-hidden="true"></i> ' . __( 'Error Saving Settings', 'ajax-load-more' ),
+			'shortcode_max'        => __( 'There is a maximum of 3 tax_query objects while using the shortcode builder', 'ajax-load-more' ),
+			'restapi'              => [
 				'url'       => function_exists( 'get_rest_url' ) ? get_rest_url() : '',
 				'namespace' => ALM_REST_NAMESPACE,
 			],
@@ -617,7 +594,7 @@ function alm_get_tax_terms() {
 		echo $value; // phpcs:ignore
 		wp_die();
 	} else {
-		echo "<p class='warning'>No terms exist within this taxonomy</p>";
+		echo '<p class="warning">' . __( 'No terms exist within this taxonomy', 'ajax-load-more' ) . '</p>';
 		wp_die();
 	}
 }

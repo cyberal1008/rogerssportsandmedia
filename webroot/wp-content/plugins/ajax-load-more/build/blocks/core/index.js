@@ -2,14 +2,14 @@ var ajaxloadmore;
 /******/ (function() { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 145:
+/***/ 6145:
 /***/ (function() {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
 
-/***/ 379:
+/***/ 3379:
 /***/ (function(module) {
 
 "use strict";
@@ -141,7 +141,7 @@ module.exports = insertBySelector;
 
 /***/ }),
 
-/***/ 216:
+/***/ 9216:
 /***/ (function(module) {
 
 "use strict";
@@ -158,7 +158,7 @@ module.exports = insertStyleElement;
 
 /***/ }),
 
-/***/ 565:
+/***/ 3565:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
@@ -175,7 +175,7 @@ module.exports = setAttributesWithoutAttributes;
 
 /***/ }),
 
-/***/ 795:
+/***/ 7795:
 /***/ (function(module) {
 
 "use strict";
@@ -243,7 +243,7 @@ module.exports = domAPI;
 
 /***/ }),
 
-/***/ 589:
+/***/ 4589:
 /***/ (function(module) {
 
 "use strict";
@@ -418,7 +418,7 @@ function Loader() {
   }));
 }
 ;// CONCATENATED MODULE: ./src/blocks/core/block.json
-var block_namespaceObject = JSON.parse('{"u2":"ajax-load-more/core"}');
+var block_namespaceObject = JSON.parse('{"u2":"ajax-load-more/core","EI":["queryId","query"]}');
 ;// CONCATENATED MODULE: external ["wp","i18n"]
 var external_wp_i18n_namespaceObject = window["wp"]["i18n"];
 ;// CONCATENATED MODULE: ./src/blocks/core/inspector.js
@@ -453,16 +453,22 @@ var external_wp_i18n_namespaceObject = window["wp"]["i18n"];
     rows: 6
   }), /*#__PURE__*/React.createElement(external_wp_components_namespaceObject.Flex, {
     gap: "5px",
-    justify: "flex-start",
-    style: {
-      marginTop: '-10px'
+    justify: "flex-start"
+  }, !(attributes !== null && attributes !== void 0 && attributes.shortcode) && /*#__PURE__*/React.createElement(external_wp_components_namespaceObject.Button, {
+    size: "compact",
+    variant: "primary",
+    target: "_blank",
+    onClick: function onClick() {
+      return setAttributes({
+        shortcode: '[ajax_load_more]'
+      });
     }
-  }, /*#__PURE__*/React.createElement(external_wp_components_namespaceObject.Button, {
+  }, (0,external_wp_i18n_namespaceObject.__)('Add Basic', 'ajax-load-more')), /*#__PURE__*/React.createElement(external_wp_components_namespaceObject.Button, {
     href: "".concat(adminurl, "/admin.php?page=ajax-load-more-shortcode-builder"),
     size: "compact",
     variant: "secondary",
     target: "_blank"
-  }, (0,external_wp_i18n_namespaceObject.__)('Create Shortcode', 'ajax-load-more')))));
+  }, (0,external_wp_i18n_namespaceObject.__)('Create Query', 'ajax-load-more')))));
 }
 ;// CONCATENATED MODULE: ./src/blocks/core/edit.js
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
@@ -478,10 +484,19 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
 
 /* harmony default export */ function edit(props) {
-  var attributes = props.attributes;
+  var attributes = props.attributes,
+    context = props.context;
+
+  // Create query args from block context.
+  var urlQueryArgs = {};
+  block_namespaceObject.EI.forEach(function (contextName) {
+    var _context$contextName;
+    urlQueryArgs[contextName] = (_context$contextName = context[contextName]) !== null && _context$contextName !== void 0 ? _context$contextName : null;
+  });
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(inspector, props), /*#__PURE__*/React.createElement(EditWrapper, null, /*#__PURE__*/React.createElement((external_wp_serverSideRender_default()), {
     block: block_namespaceObject.u2,
     attributes: attributes,
+    urlQueryArgs: urlQueryArgs,
     LoadingResponsePlaceholder: Loader,
     EmptyResponsePlaceholder: Loader
   })));
@@ -491,12 +506,23 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
  * Watch for changes to the DOM and initialize ALM blocks.
  */
 var almBlockCallback = function almBlockCallback() {
-  var alm = document.querySelectorAll('.wp-block-ajax-load-more-core .ajax-load-more-wrap');
-  if (alm !== null && alm !== void 0 && alm.length) {
-    _toConsumableArray(alm).forEach(function (instance) {
-      ajaxloadmore.wpblock(instance);
-    });
-  }
+  setTimeout(function () {
+    var targetClass = '.wp-block-ajax-load-more-core .ajax-load-more-wrap';
+
+    /**
+     * Support iFrame block editor.
+     * @see https://make.wordpress.org/core/2023/07/18/miscellaneous-editor-changes-in-wordpress-6-3/#post-editor-iframed
+     */
+    var iframe = document.querySelector('iframe[name="editor-canvas"]');
+
+    // Get all instances of ALM blocks.
+    var alm = iframe ? iframe.contentWindow.document.querySelectorAll(targetClass) : document.querySelectorAll(targetClass);
+    if (alm !== null && alm !== void 0 && alm.length) {
+      _toConsumableArray(alm).forEach(function (instance) {
+        ajaxloadmore.wpblock(instance);
+      });
+    }
+  }, 1000);
 };
 external_wp_domReady_default()(function () {
   var observer = new MutationObserver(almBlockCallback);
@@ -506,28 +532,30 @@ external_wp_domReady_default()(function () {
     childList: true,
     subtree: true
   };
-  observer.observe(targetNode, config);
+  if (targetNode) {
+    observer.observe(targetNode, config);
+  }
 });
 // EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
-var injectStylesIntoStyleTag = __webpack_require__(379);
+var injectStylesIntoStyleTag = __webpack_require__(3379);
 var injectStylesIntoStyleTag_default = /*#__PURE__*/__webpack_require__.n(injectStylesIntoStyleTag);
 // EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/styleDomAPI.js
-var styleDomAPI = __webpack_require__(795);
+var styleDomAPI = __webpack_require__(7795);
 var styleDomAPI_default = /*#__PURE__*/__webpack_require__.n(styleDomAPI);
 // EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/insertBySelector.js
 var insertBySelector = __webpack_require__(569);
 var insertBySelector_default = /*#__PURE__*/__webpack_require__.n(insertBySelector);
 // EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js
-var setAttributesWithoutAttributes = __webpack_require__(565);
+var setAttributesWithoutAttributes = __webpack_require__(3565);
 var setAttributesWithoutAttributes_default = /*#__PURE__*/__webpack_require__.n(setAttributesWithoutAttributes);
 // EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/insertStyleElement.js
-var insertStyleElement = __webpack_require__(216);
+var insertStyleElement = __webpack_require__(9216);
 var insertStyleElement_default = /*#__PURE__*/__webpack_require__.n(insertStyleElement);
 // EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/styleTagTransform.js
-var styleTagTransform = __webpack_require__(589);
+var styleTagTransform = __webpack_require__(4589);
 var styleTagTransform_default = /*#__PURE__*/__webpack_require__.n(styleTagTransform);
 // EXTERNAL MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js??ruleSet[1].rules[2].use[1]!./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[2].use[3]!./src/blocks/core/index.scss
-var core = __webpack_require__(145);
+var core = __webpack_require__(6145);
 var core_default = /*#__PURE__*/__webpack_require__.n(core);
 ;// CONCATENATED MODULE: ./src/blocks/core/index.scss
 

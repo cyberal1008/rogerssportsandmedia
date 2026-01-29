@@ -72,11 +72,10 @@ if ( ! class_exists( 'ALM_QUERY_ARGS' ) ) :
 			$month = isset( $a['month'] ) ? $a['month'] : '';
 			$day   = isset( $a['day'] ) ? $a['day'] : '';
 
-			// Custom Fields.
-			$sort_key   = isset( $a['sort_key'] ) ? $a['sort_key'] : '';
-			$meta_key   = isset( $a['meta_key'] ) ? $a['meta_key'] : '';
-			$meta_value = isset( $a['meta_value'] ) ? $a['meta_value'] : '';
-
+			// Meta/Custom Fields.
+			$sort_key     = isset( $a['sort_key'] ) ? $a['sort_key'] : '';
+			$meta_key     = isset( $a['meta_key'] ) ? $a['meta_key'] : '';
+			$meta_value   = isset( $a['meta_value'] ) ? $a['meta_value'] : '';
 			$meta_compare = isset( $a['meta_compare'] ) ? $a['meta_compare'] : '';
 			$meta_compare = empty( $meta_compare ) ? 'IN' : $meta_compare;
 
@@ -86,8 +85,18 @@ if ( ! class_exists( 'ALM_QUERY_ARGS' ) ) :
 			$meta_relation = isset( $a['meta_relation'] ) ? $a['meta_relation'] : '';
 			$meta_relation = empty( $meta_relation ) || $facets ? 'AND' : $meta_relation;
 
+			// Date Query.
+			$date_query           = isset( $a['date_query'] ) ? $a['date_query'] : '';
+			$date_query_before    = isset( $a['date_query_before'] ) ? $a['date_query_before'] : '';
+			$date_query_after     = isset( $a['date_query_after'] ) ? $a['date_query_after'] : '';
+			$date_query_inclusive = isset( $a['date_query_inclusive'] ) ? $a['date_query_inclusive'] : '';
+			$date_query_column    = isset( $a['date_query_column'] ) ? $a['date_query_column'] : '';
+			$date_query_compare   = isset( $a['date_query_compare'] ) ? $a['date_query_compare'] : '';
+			$date_query_relation  = isset( $a['date_query_relation'] ) ? $a['date_query_relation'] : '';
+
 			// Search.
-			$s = isset( $a['search'] ) ? $a['search'] : '';
+			$s      = isset( $a['search'] ) ? trim( $a['search'] ) : '';
+			$engine = isset( $a['engine'] ) ? $a['engine'] : '';
 
 			// Custom Args.
 			$custom_args = isset( $a['custom_args'] ) ? $a['custom_args'] : '';
@@ -114,23 +123,44 @@ if ( ! class_exists( 'ALM_QUERY_ARGS' ) ) :
 			$exclude      = isset( $a['exclude'] ) ? $a['exclude'] : '';
 
 			// Offset.
-			$offset = isset( $a['offset'] ) ? $a['offset'] : 0;
+			$offset          = isset( $a['offset'] ) ? $a['offset'] : 0;
+			$original_offset = isset( $a['original_offset'] ) ? $a['original_offset'] : 0;
 
 			// Post Status.
-			$post_status = isset( $a['post_status'] ) ? $a['post_status'] : 'publish';
-			$post_status = empty( $post_status ) ? 'publish' : $post_status;
-			if ( $post_status !== 'publish' && $post_status !== 'inherit' ) {
-				// If not 'publish', confirm user has rights to view these posts.
+			$post_status      = isset( $a['post_status'] ) && ! empty( $a['post_status'] ) ? $a['post_status'] : 'publish'; // Default to publish.
+			$allowed_statuses = [ 'publish', 'inherit' ];
+
+			if ( ! in_array( $post_status, $allowed_statuses, true ) ) {
+				// Handle post status exceptions.
 				if ( current_user_can( apply_filters( 'alm_user_role_post_status', 'edit_theme_options' ) ) ) {
+					// Admin users can view all post statuses.
 					$post_status = $post_status;
 				} else {
-					$post_status = apply_filters( 'alm_allow_future_posts', false ) ? $post_status : 'publish';
-					// e.g. add_filter( 'alm_allow_future_posts', '__return_true' ).
+					// Switch over the post status and check if it's allowed via filter.
+					switch ( $post_status ) {
+						case 'private':
+							$post_status = apply_filters( 'alm_allow_private_posts', false ) ? $post_status : 'publish';
+							break;
+						case 'future':
+							$post_status = apply_filters( 'alm_allow_future_posts', false ) ? $post_status : 'publish';
+							break;
+						case 'draft':
+							$post_status = apply_filters( 'alm_allow_draft_posts', false ) ? $post_status : 'publish';
+							break;
+						case 'pending':
+							$post_status = apply_filters( 'alm_allow_pending_posts', false ) ? $post_status : 'publish';
+							break;
+						case 'trash':
+							$post_status = apply_filters( 'alm_allow_trash_posts', false ) ? $post_status : 'publish';
+							break;
+					}
 				}
 			}
 
-			// Advanced Custom Fields.
-			// Only used for Relationship Field. Gallery, Repeater and Flex Content is in the ACF extension.
+			/**
+			 * Advanced Custom Fields.
+			 * Used with Relationship Field. Gallery, Repeater and Flex Content is in the ACF extension.
+			 */
 			if ( $is_ajax ) {
 				$acf = ( isset( $a['acf'] ) ) ? true : false;
 				if ( $acf ) {
@@ -139,7 +169,7 @@ if ( ! class_exists( 'ALM_QUERY_ARGS' ) ) :
 					$acf_field_name        = isset( $a['acf']['field_name'] ) ? $a['acf']['field_name'] : ''; // Field Name.
 					$acf_parent_field_name = isset( $a['acf']['parent_field_name'] ) ? $a['acf']['parent_field_name'] : ''; // Parent Field Name.
 				}
-			} else { // phpcs:ignore
+			} else {
 				// If Preloaded, $a needs to access acf data differently.
 				if ( isset( $a['acf'] ) && $a['acf'] === 'true' ) {
 					$acf_post_id           = isset( $a['acf_post_id'] ) ? $a['acf_post_id'] : ''; // Post ID.
@@ -154,6 +184,7 @@ if ( ! class_exists( 'ALM_QUERY_ARGS' ) ) :
 				'post_type'           => $post_type,
 				'posts_per_page'      => $posts_per_page,
 				'offset'              => $offset,
+				'original_offset'     => $original_offset,
 				'order'               => $order,
 				'orderby'             => $orderby,
 				'post_status'         => $post_status,
@@ -202,11 +233,11 @@ if ( ! class_exists( 'ALM_QUERY_ARGS' ) ) :
 			// Taxonomy & Post Format.
 			// Both use tax_query, so we need to combine the queries.
 			if ( ! empty( $post_format ) || ! empty( $taxonomy ) ) {
-				$tax_query_total   = count( explode( ':', $taxonomy ) ); // Total $taxonomy objects.
 				$taxonomy          = explode( ':', $taxonomy ); // Convert to array.
 				$taxonomy_terms    = explode( ':', $taxonomy_terms ); // Convert to array.
 				$taxonomy_operator = explode( ':', $taxonomy_operator ); // Convert to array.
 				$taxonomy_children = explode( ':', $taxonomy_children ); // Convert to array.
+				$tax_query_total   = count( $taxonomy ); // Total $taxonomy objects.
 
 				if ( empty( $taxonomy ) ) {
 					// Post Format only.
@@ -235,7 +266,7 @@ if ( ! class_exists( 'ALM_QUERY_ARGS' ) ) :
 						$args['tax_query'][] = alm_get_taxonomy_query(
 							$taxonomy[ $i ],
 							$taxonomy_terms[ $i ],
-							$taxonomy_operator[ $i ],
+							isset( $taxonomy_operator[ $i ] ) ? $taxonomy_operator[ $i ] : 'IN',
 							isset( $taxonomy_children[ $i ] ) ? $taxonomy_children[ $i ] : true
 						);
 					}
@@ -244,16 +275,14 @@ if ( ! class_exists( 'ALM_QUERY_ARGS' ) ) :
 
 			// Meta Query.
 			if ( ! empty( $meta_key ) && isset( $meta_value ) || ! empty( $meta_key ) && $meta_compare !== 'IN' ) {
-
 				// Parse multiple meta query.
-				$meta_query_total = count( explode( ':', $meta_key ) ); // Total meta_query objects.
 				$meta_keys        = explode( ':', $meta_key ); // convert to array.
 				$meta_value       = explode( ':', $meta_value ); // convert to array.
 				$meta_compare     = explode( ':', $meta_compare ); // convert to array.
 				$meta_type        = explode( ':', $meta_type ); // convert to array.
+				$meta_query_total = count( $meta_keys ); // Total meta_query objects.
 
 				// Add the meta relation.
-
 				// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 				$args['meta_query'] = [
 					'relation' => $meta_relation,
@@ -261,13 +290,33 @@ if ( ! class_exists( 'ALM_QUERY_ARGS' ) ) :
 
 				// Loop and build the Meta Query.
 				for ( $i = 0; $i < $meta_query_total; $i++ ) {
-					$meta_array = [
-						'key'     => isset( $meta_keys[ $i ] ) ? $meta_keys[ $i ] : '',
-						'value'   => isset( $meta_value[ $i ] ) ? $meta_value[ $i ] : '',
-						'compare' => isset( $meta_compare[ $i ] ) ? $meta_compare[ $i ] : 'IN',
-						'type'    => isset( $meta_type[ $i ] ) ? $meta_type[ $i ] : 'CHAR',
-					];
-					$args['meta_query'][ alm_create_meta_clause( $meta_keys[ $i ] ) ] = alm_get_meta_query( $meta_array );
+					if ( isset( $meta_keys[ $i ] ) && isset( $meta_value[ $i ] ) ) {
+						$meta_array = [
+							'key'     => isset( $meta_keys[ $i ] ) ? $meta_keys[ $i ] : '',
+							'value'   => isset( $meta_value[ $i ] ) ? $meta_value[ $i ] : '',
+							'compare' => isset( $meta_compare[ $i ] ) ? $meta_compare[ $i ] : 'IN',
+							'type'    => isset( $meta_type[ $i ] ) ? $meta_type[ $i ] : 'CHAR',
+						];
+						$args['meta_query'][ alm_create_meta_clause( $meta_keys[ $i ] ) ] = alm_get_meta_query( $meta_array );
+					}
+				}
+			}
+
+			// Date Query.
+			if ( $date_query || $date_query_after || $date_query_before ) {
+				$args['date_query'] = [];
+				if ( ! empty( $date_query_relation ) ) {
+					$args['date_query']['relation'] = $date_query_relation;
+				}
+
+				// Standard Date Query.
+				if ( $date_query ) {
+					$args = alm_get_date_query( $date_query, $date_query_compare, $date_query_column, $args );
+				}
+
+				// Date Query (Before/After).
+				if ( $date_query_before || $date_query_after ) {
+					$args = alm_get_date_query_before_after( $args, $date_query_before, $date_query_after, $date_query_inclusive );
 				}
 			}
 
@@ -285,6 +334,13 @@ if ( ! class_exists( 'ALM_QUERY_ARGS' ) ) :
 			// Search Term.
 			if ( ! empty( $s ) ) {
 				$args['s'] = $s;
+			} else {
+				unset( $args['s'] );
+			}
+
+			// Search Engine.
+			if ( ! empty( $engine ) ) {
+				$args['engine'] = $engine;
 			}
 
 			// Custom Args.

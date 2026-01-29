@@ -2,7 +2,7 @@ var ajaxloadmore;
 /******/ (function() { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 924:
+/***/ 1924:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
@@ -10,7 +10,7 @@ var ajaxloadmore;
 
 var GetIntrinsic = __webpack_require__(210);
 
-var callBind = __webpack_require__(559);
+var callBind = __webpack_require__(5559);
 
 var $indexOf = callBind(GetIntrinsic('String.prototype.indexOf'));
 
@@ -25,13 +25,13 @@ module.exports = function callBoundIntrinsic(name, allowMissing) {
 
 /***/ }),
 
-/***/ 559:
+/***/ 5559:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
 
-var bind = __webpack_require__(612);
+var bind = __webpack_require__(8612);
 var GetIntrinsic = __webpack_require__(210);
 
 var $apply = GetIntrinsic('%Function.prototype.apply%');
@@ -80,7 +80,1129 @@ if ($defineProperty) {
 
 /***/ }),
 
-/***/ 249:
+/***/ 452:
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(8249), __webpack_require__(8269), __webpack_require__(8214), __webpack_require__(888), __webpack_require__(5109));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	(function () {
+	    // Shortcuts
+	    var C = CryptoJS;
+	    var C_lib = C.lib;
+	    var BlockCipher = C_lib.BlockCipher;
+	    var C_algo = C.algo;
+
+	    // Lookup tables
+	    var SBOX = [];
+	    var INV_SBOX = [];
+	    var SUB_MIX_0 = [];
+	    var SUB_MIX_1 = [];
+	    var SUB_MIX_2 = [];
+	    var SUB_MIX_3 = [];
+	    var INV_SUB_MIX_0 = [];
+	    var INV_SUB_MIX_1 = [];
+	    var INV_SUB_MIX_2 = [];
+	    var INV_SUB_MIX_3 = [];
+
+	    // Compute lookup tables
+	    (function () {
+	        // Compute double table
+	        var d = [];
+	        for (var i = 0; i < 256; i++) {
+	            if (i < 128) {
+	                d[i] = i << 1;
+	            } else {
+	                d[i] = (i << 1) ^ 0x11b;
+	            }
+	        }
+
+	        // Walk GF(2^8)
+	        var x = 0;
+	        var xi = 0;
+	        for (var i = 0; i < 256; i++) {
+	            // Compute sbox
+	            var sx = xi ^ (xi << 1) ^ (xi << 2) ^ (xi << 3) ^ (xi << 4);
+	            sx = (sx >>> 8) ^ (sx & 0xff) ^ 0x63;
+	            SBOX[x] = sx;
+	            INV_SBOX[sx] = x;
+
+	            // Compute multiplication
+	            var x2 = d[x];
+	            var x4 = d[x2];
+	            var x8 = d[x4];
+
+	            // Compute sub bytes, mix columns tables
+	            var t = (d[sx] * 0x101) ^ (sx * 0x1010100);
+	            SUB_MIX_0[x] = (t << 24) | (t >>> 8);
+	            SUB_MIX_1[x] = (t << 16) | (t >>> 16);
+	            SUB_MIX_2[x] = (t << 8)  | (t >>> 24);
+	            SUB_MIX_3[x] = t;
+
+	            // Compute inv sub bytes, inv mix columns tables
+	            var t = (x8 * 0x1010101) ^ (x4 * 0x10001) ^ (x2 * 0x101) ^ (x * 0x1010100);
+	            INV_SUB_MIX_0[sx] = (t << 24) | (t >>> 8);
+	            INV_SUB_MIX_1[sx] = (t << 16) | (t >>> 16);
+	            INV_SUB_MIX_2[sx] = (t << 8)  | (t >>> 24);
+	            INV_SUB_MIX_3[sx] = t;
+
+	            // Compute next counter
+	            if (!x) {
+	                x = xi = 1;
+	            } else {
+	                x = x2 ^ d[d[d[x8 ^ x2]]];
+	                xi ^= d[d[xi]];
+	            }
+	        }
+	    }());
+
+	    // Precomputed Rcon lookup
+	    var RCON = [0x00, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x1b, 0x36];
+
+	    /**
+	     * AES block cipher algorithm.
+	     */
+	    var AES = C_algo.AES = BlockCipher.extend({
+	        _doReset: function () {
+	            var t;
+
+	            // Skip reset of nRounds has been set before and key did not change
+	            if (this._nRounds && this._keyPriorReset === this._key) {
+	                return;
+	            }
+
+	            // Shortcuts
+	            var key = this._keyPriorReset = this._key;
+	            var keyWords = key.words;
+	            var keySize = key.sigBytes / 4;
+
+	            // Compute number of rounds
+	            var nRounds = this._nRounds = keySize + 6;
+
+	            // Compute number of key schedule rows
+	            var ksRows = (nRounds + 1) * 4;
+
+	            // Compute key schedule
+	            var keySchedule = this._keySchedule = [];
+	            for (var ksRow = 0; ksRow < ksRows; ksRow++) {
+	                if (ksRow < keySize) {
+	                    keySchedule[ksRow] = keyWords[ksRow];
+	                } else {
+	                    t = keySchedule[ksRow - 1];
+
+	                    if (!(ksRow % keySize)) {
+	                        // Rot word
+	                        t = (t << 8) | (t >>> 24);
+
+	                        // Sub word
+	                        t = (SBOX[t >>> 24] << 24) | (SBOX[(t >>> 16) & 0xff] << 16) | (SBOX[(t >>> 8) & 0xff] << 8) | SBOX[t & 0xff];
+
+	                        // Mix Rcon
+	                        t ^= RCON[(ksRow / keySize) | 0] << 24;
+	                    } else if (keySize > 6 && ksRow % keySize == 4) {
+	                        // Sub word
+	                        t = (SBOX[t >>> 24] << 24) | (SBOX[(t >>> 16) & 0xff] << 16) | (SBOX[(t >>> 8) & 0xff] << 8) | SBOX[t & 0xff];
+	                    }
+
+	                    keySchedule[ksRow] = keySchedule[ksRow - keySize] ^ t;
+	                }
+	            }
+
+	            // Compute inv key schedule
+	            var invKeySchedule = this._invKeySchedule = [];
+	            for (var invKsRow = 0; invKsRow < ksRows; invKsRow++) {
+	                var ksRow = ksRows - invKsRow;
+
+	                if (invKsRow % 4) {
+	                    var t = keySchedule[ksRow];
+	                } else {
+	                    var t = keySchedule[ksRow - 4];
+	                }
+
+	                if (invKsRow < 4 || ksRow <= 4) {
+	                    invKeySchedule[invKsRow] = t;
+	                } else {
+	                    invKeySchedule[invKsRow] = INV_SUB_MIX_0[SBOX[t >>> 24]] ^ INV_SUB_MIX_1[SBOX[(t >>> 16) & 0xff]] ^
+	                                               INV_SUB_MIX_2[SBOX[(t >>> 8) & 0xff]] ^ INV_SUB_MIX_3[SBOX[t & 0xff]];
+	                }
+	            }
+	        },
+
+	        encryptBlock: function (M, offset) {
+	            this._doCryptBlock(M, offset, this._keySchedule, SUB_MIX_0, SUB_MIX_1, SUB_MIX_2, SUB_MIX_3, SBOX);
+	        },
+
+	        decryptBlock: function (M, offset) {
+	            // Swap 2nd and 4th rows
+	            var t = M[offset + 1];
+	            M[offset + 1] = M[offset + 3];
+	            M[offset + 3] = t;
+
+	            this._doCryptBlock(M, offset, this._invKeySchedule, INV_SUB_MIX_0, INV_SUB_MIX_1, INV_SUB_MIX_2, INV_SUB_MIX_3, INV_SBOX);
+
+	            // Inv swap 2nd and 4th rows
+	            var t = M[offset + 1];
+	            M[offset + 1] = M[offset + 3];
+	            M[offset + 3] = t;
+	        },
+
+	        _doCryptBlock: function (M, offset, keySchedule, SUB_MIX_0, SUB_MIX_1, SUB_MIX_2, SUB_MIX_3, SBOX) {
+	            // Shortcut
+	            var nRounds = this._nRounds;
+
+	            // Get input, add round key
+	            var s0 = M[offset]     ^ keySchedule[0];
+	            var s1 = M[offset + 1] ^ keySchedule[1];
+	            var s2 = M[offset + 2] ^ keySchedule[2];
+	            var s3 = M[offset + 3] ^ keySchedule[3];
+
+	            // Key schedule row counter
+	            var ksRow = 4;
+
+	            // Rounds
+	            for (var round = 1; round < nRounds; round++) {
+	                // Shift rows, sub bytes, mix columns, add round key
+	                var t0 = SUB_MIX_0[s0 >>> 24] ^ SUB_MIX_1[(s1 >>> 16) & 0xff] ^ SUB_MIX_2[(s2 >>> 8) & 0xff] ^ SUB_MIX_3[s3 & 0xff] ^ keySchedule[ksRow++];
+	                var t1 = SUB_MIX_0[s1 >>> 24] ^ SUB_MIX_1[(s2 >>> 16) & 0xff] ^ SUB_MIX_2[(s3 >>> 8) & 0xff] ^ SUB_MIX_3[s0 & 0xff] ^ keySchedule[ksRow++];
+	                var t2 = SUB_MIX_0[s2 >>> 24] ^ SUB_MIX_1[(s3 >>> 16) & 0xff] ^ SUB_MIX_2[(s0 >>> 8) & 0xff] ^ SUB_MIX_3[s1 & 0xff] ^ keySchedule[ksRow++];
+	                var t3 = SUB_MIX_0[s3 >>> 24] ^ SUB_MIX_1[(s0 >>> 16) & 0xff] ^ SUB_MIX_2[(s1 >>> 8) & 0xff] ^ SUB_MIX_3[s2 & 0xff] ^ keySchedule[ksRow++];
+
+	                // Update state
+	                s0 = t0;
+	                s1 = t1;
+	                s2 = t2;
+	                s3 = t3;
+	            }
+
+	            // Shift rows, sub bytes, add round key
+	            var t0 = ((SBOX[s0 >>> 24] << 24) | (SBOX[(s1 >>> 16) & 0xff] << 16) | (SBOX[(s2 >>> 8) & 0xff] << 8) | SBOX[s3 & 0xff]) ^ keySchedule[ksRow++];
+	            var t1 = ((SBOX[s1 >>> 24] << 24) | (SBOX[(s2 >>> 16) & 0xff] << 16) | (SBOX[(s3 >>> 8) & 0xff] << 8) | SBOX[s0 & 0xff]) ^ keySchedule[ksRow++];
+	            var t2 = ((SBOX[s2 >>> 24] << 24) | (SBOX[(s3 >>> 16) & 0xff] << 16) | (SBOX[(s0 >>> 8) & 0xff] << 8) | SBOX[s1 & 0xff]) ^ keySchedule[ksRow++];
+	            var t3 = ((SBOX[s3 >>> 24] << 24) | (SBOX[(s0 >>> 16) & 0xff] << 16) | (SBOX[(s1 >>> 8) & 0xff] << 8) | SBOX[s2 & 0xff]) ^ keySchedule[ksRow++];
+
+	            // Set output
+	            M[offset]     = t0;
+	            M[offset + 1] = t1;
+	            M[offset + 2] = t2;
+	            M[offset + 3] = t3;
+	        },
+
+	        keySize: 256/32
+	    });
+
+	    /**
+	     * Shortcut functions to the cipher's object interface.
+	     *
+	     * @example
+	     *
+	     *     var ciphertext = CryptoJS.AES.encrypt(message, key, cfg);
+	     *     var plaintext  = CryptoJS.AES.decrypt(ciphertext, key, cfg);
+	     */
+	    C.AES = BlockCipher._createHelper(AES);
+	}());
+
+
+	return CryptoJS.AES;
+
+}));
+
+/***/ }),
+
+/***/ 5109:
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(8249), __webpack_require__(888));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	/**
+	 * Cipher core components.
+	 */
+	CryptoJS.lib.Cipher || (function (undefined) {
+	    // Shortcuts
+	    var C = CryptoJS;
+	    var C_lib = C.lib;
+	    var Base = C_lib.Base;
+	    var WordArray = C_lib.WordArray;
+	    var BufferedBlockAlgorithm = C_lib.BufferedBlockAlgorithm;
+	    var C_enc = C.enc;
+	    var Utf8 = C_enc.Utf8;
+	    var Base64 = C_enc.Base64;
+	    var C_algo = C.algo;
+	    var EvpKDF = C_algo.EvpKDF;
+
+	    /**
+	     * Abstract base cipher template.
+	     *
+	     * @property {number} keySize This cipher's key size. Default: 4 (128 bits)
+	     * @property {number} ivSize This cipher's IV size. Default: 4 (128 bits)
+	     * @property {number} _ENC_XFORM_MODE A constant representing encryption mode.
+	     * @property {number} _DEC_XFORM_MODE A constant representing decryption mode.
+	     */
+	    var Cipher = C_lib.Cipher = BufferedBlockAlgorithm.extend({
+	        /**
+	         * Configuration options.
+	         *
+	         * @property {WordArray} iv The IV to use for this operation.
+	         */
+	        cfg: Base.extend(),
+
+	        /**
+	         * Creates this cipher in encryption mode.
+	         *
+	         * @param {WordArray} key The key.
+	         * @param {Object} cfg (Optional) The configuration options to use for this operation.
+	         *
+	         * @return {Cipher} A cipher instance.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var cipher = CryptoJS.algo.AES.createEncryptor(keyWordArray, { iv: ivWordArray });
+	         */
+	        createEncryptor: function (key, cfg) {
+	            return this.create(this._ENC_XFORM_MODE, key, cfg);
+	        },
+
+	        /**
+	         * Creates this cipher in decryption mode.
+	         *
+	         * @param {WordArray} key The key.
+	         * @param {Object} cfg (Optional) The configuration options to use for this operation.
+	         *
+	         * @return {Cipher} A cipher instance.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var cipher = CryptoJS.algo.AES.createDecryptor(keyWordArray, { iv: ivWordArray });
+	         */
+	        createDecryptor: function (key, cfg) {
+	            return this.create(this._DEC_XFORM_MODE, key, cfg);
+	        },
+
+	        /**
+	         * Initializes a newly created cipher.
+	         *
+	         * @param {number} xformMode Either the encryption or decryption transormation mode constant.
+	         * @param {WordArray} key The key.
+	         * @param {Object} cfg (Optional) The configuration options to use for this operation.
+	         *
+	         * @example
+	         *
+	         *     var cipher = CryptoJS.algo.AES.create(CryptoJS.algo.AES._ENC_XFORM_MODE, keyWordArray, { iv: ivWordArray });
+	         */
+	        init: function (xformMode, key, cfg) {
+	            // Apply config defaults
+	            this.cfg = this.cfg.extend(cfg);
+
+	            // Store transform mode and key
+	            this._xformMode = xformMode;
+	            this._key = key;
+
+	            // Set initial values
+	            this.reset();
+	        },
+
+	        /**
+	         * Resets this cipher to its initial state.
+	         *
+	         * @example
+	         *
+	         *     cipher.reset();
+	         */
+	        reset: function () {
+	            // Reset data buffer
+	            BufferedBlockAlgorithm.reset.call(this);
+
+	            // Perform concrete-cipher logic
+	            this._doReset();
+	        },
+
+	        /**
+	         * Adds data to be encrypted or decrypted.
+	         *
+	         * @param {WordArray|string} dataUpdate The data to encrypt or decrypt.
+	         *
+	         * @return {WordArray} The data after processing.
+	         *
+	         * @example
+	         *
+	         *     var encrypted = cipher.process('data');
+	         *     var encrypted = cipher.process(wordArray);
+	         */
+	        process: function (dataUpdate) {
+	            // Append
+	            this._append(dataUpdate);
+
+	            // Process available blocks
+	            return this._process();
+	        },
+
+	        /**
+	         * Finalizes the encryption or decryption process.
+	         * Note that the finalize operation is effectively a destructive, read-once operation.
+	         *
+	         * @param {WordArray|string} dataUpdate The final data to encrypt or decrypt.
+	         *
+	         * @return {WordArray} The data after final processing.
+	         *
+	         * @example
+	         *
+	         *     var encrypted = cipher.finalize();
+	         *     var encrypted = cipher.finalize('data');
+	         *     var encrypted = cipher.finalize(wordArray);
+	         */
+	        finalize: function (dataUpdate) {
+	            // Final data update
+	            if (dataUpdate) {
+	                this._append(dataUpdate);
+	            }
+
+	            // Perform concrete-cipher logic
+	            var finalProcessedData = this._doFinalize();
+
+	            return finalProcessedData;
+	        },
+
+	        keySize: 128/32,
+
+	        ivSize: 128/32,
+
+	        _ENC_XFORM_MODE: 1,
+
+	        _DEC_XFORM_MODE: 2,
+
+	        /**
+	         * Creates shortcut functions to a cipher's object interface.
+	         *
+	         * @param {Cipher} cipher The cipher to create a helper for.
+	         *
+	         * @return {Object} An object with encrypt and decrypt shortcut functions.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var AES = CryptoJS.lib.Cipher._createHelper(CryptoJS.algo.AES);
+	         */
+	        _createHelper: (function () {
+	            function selectCipherStrategy(key) {
+	                if (typeof key == 'string') {
+	                    return PasswordBasedCipher;
+	                } else {
+	                    return SerializableCipher;
+	                }
+	            }
+
+	            return function (cipher) {
+	                return {
+	                    encrypt: function (message, key, cfg) {
+	                        return selectCipherStrategy(key).encrypt(cipher, message, key, cfg);
+	                    },
+
+	                    decrypt: function (ciphertext, key, cfg) {
+	                        return selectCipherStrategy(key).decrypt(cipher, ciphertext, key, cfg);
+	                    }
+	                };
+	            };
+	        }())
+	    });
+
+	    /**
+	     * Abstract base stream cipher template.
+	     *
+	     * @property {number} blockSize The number of 32-bit words this cipher operates on. Default: 1 (32 bits)
+	     */
+	    var StreamCipher = C_lib.StreamCipher = Cipher.extend({
+	        _doFinalize: function () {
+	            // Process partial blocks
+	            var finalProcessedBlocks = this._process(!!'flush');
+
+	            return finalProcessedBlocks;
+	        },
+
+	        blockSize: 1
+	    });
+
+	    /**
+	     * Mode namespace.
+	     */
+	    var C_mode = C.mode = {};
+
+	    /**
+	     * Abstract base block cipher mode template.
+	     */
+	    var BlockCipherMode = C_lib.BlockCipherMode = Base.extend({
+	        /**
+	         * Creates this mode for encryption.
+	         *
+	         * @param {Cipher} cipher A block cipher instance.
+	         * @param {Array} iv The IV words.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var mode = CryptoJS.mode.CBC.createEncryptor(cipher, iv.words);
+	         */
+	        createEncryptor: function (cipher, iv) {
+	            return this.Encryptor.create(cipher, iv);
+	        },
+
+	        /**
+	         * Creates this mode for decryption.
+	         *
+	         * @param {Cipher} cipher A block cipher instance.
+	         * @param {Array} iv The IV words.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var mode = CryptoJS.mode.CBC.createDecryptor(cipher, iv.words);
+	         */
+	        createDecryptor: function (cipher, iv) {
+	            return this.Decryptor.create(cipher, iv);
+	        },
+
+	        /**
+	         * Initializes a newly created mode.
+	         *
+	         * @param {Cipher} cipher A block cipher instance.
+	         * @param {Array} iv The IV words.
+	         *
+	         * @example
+	         *
+	         *     var mode = CryptoJS.mode.CBC.Encryptor.create(cipher, iv.words);
+	         */
+	        init: function (cipher, iv) {
+	            this._cipher = cipher;
+	            this._iv = iv;
+	        }
+	    });
+
+	    /**
+	     * Cipher Block Chaining mode.
+	     */
+	    var CBC = C_mode.CBC = (function () {
+	        /**
+	         * Abstract base CBC mode.
+	         */
+	        var CBC = BlockCipherMode.extend();
+
+	        /**
+	         * CBC encryptor.
+	         */
+	        CBC.Encryptor = CBC.extend({
+	            /**
+	             * Processes the data block at offset.
+	             *
+	             * @param {Array} words The data words to operate on.
+	             * @param {number} offset The offset where the block starts.
+	             *
+	             * @example
+	             *
+	             *     mode.processBlock(data.words, offset);
+	             */
+	            processBlock: function (words, offset) {
+	                // Shortcuts
+	                var cipher = this._cipher;
+	                var blockSize = cipher.blockSize;
+
+	                // XOR and encrypt
+	                xorBlock.call(this, words, offset, blockSize);
+	                cipher.encryptBlock(words, offset);
+
+	                // Remember this block to use with next block
+	                this._prevBlock = words.slice(offset, offset + blockSize);
+	            }
+	        });
+
+	        /**
+	         * CBC decryptor.
+	         */
+	        CBC.Decryptor = CBC.extend({
+	            /**
+	             * Processes the data block at offset.
+	             *
+	             * @param {Array} words The data words to operate on.
+	             * @param {number} offset The offset where the block starts.
+	             *
+	             * @example
+	             *
+	             *     mode.processBlock(data.words, offset);
+	             */
+	            processBlock: function (words, offset) {
+	                // Shortcuts
+	                var cipher = this._cipher;
+	                var blockSize = cipher.blockSize;
+
+	                // Remember this block to use with next block
+	                var thisBlock = words.slice(offset, offset + blockSize);
+
+	                // Decrypt and XOR
+	                cipher.decryptBlock(words, offset);
+	                xorBlock.call(this, words, offset, blockSize);
+
+	                // This block becomes the previous block
+	                this._prevBlock = thisBlock;
+	            }
+	        });
+
+	        function xorBlock(words, offset, blockSize) {
+	            var block;
+
+	            // Shortcut
+	            var iv = this._iv;
+
+	            // Choose mixing block
+	            if (iv) {
+	                block = iv;
+
+	                // Remove IV for subsequent blocks
+	                this._iv = undefined;
+	            } else {
+	                block = this._prevBlock;
+	            }
+
+	            // XOR blocks
+	            for (var i = 0; i < blockSize; i++) {
+	                words[offset + i] ^= block[i];
+	            }
+	        }
+
+	        return CBC;
+	    }());
+
+	    /**
+	     * Padding namespace.
+	     */
+	    var C_pad = C.pad = {};
+
+	    /**
+	     * PKCS #5/7 padding strategy.
+	     */
+	    var Pkcs7 = C_pad.Pkcs7 = {
+	        /**
+	         * Pads data using the algorithm defined in PKCS #5/7.
+	         *
+	         * @param {WordArray} data The data to pad.
+	         * @param {number} blockSize The multiple that the data should be padded to.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     CryptoJS.pad.Pkcs7.pad(wordArray, 4);
+	         */
+	        pad: function (data, blockSize) {
+	            // Shortcut
+	            var blockSizeBytes = blockSize * 4;
+
+	            // Count padding bytes
+	            var nPaddingBytes = blockSizeBytes - data.sigBytes % blockSizeBytes;
+
+	            // Create padding word
+	            var paddingWord = (nPaddingBytes << 24) | (nPaddingBytes << 16) | (nPaddingBytes << 8) | nPaddingBytes;
+
+	            // Create padding
+	            var paddingWords = [];
+	            for (var i = 0; i < nPaddingBytes; i += 4) {
+	                paddingWords.push(paddingWord);
+	            }
+	            var padding = WordArray.create(paddingWords, nPaddingBytes);
+
+	            // Add padding
+	            data.concat(padding);
+	        },
+
+	        /**
+	         * Unpads data that had been padded using the algorithm defined in PKCS #5/7.
+	         *
+	         * @param {WordArray} data The data to unpad.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     CryptoJS.pad.Pkcs7.unpad(wordArray);
+	         */
+	        unpad: function (data) {
+	            // Get number of padding bytes from last byte
+	            var nPaddingBytes = data.words[(data.sigBytes - 1) >>> 2] & 0xff;
+
+	            // Remove padding
+	            data.sigBytes -= nPaddingBytes;
+	        }
+	    };
+
+	    /**
+	     * Abstract base block cipher template.
+	     *
+	     * @property {number} blockSize The number of 32-bit words this cipher operates on. Default: 4 (128 bits)
+	     */
+	    var BlockCipher = C_lib.BlockCipher = Cipher.extend({
+	        /**
+	         * Configuration options.
+	         *
+	         * @property {Mode} mode The block mode to use. Default: CBC
+	         * @property {Padding} padding The padding strategy to use. Default: Pkcs7
+	         */
+	        cfg: Cipher.cfg.extend({
+	            mode: CBC,
+	            padding: Pkcs7
+	        }),
+
+	        reset: function () {
+	            var modeCreator;
+
+	            // Reset cipher
+	            Cipher.reset.call(this);
+
+	            // Shortcuts
+	            var cfg = this.cfg;
+	            var iv = cfg.iv;
+	            var mode = cfg.mode;
+
+	            // Reset block mode
+	            if (this._xformMode == this._ENC_XFORM_MODE) {
+	                modeCreator = mode.createEncryptor;
+	            } else /* if (this._xformMode == this._DEC_XFORM_MODE) */ {
+	                modeCreator = mode.createDecryptor;
+	                // Keep at least one block in the buffer for unpadding
+	                this._minBufferSize = 1;
+	            }
+
+	            if (this._mode && this._mode.__creator == modeCreator) {
+	                this._mode.init(this, iv && iv.words);
+	            } else {
+	                this._mode = modeCreator.call(mode, this, iv && iv.words);
+	                this._mode.__creator = modeCreator;
+	            }
+	        },
+
+	        _doProcessBlock: function (words, offset) {
+	            this._mode.processBlock(words, offset);
+	        },
+
+	        _doFinalize: function () {
+	            var finalProcessedBlocks;
+
+	            // Shortcut
+	            var padding = this.cfg.padding;
+
+	            // Finalize
+	            if (this._xformMode == this._ENC_XFORM_MODE) {
+	                // Pad data
+	                padding.pad(this._data, this.blockSize);
+
+	                // Process final blocks
+	                finalProcessedBlocks = this._process(!!'flush');
+	            } else /* if (this._xformMode == this._DEC_XFORM_MODE) */ {
+	                // Process final blocks
+	                finalProcessedBlocks = this._process(!!'flush');
+
+	                // Unpad data
+	                padding.unpad(finalProcessedBlocks);
+	            }
+
+	            return finalProcessedBlocks;
+	        },
+
+	        blockSize: 128/32
+	    });
+
+	    /**
+	     * A collection of cipher parameters.
+	     *
+	     * @property {WordArray} ciphertext The raw ciphertext.
+	     * @property {WordArray} key The key to this ciphertext.
+	     * @property {WordArray} iv The IV used in the ciphering operation.
+	     * @property {WordArray} salt The salt used with a key derivation function.
+	     * @property {Cipher} algorithm The cipher algorithm.
+	     * @property {Mode} mode The block mode used in the ciphering operation.
+	     * @property {Padding} padding The padding scheme used in the ciphering operation.
+	     * @property {number} blockSize The block size of the cipher.
+	     * @property {Format} formatter The default formatting strategy to convert this cipher params object to a string.
+	     */
+	    var CipherParams = C_lib.CipherParams = Base.extend({
+	        /**
+	         * Initializes a newly created cipher params object.
+	         *
+	         * @param {Object} cipherParams An object with any of the possible cipher parameters.
+	         *
+	         * @example
+	         *
+	         *     var cipherParams = CryptoJS.lib.CipherParams.create({
+	         *         ciphertext: ciphertextWordArray,
+	         *         key: keyWordArray,
+	         *         iv: ivWordArray,
+	         *         salt: saltWordArray,
+	         *         algorithm: CryptoJS.algo.AES,
+	         *         mode: CryptoJS.mode.CBC,
+	         *         padding: CryptoJS.pad.PKCS7,
+	         *         blockSize: 4,
+	         *         formatter: CryptoJS.format.OpenSSL
+	         *     });
+	         */
+	        init: function (cipherParams) {
+	            this.mixIn(cipherParams);
+	        },
+
+	        /**
+	         * Converts this cipher params object to a string.
+	         *
+	         * @param {Format} formatter (Optional) The formatting strategy to use.
+	         *
+	         * @return {string} The stringified cipher params.
+	         *
+	         * @throws Error If neither the formatter nor the default formatter is set.
+	         *
+	         * @example
+	         *
+	         *     var string = cipherParams + '';
+	         *     var string = cipherParams.toString();
+	         *     var string = cipherParams.toString(CryptoJS.format.OpenSSL);
+	         */
+	        toString: function (formatter) {
+	            return (formatter || this.formatter).stringify(this);
+	        }
+	    });
+
+	    /**
+	     * Format namespace.
+	     */
+	    var C_format = C.format = {};
+
+	    /**
+	     * OpenSSL formatting strategy.
+	     */
+	    var OpenSSLFormatter = C_format.OpenSSL = {
+	        /**
+	         * Converts a cipher params object to an OpenSSL-compatible string.
+	         *
+	         * @param {CipherParams} cipherParams The cipher params object.
+	         *
+	         * @return {string} The OpenSSL-compatible string.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var openSSLString = CryptoJS.format.OpenSSL.stringify(cipherParams);
+	         */
+	        stringify: function (cipherParams) {
+	            var wordArray;
+
+	            // Shortcuts
+	            var ciphertext = cipherParams.ciphertext;
+	            var salt = cipherParams.salt;
+
+	            // Format
+	            if (salt) {
+	                wordArray = WordArray.create([0x53616c74, 0x65645f5f]).concat(salt).concat(ciphertext);
+	            } else {
+	                wordArray = ciphertext;
+	            }
+
+	            return wordArray.toString(Base64);
+	        },
+
+	        /**
+	         * Converts an OpenSSL-compatible string to a cipher params object.
+	         *
+	         * @param {string} openSSLStr The OpenSSL-compatible string.
+	         *
+	         * @return {CipherParams} The cipher params object.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var cipherParams = CryptoJS.format.OpenSSL.parse(openSSLString);
+	         */
+	        parse: function (openSSLStr) {
+	            var salt;
+
+	            // Parse base64
+	            var ciphertext = Base64.parse(openSSLStr);
+
+	            // Shortcut
+	            var ciphertextWords = ciphertext.words;
+
+	            // Test for salt
+	            if (ciphertextWords[0] == 0x53616c74 && ciphertextWords[1] == 0x65645f5f) {
+	                // Extract salt
+	                salt = WordArray.create(ciphertextWords.slice(2, 4));
+
+	                // Remove salt from ciphertext
+	                ciphertextWords.splice(0, 4);
+	                ciphertext.sigBytes -= 16;
+	            }
+
+	            return CipherParams.create({ ciphertext: ciphertext, salt: salt });
+	        }
+	    };
+
+	    /**
+	     * A cipher wrapper that returns ciphertext as a serializable cipher params object.
+	     */
+	    var SerializableCipher = C_lib.SerializableCipher = Base.extend({
+	        /**
+	         * Configuration options.
+	         *
+	         * @property {Formatter} format The formatting strategy to convert cipher param objects to and from a string. Default: OpenSSL
+	         */
+	        cfg: Base.extend({
+	            format: OpenSSLFormatter
+	        }),
+
+	        /**
+	         * Encrypts a message.
+	         *
+	         * @param {Cipher} cipher The cipher algorithm to use.
+	         * @param {WordArray|string} message The message to encrypt.
+	         * @param {WordArray} key The key.
+	         * @param {Object} cfg (Optional) The configuration options to use for this operation.
+	         *
+	         * @return {CipherParams} A cipher params object.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var ciphertextParams = CryptoJS.lib.SerializableCipher.encrypt(CryptoJS.algo.AES, message, key);
+	         *     var ciphertextParams = CryptoJS.lib.SerializableCipher.encrypt(CryptoJS.algo.AES, message, key, { iv: iv });
+	         *     var ciphertextParams = CryptoJS.lib.SerializableCipher.encrypt(CryptoJS.algo.AES, message, key, { iv: iv, format: CryptoJS.format.OpenSSL });
+	         */
+	        encrypt: function (cipher, message, key, cfg) {
+	            // Apply config defaults
+	            cfg = this.cfg.extend(cfg);
+
+	            // Encrypt
+	            var encryptor = cipher.createEncryptor(key, cfg);
+	            var ciphertext = encryptor.finalize(message);
+
+	            // Shortcut
+	            var cipherCfg = encryptor.cfg;
+
+	            // Create and return serializable cipher params
+	            return CipherParams.create({
+	                ciphertext: ciphertext,
+	                key: key,
+	                iv: cipherCfg.iv,
+	                algorithm: cipher,
+	                mode: cipherCfg.mode,
+	                padding: cipherCfg.padding,
+	                blockSize: cipher.blockSize,
+	                formatter: cfg.format
+	            });
+	        },
+
+	        /**
+	         * Decrypts serialized ciphertext.
+	         *
+	         * @param {Cipher} cipher The cipher algorithm to use.
+	         * @param {CipherParams|string} ciphertext The ciphertext to decrypt.
+	         * @param {WordArray} key The key.
+	         * @param {Object} cfg (Optional) The configuration options to use for this operation.
+	         *
+	         * @return {WordArray} The plaintext.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var plaintext = CryptoJS.lib.SerializableCipher.decrypt(CryptoJS.algo.AES, formattedCiphertext, key, { iv: iv, format: CryptoJS.format.OpenSSL });
+	         *     var plaintext = CryptoJS.lib.SerializableCipher.decrypt(CryptoJS.algo.AES, ciphertextParams, key, { iv: iv, format: CryptoJS.format.OpenSSL });
+	         */
+	        decrypt: function (cipher, ciphertext, key, cfg) {
+	            // Apply config defaults
+	            cfg = this.cfg.extend(cfg);
+
+	            // Convert string to CipherParams
+	            ciphertext = this._parse(ciphertext, cfg.format);
+
+	            // Decrypt
+	            var plaintext = cipher.createDecryptor(key, cfg).finalize(ciphertext.ciphertext);
+
+	            return plaintext;
+	        },
+
+	        /**
+	         * Converts serialized ciphertext to CipherParams,
+	         * else assumed CipherParams already and returns ciphertext unchanged.
+	         *
+	         * @param {CipherParams|string} ciphertext The ciphertext.
+	         * @param {Formatter} format The formatting strategy to use to parse serialized ciphertext.
+	         *
+	         * @return {CipherParams} The unserialized ciphertext.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var ciphertextParams = CryptoJS.lib.SerializableCipher._parse(ciphertextStringOrParams, format);
+	         */
+	        _parse: function (ciphertext, format) {
+	            if (typeof ciphertext == 'string') {
+	                return format.parse(ciphertext, this);
+	            } else {
+	                return ciphertext;
+	            }
+	        }
+	    });
+
+	    /**
+	     * Key derivation function namespace.
+	     */
+	    var C_kdf = C.kdf = {};
+
+	    /**
+	     * OpenSSL key derivation function.
+	     */
+	    var OpenSSLKdf = C_kdf.OpenSSL = {
+	        /**
+	         * Derives a key and IV from a password.
+	         *
+	         * @param {string} password The password to derive from.
+	         * @param {number} keySize The size in words of the key to generate.
+	         * @param {number} ivSize The size in words of the IV to generate.
+	         * @param {WordArray|string} salt (Optional) A 64-bit salt to use. If omitted, a salt will be generated randomly.
+	         *
+	         * @return {CipherParams} A cipher params object with the key, IV, and salt.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var derivedParams = CryptoJS.kdf.OpenSSL.execute('Password', 256/32, 128/32);
+	         *     var derivedParams = CryptoJS.kdf.OpenSSL.execute('Password', 256/32, 128/32, 'saltsalt');
+	         */
+	        execute: function (password, keySize, ivSize, salt) {
+	            // Generate random salt
+	            if (!salt) {
+	                salt = WordArray.random(64/8);
+	            }
+
+	            // Derive key and IV
+	            var key = EvpKDF.create({ keySize: keySize + ivSize }).compute(password, salt);
+
+	            // Separate key and IV
+	            var iv = WordArray.create(key.words.slice(keySize), ivSize * 4);
+	            key.sigBytes = keySize * 4;
+
+	            // Return params
+	            return CipherParams.create({ key: key, iv: iv, salt: salt });
+	        }
+	    };
+
+	    /**
+	     * A serializable cipher wrapper that derives the key from a password,
+	     * and returns ciphertext as a serializable cipher params object.
+	     */
+	    var PasswordBasedCipher = C_lib.PasswordBasedCipher = SerializableCipher.extend({
+	        /**
+	         * Configuration options.
+	         *
+	         * @property {KDF} kdf The key derivation function to use to generate a key and IV from a password. Default: OpenSSL
+	         */
+	        cfg: SerializableCipher.cfg.extend({
+	            kdf: OpenSSLKdf
+	        }),
+
+	        /**
+	         * Encrypts a message using a password.
+	         *
+	         * @param {Cipher} cipher The cipher algorithm to use.
+	         * @param {WordArray|string} message The message to encrypt.
+	         * @param {string} password The password.
+	         * @param {Object} cfg (Optional) The configuration options to use for this operation.
+	         *
+	         * @return {CipherParams} A cipher params object.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var ciphertextParams = CryptoJS.lib.PasswordBasedCipher.encrypt(CryptoJS.algo.AES, message, 'password');
+	         *     var ciphertextParams = CryptoJS.lib.PasswordBasedCipher.encrypt(CryptoJS.algo.AES, message, 'password', { format: CryptoJS.format.OpenSSL });
+	         */
+	        encrypt: function (cipher, message, password, cfg) {
+	            // Apply config defaults
+	            cfg = this.cfg.extend(cfg);
+
+	            // Derive key and other params
+	            var derivedParams = cfg.kdf.execute(password, cipher.keySize, cipher.ivSize);
+
+	            // Add IV to config
+	            cfg.iv = derivedParams.iv;
+
+	            // Encrypt
+	            var ciphertext = SerializableCipher.encrypt.call(this, cipher, message, derivedParams.key, cfg);
+
+	            // Mix in derived params
+	            ciphertext.mixIn(derivedParams);
+
+	            return ciphertext;
+	        },
+
+	        /**
+	         * Decrypts serialized ciphertext using a password.
+	         *
+	         * @param {Cipher} cipher The cipher algorithm to use.
+	         * @param {CipherParams|string} ciphertext The ciphertext to decrypt.
+	         * @param {string} password The password.
+	         * @param {Object} cfg (Optional) The configuration options to use for this operation.
+	         *
+	         * @return {WordArray} The plaintext.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var plaintext = CryptoJS.lib.PasswordBasedCipher.decrypt(CryptoJS.algo.AES, formattedCiphertext, 'password', { format: CryptoJS.format.OpenSSL });
+	         *     var plaintext = CryptoJS.lib.PasswordBasedCipher.decrypt(CryptoJS.algo.AES, ciphertextParams, 'password', { format: CryptoJS.format.OpenSSL });
+	         */
+	        decrypt: function (cipher, ciphertext, password, cfg) {
+	            // Apply config defaults
+	            cfg = this.cfg.extend(cfg);
+
+	            // Convert string to CipherParams
+	            ciphertext = this._parse(ciphertext, cfg.format);
+
+	            // Derive key and other params
+	            var derivedParams = cfg.kdf.execute(password, cipher.keySize, cipher.ivSize, ciphertext.salt);
+
+	            // Add IV to config
+	            cfg.iv = derivedParams.iv;
+
+	            // Decrypt
+	            var plaintext = SerializableCipher.decrypt.call(this, cipher, ciphertext, derivedParams.key, cfg);
+
+	            return plaintext;
+	        }
+	    });
+	}());
+
+
+}));
+
+/***/ }),
+
+/***/ 8249:
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory) {
@@ -128,7 +1250,7 @@ if ($defineProperty) {
 	    // Native crypto import via require (NodeJS)
 	    if (!crypto && "function" === 'function') {
 	        try {
-	            crypto = __webpack_require__(480);
+	            crypto = __webpack_require__(2480);
 	        } catch (err) {}
 	    }
 
@@ -886,13 +2008,867 @@ if ($defineProperty) {
 
 /***/ }),
 
-/***/ 214:
+/***/ 8269:
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory) {
 	if (true) {
 		// CommonJS
-		module.exports = exports = factory(__webpack_require__(249));
+		module.exports = exports = factory(__webpack_require__(8249));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	(function () {
+	    // Shortcuts
+	    var C = CryptoJS;
+	    var C_lib = C.lib;
+	    var WordArray = C_lib.WordArray;
+	    var C_enc = C.enc;
+
+	    /**
+	     * Base64 encoding strategy.
+	     */
+	    var Base64 = C_enc.Base64 = {
+	        /**
+	         * Converts a word array to a Base64 string.
+	         *
+	         * @param {WordArray} wordArray The word array.
+	         *
+	         * @return {string} The Base64 string.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var base64String = CryptoJS.enc.Base64.stringify(wordArray);
+	         */
+	        stringify: function (wordArray) {
+	            // Shortcuts
+	            var words = wordArray.words;
+	            var sigBytes = wordArray.sigBytes;
+	            var map = this._map;
+
+	            // Clamp excess bits
+	            wordArray.clamp();
+
+	            // Convert
+	            var base64Chars = [];
+	            for (var i = 0; i < sigBytes; i += 3) {
+	                var byte1 = (words[i >>> 2]       >>> (24 - (i % 4) * 8))       & 0xff;
+	                var byte2 = (words[(i + 1) >>> 2] >>> (24 - ((i + 1) % 4) * 8)) & 0xff;
+	                var byte3 = (words[(i + 2) >>> 2] >>> (24 - ((i + 2) % 4) * 8)) & 0xff;
+
+	                var triplet = (byte1 << 16) | (byte2 << 8) | byte3;
+
+	                for (var j = 0; (j < 4) && (i + j * 0.75 < sigBytes); j++) {
+	                    base64Chars.push(map.charAt((triplet >>> (6 * (3 - j))) & 0x3f));
+	                }
+	            }
+
+	            // Add padding
+	            var paddingChar = map.charAt(64);
+	            if (paddingChar) {
+	                while (base64Chars.length % 4) {
+	                    base64Chars.push(paddingChar);
+	                }
+	            }
+
+	            return base64Chars.join('');
+	        },
+
+	        /**
+	         * Converts a Base64 string to a word array.
+	         *
+	         * @param {string} base64Str The Base64 string.
+	         *
+	         * @return {WordArray} The word array.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var wordArray = CryptoJS.enc.Base64.parse(base64String);
+	         */
+	        parse: function (base64Str) {
+	            // Shortcuts
+	            var base64StrLength = base64Str.length;
+	            var map = this._map;
+	            var reverseMap = this._reverseMap;
+
+	            if (!reverseMap) {
+	                    reverseMap = this._reverseMap = [];
+	                    for (var j = 0; j < map.length; j++) {
+	                        reverseMap[map.charCodeAt(j)] = j;
+	                    }
+	            }
+
+	            // Ignore padding
+	            var paddingChar = map.charAt(64);
+	            if (paddingChar) {
+	                var paddingIndex = base64Str.indexOf(paddingChar);
+	                if (paddingIndex !== -1) {
+	                    base64StrLength = paddingIndex;
+	                }
+	            }
+
+	            // Convert
+	            return parseLoop(base64Str, base64StrLength, reverseMap);
+
+	        },
+
+	        _map: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/='
+	    };
+
+	    function parseLoop(base64Str, base64StrLength, reverseMap) {
+	      var words = [];
+	      var nBytes = 0;
+	      for (var i = 0; i < base64StrLength; i++) {
+	          if (i % 4) {
+	              var bits1 = reverseMap[base64Str.charCodeAt(i - 1)] << ((i % 4) * 2);
+	              var bits2 = reverseMap[base64Str.charCodeAt(i)] >>> (6 - (i % 4) * 2);
+	              var bitsCombined = bits1 | bits2;
+	              words[nBytes >>> 2] |= bitsCombined << (24 - (nBytes % 4) * 8);
+	              nBytes++;
+	          }
+	      }
+	      return WordArray.create(words, nBytes);
+	    }
+	}());
+
+
+	return CryptoJS.enc.Base64;
+
+}));
+
+/***/ }),
+
+/***/ 3786:
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(8249));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	(function () {
+	    // Shortcuts
+	    var C = CryptoJS;
+	    var C_lib = C.lib;
+	    var WordArray = C_lib.WordArray;
+	    var C_enc = C.enc;
+
+	    /**
+	     * Base64url encoding strategy.
+	     */
+	    var Base64url = C_enc.Base64url = {
+	        /**
+	         * Converts a word array to a Base64url string.
+	         *
+	         * @param {WordArray} wordArray The word array.
+	         *
+	         * @param {boolean} urlSafe Whether to use url safe
+	         *
+	         * @return {string} The Base64url string.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var base64String = CryptoJS.enc.Base64url.stringify(wordArray);
+	         */
+	        stringify: function (wordArray, urlSafe=true) {
+	            // Shortcuts
+	            var words = wordArray.words;
+	            var sigBytes = wordArray.sigBytes;
+	            var map = urlSafe ? this._safe_map : this._map;
+
+	            // Clamp excess bits
+	            wordArray.clamp();
+
+	            // Convert
+	            var base64Chars = [];
+	            for (var i = 0; i < sigBytes; i += 3) {
+	                var byte1 = (words[i >>> 2]       >>> (24 - (i % 4) * 8))       & 0xff;
+	                var byte2 = (words[(i + 1) >>> 2] >>> (24 - ((i + 1) % 4) * 8)) & 0xff;
+	                var byte3 = (words[(i + 2) >>> 2] >>> (24 - ((i + 2) % 4) * 8)) & 0xff;
+
+	                var triplet = (byte1 << 16) | (byte2 << 8) | byte3;
+
+	                for (var j = 0; (j < 4) && (i + j * 0.75 < sigBytes); j++) {
+	                    base64Chars.push(map.charAt((triplet >>> (6 * (3 - j))) & 0x3f));
+	                }
+	            }
+
+	            // Add padding
+	            var paddingChar = map.charAt(64);
+	            if (paddingChar) {
+	                while (base64Chars.length % 4) {
+	                    base64Chars.push(paddingChar);
+	                }
+	            }
+
+	            return base64Chars.join('');
+	        },
+
+	        /**
+	         * Converts a Base64url string to a word array.
+	         *
+	         * @param {string} base64Str The Base64url string.
+	         *
+	         * @param {boolean} urlSafe Whether to use url safe
+	         *
+	         * @return {WordArray} The word array.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var wordArray = CryptoJS.enc.Base64url.parse(base64String);
+	         */
+	        parse: function (base64Str, urlSafe=true) {
+	            // Shortcuts
+	            var base64StrLength = base64Str.length;
+	            var map = urlSafe ? this._safe_map : this._map;
+	            var reverseMap = this._reverseMap;
+
+	            if (!reverseMap) {
+	                reverseMap = this._reverseMap = [];
+	                for (var j = 0; j < map.length; j++) {
+	                    reverseMap[map.charCodeAt(j)] = j;
+	                }
+	            }
+
+	            // Ignore padding
+	            var paddingChar = map.charAt(64);
+	            if (paddingChar) {
+	                var paddingIndex = base64Str.indexOf(paddingChar);
+	                if (paddingIndex !== -1) {
+	                    base64StrLength = paddingIndex;
+	                }
+	            }
+
+	            // Convert
+	            return parseLoop(base64Str, base64StrLength, reverseMap);
+
+	        },
+
+	        _map: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=',
+	        _safe_map: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_',
+	    };
+
+	    function parseLoop(base64Str, base64StrLength, reverseMap) {
+	        var words = [];
+	        var nBytes = 0;
+	        for (var i = 0; i < base64StrLength; i++) {
+	            if (i % 4) {
+	                var bits1 = reverseMap[base64Str.charCodeAt(i - 1)] << ((i % 4) * 2);
+	                var bits2 = reverseMap[base64Str.charCodeAt(i)] >>> (6 - (i % 4) * 2);
+	                var bitsCombined = bits1 | bits2;
+	                words[nBytes >>> 2] |= bitsCombined << (24 - (nBytes % 4) * 8);
+	                nBytes++;
+	            }
+	        }
+	        return WordArray.create(words, nBytes);
+	    }
+	}());
+
+	return CryptoJS.enc.Base64url;
+
+}));
+
+/***/ }),
+
+/***/ 298:
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(8249));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	(function () {
+	    // Shortcuts
+	    var C = CryptoJS;
+	    var C_lib = C.lib;
+	    var WordArray = C_lib.WordArray;
+	    var C_enc = C.enc;
+
+	    /**
+	     * UTF-16 BE encoding strategy.
+	     */
+	    var Utf16BE = C_enc.Utf16 = C_enc.Utf16BE = {
+	        /**
+	         * Converts a word array to a UTF-16 BE string.
+	         *
+	         * @param {WordArray} wordArray The word array.
+	         *
+	         * @return {string} The UTF-16 BE string.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var utf16String = CryptoJS.enc.Utf16.stringify(wordArray);
+	         */
+	        stringify: function (wordArray) {
+	            // Shortcuts
+	            var words = wordArray.words;
+	            var sigBytes = wordArray.sigBytes;
+
+	            // Convert
+	            var utf16Chars = [];
+	            for (var i = 0; i < sigBytes; i += 2) {
+	                var codePoint = (words[i >>> 2] >>> (16 - (i % 4) * 8)) & 0xffff;
+	                utf16Chars.push(String.fromCharCode(codePoint));
+	            }
+
+	            return utf16Chars.join('');
+	        },
+
+	        /**
+	         * Converts a UTF-16 BE string to a word array.
+	         *
+	         * @param {string} utf16Str The UTF-16 BE string.
+	         *
+	         * @return {WordArray} The word array.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var wordArray = CryptoJS.enc.Utf16.parse(utf16String);
+	         */
+	        parse: function (utf16Str) {
+	            // Shortcut
+	            var utf16StrLength = utf16Str.length;
+
+	            // Convert
+	            var words = [];
+	            for (var i = 0; i < utf16StrLength; i++) {
+	                words[i >>> 1] |= utf16Str.charCodeAt(i) << (16 - (i % 2) * 16);
+	            }
+
+	            return WordArray.create(words, utf16StrLength * 2);
+	        }
+	    };
+
+	    /**
+	     * UTF-16 LE encoding strategy.
+	     */
+	    C_enc.Utf16LE = {
+	        /**
+	         * Converts a word array to a UTF-16 LE string.
+	         *
+	         * @param {WordArray} wordArray The word array.
+	         *
+	         * @return {string} The UTF-16 LE string.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var utf16Str = CryptoJS.enc.Utf16LE.stringify(wordArray);
+	         */
+	        stringify: function (wordArray) {
+	            // Shortcuts
+	            var words = wordArray.words;
+	            var sigBytes = wordArray.sigBytes;
+
+	            // Convert
+	            var utf16Chars = [];
+	            for (var i = 0; i < sigBytes; i += 2) {
+	                var codePoint = swapEndian((words[i >>> 2] >>> (16 - (i % 4) * 8)) & 0xffff);
+	                utf16Chars.push(String.fromCharCode(codePoint));
+	            }
+
+	            return utf16Chars.join('');
+	        },
+
+	        /**
+	         * Converts a UTF-16 LE string to a word array.
+	         *
+	         * @param {string} utf16Str The UTF-16 LE string.
+	         *
+	         * @return {WordArray} The word array.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var wordArray = CryptoJS.enc.Utf16LE.parse(utf16Str);
+	         */
+	        parse: function (utf16Str) {
+	            // Shortcut
+	            var utf16StrLength = utf16Str.length;
+
+	            // Convert
+	            var words = [];
+	            for (var i = 0; i < utf16StrLength; i++) {
+	                words[i >>> 1] |= swapEndian(utf16Str.charCodeAt(i) << (16 - (i % 2) * 16));
+	            }
+
+	            return WordArray.create(words, utf16StrLength * 2);
+	        }
+	    };
+
+	    function swapEndian(word) {
+	        return ((word << 8) & 0xff00ff00) | ((word >>> 8) & 0x00ff00ff);
+	    }
+	}());
+
+
+	return CryptoJS.enc.Utf16;
+
+}));
+
+/***/ }),
+
+/***/ 888:
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(8249), __webpack_require__(2783), __webpack_require__(9824));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	(function () {
+	    // Shortcuts
+	    var C = CryptoJS;
+	    var C_lib = C.lib;
+	    var Base = C_lib.Base;
+	    var WordArray = C_lib.WordArray;
+	    var C_algo = C.algo;
+	    var MD5 = C_algo.MD5;
+
+	    /**
+	     * This key derivation function is meant to conform with EVP_BytesToKey.
+	     * www.openssl.org/docs/crypto/EVP_BytesToKey.html
+	     */
+	    var EvpKDF = C_algo.EvpKDF = Base.extend({
+	        /**
+	         * Configuration options.
+	         *
+	         * @property {number} keySize The key size in words to generate. Default: 4 (128 bits)
+	         * @property {Hasher} hasher The hash algorithm to use. Default: MD5
+	         * @property {number} iterations The number of iterations to perform. Default: 1
+	         */
+	        cfg: Base.extend({
+	            keySize: 128/32,
+	            hasher: MD5,
+	            iterations: 1
+	        }),
+
+	        /**
+	         * Initializes a newly created key derivation function.
+	         *
+	         * @param {Object} cfg (Optional) The configuration options to use for the derivation.
+	         *
+	         * @example
+	         *
+	         *     var kdf = CryptoJS.algo.EvpKDF.create();
+	         *     var kdf = CryptoJS.algo.EvpKDF.create({ keySize: 8 });
+	         *     var kdf = CryptoJS.algo.EvpKDF.create({ keySize: 8, iterations: 1000 });
+	         */
+	        init: function (cfg) {
+	            this.cfg = this.cfg.extend(cfg);
+	        },
+
+	        /**
+	         * Derives a key from a password.
+	         *
+	         * @param {WordArray|string} password The password.
+	         * @param {WordArray|string} salt A salt.
+	         *
+	         * @return {WordArray} The derived key.
+	         *
+	         * @example
+	         *
+	         *     var key = kdf.compute(password, salt);
+	         */
+	        compute: function (password, salt) {
+	            var block;
+
+	            // Shortcut
+	            var cfg = this.cfg;
+
+	            // Init hasher
+	            var hasher = cfg.hasher.create();
+
+	            // Initial values
+	            var derivedKey = WordArray.create();
+
+	            // Shortcuts
+	            var derivedKeyWords = derivedKey.words;
+	            var keySize = cfg.keySize;
+	            var iterations = cfg.iterations;
+
+	            // Generate key
+	            while (derivedKeyWords.length < keySize) {
+	                if (block) {
+	                    hasher.update(block);
+	                }
+	                block = hasher.update(password).finalize(salt);
+	                hasher.reset();
+
+	                // Iterations
+	                for (var i = 1; i < iterations; i++) {
+	                    block = hasher.finalize(block);
+	                    hasher.reset();
+	                }
+
+	                derivedKey.concat(block);
+	            }
+	            derivedKey.sigBytes = keySize * 4;
+
+	            return derivedKey;
+	        }
+	    });
+
+	    /**
+	     * Derives a key from a password.
+	     *
+	     * @param {WordArray|string} password The password.
+	     * @param {WordArray|string} salt A salt.
+	     * @param {Object} cfg (Optional) The configuration options to use for this computation.
+	     *
+	     * @return {WordArray} The derived key.
+	     *
+	     * @static
+	     *
+	     * @example
+	     *
+	     *     var key = CryptoJS.EvpKDF(password, salt);
+	     *     var key = CryptoJS.EvpKDF(password, salt, { keySize: 8 });
+	     *     var key = CryptoJS.EvpKDF(password, salt, { keySize: 8, iterations: 1000 });
+	     */
+	    C.EvpKDF = function (password, salt, cfg) {
+	        return EvpKDF.create(cfg).compute(password, salt);
+	    };
+	}());
+
+
+	return CryptoJS.EvpKDF;
+
+}));
+
+/***/ }),
+
+/***/ 2209:
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(8249), __webpack_require__(5109));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	(function (undefined) {
+	    // Shortcuts
+	    var C = CryptoJS;
+	    var C_lib = C.lib;
+	    var CipherParams = C_lib.CipherParams;
+	    var C_enc = C.enc;
+	    var Hex = C_enc.Hex;
+	    var C_format = C.format;
+
+	    var HexFormatter = C_format.Hex = {
+	        /**
+	         * Converts the ciphertext of a cipher params object to a hexadecimally encoded string.
+	         *
+	         * @param {CipherParams} cipherParams The cipher params object.
+	         *
+	         * @return {string} The hexadecimally encoded string.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var hexString = CryptoJS.format.Hex.stringify(cipherParams);
+	         */
+	        stringify: function (cipherParams) {
+	            return cipherParams.ciphertext.toString(Hex);
+	        },
+
+	        /**
+	         * Converts a hexadecimally encoded ciphertext string to a cipher params object.
+	         *
+	         * @param {string} input The hexadecimally encoded string.
+	         *
+	         * @return {CipherParams} The cipher params object.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var cipherParams = CryptoJS.format.Hex.parse(hexString);
+	         */
+	        parse: function (input) {
+	            var ciphertext = Hex.parse(input);
+	            return CipherParams.create({ ciphertext: ciphertext });
+	        }
+	    };
+	}());
+
+
+	return CryptoJS.format.Hex;
+
+}));
+
+/***/ }),
+
+/***/ 9824:
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(8249));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	(function () {
+	    // Shortcuts
+	    var C = CryptoJS;
+	    var C_lib = C.lib;
+	    var Base = C_lib.Base;
+	    var C_enc = C.enc;
+	    var Utf8 = C_enc.Utf8;
+	    var C_algo = C.algo;
+
+	    /**
+	     * HMAC algorithm.
+	     */
+	    var HMAC = C_algo.HMAC = Base.extend({
+	        /**
+	         * Initializes a newly created HMAC.
+	         *
+	         * @param {Hasher} hasher The hash algorithm to use.
+	         * @param {WordArray|string} key The secret key.
+	         *
+	         * @example
+	         *
+	         *     var hmacHasher = CryptoJS.algo.HMAC.create(CryptoJS.algo.SHA256, key);
+	         */
+	        init: function (hasher, key) {
+	            // Init hasher
+	            hasher = this._hasher = new hasher.init();
+
+	            // Convert string to WordArray, else assume WordArray already
+	            if (typeof key == 'string') {
+	                key = Utf8.parse(key);
+	            }
+
+	            // Shortcuts
+	            var hasherBlockSize = hasher.blockSize;
+	            var hasherBlockSizeBytes = hasherBlockSize * 4;
+
+	            // Allow arbitrary length keys
+	            if (key.sigBytes > hasherBlockSizeBytes) {
+	                key = hasher.finalize(key);
+	            }
+
+	            // Clamp excess bits
+	            key.clamp();
+
+	            // Clone key for inner and outer pads
+	            var oKey = this._oKey = key.clone();
+	            var iKey = this._iKey = key.clone();
+
+	            // Shortcuts
+	            var oKeyWords = oKey.words;
+	            var iKeyWords = iKey.words;
+
+	            // XOR keys with pad constants
+	            for (var i = 0; i < hasherBlockSize; i++) {
+	                oKeyWords[i] ^= 0x5c5c5c5c;
+	                iKeyWords[i] ^= 0x36363636;
+	            }
+	            oKey.sigBytes = iKey.sigBytes = hasherBlockSizeBytes;
+
+	            // Set initial values
+	            this.reset();
+	        },
+
+	        /**
+	         * Resets this HMAC to its initial state.
+	         *
+	         * @example
+	         *
+	         *     hmacHasher.reset();
+	         */
+	        reset: function () {
+	            // Shortcut
+	            var hasher = this._hasher;
+
+	            // Reset
+	            hasher.reset();
+	            hasher.update(this._iKey);
+	        },
+
+	        /**
+	         * Updates this HMAC with a message.
+	         *
+	         * @param {WordArray|string} messageUpdate The message to append.
+	         *
+	         * @return {HMAC} This HMAC instance.
+	         *
+	         * @example
+	         *
+	         *     hmacHasher.update('message');
+	         *     hmacHasher.update(wordArray);
+	         */
+	        update: function (messageUpdate) {
+	            this._hasher.update(messageUpdate);
+
+	            // Chainable
+	            return this;
+	        },
+
+	        /**
+	         * Finalizes the HMAC computation.
+	         * Note that the finalize operation is effectively a destructive, read-once operation.
+	         *
+	         * @param {WordArray|string} messageUpdate (Optional) A final message update.
+	         *
+	         * @return {WordArray} The HMAC.
+	         *
+	         * @example
+	         *
+	         *     var hmac = hmacHasher.finalize();
+	         *     var hmac = hmacHasher.finalize('message');
+	         *     var hmac = hmacHasher.finalize(wordArray);
+	         */
+	        finalize: function (messageUpdate) {
+	            // Shortcut
+	            var hasher = this._hasher;
+
+	            // Compute HMAC
+	            var innerHash = hasher.finalize(messageUpdate);
+	            hasher.reset();
+	            var hmac = hasher.finalize(this._oKey.clone().concat(innerHash));
+
+	            return hmac;
+	        }
+	    });
+	}());
+
+
+}));
+
+/***/ }),
+
+/***/ 1354:
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(8249), __webpack_require__(4938), __webpack_require__(4433), __webpack_require__(298), __webpack_require__(8269), __webpack_require__(3786), __webpack_require__(8214), __webpack_require__(2783), __webpack_require__(2153), __webpack_require__(7792), __webpack_require__(34), __webpack_require__(7460), __webpack_require__(3327), __webpack_require__(706), __webpack_require__(9824), __webpack_require__(2112), __webpack_require__(888), __webpack_require__(5109), __webpack_require__(8568), __webpack_require__(4242), __webpack_require__(9968), __webpack_require__(7660), __webpack_require__(1148), __webpack_require__(3615), __webpack_require__(2807), __webpack_require__(1077), __webpack_require__(6475), __webpack_require__(6991), __webpack_require__(2209), __webpack_require__(452), __webpack_require__(4253), __webpack_require__(1857), __webpack_require__(4454), __webpack_require__(3974));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	return CryptoJS;
+
+}));
+
+/***/ }),
+
+/***/ 4433:
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(8249));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	(function () {
+	    // Check if typed arrays are supported
+	    if (typeof ArrayBuffer != 'function') {
+	        return;
+	    }
+
+	    // Shortcuts
+	    var C = CryptoJS;
+	    var C_lib = C.lib;
+	    var WordArray = C_lib.WordArray;
+
+	    // Reference original init
+	    var superInit = WordArray.init;
+
+	    // Augment WordArray.init to handle typed arrays
+	    var subInit = WordArray.init = function (typedArray) {
+	        // Convert buffers to uint8
+	        if (typedArray instanceof ArrayBuffer) {
+	            typedArray = new Uint8Array(typedArray);
+	        }
+
+	        // Convert other array views to uint8
+	        if (
+	            typedArray instanceof Int8Array ||
+	            (typeof Uint8ClampedArray !== "undefined" && typedArray instanceof Uint8ClampedArray) ||
+	            typedArray instanceof Int16Array ||
+	            typedArray instanceof Uint16Array ||
+	            typedArray instanceof Int32Array ||
+	            typedArray instanceof Uint32Array ||
+	            typedArray instanceof Float32Array ||
+	            typedArray instanceof Float64Array
+	        ) {
+	            typedArray = new Uint8Array(typedArray.buffer, typedArray.byteOffset, typedArray.byteLength);
+	        }
+
+	        // Handle Uint8Array
+	        if (typedArray instanceof Uint8Array) {
+	            // Shortcut
+	            var typedArrayByteLength = typedArray.byteLength;
+
+	            // Extract bytes
+	            var words = [];
+	            for (var i = 0; i < typedArrayByteLength; i++) {
+	                words[i >>> 2] |= typedArray[i] << (24 - (i % 4) * 8);
+	            }
+
+	            // Initialize this word array
+	            superInit.call(this, words, typedArrayByteLength);
+	        } else {
+	            // Else call normal init
+	            superInit.apply(this, arguments);
+	        }
+	    };
+
+	    subInit.prototype = WordArray;
+	}());
+
+
+	return CryptoJS.lib.WordArray;
+
+}));
+
+/***/ }),
+
+/***/ 8214:
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(8249));
 	}
 	else {}
 }(this, function (CryptoJS) {
@@ -1153,7 +3129,3722 @@ if ($defineProperty) {
 
 /***/ }),
 
-/***/ 158:
+/***/ 8568:
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(8249), __webpack_require__(5109));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	/**
+	 * Cipher Feedback block mode.
+	 */
+	CryptoJS.mode.CFB = (function () {
+	    var CFB = CryptoJS.lib.BlockCipherMode.extend();
+
+	    CFB.Encryptor = CFB.extend({
+	        processBlock: function (words, offset) {
+	            // Shortcuts
+	            var cipher = this._cipher;
+	            var blockSize = cipher.blockSize;
+
+	            generateKeystreamAndEncrypt.call(this, words, offset, blockSize, cipher);
+
+	            // Remember this block to use with next block
+	            this._prevBlock = words.slice(offset, offset + blockSize);
+	        }
+	    });
+
+	    CFB.Decryptor = CFB.extend({
+	        processBlock: function (words, offset) {
+	            // Shortcuts
+	            var cipher = this._cipher;
+	            var blockSize = cipher.blockSize;
+
+	            // Remember this block to use with next block
+	            var thisBlock = words.slice(offset, offset + blockSize);
+
+	            generateKeystreamAndEncrypt.call(this, words, offset, blockSize, cipher);
+
+	            // This block becomes the previous block
+	            this._prevBlock = thisBlock;
+	        }
+	    });
+
+	    function generateKeystreamAndEncrypt(words, offset, blockSize, cipher) {
+	        var keystream;
+
+	        // Shortcut
+	        var iv = this._iv;
+
+	        // Generate keystream
+	        if (iv) {
+	            keystream = iv.slice(0);
+
+	            // Remove IV for subsequent blocks
+	            this._iv = undefined;
+	        } else {
+	            keystream = this._prevBlock;
+	        }
+	        cipher.encryptBlock(keystream, 0);
+
+	        // Encrypt
+	        for (var i = 0; i < blockSize; i++) {
+	            words[offset + i] ^= keystream[i];
+	        }
+	    }
+
+	    return CFB;
+	}());
+
+
+	return CryptoJS.mode.CFB;
+
+}));
+
+/***/ }),
+
+/***/ 9968:
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(8249), __webpack_require__(5109));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	/** @preserve
+	 * Counter block mode compatible with  Dr Brian Gladman fileenc.c
+	 * derived from CryptoJS.mode.CTR
+	 * Jan Hruby jhruby.web@gmail.com
+	 */
+	CryptoJS.mode.CTRGladman = (function () {
+	    var CTRGladman = CryptoJS.lib.BlockCipherMode.extend();
+
+		function incWord(word)
+		{
+			if (((word >> 24) & 0xff) === 0xff) { //overflow
+			var b1 = (word >> 16)&0xff;
+			var b2 = (word >> 8)&0xff;
+			var b3 = word & 0xff;
+
+			if (b1 === 0xff) // overflow b1
+			{
+			b1 = 0;
+			if (b2 === 0xff)
+			{
+				b2 = 0;
+				if (b3 === 0xff)
+				{
+					b3 = 0;
+				}
+				else
+				{
+					++b3;
+				}
+			}
+			else
+			{
+				++b2;
+			}
+			}
+			else
+			{
+			++b1;
+			}
+
+			word = 0;
+			word += (b1 << 16);
+			word += (b2 << 8);
+			word += b3;
+			}
+			else
+			{
+			word += (0x01 << 24);
+			}
+			return word;
+		}
+
+		function incCounter(counter)
+		{
+			if ((counter[0] = incWord(counter[0])) === 0)
+			{
+				// encr_data in fileenc.c from  Dr Brian Gladman's counts only with DWORD j < 8
+				counter[1] = incWord(counter[1]);
+			}
+			return counter;
+		}
+
+	    var Encryptor = CTRGladman.Encryptor = CTRGladman.extend({
+	        processBlock: function (words, offset) {
+	            // Shortcuts
+	            var cipher = this._cipher
+	            var blockSize = cipher.blockSize;
+	            var iv = this._iv;
+	            var counter = this._counter;
+
+	            // Generate keystream
+	            if (iv) {
+	                counter = this._counter = iv.slice(0);
+
+	                // Remove IV for subsequent blocks
+	                this._iv = undefined;
+	            }
+
+				incCounter(counter);
+
+				var keystream = counter.slice(0);
+	            cipher.encryptBlock(keystream, 0);
+
+	            // Encrypt
+	            for (var i = 0; i < blockSize; i++) {
+	                words[offset + i] ^= keystream[i];
+	            }
+	        }
+	    });
+
+	    CTRGladman.Decryptor = Encryptor;
+
+	    return CTRGladman;
+	}());
+
+
+
+
+	return CryptoJS.mode.CTRGladman;
+
+}));
+
+/***/ }),
+
+/***/ 4242:
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(8249), __webpack_require__(5109));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	/**
+	 * Counter block mode.
+	 */
+	CryptoJS.mode.CTR = (function () {
+	    var CTR = CryptoJS.lib.BlockCipherMode.extend();
+
+	    var Encryptor = CTR.Encryptor = CTR.extend({
+	        processBlock: function (words, offset) {
+	            // Shortcuts
+	            var cipher = this._cipher
+	            var blockSize = cipher.blockSize;
+	            var iv = this._iv;
+	            var counter = this._counter;
+
+	            // Generate keystream
+	            if (iv) {
+	                counter = this._counter = iv.slice(0);
+
+	                // Remove IV for subsequent blocks
+	                this._iv = undefined;
+	            }
+	            var keystream = counter.slice(0);
+	            cipher.encryptBlock(keystream, 0);
+
+	            // Increment counter
+	            counter[blockSize - 1] = (counter[blockSize - 1] + 1) | 0
+
+	            // Encrypt
+	            for (var i = 0; i < blockSize; i++) {
+	                words[offset + i] ^= keystream[i];
+	            }
+	        }
+	    });
+
+	    CTR.Decryptor = Encryptor;
+
+	    return CTR;
+	}());
+
+
+	return CryptoJS.mode.CTR;
+
+}));
+
+/***/ }),
+
+/***/ 1148:
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(8249), __webpack_require__(5109));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	/**
+	 * Electronic Codebook block mode.
+	 */
+	CryptoJS.mode.ECB = (function () {
+	    var ECB = CryptoJS.lib.BlockCipherMode.extend();
+
+	    ECB.Encryptor = ECB.extend({
+	        processBlock: function (words, offset) {
+	            this._cipher.encryptBlock(words, offset);
+	        }
+	    });
+
+	    ECB.Decryptor = ECB.extend({
+	        processBlock: function (words, offset) {
+	            this._cipher.decryptBlock(words, offset);
+	        }
+	    });
+
+	    return ECB;
+	}());
+
+
+	return CryptoJS.mode.ECB;
+
+}));
+
+/***/ }),
+
+/***/ 7660:
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(8249), __webpack_require__(5109));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	/**
+	 * Output Feedback block mode.
+	 */
+	CryptoJS.mode.OFB = (function () {
+	    var OFB = CryptoJS.lib.BlockCipherMode.extend();
+
+	    var Encryptor = OFB.Encryptor = OFB.extend({
+	        processBlock: function (words, offset) {
+	            // Shortcuts
+	            var cipher = this._cipher
+	            var blockSize = cipher.blockSize;
+	            var iv = this._iv;
+	            var keystream = this._keystream;
+
+	            // Generate keystream
+	            if (iv) {
+	                keystream = this._keystream = iv.slice(0);
+
+	                // Remove IV for subsequent blocks
+	                this._iv = undefined;
+	            }
+	            cipher.encryptBlock(keystream, 0);
+
+	            // Encrypt
+	            for (var i = 0; i < blockSize; i++) {
+	                words[offset + i] ^= keystream[i];
+	            }
+	        }
+	    });
+
+	    OFB.Decryptor = Encryptor;
+
+	    return OFB;
+	}());
+
+
+	return CryptoJS.mode.OFB;
+
+}));
+
+/***/ }),
+
+/***/ 3615:
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(8249), __webpack_require__(5109));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	/**
+	 * ANSI X.923 padding strategy.
+	 */
+	CryptoJS.pad.AnsiX923 = {
+	    pad: function (data, blockSize) {
+	        // Shortcuts
+	        var dataSigBytes = data.sigBytes;
+	        var blockSizeBytes = blockSize * 4;
+
+	        // Count padding bytes
+	        var nPaddingBytes = blockSizeBytes - dataSigBytes % blockSizeBytes;
+
+	        // Compute last byte position
+	        var lastBytePos = dataSigBytes + nPaddingBytes - 1;
+
+	        // Pad
+	        data.clamp();
+	        data.words[lastBytePos >>> 2] |= nPaddingBytes << (24 - (lastBytePos % 4) * 8);
+	        data.sigBytes += nPaddingBytes;
+	    },
+
+	    unpad: function (data) {
+	        // Get number of padding bytes from last byte
+	        var nPaddingBytes = data.words[(data.sigBytes - 1) >>> 2] & 0xff;
+
+	        // Remove padding
+	        data.sigBytes -= nPaddingBytes;
+	    }
+	};
+
+
+	return CryptoJS.pad.Ansix923;
+
+}));
+
+/***/ }),
+
+/***/ 2807:
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(8249), __webpack_require__(5109));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	/**
+	 * ISO 10126 padding strategy.
+	 */
+	CryptoJS.pad.Iso10126 = {
+	    pad: function (data, blockSize) {
+	        // Shortcut
+	        var blockSizeBytes = blockSize * 4;
+
+	        // Count padding bytes
+	        var nPaddingBytes = blockSizeBytes - data.sigBytes % blockSizeBytes;
+
+	        // Pad
+	        data.concat(CryptoJS.lib.WordArray.random(nPaddingBytes - 1)).
+	             concat(CryptoJS.lib.WordArray.create([nPaddingBytes << 24], 1));
+	    },
+
+	    unpad: function (data) {
+	        // Get number of padding bytes from last byte
+	        var nPaddingBytes = data.words[(data.sigBytes - 1) >>> 2] & 0xff;
+
+	        // Remove padding
+	        data.sigBytes -= nPaddingBytes;
+	    }
+	};
+
+
+	return CryptoJS.pad.Iso10126;
+
+}));
+
+/***/ }),
+
+/***/ 1077:
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(8249), __webpack_require__(5109));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	/**
+	 * ISO/IEC 9797-1 Padding Method 2.
+	 */
+	CryptoJS.pad.Iso97971 = {
+	    pad: function (data, blockSize) {
+	        // Add 0x80 byte
+	        data.concat(CryptoJS.lib.WordArray.create([0x80000000], 1));
+
+	        // Zero pad the rest
+	        CryptoJS.pad.ZeroPadding.pad(data, blockSize);
+	    },
+
+	    unpad: function (data) {
+	        // Remove zero padding
+	        CryptoJS.pad.ZeroPadding.unpad(data);
+
+	        // Remove one more byte -- the 0x80 byte
+	        data.sigBytes--;
+	    }
+	};
+
+
+	return CryptoJS.pad.Iso97971;
+
+}));
+
+/***/ }),
+
+/***/ 6991:
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(8249), __webpack_require__(5109));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	/**
+	 * A noop padding strategy.
+	 */
+	CryptoJS.pad.NoPadding = {
+	    pad: function () {
+	    },
+
+	    unpad: function () {
+	    }
+	};
+
+
+	return CryptoJS.pad.NoPadding;
+
+}));
+
+/***/ }),
+
+/***/ 6475:
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(8249), __webpack_require__(5109));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	/**
+	 * Zero padding strategy.
+	 */
+	CryptoJS.pad.ZeroPadding = {
+	    pad: function (data, blockSize) {
+	        // Shortcut
+	        var blockSizeBytes = blockSize * 4;
+
+	        // Pad
+	        data.clamp();
+	        data.sigBytes += blockSizeBytes - ((data.sigBytes % blockSizeBytes) || blockSizeBytes);
+	    },
+
+	    unpad: function (data) {
+	        // Shortcut
+	        var dataWords = data.words;
+
+	        // Unpad
+	        var i = data.sigBytes - 1;
+	        for (var i = data.sigBytes - 1; i >= 0; i--) {
+	            if (((dataWords[i >>> 2] >>> (24 - (i % 4) * 8)) & 0xff)) {
+	                data.sigBytes = i + 1;
+	                break;
+	            }
+	        }
+	    }
+	};
+
+
+	return CryptoJS.pad.ZeroPadding;
+
+}));
+
+/***/ }),
+
+/***/ 2112:
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(8249), __webpack_require__(2783), __webpack_require__(9824));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	(function () {
+	    // Shortcuts
+	    var C = CryptoJS;
+	    var C_lib = C.lib;
+	    var Base = C_lib.Base;
+	    var WordArray = C_lib.WordArray;
+	    var C_algo = C.algo;
+	    var SHA1 = C_algo.SHA1;
+	    var HMAC = C_algo.HMAC;
+
+	    /**
+	     * Password-Based Key Derivation Function 2 algorithm.
+	     */
+	    var PBKDF2 = C_algo.PBKDF2 = Base.extend({
+	        /**
+	         * Configuration options.
+	         *
+	         * @property {number} keySize The key size in words to generate. Default: 4 (128 bits)
+	         * @property {Hasher} hasher The hasher to use. Default: SHA1
+	         * @property {number} iterations The number of iterations to perform. Default: 1
+	         */
+	        cfg: Base.extend({
+	            keySize: 128/32,
+	            hasher: SHA1,
+	            iterations: 1
+	        }),
+
+	        /**
+	         * Initializes a newly created key derivation function.
+	         *
+	         * @param {Object} cfg (Optional) The configuration options to use for the derivation.
+	         *
+	         * @example
+	         *
+	         *     var kdf = CryptoJS.algo.PBKDF2.create();
+	         *     var kdf = CryptoJS.algo.PBKDF2.create({ keySize: 8 });
+	         *     var kdf = CryptoJS.algo.PBKDF2.create({ keySize: 8, iterations: 1000 });
+	         */
+	        init: function (cfg) {
+	            this.cfg = this.cfg.extend(cfg);
+	        },
+
+	        /**
+	         * Computes the Password-Based Key Derivation Function 2.
+	         *
+	         * @param {WordArray|string} password The password.
+	         * @param {WordArray|string} salt A salt.
+	         *
+	         * @return {WordArray} The derived key.
+	         *
+	         * @example
+	         *
+	         *     var key = kdf.compute(password, salt);
+	         */
+	        compute: function (password, salt) {
+	            // Shortcut
+	            var cfg = this.cfg;
+
+	            // Init HMAC
+	            var hmac = HMAC.create(cfg.hasher, password);
+
+	            // Initial values
+	            var derivedKey = WordArray.create();
+	            var blockIndex = WordArray.create([0x00000001]);
+
+	            // Shortcuts
+	            var derivedKeyWords = derivedKey.words;
+	            var blockIndexWords = blockIndex.words;
+	            var keySize = cfg.keySize;
+	            var iterations = cfg.iterations;
+
+	            // Generate key
+	            while (derivedKeyWords.length < keySize) {
+	                var block = hmac.update(salt).finalize(blockIndex);
+	                hmac.reset();
+
+	                // Shortcuts
+	                var blockWords = block.words;
+	                var blockWordsLength = blockWords.length;
+
+	                // Iterations
+	                var intermediate = block;
+	                for (var i = 1; i < iterations; i++) {
+	                    intermediate = hmac.finalize(intermediate);
+	                    hmac.reset();
+
+	                    // Shortcut
+	                    var intermediateWords = intermediate.words;
+
+	                    // XOR intermediate with block
+	                    for (var j = 0; j < blockWordsLength; j++) {
+	                        blockWords[j] ^= intermediateWords[j];
+	                    }
+	                }
+
+	                derivedKey.concat(block);
+	                blockIndexWords[0]++;
+	            }
+	            derivedKey.sigBytes = keySize * 4;
+
+	            return derivedKey;
+	        }
+	    });
+
+	    /**
+	     * Computes the Password-Based Key Derivation Function 2.
+	     *
+	     * @param {WordArray|string} password The password.
+	     * @param {WordArray|string} salt A salt.
+	     * @param {Object} cfg (Optional) The configuration options to use for this computation.
+	     *
+	     * @return {WordArray} The derived key.
+	     *
+	     * @static
+	     *
+	     * @example
+	     *
+	     *     var key = CryptoJS.PBKDF2(password, salt);
+	     *     var key = CryptoJS.PBKDF2(password, salt, { keySize: 8 });
+	     *     var key = CryptoJS.PBKDF2(password, salt, { keySize: 8, iterations: 1000 });
+	     */
+	    C.PBKDF2 = function (password, salt, cfg) {
+	        return PBKDF2.create(cfg).compute(password, salt);
+	    };
+	}());
+
+
+	return CryptoJS.PBKDF2;
+
+}));
+
+/***/ }),
+
+/***/ 3974:
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(8249), __webpack_require__(8269), __webpack_require__(8214), __webpack_require__(888), __webpack_require__(5109));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	(function () {
+	    // Shortcuts
+	    var C = CryptoJS;
+	    var C_lib = C.lib;
+	    var StreamCipher = C_lib.StreamCipher;
+	    var C_algo = C.algo;
+
+	    // Reusable objects
+	    var S  = [];
+	    var C_ = [];
+	    var G  = [];
+
+	    /**
+	     * Rabbit stream cipher algorithm.
+	     *
+	     * This is a legacy version that neglected to convert the key to little-endian.
+	     * This error doesn't affect the cipher's security,
+	     * but it does affect its compatibility with other implementations.
+	     */
+	    var RabbitLegacy = C_algo.RabbitLegacy = StreamCipher.extend({
+	        _doReset: function () {
+	            // Shortcuts
+	            var K = this._key.words;
+	            var iv = this.cfg.iv;
+
+	            // Generate initial state values
+	            var X = this._X = [
+	                K[0], (K[3] << 16) | (K[2] >>> 16),
+	                K[1], (K[0] << 16) | (K[3] >>> 16),
+	                K[2], (K[1] << 16) | (K[0] >>> 16),
+	                K[3], (K[2] << 16) | (K[1] >>> 16)
+	            ];
+
+	            // Generate initial counter values
+	            var C = this._C = [
+	                (K[2] << 16) | (K[2] >>> 16), (K[0] & 0xffff0000) | (K[1] & 0x0000ffff),
+	                (K[3] << 16) | (K[3] >>> 16), (K[1] & 0xffff0000) | (K[2] & 0x0000ffff),
+	                (K[0] << 16) | (K[0] >>> 16), (K[2] & 0xffff0000) | (K[3] & 0x0000ffff),
+	                (K[1] << 16) | (K[1] >>> 16), (K[3] & 0xffff0000) | (K[0] & 0x0000ffff)
+	            ];
+
+	            // Carry bit
+	            this._b = 0;
+
+	            // Iterate the system four times
+	            for (var i = 0; i < 4; i++) {
+	                nextState.call(this);
+	            }
+
+	            // Modify the counters
+	            for (var i = 0; i < 8; i++) {
+	                C[i] ^= X[(i + 4) & 7];
+	            }
+
+	            // IV setup
+	            if (iv) {
+	                // Shortcuts
+	                var IV = iv.words;
+	                var IV_0 = IV[0];
+	                var IV_1 = IV[1];
+
+	                // Generate four subvectors
+	                var i0 = (((IV_0 << 8) | (IV_0 >>> 24)) & 0x00ff00ff) | (((IV_0 << 24) | (IV_0 >>> 8)) & 0xff00ff00);
+	                var i2 = (((IV_1 << 8) | (IV_1 >>> 24)) & 0x00ff00ff) | (((IV_1 << 24) | (IV_1 >>> 8)) & 0xff00ff00);
+	                var i1 = (i0 >>> 16) | (i2 & 0xffff0000);
+	                var i3 = (i2 << 16)  | (i0 & 0x0000ffff);
+
+	                // Modify counter values
+	                C[0] ^= i0;
+	                C[1] ^= i1;
+	                C[2] ^= i2;
+	                C[3] ^= i3;
+	                C[4] ^= i0;
+	                C[5] ^= i1;
+	                C[6] ^= i2;
+	                C[7] ^= i3;
+
+	                // Iterate the system four times
+	                for (var i = 0; i < 4; i++) {
+	                    nextState.call(this);
+	                }
+	            }
+	        },
+
+	        _doProcessBlock: function (M, offset) {
+	            // Shortcut
+	            var X = this._X;
+
+	            // Iterate the system
+	            nextState.call(this);
+
+	            // Generate four keystream words
+	            S[0] = X[0] ^ (X[5] >>> 16) ^ (X[3] << 16);
+	            S[1] = X[2] ^ (X[7] >>> 16) ^ (X[5] << 16);
+	            S[2] = X[4] ^ (X[1] >>> 16) ^ (X[7] << 16);
+	            S[3] = X[6] ^ (X[3] >>> 16) ^ (X[1] << 16);
+
+	            for (var i = 0; i < 4; i++) {
+	                // Swap endian
+	                S[i] = (((S[i] << 8)  | (S[i] >>> 24)) & 0x00ff00ff) |
+	                       (((S[i] << 24) | (S[i] >>> 8))  & 0xff00ff00);
+
+	                // Encrypt
+	                M[offset + i] ^= S[i];
+	            }
+	        },
+
+	        blockSize: 128/32,
+
+	        ivSize: 64/32
+	    });
+
+	    function nextState() {
+	        // Shortcuts
+	        var X = this._X;
+	        var C = this._C;
+
+	        // Save old counter values
+	        for (var i = 0; i < 8; i++) {
+	            C_[i] = C[i];
+	        }
+
+	        // Calculate new counter values
+	        C[0] = (C[0] + 0x4d34d34d + this._b) | 0;
+	        C[1] = (C[1] + 0xd34d34d3 + ((C[0] >>> 0) < (C_[0] >>> 0) ? 1 : 0)) | 0;
+	        C[2] = (C[2] + 0x34d34d34 + ((C[1] >>> 0) < (C_[1] >>> 0) ? 1 : 0)) | 0;
+	        C[3] = (C[3] + 0x4d34d34d + ((C[2] >>> 0) < (C_[2] >>> 0) ? 1 : 0)) | 0;
+	        C[4] = (C[4] + 0xd34d34d3 + ((C[3] >>> 0) < (C_[3] >>> 0) ? 1 : 0)) | 0;
+	        C[5] = (C[5] + 0x34d34d34 + ((C[4] >>> 0) < (C_[4] >>> 0) ? 1 : 0)) | 0;
+	        C[6] = (C[6] + 0x4d34d34d + ((C[5] >>> 0) < (C_[5] >>> 0) ? 1 : 0)) | 0;
+	        C[7] = (C[7] + 0xd34d34d3 + ((C[6] >>> 0) < (C_[6] >>> 0) ? 1 : 0)) | 0;
+	        this._b = (C[7] >>> 0) < (C_[7] >>> 0) ? 1 : 0;
+
+	        // Calculate the g-values
+	        for (var i = 0; i < 8; i++) {
+	            var gx = X[i] + C[i];
+
+	            // Construct high and low argument for squaring
+	            var ga = gx & 0xffff;
+	            var gb = gx >>> 16;
+
+	            // Calculate high and low result of squaring
+	            var gh = ((((ga * ga) >>> 17) + ga * gb) >>> 15) + gb * gb;
+	            var gl = (((gx & 0xffff0000) * gx) | 0) + (((gx & 0x0000ffff) * gx) | 0);
+
+	            // High XOR low
+	            G[i] = gh ^ gl;
+	        }
+
+	        // Calculate new state values
+	        X[0] = (G[0] + ((G[7] << 16) | (G[7] >>> 16)) + ((G[6] << 16) | (G[6] >>> 16))) | 0;
+	        X[1] = (G[1] + ((G[0] << 8)  | (G[0] >>> 24)) + G[7]) | 0;
+	        X[2] = (G[2] + ((G[1] << 16) | (G[1] >>> 16)) + ((G[0] << 16) | (G[0] >>> 16))) | 0;
+	        X[3] = (G[3] + ((G[2] << 8)  | (G[2] >>> 24)) + G[1]) | 0;
+	        X[4] = (G[4] + ((G[3] << 16) | (G[3] >>> 16)) + ((G[2] << 16) | (G[2] >>> 16))) | 0;
+	        X[5] = (G[5] + ((G[4] << 8)  | (G[4] >>> 24)) + G[3]) | 0;
+	        X[6] = (G[6] + ((G[5] << 16) | (G[5] >>> 16)) + ((G[4] << 16) | (G[4] >>> 16))) | 0;
+	        X[7] = (G[7] + ((G[6] << 8)  | (G[6] >>> 24)) + G[5]) | 0;
+	    }
+
+	    /**
+	     * Shortcut functions to the cipher's object interface.
+	     *
+	     * @example
+	     *
+	     *     var ciphertext = CryptoJS.RabbitLegacy.encrypt(message, key, cfg);
+	     *     var plaintext  = CryptoJS.RabbitLegacy.decrypt(ciphertext, key, cfg);
+	     */
+	    C.RabbitLegacy = StreamCipher._createHelper(RabbitLegacy);
+	}());
+
+
+	return CryptoJS.RabbitLegacy;
+
+}));
+
+/***/ }),
+
+/***/ 4454:
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(8249), __webpack_require__(8269), __webpack_require__(8214), __webpack_require__(888), __webpack_require__(5109));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	(function () {
+	    // Shortcuts
+	    var C = CryptoJS;
+	    var C_lib = C.lib;
+	    var StreamCipher = C_lib.StreamCipher;
+	    var C_algo = C.algo;
+
+	    // Reusable objects
+	    var S  = [];
+	    var C_ = [];
+	    var G  = [];
+
+	    /**
+	     * Rabbit stream cipher algorithm
+	     */
+	    var Rabbit = C_algo.Rabbit = StreamCipher.extend({
+	        _doReset: function () {
+	            // Shortcuts
+	            var K = this._key.words;
+	            var iv = this.cfg.iv;
+
+	            // Swap endian
+	            for (var i = 0; i < 4; i++) {
+	                K[i] = (((K[i] << 8)  | (K[i] >>> 24)) & 0x00ff00ff) |
+	                       (((K[i] << 24) | (K[i] >>> 8))  & 0xff00ff00);
+	            }
+
+	            // Generate initial state values
+	            var X = this._X = [
+	                K[0], (K[3] << 16) | (K[2] >>> 16),
+	                K[1], (K[0] << 16) | (K[3] >>> 16),
+	                K[2], (K[1] << 16) | (K[0] >>> 16),
+	                K[3], (K[2] << 16) | (K[1] >>> 16)
+	            ];
+
+	            // Generate initial counter values
+	            var C = this._C = [
+	                (K[2] << 16) | (K[2] >>> 16), (K[0] & 0xffff0000) | (K[1] & 0x0000ffff),
+	                (K[3] << 16) | (K[3] >>> 16), (K[1] & 0xffff0000) | (K[2] & 0x0000ffff),
+	                (K[0] << 16) | (K[0] >>> 16), (K[2] & 0xffff0000) | (K[3] & 0x0000ffff),
+	                (K[1] << 16) | (K[1] >>> 16), (K[3] & 0xffff0000) | (K[0] & 0x0000ffff)
+	            ];
+
+	            // Carry bit
+	            this._b = 0;
+
+	            // Iterate the system four times
+	            for (var i = 0; i < 4; i++) {
+	                nextState.call(this);
+	            }
+
+	            // Modify the counters
+	            for (var i = 0; i < 8; i++) {
+	                C[i] ^= X[(i + 4) & 7];
+	            }
+
+	            // IV setup
+	            if (iv) {
+	                // Shortcuts
+	                var IV = iv.words;
+	                var IV_0 = IV[0];
+	                var IV_1 = IV[1];
+
+	                // Generate four subvectors
+	                var i0 = (((IV_0 << 8) | (IV_0 >>> 24)) & 0x00ff00ff) | (((IV_0 << 24) | (IV_0 >>> 8)) & 0xff00ff00);
+	                var i2 = (((IV_1 << 8) | (IV_1 >>> 24)) & 0x00ff00ff) | (((IV_1 << 24) | (IV_1 >>> 8)) & 0xff00ff00);
+	                var i1 = (i0 >>> 16) | (i2 & 0xffff0000);
+	                var i3 = (i2 << 16)  | (i0 & 0x0000ffff);
+
+	                // Modify counter values
+	                C[0] ^= i0;
+	                C[1] ^= i1;
+	                C[2] ^= i2;
+	                C[3] ^= i3;
+	                C[4] ^= i0;
+	                C[5] ^= i1;
+	                C[6] ^= i2;
+	                C[7] ^= i3;
+
+	                // Iterate the system four times
+	                for (var i = 0; i < 4; i++) {
+	                    nextState.call(this);
+	                }
+	            }
+	        },
+
+	        _doProcessBlock: function (M, offset) {
+	            // Shortcut
+	            var X = this._X;
+
+	            // Iterate the system
+	            nextState.call(this);
+
+	            // Generate four keystream words
+	            S[0] = X[0] ^ (X[5] >>> 16) ^ (X[3] << 16);
+	            S[1] = X[2] ^ (X[7] >>> 16) ^ (X[5] << 16);
+	            S[2] = X[4] ^ (X[1] >>> 16) ^ (X[7] << 16);
+	            S[3] = X[6] ^ (X[3] >>> 16) ^ (X[1] << 16);
+
+	            for (var i = 0; i < 4; i++) {
+	                // Swap endian
+	                S[i] = (((S[i] << 8)  | (S[i] >>> 24)) & 0x00ff00ff) |
+	                       (((S[i] << 24) | (S[i] >>> 8))  & 0xff00ff00);
+
+	                // Encrypt
+	                M[offset + i] ^= S[i];
+	            }
+	        },
+
+	        blockSize: 128/32,
+
+	        ivSize: 64/32
+	    });
+
+	    function nextState() {
+	        // Shortcuts
+	        var X = this._X;
+	        var C = this._C;
+
+	        // Save old counter values
+	        for (var i = 0; i < 8; i++) {
+	            C_[i] = C[i];
+	        }
+
+	        // Calculate new counter values
+	        C[0] = (C[0] + 0x4d34d34d + this._b) | 0;
+	        C[1] = (C[1] + 0xd34d34d3 + ((C[0] >>> 0) < (C_[0] >>> 0) ? 1 : 0)) | 0;
+	        C[2] = (C[2] + 0x34d34d34 + ((C[1] >>> 0) < (C_[1] >>> 0) ? 1 : 0)) | 0;
+	        C[3] = (C[3] + 0x4d34d34d + ((C[2] >>> 0) < (C_[2] >>> 0) ? 1 : 0)) | 0;
+	        C[4] = (C[4] + 0xd34d34d3 + ((C[3] >>> 0) < (C_[3] >>> 0) ? 1 : 0)) | 0;
+	        C[5] = (C[5] + 0x34d34d34 + ((C[4] >>> 0) < (C_[4] >>> 0) ? 1 : 0)) | 0;
+	        C[6] = (C[6] + 0x4d34d34d + ((C[5] >>> 0) < (C_[5] >>> 0) ? 1 : 0)) | 0;
+	        C[7] = (C[7] + 0xd34d34d3 + ((C[6] >>> 0) < (C_[6] >>> 0) ? 1 : 0)) | 0;
+	        this._b = (C[7] >>> 0) < (C_[7] >>> 0) ? 1 : 0;
+
+	        // Calculate the g-values
+	        for (var i = 0; i < 8; i++) {
+	            var gx = X[i] + C[i];
+
+	            // Construct high and low argument for squaring
+	            var ga = gx & 0xffff;
+	            var gb = gx >>> 16;
+
+	            // Calculate high and low result of squaring
+	            var gh = ((((ga * ga) >>> 17) + ga * gb) >>> 15) + gb * gb;
+	            var gl = (((gx & 0xffff0000) * gx) | 0) + (((gx & 0x0000ffff) * gx) | 0);
+
+	            // High XOR low
+	            G[i] = gh ^ gl;
+	        }
+
+	        // Calculate new state values
+	        X[0] = (G[0] + ((G[7] << 16) | (G[7] >>> 16)) + ((G[6] << 16) | (G[6] >>> 16))) | 0;
+	        X[1] = (G[1] + ((G[0] << 8)  | (G[0] >>> 24)) + G[7]) | 0;
+	        X[2] = (G[2] + ((G[1] << 16) | (G[1] >>> 16)) + ((G[0] << 16) | (G[0] >>> 16))) | 0;
+	        X[3] = (G[3] + ((G[2] << 8)  | (G[2] >>> 24)) + G[1]) | 0;
+	        X[4] = (G[4] + ((G[3] << 16) | (G[3] >>> 16)) + ((G[2] << 16) | (G[2] >>> 16))) | 0;
+	        X[5] = (G[5] + ((G[4] << 8)  | (G[4] >>> 24)) + G[3]) | 0;
+	        X[6] = (G[6] + ((G[5] << 16) | (G[5] >>> 16)) + ((G[4] << 16) | (G[4] >>> 16))) | 0;
+	        X[7] = (G[7] + ((G[6] << 8)  | (G[6] >>> 24)) + G[5]) | 0;
+	    }
+
+	    /**
+	     * Shortcut functions to the cipher's object interface.
+	     *
+	     * @example
+	     *
+	     *     var ciphertext = CryptoJS.Rabbit.encrypt(message, key, cfg);
+	     *     var plaintext  = CryptoJS.Rabbit.decrypt(ciphertext, key, cfg);
+	     */
+	    C.Rabbit = StreamCipher._createHelper(Rabbit);
+	}());
+
+
+	return CryptoJS.Rabbit;
+
+}));
+
+/***/ }),
+
+/***/ 1857:
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(8249), __webpack_require__(8269), __webpack_require__(8214), __webpack_require__(888), __webpack_require__(5109));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	(function () {
+	    // Shortcuts
+	    var C = CryptoJS;
+	    var C_lib = C.lib;
+	    var StreamCipher = C_lib.StreamCipher;
+	    var C_algo = C.algo;
+
+	    /**
+	     * RC4 stream cipher algorithm.
+	     */
+	    var RC4 = C_algo.RC4 = StreamCipher.extend({
+	        _doReset: function () {
+	            // Shortcuts
+	            var key = this._key;
+	            var keyWords = key.words;
+	            var keySigBytes = key.sigBytes;
+
+	            // Init sbox
+	            var S = this._S = [];
+	            for (var i = 0; i < 256; i++) {
+	                S[i] = i;
+	            }
+
+	            // Key setup
+	            for (var i = 0, j = 0; i < 256; i++) {
+	                var keyByteIndex = i % keySigBytes;
+	                var keyByte = (keyWords[keyByteIndex >>> 2] >>> (24 - (keyByteIndex % 4) * 8)) & 0xff;
+
+	                j = (j + S[i] + keyByte) % 256;
+
+	                // Swap
+	                var t = S[i];
+	                S[i] = S[j];
+	                S[j] = t;
+	            }
+
+	            // Counters
+	            this._i = this._j = 0;
+	        },
+
+	        _doProcessBlock: function (M, offset) {
+	            M[offset] ^= generateKeystreamWord.call(this);
+	        },
+
+	        keySize: 256/32,
+
+	        ivSize: 0
+	    });
+
+	    function generateKeystreamWord() {
+	        // Shortcuts
+	        var S = this._S;
+	        var i = this._i;
+	        var j = this._j;
+
+	        // Generate keystream word
+	        var keystreamWord = 0;
+	        for (var n = 0; n < 4; n++) {
+	            i = (i + 1) % 256;
+	            j = (j + S[i]) % 256;
+
+	            // Swap
+	            var t = S[i];
+	            S[i] = S[j];
+	            S[j] = t;
+
+	            keystreamWord |= S[(S[i] + S[j]) % 256] << (24 - n * 8);
+	        }
+
+	        // Update counters
+	        this._i = i;
+	        this._j = j;
+
+	        return keystreamWord;
+	    }
+
+	    /**
+	     * Shortcut functions to the cipher's object interface.
+	     *
+	     * @example
+	     *
+	     *     var ciphertext = CryptoJS.RC4.encrypt(message, key, cfg);
+	     *     var plaintext  = CryptoJS.RC4.decrypt(ciphertext, key, cfg);
+	     */
+	    C.RC4 = StreamCipher._createHelper(RC4);
+
+	    /**
+	     * Modified RC4 stream cipher algorithm.
+	     */
+	    var RC4Drop = C_algo.RC4Drop = RC4.extend({
+	        /**
+	         * Configuration options.
+	         *
+	         * @property {number} drop The number of keystream words to drop. Default 192
+	         */
+	        cfg: RC4.cfg.extend({
+	            drop: 192
+	        }),
+
+	        _doReset: function () {
+	            RC4._doReset.call(this);
+
+	            // Drop
+	            for (var i = this.cfg.drop; i > 0; i--) {
+	                generateKeystreamWord.call(this);
+	            }
+	        }
+	    });
+
+	    /**
+	     * Shortcut functions to the cipher's object interface.
+	     *
+	     * @example
+	     *
+	     *     var ciphertext = CryptoJS.RC4Drop.encrypt(message, key, cfg);
+	     *     var plaintext  = CryptoJS.RC4Drop.decrypt(ciphertext, key, cfg);
+	     */
+	    C.RC4Drop = StreamCipher._createHelper(RC4Drop);
+	}());
+
+
+	return CryptoJS.RC4;
+
+}));
+
+/***/ }),
+
+/***/ 706:
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(8249));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	/** @preserve
+	(c) 2012 by Cédric Mesnil. All rights reserved.
+
+	Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+	    - Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+	    - Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+
+	THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+	*/
+
+	(function (Math) {
+	    // Shortcuts
+	    var C = CryptoJS;
+	    var C_lib = C.lib;
+	    var WordArray = C_lib.WordArray;
+	    var Hasher = C_lib.Hasher;
+	    var C_algo = C.algo;
+
+	    // Constants table
+	    var _zl = WordArray.create([
+	        0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15,
+	        7,  4, 13,  1, 10,  6, 15,  3, 12,  0,  9,  5,  2, 14, 11,  8,
+	        3, 10, 14,  4,  9, 15,  8,  1,  2,  7,  0,  6, 13, 11,  5, 12,
+	        1,  9, 11, 10,  0,  8, 12,  4, 13,  3,  7, 15, 14,  5,  6,  2,
+	        4,  0,  5,  9,  7, 12,  2, 10, 14,  1,  3,  8, 11,  6, 15, 13]);
+	    var _zr = WordArray.create([
+	        5, 14,  7,  0,  9,  2, 11,  4, 13,  6, 15,  8,  1, 10,  3, 12,
+	        6, 11,  3,  7,  0, 13,  5, 10, 14, 15,  8, 12,  4,  9,  1,  2,
+	        15,  5,  1,  3,  7, 14,  6,  9, 11,  8, 12,  2, 10,  0,  4, 13,
+	        8,  6,  4,  1,  3, 11, 15,  0,  5, 12,  2, 13,  9,  7, 10, 14,
+	        12, 15, 10,  4,  1,  5,  8,  7,  6,  2, 13, 14,  0,  3,  9, 11]);
+	    var _sl = WordArray.create([
+	         11, 14, 15, 12,  5,  8,  7,  9, 11, 13, 14, 15,  6,  7,  9,  8,
+	        7, 6,   8, 13, 11,  9,  7, 15,  7, 12, 15,  9, 11,  7, 13, 12,
+	        11, 13,  6,  7, 14,  9, 13, 15, 14,  8, 13,  6,  5, 12,  7,  5,
+	          11, 12, 14, 15, 14, 15,  9,  8,  9, 14,  5,  6,  8,  6,  5, 12,
+	        9, 15,  5, 11,  6,  8, 13, 12,  5, 12, 13, 14, 11,  8,  5,  6 ]);
+	    var _sr = WordArray.create([
+	        8,  9,  9, 11, 13, 15, 15,  5,  7,  7,  8, 11, 14, 14, 12,  6,
+	        9, 13, 15,  7, 12,  8,  9, 11,  7,  7, 12,  7,  6, 15, 13, 11,
+	        9,  7, 15, 11,  8,  6,  6, 14, 12, 13,  5, 14, 13, 13,  7,  5,
+	        15,  5,  8, 11, 14, 14,  6, 14,  6,  9, 12,  9, 12,  5, 15,  8,
+	        8,  5, 12,  9, 12,  5, 14,  6,  8, 13,  6,  5, 15, 13, 11, 11 ]);
+
+	    var _hl =  WordArray.create([ 0x00000000, 0x5A827999, 0x6ED9EBA1, 0x8F1BBCDC, 0xA953FD4E]);
+	    var _hr =  WordArray.create([ 0x50A28BE6, 0x5C4DD124, 0x6D703EF3, 0x7A6D76E9, 0x00000000]);
+
+	    /**
+	     * RIPEMD160 hash algorithm.
+	     */
+	    var RIPEMD160 = C_algo.RIPEMD160 = Hasher.extend({
+	        _doReset: function () {
+	            this._hash  = WordArray.create([0x67452301, 0xEFCDAB89, 0x98BADCFE, 0x10325476, 0xC3D2E1F0]);
+	        },
+
+	        _doProcessBlock: function (M, offset) {
+
+	            // Swap endian
+	            for (var i = 0; i < 16; i++) {
+	                // Shortcuts
+	                var offset_i = offset + i;
+	                var M_offset_i = M[offset_i];
+
+	                // Swap
+	                M[offset_i] = (
+	                    (((M_offset_i << 8)  | (M_offset_i >>> 24)) & 0x00ff00ff) |
+	                    (((M_offset_i << 24) | (M_offset_i >>> 8))  & 0xff00ff00)
+	                );
+	            }
+	            // Shortcut
+	            var H  = this._hash.words;
+	            var hl = _hl.words;
+	            var hr = _hr.words;
+	            var zl = _zl.words;
+	            var zr = _zr.words;
+	            var sl = _sl.words;
+	            var sr = _sr.words;
+
+	            // Working variables
+	            var al, bl, cl, dl, el;
+	            var ar, br, cr, dr, er;
+
+	            ar = al = H[0];
+	            br = bl = H[1];
+	            cr = cl = H[2];
+	            dr = dl = H[3];
+	            er = el = H[4];
+	            // Computation
+	            var t;
+	            for (var i = 0; i < 80; i += 1) {
+	                t = (al +  M[offset+zl[i]])|0;
+	                if (i<16){
+		            t +=  f1(bl,cl,dl) + hl[0];
+	                } else if (i<32) {
+		            t +=  f2(bl,cl,dl) + hl[1];
+	                } else if (i<48) {
+		            t +=  f3(bl,cl,dl) + hl[2];
+	                } else if (i<64) {
+		            t +=  f4(bl,cl,dl) + hl[3];
+	                } else {// if (i<80) {
+		            t +=  f5(bl,cl,dl) + hl[4];
+	                }
+	                t = t|0;
+	                t =  rotl(t,sl[i]);
+	                t = (t+el)|0;
+	                al = el;
+	                el = dl;
+	                dl = rotl(cl, 10);
+	                cl = bl;
+	                bl = t;
+
+	                t = (ar + M[offset+zr[i]])|0;
+	                if (i<16){
+		            t +=  f5(br,cr,dr) + hr[0];
+	                } else if (i<32) {
+		            t +=  f4(br,cr,dr) + hr[1];
+	                } else if (i<48) {
+		            t +=  f3(br,cr,dr) + hr[2];
+	                } else if (i<64) {
+		            t +=  f2(br,cr,dr) + hr[3];
+	                } else {// if (i<80) {
+		            t +=  f1(br,cr,dr) + hr[4];
+	                }
+	                t = t|0;
+	                t =  rotl(t,sr[i]) ;
+	                t = (t+er)|0;
+	                ar = er;
+	                er = dr;
+	                dr = rotl(cr, 10);
+	                cr = br;
+	                br = t;
+	            }
+	            // Intermediate hash value
+	            t    = (H[1] + cl + dr)|0;
+	            H[1] = (H[2] + dl + er)|0;
+	            H[2] = (H[3] + el + ar)|0;
+	            H[3] = (H[4] + al + br)|0;
+	            H[4] = (H[0] + bl + cr)|0;
+	            H[0] =  t;
+	        },
+
+	        _doFinalize: function () {
+	            // Shortcuts
+	            var data = this._data;
+	            var dataWords = data.words;
+
+	            var nBitsTotal = this._nDataBytes * 8;
+	            var nBitsLeft = data.sigBytes * 8;
+
+	            // Add padding
+	            dataWords[nBitsLeft >>> 5] |= 0x80 << (24 - nBitsLeft % 32);
+	            dataWords[(((nBitsLeft + 64) >>> 9) << 4) + 14] = (
+	                (((nBitsTotal << 8)  | (nBitsTotal >>> 24)) & 0x00ff00ff) |
+	                (((nBitsTotal << 24) | (nBitsTotal >>> 8))  & 0xff00ff00)
+	            );
+	            data.sigBytes = (dataWords.length + 1) * 4;
+
+	            // Hash final blocks
+	            this._process();
+
+	            // Shortcuts
+	            var hash = this._hash;
+	            var H = hash.words;
+
+	            // Swap endian
+	            for (var i = 0; i < 5; i++) {
+	                // Shortcut
+	                var H_i = H[i];
+
+	                // Swap
+	                H[i] = (((H_i << 8)  | (H_i >>> 24)) & 0x00ff00ff) |
+	                       (((H_i << 24) | (H_i >>> 8))  & 0xff00ff00);
+	            }
+
+	            // Return final computed hash
+	            return hash;
+	        },
+
+	        clone: function () {
+	            var clone = Hasher.clone.call(this);
+	            clone._hash = this._hash.clone();
+
+	            return clone;
+	        }
+	    });
+
+
+	    function f1(x, y, z) {
+	        return ((x) ^ (y) ^ (z));
+
+	    }
+
+	    function f2(x, y, z) {
+	        return (((x)&(y)) | ((~x)&(z)));
+	    }
+
+	    function f3(x, y, z) {
+	        return (((x) | (~(y))) ^ (z));
+	    }
+
+	    function f4(x, y, z) {
+	        return (((x) & (z)) | ((y)&(~(z))));
+	    }
+
+	    function f5(x, y, z) {
+	        return ((x) ^ ((y) |(~(z))));
+
+	    }
+
+	    function rotl(x,n) {
+	        return (x<<n) | (x>>>(32-n));
+	    }
+
+
+	    /**
+	     * Shortcut function to the hasher's object interface.
+	     *
+	     * @param {WordArray|string} message The message to hash.
+	     *
+	     * @return {WordArray} The hash.
+	     *
+	     * @static
+	     *
+	     * @example
+	     *
+	     *     var hash = CryptoJS.RIPEMD160('message');
+	     *     var hash = CryptoJS.RIPEMD160(wordArray);
+	     */
+	    C.RIPEMD160 = Hasher._createHelper(RIPEMD160);
+
+	    /**
+	     * Shortcut function to the HMAC's object interface.
+	     *
+	     * @param {WordArray|string} message The message to hash.
+	     * @param {WordArray|string} key The secret key.
+	     *
+	     * @return {WordArray} The HMAC.
+	     *
+	     * @static
+	     *
+	     * @example
+	     *
+	     *     var hmac = CryptoJS.HmacRIPEMD160(message, key);
+	     */
+	    C.HmacRIPEMD160 = Hasher._createHmacHelper(RIPEMD160);
+	}(Math));
+
+
+	return CryptoJS.RIPEMD160;
+
+}));
+
+/***/ }),
+
+/***/ 2783:
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(8249));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	(function () {
+	    // Shortcuts
+	    var C = CryptoJS;
+	    var C_lib = C.lib;
+	    var WordArray = C_lib.WordArray;
+	    var Hasher = C_lib.Hasher;
+	    var C_algo = C.algo;
+
+	    // Reusable object
+	    var W = [];
+
+	    /**
+	     * SHA-1 hash algorithm.
+	     */
+	    var SHA1 = C_algo.SHA1 = Hasher.extend({
+	        _doReset: function () {
+	            this._hash = new WordArray.init([
+	                0x67452301, 0xefcdab89,
+	                0x98badcfe, 0x10325476,
+	                0xc3d2e1f0
+	            ]);
+	        },
+
+	        _doProcessBlock: function (M, offset) {
+	            // Shortcut
+	            var H = this._hash.words;
+
+	            // Working variables
+	            var a = H[0];
+	            var b = H[1];
+	            var c = H[2];
+	            var d = H[3];
+	            var e = H[4];
+
+	            // Computation
+	            for (var i = 0; i < 80; i++) {
+	                if (i < 16) {
+	                    W[i] = M[offset + i] | 0;
+	                } else {
+	                    var n = W[i - 3] ^ W[i - 8] ^ W[i - 14] ^ W[i - 16];
+	                    W[i] = (n << 1) | (n >>> 31);
+	                }
+
+	                var t = ((a << 5) | (a >>> 27)) + e + W[i];
+	                if (i < 20) {
+	                    t += ((b & c) | (~b & d)) + 0x5a827999;
+	                } else if (i < 40) {
+	                    t += (b ^ c ^ d) + 0x6ed9eba1;
+	                } else if (i < 60) {
+	                    t += ((b & c) | (b & d) | (c & d)) - 0x70e44324;
+	                } else /* if (i < 80) */ {
+	                    t += (b ^ c ^ d) - 0x359d3e2a;
+	                }
+
+	                e = d;
+	                d = c;
+	                c = (b << 30) | (b >>> 2);
+	                b = a;
+	                a = t;
+	            }
+
+	            // Intermediate hash value
+	            H[0] = (H[0] + a) | 0;
+	            H[1] = (H[1] + b) | 0;
+	            H[2] = (H[2] + c) | 0;
+	            H[3] = (H[3] + d) | 0;
+	            H[4] = (H[4] + e) | 0;
+	        },
+
+	        _doFinalize: function () {
+	            // Shortcuts
+	            var data = this._data;
+	            var dataWords = data.words;
+
+	            var nBitsTotal = this._nDataBytes * 8;
+	            var nBitsLeft = data.sigBytes * 8;
+
+	            // Add padding
+	            dataWords[nBitsLeft >>> 5] |= 0x80 << (24 - nBitsLeft % 32);
+	            dataWords[(((nBitsLeft + 64) >>> 9) << 4) + 14] = Math.floor(nBitsTotal / 0x100000000);
+	            dataWords[(((nBitsLeft + 64) >>> 9) << 4) + 15] = nBitsTotal;
+	            data.sigBytes = dataWords.length * 4;
+
+	            // Hash final blocks
+	            this._process();
+
+	            // Return final computed hash
+	            return this._hash;
+	        },
+
+	        clone: function () {
+	            var clone = Hasher.clone.call(this);
+	            clone._hash = this._hash.clone();
+
+	            return clone;
+	        }
+	    });
+
+	    /**
+	     * Shortcut function to the hasher's object interface.
+	     *
+	     * @param {WordArray|string} message The message to hash.
+	     *
+	     * @return {WordArray} The hash.
+	     *
+	     * @static
+	     *
+	     * @example
+	     *
+	     *     var hash = CryptoJS.SHA1('message');
+	     *     var hash = CryptoJS.SHA1(wordArray);
+	     */
+	    C.SHA1 = Hasher._createHelper(SHA1);
+
+	    /**
+	     * Shortcut function to the HMAC's object interface.
+	     *
+	     * @param {WordArray|string} message The message to hash.
+	     * @param {WordArray|string} key The secret key.
+	     *
+	     * @return {WordArray} The HMAC.
+	     *
+	     * @static
+	     *
+	     * @example
+	     *
+	     *     var hmac = CryptoJS.HmacSHA1(message, key);
+	     */
+	    C.HmacSHA1 = Hasher._createHmacHelper(SHA1);
+	}());
+
+
+	return CryptoJS.SHA1;
+
+}));
+
+/***/ }),
+
+/***/ 7792:
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(8249), __webpack_require__(2153));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	(function () {
+	    // Shortcuts
+	    var C = CryptoJS;
+	    var C_lib = C.lib;
+	    var WordArray = C_lib.WordArray;
+	    var C_algo = C.algo;
+	    var SHA256 = C_algo.SHA256;
+
+	    /**
+	     * SHA-224 hash algorithm.
+	     */
+	    var SHA224 = C_algo.SHA224 = SHA256.extend({
+	        _doReset: function () {
+	            this._hash = new WordArray.init([
+	                0xc1059ed8, 0x367cd507, 0x3070dd17, 0xf70e5939,
+	                0xffc00b31, 0x68581511, 0x64f98fa7, 0xbefa4fa4
+	            ]);
+	        },
+
+	        _doFinalize: function () {
+	            var hash = SHA256._doFinalize.call(this);
+
+	            hash.sigBytes -= 4;
+
+	            return hash;
+	        }
+	    });
+
+	    /**
+	     * Shortcut function to the hasher's object interface.
+	     *
+	     * @param {WordArray|string} message The message to hash.
+	     *
+	     * @return {WordArray} The hash.
+	     *
+	     * @static
+	     *
+	     * @example
+	     *
+	     *     var hash = CryptoJS.SHA224('message');
+	     *     var hash = CryptoJS.SHA224(wordArray);
+	     */
+	    C.SHA224 = SHA256._createHelper(SHA224);
+
+	    /**
+	     * Shortcut function to the HMAC's object interface.
+	     *
+	     * @param {WordArray|string} message The message to hash.
+	     * @param {WordArray|string} key The secret key.
+	     *
+	     * @return {WordArray} The HMAC.
+	     *
+	     * @static
+	     *
+	     * @example
+	     *
+	     *     var hmac = CryptoJS.HmacSHA224(message, key);
+	     */
+	    C.HmacSHA224 = SHA256._createHmacHelper(SHA224);
+	}());
+
+
+	return CryptoJS.SHA224;
+
+}));
+
+/***/ }),
+
+/***/ 2153:
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(8249));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	(function (Math) {
+	    // Shortcuts
+	    var C = CryptoJS;
+	    var C_lib = C.lib;
+	    var WordArray = C_lib.WordArray;
+	    var Hasher = C_lib.Hasher;
+	    var C_algo = C.algo;
+
+	    // Initialization and round constants tables
+	    var H = [];
+	    var K = [];
+
+	    // Compute constants
+	    (function () {
+	        function isPrime(n) {
+	            var sqrtN = Math.sqrt(n);
+	            for (var factor = 2; factor <= sqrtN; factor++) {
+	                if (!(n % factor)) {
+	                    return false;
+	                }
+	            }
+
+	            return true;
+	        }
+
+	        function getFractionalBits(n) {
+	            return ((n - (n | 0)) * 0x100000000) | 0;
+	        }
+
+	        var n = 2;
+	        var nPrime = 0;
+	        while (nPrime < 64) {
+	            if (isPrime(n)) {
+	                if (nPrime < 8) {
+	                    H[nPrime] = getFractionalBits(Math.pow(n, 1 / 2));
+	                }
+	                K[nPrime] = getFractionalBits(Math.pow(n, 1 / 3));
+
+	                nPrime++;
+	            }
+
+	            n++;
+	        }
+	    }());
+
+	    // Reusable object
+	    var W = [];
+
+	    /**
+	     * SHA-256 hash algorithm.
+	     */
+	    var SHA256 = C_algo.SHA256 = Hasher.extend({
+	        _doReset: function () {
+	            this._hash = new WordArray.init(H.slice(0));
+	        },
+
+	        _doProcessBlock: function (M, offset) {
+	            // Shortcut
+	            var H = this._hash.words;
+
+	            // Working variables
+	            var a = H[0];
+	            var b = H[1];
+	            var c = H[2];
+	            var d = H[3];
+	            var e = H[4];
+	            var f = H[5];
+	            var g = H[6];
+	            var h = H[7];
+
+	            // Computation
+	            for (var i = 0; i < 64; i++) {
+	                if (i < 16) {
+	                    W[i] = M[offset + i] | 0;
+	                } else {
+	                    var gamma0x = W[i - 15];
+	                    var gamma0  = ((gamma0x << 25) | (gamma0x >>> 7))  ^
+	                                  ((gamma0x << 14) | (gamma0x >>> 18)) ^
+	                                   (gamma0x >>> 3);
+
+	                    var gamma1x = W[i - 2];
+	                    var gamma1  = ((gamma1x << 15) | (gamma1x >>> 17)) ^
+	                                  ((gamma1x << 13) | (gamma1x >>> 19)) ^
+	                                   (gamma1x >>> 10);
+
+	                    W[i] = gamma0 + W[i - 7] + gamma1 + W[i - 16];
+	                }
+
+	                var ch  = (e & f) ^ (~e & g);
+	                var maj = (a & b) ^ (a & c) ^ (b & c);
+
+	                var sigma0 = ((a << 30) | (a >>> 2)) ^ ((a << 19) | (a >>> 13)) ^ ((a << 10) | (a >>> 22));
+	                var sigma1 = ((e << 26) | (e >>> 6)) ^ ((e << 21) | (e >>> 11)) ^ ((e << 7)  | (e >>> 25));
+
+	                var t1 = h + sigma1 + ch + K[i] + W[i];
+	                var t2 = sigma0 + maj;
+
+	                h = g;
+	                g = f;
+	                f = e;
+	                e = (d + t1) | 0;
+	                d = c;
+	                c = b;
+	                b = a;
+	                a = (t1 + t2) | 0;
+	            }
+
+	            // Intermediate hash value
+	            H[0] = (H[0] + a) | 0;
+	            H[1] = (H[1] + b) | 0;
+	            H[2] = (H[2] + c) | 0;
+	            H[3] = (H[3] + d) | 0;
+	            H[4] = (H[4] + e) | 0;
+	            H[5] = (H[5] + f) | 0;
+	            H[6] = (H[6] + g) | 0;
+	            H[7] = (H[7] + h) | 0;
+	        },
+
+	        _doFinalize: function () {
+	            // Shortcuts
+	            var data = this._data;
+	            var dataWords = data.words;
+
+	            var nBitsTotal = this._nDataBytes * 8;
+	            var nBitsLeft = data.sigBytes * 8;
+
+	            // Add padding
+	            dataWords[nBitsLeft >>> 5] |= 0x80 << (24 - nBitsLeft % 32);
+	            dataWords[(((nBitsLeft + 64) >>> 9) << 4) + 14] = Math.floor(nBitsTotal / 0x100000000);
+	            dataWords[(((nBitsLeft + 64) >>> 9) << 4) + 15] = nBitsTotal;
+	            data.sigBytes = dataWords.length * 4;
+
+	            // Hash final blocks
+	            this._process();
+
+	            // Return final computed hash
+	            return this._hash;
+	        },
+
+	        clone: function () {
+	            var clone = Hasher.clone.call(this);
+	            clone._hash = this._hash.clone();
+
+	            return clone;
+	        }
+	    });
+
+	    /**
+	     * Shortcut function to the hasher's object interface.
+	     *
+	     * @param {WordArray|string} message The message to hash.
+	     *
+	     * @return {WordArray} The hash.
+	     *
+	     * @static
+	     *
+	     * @example
+	     *
+	     *     var hash = CryptoJS.SHA256('message');
+	     *     var hash = CryptoJS.SHA256(wordArray);
+	     */
+	    C.SHA256 = Hasher._createHelper(SHA256);
+
+	    /**
+	     * Shortcut function to the HMAC's object interface.
+	     *
+	     * @param {WordArray|string} message The message to hash.
+	     * @param {WordArray|string} key The secret key.
+	     *
+	     * @return {WordArray} The HMAC.
+	     *
+	     * @static
+	     *
+	     * @example
+	     *
+	     *     var hmac = CryptoJS.HmacSHA256(message, key);
+	     */
+	    C.HmacSHA256 = Hasher._createHmacHelper(SHA256);
+	}(Math));
+
+
+	return CryptoJS.SHA256;
+
+}));
+
+/***/ }),
+
+/***/ 3327:
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(8249), __webpack_require__(4938));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	(function (Math) {
+	    // Shortcuts
+	    var C = CryptoJS;
+	    var C_lib = C.lib;
+	    var WordArray = C_lib.WordArray;
+	    var Hasher = C_lib.Hasher;
+	    var C_x64 = C.x64;
+	    var X64Word = C_x64.Word;
+	    var C_algo = C.algo;
+
+	    // Constants tables
+	    var RHO_OFFSETS = [];
+	    var PI_INDEXES  = [];
+	    var ROUND_CONSTANTS = [];
+
+	    // Compute Constants
+	    (function () {
+	        // Compute rho offset constants
+	        var x = 1, y = 0;
+	        for (var t = 0; t < 24; t++) {
+	            RHO_OFFSETS[x + 5 * y] = ((t + 1) * (t + 2) / 2) % 64;
+
+	            var newX = y % 5;
+	            var newY = (2 * x + 3 * y) % 5;
+	            x = newX;
+	            y = newY;
+	        }
+
+	        // Compute pi index constants
+	        for (var x = 0; x < 5; x++) {
+	            for (var y = 0; y < 5; y++) {
+	                PI_INDEXES[x + 5 * y] = y + ((2 * x + 3 * y) % 5) * 5;
+	            }
+	        }
+
+	        // Compute round constants
+	        var LFSR = 0x01;
+	        for (var i = 0; i < 24; i++) {
+	            var roundConstantMsw = 0;
+	            var roundConstantLsw = 0;
+
+	            for (var j = 0; j < 7; j++) {
+	                if (LFSR & 0x01) {
+	                    var bitPosition = (1 << j) - 1;
+	                    if (bitPosition < 32) {
+	                        roundConstantLsw ^= 1 << bitPosition;
+	                    } else /* if (bitPosition >= 32) */ {
+	                        roundConstantMsw ^= 1 << (bitPosition - 32);
+	                    }
+	                }
+
+	                // Compute next LFSR
+	                if (LFSR & 0x80) {
+	                    // Primitive polynomial over GF(2): x^8 + x^6 + x^5 + x^4 + 1
+	                    LFSR = (LFSR << 1) ^ 0x71;
+	                } else {
+	                    LFSR <<= 1;
+	                }
+	            }
+
+	            ROUND_CONSTANTS[i] = X64Word.create(roundConstantMsw, roundConstantLsw);
+	        }
+	    }());
+
+	    // Reusable objects for temporary values
+	    var T = [];
+	    (function () {
+	        for (var i = 0; i < 25; i++) {
+	            T[i] = X64Word.create();
+	        }
+	    }());
+
+	    /**
+	     * SHA-3 hash algorithm.
+	     */
+	    var SHA3 = C_algo.SHA3 = Hasher.extend({
+	        /**
+	         * Configuration options.
+	         *
+	         * @property {number} outputLength
+	         *   The desired number of bits in the output hash.
+	         *   Only values permitted are: 224, 256, 384, 512.
+	         *   Default: 512
+	         */
+	        cfg: Hasher.cfg.extend({
+	            outputLength: 512
+	        }),
+
+	        _doReset: function () {
+	            var state = this._state = []
+	            for (var i = 0; i < 25; i++) {
+	                state[i] = new X64Word.init();
+	            }
+
+	            this.blockSize = (1600 - 2 * this.cfg.outputLength) / 32;
+	        },
+
+	        _doProcessBlock: function (M, offset) {
+	            // Shortcuts
+	            var state = this._state;
+	            var nBlockSizeLanes = this.blockSize / 2;
+
+	            // Absorb
+	            for (var i = 0; i < nBlockSizeLanes; i++) {
+	                // Shortcuts
+	                var M2i  = M[offset + 2 * i];
+	                var M2i1 = M[offset + 2 * i + 1];
+
+	                // Swap endian
+	                M2i = (
+	                    (((M2i << 8)  | (M2i >>> 24)) & 0x00ff00ff) |
+	                    (((M2i << 24) | (M2i >>> 8))  & 0xff00ff00)
+	                );
+	                M2i1 = (
+	                    (((M2i1 << 8)  | (M2i1 >>> 24)) & 0x00ff00ff) |
+	                    (((M2i1 << 24) | (M2i1 >>> 8))  & 0xff00ff00)
+	                );
+
+	                // Absorb message into state
+	                var lane = state[i];
+	                lane.high ^= M2i1;
+	                lane.low  ^= M2i;
+	            }
+
+	            // Rounds
+	            for (var round = 0; round < 24; round++) {
+	                // Theta
+	                for (var x = 0; x < 5; x++) {
+	                    // Mix column lanes
+	                    var tMsw = 0, tLsw = 0;
+	                    for (var y = 0; y < 5; y++) {
+	                        var lane = state[x + 5 * y];
+	                        tMsw ^= lane.high;
+	                        tLsw ^= lane.low;
+	                    }
+
+	                    // Temporary values
+	                    var Tx = T[x];
+	                    Tx.high = tMsw;
+	                    Tx.low  = tLsw;
+	                }
+	                for (var x = 0; x < 5; x++) {
+	                    // Shortcuts
+	                    var Tx4 = T[(x + 4) % 5];
+	                    var Tx1 = T[(x + 1) % 5];
+	                    var Tx1Msw = Tx1.high;
+	                    var Tx1Lsw = Tx1.low;
+
+	                    // Mix surrounding columns
+	                    var tMsw = Tx4.high ^ ((Tx1Msw << 1) | (Tx1Lsw >>> 31));
+	                    var tLsw = Tx4.low  ^ ((Tx1Lsw << 1) | (Tx1Msw >>> 31));
+	                    for (var y = 0; y < 5; y++) {
+	                        var lane = state[x + 5 * y];
+	                        lane.high ^= tMsw;
+	                        lane.low  ^= tLsw;
+	                    }
+	                }
+
+	                // Rho Pi
+	                for (var laneIndex = 1; laneIndex < 25; laneIndex++) {
+	                    var tMsw;
+	                    var tLsw;
+
+	                    // Shortcuts
+	                    var lane = state[laneIndex];
+	                    var laneMsw = lane.high;
+	                    var laneLsw = lane.low;
+	                    var rhoOffset = RHO_OFFSETS[laneIndex];
+
+	                    // Rotate lanes
+	                    if (rhoOffset < 32) {
+	                        tMsw = (laneMsw << rhoOffset) | (laneLsw >>> (32 - rhoOffset));
+	                        tLsw = (laneLsw << rhoOffset) | (laneMsw >>> (32 - rhoOffset));
+	                    } else /* if (rhoOffset >= 32) */ {
+	                        tMsw = (laneLsw << (rhoOffset - 32)) | (laneMsw >>> (64 - rhoOffset));
+	                        tLsw = (laneMsw << (rhoOffset - 32)) | (laneLsw >>> (64 - rhoOffset));
+	                    }
+
+	                    // Transpose lanes
+	                    var TPiLane = T[PI_INDEXES[laneIndex]];
+	                    TPiLane.high = tMsw;
+	                    TPiLane.low  = tLsw;
+	                }
+
+	                // Rho pi at x = y = 0
+	                var T0 = T[0];
+	                var state0 = state[0];
+	                T0.high = state0.high;
+	                T0.low  = state0.low;
+
+	                // Chi
+	                for (var x = 0; x < 5; x++) {
+	                    for (var y = 0; y < 5; y++) {
+	                        // Shortcuts
+	                        var laneIndex = x + 5 * y;
+	                        var lane = state[laneIndex];
+	                        var TLane = T[laneIndex];
+	                        var Tx1Lane = T[((x + 1) % 5) + 5 * y];
+	                        var Tx2Lane = T[((x + 2) % 5) + 5 * y];
+
+	                        // Mix rows
+	                        lane.high = TLane.high ^ (~Tx1Lane.high & Tx2Lane.high);
+	                        lane.low  = TLane.low  ^ (~Tx1Lane.low  & Tx2Lane.low);
+	                    }
+	                }
+
+	                // Iota
+	                var lane = state[0];
+	                var roundConstant = ROUND_CONSTANTS[round];
+	                lane.high ^= roundConstant.high;
+	                lane.low  ^= roundConstant.low;
+	            }
+	        },
+
+	        _doFinalize: function () {
+	            // Shortcuts
+	            var data = this._data;
+	            var dataWords = data.words;
+	            var nBitsTotal = this._nDataBytes * 8;
+	            var nBitsLeft = data.sigBytes * 8;
+	            var blockSizeBits = this.blockSize * 32;
+
+	            // Add padding
+	            dataWords[nBitsLeft >>> 5] |= 0x1 << (24 - nBitsLeft % 32);
+	            dataWords[((Math.ceil((nBitsLeft + 1) / blockSizeBits) * blockSizeBits) >>> 5) - 1] |= 0x80;
+	            data.sigBytes = dataWords.length * 4;
+
+	            // Hash final blocks
+	            this._process();
+
+	            // Shortcuts
+	            var state = this._state;
+	            var outputLengthBytes = this.cfg.outputLength / 8;
+	            var outputLengthLanes = outputLengthBytes / 8;
+
+	            // Squeeze
+	            var hashWords = [];
+	            for (var i = 0; i < outputLengthLanes; i++) {
+	                // Shortcuts
+	                var lane = state[i];
+	                var laneMsw = lane.high;
+	                var laneLsw = lane.low;
+
+	                // Swap endian
+	                laneMsw = (
+	                    (((laneMsw << 8)  | (laneMsw >>> 24)) & 0x00ff00ff) |
+	                    (((laneMsw << 24) | (laneMsw >>> 8))  & 0xff00ff00)
+	                );
+	                laneLsw = (
+	                    (((laneLsw << 8)  | (laneLsw >>> 24)) & 0x00ff00ff) |
+	                    (((laneLsw << 24) | (laneLsw >>> 8))  & 0xff00ff00)
+	                );
+
+	                // Squeeze state to retrieve hash
+	                hashWords.push(laneLsw);
+	                hashWords.push(laneMsw);
+	            }
+
+	            // Return final computed hash
+	            return new WordArray.init(hashWords, outputLengthBytes);
+	        },
+
+	        clone: function () {
+	            var clone = Hasher.clone.call(this);
+
+	            var state = clone._state = this._state.slice(0);
+	            for (var i = 0; i < 25; i++) {
+	                state[i] = state[i].clone();
+	            }
+
+	            return clone;
+	        }
+	    });
+
+	    /**
+	     * Shortcut function to the hasher's object interface.
+	     *
+	     * @param {WordArray|string} message The message to hash.
+	     *
+	     * @return {WordArray} The hash.
+	     *
+	     * @static
+	     *
+	     * @example
+	     *
+	     *     var hash = CryptoJS.SHA3('message');
+	     *     var hash = CryptoJS.SHA3(wordArray);
+	     */
+	    C.SHA3 = Hasher._createHelper(SHA3);
+
+	    /**
+	     * Shortcut function to the HMAC's object interface.
+	     *
+	     * @param {WordArray|string} message The message to hash.
+	     * @param {WordArray|string} key The secret key.
+	     *
+	     * @return {WordArray} The HMAC.
+	     *
+	     * @static
+	     *
+	     * @example
+	     *
+	     *     var hmac = CryptoJS.HmacSHA3(message, key);
+	     */
+	    C.HmacSHA3 = Hasher._createHmacHelper(SHA3);
+	}(Math));
+
+
+	return CryptoJS.SHA3;
+
+}));
+
+/***/ }),
+
+/***/ 7460:
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(8249), __webpack_require__(4938), __webpack_require__(34));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	(function () {
+	    // Shortcuts
+	    var C = CryptoJS;
+	    var C_x64 = C.x64;
+	    var X64Word = C_x64.Word;
+	    var X64WordArray = C_x64.WordArray;
+	    var C_algo = C.algo;
+	    var SHA512 = C_algo.SHA512;
+
+	    /**
+	     * SHA-384 hash algorithm.
+	     */
+	    var SHA384 = C_algo.SHA384 = SHA512.extend({
+	        _doReset: function () {
+	            this._hash = new X64WordArray.init([
+	                new X64Word.init(0xcbbb9d5d, 0xc1059ed8), new X64Word.init(0x629a292a, 0x367cd507),
+	                new X64Word.init(0x9159015a, 0x3070dd17), new X64Word.init(0x152fecd8, 0xf70e5939),
+	                new X64Word.init(0x67332667, 0xffc00b31), new X64Word.init(0x8eb44a87, 0x68581511),
+	                new X64Word.init(0xdb0c2e0d, 0x64f98fa7), new X64Word.init(0x47b5481d, 0xbefa4fa4)
+	            ]);
+	        },
+
+	        _doFinalize: function () {
+	            var hash = SHA512._doFinalize.call(this);
+
+	            hash.sigBytes -= 16;
+
+	            return hash;
+	        }
+	    });
+
+	    /**
+	     * Shortcut function to the hasher's object interface.
+	     *
+	     * @param {WordArray|string} message The message to hash.
+	     *
+	     * @return {WordArray} The hash.
+	     *
+	     * @static
+	     *
+	     * @example
+	     *
+	     *     var hash = CryptoJS.SHA384('message');
+	     *     var hash = CryptoJS.SHA384(wordArray);
+	     */
+	    C.SHA384 = SHA512._createHelper(SHA384);
+
+	    /**
+	     * Shortcut function to the HMAC's object interface.
+	     *
+	     * @param {WordArray|string} message The message to hash.
+	     * @param {WordArray|string} key The secret key.
+	     *
+	     * @return {WordArray} The HMAC.
+	     *
+	     * @static
+	     *
+	     * @example
+	     *
+	     *     var hmac = CryptoJS.HmacSHA384(message, key);
+	     */
+	    C.HmacSHA384 = SHA512._createHmacHelper(SHA384);
+	}());
+
+
+	return CryptoJS.SHA384;
+
+}));
+
+/***/ }),
+
+/***/ 34:
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(8249), __webpack_require__(4938));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	(function () {
+	    // Shortcuts
+	    var C = CryptoJS;
+	    var C_lib = C.lib;
+	    var Hasher = C_lib.Hasher;
+	    var C_x64 = C.x64;
+	    var X64Word = C_x64.Word;
+	    var X64WordArray = C_x64.WordArray;
+	    var C_algo = C.algo;
+
+	    function X64Word_create() {
+	        return X64Word.create.apply(X64Word, arguments);
+	    }
+
+	    // Constants
+	    var K = [
+	        X64Word_create(0x428a2f98, 0xd728ae22), X64Word_create(0x71374491, 0x23ef65cd),
+	        X64Word_create(0xb5c0fbcf, 0xec4d3b2f), X64Word_create(0xe9b5dba5, 0x8189dbbc),
+	        X64Word_create(0x3956c25b, 0xf348b538), X64Word_create(0x59f111f1, 0xb605d019),
+	        X64Word_create(0x923f82a4, 0xaf194f9b), X64Word_create(0xab1c5ed5, 0xda6d8118),
+	        X64Word_create(0xd807aa98, 0xa3030242), X64Word_create(0x12835b01, 0x45706fbe),
+	        X64Word_create(0x243185be, 0x4ee4b28c), X64Word_create(0x550c7dc3, 0xd5ffb4e2),
+	        X64Word_create(0x72be5d74, 0xf27b896f), X64Word_create(0x80deb1fe, 0x3b1696b1),
+	        X64Word_create(0x9bdc06a7, 0x25c71235), X64Word_create(0xc19bf174, 0xcf692694),
+	        X64Word_create(0xe49b69c1, 0x9ef14ad2), X64Word_create(0xefbe4786, 0x384f25e3),
+	        X64Word_create(0x0fc19dc6, 0x8b8cd5b5), X64Word_create(0x240ca1cc, 0x77ac9c65),
+	        X64Word_create(0x2de92c6f, 0x592b0275), X64Word_create(0x4a7484aa, 0x6ea6e483),
+	        X64Word_create(0x5cb0a9dc, 0xbd41fbd4), X64Word_create(0x76f988da, 0x831153b5),
+	        X64Word_create(0x983e5152, 0xee66dfab), X64Word_create(0xa831c66d, 0x2db43210),
+	        X64Word_create(0xb00327c8, 0x98fb213f), X64Word_create(0xbf597fc7, 0xbeef0ee4),
+	        X64Word_create(0xc6e00bf3, 0x3da88fc2), X64Word_create(0xd5a79147, 0x930aa725),
+	        X64Word_create(0x06ca6351, 0xe003826f), X64Word_create(0x14292967, 0x0a0e6e70),
+	        X64Word_create(0x27b70a85, 0x46d22ffc), X64Word_create(0x2e1b2138, 0x5c26c926),
+	        X64Word_create(0x4d2c6dfc, 0x5ac42aed), X64Word_create(0x53380d13, 0x9d95b3df),
+	        X64Word_create(0x650a7354, 0x8baf63de), X64Word_create(0x766a0abb, 0x3c77b2a8),
+	        X64Word_create(0x81c2c92e, 0x47edaee6), X64Word_create(0x92722c85, 0x1482353b),
+	        X64Word_create(0xa2bfe8a1, 0x4cf10364), X64Word_create(0xa81a664b, 0xbc423001),
+	        X64Word_create(0xc24b8b70, 0xd0f89791), X64Word_create(0xc76c51a3, 0x0654be30),
+	        X64Word_create(0xd192e819, 0xd6ef5218), X64Word_create(0xd6990624, 0x5565a910),
+	        X64Word_create(0xf40e3585, 0x5771202a), X64Word_create(0x106aa070, 0x32bbd1b8),
+	        X64Word_create(0x19a4c116, 0xb8d2d0c8), X64Word_create(0x1e376c08, 0x5141ab53),
+	        X64Word_create(0x2748774c, 0xdf8eeb99), X64Word_create(0x34b0bcb5, 0xe19b48a8),
+	        X64Word_create(0x391c0cb3, 0xc5c95a63), X64Word_create(0x4ed8aa4a, 0xe3418acb),
+	        X64Word_create(0x5b9cca4f, 0x7763e373), X64Word_create(0x682e6ff3, 0xd6b2b8a3),
+	        X64Word_create(0x748f82ee, 0x5defb2fc), X64Word_create(0x78a5636f, 0x43172f60),
+	        X64Word_create(0x84c87814, 0xa1f0ab72), X64Word_create(0x8cc70208, 0x1a6439ec),
+	        X64Word_create(0x90befffa, 0x23631e28), X64Word_create(0xa4506ceb, 0xde82bde9),
+	        X64Word_create(0xbef9a3f7, 0xb2c67915), X64Word_create(0xc67178f2, 0xe372532b),
+	        X64Word_create(0xca273ece, 0xea26619c), X64Word_create(0xd186b8c7, 0x21c0c207),
+	        X64Word_create(0xeada7dd6, 0xcde0eb1e), X64Word_create(0xf57d4f7f, 0xee6ed178),
+	        X64Word_create(0x06f067aa, 0x72176fba), X64Word_create(0x0a637dc5, 0xa2c898a6),
+	        X64Word_create(0x113f9804, 0xbef90dae), X64Word_create(0x1b710b35, 0x131c471b),
+	        X64Word_create(0x28db77f5, 0x23047d84), X64Word_create(0x32caab7b, 0x40c72493),
+	        X64Word_create(0x3c9ebe0a, 0x15c9bebc), X64Word_create(0x431d67c4, 0x9c100d4c),
+	        X64Word_create(0x4cc5d4be, 0xcb3e42b6), X64Word_create(0x597f299c, 0xfc657e2a),
+	        X64Word_create(0x5fcb6fab, 0x3ad6faec), X64Word_create(0x6c44198c, 0x4a475817)
+	    ];
+
+	    // Reusable objects
+	    var W = [];
+	    (function () {
+	        for (var i = 0; i < 80; i++) {
+	            W[i] = X64Word_create();
+	        }
+	    }());
+
+	    /**
+	     * SHA-512 hash algorithm.
+	     */
+	    var SHA512 = C_algo.SHA512 = Hasher.extend({
+	        _doReset: function () {
+	            this._hash = new X64WordArray.init([
+	                new X64Word.init(0x6a09e667, 0xf3bcc908), new X64Word.init(0xbb67ae85, 0x84caa73b),
+	                new X64Word.init(0x3c6ef372, 0xfe94f82b), new X64Word.init(0xa54ff53a, 0x5f1d36f1),
+	                new X64Word.init(0x510e527f, 0xade682d1), new X64Word.init(0x9b05688c, 0x2b3e6c1f),
+	                new X64Word.init(0x1f83d9ab, 0xfb41bd6b), new X64Word.init(0x5be0cd19, 0x137e2179)
+	            ]);
+	        },
+
+	        _doProcessBlock: function (M, offset) {
+	            // Shortcuts
+	            var H = this._hash.words;
+
+	            var H0 = H[0];
+	            var H1 = H[1];
+	            var H2 = H[2];
+	            var H3 = H[3];
+	            var H4 = H[4];
+	            var H5 = H[5];
+	            var H6 = H[6];
+	            var H7 = H[7];
+
+	            var H0h = H0.high;
+	            var H0l = H0.low;
+	            var H1h = H1.high;
+	            var H1l = H1.low;
+	            var H2h = H2.high;
+	            var H2l = H2.low;
+	            var H3h = H3.high;
+	            var H3l = H3.low;
+	            var H4h = H4.high;
+	            var H4l = H4.low;
+	            var H5h = H5.high;
+	            var H5l = H5.low;
+	            var H6h = H6.high;
+	            var H6l = H6.low;
+	            var H7h = H7.high;
+	            var H7l = H7.low;
+
+	            // Working variables
+	            var ah = H0h;
+	            var al = H0l;
+	            var bh = H1h;
+	            var bl = H1l;
+	            var ch = H2h;
+	            var cl = H2l;
+	            var dh = H3h;
+	            var dl = H3l;
+	            var eh = H4h;
+	            var el = H4l;
+	            var fh = H5h;
+	            var fl = H5l;
+	            var gh = H6h;
+	            var gl = H6l;
+	            var hh = H7h;
+	            var hl = H7l;
+
+	            // Rounds
+	            for (var i = 0; i < 80; i++) {
+	                var Wil;
+	                var Wih;
+
+	                // Shortcut
+	                var Wi = W[i];
+
+	                // Extend message
+	                if (i < 16) {
+	                    Wih = Wi.high = M[offset + i * 2]     | 0;
+	                    Wil = Wi.low  = M[offset + i * 2 + 1] | 0;
+	                } else {
+	                    // Gamma0
+	                    var gamma0x  = W[i - 15];
+	                    var gamma0xh = gamma0x.high;
+	                    var gamma0xl = gamma0x.low;
+	                    var gamma0h  = ((gamma0xh >>> 1) | (gamma0xl << 31)) ^ ((gamma0xh >>> 8) | (gamma0xl << 24)) ^ (gamma0xh >>> 7);
+	                    var gamma0l  = ((gamma0xl >>> 1) | (gamma0xh << 31)) ^ ((gamma0xl >>> 8) | (gamma0xh << 24)) ^ ((gamma0xl >>> 7) | (gamma0xh << 25));
+
+	                    // Gamma1
+	                    var gamma1x  = W[i - 2];
+	                    var gamma1xh = gamma1x.high;
+	                    var gamma1xl = gamma1x.low;
+	                    var gamma1h  = ((gamma1xh >>> 19) | (gamma1xl << 13)) ^ ((gamma1xh << 3) | (gamma1xl >>> 29)) ^ (gamma1xh >>> 6);
+	                    var gamma1l  = ((gamma1xl >>> 19) | (gamma1xh << 13)) ^ ((gamma1xl << 3) | (gamma1xh >>> 29)) ^ ((gamma1xl >>> 6) | (gamma1xh << 26));
+
+	                    // W[i] = gamma0 + W[i - 7] + gamma1 + W[i - 16]
+	                    var Wi7  = W[i - 7];
+	                    var Wi7h = Wi7.high;
+	                    var Wi7l = Wi7.low;
+
+	                    var Wi16  = W[i - 16];
+	                    var Wi16h = Wi16.high;
+	                    var Wi16l = Wi16.low;
+
+	                    Wil = gamma0l + Wi7l;
+	                    Wih = gamma0h + Wi7h + ((Wil >>> 0) < (gamma0l >>> 0) ? 1 : 0);
+	                    Wil = Wil + gamma1l;
+	                    Wih = Wih + gamma1h + ((Wil >>> 0) < (gamma1l >>> 0) ? 1 : 0);
+	                    Wil = Wil + Wi16l;
+	                    Wih = Wih + Wi16h + ((Wil >>> 0) < (Wi16l >>> 0) ? 1 : 0);
+
+	                    Wi.high = Wih;
+	                    Wi.low  = Wil;
+	                }
+
+	                var chh  = (eh & fh) ^ (~eh & gh);
+	                var chl  = (el & fl) ^ (~el & gl);
+	                var majh = (ah & bh) ^ (ah & ch) ^ (bh & ch);
+	                var majl = (al & bl) ^ (al & cl) ^ (bl & cl);
+
+	                var sigma0h = ((ah >>> 28) | (al << 4))  ^ ((ah << 30)  | (al >>> 2)) ^ ((ah << 25) | (al >>> 7));
+	                var sigma0l = ((al >>> 28) | (ah << 4))  ^ ((al << 30)  | (ah >>> 2)) ^ ((al << 25) | (ah >>> 7));
+	                var sigma1h = ((eh >>> 14) | (el << 18)) ^ ((eh >>> 18) | (el << 14)) ^ ((eh << 23) | (el >>> 9));
+	                var sigma1l = ((el >>> 14) | (eh << 18)) ^ ((el >>> 18) | (eh << 14)) ^ ((el << 23) | (eh >>> 9));
+
+	                // t1 = h + sigma1 + ch + K[i] + W[i]
+	                var Ki  = K[i];
+	                var Kih = Ki.high;
+	                var Kil = Ki.low;
+
+	                var t1l = hl + sigma1l;
+	                var t1h = hh + sigma1h + ((t1l >>> 0) < (hl >>> 0) ? 1 : 0);
+	                var t1l = t1l + chl;
+	                var t1h = t1h + chh + ((t1l >>> 0) < (chl >>> 0) ? 1 : 0);
+	                var t1l = t1l + Kil;
+	                var t1h = t1h + Kih + ((t1l >>> 0) < (Kil >>> 0) ? 1 : 0);
+	                var t1l = t1l + Wil;
+	                var t1h = t1h + Wih + ((t1l >>> 0) < (Wil >>> 0) ? 1 : 0);
+
+	                // t2 = sigma0 + maj
+	                var t2l = sigma0l + majl;
+	                var t2h = sigma0h + majh + ((t2l >>> 0) < (sigma0l >>> 0) ? 1 : 0);
+
+	                // Update working variables
+	                hh = gh;
+	                hl = gl;
+	                gh = fh;
+	                gl = fl;
+	                fh = eh;
+	                fl = el;
+	                el = (dl + t1l) | 0;
+	                eh = (dh + t1h + ((el >>> 0) < (dl >>> 0) ? 1 : 0)) | 0;
+	                dh = ch;
+	                dl = cl;
+	                ch = bh;
+	                cl = bl;
+	                bh = ah;
+	                bl = al;
+	                al = (t1l + t2l) | 0;
+	                ah = (t1h + t2h + ((al >>> 0) < (t1l >>> 0) ? 1 : 0)) | 0;
+	            }
+
+	            // Intermediate hash value
+	            H0l = H0.low  = (H0l + al);
+	            H0.high = (H0h + ah + ((H0l >>> 0) < (al >>> 0) ? 1 : 0));
+	            H1l = H1.low  = (H1l + bl);
+	            H1.high = (H1h + bh + ((H1l >>> 0) < (bl >>> 0) ? 1 : 0));
+	            H2l = H2.low  = (H2l + cl);
+	            H2.high = (H2h + ch + ((H2l >>> 0) < (cl >>> 0) ? 1 : 0));
+	            H3l = H3.low  = (H3l + dl);
+	            H3.high = (H3h + dh + ((H3l >>> 0) < (dl >>> 0) ? 1 : 0));
+	            H4l = H4.low  = (H4l + el);
+	            H4.high = (H4h + eh + ((H4l >>> 0) < (el >>> 0) ? 1 : 0));
+	            H5l = H5.low  = (H5l + fl);
+	            H5.high = (H5h + fh + ((H5l >>> 0) < (fl >>> 0) ? 1 : 0));
+	            H6l = H6.low  = (H6l + gl);
+	            H6.high = (H6h + gh + ((H6l >>> 0) < (gl >>> 0) ? 1 : 0));
+	            H7l = H7.low  = (H7l + hl);
+	            H7.high = (H7h + hh + ((H7l >>> 0) < (hl >>> 0) ? 1 : 0));
+	        },
+
+	        _doFinalize: function () {
+	            // Shortcuts
+	            var data = this._data;
+	            var dataWords = data.words;
+
+	            var nBitsTotal = this._nDataBytes * 8;
+	            var nBitsLeft = data.sigBytes * 8;
+
+	            // Add padding
+	            dataWords[nBitsLeft >>> 5] |= 0x80 << (24 - nBitsLeft % 32);
+	            dataWords[(((nBitsLeft + 128) >>> 10) << 5) + 30] = Math.floor(nBitsTotal / 0x100000000);
+	            dataWords[(((nBitsLeft + 128) >>> 10) << 5) + 31] = nBitsTotal;
+	            data.sigBytes = dataWords.length * 4;
+
+	            // Hash final blocks
+	            this._process();
+
+	            // Convert hash to 32-bit word array before returning
+	            var hash = this._hash.toX32();
+
+	            // Return final computed hash
+	            return hash;
+	        },
+
+	        clone: function () {
+	            var clone = Hasher.clone.call(this);
+	            clone._hash = this._hash.clone();
+
+	            return clone;
+	        },
+
+	        blockSize: 1024/32
+	    });
+
+	    /**
+	     * Shortcut function to the hasher's object interface.
+	     *
+	     * @param {WordArray|string} message The message to hash.
+	     *
+	     * @return {WordArray} The hash.
+	     *
+	     * @static
+	     *
+	     * @example
+	     *
+	     *     var hash = CryptoJS.SHA512('message');
+	     *     var hash = CryptoJS.SHA512(wordArray);
+	     */
+	    C.SHA512 = Hasher._createHelper(SHA512);
+
+	    /**
+	     * Shortcut function to the HMAC's object interface.
+	     *
+	     * @param {WordArray|string} message The message to hash.
+	     * @param {WordArray|string} key The secret key.
+	     *
+	     * @return {WordArray} The HMAC.
+	     *
+	     * @static
+	     *
+	     * @example
+	     *
+	     *     var hmac = CryptoJS.HmacSHA512(message, key);
+	     */
+	    C.HmacSHA512 = Hasher._createHmacHelper(SHA512);
+	}());
+
+
+	return CryptoJS.SHA512;
+
+}));
+
+/***/ }),
+
+/***/ 4253:
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(8249), __webpack_require__(8269), __webpack_require__(8214), __webpack_require__(888), __webpack_require__(5109));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	(function () {
+	    // Shortcuts
+	    var C = CryptoJS;
+	    var C_lib = C.lib;
+	    var WordArray = C_lib.WordArray;
+	    var BlockCipher = C_lib.BlockCipher;
+	    var C_algo = C.algo;
+
+	    // Permuted Choice 1 constants
+	    var PC1 = [
+	        57, 49, 41, 33, 25, 17, 9,  1,
+	        58, 50, 42, 34, 26, 18, 10, 2,
+	        59, 51, 43, 35, 27, 19, 11, 3,
+	        60, 52, 44, 36, 63, 55, 47, 39,
+	        31, 23, 15, 7,  62, 54, 46, 38,
+	        30, 22, 14, 6,  61, 53, 45, 37,
+	        29, 21, 13, 5,  28, 20, 12, 4
+	    ];
+
+	    // Permuted Choice 2 constants
+	    var PC2 = [
+	        14, 17, 11, 24, 1,  5,
+	        3,  28, 15, 6,  21, 10,
+	        23, 19, 12, 4,  26, 8,
+	        16, 7,  27, 20, 13, 2,
+	        41, 52, 31, 37, 47, 55,
+	        30, 40, 51, 45, 33, 48,
+	        44, 49, 39, 56, 34, 53,
+	        46, 42, 50, 36, 29, 32
+	    ];
+
+	    // Cumulative bit shift constants
+	    var BIT_SHIFTS = [1,  2,  4,  6,  8,  10, 12, 14, 15, 17, 19, 21, 23, 25, 27, 28];
+
+	    // SBOXes and round permutation constants
+	    var SBOX_P = [
+	        {
+	            0x0: 0x808200,
+	            0x10000000: 0x8000,
+	            0x20000000: 0x808002,
+	            0x30000000: 0x2,
+	            0x40000000: 0x200,
+	            0x50000000: 0x808202,
+	            0x60000000: 0x800202,
+	            0x70000000: 0x800000,
+	            0x80000000: 0x202,
+	            0x90000000: 0x800200,
+	            0xa0000000: 0x8200,
+	            0xb0000000: 0x808000,
+	            0xc0000000: 0x8002,
+	            0xd0000000: 0x800002,
+	            0xe0000000: 0x0,
+	            0xf0000000: 0x8202,
+	            0x8000000: 0x0,
+	            0x18000000: 0x808202,
+	            0x28000000: 0x8202,
+	            0x38000000: 0x8000,
+	            0x48000000: 0x808200,
+	            0x58000000: 0x200,
+	            0x68000000: 0x808002,
+	            0x78000000: 0x2,
+	            0x88000000: 0x800200,
+	            0x98000000: 0x8200,
+	            0xa8000000: 0x808000,
+	            0xb8000000: 0x800202,
+	            0xc8000000: 0x800002,
+	            0xd8000000: 0x8002,
+	            0xe8000000: 0x202,
+	            0xf8000000: 0x800000,
+	            0x1: 0x8000,
+	            0x10000001: 0x2,
+	            0x20000001: 0x808200,
+	            0x30000001: 0x800000,
+	            0x40000001: 0x808002,
+	            0x50000001: 0x8200,
+	            0x60000001: 0x200,
+	            0x70000001: 0x800202,
+	            0x80000001: 0x808202,
+	            0x90000001: 0x808000,
+	            0xa0000001: 0x800002,
+	            0xb0000001: 0x8202,
+	            0xc0000001: 0x202,
+	            0xd0000001: 0x800200,
+	            0xe0000001: 0x8002,
+	            0xf0000001: 0x0,
+	            0x8000001: 0x808202,
+	            0x18000001: 0x808000,
+	            0x28000001: 0x800000,
+	            0x38000001: 0x200,
+	            0x48000001: 0x8000,
+	            0x58000001: 0x800002,
+	            0x68000001: 0x2,
+	            0x78000001: 0x8202,
+	            0x88000001: 0x8002,
+	            0x98000001: 0x800202,
+	            0xa8000001: 0x202,
+	            0xb8000001: 0x808200,
+	            0xc8000001: 0x800200,
+	            0xd8000001: 0x0,
+	            0xe8000001: 0x8200,
+	            0xf8000001: 0x808002
+	        },
+	        {
+	            0x0: 0x40084010,
+	            0x1000000: 0x4000,
+	            0x2000000: 0x80000,
+	            0x3000000: 0x40080010,
+	            0x4000000: 0x40000010,
+	            0x5000000: 0x40084000,
+	            0x6000000: 0x40004000,
+	            0x7000000: 0x10,
+	            0x8000000: 0x84000,
+	            0x9000000: 0x40004010,
+	            0xa000000: 0x40000000,
+	            0xb000000: 0x84010,
+	            0xc000000: 0x80010,
+	            0xd000000: 0x0,
+	            0xe000000: 0x4010,
+	            0xf000000: 0x40080000,
+	            0x800000: 0x40004000,
+	            0x1800000: 0x84010,
+	            0x2800000: 0x10,
+	            0x3800000: 0x40004010,
+	            0x4800000: 0x40084010,
+	            0x5800000: 0x40000000,
+	            0x6800000: 0x80000,
+	            0x7800000: 0x40080010,
+	            0x8800000: 0x80010,
+	            0x9800000: 0x0,
+	            0xa800000: 0x4000,
+	            0xb800000: 0x40080000,
+	            0xc800000: 0x40000010,
+	            0xd800000: 0x84000,
+	            0xe800000: 0x40084000,
+	            0xf800000: 0x4010,
+	            0x10000000: 0x0,
+	            0x11000000: 0x40080010,
+	            0x12000000: 0x40004010,
+	            0x13000000: 0x40084000,
+	            0x14000000: 0x40080000,
+	            0x15000000: 0x10,
+	            0x16000000: 0x84010,
+	            0x17000000: 0x4000,
+	            0x18000000: 0x4010,
+	            0x19000000: 0x80000,
+	            0x1a000000: 0x80010,
+	            0x1b000000: 0x40000010,
+	            0x1c000000: 0x84000,
+	            0x1d000000: 0x40004000,
+	            0x1e000000: 0x40000000,
+	            0x1f000000: 0x40084010,
+	            0x10800000: 0x84010,
+	            0x11800000: 0x80000,
+	            0x12800000: 0x40080000,
+	            0x13800000: 0x4000,
+	            0x14800000: 0x40004000,
+	            0x15800000: 0x40084010,
+	            0x16800000: 0x10,
+	            0x17800000: 0x40000000,
+	            0x18800000: 0x40084000,
+	            0x19800000: 0x40000010,
+	            0x1a800000: 0x40004010,
+	            0x1b800000: 0x80010,
+	            0x1c800000: 0x0,
+	            0x1d800000: 0x4010,
+	            0x1e800000: 0x40080010,
+	            0x1f800000: 0x84000
+	        },
+	        {
+	            0x0: 0x104,
+	            0x100000: 0x0,
+	            0x200000: 0x4000100,
+	            0x300000: 0x10104,
+	            0x400000: 0x10004,
+	            0x500000: 0x4000004,
+	            0x600000: 0x4010104,
+	            0x700000: 0x4010000,
+	            0x800000: 0x4000000,
+	            0x900000: 0x4010100,
+	            0xa00000: 0x10100,
+	            0xb00000: 0x4010004,
+	            0xc00000: 0x4000104,
+	            0xd00000: 0x10000,
+	            0xe00000: 0x4,
+	            0xf00000: 0x100,
+	            0x80000: 0x4010100,
+	            0x180000: 0x4010004,
+	            0x280000: 0x0,
+	            0x380000: 0x4000100,
+	            0x480000: 0x4000004,
+	            0x580000: 0x10000,
+	            0x680000: 0x10004,
+	            0x780000: 0x104,
+	            0x880000: 0x4,
+	            0x980000: 0x100,
+	            0xa80000: 0x4010000,
+	            0xb80000: 0x10104,
+	            0xc80000: 0x10100,
+	            0xd80000: 0x4000104,
+	            0xe80000: 0x4010104,
+	            0xf80000: 0x4000000,
+	            0x1000000: 0x4010100,
+	            0x1100000: 0x10004,
+	            0x1200000: 0x10000,
+	            0x1300000: 0x4000100,
+	            0x1400000: 0x100,
+	            0x1500000: 0x4010104,
+	            0x1600000: 0x4000004,
+	            0x1700000: 0x0,
+	            0x1800000: 0x4000104,
+	            0x1900000: 0x4000000,
+	            0x1a00000: 0x4,
+	            0x1b00000: 0x10100,
+	            0x1c00000: 0x4010000,
+	            0x1d00000: 0x104,
+	            0x1e00000: 0x10104,
+	            0x1f00000: 0x4010004,
+	            0x1080000: 0x4000000,
+	            0x1180000: 0x104,
+	            0x1280000: 0x4010100,
+	            0x1380000: 0x0,
+	            0x1480000: 0x10004,
+	            0x1580000: 0x4000100,
+	            0x1680000: 0x100,
+	            0x1780000: 0x4010004,
+	            0x1880000: 0x10000,
+	            0x1980000: 0x4010104,
+	            0x1a80000: 0x10104,
+	            0x1b80000: 0x4000004,
+	            0x1c80000: 0x4000104,
+	            0x1d80000: 0x4010000,
+	            0x1e80000: 0x4,
+	            0x1f80000: 0x10100
+	        },
+	        {
+	            0x0: 0x80401000,
+	            0x10000: 0x80001040,
+	            0x20000: 0x401040,
+	            0x30000: 0x80400000,
+	            0x40000: 0x0,
+	            0x50000: 0x401000,
+	            0x60000: 0x80000040,
+	            0x70000: 0x400040,
+	            0x80000: 0x80000000,
+	            0x90000: 0x400000,
+	            0xa0000: 0x40,
+	            0xb0000: 0x80001000,
+	            0xc0000: 0x80400040,
+	            0xd0000: 0x1040,
+	            0xe0000: 0x1000,
+	            0xf0000: 0x80401040,
+	            0x8000: 0x80001040,
+	            0x18000: 0x40,
+	            0x28000: 0x80400040,
+	            0x38000: 0x80001000,
+	            0x48000: 0x401000,
+	            0x58000: 0x80401040,
+	            0x68000: 0x0,
+	            0x78000: 0x80400000,
+	            0x88000: 0x1000,
+	            0x98000: 0x80401000,
+	            0xa8000: 0x400000,
+	            0xb8000: 0x1040,
+	            0xc8000: 0x80000000,
+	            0xd8000: 0x400040,
+	            0xe8000: 0x401040,
+	            0xf8000: 0x80000040,
+	            0x100000: 0x400040,
+	            0x110000: 0x401000,
+	            0x120000: 0x80000040,
+	            0x130000: 0x0,
+	            0x140000: 0x1040,
+	            0x150000: 0x80400040,
+	            0x160000: 0x80401000,
+	            0x170000: 0x80001040,
+	            0x180000: 0x80401040,
+	            0x190000: 0x80000000,
+	            0x1a0000: 0x80400000,
+	            0x1b0000: 0x401040,
+	            0x1c0000: 0x80001000,
+	            0x1d0000: 0x400000,
+	            0x1e0000: 0x40,
+	            0x1f0000: 0x1000,
+	            0x108000: 0x80400000,
+	            0x118000: 0x80401040,
+	            0x128000: 0x0,
+	            0x138000: 0x401000,
+	            0x148000: 0x400040,
+	            0x158000: 0x80000000,
+	            0x168000: 0x80001040,
+	            0x178000: 0x40,
+	            0x188000: 0x80000040,
+	            0x198000: 0x1000,
+	            0x1a8000: 0x80001000,
+	            0x1b8000: 0x80400040,
+	            0x1c8000: 0x1040,
+	            0x1d8000: 0x80401000,
+	            0x1e8000: 0x400000,
+	            0x1f8000: 0x401040
+	        },
+	        {
+	            0x0: 0x80,
+	            0x1000: 0x1040000,
+	            0x2000: 0x40000,
+	            0x3000: 0x20000000,
+	            0x4000: 0x20040080,
+	            0x5000: 0x1000080,
+	            0x6000: 0x21000080,
+	            0x7000: 0x40080,
+	            0x8000: 0x1000000,
+	            0x9000: 0x20040000,
+	            0xa000: 0x20000080,
+	            0xb000: 0x21040080,
+	            0xc000: 0x21040000,
+	            0xd000: 0x0,
+	            0xe000: 0x1040080,
+	            0xf000: 0x21000000,
+	            0x800: 0x1040080,
+	            0x1800: 0x21000080,
+	            0x2800: 0x80,
+	            0x3800: 0x1040000,
+	            0x4800: 0x40000,
+	            0x5800: 0x20040080,
+	            0x6800: 0x21040000,
+	            0x7800: 0x20000000,
+	            0x8800: 0x20040000,
+	            0x9800: 0x0,
+	            0xa800: 0x21040080,
+	            0xb800: 0x1000080,
+	            0xc800: 0x20000080,
+	            0xd800: 0x21000000,
+	            0xe800: 0x1000000,
+	            0xf800: 0x40080,
+	            0x10000: 0x40000,
+	            0x11000: 0x80,
+	            0x12000: 0x20000000,
+	            0x13000: 0x21000080,
+	            0x14000: 0x1000080,
+	            0x15000: 0x21040000,
+	            0x16000: 0x20040080,
+	            0x17000: 0x1000000,
+	            0x18000: 0x21040080,
+	            0x19000: 0x21000000,
+	            0x1a000: 0x1040000,
+	            0x1b000: 0x20040000,
+	            0x1c000: 0x40080,
+	            0x1d000: 0x20000080,
+	            0x1e000: 0x0,
+	            0x1f000: 0x1040080,
+	            0x10800: 0x21000080,
+	            0x11800: 0x1000000,
+	            0x12800: 0x1040000,
+	            0x13800: 0x20040080,
+	            0x14800: 0x20000000,
+	            0x15800: 0x1040080,
+	            0x16800: 0x80,
+	            0x17800: 0x21040000,
+	            0x18800: 0x40080,
+	            0x19800: 0x21040080,
+	            0x1a800: 0x0,
+	            0x1b800: 0x21000000,
+	            0x1c800: 0x1000080,
+	            0x1d800: 0x40000,
+	            0x1e800: 0x20040000,
+	            0x1f800: 0x20000080
+	        },
+	        {
+	            0x0: 0x10000008,
+	            0x100: 0x2000,
+	            0x200: 0x10200000,
+	            0x300: 0x10202008,
+	            0x400: 0x10002000,
+	            0x500: 0x200000,
+	            0x600: 0x200008,
+	            0x700: 0x10000000,
+	            0x800: 0x0,
+	            0x900: 0x10002008,
+	            0xa00: 0x202000,
+	            0xb00: 0x8,
+	            0xc00: 0x10200008,
+	            0xd00: 0x202008,
+	            0xe00: 0x2008,
+	            0xf00: 0x10202000,
+	            0x80: 0x10200000,
+	            0x180: 0x10202008,
+	            0x280: 0x8,
+	            0x380: 0x200000,
+	            0x480: 0x202008,
+	            0x580: 0x10000008,
+	            0x680: 0x10002000,
+	            0x780: 0x2008,
+	            0x880: 0x200008,
+	            0x980: 0x2000,
+	            0xa80: 0x10002008,
+	            0xb80: 0x10200008,
+	            0xc80: 0x0,
+	            0xd80: 0x10202000,
+	            0xe80: 0x202000,
+	            0xf80: 0x10000000,
+	            0x1000: 0x10002000,
+	            0x1100: 0x10200008,
+	            0x1200: 0x10202008,
+	            0x1300: 0x2008,
+	            0x1400: 0x200000,
+	            0x1500: 0x10000000,
+	            0x1600: 0x10000008,
+	            0x1700: 0x202000,
+	            0x1800: 0x202008,
+	            0x1900: 0x0,
+	            0x1a00: 0x8,
+	            0x1b00: 0x10200000,
+	            0x1c00: 0x2000,
+	            0x1d00: 0x10002008,
+	            0x1e00: 0x10202000,
+	            0x1f00: 0x200008,
+	            0x1080: 0x8,
+	            0x1180: 0x202000,
+	            0x1280: 0x200000,
+	            0x1380: 0x10000008,
+	            0x1480: 0x10002000,
+	            0x1580: 0x2008,
+	            0x1680: 0x10202008,
+	            0x1780: 0x10200000,
+	            0x1880: 0x10202000,
+	            0x1980: 0x10200008,
+	            0x1a80: 0x2000,
+	            0x1b80: 0x202008,
+	            0x1c80: 0x200008,
+	            0x1d80: 0x0,
+	            0x1e80: 0x10000000,
+	            0x1f80: 0x10002008
+	        },
+	        {
+	            0x0: 0x100000,
+	            0x10: 0x2000401,
+	            0x20: 0x400,
+	            0x30: 0x100401,
+	            0x40: 0x2100401,
+	            0x50: 0x0,
+	            0x60: 0x1,
+	            0x70: 0x2100001,
+	            0x80: 0x2000400,
+	            0x90: 0x100001,
+	            0xa0: 0x2000001,
+	            0xb0: 0x2100400,
+	            0xc0: 0x2100000,
+	            0xd0: 0x401,
+	            0xe0: 0x100400,
+	            0xf0: 0x2000000,
+	            0x8: 0x2100001,
+	            0x18: 0x0,
+	            0x28: 0x2000401,
+	            0x38: 0x2100400,
+	            0x48: 0x100000,
+	            0x58: 0x2000001,
+	            0x68: 0x2000000,
+	            0x78: 0x401,
+	            0x88: 0x100401,
+	            0x98: 0x2000400,
+	            0xa8: 0x2100000,
+	            0xb8: 0x100001,
+	            0xc8: 0x400,
+	            0xd8: 0x2100401,
+	            0xe8: 0x1,
+	            0xf8: 0x100400,
+	            0x100: 0x2000000,
+	            0x110: 0x100000,
+	            0x120: 0x2000401,
+	            0x130: 0x2100001,
+	            0x140: 0x100001,
+	            0x150: 0x2000400,
+	            0x160: 0x2100400,
+	            0x170: 0x100401,
+	            0x180: 0x401,
+	            0x190: 0x2100401,
+	            0x1a0: 0x100400,
+	            0x1b0: 0x1,
+	            0x1c0: 0x0,
+	            0x1d0: 0x2100000,
+	            0x1e0: 0x2000001,
+	            0x1f0: 0x400,
+	            0x108: 0x100400,
+	            0x118: 0x2000401,
+	            0x128: 0x2100001,
+	            0x138: 0x1,
+	            0x148: 0x2000000,
+	            0x158: 0x100000,
+	            0x168: 0x401,
+	            0x178: 0x2100400,
+	            0x188: 0x2000001,
+	            0x198: 0x2100000,
+	            0x1a8: 0x0,
+	            0x1b8: 0x2100401,
+	            0x1c8: 0x100401,
+	            0x1d8: 0x400,
+	            0x1e8: 0x2000400,
+	            0x1f8: 0x100001
+	        },
+	        {
+	            0x0: 0x8000820,
+	            0x1: 0x20000,
+	            0x2: 0x8000000,
+	            0x3: 0x20,
+	            0x4: 0x20020,
+	            0x5: 0x8020820,
+	            0x6: 0x8020800,
+	            0x7: 0x800,
+	            0x8: 0x8020000,
+	            0x9: 0x8000800,
+	            0xa: 0x20800,
+	            0xb: 0x8020020,
+	            0xc: 0x820,
+	            0xd: 0x0,
+	            0xe: 0x8000020,
+	            0xf: 0x20820,
+	            0x80000000: 0x800,
+	            0x80000001: 0x8020820,
+	            0x80000002: 0x8000820,
+	            0x80000003: 0x8000000,
+	            0x80000004: 0x8020000,
+	            0x80000005: 0x20800,
+	            0x80000006: 0x20820,
+	            0x80000007: 0x20,
+	            0x80000008: 0x8000020,
+	            0x80000009: 0x820,
+	            0x8000000a: 0x20020,
+	            0x8000000b: 0x8020800,
+	            0x8000000c: 0x0,
+	            0x8000000d: 0x8020020,
+	            0x8000000e: 0x8000800,
+	            0x8000000f: 0x20000,
+	            0x10: 0x20820,
+	            0x11: 0x8020800,
+	            0x12: 0x20,
+	            0x13: 0x800,
+	            0x14: 0x8000800,
+	            0x15: 0x8000020,
+	            0x16: 0x8020020,
+	            0x17: 0x20000,
+	            0x18: 0x0,
+	            0x19: 0x20020,
+	            0x1a: 0x8020000,
+	            0x1b: 0x8000820,
+	            0x1c: 0x8020820,
+	            0x1d: 0x20800,
+	            0x1e: 0x820,
+	            0x1f: 0x8000000,
+	            0x80000010: 0x20000,
+	            0x80000011: 0x800,
+	            0x80000012: 0x8020020,
+	            0x80000013: 0x20820,
+	            0x80000014: 0x20,
+	            0x80000015: 0x8020000,
+	            0x80000016: 0x8000000,
+	            0x80000017: 0x8000820,
+	            0x80000018: 0x8020820,
+	            0x80000019: 0x8000020,
+	            0x8000001a: 0x8000800,
+	            0x8000001b: 0x0,
+	            0x8000001c: 0x20800,
+	            0x8000001d: 0x820,
+	            0x8000001e: 0x20020,
+	            0x8000001f: 0x8020800
+	        }
+	    ];
+
+	    // Masks that select the SBOX input
+	    var SBOX_MASK = [
+	        0xf8000001, 0x1f800000, 0x01f80000, 0x001f8000,
+	        0x0001f800, 0x00001f80, 0x000001f8, 0x8000001f
+	    ];
+
+	    /**
+	     * DES block cipher algorithm.
+	     */
+	    var DES = C_algo.DES = BlockCipher.extend({
+	        _doReset: function () {
+	            // Shortcuts
+	            var key = this._key;
+	            var keyWords = key.words;
+
+	            // Select 56 bits according to PC1
+	            var keyBits = [];
+	            for (var i = 0; i < 56; i++) {
+	                var keyBitPos = PC1[i] - 1;
+	                keyBits[i] = (keyWords[keyBitPos >>> 5] >>> (31 - keyBitPos % 32)) & 1;
+	            }
+
+	            // Assemble 16 subkeys
+	            var subKeys = this._subKeys = [];
+	            for (var nSubKey = 0; nSubKey < 16; nSubKey++) {
+	                // Create subkey
+	                var subKey = subKeys[nSubKey] = [];
+
+	                // Shortcut
+	                var bitShift = BIT_SHIFTS[nSubKey];
+
+	                // Select 48 bits according to PC2
+	                for (var i = 0; i < 24; i++) {
+	                    // Select from the left 28 key bits
+	                    subKey[(i / 6) | 0] |= keyBits[((PC2[i] - 1) + bitShift) % 28] << (31 - i % 6);
+
+	                    // Select from the right 28 key bits
+	                    subKey[4 + ((i / 6) | 0)] |= keyBits[28 + (((PC2[i + 24] - 1) + bitShift) % 28)] << (31 - i % 6);
+	                }
+
+	                // Since each subkey is applied to an expanded 32-bit input,
+	                // the subkey can be broken into 8 values scaled to 32-bits,
+	                // which allows the key to be used without expansion
+	                subKey[0] = (subKey[0] << 1) | (subKey[0] >>> 31);
+	                for (var i = 1; i < 7; i++) {
+	                    subKey[i] = subKey[i] >>> ((i - 1) * 4 + 3);
+	                }
+	                subKey[7] = (subKey[7] << 5) | (subKey[7] >>> 27);
+	            }
+
+	            // Compute inverse subkeys
+	            var invSubKeys = this._invSubKeys = [];
+	            for (var i = 0; i < 16; i++) {
+	                invSubKeys[i] = subKeys[15 - i];
+	            }
+	        },
+
+	        encryptBlock: function (M, offset) {
+	            this._doCryptBlock(M, offset, this._subKeys);
+	        },
+
+	        decryptBlock: function (M, offset) {
+	            this._doCryptBlock(M, offset, this._invSubKeys);
+	        },
+
+	        _doCryptBlock: function (M, offset, subKeys) {
+	            // Get input
+	            this._lBlock = M[offset];
+	            this._rBlock = M[offset + 1];
+
+	            // Initial permutation
+	            exchangeLR.call(this, 4,  0x0f0f0f0f);
+	            exchangeLR.call(this, 16, 0x0000ffff);
+	            exchangeRL.call(this, 2,  0x33333333);
+	            exchangeRL.call(this, 8,  0x00ff00ff);
+	            exchangeLR.call(this, 1,  0x55555555);
+
+	            // Rounds
+	            for (var round = 0; round < 16; round++) {
+	                // Shortcuts
+	                var subKey = subKeys[round];
+	                var lBlock = this._lBlock;
+	                var rBlock = this._rBlock;
+
+	                // Feistel function
+	                var f = 0;
+	                for (var i = 0; i < 8; i++) {
+	                    f |= SBOX_P[i][((rBlock ^ subKey[i]) & SBOX_MASK[i]) >>> 0];
+	                }
+	                this._lBlock = rBlock;
+	                this._rBlock = lBlock ^ f;
+	            }
+
+	            // Undo swap from last round
+	            var t = this._lBlock;
+	            this._lBlock = this._rBlock;
+	            this._rBlock = t;
+
+	            // Final permutation
+	            exchangeLR.call(this, 1,  0x55555555);
+	            exchangeRL.call(this, 8,  0x00ff00ff);
+	            exchangeRL.call(this, 2,  0x33333333);
+	            exchangeLR.call(this, 16, 0x0000ffff);
+	            exchangeLR.call(this, 4,  0x0f0f0f0f);
+
+	            // Set output
+	            M[offset] = this._lBlock;
+	            M[offset + 1] = this._rBlock;
+	        },
+
+	        keySize: 64/32,
+
+	        ivSize: 64/32,
+
+	        blockSize: 64/32
+	    });
+
+	    // Swap bits across the left and right words
+	    function exchangeLR(offset, mask) {
+	        var t = ((this._lBlock >>> offset) ^ this._rBlock) & mask;
+	        this._rBlock ^= t;
+	        this._lBlock ^= t << offset;
+	    }
+
+	    function exchangeRL(offset, mask) {
+	        var t = ((this._rBlock >>> offset) ^ this._lBlock) & mask;
+	        this._lBlock ^= t;
+	        this._rBlock ^= t << offset;
+	    }
+
+	    /**
+	     * Shortcut functions to the cipher's object interface.
+	     *
+	     * @example
+	     *
+	     *     var ciphertext = CryptoJS.DES.encrypt(message, key, cfg);
+	     *     var plaintext  = CryptoJS.DES.decrypt(ciphertext, key, cfg);
+	     */
+	    C.DES = BlockCipher._createHelper(DES);
+
+	    /**
+	     * Triple-DES block cipher algorithm.
+	     */
+	    var TripleDES = C_algo.TripleDES = BlockCipher.extend({
+	        _doReset: function () {
+	            // Shortcuts
+	            var key = this._key;
+	            var keyWords = key.words;
+	            // Make sure the key length is valid (64, 128 or >= 192 bit)
+	            if (keyWords.length !== 2 && keyWords.length !== 4 && keyWords.length < 6) {
+	                throw new Error('Invalid key length - 3DES requires the key length to be 64, 128, 192 or >192.');
+	            }
+
+	            // Extend the key according to the keying options defined in 3DES standard
+	            var key1 = keyWords.slice(0, 2);
+	            var key2 = keyWords.length < 4 ? keyWords.slice(0, 2) : keyWords.slice(2, 4);
+	            var key3 = keyWords.length < 6 ? keyWords.slice(0, 2) : keyWords.slice(4, 6);
+
+	            // Create DES instances
+	            this._des1 = DES.createEncryptor(WordArray.create(key1));
+	            this._des2 = DES.createEncryptor(WordArray.create(key2));
+	            this._des3 = DES.createEncryptor(WordArray.create(key3));
+	        },
+
+	        encryptBlock: function (M, offset) {
+	            this._des1.encryptBlock(M, offset);
+	            this._des2.decryptBlock(M, offset);
+	            this._des3.encryptBlock(M, offset);
+	        },
+
+	        decryptBlock: function (M, offset) {
+	            this._des3.decryptBlock(M, offset);
+	            this._des2.encryptBlock(M, offset);
+	            this._des1.decryptBlock(M, offset);
+	        },
+
+	        keySize: 192/32,
+
+	        ivSize: 64/32,
+
+	        blockSize: 64/32
+	    });
+
+	    /**
+	     * Shortcut functions to the cipher's object interface.
+	     *
+	     * @example
+	     *
+	     *     var ciphertext = CryptoJS.TripleDES.encrypt(message, key, cfg);
+	     *     var plaintext  = CryptoJS.TripleDES.decrypt(ciphertext, key, cfg);
+	     */
+	    C.TripleDES = BlockCipher._createHelper(TripleDES);
+	}());
+
+
+	return CryptoJS.TripleDES;
+
+}));
+
+/***/ }),
+
+/***/ 4938:
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(8249));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	(function (undefined) {
+	    // Shortcuts
+	    var C = CryptoJS;
+	    var C_lib = C.lib;
+	    var Base = C_lib.Base;
+	    var X32WordArray = C_lib.WordArray;
+
+	    /**
+	     * x64 namespace.
+	     */
+	    var C_x64 = C.x64 = {};
+
+	    /**
+	     * A 64-bit word.
+	     */
+	    var X64Word = C_x64.Word = Base.extend({
+	        /**
+	         * Initializes a newly created 64-bit word.
+	         *
+	         * @param {number} high The high 32 bits.
+	         * @param {number} low The low 32 bits.
+	         *
+	         * @example
+	         *
+	         *     var x64Word = CryptoJS.x64.Word.create(0x00010203, 0x04050607);
+	         */
+	        init: function (high, low) {
+	            this.high = high;
+	            this.low = low;
+	        }
+
+	        /**
+	         * Bitwise NOTs this word.
+	         *
+	         * @return {X64Word} A new x64-Word object after negating.
+	         *
+	         * @example
+	         *
+	         *     var negated = x64Word.not();
+	         */
+	        // not: function () {
+	            // var high = ~this.high;
+	            // var low = ~this.low;
+
+	            // return X64Word.create(high, low);
+	        // },
+
+	        /**
+	         * Bitwise ANDs this word with the passed word.
+	         *
+	         * @param {X64Word} word The x64-Word to AND with this word.
+	         *
+	         * @return {X64Word} A new x64-Word object after ANDing.
+	         *
+	         * @example
+	         *
+	         *     var anded = x64Word.and(anotherX64Word);
+	         */
+	        // and: function (word) {
+	            // var high = this.high & word.high;
+	            // var low = this.low & word.low;
+
+	            // return X64Word.create(high, low);
+	        // },
+
+	        /**
+	         * Bitwise ORs this word with the passed word.
+	         *
+	         * @param {X64Word} word The x64-Word to OR with this word.
+	         *
+	         * @return {X64Word} A new x64-Word object after ORing.
+	         *
+	         * @example
+	         *
+	         *     var ored = x64Word.or(anotherX64Word);
+	         */
+	        // or: function (word) {
+	            // var high = this.high | word.high;
+	            // var low = this.low | word.low;
+
+	            // return X64Word.create(high, low);
+	        // },
+
+	        /**
+	         * Bitwise XORs this word with the passed word.
+	         *
+	         * @param {X64Word} word The x64-Word to XOR with this word.
+	         *
+	         * @return {X64Word} A new x64-Word object after XORing.
+	         *
+	         * @example
+	         *
+	         *     var xored = x64Word.xor(anotherX64Word);
+	         */
+	        // xor: function (word) {
+	            // var high = this.high ^ word.high;
+	            // var low = this.low ^ word.low;
+
+	            // return X64Word.create(high, low);
+	        // },
+
+	        /**
+	         * Shifts this word n bits to the left.
+	         *
+	         * @param {number} n The number of bits to shift.
+	         *
+	         * @return {X64Word} A new x64-Word object after shifting.
+	         *
+	         * @example
+	         *
+	         *     var shifted = x64Word.shiftL(25);
+	         */
+	        // shiftL: function (n) {
+	            // if (n < 32) {
+	                // var high = (this.high << n) | (this.low >>> (32 - n));
+	                // var low = this.low << n;
+	            // } else {
+	                // var high = this.low << (n - 32);
+	                // var low = 0;
+	            // }
+
+	            // return X64Word.create(high, low);
+	        // },
+
+	        /**
+	         * Shifts this word n bits to the right.
+	         *
+	         * @param {number} n The number of bits to shift.
+	         *
+	         * @return {X64Word} A new x64-Word object after shifting.
+	         *
+	         * @example
+	         *
+	         *     var shifted = x64Word.shiftR(7);
+	         */
+	        // shiftR: function (n) {
+	            // if (n < 32) {
+	                // var low = (this.low >>> n) | (this.high << (32 - n));
+	                // var high = this.high >>> n;
+	            // } else {
+	                // var low = this.high >>> (n - 32);
+	                // var high = 0;
+	            // }
+
+	            // return X64Word.create(high, low);
+	        // },
+
+	        /**
+	         * Rotates this word n bits to the left.
+	         *
+	         * @param {number} n The number of bits to rotate.
+	         *
+	         * @return {X64Word} A new x64-Word object after rotating.
+	         *
+	         * @example
+	         *
+	         *     var rotated = x64Word.rotL(25);
+	         */
+	        // rotL: function (n) {
+	            // return this.shiftL(n).or(this.shiftR(64 - n));
+	        // },
+
+	        /**
+	         * Rotates this word n bits to the right.
+	         *
+	         * @param {number} n The number of bits to rotate.
+	         *
+	         * @return {X64Word} A new x64-Word object after rotating.
+	         *
+	         * @example
+	         *
+	         *     var rotated = x64Word.rotR(7);
+	         */
+	        // rotR: function (n) {
+	            // return this.shiftR(n).or(this.shiftL(64 - n));
+	        // },
+
+	        /**
+	         * Adds this word with the passed word.
+	         *
+	         * @param {X64Word} word The x64-Word to add with this word.
+	         *
+	         * @return {X64Word} A new x64-Word object after adding.
+	         *
+	         * @example
+	         *
+	         *     var added = x64Word.add(anotherX64Word);
+	         */
+	        // add: function (word) {
+	            // var low = (this.low + word.low) | 0;
+	            // var carry = (low >>> 0) < (this.low >>> 0) ? 1 : 0;
+	            // var high = (this.high + word.high + carry) | 0;
+
+	            // return X64Word.create(high, low);
+	        // }
+	    });
+
+	    /**
+	     * An array of 64-bit words.
+	     *
+	     * @property {Array} words The array of CryptoJS.x64.Word objects.
+	     * @property {number} sigBytes The number of significant bytes in this word array.
+	     */
+	    var X64WordArray = C_x64.WordArray = Base.extend({
+	        /**
+	         * Initializes a newly created word array.
+	         *
+	         * @param {Array} words (Optional) An array of CryptoJS.x64.Word objects.
+	         * @param {number} sigBytes (Optional) The number of significant bytes in the words.
+	         *
+	         * @example
+	         *
+	         *     var wordArray = CryptoJS.x64.WordArray.create();
+	         *
+	         *     var wordArray = CryptoJS.x64.WordArray.create([
+	         *         CryptoJS.x64.Word.create(0x00010203, 0x04050607),
+	         *         CryptoJS.x64.Word.create(0x18191a1b, 0x1c1d1e1f)
+	         *     ]);
+	         *
+	         *     var wordArray = CryptoJS.x64.WordArray.create([
+	         *         CryptoJS.x64.Word.create(0x00010203, 0x04050607),
+	         *         CryptoJS.x64.Word.create(0x18191a1b, 0x1c1d1e1f)
+	         *     ], 10);
+	         */
+	        init: function (words, sigBytes) {
+	            words = this.words = words || [];
+
+	            if (sigBytes != undefined) {
+	                this.sigBytes = sigBytes;
+	            } else {
+	                this.sigBytes = words.length * 8;
+	            }
+	        },
+
+	        /**
+	         * Converts this 64-bit word array to a 32-bit word array.
+	         *
+	         * @return {CryptoJS.lib.WordArray} This word array's data as a 32-bit word array.
+	         *
+	         * @example
+	         *
+	         *     var x32WordArray = x64WordArray.toX32();
+	         */
+	        toX32: function () {
+	            // Shortcuts
+	            var x64Words = this.words;
+	            var x64WordsLength = x64Words.length;
+
+	            // Convert
+	            var x32Words = [];
+	            for (var i = 0; i < x64WordsLength; i++) {
+	                var x64Word = x64Words[i];
+	                x32Words.push(x64Word.high);
+	                x32Words.push(x64Word.low);
+	            }
+
+	            return X32WordArray.create(x32Words, this.sigBytes);
+	        },
+
+	        /**
+	         * Creates a copy of this word array.
+	         *
+	         * @return {X64WordArray} The clone.
+	         *
+	         * @example
+	         *
+	         *     var clone = x64WordArray.clone();
+	         */
+	        clone: function () {
+	            var clone = Base.clone.call(this);
+
+	            // Clone "words" array
+	            var words = clone.words = this.words.slice(0);
+
+	            // Clone each X64Word object
+	            var wordsLength = words.length;
+	            for (var i = 0; i < wordsLength; i++) {
+	                words[i] = words[i].clone();
+	            }
+
+	            return clone;
+	        }
+	    });
+	}());
+
+
+	return CryptoJS;
+
+}));
+
+/***/ }),
+
+/***/ 7158:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -1270,114 +6961,7 @@ return EvEmitter;
 
 /***/ }),
 
-/***/ 334:
-/***/ (function() {
-
-// focus - focusOptions - preventScroll polyfill
-(function() {
-  if (
-    typeof window === "undefined" ||
-    typeof document === "undefined" ||
-    typeof HTMLElement === "undefined"
-  ) {
-    return;
-  }
-
-  var supportsPreventScrollOption = false;
-  try {
-    var focusElem = document.createElement("div");
-    focusElem.addEventListener(
-      "focus",
-      function(event) {
-        event.preventDefault();
-        event.stopPropagation();
-      },
-      true
-    );
-    focusElem.focus(
-      Object.defineProperty({}, "preventScroll", {
-        get: function() {
-          // Edge v18 gives a false positive for supporting inputs
-          if (
-            navigator &&
-            typeof navigator.userAgent !== 'undefined' &&
-            navigator.userAgent &&
-            navigator.userAgent.match(/Edge\/1[7-8]/)) {
-              return supportsPreventScrollOption = false
-          }
-
-          supportsPreventScrollOption = true;
-        }
-      })
-    );
-  } catch (e) {}
-
-  if (
-    HTMLElement.prototype.nativeFocus === undefined &&
-    !supportsPreventScrollOption
-  ) {
-    HTMLElement.prototype.nativeFocus = HTMLElement.prototype.focus;
-
-    var calcScrollableElements = function(element) {
-      var parent = element.parentNode;
-      var scrollableElements = [];
-      var rootScrollingElement =
-        document.scrollingElement || document.documentElement;
-
-      while (parent && parent !== rootScrollingElement) {
-        if (
-          parent.offsetHeight < parent.scrollHeight ||
-          parent.offsetWidth < parent.scrollWidth
-        ) {
-          scrollableElements.push([
-            parent,
-            parent.scrollTop,
-            parent.scrollLeft
-          ]);
-        }
-        parent = parent.parentNode;
-      }
-      parent = rootScrollingElement;
-      scrollableElements.push([parent, parent.scrollTop, parent.scrollLeft]);
-
-      return scrollableElements;
-    };
-
-    var restoreScrollPosition = function(scrollableElements) {
-      for (var i = 0; i < scrollableElements.length; i++) {
-        scrollableElements[i][0].scrollTop = scrollableElements[i][1];
-        scrollableElements[i][0].scrollLeft = scrollableElements[i][2];
-      }
-      scrollableElements = [];
-    };
-
-    var patchedFocus = function(args) {
-      if (args && args.preventScroll) {
-        var evScrollableElements = calcScrollableElements(this);
-        if (typeof setTimeout === 'function') {
-          var thisElem = this;
-          setTimeout(function () {
-            thisElem.nativeFocus();
-            restoreScrollPosition(evScrollableElements);
-          }, 0);
-        } else {
-          this.nativeFocus();
-          restoreScrollPosition(evScrollableElements);
-        }
-      }
-      else {
-        this.nativeFocus();
-      }
-    };
-
-    HTMLElement.prototype.focus = patchedFocus;
-  }
-})();
-
-
-/***/ }),
-
-/***/ 648:
+/***/ 7648:
 /***/ (function(module) {
 
 "use strict";
@@ -1437,13 +7021,13 @@ module.exports = function bind(that) {
 
 /***/ }),
 
-/***/ 612:
+/***/ 8612:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
 
-var implementation = __webpack_require__(648);
+var implementation = __webpack_require__(7648);
 
 module.exports = Function.prototype.bind || implementation;
 
@@ -1498,8 +7082,8 @@ var ThrowTypeError = $gOPD
 	}())
 	: throwTypeError;
 
-var hasSymbols = __webpack_require__(405)();
-var hasProto = __webpack_require__(185)();
+var hasSymbols = __webpack_require__(1405)();
+var hasProto = __webpack_require__(8185)();
 
 var getProto = Object.getPrototypeOf || (
 	hasProto
@@ -1669,8 +7253,8 @@ var LEGACY_ALIASES = {
 	'%WeakSetPrototype%': ['WeakSet', 'prototype']
 };
 
-var bind = __webpack_require__(612);
-var hasOwn = __webpack_require__(642);
+var bind = __webpack_require__(8612);
+var hasOwn = __webpack_require__(7642);
 var $concat = bind.call(Function.call, Array.prototype.concat);
 var $spliceApply = bind.call(Function.apply, Array.prototype.splice);
 var $replace = bind.call(Function.call, String.prototype.replace);
@@ -1809,7 +7393,7 @@ module.exports = function GetIntrinsic(name, allowMissing) {
 
 /***/ }),
 
-/***/ 185:
+/***/ 8185:
 /***/ (function(module) {
 
 "use strict";
@@ -1828,14 +7412,14 @@ module.exports = function hasProto() {
 
 /***/ }),
 
-/***/ 405:
+/***/ 1405:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
 
 var origSymbol = typeof Symbol !== 'undefined' && Symbol;
-var hasSymbolSham = __webpack_require__(419);
+var hasSymbolSham = __webpack_require__(5419);
 
 module.exports = function hasNativeSymbols() {
 	if (typeof origSymbol !== 'function') { return false; }
@@ -1849,7 +7433,7 @@ module.exports = function hasNativeSymbols() {
 
 /***/ }),
 
-/***/ 419:
+/***/ 5419:
 /***/ (function(module) {
 
 "use strict";
@@ -1899,20 +7483,20 @@ module.exports = function hasSymbols() {
 
 /***/ }),
 
-/***/ 642:
+/***/ 7642:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
 
-var bind = __webpack_require__(612);
+var bind = __webpack_require__(8612);
 
 module.exports = bind.call(Function.call, Object.prototype.hasOwnProperty);
 
 
 /***/ }),
 
-/***/ 564:
+/***/ 7564:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -1929,7 +7513,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
   if ( true ) {
     // AMD
     !(__WEBPACK_AMD_DEFINE_ARRAY__ = [
-      __webpack_require__(158)
+      __webpack_require__(7158)
     ], __WEBPACK_AMD_DEFINE_RESULT__ = (function( EvEmitter ) {
       return factory( window, EvEmitter );
     }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
@@ -2285,7 +7869,7 @@ return ImagesLoaded;
 
 /***/ }),
 
-/***/ 792:
+/***/ 9792:
 /***/ (function() {
 
 // extracted by mini-css-extract-plugin
@@ -2362,7 +7946,7 @@ function addNumericSeparator(num, str) {
     return $replace.call(str, sepRegex, '$&_');
 }
 
-var utilInspect = __webpack_require__(654);
+var utilInspect = __webpack_require__(4654);
 var inspectCustom = utilInspect.custom;
 var inspectSymbol = isSymbol(inspectCustom) ? inspectCustom : null;
 
@@ -2815,7 +8399,7 @@ function arrObjKeys(obj, inspect) {
 
 /***/ }),
 
-/***/ 798:
+/***/ 5798:
 /***/ (function(module) {
 
 "use strict";
@@ -2852,9 +8436,9 @@ module.exports = {
 "use strict";
 
 
-var stringify = __webpack_require__(261);
-var parse = __webpack_require__(235);
-var formats = __webpack_require__(798);
+var stringify = __webpack_require__(8261);
+var parse = __webpack_require__(5235);
+var formats = __webpack_require__(5798);
 
 module.exports = {
     formats: formats,
@@ -2865,13 +8449,13 @@ module.exports = {
 
 /***/ }),
 
-/***/ 235:
+/***/ 5235:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(769);
+var utils = __webpack_require__(2769);
 
 var has = Object.prototype.hasOwnProperty;
 var isArray = Array.isArray;
@@ -3137,15 +8721,15 @@ module.exports = function (str, opts) {
 
 /***/ }),
 
-/***/ 261:
+/***/ 8261:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
 
-var getSideChannel = __webpack_require__(478);
-var utils = __webpack_require__(769);
-var formats = __webpack_require__(798);
+var getSideChannel = __webpack_require__(7478);
+var utils = __webpack_require__(2769);
+var formats = __webpack_require__(5798);
 var has = Object.prototype.hasOwnProperty;
 
 var arrayPrefixGenerators = {
@@ -3465,13 +9049,13 @@ module.exports = function (object, opts) {
 
 /***/ }),
 
-/***/ 769:
+/***/ 2769:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
 
-var formats = __webpack_require__(798);
+var formats = __webpack_require__(5798);
 
 var has = Object.prototype.hasOwnProperty;
 var isArray = Array.isArray;
@@ -3725,14 +9309,14 @@ module.exports = {
 
 /***/ }),
 
-/***/ 478:
+/***/ 7478:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
 
 var GetIntrinsic = __webpack_require__(210);
-var callBound = __webpack_require__(924);
+var callBound = __webpack_require__(1924);
 var inspect = __webpack_require__(631);
 
 var $TypeError = GetIntrinsic('%TypeError%');
@@ -3857,7 +9441,7 @@ module.exports = function getSideChannel() {
 
 /***/ }),
 
-/***/ 379:
+/***/ 3379:
 /***/ (function(module) {
 
 "use strict";
@@ -3989,7 +9573,7 @@ module.exports = insertBySelector;
 
 /***/ }),
 
-/***/ 216:
+/***/ 9216:
 /***/ (function(module) {
 
 "use strict";
@@ -4006,7 +9590,7 @@ module.exports = insertStyleElement;
 
 /***/ }),
 
-/***/ 565:
+/***/ 3565:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
@@ -4023,7 +9607,7 @@ module.exports = setAttributesWithoutAttributes;
 
 /***/ }),
 
-/***/ 795:
+/***/ 7795:
 /***/ (function(module) {
 
 "use strict";
@@ -4091,7 +9675,7 @@ module.exports = domAPI;
 
 /***/ }),
 
-/***/ 589:
+/***/ 4589:
 /***/ (function(module) {
 
 "use strict";
@@ -4112,14 +9696,14 @@ module.exports = styleTagTransform;
 
 /***/ }),
 
-/***/ 480:
+/***/ 2480:
 /***/ (function() {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 654:
+/***/ 4654:
 /***/ (function() {
 
 /* (ignored) */
@@ -4240,6 +9824,7 @@ __webpack_require__.d(common_utils_namespaceObject, {
   hasBrowserEnv: function() { return hasBrowserEnv; },
   hasStandardBrowserEnv: function() { return hasStandardBrowserEnv; },
   hasStandardBrowserWebWorkerEnv: function() { return hasStandardBrowserWebWorkerEnv; },
+  navigator: function() { return _navigator; },
   origin: function() { return origin; }
 });
 
@@ -4261,6 +9846,7 @@ function bind(fn, thisArg) {
 
 const {toString: utils_toString} = Object.prototype;
 const {getPrototypeOf} = Object;
+const {iterator, toStringTag} = Symbol;
 
 const kindOf = (cache => thing => {
     const str = utils_toString.call(thing);
@@ -4387,7 +9973,7 @@ const isPlainObject = (val) => {
   }
 
   const prototype = getPrototypeOf(val);
-  return (prototype === null || prototype === Object.prototype || Object.getPrototypeOf(prototype) === null) && !(Symbol.toStringTag in val) && !(Symbol.iterator in val);
+  return (prototype === null || prototype === Object.prototype || Object.getPrototypeOf(prototype) === null) && !(toStringTag in val) && !(iterator in val);
 }
 
 /**
@@ -4738,13 +10324,13 @@ const isTypedArray = (TypedArray => {
  * @returns {void}
  */
 const forEachEntry = (obj, fn) => {
-  const generator = obj && obj[Symbol.iterator];
+  const generator = obj && obj[iterator];
 
-  const iterator = generator.call(obj);
+  const _iterator = generator.call(obj);
 
   let result;
 
-  while ((result = iterator.next()) && !result.done) {
+  while ((result = _iterator.next()) && !result.done) {
     const pair = result.value;
     fn.call(obj, pair[0], pair[1]);
   }
@@ -4857,26 +10443,6 @@ const toFiniteNumber = (value, defaultValue) => {
   return value != null && Number.isFinite(value = +value) ? value : defaultValue;
 }
 
-const ALPHA = 'abcdefghijklmnopqrstuvwxyz'
-
-const DIGIT = '0123456789';
-
-const ALPHABET = {
-  DIGIT,
-  ALPHA,
-  ALPHA_DIGIT: ALPHA + ALPHA.toUpperCase() + DIGIT
-}
-
-const generateString = (size = 16, alphabet = ALPHABET.ALPHA_DIGIT) => {
-  let str = '';
-  const {length} = alphabet;
-  while (size--) {
-    str += alphabet[Math.random() * length|0]
-  }
-
-  return str;
-}
-
 /**
  * If the thing is a FormData object, return true, otherwise return false.
  *
@@ -4885,7 +10451,7 @@ const generateString = (size = 16, alphabet = ALPHABET.ALPHA_DIGIT) => {
  * @returns {boolean}
  */
 function isSpecCompliantForm(thing) {
-  return !!(thing && isFunction(thing.append) && thing[Symbol.toStringTag] === 'FormData' && thing[Symbol.iterator]);
+  return !!(thing && isFunction(thing.append) && thing[toStringTag] === 'FormData' && thing[iterator]);
 }
 
 const toJSONObject = (obj) => {
@@ -4923,6 +10489,40 @@ const isAsyncFn = kindOfTest('AsyncFunction');
 
 const isThenable = (thing) =>
   thing && (isObject(thing) || isFunction(thing)) && isFunction(thing.then) && isFunction(thing.catch);
+
+// original code
+// https://github.com/DigitalBrainJS/AxiosPromise/blob/16deab13710ec09779922131f3fa5954320f83ab/lib/utils.js#L11-L34
+
+const _setImmediate = ((setImmediateSupported, postMessageSupported) => {
+  if (setImmediateSupported) {
+    return setImmediate;
+  }
+
+  return postMessageSupported ? ((token, callbacks) => {
+    _global.addEventListener("message", ({source, data}) => {
+      if (source === _global && data === token) {
+        callbacks.length && callbacks.shift()();
+      }
+    }, false);
+
+    return (cb) => {
+      callbacks.push(cb);
+      _global.postMessage(token, "*");
+    }
+  })(`axios@${Math.random()}`, []) : (cb) => setTimeout(cb);
+})(
+  typeof setImmediate === 'function',
+  isFunction(_global.postMessage)
+);
+
+const asap = typeof queueMicrotask !== 'undefined' ?
+  queueMicrotask.bind(_global) : ( typeof process !== 'undefined' && process.nextTick || _setImmediate);
+
+// *********************
+
+
+const isIterable = (thing) => thing != null && isFunction(thing[iterator]);
+
 
 /* harmony default export */ var utils = ({
   isArray,
@@ -4974,12 +10574,13 @@ const isThenable = (thing) =>
   findKey,
   global: _global,
   isContextDefined,
-  ALPHABET,
-  generateString,
   isSpecCompliantForm,
   toJSONObject,
   isAsyncFn,
-  isThenable
+  isThenable,
+  setImmediate: _setImmediate,
+  asap,
+  isIterable
 });
 
 ;// CONCATENATED MODULE: ./node_modules/axios/lib/core/AxiosError.js
@@ -5012,7 +10613,10 @@ function AxiosError(message, code, config, request, response) {
   code && (this.code = code);
   config && (this.config = config);
   request && (this.request = request);
-  response && (this.response = response);
+  if (response) {
+    this.response = response;
+    this.status = response.status ? response.status : null;
+  }
 }
 
 utils.inherits(AxiosError, Error, {
@@ -5032,7 +10636,7 @@ utils.inherits(AxiosError, Error, {
       // Axios
       config: utils.toJSONObject(this.config),
       code: this.code,
-      status: this.response && this.response.status ? this.response.status : null
+      status: this.status
     };
   }
 });
@@ -5398,7 +11002,7 @@ function buildURL_encode(val) {
  *
  * @param {string} url The base of the url (e.g., http://www.google.com)
  * @param {object} [params] The params to be appended
- * @param {?object} options
+ * @param {?(object|Function)} options
  *
  * @returns {string} The formatted url
  */
@@ -5409,6 +11013,12 @@ function buildURL(url, params, options) {
   }
   
   const _encode = options && options.encode || buildURL_encode;
+
+  if (utils.isFunction(options)) {
+    options = {
+      serialize: options
+    };
+  } 
 
   const serializeFn = options && options.serialize;
 
@@ -5550,6 +11160,8 @@ class InterceptorManager {
 ;// CONCATENATED MODULE: ./node_modules/axios/lib/platform/common/utils.js
 const hasBrowserEnv = typeof window !== 'undefined' && typeof document !== 'undefined';
 
+const _navigator = typeof navigator === 'object' && navigator || undefined;
+
 /**
  * Determine if we're running in a standard browser environment
  *
@@ -5567,10 +11179,8 @@ const hasBrowserEnv = typeof window !== 'undefined' && typeof document !== 'unde
  *
  * @returns {boolean}
  */
-const hasStandardBrowserEnv = (
-  (product) => {
-    return hasBrowserEnv && ['ReactNative', 'NativeScript', 'NS'].indexOf(product) < 0
-  })(typeof navigator !== 'undefined' && navigator.product);
+const hasStandardBrowserEnv = hasBrowserEnv &&
+  (!_navigator || ['ReactNative', 'NativeScript', 'NS'].indexOf(_navigator.product) < 0);
 
 /**
  * Determine if we're running in a standard browser webWorker environment
@@ -6043,10 +11653,18 @@ class AxiosHeaders {
       setHeaders(header, valueOrRewrite)
     } else if(utils.isString(header) && (header = header.trim()) && !isValidHeaderName(header)) {
       setHeaders(parseHeaders(header), valueOrRewrite);
-    } else if (utils.isHeaders(header)) {
-      for (const [key, value] of header.entries()) {
-        setHeader(value, key, rewrite);
+    } else if (utils.isObject(header) && utils.isIterable(header)) {
+      let obj = {}, dest, key;
+      for (const entry of header) {
+        if (!utils.isArray(entry)) {
+          throw TypeError('Object iterator must return a key-value pair');
+        }
+
+        obj[key = entry[0]] = (dest = obj[key]) ?
+          (utils.isArray(dest) ? [...dest, entry[1]] : [dest, entry[1]]) : entry[1];
       }
+
+      setHeaders(obj, valueOrRewrite)
     } else {
       header != null && setHeader(valueOrRewrite, header, rewrite);
     }
@@ -6186,6 +11804,10 @@ class AxiosHeaders {
 
   toString() {
     return Object.entries(this.toJSON()).map(([header, value]) => header + ': ' + value).join('\n');
+  }
+
+  getSetCookie() {
+    return this.get("set-cookie") || [];
   }
 
   get [Symbol.toStringTag]() {
@@ -6403,8 +12025,6 @@ function speedometer(samplesCount, min) {
 /* harmony default export */ var helpers_speedometer = (speedometer);
 
 ;// CONCATENATED MODULE: ./node_modules/axios/lib/helpers/throttle.js
-
-
 /**
  * Throttle decorator
  * @param {Function} fn
@@ -6413,28 +12033,39 @@ function speedometer(samplesCount, min) {
  */
 function throttle(fn, freq) {
   let timestamp = 0;
-  const threshold = 1000 / freq;
-  let timer = null;
-  return function throttled() {
-    const force = this === true;
+  let threshold = 1000 / freq;
+  let lastArgs;
+  let timer;
 
+  const invoke = (args, now = Date.now()) => {
+    timestamp = now;
+    lastArgs = null;
+    if (timer) {
+      clearTimeout(timer);
+      timer = null;
+    }
+    fn.apply(null, args);
+  }
+
+  const throttled = (...args) => {
     const now = Date.now();
-    if (force || now - timestamp > threshold) {
-      if (timer) {
-        clearTimeout(timer);
-        timer = null;
+    const passed = now - timestamp;
+    if ( passed >= threshold) {
+      invoke(args, now);
+    } else {
+      lastArgs = args;
+      if (!timer) {
+        timer = setTimeout(() => {
+          timer = null;
+          invoke(lastArgs)
+        }, threshold - passed);
       }
-      timestamp = now;
-      return fn.apply(null, arguments);
     }
-    if (!timer) {
-      timer = setTimeout(() => {
-        timer = null;
-        timestamp = Date.now();
-        return fn.apply(null, arguments);
-      }, threshold - (now - timestamp));
-    }
-  };
+  }
+
+  const flush = () => lastArgs && invoke(lastArgs);
+
+  return [throttled, flush];
 }
 
 /* harmony default export */ var helpers_throttle = (throttle);
@@ -6443,7 +12074,8 @@ function throttle(fn, freq) {
 
 
 
-/* harmony default export */ var progressEventReducer = ((listener, isDownloadStream, freq = 3) => {
+
+const progressEventReducer = (listener, isDownloadStream, freq = 3) => {
   let bytesNotified = 0;
   const _speedometer = helpers_speedometer(50, 250);
 
@@ -6464,83 +12096,41 @@ function throttle(fn, freq) {
       rate: rate ? rate : undefined,
       estimated: rate && total && inRange ? (total - loaded) / rate : undefined,
       event: e,
-      lengthComputable: total != null
+      lengthComputable: total != null,
+      [isDownloadStream ? 'download' : 'upload']: true
     };
-
-    data[isDownloadStream ? 'download' : 'upload'] = true;
 
     listener(data);
   }, freq);
-});
+}
+
+const progressEventDecorator = (total, throttled) => {
+  const lengthComputable = total != null;
+
+  return [(loaded) => throttled[0]({
+    lengthComputable,
+    total,
+    loaded
+  }), throttled[1]];
+}
+
+const asyncDecorator = (fn) => (...args) => utils.asap(() => fn(...args));
 
 ;// CONCATENATED MODULE: ./node_modules/axios/lib/helpers/isURLSameOrigin.js
 
 
+/* harmony default export */ var isURLSameOrigin = (platform.hasStandardBrowserEnv ? ((origin, isMSIE) => (url) => {
+  url = new URL(url, platform.origin);
 
-
-
-/* harmony default export */ var isURLSameOrigin = (platform.hasStandardBrowserEnv ?
-
-// Standard browser envs have full support of the APIs needed to test
-// whether the request URL is of the same origin as current location.
-  (function standardBrowserEnv() {
-    const msie = /(msie|trident)/i.test(navigator.userAgent);
-    const urlParsingNode = document.createElement('a');
-    let originURL;
-
-    /**
-    * Parse a URL to discover its components
-    *
-    * @param {String} url The URL to be parsed
-    * @returns {Object}
-    */
-    function resolveURL(url) {
-      let href = url;
-
-      if (msie) {
-        // IE needs attribute set twice to normalize properties
-        urlParsingNode.setAttribute('href', href);
-        href = urlParsingNode.href;
-      }
-
-      urlParsingNode.setAttribute('href', href);
-
-      // urlParsingNode provides the UrlUtils interface - http://url.spec.whatwg.org/#urlutils
-      return {
-        href: urlParsingNode.href,
-        protocol: urlParsingNode.protocol ? urlParsingNode.protocol.replace(/:$/, '') : '',
-        host: urlParsingNode.host,
-        search: urlParsingNode.search ? urlParsingNode.search.replace(/^\?/, '') : '',
-        hash: urlParsingNode.hash ? urlParsingNode.hash.replace(/^#/, '') : '',
-        hostname: urlParsingNode.hostname,
-        port: urlParsingNode.port,
-        pathname: (urlParsingNode.pathname.charAt(0) === '/') ?
-          urlParsingNode.pathname :
-          '/' + urlParsingNode.pathname
-      };
-    }
-
-    originURL = resolveURL(window.location.href);
-
-    /**
-    * Determine if a URL shares the same origin as the current location
-    *
-    * @param {String} requestURL The URL to test
-    * @returns {boolean} True if URL shares the same origin, otherwise false
-    */
-    return function isURLSameOrigin(requestURL) {
-      const parsed = (utils.isString(requestURL)) ? resolveURL(requestURL) : requestURL;
-      return (parsed.protocol === originURL.protocol &&
-          parsed.host === originURL.host);
-    };
-  })() :
-
-  // Non standard browser envs (web workers, react-native) lack needed support.
-  (function nonStandardBrowserEnv() {
-    return function isURLSameOrigin() {
-      return true;
-    };
-  })());
+  return (
+    origin.protocol === url.protocol &&
+    origin.host === url.host &&
+    (isMSIE || origin.port === url.port)
+  );
+})(
+  new URL(platform.origin),
+  platform.navigator && /(msie|trident)/i.test(platform.navigator.userAgent)
+) : () => true);
 
 ;// CONCATENATED MODULE: ./node_modules/axios/lib/helpers/cookies.js
 
@@ -6636,8 +12226,9 @@ function combineURLs(baseURL, relativeURL) {
  *
  * @returns {string} The combined full path
  */
-function buildFullPath(baseURL, requestedURL) {
-  if (baseURL && !isAbsoluteURL(requestedURL)) {
+function buildFullPath(baseURL, requestedURL, allowAbsoluteUrls) {
+  let isRelativeUrl = !isAbsoluteURL(requestedURL);
+  if (baseURL && (isRelativeUrl || allowAbsoluteUrls == false)) {
     return combineURLs(baseURL, requestedURL);
   }
   return requestedURL;
@@ -6665,7 +12256,7 @@ function mergeConfig(config1, config2) {
   config2 = config2 || {};
   const config = {};
 
-  function getMergedValue(target, source, caseless) {
+  function getMergedValue(target, source, prop, caseless) {
     if (utils.isPlainObject(target) && utils.isPlainObject(source)) {
       return utils.merge.call({caseless}, target, source);
     } else if (utils.isPlainObject(source)) {
@@ -6677,11 +12268,11 @@ function mergeConfig(config1, config2) {
   }
 
   // eslint-disable-next-line consistent-return
-  function mergeDeepProperties(a, b, caseless) {
+  function mergeDeepProperties(a, b, prop , caseless) {
     if (!utils.isUndefined(b)) {
-      return getMergedValue(a, b, caseless);
+      return getMergedValue(a, b, prop , caseless);
     } else if (!utils.isUndefined(a)) {
-      return getMergedValue(undefined, a, caseless);
+      return getMergedValue(undefined, a, prop , caseless);
     }
   }
 
@@ -6739,7 +12330,7 @@ function mergeConfig(config1, config2) {
     socketPath: defaultToConfig2,
     responseEncoding: defaultToConfig2,
     validateStatus: mergeDirectKeys,
-    headers: (a, b) => mergeDeepProperties(headersToObject(a), headersToObject(b), true)
+    headers: (a, b , prop) => mergeDeepProperties(headersToObject(a), headersToObject(b),prop, true)
   };
 
   utils.forEach(Object.keys(Object.assign({}, config1, config2)), function computeConfigValue(prop) {
@@ -6768,7 +12359,7 @@ function mergeConfig(config1, config2) {
 
   newConfig.headers = headers = core_AxiosHeaders.from(headers);
 
-  newConfig.url = buildURL(buildFullPath(newConfig.baseURL, newConfig.url), config.params, config.paramsSerializer);
+  newConfig.url = buildURL(buildFullPath(newConfig.baseURL, newConfig.url, newConfig.allowAbsoluteUrls), config.params, config.paramsSerializer);
 
   // HTTP basic authentication
   if (auth) {
@@ -6829,16 +12420,18 @@ const isXHRAdapterSupported = typeof XMLHttpRequest !== 'undefined';
     const _config = resolveConfig(config);
     let requestData = _config.data;
     const requestHeaders = core_AxiosHeaders.from(_config.headers).normalize();
-    let {responseType} = _config;
+    let {responseType, onUploadProgress, onDownloadProgress} = _config;
     let onCanceled;
-    function done() {
-      if (_config.cancelToken) {
-        _config.cancelToken.unsubscribe(onCanceled);
-      }
+    let uploadThrottled, downloadThrottled;
+    let flushUpload, flushDownload;
 
-      if (_config.signal) {
-        _config.signal.removeEventListener('abort', onCanceled);
-      }
+    function done() {
+      flushUpload && flushUpload(); // flush events
+      flushDownload && flushDownload(); // flush events
+
+      _config.cancelToken && _config.cancelToken.unsubscribe(onCanceled);
+
+      _config.signal && _config.signal.removeEventListener('abort', onCanceled);
     }
 
     let request = new XMLHttpRequest();
@@ -6908,7 +12501,7 @@ const isXHRAdapterSupported = typeof XMLHttpRequest !== 'undefined';
         return;
       }
 
-      reject(new core_AxiosError('Request aborted', core_AxiosError.ECONNABORTED, _config, request));
+      reject(new core_AxiosError('Request aborted', core_AxiosError.ECONNABORTED, config, request));
 
       // Clean up request
       request = null;
@@ -6918,7 +12511,7 @@ const isXHRAdapterSupported = typeof XMLHttpRequest !== 'undefined';
     request.onerror = function handleError() {
       // Real errors are hidden from us by the browser
       // onerror should only fire if it's a network error
-      reject(new core_AxiosError('Network Error', core_AxiosError.ERR_NETWORK, _config, request));
+      reject(new core_AxiosError('Network Error', core_AxiosError.ERR_NETWORK, config, request));
 
       // Clean up request
       request = null;
@@ -6934,7 +12527,7 @@ const isXHRAdapterSupported = typeof XMLHttpRequest !== 'undefined';
       reject(new core_AxiosError(
         timeoutErrorMessage,
         transitional.clarifyTimeoutError ? core_AxiosError.ETIMEDOUT : core_AxiosError.ECONNABORTED,
-        _config,
+        config,
         request));
 
       // Clean up request
@@ -6962,13 +12555,18 @@ const isXHRAdapterSupported = typeof XMLHttpRequest !== 'undefined';
     }
 
     // Handle progress if needed
-    if (typeof _config.onDownloadProgress === 'function') {
-      request.addEventListener('progress', progressEventReducer(_config.onDownloadProgress, true));
+    if (onDownloadProgress) {
+      ([downloadThrottled, flushDownload] = progressEventReducer(onDownloadProgress, true));
+      request.addEventListener('progress', downloadThrottled);
     }
 
     // Not all browsers support upload events
-    if (typeof _config.onUploadProgress === 'function' && request.upload) {
-      request.upload.addEventListener('progress', progressEventReducer(_config.onUploadProgress));
+    if (onUploadProgress && request.upload) {
+      ([uploadThrottled, flushUpload] = progressEventReducer(onUploadProgress));
+
+      request.upload.addEventListener('progress', uploadThrottled);
+
+      request.upload.addEventListener('loadend', flushUpload);
     }
 
     if (_config.cancelToken || _config.signal) {
@@ -7006,52 +12604,53 @@ const isXHRAdapterSupported = typeof XMLHttpRequest !== 'undefined';
 
 
 
+
 const composeSignals = (signals, timeout) => {
-  let controller = new AbortController();
+  const {length} = (signals = signals ? signals.filter(Boolean) : []);
 
-  let aborted;
+  if (timeout || length) {
+    let controller = new AbortController();
 
-  const onabort = function (cancel) {
-    if (!aborted) {
-      aborted = true;
-      unsubscribe();
-      const err = cancel instanceof Error ? cancel : this.reason;
-      controller.abort(err instanceof core_AxiosError ? err : new cancel_CanceledError(err instanceof Error ? err.message : err));
+    let aborted;
+
+    const onabort = function (reason) {
+      if (!aborted) {
+        aborted = true;
+        unsubscribe();
+        const err = reason instanceof Error ? reason : this.reason;
+        controller.abort(err instanceof core_AxiosError ? err : new cancel_CanceledError(err instanceof Error ? err.message : err));
+      }
     }
-  }
 
-  let timer = timeout && setTimeout(() => {
-    onabort(new core_AxiosError(`timeout ${timeout} of ms exceeded`, core_AxiosError.ETIMEDOUT))
-  }, timeout)
-
-  const unsubscribe = () => {
-    if (signals) {
-      timer && clearTimeout(timer);
+    let timer = timeout && setTimeout(() => {
       timer = null;
-      signals.forEach(signal => {
-        signal &&
-        (signal.removeEventListener ? signal.removeEventListener('abort', onabort) : signal.unsubscribe(onabort));
-      });
-      signals = null;
+      onabort(new core_AxiosError(`timeout ${timeout} of ms exceeded`, core_AxiosError.ETIMEDOUT))
+    }, timeout)
+
+    const unsubscribe = () => {
+      if (signals) {
+        timer && clearTimeout(timer);
+        timer = null;
+        signals.forEach(signal => {
+          signal.unsubscribe ? signal.unsubscribe(onabort) : signal.removeEventListener('abort', onabort);
+        });
+        signals = null;
+      }
     }
+
+    signals.forEach((signal) => signal.addEventListener('abort', onabort));
+
+    const {signal} = controller;
+
+    signal.unsubscribe = () => utils.asap(unsubscribe);
+
+    return signal;
   }
-
-  signals.forEach((signal) => signal && signal.addEventListener && signal.addEventListener('abort', onabort));
-
-  const {signal} = controller;
-
-  signal.unsubscribe = unsubscribe;
-
-  return [signal, () => {
-    timer && clearTimeout(timer);
-    timer = null;
-  }];
 }
 
 /* harmony default export */ var helpers_composeSignals = (composeSignals);
 
 ;// CONCATENATED MODULE: ./node_modules/axios/lib/helpers/trackStream.js
-
 
 const streamChunk = function* (chunk, chunkSize) {
   let len = chunk.byteLength;
@@ -7071,35 +12670,68 @@ const streamChunk = function* (chunk, chunkSize) {
   }
 }
 
-const readBytes = async function* (iterable, chunkSize, encode) {
-  for await (const chunk of iterable) {
-    yield* streamChunk(ArrayBuffer.isView(chunk) ? chunk : (await encode(String(chunk))), chunkSize);
+const readBytes = async function* (iterable, chunkSize) {
+  for await (const chunk of readStream(iterable)) {
+    yield* streamChunk(chunk, chunkSize);
   }
 }
 
-const trackStream = (stream, chunkSize, onProgress, onFinish, encode) => {
-  const iterator = readBytes(stream, chunkSize, encode);
+const readStream = async function* (stream) {
+  if (stream[Symbol.asyncIterator]) {
+    yield* stream;
+    return;
+  }
+
+  const reader = stream.getReader();
+  try {
+    for (;;) {
+      const {done, value} = await reader.read();
+      if (done) {
+        break;
+      }
+      yield value;
+    }
+  } finally {
+    await reader.cancel();
+  }
+}
+
+const trackStream = (stream, chunkSize, onProgress, onFinish) => {
+  const iterator = readBytes(stream, chunkSize);
 
   let bytes = 0;
+  let done;
+  let _onFinish = (e) => {
+    if (!done) {
+      done = true;
+      onFinish && onFinish(e);
+    }
+  }
 
   return new ReadableStream({
-    type: 'bytes',
-
     async pull(controller) {
-      const {done, value} = await iterator.next();
+      try {
+        const {done, value} = await iterator.next();
 
-      if (done) {
-        controller.close();
-        onFinish();
-        return;
+        if (done) {
+         _onFinish();
+          controller.close();
+          return;
+        }
+
+        let len = value.byteLength;
+        if (onProgress) {
+          let loadedBytes = bytes += len;
+          onProgress(loadedBytes);
+        }
+        controller.enqueue(new Uint8Array(value));
+      } catch (err) {
+        _onFinish(err);
+        throw err;
       }
-
-      let len = value.byteLength;
-      onProgress && onProgress(bytes += len);
-      controller.enqueue(new Uint8Array(value));
     },
     cancel(reason) {
-      onFinish(reason);
+      _onFinish(reason);
       return iterator.return();
     }
   }, {
@@ -7118,15 +12750,6 @@ const trackStream = (stream, chunkSize, onProgress, onFinish, encode) => {
 
 
 
-const fetchProgressDecorator = (total, fn) => {
-  const lengthComputable = total != null;
-  return (loaded) => setTimeout(() => fn({
-    lengthComputable,
-    total,
-    loaded
-  }));
-}
-
 const isFetchSupported = typeof fetch === 'function' && typeof Request === 'function' && typeof Response === 'function';
 const isReadableStreamSupported = isFetchSupported && typeof ReadableStream === 'function';
 
@@ -7136,7 +12759,15 @@ const encodeText = isFetchSupported && (typeof TextEncoder === 'function' ?
     async (str) => new Uint8Array(await new Response(str).arrayBuffer())
 );
 
-const supportsRequestStream = isReadableStreamSupported && (() => {
+const test = (fn, ...args) => {
+  try {
+    return !!fn(...args);
+  } catch (e) {
+    return false
+  }
+}
+
+const supportsRequestStream = isReadableStreamSupported && test(() => {
   let duplexAccessed = false;
 
   const hasContentType = new Request(platform.origin, {
@@ -7149,17 +12780,13 @@ const supportsRequestStream = isReadableStreamSupported && (() => {
   }).headers.has('Content-Type');
 
   return duplexAccessed && !hasContentType;
-})();
+});
 
 const DEFAULT_CHUNK_SIZE = 64 * 1024;
 
-const supportsResponseStream = isReadableStreamSupported && !!(()=> {
-  try {
-    return utils.isReadableStream(new Response('').body);
-  } catch(err) {
-    // return undefined
-  }
-})();
+const supportsResponseStream = isReadableStreamSupported &&
+  test(() => utils.isReadableStream(new Response('').body));
+
 
 const resolvers = {
   stream: supportsResponseStream && ((res) => res.body)
@@ -7184,10 +12811,14 @@ const getBodyLength = async (body) => {
   }
 
   if(utils.isSpecCompliantForm(body)) {
-    return (await new Request(body).arrayBuffer()).byteLength;
+    const _request = new Request(platform.origin, {
+      method: 'POST',
+      body,
+    });
+    return (await _request.arrayBuffer()).byteLength;
   }
 
-  if(utils.isArrayBufferView(body)) {
+  if(utils.isArrayBufferView(body) || utils.isArrayBuffer(body)) {
     return body.byteLength;
   }
 
@@ -7224,18 +12855,13 @@ const resolveBodyLength = async (headers, body) => {
 
   responseType = responseType ? (responseType + '').toLowerCase() : 'text';
 
-  let [composedSignal, stopTimeout] = (signal || cancelToken || timeout) ?
-    helpers_composeSignals([signal, cancelToken], timeout) : [];
+  let composedSignal = helpers_composeSignals([signal, cancelToken && cancelToken.toAbortSignal()], timeout);
 
-  let finished, request;
+  let request;
 
-  const onFinish = () => {
-    !finished && setTimeout(() => {
-      composedSignal && composedSignal.unsubscribe();
-    });
-
-    finished = true;
-  }
+  const unsubscribe = composedSignal && composedSignal.unsubscribe && (() => {
+      composedSignal.unsubscribe();
+  });
 
   let requestContentLength;
 
@@ -7257,17 +12883,22 @@ const resolveBodyLength = async (headers, body) => {
       }
 
       if (_request.body) {
-        data = trackStream(_request.body, DEFAULT_CHUNK_SIZE, fetchProgressDecorator(
+        const [onProgress, flush] = progressEventDecorator(
           requestContentLength,
-          progressEventReducer(onUploadProgress)
-        ), null, encodeText);
+          progressEventReducer(asyncDecorator(onUploadProgress))
+        );
+
+        data = trackStream(_request.body, DEFAULT_CHUNK_SIZE, onProgress, flush);
       }
     }
 
     if (!utils.isString(withCredentials)) {
-      withCredentials = withCredentials ? 'cors' : 'omit';
+      withCredentials = withCredentials ? 'include' : 'omit';
     }
 
+    // Cloudflare Workers throws when credentials are defined
+    // see https://github.com/cloudflare/workerd/issues/902
+    const isCredentialsSupported = "credentials" in Request.prototype;
     request = new Request(url, {
       ...fetchOptions,
       signal: composedSignal,
@@ -7275,14 +12906,14 @@ const resolveBodyLength = async (headers, body) => {
       headers: headers.normalize().toJSON(),
       body: data,
       duplex: "half",
-      withCredentials
+      credentials: isCredentialsSupported ? withCredentials : undefined
     });
 
     let response = await fetch(request);
 
     const isStreamResponse = supportsResponseStream && (responseType === 'stream' || responseType === 'response');
 
-    if (supportsResponseStream && (onDownloadProgress || isStreamResponse)) {
+    if (supportsResponseStream && (onDownloadProgress || (isStreamResponse && unsubscribe))) {
       const options = {};
 
       ['status', 'statusText', 'headers'].forEach(prop => {
@@ -7291,11 +12922,16 @@ const resolveBodyLength = async (headers, body) => {
 
       const responseContentLength = utils.toFiniteNumber(response.headers.get('content-length'));
 
+      const [onProgress, flush] = onDownloadProgress && progressEventDecorator(
+        responseContentLength,
+        progressEventReducer(asyncDecorator(onDownloadProgress), true)
+      ) || [];
+
       response = new Response(
-        trackStream(response.body, DEFAULT_CHUNK_SIZE, onDownloadProgress && fetchProgressDecorator(
-          responseContentLength,
-          progressEventReducer(onDownloadProgress, true)
-        ), isStreamResponse && onFinish, encodeText),
+        trackStream(response.body, DEFAULT_CHUNK_SIZE, onProgress, () => {
+          flush && flush();
+          unsubscribe && unsubscribe();
+        }),
         options
       );
     }
@@ -7304,9 +12940,7 @@ const resolveBodyLength = async (headers, body) => {
 
     let responseData = await resolvers[utils.findKey(resolvers, responseType) || 'text'](response, config);
 
-    !isStreamResponse && onFinish();
-
-    stopTimeout && stopTimeout();
+    !isStreamResponse && unsubscribe && unsubscribe();
 
     return await new Promise((resolve, reject) => {
       settle(resolve, reject, {
@@ -7319,9 +12953,9 @@ const resolveBodyLength = async (headers, body) => {
       })
     })
   } catch (err) {
-    onFinish();
+    unsubscribe && unsubscribe();
 
-    if (err && err.name === 'TypeError' && /fetch/i.test(err.message)) {
+    if (err && err.name === 'TypeError' && /Load failed|fetch/i.test(err.message)) {
       throw Object.assign(
         new core_AxiosError('Network Error', core_AxiosError.ERR_NETWORK, config, request),
         {
@@ -7501,7 +13135,7 @@ function dispatchRequest(config) {
 }
 
 ;// CONCATENATED MODULE: ./node_modules/axios/lib/env/data.js
-const VERSION = "1.7.2";
+const VERSION = "1.9.0";
 ;// CONCATENATED MODULE: ./node_modules/axios/lib/helpers/validator.js
 
 
@@ -7555,6 +13189,14 @@ validators.transitional = function transitional(validator, version, message) {
 
     return validator ? validator(value, opt, opts) : true;
   };
+};
+
+validators.spelling = function spelling(correctSpelling) {
+  return (value, opt) => {
+    // eslint-disable-next-line no-console
+    console.warn(`${opt} is likely a misspelling of ${correctSpelling}`);
+    return true;
+  }
 };
 
 /**
@@ -7618,7 +13260,7 @@ const Axios_validators = validator.validators;
  */
 class Axios {
   constructor(instanceConfig) {
-    this.defaults = instanceConfig;
+    this.defaults = instanceConfig || {};
     this.interceptors = {
       request: new core_InterceptorManager(),
       response: new core_InterceptorManager()
@@ -7638,9 +13280,9 @@ class Axios {
       return await this._request(configOrUrl, config);
     } catch (err) {
       if (err instanceof Error) {
-        let dummy;
+        let dummy = {};
 
-        Error.captureStackTrace ? Error.captureStackTrace(dummy = {}) : (dummy = new Error());
+        Error.captureStackTrace ? Error.captureStackTrace(dummy) : (dummy = new Error());
 
         // slice off the Error: ... line
         const stack = dummy.stack ? dummy.stack.replace(/^.+\n/, '') : '';
@@ -7694,6 +13336,20 @@ class Axios {
         }, true);
       }
     }
+
+    // Set config.allowAbsoluteUrls
+    if (config.allowAbsoluteUrls !== undefined) {
+      // do nothing
+    } else if (this.defaults.allowAbsoluteUrls !== undefined) {
+      config.allowAbsoluteUrls = this.defaults.allowAbsoluteUrls;
+    } else {
+      config.allowAbsoluteUrls = true;
+    }
+
+    validator.assertOptions(config, {
+      baseUrl: Axios_validators.spelling('baseURL'),
+      withXsrfToken: Axios_validators.spelling('withXSRFToken')
+    }, true);
 
     // Set config.method
     config.method = (config.method || this.defaults.method || 'get').toLowerCase();
@@ -7785,7 +13441,7 @@ class Axios {
 
   getUri(config) {
     config = mergeConfig(this.defaults, config);
-    const fullPath = buildFullPath(config.baseURL, config.url);
+    const fullPath = buildFullPath(config.baseURL, config.url, config.allowAbsoluteUrls);
     return buildURL(fullPath, config.params, config.paramsSerializer);
   }
 }
@@ -7928,6 +13584,20 @@ class CancelToken {
     if (index !== -1) {
       this._listeners.splice(index, 1);
     }
+  }
+
+  toAbortSignal() {
+    const controller = new AbortController();
+
+    const abort = (err) => {
+      controller.abort(err);
+    };
+
+    this.subscribe(abort);
+
+    controller.signal.unsubscribe = () => this.unsubscribe(abort);
+
+    return controller.signal;
   }
 
   /**
@@ -8158,59 +13828,1356 @@ axios.default = axios;
 // this module should only have a default export
 /* harmony default export */ var lib_axios = (axios);
 
-// EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
-var injectStylesIntoStyleTag = __webpack_require__(379);
-var injectStylesIntoStyleTag_default = /*#__PURE__*/__webpack_require__.n(injectStylesIntoStyleTag);
-// EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/styleDomAPI.js
-var styleDomAPI = __webpack_require__(795);
-var styleDomAPI_default = /*#__PURE__*/__webpack_require__.n(styleDomAPI);
-// EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/insertBySelector.js
-var insertBySelector = __webpack_require__(569);
-var insertBySelector_default = /*#__PURE__*/__webpack_require__.n(insertBySelector);
-// EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js
-var setAttributesWithoutAttributes = __webpack_require__(565);
-var setAttributesWithoutAttributes_default = /*#__PURE__*/__webpack_require__.n(setAttributesWithoutAttributes);
-// EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/insertStyleElement.js
-var insertStyleElement = __webpack_require__(216);
-var insertStyleElement_default = /*#__PURE__*/__webpack_require__.n(insertStyleElement);
-// EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/styleTagTransform.js
-var styleTagTransform = __webpack_require__(589);
-var styleTagTransform_default = /*#__PURE__*/__webpack_require__.n(styleTagTransform);
-// EXTERNAL MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js??ruleSet[1].rules[2].use[1]!./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[2].use[3]!./src/frontend/scss/ajax-load-more.scss
-var ajax_load_more = __webpack_require__(792);
-var ajax_load_more_default = /*#__PURE__*/__webpack_require__.n(ajax_load_more);
-;// CONCATENATED MODULE: ./src/frontend/scss/ajax-load-more.scss
+;// CONCATENATED MODULE: ./node_modules/dompurify/dist/purify.es.mjs
+/*! @license DOMPurify 3.2.6 | (c) Cure53 and other contributors | Released under the Apache license 2.0 and Mozilla Public License 2.0 | github.com/cure53/DOMPurify/blob/3.2.6/LICENSE */
 
-      
-      
-      
-      
-      
-      
-      
-      
-      
+const {
+  entries,
+  setPrototypeOf,
+  isFrozen,
+  getPrototypeOf: purify_es_getPrototypeOf,
+  getOwnPropertyDescriptor
+} = Object;
+let {
+  freeze,
+  seal,
+  create
+} = Object; // eslint-disable-line import/no-mutable-exports
+let {
+  apply,
+  construct
+} = typeof Reflect !== 'undefined' && Reflect;
+if (!freeze) {
+  freeze = function freeze(x) {
+    return x;
+  };
+}
+if (!seal) {
+  seal = function seal(x) {
+    return x;
+  };
+}
+if (!apply) {
+  apply = function apply(fun, thisValue, args) {
+    return fun.apply(thisValue, args);
+  };
+}
+if (!construct) {
+  construct = function construct(Func, args) {
+    return new Func(...args);
+  };
+}
+const arrayForEach = unapply(Array.prototype.forEach);
+const arrayLastIndexOf = unapply(Array.prototype.lastIndexOf);
+const arrayPop = unapply(Array.prototype.pop);
+const arrayPush = unapply(Array.prototype.push);
+const arraySplice = unapply(Array.prototype.splice);
+const stringToLowerCase = unapply(String.prototype.toLowerCase);
+const stringToString = unapply(String.prototype.toString);
+const stringMatch = unapply(String.prototype.match);
+const stringReplace = unapply(String.prototype.replace);
+const stringIndexOf = unapply(String.prototype.indexOf);
+const stringTrim = unapply(String.prototype.trim);
+const objectHasOwnProperty = unapply(Object.prototype.hasOwnProperty);
+const regExpTest = unapply(RegExp.prototype.test);
+const typeErrorCreate = unconstruct(TypeError);
+/**
+ * Creates a new function that calls the given function with a specified thisArg and arguments.
+ *
+ * @param func - The function to be wrapped and called.
+ * @returns A new function that calls the given function with a specified thisArg and arguments.
+ */
+function unapply(func) {
+  return function (thisArg) {
+    if (thisArg instanceof RegExp) {
+      thisArg.lastIndex = 0;
+    }
+    for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      args[_key - 1] = arguments[_key];
+    }
+    return apply(func, thisArg, args);
+  };
+}
+/**
+ * Creates a new function that constructs an instance of the given constructor function with the provided arguments.
+ *
+ * @param func - The constructor function to be wrapped and called.
+ * @returns A new function that constructs an instance of the given constructor function with the provided arguments.
+ */
+function unconstruct(func) {
+  return function () {
+    for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      args[_key2] = arguments[_key2];
+    }
+    return construct(func, args);
+  };
+}
+/**
+ * Add properties to a lookup table
+ *
+ * @param set - The set to which elements will be added.
+ * @param array - The array containing elements to be added to the set.
+ * @param transformCaseFunc - An optional function to transform the case of each element before adding to the set.
+ * @returns The modified set with added elements.
+ */
+function addToSet(set, array) {
+  let transformCaseFunc = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : stringToLowerCase;
+  if (setPrototypeOf) {
+    // Make 'in' and truthy checks like Boolean(set.constructor)
+    // independent of any properties defined on Object.prototype.
+    // Prevent prototype setters from intercepting set as a this value.
+    setPrototypeOf(set, null);
+  }
+  let l = array.length;
+  while (l--) {
+    let element = array[l];
+    if (typeof element === 'string') {
+      const lcElement = transformCaseFunc(element);
+      if (lcElement !== element) {
+        // Config presets (e.g. tags.js, attrs.js) are immutable.
+        if (!isFrozen(array)) {
+          array[l] = lcElement;
+        }
+        element = lcElement;
+      }
+    }
+    set[element] = true;
+  }
+  return set;
+}
+/**
+ * Clean up an array to harden against CSPP
+ *
+ * @param array - The array to be cleaned.
+ * @returns The cleaned version of the array
+ */
+function cleanArray(array) {
+  for (let index = 0; index < array.length; index++) {
+    const isPropertyExist = objectHasOwnProperty(array, index);
+    if (!isPropertyExist) {
+      array[index] = null;
+    }
+  }
+  return array;
+}
+/**
+ * Shallow clone an object
+ *
+ * @param object - The object to be cloned.
+ * @returns A new object that copies the original.
+ */
+function clone(object) {
+  const newObject = create(null);
+  for (const [property, value] of entries(object)) {
+    const isPropertyExist = objectHasOwnProperty(object, property);
+    if (isPropertyExist) {
+      if (Array.isArray(value)) {
+        newObject[property] = cleanArray(value);
+      } else if (value && typeof value === 'object' && value.constructor === Object) {
+        newObject[property] = clone(value);
+      } else {
+        newObject[property] = value;
+      }
+    }
+  }
+  return newObject;
+}
+/**
+ * This method automatically checks if the prop is function or getter and behaves accordingly.
+ *
+ * @param object - The object to look up the getter function in its prototype chain.
+ * @param prop - The property name for which to find the getter function.
+ * @returns The getter function found in the prototype chain or a fallback function.
+ */
+function lookupGetter(object, prop) {
+  while (object !== null) {
+    const desc = getOwnPropertyDescriptor(object, prop);
+    if (desc) {
+      if (desc.get) {
+        return unapply(desc.get);
+      }
+      if (typeof desc.value === 'function') {
+        return unapply(desc.value);
+      }
+    }
+    object = purify_es_getPrototypeOf(object);
+  }
+  function fallbackValue() {
+    return null;
+  }
+  return fallbackValue;
+}
 
-var options = {};
+const html$1 = freeze(['a', 'abbr', 'acronym', 'address', 'area', 'article', 'aside', 'audio', 'b', 'bdi', 'bdo', 'big', 'blink', 'blockquote', 'body', 'br', 'button', 'canvas', 'caption', 'center', 'cite', 'code', 'col', 'colgroup', 'content', 'data', 'datalist', 'dd', 'decorator', 'del', 'details', 'dfn', 'dialog', 'dir', 'div', 'dl', 'dt', 'element', 'em', 'fieldset', 'figcaption', 'figure', 'font', 'footer', 'form', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'head', 'header', 'hgroup', 'hr', 'html', 'i', 'img', 'input', 'ins', 'kbd', 'label', 'legend', 'li', 'main', 'map', 'mark', 'marquee', 'menu', 'menuitem', 'meter', 'nav', 'nobr', 'ol', 'optgroup', 'option', 'output', 'p', 'picture', 'pre', 'progress', 'q', 'rp', 'rt', 'ruby', 's', 'samp', 'section', 'select', 'shadow', 'small', 'source', 'spacer', 'span', 'strike', 'strong', 'style', 'sub', 'summary', 'sup', 'table', 'tbody', 'td', 'template', 'textarea', 'tfoot', 'th', 'thead', 'time', 'tr', 'track', 'tt', 'u', 'ul', 'var', 'video', 'wbr']);
+const svg$1 = freeze(['svg', 'a', 'altglyph', 'altglyphdef', 'altglyphitem', 'animatecolor', 'animatemotion', 'animatetransform', 'circle', 'clippath', 'defs', 'desc', 'ellipse', 'filter', 'font', 'g', 'glyph', 'glyphref', 'hkern', 'image', 'line', 'lineargradient', 'marker', 'mask', 'metadata', 'mpath', 'path', 'pattern', 'polygon', 'polyline', 'radialgradient', 'rect', 'stop', 'style', 'switch', 'symbol', 'text', 'textpath', 'title', 'tref', 'tspan', 'view', 'vkern']);
+const svgFilters = freeze(['feBlend', 'feColorMatrix', 'feComponentTransfer', 'feComposite', 'feConvolveMatrix', 'feDiffuseLighting', 'feDisplacementMap', 'feDistantLight', 'feDropShadow', 'feFlood', 'feFuncA', 'feFuncB', 'feFuncG', 'feFuncR', 'feGaussianBlur', 'feImage', 'feMerge', 'feMergeNode', 'feMorphology', 'feOffset', 'fePointLight', 'feSpecularLighting', 'feSpotLight', 'feTile', 'feTurbulence']);
+// List of SVG elements that are disallowed by default.
+// We still need to know them so that we can do namespace
+// checks properly in case one wants to add them to
+// allow-list.
+const svgDisallowed = freeze(['animate', 'color-profile', 'cursor', 'discard', 'font-face', 'font-face-format', 'font-face-name', 'font-face-src', 'font-face-uri', 'foreignobject', 'hatch', 'hatchpath', 'mesh', 'meshgradient', 'meshpatch', 'meshrow', 'missing-glyph', 'script', 'set', 'solidcolor', 'unknown', 'use']);
+const mathMl$1 = freeze(['math', 'menclose', 'merror', 'mfenced', 'mfrac', 'mglyph', 'mi', 'mlabeledtr', 'mmultiscripts', 'mn', 'mo', 'mover', 'mpadded', 'mphantom', 'mroot', 'mrow', 'ms', 'mspace', 'msqrt', 'mstyle', 'msub', 'msup', 'msubsup', 'mtable', 'mtd', 'mtext', 'mtr', 'munder', 'munderover', 'mprescripts']);
+// Similarly to SVG, we want to know all MathML elements,
+// even those that we disallow by default.
+const mathMlDisallowed = freeze(['maction', 'maligngroup', 'malignmark', 'mlongdiv', 'mscarries', 'mscarry', 'msgroup', 'mstack', 'msline', 'msrow', 'semantics', 'annotation', 'annotation-xml', 'mprescripts', 'none']);
+const purify_es_text = freeze(['#text']);
 
-options.styleTagTransform = (styleTagTransform_default());
-options.setAttributes = (setAttributesWithoutAttributes_default());
+const html = freeze(['accept', 'action', 'align', 'alt', 'autocapitalize', 'autocomplete', 'autopictureinpicture', 'autoplay', 'background', 'bgcolor', 'border', 'capture', 'cellpadding', 'cellspacing', 'checked', 'cite', 'class', 'clear', 'color', 'cols', 'colspan', 'controls', 'controlslist', 'coords', 'crossorigin', 'datetime', 'decoding', 'default', 'dir', 'disabled', 'disablepictureinpicture', 'disableremoteplayback', 'download', 'draggable', 'enctype', 'enterkeyhint', 'face', 'for', 'headers', 'height', 'hidden', 'high', 'href', 'hreflang', 'id', 'inputmode', 'integrity', 'ismap', 'kind', 'label', 'lang', 'list', 'loading', 'loop', 'low', 'max', 'maxlength', 'media', 'method', 'min', 'minlength', 'multiple', 'muted', 'name', 'nonce', 'noshade', 'novalidate', 'nowrap', 'open', 'optimum', 'pattern', 'placeholder', 'playsinline', 'popover', 'popovertarget', 'popovertargetaction', 'poster', 'preload', 'pubdate', 'radiogroup', 'readonly', 'rel', 'required', 'rev', 'reversed', 'role', 'rows', 'rowspan', 'spellcheck', 'scope', 'selected', 'shape', 'size', 'sizes', 'span', 'srclang', 'start', 'src', 'srcset', 'step', 'style', 'summary', 'tabindex', 'title', 'translate', 'type', 'usemap', 'valign', 'value', 'width', 'wrap', 'xmlns', 'slot']);
+const svg = freeze(['accent-height', 'accumulate', 'additive', 'alignment-baseline', 'amplitude', 'ascent', 'attributename', 'attributetype', 'azimuth', 'basefrequency', 'baseline-shift', 'begin', 'bias', 'by', 'class', 'clip', 'clippathunits', 'clip-path', 'clip-rule', 'color', 'color-interpolation', 'color-interpolation-filters', 'color-profile', 'color-rendering', 'cx', 'cy', 'd', 'dx', 'dy', 'diffuseconstant', 'direction', 'display', 'divisor', 'dur', 'edgemode', 'elevation', 'end', 'exponent', 'fill', 'fill-opacity', 'fill-rule', 'filter', 'filterunits', 'flood-color', 'flood-opacity', 'font-family', 'font-size', 'font-size-adjust', 'font-stretch', 'font-style', 'font-variant', 'font-weight', 'fx', 'fy', 'g1', 'g2', 'glyph-name', 'glyphref', 'gradientunits', 'gradienttransform', 'height', 'href', 'id', 'image-rendering', 'in', 'in2', 'intercept', 'k', 'k1', 'k2', 'k3', 'k4', 'kerning', 'keypoints', 'keysplines', 'keytimes', 'lang', 'lengthadjust', 'letter-spacing', 'kernelmatrix', 'kernelunitlength', 'lighting-color', 'local', 'marker-end', 'marker-mid', 'marker-start', 'markerheight', 'markerunits', 'markerwidth', 'maskcontentunits', 'maskunits', 'max', 'mask', 'media', 'method', 'mode', 'min', 'name', 'numoctaves', 'offset', 'operator', 'opacity', 'order', 'orient', 'orientation', 'origin', 'overflow', 'paint-order', 'path', 'pathlength', 'patterncontentunits', 'patterntransform', 'patternunits', 'points', 'preservealpha', 'preserveaspectratio', 'primitiveunits', 'r', 'rx', 'ry', 'radius', 'refx', 'refy', 'repeatcount', 'repeatdur', 'restart', 'result', 'rotate', 'scale', 'seed', 'shape-rendering', 'slope', 'specularconstant', 'specularexponent', 'spreadmethod', 'startoffset', 'stddeviation', 'stitchtiles', 'stop-color', 'stop-opacity', 'stroke-dasharray', 'stroke-dashoffset', 'stroke-linecap', 'stroke-linejoin', 'stroke-miterlimit', 'stroke-opacity', 'stroke', 'stroke-width', 'style', 'surfacescale', 'systemlanguage', 'tabindex', 'tablevalues', 'targetx', 'targety', 'transform', 'transform-origin', 'text-anchor', 'text-decoration', 'text-rendering', 'textlength', 'type', 'u1', 'u2', 'unicode', 'values', 'viewbox', 'visibility', 'version', 'vert-adv-y', 'vert-origin-x', 'vert-origin-y', 'width', 'word-spacing', 'wrap', 'writing-mode', 'xchannelselector', 'ychannelselector', 'x', 'x1', 'x2', 'xmlns', 'y', 'y1', 'y2', 'z', 'zoomandpan']);
+const mathMl = freeze(['accent', 'accentunder', 'align', 'bevelled', 'close', 'columnsalign', 'columnlines', 'columnspan', 'denomalign', 'depth', 'dir', 'display', 'displaystyle', 'encoding', 'fence', 'frame', 'height', 'href', 'id', 'largeop', 'length', 'linethickness', 'lspace', 'lquote', 'mathbackground', 'mathcolor', 'mathsize', 'mathvariant', 'maxsize', 'minsize', 'movablelimits', 'notation', 'numalign', 'open', 'rowalign', 'rowlines', 'rowspacing', 'rowspan', 'rspace', 'rquote', 'scriptlevel', 'scriptminsize', 'scriptsizemultiplier', 'selection', 'separator', 'separators', 'stretchy', 'subscriptshift', 'supscriptshift', 'symmetric', 'voffset', 'width', 'xmlns']);
+const xml = freeze(['xlink:href', 'xml:id', 'xlink:title', 'xml:space', 'xmlns:xlink']);
 
-      options.insert = insertBySelector_default().bind(null, "head");
-    
-options.domAPI = (styleDomAPI_default());
-options.insertStyleElement = (insertStyleElement_default());
+// eslint-disable-next-line unicorn/better-regex
+const MUSTACHE_EXPR = seal(/\{\{[\w\W]*|[\w\W]*\}\}/gm); // Specify template detection regex for SAFE_FOR_TEMPLATES mode
+const ERB_EXPR = seal(/<%[\w\W]*|[\w\W]*%>/gm);
+const TMPLIT_EXPR = seal(/\$\{[\w\W]*/gm); // eslint-disable-line unicorn/better-regex
+const DATA_ATTR = seal(/^data-[\-\w.\u00B7-\uFFFF]+$/); // eslint-disable-line no-useless-escape
+const ARIA_ATTR = seal(/^aria-[\-\w]+$/); // eslint-disable-line no-useless-escape
+const IS_ALLOWED_URI = seal(/^(?:(?:(?:f|ht)tps?|mailto|tel|callto|sms|cid|xmpp|matrix):|[^a-z]|[a-z+.\-]+(?:[^a-z+.\-:]|$))/i // eslint-disable-line no-useless-escape
+);
+const IS_SCRIPT_OR_DATA = seal(/^(?:\w+script|data):/i);
+const ATTR_WHITESPACE = seal(/[\u0000-\u0020\u00A0\u1680\u180E\u2000-\u2029\u205F\u3000]/g // eslint-disable-line no-control-regex
+);
+const DOCTYPE_NAME = seal(/^html$/i);
+const CUSTOM_ELEMENT = seal(/^[a-z][.\w]*(-[.\w]+)+$/i);
 
-var update = injectStylesIntoStyleTag_default()((ajax_load_more_default()), options);
+var EXPRESSIONS = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  ARIA_ATTR: ARIA_ATTR,
+  ATTR_WHITESPACE: ATTR_WHITESPACE,
+  CUSTOM_ELEMENT: CUSTOM_ELEMENT,
+  DATA_ATTR: DATA_ATTR,
+  DOCTYPE_NAME: DOCTYPE_NAME,
+  ERB_EXPR: ERB_EXPR,
+  IS_ALLOWED_URI: IS_ALLOWED_URI,
+  IS_SCRIPT_OR_DATA: IS_SCRIPT_OR_DATA,
+  MUSTACHE_EXPR: MUSTACHE_EXPR,
+  TMPLIT_EXPR: TMPLIT_EXPR
+});
+
+/* eslint-disable @typescript-eslint/indent */
+// https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType
+const NODE_TYPE = {
+  element: 1,
+  attribute: 2,
+  text: 3,
+  cdataSection: 4,
+  entityReference: 5,
+  // Deprecated
+  entityNode: 6,
+  // Deprecated
+  progressingInstruction: 7,
+  comment: 8,
+  document: 9,
+  documentType: 10,
+  documentFragment: 11,
+  notation: 12 // Deprecated
+};
+const getGlobal = function getGlobal() {
+  return typeof window === 'undefined' ? null : window;
+};
+/**
+ * Creates a no-op policy for internal use only.
+ * Don't export this function outside this module!
+ * @param trustedTypes The policy factory.
+ * @param purifyHostElement The Script element used to load DOMPurify (to determine policy name suffix).
+ * @return The policy created (or null, if Trusted Types
+ * are not supported or creating the policy failed).
+ */
+const _createTrustedTypesPolicy = function _createTrustedTypesPolicy(trustedTypes, purifyHostElement) {
+  if (typeof trustedTypes !== 'object' || typeof trustedTypes.createPolicy !== 'function') {
+    return null;
+  }
+  // Allow the callers to control the unique policy name
+  // by adding a data-tt-policy-suffix to the script element with the DOMPurify.
+  // Policy creation with duplicate names throws in Trusted Types.
+  let suffix = null;
+  const ATTR_NAME = 'data-tt-policy-suffix';
+  if (purifyHostElement && purifyHostElement.hasAttribute(ATTR_NAME)) {
+    suffix = purifyHostElement.getAttribute(ATTR_NAME);
+  }
+  const policyName = 'dompurify' + (suffix ? '#' + suffix : '');
+  try {
+    return trustedTypes.createPolicy(policyName, {
+      createHTML(html) {
+        return html;
+      },
+      createScriptURL(scriptUrl) {
+        return scriptUrl;
+      }
+    });
+  } catch (_) {
+    // Policy creation failed (most likely another DOMPurify script has
+    // already run). Skip creating the policy, as this will only cause errors
+    // if TT are enforced.
+    console.warn('TrustedTypes policy ' + policyName + ' could not be created.');
+    return null;
+  }
+};
+const _createHooksMap = function _createHooksMap() {
+  return {
+    afterSanitizeAttributes: [],
+    afterSanitizeElements: [],
+    afterSanitizeShadowDOM: [],
+    beforeSanitizeAttributes: [],
+    beforeSanitizeElements: [],
+    beforeSanitizeShadowDOM: [],
+    uponSanitizeAttribute: [],
+    uponSanitizeElement: [],
+    uponSanitizeShadowNode: []
+  };
+};
+function createDOMPurify() {
+  let window = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : getGlobal();
+  const DOMPurify = root => createDOMPurify(root);
+  DOMPurify.version = '3.2.6';
+  DOMPurify.removed = [];
+  if (!window || !window.document || window.document.nodeType !== NODE_TYPE.document || !window.Element) {
+    // Not running in a browser, provide a factory function
+    // so that you can pass your own Window
+    DOMPurify.isSupported = false;
+    return DOMPurify;
+  }
+  let {
+    document
+  } = window;
+  const originalDocument = document;
+  const currentScript = originalDocument.currentScript;
+  const {
+    DocumentFragment,
+    HTMLTemplateElement,
+    Node,
+    Element,
+    NodeFilter,
+    NamedNodeMap = window.NamedNodeMap || window.MozNamedAttrMap,
+    HTMLFormElement,
+    DOMParser,
+    trustedTypes
+  } = window;
+  const ElementPrototype = Element.prototype;
+  const cloneNode = lookupGetter(ElementPrototype, 'cloneNode');
+  const remove = lookupGetter(ElementPrototype, 'remove');
+  const getNextSibling = lookupGetter(ElementPrototype, 'nextSibling');
+  const getChildNodes = lookupGetter(ElementPrototype, 'childNodes');
+  const getParentNode = lookupGetter(ElementPrototype, 'parentNode');
+  // As per issue #47, the web-components registry is inherited by a
+  // new document created via createHTMLDocument. As per the spec
+  // (http://w3c.github.io/webcomponents/spec/custom/#creating-and-passing-registries)
+  // a new empty registry is used when creating a template contents owner
+  // document, so we use that as our parent document to ensure nothing
+  // is inherited.
+  if (typeof HTMLTemplateElement === 'function') {
+    const template = document.createElement('template');
+    if (template.content && template.content.ownerDocument) {
+      document = template.content.ownerDocument;
+    }
+  }
+  let trustedTypesPolicy;
+  let emptyHTML = '';
+  const {
+    implementation,
+    createNodeIterator,
+    createDocumentFragment,
+    getElementsByTagName
+  } = document;
+  const {
+    importNode
+  } = originalDocument;
+  let hooks = _createHooksMap();
+  /**
+   * Expose whether this browser supports running the full DOMPurify.
+   */
+  DOMPurify.isSupported = typeof entries === 'function' && typeof getParentNode === 'function' && implementation && implementation.createHTMLDocument !== undefined;
+  const {
+    MUSTACHE_EXPR,
+    ERB_EXPR,
+    TMPLIT_EXPR,
+    DATA_ATTR,
+    ARIA_ATTR,
+    IS_SCRIPT_OR_DATA,
+    ATTR_WHITESPACE,
+    CUSTOM_ELEMENT
+  } = EXPRESSIONS;
+  let {
+    IS_ALLOWED_URI: IS_ALLOWED_URI$1
+  } = EXPRESSIONS;
+  /**
+   * We consider the elements and attributes below to be safe. Ideally
+   * don't add any new ones but feel free to remove unwanted ones.
+   */
+  /* allowed element names */
+  let ALLOWED_TAGS = null;
+  const DEFAULT_ALLOWED_TAGS = addToSet({}, [...html$1, ...svg$1, ...svgFilters, ...mathMl$1, ...purify_es_text]);
+  /* Allowed attribute names */
+  let ALLOWED_ATTR = null;
+  const DEFAULT_ALLOWED_ATTR = addToSet({}, [...html, ...svg, ...mathMl, ...xml]);
+  /*
+   * Configure how DOMPurify should handle custom elements and their attributes as well as customized built-in elements.
+   * @property {RegExp|Function|null} tagNameCheck one of [null, regexPattern, predicate]. Default: `null` (disallow any custom elements)
+   * @property {RegExp|Function|null} attributeNameCheck one of [null, regexPattern, predicate]. Default: `null` (disallow any attributes not on the allow list)
+   * @property {boolean} allowCustomizedBuiltInElements allow custom elements derived from built-ins if they pass CUSTOM_ELEMENT_HANDLING.tagNameCheck. Default: `false`.
+   */
+  let CUSTOM_ELEMENT_HANDLING = Object.seal(create(null, {
+    tagNameCheck: {
+      writable: true,
+      configurable: false,
+      enumerable: true,
+      value: null
+    },
+    attributeNameCheck: {
+      writable: true,
+      configurable: false,
+      enumerable: true,
+      value: null
+    },
+    allowCustomizedBuiltInElements: {
+      writable: true,
+      configurable: false,
+      enumerable: true,
+      value: false
+    }
+  }));
+  /* Explicitly forbidden tags (overrides ALLOWED_TAGS/ADD_TAGS) */
+  let FORBID_TAGS = null;
+  /* Explicitly forbidden attributes (overrides ALLOWED_ATTR/ADD_ATTR) */
+  let FORBID_ATTR = null;
+  /* Decide if ARIA attributes are okay */
+  let ALLOW_ARIA_ATTR = true;
+  /* Decide if custom data attributes are okay */
+  let ALLOW_DATA_ATTR = true;
+  /* Decide if unknown protocols are okay */
+  let ALLOW_UNKNOWN_PROTOCOLS = false;
+  /* Decide if self-closing tags in attributes are allowed.
+   * Usually removed due to a mXSS issue in jQuery 3.0 */
+  let ALLOW_SELF_CLOSE_IN_ATTR = true;
+  /* Output should be safe for common template engines.
+   * This means, DOMPurify removes data attributes, mustaches and ERB
+   */
+  let SAFE_FOR_TEMPLATES = false;
+  /* Output should be safe even for XML used within HTML and alike.
+   * This means, DOMPurify removes comments when containing risky content.
+   */
+  let SAFE_FOR_XML = true;
+  /* Decide if document with <html>... should be returned */
+  let WHOLE_DOCUMENT = false;
+  /* Track whether config is already set on this instance of DOMPurify. */
+  let SET_CONFIG = false;
+  /* Decide if all elements (e.g. style, script) must be children of
+   * document.body. By default, browsers might move them to document.head */
+  let FORCE_BODY = false;
+  /* Decide if a DOM `HTMLBodyElement` should be returned, instead of a html
+   * string (or a TrustedHTML object if Trusted Types are supported).
+   * If `WHOLE_DOCUMENT` is enabled a `HTMLHtmlElement` will be returned instead
+   */
+  let RETURN_DOM = false;
+  /* Decide if a DOM `DocumentFragment` should be returned, instead of a html
+   * string  (or a TrustedHTML object if Trusted Types are supported) */
+  let RETURN_DOM_FRAGMENT = false;
+  /* Try to return a Trusted Type object instead of a string, return a string in
+   * case Trusted Types are not supported  */
+  let RETURN_TRUSTED_TYPE = false;
+  /* Output should be free from DOM clobbering attacks?
+   * This sanitizes markups named with colliding, clobberable built-in DOM APIs.
+   */
+  let SANITIZE_DOM = true;
+  /* Achieve full DOM Clobbering protection by isolating the namespace of named
+   * properties and JS variables, mitigating attacks that abuse the HTML/DOM spec rules.
+   *
+   * HTML/DOM spec rules that enable DOM Clobbering:
+   *   - Named Access on Window (§7.3.3)
+   *   - DOM Tree Accessors (§3.1.5)
+   *   - Form Element Parent-Child Relations (§4.10.3)
+   *   - Iframe srcdoc / Nested WindowProxies (§4.8.5)
+   *   - HTMLCollection (§4.2.10.2)
+   *
+   * Namespace isolation is implemented by prefixing `id` and `name` attributes
+   * with a constant string, i.e., `user-content-`
+   */
+  let SANITIZE_NAMED_PROPS = false;
+  const SANITIZE_NAMED_PROPS_PREFIX = 'user-content-';
+  /* Keep element content when removing element? */
+  let KEEP_CONTENT = true;
+  /* If a `Node` is passed to sanitize(), then performs sanitization in-place instead
+   * of importing it into a new Document and returning a sanitized copy */
+  let IN_PLACE = false;
+  /* Allow usage of profiles like html, svg and mathMl */
+  let USE_PROFILES = {};
+  /* Tags to ignore content of when KEEP_CONTENT is true */
+  let FORBID_CONTENTS = null;
+  const DEFAULT_FORBID_CONTENTS = addToSet({}, ['annotation-xml', 'audio', 'colgroup', 'desc', 'foreignobject', 'head', 'iframe', 'math', 'mi', 'mn', 'mo', 'ms', 'mtext', 'noembed', 'noframes', 'noscript', 'plaintext', 'script', 'style', 'svg', 'template', 'thead', 'title', 'video', 'xmp']);
+  /* Tags that are safe for data: URIs */
+  let DATA_URI_TAGS = null;
+  const DEFAULT_DATA_URI_TAGS = addToSet({}, ['audio', 'video', 'img', 'source', 'image', 'track']);
+  /* Attributes safe for values like "javascript:" */
+  let URI_SAFE_ATTRIBUTES = null;
+  const DEFAULT_URI_SAFE_ATTRIBUTES = addToSet({}, ['alt', 'class', 'for', 'id', 'label', 'name', 'pattern', 'placeholder', 'role', 'summary', 'title', 'value', 'style', 'xmlns']);
+  const MATHML_NAMESPACE = 'http://www.w3.org/1998/Math/MathML';
+  const SVG_NAMESPACE = 'http://www.w3.org/2000/svg';
+  const HTML_NAMESPACE = 'http://www.w3.org/1999/xhtml';
+  /* Document namespace */
+  let NAMESPACE = HTML_NAMESPACE;
+  let IS_EMPTY_INPUT = false;
+  /* Allowed XHTML+XML namespaces */
+  let ALLOWED_NAMESPACES = null;
+  const DEFAULT_ALLOWED_NAMESPACES = addToSet({}, [MATHML_NAMESPACE, SVG_NAMESPACE, HTML_NAMESPACE], stringToString);
+  let MATHML_TEXT_INTEGRATION_POINTS = addToSet({}, ['mi', 'mo', 'mn', 'ms', 'mtext']);
+  let HTML_INTEGRATION_POINTS = addToSet({}, ['annotation-xml']);
+  // Certain elements are allowed in both SVG and HTML
+  // namespace. We need to specify them explicitly
+  // so that they don't get erroneously deleted from
+  // HTML namespace.
+  const COMMON_SVG_AND_HTML_ELEMENTS = addToSet({}, ['title', 'style', 'font', 'a', 'script']);
+  /* Parsing of strict XHTML documents */
+  let PARSER_MEDIA_TYPE = null;
+  const SUPPORTED_PARSER_MEDIA_TYPES = ['application/xhtml+xml', 'text/html'];
+  const DEFAULT_PARSER_MEDIA_TYPE = 'text/html';
+  let transformCaseFunc = null;
+  /* Keep a reference to config to pass to hooks */
+  let CONFIG = null;
+  /* Ideally, do not touch anything below this line */
+  /* ______________________________________________ */
+  const formElement = document.createElement('form');
+  const isRegexOrFunction = function isRegexOrFunction(testValue) {
+    return testValue instanceof RegExp || testValue instanceof Function;
+  };
+  /**
+   * _parseConfig
+   *
+   * @param cfg optional config literal
+   */
+  // eslint-disable-next-line complexity
+  const _parseConfig = function _parseConfig() {
+    let cfg = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    if (CONFIG && CONFIG === cfg) {
+      return;
+    }
+    /* Shield configuration object from tampering */
+    if (!cfg || typeof cfg !== 'object') {
+      cfg = {};
+    }
+    /* Shield configuration object from prototype pollution */
+    cfg = clone(cfg);
+    PARSER_MEDIA_TYPE =
+    // eslint-disable-next-line unicorn/prefer-includes
+    SUPPORTED_PARSER_MEDIA_TYPES.indexOf(cfg.PARSER_MEDIA_TYPE) === -1 ? DEFAULT_PARSER_MEDIA_TYPE : cfg.PARSER_MEDIA_TYPE;
+    // HTML tags and attributes are not case-sensitive, converting to lowercase. Keeping XHTML as is.
+    transformCaseFunc = PARSER_MEDIA_TYPE === 'application/xhtml+xml' ? stringToString : stringToLowerCase;
+    /* Set configuration parameters */
+    ALLOWED_TAGS = objectHasOwnProperty(cfg, 'ALLOWED_TAGS') ? addToSet({}, cfg.ALLOWED_TAGS, transformCaseFunc) : DEFAULT_ALLOWED_TAGS;
+    ALLOWED_ATTR = objectHasOwnProperty(cfg, 'ALLOWED_ATTR') ? addToSet({}, cfg.ALLOWED_ATTR, transformCaseFunc) : DEFAULT_ALLOWED_ATTR;
+    ALLOWED_NAMESPACES = objectHasOwnProperty(cfg, 'ALLOWED_NAMESPACES') ? addToSet({}, cfg.ALLOWED_NAMESPACES, stringToString) : DEFAULT_ALLOWED_NAMESPACES;
+    URI_SAFE_ATTRIBUTES = objectHasOwnProperty(cfg, 'ADD_URI_SAFE_ATTR') ? addToSet(clone(DEFAULT_URI_SAFE_ATTRIBUTES), cfg.ADD_URI_SAFE_ATTR, transformCaseFunc) : DEFAULT_URI_SAFE_ATTRIBUTES;
+    DATA_URI_TAGS = objectHasOwnProperty(cfg, 'ADD_DATA_URI_TAGS') ? addToSet(clone(DEFAULT_DATA_URI_TAGS), cfg.ADD_DATA_URI_TAGS, transformCaseFunc) : DEFAULT_DATA_URI_TAGS;
+    FORBID_CONTENTS = objectHasOwnProperty(cfg, 'FORBID_CONTENTS') ? addToSet({}, cfg.FORBID_CONTENTS, transformCaseFunc) : DEFAULT_FORBID_CONTENTS;
+    FORBID_TAGS = objectHasOwnProperty(cfg, 'FORBID_TAGS') ? addToSet({}, cfg.FORBID_TAGS, transformCaseFunc) : clone({});
+    FORBID_ATTR = objectHasOwnProperty(cfg, 'FORBID_ATTR') ? addToSet({}, cfg.FORBID_ATTR, transformCaseFunc) : clone({});
+    USE_PROFILES = objectHasOwnProperty(cfg, 'USE_PROFILES') ? cfg.USE_PROFILES : false;
+    ALLOW_ARIA_ATTR = cfg.ALLOW_ARIA_ATTR !== false; // Default true
+    ALLOW_DATA_ATTR = cfg.ALLOW_DATA_ATTR !== false; // Default true
+    ALLOW_UNKNOWN_PROTOCOLS = cfg.ALLOW_UNKNOWN_PROTOCOLS || false; // Default false
+    ALLOW_SELF_CLOSE_IN_ATTR = cfg.ALLOW_SELF_CLOSE_IN_ATTR !== false; // Default true
+    SAFE_FOR_TEMPLATES = cfg.SAFE_FOR_TEMPLATES || false; // Default false
+    SAFE_FOR_XML = cfg.SAFE_FOR_XML !== false; // Default true
+    WHOLE_DOCUMENT = cfg.WHOLE_DOCUMENT || false; // Default false
+    RETURN_DOM = cfg.RETURN_DOM || false; // Default false
+    RETURN_DOM_FRAGMENT = cfg.RETURN_DOM_FRAGMENT || false; // Default false
+    RETURN_TRUSTED_TYPE = cfg.RETURN_TRUSTED_TYPE || false; // Default false
+    FORCE_BODY = cfg.FORCE_BODY || false; // Default false
+    SANITIZE_DOM = cfg.SANITIZE_DOM !== false; // Default true
+    SANITIZE_NAMED_PROPS = cfg.SANITIZE_NAMED_PROPS || false; // Default false
+    KEEP_CONTENT = cfg.KEEP_CONTENT !== false; // Default true
+    IN_PLACE = cfg.IN_PLACE || false; // Default false
+    IS_ALLOWED_URI$1 = cfg.ALLOWED_URI_REGEXP || IS_ALLOWED_URI;
+    NAMESPACE = cfg.NAMESPACE || HTML_NAMESPACE;
+    MATHML_TEXT_INTEGRATION_POINTS = cfg.MATHML_TEXT_INTEGRATION_POINTS || MATHML_TEXT_INTEGRATION_POINTS;
+    HTML_INTEGRATION_POINTS = cfg.HTML_INTEGRATION_POINTS || HTML_INTEGRATION_POINTS;
+    CUSTOM_ELEMENT_HANDLING = cfg.CUSTOM_ELEMENT_HANDLING || {};
+    if (cfg.CUSTOM_ELEMENT_HANDLING && isRegexOrFunction(cfg.CUSTOM_ELEMENT_HANDLING.tagNameCheck)) {
+      CUSTOM_ELEMENT_HANDLING.tagNameCheck = cfg.CUSTOM_ELEMENT_HANDLING.tagNameCheck;
+    }
+    if (cfg.CUSTOM_ELEMENT_HANDLING && isRegexOrFunction(cfg.CUSTOM_ELEMENT_HANDLING.attributeNameCheck)) {
+      CUSTOM_ELEMENT_HANDLING.attributeNameCheck = cfg.CUSTOM_ELEMENT_HANDLING.attributeNameCheck;
+    }
+    if (cfg.CUSTOM_ELEMENT_HANDLING && typeof cfg.CUSTOM_ELEMENT_HANDLING.allowCustomizedBuiltInElements === 'boolean') {
+      CUSTOM_ELEMENT_HANDLING.allowCustomizedBuiltInElements = cfg.CUSTOM_ELEMENT_HANDLING.allowCustomizedBuiltInElements;
+    }
+    if (SAFE_FOR_TEMPLATES) {
+      ALLOW_DATA_ATTR = false;
+    }
+    if (RETURN_DOM_FRAGMENT) {
+      RETURN_DOM = true;
+    }
+    /* Parse profile info */
+    if (USE_PROFILES) {
+      ALLOWED_TAGS = addToSet({}, purify_es_text);
+      ALLOWED_ATTR = [];
+      if (USE_PROFILES.html === true) {
+        addToSet(ALLOWED_TAGS, html$1);
+        addToSet(ALLOWED_ATTR, html);
+      }
+      if (USE_PROFILES.svg === true) {
+        addToSet(ALLOWED_TAGS, svg$1);
+        addToSet(ALLOWED_ATTR, svg);
+        addToSet(ALLOWED_ATTR, xml);
+      }
+      if (USE_PROFILES.svgFilters === true) {
+        addToSet(ALLOWED_TAGS, svgFilters);
+        addToSet(ALLOWED_ATTR, svg);
+        addToSet(ALLOWED_ATTR, xml);
+      }
+      if (USE_PROFILES.mathMl === true) {
+        addToSet(ALLOWED_TAGS, mathMl$1);
+        addToSet(ALLOWED_ATTR, mathMl);
+        addToSet(ALLOWED_ATTR, xml);
+      }
+    }
+    /* Merge configuration parameters */
+    if (cfg.ADD_TAGS) {
+      if (ALLOWED_TAGS === DEFAULT_ALLOWED_TAGS) {
+        ALLOWED_TAGS = clone(ALLOWED_TAGS);
+      }
+      addToSet(ALLOWED_TAGS, cfg.ADD_TAGS, transformCaseFunc);
+    }
+    if (cfg.ADD_ATTR) {
+      if (ALLOWED_ATTR === DEFAULT_ALLOWED_ATTR) {
+        ALLOWED_ATTR = clone(ALLOWED_ATTR);
+      }
+      addToSet(ALLOWED_ATTR, cfg.ADD_ATTR, transformCaseFunc);
+    }
+    if (cfg.ADD_URI_SAFE_ATTR) {
+      addToSet(URI_SAFE_ATTRIBUTES, cfg.ADD_URI_SAFE_ATTR, transformCaseFunc);
+    }
+    if (cfg.FORBID_CONTENTS) {
+      if (FORBID_CONTENTS === DEFAULT_FORBID_CONTENTS) {
+        FORBID_CONTENTS = clone(FORBID_CONTENTS);
+      }
+      addToSet(FORBID_CONTENTS, cfg.FORBID_CONTENTS, transformCaseFunc);
+    }
+    /* Add #text in case KEEP_CONTENT is set to true */
+    if (KEEP_CONTENT) {
+      ALLOWED_TAGS['#text'] = true;
+    }
+    /* Add html, head and body to ALLOWED_TAGS in case WHOLE_DOCUMENT is true */
+    if (WHOLE_DOCUMENT) {
+      addToSet(ALLOWED_TAGS, ['html', 'head', 'body']);
+    }
+    /* Add tbody to ALLOWED_TAGS in case tables are permitted, see #286, #365 */
+    if (ALLOWED_TAGS.table) {
+      addToSet(ALLOWED_TAGS, ['tbody']);
+      delete FORBID_TAGS.tbody;
+    }
+    if (cfg.TRUSTED_TYPES_POLICY) {
+      if (typeof cfg.TRUSTED_TYPES_POLICY.createHTML !== 'function') {
+        throw typeErrorCreate('TRUSTED_TYPES_POLICY configuration option must provide a "createHTML" hook.');
+      }
+      if (typeof cfg.TRUSTED_TYPES_POLICY.createScriptURL !== 'function') {
+        throw typeErrorCreate('TRUSTED_TYPES_POLICY configuration option must provide a "createScriptURL" hook.');
+      }
+      // Overwrite existing TrustedTypes policy.
+      trustedTypesPolicy = cfg.TRUSTED_TYPES_POLICY;
+      // Sign local variables required by `sanitize`.
+      emptyHTML = trustedTypesPolicy.createHTML('');
+    } else {
+      // Uninitialized policy, attempt to initialize the internal dompurify policy.
+      if (trustedTypesPolicy === undefined) {
+        trustedTypesPolicy = _createTrustedTypesPolicy(trustedTypes, currentScript);
+      }
+      // If creating the internal policy succeeded sign internal variables.
+      if (trustedTypesPolicy !== null && typeof emptyHTML === 'string') {
+        emptyHTML = trustedTypesPolicy.createHTML('');
+      }
+    }
+    // Prevent further manipulation of configuration.
+    // Not available in IE8, Safari 5, etc.
+    if (freeze) {
+      freeze(cfg);
+    }
+    CONFIG = cfg;
+  };
+  /* Keep track of all possible SVG and MathML tags
+   * so that we can perform the namespace checks
+   * correctly. */
+  const ALL_SVG_TAGS = addToSet({}, [...svg$1, ...svgFilters, ...svgDisallowed]);
+  const ALL_MATHML_TAGS = addToSet({}, [...mathMl$1, ...mathMlDisallowed]);
+  /**
+   * @param element a DOM element whose namespace is being checked
+   * @returns Return false if the element has a
+   *  namespace that a spec-compliant parser would never
+   *  return. Return true otherwise.
+   */
+  const _checkValidNamespace = function _checkValidNamespace(element) {
+    let parent = getParentNode(element);
+    // In JSDOM, if we're inside shadow DOM, then parentNode
+    // can be null. We just simulate parent in this case.
+    if (!parent || !parent.tagName) {
+      parent = {
+        namespaceURI: NAMESPACE,
+        tagName: 'template'
+      };
+    }
+    const tagName = stringToLowerCase(element.tagName);
+    const parentTagName = stringToLowerCase(parent.tagName);
+    if (!ALLOWED_NAMESPACES[element.namespaceURI]) {
+      return false;
+    }
+    if (element.namespaceURI === SVG_NAMESPACE) {
+      // The only way to switch from HTML namespace to SVG
+      // is via <svg>. If it happens via any other tag, then
+      // it should be killed.
+      if (parent.namespaceURI === HTML_NAMESPACE) {
+        return tagName === 'svg';
+      }
+      // The only way to switch from MathML to SVG is via`
+      // svg if parent is either <annotation-xml> or MathML
+      // text integration points.
+      if (parent.namespaceURI === MATHML_NAMESPACE) {
+        return tagName === 'svg' && (parentTagName === 'annotation-xml' || MATHML_TEXT_INTEGRATION_POINTS[parentTagName]);
+      }
+      // We only allow elements that are defined in SVG
+      // spec. All others are disallowed in SVG namespace.
+      return Boolean(ALL_SVG_TAGS[tagName]);
+    }
+    if (element.namespaceURI === MATHML_NAMESPACE) {
+      // The only way to switch from HTML namespace to MathML
+      // is via <math>. If it happens via any other tag, then
+      // it should be killed.
+      if (parent.namespaceURI === HTML_NAMESPACE) {
+        return tagName === 'math';
+      }
+      // The only way to switch from SVG to MathML is via
+      // <math> and HTML integration points
+      if (parent.namespaceURI === SVG_NAMESPACE) {
+        return tagName === 'math' && HTML_INTEGRATION_POINTS[parentTagName];
+      }
+      // We only allow elements that are defined in MathML
+      // spec. All others are disallowed in MathML namespace.
+      return Boolean(ALL_MATHML_TAGS[tagName]);
+    }
+    if (element.namespaceURI === HTML_NAMESPACE) {
+      // The only way to switch from SVG to HTML is via
+      // HTML integration points, and from MathML to HTML
+      // is via MathML text integration points
+      if (parent.namespaceURI === SVG_NAMESPACE && !HTML_INTEGRATION_POINTS[parentTagName]) {
+        return false;
+      }
+      if (parent.namespaceURI === MATHML_NAMESPACE && !MATHML_TEXT_INTEGRATION_POINTS[parentTagName]) {
+        return false;
+      }
+      // We disallow tags that are specific for MathML
+      // or SVG and should never appear in HTML namespace
+      return !ALL_MATHML_TAGS[tagName] && (COMMON_SVG_AND_HTML_ELEMENTS[tagName] || !ALL_SVG_TAGS[tagName]);
+    }
+    // For XHTML and XML documents that support custom namespaces
+    if (PARSER_MEDIA_TYPE === 'application/xhtml+xml' && ALLOWED_NAMESPACES[element.namespaceURI]) {
+      return true;
+    }
+    // The code should never reach this place (this means
+    // that the element somehow got namespace that is not
+    // HTML, SVG, MathML or allowed via ALLOWED_NAMESPACES).
+    // Return false just in case.
+    return false;
+  };
+  /**
+   * _forceRemove
+   *
+   * @param node a DOM node
+   */
+  const _forceRemove = function _forceRemove(node) {
+    arrayPush(DOMPurify.removed, {
+      element: node
+    });
+    try {
+      // eslint-disable-next-line unicorn/prefer-dom-node-remove
+      getParentNode(node).removeChild(node);
+    } catch (_) {
+      remove(node);
+    }
+  };
+  /**
+   * _removeAttribute
+   *
+   * @param name an Attribute name
+   * @param element a DOM node
+   */
+  const _removeAttribute = function _removeAttribute(name, element) {
+    try {
+      arrayPush(DOMPurify.removed, {
+        attribute: element.getAttributeNode(name),
+        from: element
+      });
+    } catch (_) {
+      arrayPush(DOMPurify.removed, {
+        attribute: null,
+        from: element
+      });
+    }
+    element.removeAttribute(name);
+    // We void attribute values for unremovable "is" attributes
+    if (name === 'is') {
+      if (RETURN_DOM || RETURN_DOM_FRAGMENT) {
+        try {
+          _forceRemove(element);
+        } catch (_) {}
+      } else {
+        try {
+          element.setAttribute(name, '');
+        } catch (_) {}
+      }
+    }
+  };
+  /**
+   * _initDocument
+   *
+   * @param dirty - a string of dirty markup
+   * @return a DOM, filled with the dirty markup
+   */
+  const _initDocument = function _initDocument(dirty) {
+    /* Create a HTML document */
+    let doc = null;
+    let leadingWhitespace = null;
+    if (FORCE_BODY) {
+      dirty = '<remove></remove>' + dirty;
+    } else {
+      /* If FORCE_BODY isn't used, leading whitespace needs to be preserved manually */
+      const matches = stringMatch(dirty, /^[\r\n\t ]+/);
+      leadingWhitespace = matches && matches[0];
+    }
+    if (PARSER_MEDIA_TYPE === 'application/xhtml+xml' && NAMESPACE === HTML_NAMESPACE) {
+      // Root of XHTML doc must contain xmlns declaration (see https://www.w3.org/TR/xhtml1/normative.html#strict)
+      dirty = '<html xmlns="http://www.w3.org/1999/xhtml"><head></head><body>' + dirty + '</body></html>';
+    }
+    const dirtyPayload = trustedTypesPolicy ? trustedTypesPolicy.createHTML(dirty) : dirty;
+    /*
+     * Use the DOMParser API by default, fallback later if needs be
+     * DOMParser not work for svg when has multiple root element.
+     */
+    if (NAMESPACE === HTML_NAMESPACE) {
+      try {
+        doc = new DOMParser().parseFromString(dirtyPayload, PARSER_MEDIA_TYPE);
+      } catch (_) {}
+    }
+    /* Use createHTMLDocument in case DOMParser is not available */
+    if (!doc || !doc.documentElement) {
+      doc = implementation.createDocument(NAMESPACE, 'template', null);
+      try {
+        doc.documentElement.innerHTML = IS_EMPTY_INPUT ? emptyHTML : dirtyPayload;
+      } catch (_) {
+        // Syntax error if dirtyPayload is invalid xml
+      }
+    }
+    const body = doc.body || doc.documentElement;
+    if (dirty && leadingWhitespace) {
+      body.insertBefore(document.createTextNode(leadingWhitespace), body.childNodes[0] || null);
+    }
+    /* Work on whole document or just its body */
+    if (NAMESPACE === HTML_NAMESPACE) {
+      return getElementsByTagName.call(doc, WHOLE_DOCUMENT ? 'html' : 'body')[0];
+    }
+    return WHOLE_DOCUMENT ? doc.documentElement : body;
+  };
+  /**
+   * Creates a NodeIterator object that you can use to traverse filtered lists of nodes or elements in a document.
+   *
+   * @param root The root element or node to start traversing on.
+   * @return The created NodeIterator
+   */
+  const _createNodeIterator = function _createNodeIterator(root) {
+    return createNodeIterator.call(root.ownerDocument || root, root,
+    // eslint-disable-next-line no-bitwise
+    NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_COMMENT | NodeFilter.SHOW_TEXT | NodeFilter.SHOW_PROCESSING_INSTRUCTION | NodeFilter.SHOW_CDATA_SECTION, null);
+  };
+  /**
+   * _isClobbered
+   *
+   * @param element element to check for clobbering attacks
+   * @return true if clobbered, false if safe
+   */
+  const _isClobbered = function _isClobbered(element) {
+    return element instanceof HTMLFormElement && (typeof element.nodeName !== 'string' || typeof element.textContent !== 'string' || typeof element.removeChild !== 'function' || !(element.attributes instanceof NamedNodeMap) || typeof element.removeAttribute !== 'function' || typeof element.setAttribute !== 'function' || typeof element.namespaceURI !== 'string' || typeof element.insertBefore !== 'function' || typeof element.hasChildNodes !== 'function');
+  };
+  /**
+   * Checks whether the given object is a DOM node.
+   *
+   * @param value object to check whether it's a DOM node
+   * @return true is object is a DOM node
+   */
+  const _isNode = function _isNode(value) {
+    return typeof Node === 'function' && value instanceof Node;
+  };
+  function _executeHooks(hooks, currentNode, data) {
+    arrayForEach(hooks, hook => {
+      hook.call(DOMPurify, currentNode, data, CONFIG);
+    });
+  }
+  /**
+   * _sanitizeElements
+   *
+   * @protect nodeName
+   * @protect textContent
+   * @protect removeChild
+   * @param currentNode to check for permission to exist
+   * @return true if node was killed, false if left alive
+   */
+  const _sanitizeElements = function _sanitizeElements(currentNode) {
+    let content = null;
+    /* Execute a hook if present */
+    _executeHooks(hooks.beforeSanitizeElements, currentNode, null);
+    /* Check if element is clobbered or can clobber */
+    if (_isClobbered(currentNode)) {
+      _forceRemove(currentNode);
+      return true;
+    }
+    /* Now let's check the element's type and name */
+    const tagName = transformCaseFunc(currentNode.nodeName);
+    /* Execute a hook if present */
+    _executeHooks(hooks.uponSanitizeElement, currentNode, {
+      tagName,
+      allowedTags: ALLOWED_TAGS
+    });
+    /* Detect mXSS attempts abusing namespace confusion */
+    if (SAFE_FOR_XML && currentNode.hasChildNodes() && !_isNode(currentNode.firstElementChild) && regExpTest(/<[/\w!]/g, currentNode.innerHTML) && regExpTest(/<[/\w!]/g, currentNode.textContent)) {
+      _forceRemove(currentNode);
+      return true;
+    }
+    /* Remove any occurrence of processing instructions */
+    if (currentNode.nodeType === NODE_TYPE.progressingInstruction) {
+      _forceRemove(currentNode);
+      return true;
+    }
+    /* Remove any kind of possibly harmful comments */
+    if (SAFE_FOR_XML && currentNode.nodeType === NODE_TYPE.comment && regExpTest(/<[/\w]/g, currentNode.data)) {
+      _forceRemove(currentNode);
+      return true;
+    }
+    /* Remove element if anything forbids its presence */
+    if (!ALLOWED_TAGS[tagName] || FORBID_TAGS[tagName]) {
+      /* Check if we have a custom element to handle */
+      if (!FORBID_TAGS[tagName] && _isBasicCustomElement(tagName)) {
+        if (CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof RegExp && regExpTest(CUSTOM_ELEMENT_HANDLING.tagNameCheck, tagName)) {
+          return false;
+        }
+        if (CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof Function && CUSTOM_ELEMENT_HANDLING.tagNameCheck(tagName)) {
+          return false;
+        }
+      }
+      /* Keep content except for bad-listed elements */
+      if (KEEP_CONTENT && !FORBID_CONTENTS[tagName]) {
+        const parentNode = getParentNode(currentNode) || currentNode.parentNode;
+        const childNodes = getChildNodes(currentNode) || currentNode.childNodes;
+        if (childNodes && parentNode) {
+          const childCount = childNodes.length;
+          for (let i = childCount - 1; i >= 0; --i) {
+            const childClone = cloneNode(childNodes[i], true);
+            childClone.__removalCount = (currentNode.__removalCount || 0) + 1;
+            parentNode.insertBefore(childClone, getNextSibling(currentNode));
+          }
+        }
+      }
+      _forceRemove(currentNode);
+      return true;
+    }
+    /* Check whether element has a valid namespace */
+    if (currentNode instanceof Element && !_checkValidNamespace(currentNode)) {
+      _forceRemove(currentNode);
+      return true;
+    }
+    /* Make sure that older browsers don't get fallback-tag mXSS */
+    if ((tagName === 'noscript' || tagName === 'noembed' || tagName === 'noframes') && regExpTest(/<\/no(script|embed|frames)/i, currentNode.innerHTML)) {
+      _forceRemove(currentNode);
+      return true;
+    }
+    /* Sanitize element content to be template-safe */
+    if (SAFE_FOR_TEMPLATES && currentNode.nodeType === NODE_TYPE.text) {
+      /* Get the element's text content */
+      content = currentNode.textContent;
+      arrayForEach([MUSTACHE_EXPR, ERB_EXPR, TMPLIT_EXPR], expr => {
+        content = stringReplace(content, expr, ' ');
+      });
+      if (currentNode.textContent !== content) {
+        arrayPush(DOMPurify.removed, {
+          element: currentNode.cloneNode()
+        });
+        currentNode.textContent = content;
+      }
+    }
+    /* Execute a hook if present */
+    _executeHooks(hooks.afterSanitizeElements, currentNode, null);
+    return false;
+  };
+  /**
+   * _isValidAttribute
+   *
+   * @param lcTag Lowercase tag name of containing element.
+   * @param lcName Lowercase attribute name.
+   * @param value Attribute value.
+   * @return Returns true if `value` is valid, otherwise false.
+   */
+  // eslint-disable-next-line complexity
+  const _isValidAttribute = function _isValidAttribute(lcTag, lcName, value) {
+    /* Make sure attribute cannot clobber */
+    if (SANITIZE_DOM && (lcName === 'id' || lcName === 'name') && (value in document || value in formElement)) {
+      return false;
+    }
+    /* Allow valid data-* attributes: At least one character after "-"
+        (https://html.spec.whatwg.org/multipage/dom.html#embedding-custom-non-visible-data-with-the-data-*-attributes)
+        XML-compatible (https://html.spec.whatwg.org/multipage/infrastructure.html#xml-compatible and http://www.w3.org/TR/xml/#d0e804)
+        We don't need to check the value; it's always URI safe. */
+    if (ALLOW_DATA_ATTR && !FORBID_ATTR[lcName] && regExpTest(DATA_ATTR, lcName)) ; else if (ALLOW_ARIA_ATTR && regExpTest(ARIA_ATTR, lcName)) ; else if (!ALLOWED_ATTR[lcName] || FORBID_ATTR[lcName]) {
+      if (
+      // First condition does a very basic check if a) it's basically a valid custom element tagname AND
+      // b) if the tagName passes whatever the user has configured for CUSTOM_ELEMENT_HANDLING.tagNameCheck
+      // and c) if the attribute name passes whatever the user has configured for CUSTOM_ELEMENT_HANDLING.attributeNameCheck
+      _isBasicCustomElement(lcTag) && (CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof RegExp && regExpTest(CUSTOM_ELEMENT_HANDLING.tagNameCheck, lcTag) || CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof Function && CUSTOM_ELEMENT_HANDLING.tagNameCheck(lcTag)) && (CUSTOM_ELEMENT_HANDLING.attributeNameCheck instanceof RegExp && regExpTest(CUSTOM_ELEMENT_HANDLING.attributeNameCheck, lcName) || CUSTOM_ELEMENT_HANDLING.attributeNameCheck instanceof Function && CUSTOM_ELEMENT_HANDLING.attributeNameCheck(lcName)) ||
+      // Alternative, second condition checks if it's an `is`-attribute, AND
+      // the value passes whatever the user has configured for CUSTOM_ELEMENT_HANDLING.tagNameCheck
+      lcName === 'is' && CUSTOM_ELEMENT_HANDLING.allowCustomizedBuiltInElements && (CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof RegExp && regExpTest(CUSTOM_ELEMENT_HANDLING.tagNameCheck, value) || CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof Function && CUSTOM_ELEMENT_HANDLING.tagNameCheck(value))) ; else {
+        return false;
+      }
+      /* Check value is safe. First, is attr inert? If so, is safe */
+    } else if (URI_SAFE_ATTRIBUTES[lcName]) ; else if (regExpTest(IS_ALLOWED_URI$1, stringReplace(value, ATTR_WHITESPACE, ''))) ; else if ((lcName === 'src' || lcName === 'xlink:href' || lcName === 'href') && lcTag !== 'script' && stringIndexOf(value, 'data:') === 0 && DATA_URI_TAGS[lcTag]) ; else if (ALLOW_UNKNOWN_PROTOCOLS && !regExpTest(IS_SCRIPT_OR_DATA, stringReplace(value, ATTR_WHITESPACE, ''))) ; else if (value) {
+      return false;
+    } else ;
+    return true;
+  };
+  /**
+   * _isBasicCustomElement
+   * checks if at least one dash is included in tagName, and it's not the first char
+   * for more sophisticated checking see https://github.com/sindresorhus/validate-element-name
+   *
+   * @param tagName name of the tag of the node to sanitize
+   * @returns Returns true if the tag name meets the basic criteria for a custom element, otherwise false.
+   */
+  const _isBasicCustomElement = function _isBasicCustomElement(tagName) {
+    return tagName !== 'annotation-xml' && stringMatch(tagName, CUSTOM_ELEMENT);
+  };
+  /**
+   * _sanitizeAttributes
+   *
+   * @protect attributes
+   * @protect nodeName
+   * @protect removeAttribute
+   * @protect setAttribute
+   *
+   * @param currentNode to sanitize
+   */
+  const _sanitizeAttributes = function _sanitizeAttributes(currentNode) {
+    /* Execute a hook if present */
+    _executeHooks(hooks.beforeSanitizeAttributes, currentNode, null);
+    const {
+      attributes
+    } = currentNode;
+    /* Check if we have attributes; if not we might have a text node */
+    if (!attributes || _isClobbered(currentNode)) {
+      return;
+    }
+    const hookEvent = {
+      attrName: '',
+      attrValue: '',
+      keepAttr: true,
+      allowedAttributes: ALLOWED_ATTR,
+      forceKeepAttr: undefined
+    };
+    let l = attributes.length;
+    /* Go backwards over all attributes; safely remove bad ones */
+    while (l--) {
+      const attr = attributes[l];
+      const {
+        name,
+        namespaceURI,
+        value: attrValue
+      } = attr;
+      const lcName = transformCaseFunc(name);
+      const initValue = attrValue;
+      let value = name === 'value' ? initValue : stringTrim(initValue);
+      /* Execute a hook if present */
+      hookEvent.attrName = lcName;
+      hookEvent.attrValue = value;
+      hookEvent.keepAttr = true;
+      hookEvent.forceKeepAttr = undefined; // Allows developers to see this is a property they can set
+      _executeHooks(hooks.uponSanitizeAttribute, currentNode, hookEvent);
+      value = hookEvent.attrValue;
+      /* Full DOM Clobbering protection via namespace isolation,
+       * Prefix id and name attributes with `user-content-`
+       */
+      if (SANITIZE_NAMED_PROPS && (lcName === 'id' || lcName === 'name')) {
+        // Remove the attribute with this value
+        _removeAttribute(name, currentNode);
+        // Prefix the value and later re-create the attribute with the sanitized value
+        value = SANITIZE_NAMED_PROPS_PREFIX + value;
+      }
+      /* Work around a security issue with comments inside attributes */
+      if (SAFE_FOR_XML && regExpTest(/((--!?|])>)|<\/(style|title)/i, value)) {
+        _removeAttribute(name, currentNode);
+        continue;
+      }
+      /* Did the hooks approve of the attribute? */
+      if (hookEvent.forceKeepAttr) {
+        continue;
+      }
+      /* Did the hooks approve of the attribute? */
+      if (!hookEvent.keepAttr) {
+        _removeAttribute(name, currentNode);
+        continue;
+      }
+      /* Work around a security issue in jQuery 3.0 */
+      if (!ALLOW_SELF_CLOSE_IN_ATTR && regExpTest(/\/>/i, value)) {
+        _removeAttribute(name, currentNode);
+        continue;
+      }
+      /* Sanitize attribute content to be template-safe */
+      if (SAFE_FOR_TEMPLATES) {
+        arrayForEach([MUSTACHE_EXPR, ERB_EXPR, TMPLIT_EXPR], expr => {
+          value = stringReplace(value, expr, ' ');
+        });
+      }
+      /* Is `value` valid for this attribute? */
+      const lcTag = transformCaseFunc(currentNode.nodeName);
+      if (!_isValidAttribute(lcTag, lcName, value)) {
+        _removeAttribute(name, currentNode);
+        continue;
+      }
+      /* Handle attributes that require Trusted Types */
+      if (trustedTypesPolicy && typeof trustedTypes === 'object' && typeof trustedTypes.getAttributeType === 'function') {
+        if (namespaceURI) ; else {
+          switch (trustedTypes.getAttributeType(lcTag, lcName)) {
+            case 'TrustedHTML':
+              {
+                value = trustedTypesPolicy.createHTML(value);
+                break;
+              }
+            case 'TrustedScriptURL':
+              {
+                value = trustedTypesPolicy.createScriptURL(value);
+                break;
+              }
+          }
+        }
+      }
+      /* Handle invalid data-* attribute set by try-catching it */
+      if (value !== initValue) {
+        try {
+          if (namespaceURI) {
+            currentNode.setAttributeNS(namespaceURI, name, value);
+          } else {
+            /* Fallback to setAttribute() for browser-unrecognized namespaces e.g. "x-schema". */
+            currentNode.setAttribute(name, value);
+          }
+          if (_isClobbered(currentNode)) {
+            _forceRemove(currentNode);
+          } else {
+            arrayPop(DOMPurify.removed);
+          }
+        } catch (_) {
+          _removeAttribute(name, currentNode);
+        }
+      }
+    }
+    /* Execute a hook if present */
+    _executeHooks(hooks.afterSanitizeAttributes, currentNode, null);
+  };
+  /**
+   * _sanitizeShadowDOM
+   *
+   * @param fragment to iterate over recursively
+   */
+  const _sanitizeShadowDOM = function _sanitizeShadowDOM(fragment) {
+    let shadowNode = null;
+    const shadowIterator = _createNodeIterator(fragment);
+    /* Execute a hook if present */
+    _executeHooks(hooks.beforeSanitizeShadowDOM, fragment, null);
+    while (shadowNode = shadowIterator.nextNode()) {
+      /* Execute a hook if present */
+      _executeHooks(hooks.uponSanitizeShadowNode, shadowNode, null);
+      /* Sanitize tags and elements */
+      _sanitizeElements(shadowNode);
+      /* Check attributes next */
+      _sanitizeAttributes(shadowNode);
+      /* Deep shadow DOM detected */
+      if (shadowNode.content instanceof DocumentFragment) {
+        _sanitizeShadowDOM(shadowNode.content);
+      }
+    }
+    /* Execute a hook if present */
+    _executeHooks(hooks.afterSanitizeShadowDOM, fragment, null);
+  };
+  // eslint-disable-next-line complexity
+  DOMPurify.sanitize = function (dirty) {
+    let cfg = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    let body = null;
+    let importedNode = null;
+    let currentNode = null;
+    let returnNode = null;
+    /* Make sure we have a string to sanitize.
+      DO NOT return early, as this will return the wrong type if
+      the user has requested a DOM object rather than a string */
+    IS_EMPTY_INPUT = !dirty;
+    if (IS_EMPTY_INPUT) {
+      dirty = '<!-->';
+    }
+    /* Stringify, in case dirty is an object */
+    if (typeof dirty !== 'string' && !_isNode(dirty)) {
+      if (typeof dirty.toString === 'function') {
+        dirty = dirty.toString();
+        if (typeof dirty !== 'string') {
+          throw typeErrorCreate('dirty is not a string, aborting');
+        }
+      } else {
+        throw typeErrorCreate('toString is not a function');
+      }
+    }
+    /* Return dirty HTML if DOMPurify cannot run */
+    if (!DOMPurify.isSupported) {
+      return dirty;
+    }
+    /* Assign config vars */
+    if (!SET_CONFIG) {
+      _parseConfig(cfg);
+    }
+    /* Clean up removed elements */
+    DOMPurify.removed = [];
+    /* Check if dirty is correctly typed for IN_PLACE */
+    if (typeof dirty === 'string') {
+      IN_PLACE = false;
+    }
+    if (IN_PLACE) {
+      /* Do some early pre-sanitization to avoid unsafe root nodes */
+      if (dirty.nodeName) {
+        const tagName = transformCaseFunc(dirty.nodeName);
+        if (!ALLOWED_TAGS[tagName] || FORBID_TAGS[tagName]) {
+          throw typeErrorCreate('root node is forbidden and cannot be sanitized in-place');
+        }
+      }
+    } else if (dirty instanceof Node) {
+      /* If dirty is a DOM element, append to an empty document to avoid
+         elements being stripped by the parser */
+      body = _initDocument('<!---->');
+      importedNode = body.ownerDocument.importNode(dirty, true);
+      if (importedNode.nodeType === NODE_TYPE.element && importedNode.nodeName === 'BODY') {
+        /* Node is already a body, use as is */
+        body = importedNode;
+      } else if (importedNode.nodeName === 'HTML') {
+        body = importedNode;
+      } else {
+        // eslint-disable-next-line unicorn/prefer-dom-node-append
+        body.appendChild(importedNode);
+      }
+    } else {
+      /* Exit directly if we have nothing to do */
+      if (!RETURN_DOM && !SAFE_FOR_TEMPLATES && !WHOLE_DOCUMENT &&
+      // eslint-disable-next-line unicorn/prefer-includes
+      dirty.indexOf('<') === -1) {
+        return trustedTypesPolicy && RETURN_TRUSTED_TYPE ? trustedTypesPolicy.createHTML(dirty) : dirty;
+      }
+      /* Initialize the document to work on */
+      body = _initDocument(dirty);
+      /* Check we have a DOM node from the data */
+      if (!body) {
+        return RETURN_DOM ? null : RETURN_TRUSTED_TYPE ? emptyHTML : '';
+      }
+    }
+    /* Remove first element node (ours) if FORCE_BODY is set */
+    if (body && FORCE_BODY) {
+      _forceRemove(body.firstChild);
+    }
+    /* Get node iterator */
+    const nodeIterator = _createNodeIterator(IN_PLACE ? dirty : body);
+    /* Now start iterating over the created document */
+    while (currentNode = nodeIterator.nextNode()) {
+      /* Sanitize tags and elements */
+      _sanitizeElements(currentNode);
+      /* Check attributes next */
+      _sanitizeAttributes(currentNode);
+      /* Shadow DOM detected, sanitize it */
+      if (currentNode.content instanceof DocumentFragment) {
+        _sanitizeShadowDOM(currentNode.content);
+      }
+    }
+    /* If we sanitized `dirty` in-place, return it. */
+    if (IN_PLACE) {
+      return dirty;
+    }
+    /* Return sanitized string or DOM */
+    if (RETURN_DOM) {
+      if (RETURN_DOM_FRAGMENT) {
+        returnNode = createDocumentFragment.call(body.ownerDocument);
+        while (body.firstChild) {
+          // eslint-disable-next-line unicorn/prefer-dom-node-append
+          returnNode.appendChild(body.firstChild);
+        }
+      } else {
+        returnNode = body;
+      }
+      if (ALLOWED_ATTR.shadowroot || ALLOWED_ATTR.shadowrootmode) {
+        /*
+          AdoptNode() is not used because internal state is not reset
+          (e.g. the past names map of a HTMLFormElement), this is safe
+          in theory but we would rather not risk another attack vector.
+          The state that is cloned by importNode() is explicitly defined
+          by the specs.
+        */
+        returnNode = importNode.call(originalDocument, returnNode, true);
+      }
+      return returnNode;
+    }
+    let serializedHTML = WHOLE_DOCUMENT ? body.outerHTML : body.innerHTML;
+    /* Serialize doctype if allowed */
+    if (WHOLE_DOCUMENT && ALLOWED_TAGS['!doctype'] && body.ownerDocument && body.ownerDocument.doctype && body.ownerDocument.doctype.name && regExpTest(DOCTYPE_NAME, body.ownerDocument.doctype.name)) {
+      serializedHTML = '<!DOCTYPE ' + body.ownerDocument.doctype.name + '>\n' + serializedHTML;
+    }
+    /* Sanitize final string template-safe */
+    if (SAFE_FOR_TEMPLATES) {
+      arrayForEach([MUSTACHE_EXPR, ERB_EXPR, TMPLIT_EXPR], expr => {
+        serializedHTML = stringReplace(serializedHTML, expr, ' ');
+      });
+    }
+    return trustedTypesPolicy && RETURN_TRUSTED_TYPE ? trustedTypesPolicy.createHTML(serializedHTML) : serializedHTML;
+  };
+  DOMPurify.setConfig = function () {
+    let cfg = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    _parseConfig(cfg);
+    SET_CONFIG = true;
+  };
+  DOMPurify.clearConfig = function () {
+    CONFIG = null;
+    SET_CONFIG = false;
+  };
+  DOMPurify.isValidAttribute = function (tag, attr, value) {
+    /* Initialize shared config vars if necessary. */
+    if (!CONFIG) {
+      _parseConfig({});
+    }
+    const lcTag = transformCaseFunc(tag);
+    const lcName = transformCaseFunc(attr);
+    return _isValidAttribute(lcTag, lcName, value);
+  };
+  DOMPurify.addHook = function (entryPoint, hookFunction) {
+    if (typeof hookFunction !== 'function') {
+      return;
+    }
+    arrayPush(hooks[entryPoint], hookFunction);
+  };
+  DOMPurify.removeHook = function (entryPoint, hookFunction) {
+    if (hookFunction !== undefined) {
+      const index = arrayLastIndexOf(hooks[entryPoint], hookFunction);
+      return index === -1 ? undefined : arraySplice(hooks[entryPoint], index, 1)[0];
+    }
+    return arrayPop(hooks[entryPoint]);
+  };
+  DOMPurify.removeHooks = function (entryPoint) {
+    hooks[entryPoint] = [];
+  };
+  DOMPurify.removeAllHooks = function () {
+    hooks = _createHooksMap();
+  };
+  return DOMPurify;
+}
+var purify = createDOMPurify();
 
 
+//# sourceMappingURL=purify.es.mjs.map
 
-
-       /* harmony default export */ var scss_ajax_load_more = ((ajax_load_more_default()) && (ajax_load_more_default()).locals ? (ajax_load_more_default()).locals : undefined);
-
-// EXTERNAL MODULE: ./node_modules/crypto-js/md5.js
-var md5 = __webpack_require__(214);
-var md5_default = /*#__PURE__*/__webpack_require__.n(md5);
+// EXTERNAL MODULE: ./node_modules/crypto-js/index.js
+var crypto_js = __webpack_require__(1354);
 ;// CONCATENATED MODULE: ./src/frontend/js/functions/api.js
 
 var _alm_localize = alm_localize,
@@ -8218,7 +15185,7 @@ var _alm_localize = alm_localize,
   rest_nonce = _alm_localize.rest_nonce;
 
 /*
- * Create a Api object with Axios and configure it for the WordPRess Rest API.
+ * Create a Api object with Axios and configure it for the WordPress Rest API.
  *
  * @see https://axios-http.com/docs/instance
  */
@@ -8269,11 +15236,29 @@ function setButtonAtts(button, page, url) {
   button.dataset.page = page;
   button.dataset.url = url ? url : '';
 }
+;// CONCATENATED MODULE: ./src/frontend/js/functions/timeout.js
+/**
+ * Wait for a specified amount of time.
+ *
+ * @param {number} ms The number of milliseconds to wait.
+ * @return {Promise} A promise that resolves after the specified time.
+ */
+function timeout(ms) {
+  return new Promise(function (resolve) {
+    return setTimeout(resolve, ms);
+  });
+}
 ;// CONCATENATED MODULE: ./src/frontend/js/addons/cache.js
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+
 
 
 
@@ -8289,48 +15274,64 @@ function cacheCreateParams(alm) {
   var listing = alm.listing;
   alm.addons.cache = (listing === null || listing === void 0 || (_listing$dataset = listing.dataset) === null || _listing$dataset === void 0 ? void 0 : _listing$dataset.cache) === 'true';
   if (alm.addons.cache) {
-    alm.addons.cache_id = listing.dataset.cacheId;
-    alm.addons.cache_path = listing.dataset.cachePath;
-    alm.addons.cache_logged_in = listing.dataset.cacheLoggedIn ? listing.dataset.cacheLoggedIn : false;
+    // Will be true if the "Known Users: Disable Cache for Logged In Users" setting is checked.
+    alm.addons.cache_logged_in = listing.dataset.cacheLoggedIn && listing.dataset.cacheLoggedIn === 'true' ? true : false;
   }
   return alm;
 }
 
 /**
- * Create unique cache slug from query params.
+ * Get the cache ID for the given ALM instance and data.
  *
  * @param {Object} alm  The ALM object.
- * @param {Object} data The data object.
- * @return {string}     The cache file slug.
+ * @param {Object} data The data to cache.
+ * @return {string}     The cache ID.
  */
-function getCacheSlug(alm, data) {
+function getCacheId(alm, data) {
   var addons = alm.addons,
-    pagePrev = alm.pagePrev,
-    page = alm.page,
-    _alm$rel = alm.rel,
-    rel = _alm$rel === void 0 ? 'next' : _alm$rel;
-  if (addons.nextpage) {
-    // Nextpage.
-    return "page-".concat(page + addons.nextpage_startpage);
-  } else if (addons.single_post) {
-    // Single Post.
-    return addons.single_post_id;
-  } else if (addons.queryloop) {
-    // Query Loop, use the button URL.
-    return md5_default()(JSON.stringify(getButtonURL(alm, alm.rel))).toString();
-  } else if (addons.woocommerce || addons.elementor) {
-    // WooCommerce || Elementor.
-    return rel === 'prev' ? "page-".concat(pagePrev) : "page-".concat(page + 1);
+    _alm$id = alm.id,
+    id = _alm$id === void 0 ? '' : _alm$id;
+
+  // Generate a cache ID for specific addons that perform full page fetches (Woo, Elementor, Query Loop).
+  if (addons.woocommerce || addons.elementor || addons.queryloop) {
+    var url = getButtonURL(alm, alm.rel); // Get the target URL.
+    var settings = getAddOnSettings(alm); // Get addon settings.
+    return createMD5Hash("".concat(url, "-").concat(id, "-").concat(settings)); // Combine params to generate cache ID.
   }
-  return md5_default()(JSON.stringify(data)).toString(); // Standard.
+
+  // Create a shallow copy of the data object so we don't modify the main data object.
+  var copy = _objectSpread({}, data);
+
+  // Remove the following params to prevent unnecessary cache misses on paged results.
+  delete copy.page;
+  delete copy.seo_start_page;
+  delete copy.filters_startpage;
+  delete copy.paging;
+  delete copy.preloaded;
+  delete copy.preloaded_amount;
+  delete copy.cache;
+  delete copy.cache_logged_in;
+  delete copy.cache_id;
+  return createMD5Hash(copy);
+}
+
+/**
+ * Return MD5 hash of data.
+ *
+ * @param {Object} data The data to hash.
+ * @return {string}     The MD5 hash.
+ */
+function createMD5Hash(data) {
+  return (0,crypto_js.MD5)(JSON.stringify(data)).toString();
 }
 
 /**
  * Create a cache file.
  *
- * @param {Object} alm  The ALM object.
- * @param {string} data Content to cache.
- * @param {string} name The cache slug
+ * @param {Object}  alm      The ALM object.
+ * @param {Object}  data     The data to cache.
+ * @param {string}  cache_id The cache ID.
+ * @param {boolean} paging   Whether the query request is for paging add-on, which returns different data shape.
  * @since 5.3.1
  */
 function createCache(_x, _x2, _x3) {
@@ -8340,40 +15341,82 @@ function createCache(_x, _x2, _x3) {
 /**
  * Get cache data file.
  *
+ * Note: This function is used for various addons that perform full page fetches:
+ * WooCommerce, Elementor, Single Post, Query Loop, etc.
+ *
  * @param {Object} alm    The ALM object.
  * @param {Object} params Query params.
  * @return {Promise}      Cache data or false.
  */
 function _createCache() {
-  _createCache = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(alm, data, name) {
-    var _data$html, html, _data$meta, meta, params, res;
+  _createCache = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(alm, data, cache_id) {
+    var paging,
+      _res,
+      _data$html,
+      html,
+      _data$meta,
+      meta,
+      _data$facets,
+      facets,
+      params,
+      res,
+      _args = arguments;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
-          _data$html = data.html, html = _data$html === void 0 ? '' : _data$html, _data$meta = data.meta, meta = _data$meta === void 0 ? {} : _data$meta;
-          if (!(!html || !alm.addons.cache)) {
+          paging = _args.length > 3 && _args[3] !== undefined ? _args[3] : false;
+          if (!(!alm.addons.cache || alm.addons.cache && alm.addons.cache_logged_in)) {
             _context.next = 3;
             break;
           }
           return _context.abrupt("return");
         case 3:
+          _context.next = 5;
+          return timeout(500);
+        case 5:
+          if (!paging) {
+            _context.next = 11;
+            break;
+          }
+          _context.next = 8;
+          return api.post('ajax-load-more/cache/create', {
+            cache_id: cache_id,
+            paging: data
+          });
+        case 8:
+          _res = _context.sent;
+          if (_res.status === 200 && _res.data && _res.data.success) {
+            console.log(_res.data.msg); // eslint-disable-line no-console
+          }
+          return _context.abrupt("return");
+        case 11:
+          // Standard ALM cache.
+          _data$html = data.html, html = _data$html === void 0 ? '' : _data$html, _data$meta = data.meta, meta = _data$meta === void 0 ? {} : _data$meta, _data$facets = data.facets, facets = _data$facets === void 0 ? {} : _data$facets;
+          if (!(!html || !alm.addons.cache || alm.addons.cache && alm.addons.cache_logged_in)) {
+            _context.next = 14;
+            break;
+          }
+          return _context.abrupt("return", false);
+        case 14:
           params = {
-            cache_id: alm.addons.cache_id,
-            cache_logged_in: alm.addons.cache_logged_in,
-            canonical_url: alm.canonical_url,
-            name: name,
+            cache_id: cache_id,
             html: html.trim(),
             postcount: meta.postcount,
             totalposts: meta.totalposts
-          }; // Create the cache file via REST API.
-          _context.next = 6;
+          }; // Include facets if present.
+          if (facets) {
+            params.facets = facets;
+          }
+
+          // Create the cache file via REST API.
+          _context.next = 18;
           return api.post('ajax-load-more/cache/create', params);
-        case 6:
+        case 18:
           res = _context.sent;
           if (res.status === 200 && res.data && res.data.success) {
             console.log(res.data.msg); // eslint-disable-line no-console
           }
-        case 8:
+        case 20:
         case "end":
           return _context.stop();
       }
@@ -8384,42 +15427,67 @@ function _createCache() {
 function getCache(_x4, _x5) {
   return _getCache.apply(this, arguments);
 }
+
+/**
+ * Get addon settings for cache ID generation.
+ *
+ * @param {Object} alm The ALM object.
+ * @return {string}    The addon settings as a JSON string.
+ */
 function _getCache() {
   _getCache = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(alm, params) {
-    var restParams, res;
+    var res;
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) switch (_context2.prev = _context2.next) {
         case 0:
-          if (!(!alm.addons.cache || alm.addons.cache && alm.addons.cache_logged_in)) {
+          if (!(!alm.addons.cache || !params.cache_id || alm.addons.cache && alm.addons.cache_logged_in)) {
             _context2.next = 2;
             break;
           }
           return _context2.abrupt("return", false);
         case 2:
-          restParams = {
-            id: alm.addons.cache_id,
-            name: params.cache_slug
-          };
-          _context2.next = 5;
+          _context2.next = 4;
           return api.get('ajax-load-more/cache/get', {
-            params: restParams
+            params: {
+              id: params.cache_id
+            }
           });
-        case 5:
+        case 4:
           res = _context2.sent;
           if (!(res.status === 200 && res.data)) {
-            _context2.next = 8;
+            _context2.next = 7;
             break;
           }
           return _context2.abrupt("return", res.data);
-        case 8:
+        case 7:
           return _context2.abrupt("return", false);
-        case 9:
+        case 8:
         case "end":
           return _context2.stop();
       }
     }, _callee2);
   }));
   return _getCache.apply(this, arguments);
+}
+function getAddOnSettings(alm) {
+  var addons = alm.addons;
+  var settings = {};
+  if (addons.elementor) {
+    var _addons$elementor_set;
+    settings = (addons === null || addons === void 0 || (_addons$elementor_set = addons.elementor_settings) === null || _addons$elementor_set === void 0 ? void 0 : _addons$elementor_set.target) || {}; // Pluck unique target settings.
+  }
+
+  if (addons.woocommerce) {
+    var _addons$woocommerce_s;
+    settings = (addons === null || addons === void 0 || (_addons$woocommerce_s = addons.woocommerce_settings) === null || _addons$woocommerce_s === void 0 ? void 0 : _addons$woocommerce_s.container) || {}; // Pluck unique container settings.
+  }
+
+  if (addons.queryloop) {
+    var _addons$queryloop_set;
+    settings = (addons === null || addons === void 0 ? void 0 : addons.queryloopId) || (addons === null || addons === void 0 || (_addons$queryloop_set = addons.queryloop_settings) === null || _addons$queryloop_set === void 0 || (_addons$queryloop_set = _addons$queryloop_set.classes) === null || _addons$queryloop_set === void 0 ? void 0 : _addons$queryloop_set.container) || {}; // Pluck unique query loop ID
+  }
+
+  return JSON.stringify(settings);
 }
 ;// CONCATENATED MODULE: ./src/frontend/js/addons/call-to-actions.js
 /**
@@ -8434,6 +15502,9 @@ function ctaCreateParams(alm) {
   alm.addons.cta = (listing === null || listing === void 0 || (_listing$dataset = listing.dataset) === null || _listing$dataset === void 0 ? void 0 : _listing$dataset.cta) === 'true';
   if (alm.addons.cta) {
     alm.addons.cta_position = listing.dataset.ctaPosition;
+    if (listing.dataset.ctaTemplate) {
+      alm.addons.cta_template = listing.dataset.ctaTemplate;
+    }
     alm.addons.cta_repeater = listing.dataset.ctaRepeater;
     alm.addons.cta_theme_repeater = listing.dataset.ctaThemeRepeater;
   }
@@ -8463,7 +15534,9 @@ function commentsCreateParams(alm) {
 }
 ;// CONCATENATED MODULE: ./src/frontend/js/functions/constants.js
 var EXCLUDED_NODES = ['#text', '#comment'];
-var API_DATA_SHAPE = {
+
+// The default data shape returned by the API.
+var API_DEFAULT_DATA_SHAPE = {
   html: '',
   meta: {
     postcount: 0,
@@ -8597,7 +15670,7 @@ function srcsetPolyfill() {
 ;// CONCATENATED MODULE: ./src/frontend/js/modules/loadImage.js
 
 
-var imagesLoaded = __webpack_require__(564);
+var imagesLoaded = __webpack_require__(7564);
 
 /**
  * Load the image with imagesLoaded
@@ -8642,23 +15715,23 @@ function loadImage(container, item, ua) {
 /**
  * Set user focus to improve accessibility after load events.
  *
- * @param {Object}  alm       ALM object.
- * @param {Element} element   The element to focus on.
- * @param {number}  total     The total number of posts returned.
- * @param {boolean} filtering Is this a filtering event.
+ * @param {Object}  alm          ALM object.
+ * @param {Element} element      The element to focus on.
+ * @param {number}  total        The total number of posts returned.
+ * @param {boolean} is_filtering Is this a filtering event.
  * @since 5.1
  */
 function setFocus(alm) {
-  var _alm_localize;
+  var _alm_localize, _alm$addons, _alm$addons2;
   var element = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
   var total = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
-  var filtering = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+  var is_filtering = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
   if (!((_alm_localize = alm_localize) !== null && _alm_localize !== void 0 && _alm_localize.a11y_focus) || !element) {
     return;
   }
 
-  // WooCommerce||ELementor Add-ons.
-  if (alm.addons.woocommerce || alm.addons.elementor) {
+  // WooCommerce||Elementor Add-ons.
+  if (alm !== null && alm !== void 0 && (_alm$addons = alm.addons) !== null && _alm$addons !== void 0 && _alm$addons.woocommerce || alm !== null && alm !== void 0 && (_alm$addons2 = alm.addons) !== null && _alm$addons2 !== void 0 && _alm$addons2.elementor) {
     moveFocus(false, false, element, false);
     return;
   }
@@ -8668,23 +15741,23 @@ function setFocus(alm) {
 
   if (alm.addons.paging) {
     // Paging.
-    moveFocus(alm.init, alm.addons.preloaded, alm.listing, filtering);
+    moveFocus(alm.init, alm.addons.preloaded, alm.listing, is_filtering);
   } else if (alm.addons.single_post || alm.addons.nextpage) {
     // Single Posts || Next Page - Set `init` to false to trigger focus.
-    moveFocus(false, alm.addons.preloaded, element, filtering);
+    moveFocus(false, alm.addons.preloaded, element, is_filtering);
   } else {
     // Standard.
-    moveFocus(alm.init, alm.addons.preloaded, element, filtering);
+    moveFocus(alm.init, alm.addons.preloaded, element, is_filtering);
   }
 }
 
 /**
  * Move user focus to latest elements that have been loaded.
  *
- * @param {boolean} init      Initial run true or false.
- * @param {string}  preloaded Preloaded true or false.
- * @param {Element} element   The container HTML element.
- * @param {boolean} filtering Filtering true or false.
+ * @param {boolean} init         Initial run true or false.
+ * @param {string}  preloaded    Preloaded true or false.
+ * @param {Element} element      The container HTML element.
+ * @param {boolean} is_filtering Filtering true or false.
  * @since 5.1
  */
 
@@ -8692,11 +15765,13 @@ function moveFocus() {
   var init = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
   var preloaded = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'false';
   var element = arguments.length > 2 ? arguments[2] : undefined;
-  var filtering = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
-  if (!filtering) {
-    if ((init || !element) && preloaded !== 'true') {
-      return; // Exit if first run
-    }
+  var is_filtering = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+  if (!element) {
+    return; // Exit if no element.
+  }
+
+  if (!is_filtering && init && !preloaded) {
+    return; // Exit if first run and not preloaded.
   }
 
   element.setAttribute('tabIndex', '-1'); // Set tabIndex.
@@ -8707,7 +15782,7 @@ function moveFocus() {
     element.focus({
       preventScroll: true
     });
-  }, 25);
+  }, 50);
 }
 ;// CONCATENATED MODULE: ./src/frontend/js/modules/loadItems.js
 function loadItems_typeof(o) { "@babel/helpers - typeof"; return loadItems_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, loadItems_typeof(o); }
@@ -8839,7 +15914,6 @@ function elementor_asyncToGenerator(fn) { return function () { var self = this, 
 
 
 
-
 /**
  * Create add-on params for ALM.
  *
@@ -8860,7 +15934,7 @@ function elementorCreateParams(alm) {
     alm.addons.elementor_widget = elementorGetWidgetType(alm.addons.elementor_element);
 
     // Masonry
-    alm = setElementorClasses(alm, alm.addons.elementor_widget);
+    alm = setClasses(alm, alm.addons.elementor_widget);
 
     // Pagination Element
     alm.addons.elementor_controls = alm.addons.elementor_settings.controls;
@@ -8869,8 +15943,8 @@ function elementorCreateParams(alm) {
     alm.addons.elementor_prev_label = alm.addons.elementor_settings.prev_label || '';
 
     // Get next page URL.
-    alm.addons.elementor_next_page = elementorGetPagedURL(alm, alm.addons.elementor_element);
-    alm.addons.elementor_prev_page = elementorGetPagedURL(alm, alm.addons.elementor_element, 'prev');
+    alm.addons.elementor_next_page = getURL(alm, alm.addons.elementor_element);
+    alm.addons.elementor_prev_page = getURL(alm, alm.addons.elementor_element, 'prev');
 
     // Get the max pages.
     alm.addons.elementor_max_pages = alm.addons.elementor_element.querySelector('.e-load-more-anchor');
@@ -8944,80 +16018,59 @@ function elementorInit(alm) {
 /**
  * Get the content, title and results text from the Ajax response.
  *
- * @param {Object} alm        The alm object.
- * @param {string} url        The request URL.
- * @param {Object} response   Query response.
- * @param {string} cache_slug The cache slug.
- * @return {Object}           Results data.
+ * @param {Object} alm  The alm object.
+ * @param {string} url  The request URL.
+ * @param {string} html The HTML data as a string.
+ * @return {Object}     Results data.
  */
-function elementorGetContent(alm, url, response, cache_slug) {
-  var data = API_DATA_SHAPE; // Default data object.
-
-  // Successful response.
-  if (response.status === 200 && response.data) {
-    var addons = alm.addons,
-      page = alm.page,
-      button = alm.button,
-      buttonPrev = alm.buttonPrev,
-      rel = alm.rel;
-    var elementor_target = addons.elementor_target,
-      elementor_container_class = addons.elementor_container_class,
-      elementor_item_class = addons.elementor_item_class;
-
-    // Create temp div to hold response data.
-    var content = document.createElement('div');
-    content.innerHTML = response.data;
-
-    // Set button state & URL.
-    if (rel === 'prev' && buttonPrev) {
-      var prevURL = elementorGetPagedURL(alm, content, 'prev');
-      if (prevURL) {
-        setButtonAtts(buttonPrev, page - 1, prevURL);
-      } else {
-        alm.AjaxLoadMore.triggerDonePrev();
-      }
-    } else {
-      var nextURL = elementorGetPagedURL(alm, content);
-      if (nextURL) {
-        setButtonAtts(button, page + 1, nextURL);
-      } else {
-        alm.AjaxLoadMore.triggerDone();
-      }
-    }
-
-    // Get Page Title
-    var title = content.querySelector('title').innerHTML;
-    data.pageTitle = title;
-
-    // Get Elementor container.
-    var container = content.querySelector("".concat(elementor_target, " .").concat(elementor_container_class));
-    if (!container) {
-      console.warn("Ajax Load More Elementor: Unable to find Elementor container element.");
-      return data;
-    }
-
-    // Get the first item and append data attributes.
-    var item = container ? container.querySelector(".".concat(elementor_item_class)) : null;
-    if (item) {
-      item.classList.add('alm-elementor');
-      item.dataset.url = url;
-      item.dataset.page = rel === 'next' ? page + 1 : page - 1;
-      item.dataset.pageTitle = title;
-    }
-
-    // Count the number of returned items.
-    var items = container.querySelectorAll(".".concat(elementor_item_class));
-    if (items) {
-      // Set the html to the elementor container data.
-      data.html = container ? container.innerHTML : '';
-      data.meta.postcount = items.length;
-      data.meta.totalposts = items.length;
-
-      // Create cache file.
-      createCache(alm, data, cache_slug);
-    }
+function elementorGetContent(alm, url) {
+  var html = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+  if (!html) {
+    return API_DEFAULT_DATA_SHAPE; // Bail early if missing html content.
   }
-  return data;
+
+  var addons = alm.addons,
+    page = alm.page,
+    rel = alm.rel;
+  var elementor_target = addons.elementor_target,
+    elementor_container_class = addons.elementor_container_class,
+    elementor_item_class = addons.elementor_item_class;
+
+  // Create temp div to hold html data.
+  var tempDiv = document.createElement('div');
+  tempDiv.innerHTML = html;
+  var target = tempDiv.querySelector(elementor_target);
+  if (!target) {
+    console.warn("Ajax Load More Elementor: Unable to find Elementor target element.");
+    return API_DEFAULT_DATA_SHAPE;
+  }
+
+  // Get Elementor container.
+  var container = target.querySelector(".".concat(elementor_container_class));
+  if (!container) {
+    console.warn("Ajax Load More Elementor: Unable to find Elementor container element.");
+    return API_DEFAULT_DATA_SHAPE;
+  }
+
+  // Get the returned items.
+  var items = container.querySelectorAll(".".concat(elementor_item_class));
+  if (items) {
+    // Set first item data attributes.
+    items[0].classList.add('alm-elementor');
+    items[0].dataset.url = url;
+    items[0].dataset.page = rel === 'next' ? page + 1 : page - 1;
+    items[0].dataset.pageTitle = tempDiv.querySelector('title').innerHTML;
+
+    // Return data object.
+    return {
+      html: target ? target.innerHTML : '',
+      meta: {
+        postcount: items.length,
+        totalposts: items.length
+      }
+    };
+  }
+  return API_DEFAULT_DATA_SHAPE; // Return default data shape if no items found.
 }
 
 /**
@@ -9031,6 +16084,8 @@ function elementor(content, alm) {
     alm.AjaxLoadMore.triggerDone();
     return false;
   }
+  setButtonURLs(alm, content); // Set button state & URL.
+
   return new Promise(function (resolve) {
     var addons = alm.addons;
     var container = alm.addons.elementor_element.querySelector(".".concat(addons.elementor_container_class)); // Get post container
@@ -9039,9 +16094,8 @@ function elementor(content, alm) {
     if (container && items) {
       var ElementorItems = Array.prototype.slice.call(items); // Convert NodeList to Array
 
-      // Trigger almElementorLoaded callback.
       if (typeof almElementorLoaded === 'function') {
-        window.almElementorLoaded(ElementorItems);
+        window.almElementorLoaded(ElementorItems); // Trigger almElementorLoaded callback.
       }
 
       // Load the items.
@@ -9080,7 +16134,9 @@ function elementor(content, alm) {
 function elementorLoaded(alm) {
   var page = alm.page,
     AjaxLoadMore = alm.AjaxLoadMore,
-    addons = alm.addons;
+    addons = alm.addons,
+    _alm$rel = alm.rel,
+    rel = _alm$rel === void 0 ? 'next' : _alm$rel;
   var nextPage = page + 1;
   var elementor_max_pages = addons.elementor_max_pages;
   lazyImages(alm); // Lazy load images if necessary.
@@ -9089,12 +16145,11 @@ function elementorLoaded(alm) {
     window.almComplete(alm); // Trigger almComplete.
   }
 
-  AjaxLoadMore.transitionEnd(); // End transitions.
-
-  if (nextPage >= elementor_max_pages) {
-    AjaxLoadMore.triggerDone(); // ALM Done.
+  if (rel === 'next' && nextPage >= elementor_max_pages) {
+    AjaxLoadMore.triggerDone(); // Reached max pages.
   }
 
+  AjaxLoadMore.transitionEnd();
   dispatchScrollEvent();
 }
 
@@ -9105,7 +16160,7 @@ function elementorLoaded(alm) {
  * @param {string} type The Elementor type.
  * @return {Object}     The modified object.
  */
-function setElementorClasses(alm) {
+function setClasses(alm) {
   var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'posts';
   // Get the items based on the Elementor type.
   alm.addons.elementor_container_class = alm.addons.elementor_settings.container_class; // Container class
@@ -9235,27 +16290,54 @@ function elementorGetWidgetType(target) {
 }
 
 /**
- * Get the pagination container for the Elementor pagination.
+ * Set the Elementor paging URL on the ALM buttons.
  *
- * @param {Object}  alm     The alm object.
- * @param {Element} content The HTML content to search.
- * @param {string}  dir     the direction, next of prev.
- * @return {HTMLElement}    The pagination element.
+ * @param {Object}      alm     The alm object.
+ * @param {HTMLElement} content The HTML content to search.
  */
-function elementorGetPagedURL(alm, content) {
+function setButtonURLs(alm, content) {
+  if (!content) {
+    return;
+  }
+  var page = alm.page,
+    button = alm.button,
+    buttonPrev = alm.buttonPrev,
+    rel = alm.rel;
+
+  // Set button state & URL.
+  if (rel === 'prev' && buttonPrev) {
+    var prevURL = getURL(alm, content, 'prev');
+    if (prevURL) {
+      setButtonAtts(buttonPrev, page - 1, prevURL);
+    } else {
+      alm.AjaxLoadMore.triggerDonePrev();
+    }
+  } else {
+    var nextURL = getURL(alm, content);
+    if (nextURL) {
+      setButtonAtts(button, page + 1, nextURL);
+    } else {
+      alm.AjaxLoadMore.triggerDone();
+    }
+  }
+}
+
+/**
+ * Get the paged URL from Elementor pagination element.
+ *
+ * @param {Object}  alm       The alm object.
+ * @param {Element} content   The HTML content to search.
+ * @param {string}  direction The direction, next of prev.
+ * @return {HTMLElement}      The pagination element.
+ */
+function getURL(alm, content) {
   var _addons$elementor_set, _element$querySelecto;
-  var dir = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'next';
+  var direction = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'next';
   var _alm$addons = alm.addons,
     addons = _alm$addons === void 0 ? {} : _alm$addons;
-
-  // Locate the pagination container.
-  var element = (content === null || content === void 0 ? void 0 : content.querySelector(addons === null || addons === void 0 ? void 0 : addons.elementor_pagination_class)) || (content === null || content === void 0 ? void 0 : content.querySelector(".".concat(addons === null || addons === void 0 || (_addons$elementor_set = addons.elementor_settings) === null || _addons$elementor_set === void 0 ? void 0 : _addons$elementor_set.pagination_class)));
-
-  // Get URL from the pagination element.
-  var page = element === null || element === void 0 || (_element$querySelecto = element.querySelector("a.".concat(dir))) === null || _element$querySelecto === void 0 ? void 0 : _element$querySelecto.href;
-
-  // Return the paged URL element.
-  return page ? page : false;
+  var element = (content === null || content === void 0 ? void 0 : content.querySelector(addons === null || addons === void 0 ? void 0 : addons.elementor_pagination_class)) || (content === null || content === void 0 ? void 0 : content.querySelector(".".concat(addons === null || addons === void 0 || (_addons$elementor_set = addons.elementor_settings) === null || _addons$elementor_set === void 0 ? void 0 : _addons$elementor_set.pagination_class))); // Locate the pagination container.
+  var page = element === null || element === void 0 || (_element$querySelecto = element.querySelector("a.".concat(direction))) === null || _element$querySelecto === void 0 ? void 0 : _element$querySelecto.href; // Get URL from the pagination element.
+  return page ? page : false; // Return the paged URL element.
 }
 ;// CONCATENATED MODULE: ./src/frontend/js/functions/getParameterByName.js
 /**
@@ -9570,7 +16652,8 @@ var insertScript = {
  * @return {Object}    The modified object.
  */
 function pagingCreateParams(alm) {
-  var listing = alm.listing;
+  var listing = alm.listing,
+    container_type = alm.container_type;
   alm.addons.paging = listing.dataset.paging === 'true';
   if (alm.addons.paging) {
     alm.addons.paging_init = true;
@@ -9583,7 +16666,7 @@ function pagingCreateParams(alm) {
     alm.addons.paging_last_label = listing.dataset.pagingLastLabel;
     alm.addons.paging_scroll = listing.dataset.pagingScroll ? listing.dataset.pagingScroll : false;
     alm.addons.paging_scrolltop = listing.dataset.pagingScrolltop ? parseInt(listing.dataset.pagingScrolltop) : 100;
-    alm.addons.paging_container = listing.querySelector('.alm-paging-content');
+    alm.addons.paging_container = container_type === 'table' ? listing : listing.querySelector('.alm-paging-content');
     alm.pause = alm.addons.preloaded ? true : alm.pause; // If preloaded, pause ALM.
   }
 
@@ -9665,7 +16748,7 @@ function seoCreateParams(alm) {
       alm.offset = alm.posts_per_page;
     }
   }
-  alm.start_page = (alm === null || alm === void 0 || (_alm$listing = alm.listing) === null || _alm$listing === void 0 || (_alm$listing = _alm$listing.dataset) === null || _alm$listing === void 0 ? void 0 : _alm$listing.seoStartPage) || '';
+  alm.start_page = (alm === null || alm === void 0 || (_alm$listing = alm.listing) === null || _alm$listing === void 0 || (_alm$listing = _alm$listing.dataset) === null || _alm$listing === void 0 ? void 0 : _alm$listing.seoStartPage) || 0;
   if (alm.start_page) {
     alm.start_page = parseInt(alm.start_page);
     alm.addons.seo_scroll = listing.dataset.seoScroll;
@@ -9704,7 +16787,7 @@ function addSEOAttributes(alm, element, pagenum) {
   var _alm_localize = alm_localize,
     _alm_localize$retain_ = _alm_localize.retain_querystring,
     retain_querystring = _alm_localize$retain_ === void 0 ? true : _alm_localize$retain_;
-  var querystring = retain_querystring ? window.location.search : '';
+  var querystring = retain_querystring || alm.init ? window.location.search : '';
   pagenum = !skipOffset ? getSEOPageNum(addons === null || addons === void 0 ? void 0 : addons.seo_offset, pagenum) : pagenum;
   element.classList.add('alm-seo');
   element.dataset.page = pagenum;
@@ -9817,11 +16900,11 @@ function setPreloadedParams(alm) {
     }
   }
 }
-;// CONCATENATED MODULE: ./src/frontend/js/addons/queryLoop.js
-function queryLoop_typeof(o) { "@babel/helpers - typeof"; return queryLoop_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, queryLoop_typeof(o); }
-function queryLoop_regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ queryLoop_regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == queryLoop_typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(queryLoop_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
-function queryLoop_asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-function queryLoop_asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { queryLoop_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { queryLoop_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+;// CONCATENATED MODULE: ./src/frontend/js/addons/query-loop.js
+function query_loop_typeof(o) { "@babel/helpers - typeof"; return query_loop_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, query_loop_typeof(o); }
+function query_loop_regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ query_loop_regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == query_loop_typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(query_loop_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function query_loop_asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function query_loop_asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { query_loop_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { query_loop_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 
 
@@ -9847,134 +16930,130 @@ function queryLoopCreateParams(alm) {
     return alm;
   }
 
-  // If parent is a wp-block-query, set queryloop settings.
+  // Pluck the queryId from the config.
+  var _getQueryLoopConfig = getQueryLoopConfig(container),
+    _getQueryLoopConfig$q = _getQueryLoopConfig.queryId,
+    queryId = _getQueryLoopConfig$q === void 0 ? false : _getQueryLoopConfig$q,
+    _getQueryLoopConfig$p = _getQueryLoopConfig.paged,
+    paged = _getQueryLoopConfig$p === void 0 ? 1 : _getQueryLoopConfig$p;
+  if (!queryId) {
+    console.warn('Ajax Load More: Unable to locate Query Loop ID.');
+    return alm;
+  }
   alm.addons.queryloop = true;
+  alm.addons.queryloopId = queryId;
   alm.addons.queryloop_settings = {
     container: container,
+    firstEl: container.querySelector('.wp-block-post'),
     classes: {
       container: ".".concat(container.className.replace(/ /g, '.')),
       listing: '.wp-block-post-template',
-      element: '.wp-block-post',
-      pagination: '.wp-block-query-pagination',
-      pagination_prev: 'a.wp-block-query-pagination-previous',
-      pagination_next: 'a.wp-block-query-pagination-next'
-    },
-    pagination: container.querySelector('.wp-block-query-pagination'),
-    pagination_prev: container.querySelector('a.wp-block-query-pagination-previous'),
-    pagination_next: container.querySelector('a.wp-block-query-pagination-next')
+      element: '.wp-block-post'
+    }
   };
+  alm.page = parseInt(paged);
+  alm.pause = 'true'; // Pause ALM by default.
   return alm;
 }
 
 /**
- * Set up the instance of Query Loop.
- *
- * @param {Object} alm
+ * Init the Query Loop functionality.
+ * @param {Object} alm The alm object.
  */
 function queryLoopInit(alm) {
-  var rel = alm.rel,
-    addons = alm.addons,
-    button = alm.button,
-    buttonPrev = alm.buttonPrev,
-    page = alm.page;
-  var _addons$queryloop_set = addons.queryloop_settings,
-    settings = _addons$queryloop_set === void 0 ? {} : _addons$queryloop_set;
+  var _alm$addons$queryloop = alm.addons.queryloop_settings,
+    queryloop_settings = _alm$addons$queryloop === void 0 ? {} : _alm$addons$queryloop;
+  var _queryloop_settings$c = queryloop_settings.container,
+    container = _queryloop_settings$c === void 0 ? '' : _queryloop_settings$c,
+    first = queryloop_settings.firstEl;
+  var _getQueryLoopConfig2 = getQueryLoopConfig(container),
+    _getQueryLoopConfig2$ = _getQueryLoopConfig2.paged,
+    paged = _getQueryLoopConfig2$ === void 0 ? 1 : _getQueryLoopConfig2$,
+    prev = _getQueryLoopConfig2.prev;
 
-  // Set button state & URL.
-  if (rel === 'prev' && buttonPrev) {
-    var _settings$pagination_;
-    var prevURL = (settings === null || settings === void 0 || (_settings$pagination_ = settings.pagination_prev) === null || _settings$pagination_ === void 0 ? void 0 : _settings$pagination_.href) || false;
-    if (prevURL) {
-      setButtonAtts(buttonPrev, page - 1, prevURL);
-    } else {
-      alm.AjaxLoadMore.triggerDonePrev();
-    }
-  } else {
-    var _settings$pagination_2;
-    var nextURL = (settings === null || settings === void 0 || (_settings$pagination_2 = settings.pagination_next) === null || _settings$pagination_2 === void 0 ? void 0 : _settings$pagination_2.href) || false;
-    if (nextURL) {
-      setButtonAtts(button, page + 1, nextURL);
-    } else {
-      alm.AjaxLoadMore.triggerDone();
-    }
+  // Create Load Previous button.
+  if (container && paged > 1 && prev) {
+    var _alm$prev_button_labe;
+    createLoadPreviousButton(alm, container, paged - 1, prev, alm === null || alm === void 0 || (_alm$prev_button_labe = alm.prev_button_labels) === null || _alm$prev_button_labe === void 0 ? void 0 : _alm$prev_button_labe["default"]);
+  }
+
+  // Config first element in list.
+  if (first) {
+    first.classList.add('alm-query-loop');
+    first.dataset.url = window.location.href;
+    first.dataset.page = alm.page;
+    first.dataset.title = document.querySelector('title').innerHTML;
+  }
+
+  // Set button URLs.
+  query_loop_setButtonURLs(alm);
+
+  // Attach scroll events.
+  if (alm.urls) {
+    window.addEventListener('touchstart', onScroll);
+    window.addEventListener('scroll', onScroll);
   }
 }
 
 /**
  * Get the content, title and results text from the Ajax response.
  *
- * @param {Object} alm        The alm object.
- * @param {string} url        The request URL.
- * @param {Object} response   Query response.
- * @param {string} cache_slug The cache slug.
- * @return {Object}           Results data.
+ * @param {Object} alm  The alm object.
+ * @param {string} url  The request URL.
+ * @param {string} html The HTML data as a string.
+ * @return {Object}     Results data.
  */
-function queryLoopGetContent(alm, url, response, cache_slug) {
-  var data = API_DATA_SHAPE; // Default data object.
+function queryLoopGetContent(alm, url) {
+  var _queryloop_settings$c2, _queryloop_settings$c3, _queryloop_settings$c4;
+  var html = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+  if (!html) {
+    return API_DEFAULT_DATA_SHAPE; // Bail early if missing html content.
+  }
 
-  // Successful response.
-  if (response.status === 200 && response.data) {
-    var _queryloop_settings$c, _queryloop_settings$c2, _queryloop_settings$c3, _queryloop_settings$c4;
-    var addons = alm.addons,
-      page = alm.page,
-      button = alm.button,
-      buttonPrev = alm.buttonPrev,
-      rel = alm.rel;
-    var _addons$queryloop_set2 = addons.queryloop_settings,
-      queryloop_settings = _addons$queryloop_set2 === void 0 ? {} : _addons$queryloop_set2;
+  var addons = alm.addons,
+    canonical_url = alm.canonical_url;
+  var _addons$queryloop_set = addons.queryloop_settings,
+    queryloop_settings = _addons$queryloop_set === void 0 ? {} : _addons$queryloop_set;
 
-    // Create temp div to hold response data.
-    var content = document.createElement('div');
-    content.innerHTML = response.data;
+  // Create temp div to hold html data.
+  var tempDiv = document.createElement('div');
+  tempDiv.innerHTML = html;
 
-    // Set button state & URL.
-    if (rel === 'prev' && buttonPrev) {
-      var prevURL = getPagedURL(queryloop_settings, content, 'prev');
-      if (prevURL) {
-        setButtonAtts(buttonPrev, page - 1, prevURL);
-      } else {
-        alm.AjaxLoadMore.triggerDonePrev();
+  // Get container.
+  var container = tempDiv.querySelector("".concat(queryloop_settings === null || queryloop_settings === void 0 || (_queryloop_settings$c2 = queryloop_settings.classes) === null || _queryloop_settings$c2 === void 0 ? void 0 : _queryloop_settings$c2.container));
+  if (!container) {
+    console.warn('Ajax Load More: Unable to locate Query Loop container.');
+    return data;
+  }
+  var listing = container === null || container === void 0 ? void 0 : container.querySelector("".concat(queryloop_settings === null || queryloop_settings === void 0 || (_queryloop_settings$c3 = queryloop_settings.classes) === null || _queryloop_settings$c3 === void 0 ? void 0 : _queryloop_settings$c3.listing));
+  var raw = container === null || container === void 0 ? void 0 : container.querySelector('pre[data-rel="ajax-load-more"]');
+
+  // Create a new content container that holds both listing and raw query loop config.
+  var content = document.createElement('div');
+  content.className = container.classList.toString();
+  content.appendChild(listing);
+  content.appendChild(raw);
+
+  // Get the returned items.
+  var items = content.querySelectorAll(queryloop_settings === null || queryloop_settings === void 0 || (_queryloop_settings$c4 = queryloop_settings.classes) === null || _queryloop_settings$c4 === void 0 ? void 0 : _queryloop_settings$c4.element);
+  if (items) {
+    // Set first item data attributes.
+    var _getQueryLoopConfig3 = getQueryLoopConfig(content),
+      _getQueryLoopConfig3$ = _getQueryLoopConfig3.paged,
+      paged = _getQueryLoopConfig3$ === void 0 ? 1 : _getQueryLoopConfig3$; // Get current page from config settings.
+    items[0].classList.add('alm-query-loop');
+    items[0].dataset.url = paged > 1 ? url : canonical_url;
+    items[0].dataset.page = paged;
+    items[0].dataset.title = tempDiv.querySelector('title').innerHTML;
+
+    // Return data object.
+    return {
+      html: content.innerHTML,
+      meta: {
+        postcount: items.length,
+        totalposts: items.length
       }
-    } else {
-      var nextURL = getPagedURL(queryloop_settings, content);
-      if (nextURL) {
-        setButtonAtts(button, page + 1, nextURL);
-      } else {
-        alm.AjaxLoadMore.triggerDone();
-      }
-    }
-
-    // Get Page Title
-    var title = content.querySelector('title').innerHTML;
-    data.pageTitle = title;
-
-    // Get container.
-    var container = content === null || content === void 0 ? void 0 : content.querySelector("".concat(queryloop_settings === null || queryloop_settings === void 0 || (_queryloop_settings$c = queryloop_settings.classes) === null || _queryloop_settings$c === void 0 ? void 0 : _queryloop_settings$c.container, " ").concat(queryloop_settings === null || queryloop_settings === void 0 || (_queryloop_settings$c2 = queryloop_settings.classes) === null || _queryloop_settings$c2 === void 0 ? void 0 : _queryloop_settings$c2.listing));
-    if (!container) {
-      console.warn('Ajax Load More: Unable to locate Query Loop container.');
-      return data;
-    }
-
-    // Get the first item and append data attributes.
-    var item = container ? container.querySelector(queryloop_settings === null || queryloop_settings === void 0 || (_queryloop_settings$c3 = queryloop_settings.classes) === null || _queryloop_settings$c3 === void 0 ? void 0 : _queryloop_settings$c3.element) : null;
-    if (item) {
-      item.classList.add('alm-queryloop');
-      item.dataset.url = url;
-      item.dataset.page = rel === 'next' ? page + 1 : page - 1;
-      item.dataset.pageTitle = title;
-    }
-
-    // Count the number of returned items.
-    var items = container.querySelectorAll(queryloop_settings === null || queryloop_settings === void 0 || (_queryloop_settings$c4 = queryloop_settings.classes) === null || _queryloop_settings$c4 === void 0 ? void 0 : _queryloop_settings$c4.element);
-    if (items) {
-      // Set the html to the elementor container data.
-      data.html = container ? container.innerHTML : '';
-      data.meta.postcount = items.length;
-      data.meta.totalposts = items.length;
-
-      // Create cache file.
-      createCache(alm, data, cache_slug);
-    }
+    };
   }
   return data;
 }
@@ -9985,16 +17064,18 @@ function queryLoopGetContent(alm, url, response, cache_slug) {
  * @param {HTMLElement} content The HTML data.
  * @param {Object}      alm     The alm object.
  */
-function queryloop(content, alm) {
+function queryLoop(content, alm) {
   if (!content || !alm) {
     alm.AjaxLoadMore.triggerDone();
     return false;
   }
+  query_loop_setButtonURLs(alm, content); // Set button state & URL.
+
   return new Promise(function (resolve) {
     var _queryloop_settings$c5, _queryloop_settings$c6;
     var addons = alm.addons;
-    var _addons$queryloop_set3 = addons.queryloop_settings,
-      queryloop_settings = _addons$queryloop_set3 === void 0 ? {} : _addons$queryloop_set3;
+    var _addons$queryloop_set2 = addons.queryloop_settings,
+      queryloop_settings = _addons$queryloop_set2 === void 0 ? {} : _addons$queryloop_set2;
 
     // Get post listing container.
     var container = queryloop_settings === null || queryloop_settings === void 0 || (_queryloop_settings$c5 = queryloop_settings.container) === null || _queryloop_settings$c5 === void 0 ? void 0 : _queryloop_settings$c5.querySelector("".concat(queryloop_settings.classes.listing));
@@ -10004,14 +17085,14 @@ function queryloop(content, alm) {
     if (container && items) {
       var queryloopItems = Array.prototype.slice.call(items); // Convert NodeList to Array
 
-      // Trigger almQueryLoopLoaded callback.
-      if (typeof almQueryLoopLoaded === 'function') {
-        window.almQueryLoopLoaded(queryloopItems);
+      // Trigger almqueryLoopLoaded callback.
+      if (typeof almqueryLoopLoaded === 'function') {
+        window.almqueryLoopLoaded(queryloopItems);
       }
 
       // Load the items.
-      queryLoop_asyncToGenerator( /*#__PURE__*/queryLoop_regeneratorRuntime().mark(function _callee() {
-        return queryLoop_regeneratorRuntime().wrap(function _callee$(_context) {
+      query_loop_asyncToGenerator( /*#__PURE__*/query_loop_regeneratorRuntime().mark(function _callee() {
+        return query_loop_regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
               _context.next = 2;
@@ -10037,53 +17118,120 @@ function queryloop(content, alm) {
  *
  * @param {Object} alm The alm object.
  */
-function queryloopLoaded(alm) {
-  var page = alm.page,
-    AjaxLoadMore = alm.AjaxLoadMore,
-    addons = alm.addons;
-  var nextPage = page + 1;
-  var max_pages = addons.elementor_max_pages;
+function queryLoopLoaded(alm) {
+  var AjaxLoadMore = alm.AjaxLoadMore;
+  lazyImages(alm); // Lazy load images if necessary.
 
-  // Lazy load images if necessary.
-  lazyImages(alm);
-
-  // Trigger almComplete.
   if (typeof almComplete === 'function' && alm.transition !== 'masonry') {
-    window.almComplete(alm);
+    window.almComplete(alm); // Trigger almComplete.
   }
 
-  // End transitions.
-  AjaxLoadMore.transitionEnd();
-
-  // ALM Done.
-  if (nextPage >= max_pages) {
-    AjaxLoadMore.triggerDone();
-  }
+  AjaxLoadMore.transitionEnd(); // End transitions.
   dispatchScrollEvent();
 }
 
 /**
- * Get the pagination container for the Elementor pagination.
+ * Get the `<pre/>` config element.
  *
- * @param {Object}  settings The query loop settings object.
- * @param {Element} content  The HTML content to search.
- * @param {string}  dir      the direction, next of prev.
- * @return {HTMLElement}     The pagination element.
+ * @param {HTMLElement} element The element to search.
+ * @return {Object|void}        The config object.
  */
-function getPagedURL(settings, content) {
-  var _settings$classes, _settings$classes2, _pagination$querySele;
-  var dir = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'next';
-  // Locate the pagination container.
-  var pagination = content === null || content === void 0 ? void 0 : content.querySelector("".concat(settings.classes.container, " ").concat(settings.classes.pagination));
+function getQueryLoopConfig(element) {
+  var raw = element === null || element === void 0 ? void 0 : element.querySelector('pre[data-rel="ajax-load-more"]');
+  if (!raw) {
+    return {};
+  }
+  return JSON.parse(raw === null || raw === void 0 ? void 0 : raw.innerHTML);
+}
 
-  // Get the pagination target class.
-  var target = dir === 'next' ? (_settings$classes = settings.classes) === null || _settings$classes === void 0 ? void 0 : _settings$classes.pagination_next : (_settings$classes2 = settings.classes) === null || _settings$classes2 === void 0 ? void 0 : _settings$classes2.pagination_prev;
+/**
+ * Set the button URLs.
+ *
+ * @param {Object}      alm     The alm object.
+ * @param {HTMLElement} element The element to search.
+ */
+function query_loop_setButtonURLs(alm) {
+  var element = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : document;
+  var rel = alm.rel,
+    button = alm.button,
+    buttonPrev = alm.buttonPrev,
+    page = alm.page,
+    _alm$pagePrev = alm.pagePrev,
+    pagePrev = _alm$pagePrev === void 0 ? 1 : _alm$pagePrev;
+  var _getQueryLoopConfig4 = getQueryLoopConfig(element),
+    _getQueryLoopConfig4$ = _getQueryLoopConfig4.next,
+    next = _getQueryLoopConfig4$ === void 0 ? '' : _getQueryLoopConfig4$,
+    _getQueryLoopConfig4$2 = _getQueryLoopConfig4.prev,
+    prev = _getQueryLoopConfig4$2 === void 0 ? '' : _getQueryLoopConfig4$2;
 
-  // Get the next URL from the pagination element.
-  var page = pagination === null || pagination === void 0 || (_pagination$querySele = pagination.querySelector(target)) === null || _pagination$querySele === void 0 ? void 0 : _pagination$querySele.href;
+  // Set button state & URL.
+  if (rel === 'prev' && buttonPrev) {
+    if (prev) {
+      setButtonAtts(buttonPrev, pagePrev - 1, prev);
+    } else {
+      alm.AjaxLoadMore.triggerDonePrev();
+    }
+  } else {
+    if (next) {
+      setButtonAtts(button, page + 1, next);
+    } else {
+      alm.AjaxLoadMore.triggerDone();
+    }
+  }
+}
 
-  // Return the next page URL.
-  return page ? page : false;
+/**
+ * Scroll and touchstart events.
+ *
+ * @since 2.0
+ */
+function onScroll() {
+  var scrollTop = window.scrollY;
+  var disabled = false;
+  if (!disabled) {
+    var _posts$;
+    // Get all elements.
+    var posts = document.querySelectorAll('.alm-query-loop');
+    if (!posts) {
+      return;
+    }
+    var first = (_posts$ = posts[0]) === null || _posts$ === void 0 || (_posts$ = _posts$.dataset) === null || _posts$ === void 0 ? void 0 : _posts$.url;
+
+    // Get container scroll position
+    var fromTop = scrollTop;
+
+    // Loop all posts
+    var current = Array.prototype.filter.call(posts, function (n) {
+      var divOffset = ajaxloadmore.getOffset(n);
+      if (divOffset.top < fromTop) {
+        return n;
+      }
+    });
+
+    // Get the data attributes of the current element.
+    var currentPost = current[current.length - 1];
+    var title = currentPost ? currentPost.dataset.title : '';
+    var permalink = currentPost ? currentPost.dataset.url : '';
+    var url = permalink || first;
+    if (window.location.href !== url) {
+      // Set URL if current post doesn't match the browser URL.
+      setURL(title, url);
+    }
+  }
+}
+
+/**
+ * Set the URL in the browser.
+ *
+ * @param {string} title     Page title.
+ * @param {string} permalink The permalink.
+ */
+function setURL(title, permalink) {
+  var state = {
+    permalink: permalink,
+    title: title
+  };
+  history.replaceState(state, title, permalink);
 }
 ;// CONCATENATED MODULE: ./src/frontend/js/addons/singleposts.js
 
@@ -10128,7 +17276,6 @@ function singlepostsCreateParams(alm) {
     alm.addons.single_post_permalink = '';
     alm.addons.single_post_title = '';
     alm.addons.single_post_slug = '';
-    alm.addons.single_post_cache = false;
     alm.addons.single_post_title_template = listing.dataset.singlePostTitleTemplate;
     alm.addons.single_post_siteTitle = listing.dataset.singlePostSiteTitle;
     alm.addons.single_post_siteTagline = listing.dataset.singlePostSiteTagline;
@@ -10141,62 +17288,77 @@ function singlepostsCreateParams(alm) {
 }
 
 /**
+ * Build the data object to send with the Ajax request.
+ *
+ * @param {Object} alm The ALM object.
+ * @return {Object}    The data object.
+ */
+function singlepostsQueryParams(alm) {
+  var addons = alm.addons;
+  var params = {
+    action: 'alm_get_single',
+    id: parseInt(addons.single_post_id),
+    initial_id: parseInt(addons.single_post_init_id),
+    order: addons.single_post_order,
+    taxonomy: addons.single_post_taxonomy,
+    excluded_terms: addons.single_post_excluded_terms,
+    post_type: alm.post_type,
+    init: addons.single_post_init
+  };
+  return params;
+}
+
+/**
  * Create the HTML for loading Single Posts.
  *
- * @param {Object} alm        The alm object.
- * @param {Object} response   Query response.
- * @param {string} cache_slug The cache slug.
- * @return {Object}           Results data.
+ * @param {Object} alm  The alm object.
+ * @param {string} html The HTML data as a string.
+ * @return {Object}     Results data.
  * @since 5.1.8.1
  */
-function singlepostsHTML(alm, response, cache_slug) {
-  var data = {
-    html: '',
-    meta: {
-      postcount: 0,
-      totalposts: 0
-    }
-  };
-
-  // Get target element.
+function singlepostsHTML(alm) {
+  var _window;
+  var html = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
   var _alm$addons = alm.addons,
     single_post_target = _alm$addons.single_post_target,
-    single_post_id = _alm$addons.single_post_id;
-  if (response.status === 200 && response.data && single_post_target) {
-    var _window;
-    // Create temp div to hold response data.
-    var div = document.createElement('div');
-    div.innerHTML = response.data;
+    single_post_id = _alm$addons.single_post_id; // Get target elements.
 
-    // Get target element.
-    var html = div.querySelector(single_post_target);
-    if (!html) {
-      console.warn("Ajax Load More: Unable to find ".concat(single_post_target, " element."));
-      return data;
-    }
+  if (!html || !single_post_target) {
+    return API_DEFAULT_DATA_SHAPE; // Bail early if missing requirements.
+  }
 
-    // Get any custom target elements.
-    if ((_window = window) !== null && _window !== void 0 && _window.almSinglePostsCustomElements) {
-      var _window2;
-      var customElements = singlepostsGetCustomElements(div, (_window2 = window) === null || _window2 === void 0 ? void 0 : _window2.almSinglePostsCustomElements, single_post_id);
-      if (customElements) {
-        // Get first element in HTML.
-        var target = html.querySelector('article, section, div');
-        if (target) {
-          target.appendChild(customElements);
-        }
+  // Create temp div to hold html data.
+  var tempDiv = document.createElement('div');
+  tempDiv.innerHTML = html;
+
+  // Get target ref element.
+  var ref = tempDiv.querySelector(single_post_target);
+  if (!ref) {
+    console.warn("Ajax Load More: Unable to find ".concat(single_post_target, " element."));
+    return API_DEFAULT_DATA_SHAPE;
+  }
+
+  // Get any custom target elements.
+  if ((_window = window) !== null && _window !== void 0 && _window.almSinglePostsCustomElements) {
+    var _window2;
+    var customElements = singlepostsGetCustomElements(tempDiv, (_window2 = window) === null || _window2 === void 0 ? void 0 : _window2.almSinglePostsCustomElements, single_post_id);
+    if (customElements) {
+      // Get first element in HTML.
+      var target = ref.querySelector('article, section, div');
+      if (target) {
+        target.appendChild(customElements);
       }
     }
-    data.html = html.innerHTML;
-    data.meta = {
+  }
+
+  // Build return data.
+  return {
+    html: ref.innerHTML,
+    meta: {
       postcount: 1,
       totalposts: 1
-    };
-
-    // Create cache file.
-    createCache(alm, data, cache_slug);
-  }
-  return data;
+    }
+  };
 }
 
 /**
@@ -10272,9 +17434,13 @@ function addSinglePostsAttributes(alm, element) {
   }
   var page = alm.page,
     addons = alm.addons;
+  var _alm_localize = alm_localize,
+    _alm_localize$retain_ = _alm_localize.retain_querystring,
+    retain_querystring = _alm_localize$retain_ === void 0 ? true : _alm_localize$retain_;
+  var querystring = retain_querystring ? window.location.search : '';
   element.setAttribute('class', "alm-single-post post-".concat(addons.single_post_id));
   element.dataset.id = addons.single_post_id;
-  element.dataset.url = addons.single_post_permalink;
+  element.dataset.url = "".concat(addons.single_post_permalink).concat(querystring);
   element.dataset.page = addons.single_post_target ? parseInt(page) + 1 : page;
   element.dataset.title = addons.single_post_title;
   return element;
@@ -10284,7 +17450,6 @@ function woocommerce_typeof(o) { "@babel/helpers - typeof"; return woocommerce_t
 function woocommerce_regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ woocommerce_regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == woocommerce_typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(woocommerce_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
 function woocommerce_asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 function woocommerce_asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { woocommerce_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { woocommerce_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
 
 
 
@@ -10418,71 +17583,64 @@ function woocommerce(content, alm) {
 /**
  * Get the content, title and results from the Ajax request.
  *
- * @param {Object} alm        The alm object.
- * @param {string} url        The request URL.
- * @param {Object} response   Query response.
- * @param {string} cache_slug The cache slug.
- * @return {Object}           Results data.
+ * @param {Object} alm  The alm object.
+ * @param {string} url  The request URL.
+ * @param {string} html The HTML data as a string.
+ * @return {Object}     Results data.
  * @since 5.3.0
  */
-function wooGetContent(alm, url, response, cache_slug) {
-  var data = API_DATA_SHAPE; // Default data object.
-
-  // Successful response.
-  if (response.status === 200 && response.data) {
-    var addons = alm.addons,
-      pagePrev = alm.pagePrev,
-      _alm$rel = alm.rel,
-      rel = _alm$rel === void 0 ? 'next' : _alm$rel,
-      page = alm.page,
-      localize = alm.localize;
-    var total_posts = localize.total_posts;
-    var _addons$woocommerce_s2 = addons.woocommerce_settings,
-      woocommerce_settings = _addons$woocommerce_s2 === void 0 ? {} : _addons$woocommerce_s2;
-
-    // Get the page number.
-    var currentPage = rel === 'prev' ? pagePrev : page + 1;
-
-    // Create temp div to hold response data.
-    var content = document.createElement('div');
-    content.innerHTML = response.data;
-
-    // Get Page Title
-    var title = content.querySelector('title').innerHTML;
-    data.pageTitle = title;
-
-    // Get WooCommerce products container.
-    var container = content.querySelector(woocommerce_settings.container);
-    if (!container) {
-      console.warn("Ajax Load More WooCommerce: Unable to find WooCommerce ".concat(woocommerce_settings.container, " element."));
-      return data;
-    }
-
-    // Get the first item and append data attributes.
-    var item = container ? container.querySelector(woocommerce_settings.products) : null;
-    if (item) {
-      item.classList.add('alm-woocommerce');
-      item.dataset.url = url;
-      item.dataset.page = currentPage;
-      item.dataset.pageTitle = title;
-    }
-
-    // Count the number of returned items.
-    var items = container.querySelectorAll(woocommerce_settings.products);
-    if (items) {
-      // Set the html to the elementor container data.
-      data.html = container ? container.innerHTML : '';
-      data.meta.postcount = items.length;
-      data.meta.totalposts = total_posts;
-
-      // Create cache file.
-      createCache(alm, data, cache_slug);
-    }
-
-    // Results Text
-    almWooCommerceResultsText(content, alm);
+function wooGetContent(alm, url) {
+  var html = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+  if (!html) {
+    return API_DEFAULT_DATA_SHAPE; // Bail early if missing html content.
   }
-  return data;
+
+  var addons = alm.addons,
+    pagePrev = alm.pagePrev,
+    _alm$rel = alm.rel,
+    rel = _alm$rel === void 0 ? 'next' : _alm$rel,
+    page = alm.page,
+    localize = alm.localize;
+  var total_posts = localize.total_posts;
+  var _addons$woocommerce_s2 = addons.woocommerce_settings,
+    woocommerce_settings = _addons$woocommerce_s2 === void 0 ? {} : _addons$woocommerce_s2;
+
+  // Get the page number.
+  var currentPage = rel === 'prev' ? pagePrev : page + 1;
+
+  // Create temp div to hold html data.
+  var tempDiv = document.createElement('div');
+  tempDiv.innerHTML = html;
+
+  // Get WooCommerce products container.
+  var container = tempDiv.querySelector(woocommerce_settings.container);
+  if (!container) {
+    console.warn("Ajax Load More WooCommerce: Unable to find WooCommerce ".concat(woocommerce_settings.container, " element."));
+    return API_DEFAULT_DATA_SHAPE;
+  }
+
+  // Get the returned items.
+  var items = container.querySelectorAll(woocommerce_settings.products);
+  if (items) {
+    // Set first item data attributes.
+    items[0].classList.add('alm-woocommerce');
+    items[0].dataset.url = url;
+    items[0].dataset.page = currentPage;
+    items[0].dataset.pageTitle = tempDiv.querySelector('title').innerHTML;
+
+    // Update the results Text.
+    almWooCommerceResultsText(tempDiv, alm);
+
+    // Return data object.
+    return {
+      html: container.innerHTML,
+      meta: {
+        postcount: items.length,
+        totalposts: total_posts
+      }
+    };
+  }
+  return API_DEFAULT_DATA_SHAPE; // Return default data shape if no items found.
 }
 
 /**
@@ -10632,11 +17790,96 @@ function countContainers(container) {
   }
   return containers.length;
 }
+;// CONCATENATED MODULE: ./src/frontend/js/extensions/acf.js
+/**
+ * Create params for ALM.
+ *
+ * @param {Object} alm The alm object.
+ * @return {Object}    The modified object.
+ */
+function acfParams(alm) {
+  var listing = alm.listing;
+  alm.extensions.acf = listing.dataset.acf === 'true';
+  if (alm.extensions.acf) {
+    alm.extensions.acf_field_type = listing.dataset.acfFieldType;
+    alm.extensions.acf_field_name = listing.dataset.acfFieldName;
+    alm.extensions.acf_parent_field_name = listing.dataset.acfParentFieldName;
+    alm.extensions.acf_row_index = listing.dataset.acfRowIndex;
+    alm.extensions.acf_post_id = listing.dataset.acfPostId;
+
+    // if field type, name or post ID is empty.
+    if (alm.extensions.acf_field_type === undefined || alm.extensions.acf_field_name === undefined || alm.extensions.acf_post_id === undefined) {
+      alm.extensions.acf = false;
+    }
+  }
+  return alm;
+}
+;// CONCATENATED MODULE: ./src/frontend/js/extensions/restapi.js
+/**
+ * Create params for ALM.
+ *
+ * @param {Object} alm The alm object.
+ * @return {Object}    The modified object.
+ */
+function restapiParams(alm) {
+  var listing = alm.listing;
+  alm.extensions.restapi = listing.dataset.restapi === 'true';
+  if (alm.extensions.restapi) {
+    alm.extensions.restapi_base_url = listing.dataset.restapiBaseUrl;
+    alm.extensions.restapi_namespace = listing.dataset.restapiNamespace;
+    alm.extensions.restapi_endpoint = listing.dataset.restapiEndpoint;
+    alm.extensions.restapi_template_id = listing.dataset.restapiTemplateId;
+    alm.extensions.restapi_debug = listing.dataset.restapiDebug;
+    if (alm.extensions.restapi_template_id === '') {
+      alm.extensions.restapi = false;
+    }
+  }
+  return alm;
+}
+;// CONCATENATED MODULE: ./src/frontend/js/extensions/terms.js
+/**
+ * Create params for ALM.
+ *
+ * @param {Object} alm The alm object.
+ * @return {Object}    The modified object.
+ */
+function termsParams(alm) {
+  var listing = alm.listing;
+  alm.extensions.term_query = listing.dataset.termQuery === 'true';
+  if (alm.extensions.term_query) {
+    alm.extensions.term_query_taxonomy = listing.dataset.termQueryTaxonomy;
+    alm.extensions.term_query_hide_empty = listing.dataset.termQueryHideEmpty;
+    alm.extensions.term_query_number = listing.dataset.termQueryNumber;
+  }
+  return alm;
+}
+;// CONCATENATED MODULE: ./src/frontend/js/extensions/users.js
+/**
+ * Create params for ALM.
+ *
+ * @param {Object} alm The alm object.
+ * @return {Object}    The modified object.
+ */
+function usersParams(alm) {
+  var listing = alm.listing;
+  alm.extensions.users = listing.dataset.users === 'true';
+  if (alm.extensions.users) {
+    // Override paging params for users
+    alm.orginal_posts_per_page = parseInt(listing.dataset.usersPerPage);
+    alm.posts_per_page = parseInt(listing.dataset.usersPerPage);
+  }
+  return alm;
+}
 ;// CONCATENATED MODULE: ./src/frontend/js/functions/displayResults.js
+function displayResults_typeof(o) { "@babel/helpers - typeof"; return displayResults_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, displayResults_typeof(o); }
+function displayResults_regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ displayResults_regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == displayResults_typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(displayResults_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function displayResults_asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function displayResults_asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { displayResults_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { displayResults_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 
 
-var displayResults_imagesLoaded = __webpack_require__(564);
+
+var displayResults_imagesLoaded = __webpack_require__(7564);
 
 /**
  * Append and display Ajax results to the ALM container.
@@ -10645,53 +17888,8 @@ var displayResults_imagesLoaded = __webpack_require__(564);
  * @param {Array}  nodes The HTML nodes to append.
  * @return {Promise}     The Promise object.
  */
-function displayResults(alm, nodes) {
-  var container = alm.listing,
-    transition = alm.transition,
-    speed = alm.speed,
-    images_loaded = alm.images_loaded;
-  return new Promise(function (resolve) {
-    if (!container || !nodes) {
-      resolve(true);
-      return;
-    }
-    var useTransition = transition === 'fade' ? true : false;
-
-    // Add each node to the alm listing container.
-    nodes.forEach(function (node) {
-      var nodeName = node.nodeName.toLowerCase();
-      if (useTransition || images_loaded) {
-        node.style.opacity = 0;
-        if (useTransition) {
-          node.style.transition = "all ".concat(speed, "ms ease");
-        }
-      }
-
-      /**
-       * Do not append elements that are not actual element nodes (i.e. #text node).
-       * Add item if not in exclude array.
-       */
-      if (EXCLUDED_NODES.indexOf(nodeName) === -1) {
-        container.appendChild(node);
-      }
-    });
-
-    // Run srcSet polyfill.
-    srcsetPolyfill(container, alm.ua);
-
-    // Lazy load images.
-    lazyImages(alm);
-
-    // Display the results.
-    if (images_loaded) {
-      displayResults_imagesLoaded(container, function () {
-        display(alm, nodes, useTransition);
-      });
-    } else {
-      display(alm, nodes, useTransition);
-    }
-    resolve(true);
-  });
+function displayResults(_x, _x2) {
+  return _displayResults.apply(this, arguments);
 }
 
 /**
@@ -10701,38 +17899,68 @@ function displayResults(alm, nodes) {
  * @param {Array}  nodes The HTML nodes to append.
  * @return {Promise}     The Promise object.
  */
-function displayPagingResults(alm, nodes) {
-  var addons = alm.addons;
-  var container = addons.paging_container;
-  return new Promise(function (resolve) {
-    if (!container || !nodes) {
-      resolve(true);
-      return;
-    }
+function _displayResults() {
+  _displayResults = displayResults_asyncToGenerator( /*#__PURE__*/displayResults_regeneratorRuntime().mark(function _callee(alm, nodes) {
+    var container, transition, speed, images_loaded;
+    return displayResults_regeneratorRuntime().wrap(function _callee$(_context) {
+      while (1) switch (_context.prev = _context.next) {
+        case 0:
+          container = alm.listing, transition = alm.transition, speed = alm.speed, images_loaded = alm.images_loaded;
+          _context.next = 3;
+          return timeout(250);
+        case 3:
+          return _context.abrupt("return", new Promise(function (resolve) {
+            if (!container || !nodes) {
+              resolve(true);
+              return;
+            }
+            var useTransition = transition === 'fade' ? true : false;
 
-    // Clear contents of Paging container.
-    container.style.opacity = 0;
-    container.innerHTML = '';
+            // Add each node to the alm listing container.
+            nodes.forEach(function (node) {
+              var nodeName = node.nodeName.toLowerCase();
+              if (useTransition || images_loaded) {
+                node.style.opacity = 0;
+                if (useTransition) {
+                  node.style.transition = "all ".concat(speed, "ms ease");
+                }
+              }
 
-    // Add each node to the paging container.
-    nodes.forEach(function (node) {
-      var nodeName = node.nodeName.toLowerCase();
-      /**
-       * Do not append elements that are not actual element nodes (i.e. #text node).
-       * Add item if not in exclude array.
-       */
-      if (EXCLUDED_NODES.indexOf(nodeName) === -1) {
-        container.appendChild(node);
+              /**
+               * Do not append elements that are not actual element nodes (i.e. #text node).
+               * Add item if not in exclude array.
+               */
+              if (EXCLUDED_NODES.indexOf(nodeName) === -1) {
+                container.appendChild(node);
+              }
+            });
+
+            // Run srcSet polyfill.
+            srcsetPolyfill(container, alm.ua);
+
+            // Lazy load images.
+            lazyImages(alm);
+
+            // Display the results.
+            if (images_loaded) {
+              displayResults_imagesLoaded(container, function () {
+                display(alm, nodes, useTransition);
+              });
+            } else {
+              display(alm, nodes, useTransition);
+            }
+            resolve(true);
+          }));
+        case 4:
+        case "end":
+          return _context.stop();
       }
-    });
-
-    // Run srcSet polyfill.
-    srcsetPolyfill(container, alm.ua);
-
-    // Lazy load images.
-    lazyImages(alm);
-    resolve(true);
-  });
+    }, _callee);
+  }));
+  return _displayResults.apply(this, arguments);
+}
+function displayPagingResults(_x3, _x4) {
+  return _displayPagingResults.apply(this, arguments);
 }
 
 /**
@@ -10742,24 +17970,92 @@ function displayPagingResults(alm, nodes) {
  * @param {Array}   nodes         The HTML nodes to append.
  * @param {boolean} useTransition Use CSS transition.
  */
-function display(alm, nodes) {
-  var useTransition = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
-  var delay = alm.transition_delay,
-    images_loaded = alm.images_loaded;
-  var offset = useTransition ? parseInt(delay) : 0; // Delay offset timing.
+function _displayPagingResults() {
+  _displayPagingResults = displayResults_asyncToGenerator( /*#__PURE__*/displayResults_regeneratorRuntime().mark(function _callee2(alm, nodes) {
+    var addons, container;
+    return displayResults_regeneratorRuntime().wrap(function _callee2$(_context2) {
+      while (1) switch (_context2.prev = _context2.next) {
+        case 0:
+          addons = alm.addons;
+          container = addons.paging_container;
+          _context2.next = 4;
+          return timeout(125);
+        case 4:
+          return _context2.abrupt("return", new Promise(function (resolve) {
+            if (!container || !nodes) {
+              resolve(true);
+              return;
+            }
 
-  if (nodes) {
-    setTimeout(function () {
-      if (useTransition || images_loaded) {
-        nodes.forEach(function (node, index) {
-          setTimeout(function () {
-            node.style.opacity = 1;
-          }, index * offset);
-        });
+            // Clear contents of Paging container.
+            container.style.opacity = 0;
+            container.innerHTML = '';
+
+            // Add each node to the paging container.
+            nodes.forEach(function (node) {
+              var nodeName = node.nodeName.toLowerCase();
+              /**
+               * Do not append elements that are not actual element nodes (i.e. #text node).
+               * Add item if not in exclude array.
+               */
+              if (EXCLUDED_NODES.indexOf(nodeName) === -1) {
+                container.appendChild(node);
+              }
+            });
+
+            // Run srcSet polyfill.
+            srcsetPolyfill(container, alm.ua);
+
+            // Lazy load images.
+            lazyImages(alm);
+            resolve(true);
+          }));
+        case 5:
+        case "end":
+          return _context2.stop();
       }
-      alm.AjaxLoadMore.transitionEnd();
-    }, 50);
-  }
+    }, _callee2);
+  }));
+  return _displayPagingResults.apply(this, arguments);
+}
+function display(_x5, _x6) {
+  return _display.apply(this, arguments);
+}
+function _display() {
+  _display = displayResults_asyncToGenerator( /*#__PURE__*/displayResults_regeneratorRuntime().mark(function _callee3(alm, nodes) {
+    var useTransition,
+      delay,
+      images_loaded,
+      offset,
+      _args3 = arguments;
+    return displayResults_regeneratorRuntime().wrap(function _callee3$(_context3) {
+      while (1) switch (_context3.prev = _context3.next) {
+        case 0:
+          useTransition = _args3.length > 2 && _args3[2] !== undefined ? _args3[2] : true;
+          delay = alm.transition_delay, images_loaded = alm.images_loaded;
+          offset = useTransition ? parseInt(delay) : 0; // Delay offset timing.
+          _context3.next = 5;
+          return timeout(50);
+        case 5:
+          // Add short delay for effect.
+
+          if (nodes) {
+            if (useTransition || images_loaded) {
+              nodes.forEach(function (node, index) {
+                setTimeout(function () {
+                  node.style.opacity = 1;
+                }, index * offset);
+              });
+            }
+            alm.AjaxLoadMore.transitionEnd();
+          }
+        case 6:
+        case "end":
+          return _context3.stop();
+      }
+    }, _callee3);
+  }));
+  return _display.apply(this, arguments);
 }
 ;// CONCATENATED MODULE: ./src/frontend/js/functions/formatHTML.js
 function formatHTML_toConsumableArray(arr) { return formatHTML_arrayWithoutHoles(arr) || formatHTML_iterableToArray(arr) || formatHTML_unsupportedIterableToArray(arr) || formatHTML_nonIterableSpread(); }
@@ -11011,32 +18307,75 @@ function tableParser() {
   tbody.innerHTML = html;
   return [tbody];
 }
+;// CONCATENATED MODULE: ./src/frontend/js/functions/getCurrentPage.js
+/**
+ * Get the actual page number for the current request.
+ * This is because ALM may use zero-based or one-based indexing depending on context.
+ * e.g. Preloaded, paging, seo_start_page, filters_startpage etc.
+ *
+ * @param {Object} alm  The ALM object.
+ * @param {Object} data The query data object for sending to Ajax Load More.
+ * @return {string}     The cache ID.
+ */
+function getCurrentPage(alm, data) {
+  var addons = alm.addons;
+  var currentPage = data.page + 1; // Convert zero-based page to one-based page.
+
+  // Paging add-on.
+  if (addons.paging) {
+    return currentPage;
+  }
+
+  // Preloaded add-on.
+  if (addons.preloaded) {
+    if (data.seo_start_page > 1 || data.filters_startpage > 1) {
+      return currentPage; // Return current page as-is when SEO or Filters add-on is active.
+    }
+
+    return currentPage + 1; // Add another page for preloaded initial page.
+  }
+
+  if (alm.init) {
+    // SEO add-on (First run only).
+    if (data.seo_start_page > 1) {
+      currentPage = "1-".concat(data.seo_start_page); // Adjust page number based on seo_start_page.
+    }
+    // Filters (First run only).
+    if (data.filters_startpage > 1) {
+      currentPage = "1-".concat(data.filters_startpage); // Adjust page number based on filters_startpage.
+    }
+  }
+
+  return currentPage;
+}
 ;// CONCATENATED MODULE: ./src/frontend/js/functions/queryParams.js
+
 
 
 /**
  * Build the data object to send with the Ajax request.
  *
- * @param {Object} alm       The ALM object.
- * @param {string} queryType The query type.
- * @return {Object}          The data object.
+ * @param {Object} alm  The ALM object.
+ * @param {string} type The query type.
+ * @return {Object}     The data object.
  * @since 3.6
  */
-function getAjaxParams(alm, queryType) {
+function getAjaxParams(alm, type) {
   var addons = alm.addons,
     extensions = alm.extensions;
 
   // Defaults
   var data = {
     action: 'alm_get_posts',
-    query_type: queryType,
+    query_type: type,
     id: alm.id,
-    post_id: parseInt(alm.post_id),
+    post_id: alm.post_id,
     slug: alm.slug,
     canonical_url: encodeURIComponent(alm.canonical_url),
     posts_per_page: parseInt(alm.posts_per_page),
     page: parseInt(alm.page),
     offset: parseInt(alm.offset),
+    original_offset: parseInt(alm.offset),
     post_type: alm.post_type,
     repeater: alm.repeater,
     seo_start_page: alm.start_page
@@ -11151,6 +18490,27 @@ function getAjaxParams(alm, queryType) {
   if (alm.listing.dataset.metaType) {
     data.meta_type = alm.listing.dataset.metaType;
   }
+  if (alm.listing.dataset.dateQuery) {
+    data.date_query = alm.listing.dataset.dateQuery;
+  }
+  if (alm.listing.dataset.dateQueryAfter) {
+    data.date_query_after = alm.listing.dataset.dateQueryAfter;
+  }
+  if (alm.listing.dataset.dateQueryBefore) {
+    data.date_query_before = alm.listing.dataset.dateQueryBefore;
+  }
+  if (alm.listing.dataset.dateQueryColumn) {
+    data.date_query_column = alm.listing.dataset.dateQueryColumn;
+  }
+  if (alm.listing.dataset.dateQueryCompare) {
+    data.date_query_compare = alm.listing.dataset.dateQueryCompare;
+  }
+  if (alm.listing.dataset.dateQueryInclusive) {
+    data.date_query_inclusive = alm.listing.dataset.dateQueryInclusive;
+  }
+  if (alm.listing.dataset.dateQueryRelation) {
+    data.date_query_relation = alm.listing.dataset.dateQueryRelation;
+  }
   if (alm.listing.dataset.author) {
     data.author = alm.listing.dataset.author;
   }
@@ -11187,6 +18547,9 @@ function getAjaxParams(alm, queryType) {
   if (alm.listing.dataset.s) {
     data.search = alm.listing.dataset.s;
   }
+  if (alm.listing.dataset.engine) {
+    data.engine = alm.listing.dataset.engine;
+  }
   if (alm.listing.dataset.customArgs) {
     data.custom_args = alm.listing.dataset.customArgs;
   }
@@ -11194,12 +18557,15 @@ function getAjaxParams(alm, queryType) {
     data.vars = alm.listing.dataset.vars;
   }
 
-  // Cache Params
+  // Get the actual current page number.
+  alm.currentPage = getCurrentPage(alm, data);
+  data.currentPage = alm.currentPage;
 
+  // Cache Params
   if (addons.cache) {
-    data.cache_id = addons.cache_id;
+    data.cache = true;
     data.cache_logged_in = addons.cache_logged_in;
-    data.cache_slug = getCacheSlug(alm, data);
+    data.cache_id = getCacheId(alm, data);
   }
   return data;
 }
@@ -11239,7 +18605,8 @@ function getTypeParams(alm, type) {
         cta: 'true',
         cta_position: addons.cta_position,
         cta_repeater: addons.cta_repeater,
-        cta_theme_repeater: addons.cta_theme_repeater
+        cta_theme_repeater: addons.cta_theme_repeater,
+        cta_template: addons.cta_template
       };
     case 'nextpage':
       return {
@@ -11283,7 +18650,8 @@ function getTypeParams(alm, type) {
  * @return {Object}    The data object.
  * @since 3.6
  */
-function getRestAPIParams(alm) {
+function getRestParams(alm) {
+  var addons = alm.addons;
   var data = {
     id: alm.id,
     post_id: parseInt(alm.post_id),
@@ -11307,6 +18675,13 @@ function getRestAPIParams(alm) {
     meta_compare: alm.listing.dataset.metaCompare,
     meta_relation: alm.listing.dataset.metaRelation,
     meta_type: alm.listing.dataset.metaType,
+    date_query: alm.listing.dataset.dateQuery,
+    date_query_after: alm.listing.dataset.dateQueryAfter,
+    date_query_before: alm.listing.dataset.dateQueryBefore,
+    date_query_column: alm.listing.dataset.dateQueryColumn,
+    date_query_compare: alm.listing.dataset.dateQueryCompare,
+    date_query_inclusive: alm.listing.dataset.dateQueryInclusive,
+    date_query_relation: alm.listing.dataset.dateQueryRelation,
     author: alm.listing.dataset.author,
     year: alm.listing.dataset.year,
     month: alm.listing.dataset.month,
@@ -11318,6 +18693,7 @@ function getRestAPIParams(alm) {
     post__not_in: alm.listing.dataset.postNotIn,
     search: alm.listing.dataset.search,
     s: alm.listing.dataset.s,
+    engine: alm.listing.dataset.engine,
     custom_args: alm.listing.dataset.customArgs,
     vars: alm.listing.dataset.vars,
     lang: alm.lang,
@@ -11325,6 +18701,17 @@ function getRestAPIParams(alm) {
     preloaded_amount: alm.addons.preloaded_amount,
     seo_start_page: alm.start_page
   };
+
+  // Get the actual current page number.
+  alm.currentPage = getCurrentPage(alm, data);
+  data.currentPage = alm.currentPage;
+
+  // Cache Params
+  if (addons.cache) {
+    data.cache = true;
+    data.cache_logged_in = addons.cache_logged_in;
+    data.cache_id = getCacheId(alm, data);
+  }
   return data;
 }
 ;// CONCATENATED MODULE: ./src/frontend/js/functions/windowResize.js
@@ -11415,6 +18802,11 @@ var almFadeOut = function almFadeOut(element, speed) {
   });
 };
 ;// CONCATENATED MODULE: ./src/frontend/js/modules/tableofcontents.js
+function tableofcontents_typeof(o) { "@babel/helpers - typeof"; return tableofcontents_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, tableofcontents_typeof(o); }
+function tableofcontents_regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ tableofcontents_regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == tableofcontents_typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(tableofcontents_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function tableofcontents_asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function tableofcontents_asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { tableofcontents_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { tableofcontents_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 
 
 
@@ -11426,78 +18818,113 @@ var almFadeOut = function almFadeOut(element, speed) {
  * @param {boolean} from_preloaded Preloaded boolean.
  * @since 5.2
  */
-function tableOfContents(alm) {
-  var init = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-  var from_preloaded = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-  var totalPosts = alm.localize && alm.localize.post_count ? parseInt(alm.localize.post_count) : 0;
-
-  // eslint-disable-next-line eqeqeq
-  if (totalPosts == 0 && !alm.addons.single_post) {
-    // Exit if zero posts and not single posts
-    return false;
-  }
-  if (alm && alm.tableofcontents && alm.transition !== 'masonry') {
-    var offset = alm.tableofcontents.dataset.offset ? parseInt(alm.tableofcontents.dataset.offset) : 30;
-    var startPage = alm.start_page ? parseInt(alm.start_page) : 0;
-    var filterStartPage = alm.addons.filters_startpage ? parseInt(alm.addons.filters_startpage) : 0;
-    var nextpageStartPage = alm.addons.nextpage_startpage ? parseInt(alm.addons.nextpage_startpage) : 0;
-    var page = parseInt(alm.page);
-    var preloaded = alm.addons.preloaded ? true : false;
-
-    // Exit if Paging or Next Page
-    if (alm.addons.paging || alm.addons.nextpage) {
-      return false;
-    }
-
-    // Init.
-    if (init) {
-      setTimeout(function () {
-        // Paged results
-        if (alm.addons.seo && startPage > 1 || alm.addons.filters && filterStartPage > 1 || alm.addons.nextpage && nextpageStartPage > 1) {
-          // SEO
-          if (alm.addons.seo && startPage > 1) {
-            for (var i = 0; i < startPage; i++) {
-              createTOCButton(alm, i, offset);
-            }
-          }
-          // Filters
-          if (alm.addons.filters && filterStartPage > 1) {
-            for (var _i = 0; _i < filterStartPage; _i++) {
-              createTOCButton(alm, _i, offset);
-            }
-          }
-          // Nextpage
-          if (alm.addons.nextpage && nextpageStartPage > 1) {
-            for (var _i2 = 0; _i2 < nextpageStartPage; _i2++) {
-              createTOCButton(alm, _i2, offset);
-            }
-          }
-        } else {
-          if (!from_preloaded && preloaded) {
-            page = page + 1;
-          }
-          createTOCButton(alm, page, offset);
-        }
-      }, 100);
-    } else {
-      // Preloaded
-      if (preloaded) {
-        if (alm.addons.seo && startPage > 0) {
-          page = page;
-        } else if (alm.addons.filters && filterStartPage > 0) {
-          page = page;
-        } else {
-          page = page + 1;
-        }
-      }
-      createTOCButton(alm, page, offset);
-    }
-  }
+function tableOfContents(_x) {
+  return _tableOfContents.apply(this, arguments);
 }
 
 /**
  * Clear table of contents.
  */
+function _tableOfContents() {
+  _tableOfContents = tableofcontents_asyncToGenerator( /*#__PURE__*/tableofcontents_regeneratorRuntime().mark(function _callee(alm) {
+    var init,
+      from_preloaded,
+      totalPosts,
+      offset,
+      startPage,
+      filterStartPage,
+      nextpageStartPage,
+      page,
+      preloaded,
+      i,
+      _i,
+      _i2,
+      _args = arguments;
+    return tableofcontents_regeneratorRuntime().wrap(function _callee$(_context) {
+      while (1) switch (_context.prev = _context.next) {
+        case 0:
+          init = _args.length > 1 && _args[1] !== undefined ? _args[1] : false;
+          from_preloaded = _args.length > 2 && _args[2] !== undefined ? _args[2] : false;
+          totalPosts = alm.localize && alm.localize.post_count ? parseInt(alm.localize.post_count) : 0; // eslint-disable-next-line eqeqeq
+          if (!(totalPosts == 0 && !alm.addons.single_post)) {
+            _context.next = 5;
+            break;
+          }
+          return _context.abrupt("return", false);
+        case 5:
+          if (!(alm && alm.tableofcontents && alm.transition !== 'masonry')) {
+            _context.next = 22;
+            break;
+          }
+          offset = alm.tableofcontents.dataset.offset ? parseInt(alm.tableofcontents.dataset.offset) : 30;
+          startPage = alm.start_page ? parseInt(alm.start_page) : 0;
+          filterStartPage = alm.addons.filters_startpage ? parseInt(alm.addons.filters_startpage) : 0;
+          nextpageStartPage = alm.addons.nextpage_startpage ? parseInt(alm.addons.nextpage_startpage) : 0;
+          page = parseInt(alm.page);
+          preloaded = alm.addons.preloaded ? true : false; // Exit if Paging or Next Page
+          if (!(alm.addons.paging || alm.addons.nextpage)) {
+            _context.next = 14;
+            break;
+          }
+          return _context.abrupt("return", false);
+        case 14:
+          if (!init) {
+            _context.next = 20;
+            break;
+          }
+          _context.next = 17;
+          return timeout(100);
+        case 17:
+          // Add slight delay.
+
+          // Paged results
+          if (alm.addons.seo && startPage > 1 || alm.addons.filters && filterStartPage > 1 || alm.addons.nextpage && nextpageStartPage > 1) {
+            // SEO
+            if (alm.addons.seo && startPage > 1) {
+              for (i = 0; i < startPage; i++) {
+                createTOCButton(alm, i, offset);
+              }
+            }
+            // Filters
+            if (alm.addons.filters && filterStartPage > 1) {
+              for (_i = 0; _i < filterStartPage; _i++) {
+                createTOCButton(alm, _i, offset);
+              }
+            }
+            // Nextpage
+            if (alm.addons.nextpage && nextpageStartPage > 1) {
+              for (_i2 = 0; _i2 < nextpageStartPage; _i2++) {
+                createTOCButton(alm, _i2, offset);
+              }
+            }
+          } else {
+            if (!from_preloaded && preloaded) {
+              page = page + 1;
+            }
+            createTOCButton(alm, page, offset);
+          }
+          _context.next = 22;
+          break;
+        case 20:
+          // Preloaded
+          if (preloaded) {
+            if (alm.addons.seo && startPage > 0) {
+              page = page;
+            } else if (alm.addons.filters && filterStartPage > 0) {
+              page = page;
+            } else {
+              page = page + 1;
+            }
+          }
+          createTOCButton(alm, page, offset);
+        case 22:
+        case "end":
+          return _context.stop();
+      }
+    }, _callee);
+  }));
+  return _tableOfContents.apply(this, arguments);
+}
 function clearTOC() {
   var toc = document.querySelector('.alm-toc');
   if (toc) {
@@ -11512,54 +18939,9 @@ function clearTOC() {
  * @param {string} page   Current page.
  * @param {number} offset The page offset.
  */
-function createTOCButton(alm, page, offset) {
-  if (!alm.tableofcontents) {
-    return false;
-  }
-  page = parseInt(page);
-  var posts_per_page = parseInt(alm.posts_per_page);
-
-  // Create button.
-  var button = document.createElement('button');
-  button.type = 'button';
-  button.innerHTML = getTOCLabel(alm, page + 1);
-  button.dataset.page = alm.addons.single_post_target && alm.init ? page - 1 : page + 1;
-  button.dataset.target = (page + 1) * posts_per_page - posts_per_page + 1;
-
-  // Add button to TOC.
-  alm.tableofcontents.appendChild(button);
-
-  // Click event listener.
-  button.addEventListener('click', function () {
-    var current = this.dataset.page;
-    var target = this.dataset.target;
-
-    // Get all listing children.
-    var children = alm.listing.children;
-
-    // Find element.
-    var element = children[target - 1];
-
-    // Next Page.
-    if (alm.addons.nextpage) {
-      element = document.querySelector(".alm-nextpage[data-page=\"".concat(current, "\"]"));
-    }
-    // Single Posts.
-    if (alm.addons.single_post_target) {
-      element = document.querySelector(".alm-single-post[data-page=\"".concat(current, "\"]"));
-    }
-    if (!element) {
-      return; // Exit if no target.
-    }
-
-    var top = typeof getOffset === 'function' ? getOffset(element).top : element.offsetTop;
-    almScroll(top - offset);
-    setTimeout(function () {
-      setFocus(alm, element, target, false);
-    }, 500);
-  });
+function createTOCButton(_x2, _x3, _x4) {
+  return _createTOCButton.apply(this, arguments);
 }
-
 /**
  * Get Button Label.
  *
@@ -11567,6 +18949,68 @@ function createTOCButton(alm, page, offset) {
  * @param {string} page The current page.
  * @return {string}     The Label.
  */
+function _createTOCButton() {
+  _createTOCButton = tableofcontents_asyncToGenerator( /*#__PURE__*/tableofcontents_regeneratorRuntime().mark(function _callee2(alm, page, offset) {
+    var posts_per_page, button;
+    return tableofcontents_regeneratorRuntime().wrap(function _callee2$(_context2) {
+      while (1) switch (_context2.prev = _context2.next) {
+        case 0:
+          if (alm.tableofcontents) {
+            _context2.next = 2;
+            break;
+          }
+          return _context2.abrupt("return", false);
+        case 2:
+          page = parseInt(page);
+          posts_per_page = parseInt(alm.posts_per_page); // Create button.
+          button = document.createElement('button');
+          button.type = 'button';
+          button.innerHTML = getTOCLabel(alm, page + 1);
+          button.dataset.page = alm.addons.single_post_target && alm.init ? page - 1 : page + 1;
+          button.dataset.target = (page + 1) * posts_per_page - posts_per_page + 1;
+
+          // Add button to TOC.
+          alm.tableofcontents.appendChild(button);
+
+          // Click event listener.
+          button.addEventListener('click', function () {
+            var current = this.dataset.page;
+            var target = this.dataset.target;
+
+            // Get all listing children.
+            var children = alm.listing.children;
+
+            // Find element.
+            var element = children[target - 1];
+
+            // Next Page.
+            if (alm.addons.nextpage) {
+              element = document.querySelector(".alm-nextpage[data-page=\"".concat(current, "\"]"));
+            }
+            // Single Posts.
+            if (alm.addons.single_post_target) {
+              element = document.querySelector(".alm-single-post[data-page=\"".concat(current, "\"]"));
+            }
+            if (!element) {
+              return; // Exit if no target.
+            }
+
+            var top = typeof getOffset === 'function' ? getOffset(element).top : element.offsetTop;
+            almScroll(top - offset);
+
+            // Set focus on element after slight delay.
+            setTimeout(function () {
+              setFocus(alm, element, target, false);
+            }, 500);
+          });
+        case 11:
+        case "end":
+          return _context2.stop();
+      }
+    }, _callee2);
+  }));
+  return _createTOCButton.apply(this, arguments);
+}
 function getTOCLabel(alm, page) {
   var label = page;
 
@@ -11599,6 +19043,8 @@ function getTOCLabel(alm, page) {
   return label;
 }
 ;// CONCATENATED MODULE: ./src/frontend/js/modules/filtering.js
+function filtering_typeof(o) { "@babel/helpers - typeof"; return filtering_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, filtering_typeof(o); }
+function filtering_regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ filtering_regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == filtering_typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(filtering_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || filtering_unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
@@ -11609,6 +19055,9 @@ function filtering_unsupportedIterableToArray(o, minLen) { if (!o) return; if (t
 function filtering_iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
 function filtering_arrayWithoutHoles(arr) { if (Array.isArray(arr)) return filtering_arrayLikeToArray(arr); }
 function filtering_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function filtering_asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function filtering_asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { filtering_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { filtering_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 
 
 
@@ -11622,7 +19071,7 @@ function filtering_arrayLikeToArray(arr, len) { if (len == null || len > arr.len
  * @since 2.6.1
  */
 function almFilter(transition) {
-  var speed = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 150;
+  var speed = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 200;
   var data = arguments.length > 2 ? arguments[2] : undefined;
   var type = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'filter';
   if (data.target) {
@@ -11655,28 +19104,9 @@ function almFilter(transition) {
  * @param {Element} element    Target element.
  * @since 2.13.1
  */
-function almFilterTransition(transition, speed, data, type, element) {
-  if (transition === 'fade' || transition === 'masonry') {
-    // Fade, Masonry transition
-
-    switch (type) {
-      case 'filter':
-        element.classList.add('alm-is-filtering');
-        almFadeOut(element, speed);
-        break;
-    }
-
-    // Move to next function
-    setTimeout(function () {
-      almCompleteFilterTransition(speed, data, type, element);
-    }, speed);
-  } else {
-    // No transition
-    element.classList.add('alm-is-filtering');
-    almCompleteFilterTransition(speed, data, type, element);
-  }
+function almFilterTransition(_x, _x2, _x3, _x4, _x5) {
+  return _almFilterTransition.apply(this, arguments);
 }
-
 /**
  * Complete the filter transition.
  *
@@ -11686,13 +19116,47 @@ function almFilterTransition(transition, speed, data, type, element) {
  * @param {Element} element Target element.
  * @since 3.3
  */
+function _almFilterTransition() {
+  _almFilterTransition = filtering_asyncToGenerator( /*#__PURE__*/filtering_regeneratorRuntime().mark(function _callee(transition, speed, data, type, element) {
+    return filtering_regeneratorRuntime().wrap(function _callee$(_context) {
+      while (1) switch (_context.prev = _context.next) {
+        case 0:
+          if (!(transition === 'fade' || transition === 'masonry')) {
+            _context.next = 12;
+            break;
+          }
+          _context.t0 = type;
+          _context.next = _context.t0 === 'filter' ? 4 : 7;
+          break;
+        case 4:
+          element.classList.add('alm-is-filtering');
+          almFadeOut(element, speed);
+          return _context.abrupt("break", 7);
+        case 7:
+          _context.next = 9;
+          return timeout(speed);
+        case 9:
+          almCompleteFilterTransition(speed, data, type, element);
+          _context.next = 14;
+          break;
+        case 12:
+          // No transition
+          element.classList.add('alm-is-filtering');
+          almCompleteFilterTransition(speed, data, type, element);
+        case 14:
+        case "end":
+          return _context.stop();
+      }
+    }, _callee);
+  }));
+  return _almFilterTransition.apply(this, arguments);
+}
 function almCompleteFilterTransition(speed, data, type, element) {
   var btnWrap = element.querySelector('.alm-btn-wrap'); // Get `.alm-btn-wrap` element
   var listing = element.querySelectorAll('.alm-listing'); // Get `.alm-listing` element
 
   if (!listing || !btnWrap) {
-    // Exit if elements doesn't exist.
-    return false;
+    return false; // Exit if elements don't exist.
   }
 
   // Loop over all .alm-listing divs and clear HTML.
@@ -11751,6 +19215,8 @@ function almSetFilters(speed, data, type, element) {
         key = key.replace(/\W+/g, '-').replace(/([a-z\d])([A-Z])/g, '$1-$2').toLowerCase();
         listing.setAttribute('data-' + key, value);
       }
+      almCleanFilterData(listing, data); // Cleanup Filters data
+
       // Fade ALM back (Filters only)
       almFadeIn(element, speed);
       break;
@@ -11773,12 +19239,40 @@ function almSetFilters(speed, data, type, element) {
   }
   switch (type) {
     case 'filter':
-      // Filters Complete (not the add-on)
+      // Filters Complete (not the add-on).
       if (typeof almFilterComplete === 'function') {
-        // Standard Filtering
         almFilterComplete();
       }
       break;
+  }
+}
+
+/**
+ * Clean up Taxonomy and Meta Query data from filters.
+ *
+ * @param {HTMLElement} listing The alm-listing container.
+ * @param {Object}      data    The data object containing filter parameters.
+ */
+function almCleanFilterData(listing, data) {
+  // If taxonomy is empty, remove taxonomy-related data attributes.
+  if (data && data.taxonomy === '') {
+    delete listing.dataset.taxonomy;
+    if (listing.dataset.taxonomyTerms) {
+      delete listing.dataset.taxonomy;
+      delete listing.dataset.taxonomyTerms;
+      delete listing.dataset.taxonomyOperator;
+      delete listing.dataset.taxonomyIncludeChildren;
+    }
+  }
+
+  // If metaKey is empty, remove meta-related data attributes.
+  if (data && data.metaKey === '') {
+    delete listing.dataset.metaKey;
+    if (listing.dataset.metaValue) {
+      delete listing.dataset.metaValue;
+      delete listing.dataset.metaType;
+      delete listing.dataset.metaCompare;
+    }
   }
 }
 ;// CONCATENATED MODULE: ./src/frontend/js/modules/masonry.js
@@ -11787,7 +19281,7 @@ function masonry_regeneratorRuntime() { "use strict"; /*! regenerator-runtime --
 function masonry_asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 function masonry_asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { masonry_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { masonry_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-var masonry_imagesLoaded = __webpack_require__(564);
+var masonry_imagesLoaded = __webpack_require__(7564);
 
 /**
  * Function to trigger built-in Ajax Load More Masonry.
@@ -11953,6 +19447,7 @@ function placeholder_asyncGeneratorStep(gen, resolve, reject, _next, _throw, key
 function placeholder_asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { placeholder_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { placeholder_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 
+
 /**
  * Show placeholder div.
  *
@@ -11983,21 +19478,23 @@ function _placeholder() {
           return _context.abrupt("return", false);
         case 5:
           _context.t0 = type;
-          _context.next = _context.t0 === 'hide' ? 8 : 12;
+          _context.next = _context.t0 === 'hide' ? 8 : 14;
           break;
         case 8:
           _context.next = 10;
           return almFadeOut(placeholder, 175);
         case 10:
-          setTimeout(function () {
-            placeholder.style.display = 'none';
-          }, 75);
-          return _context.abrupt("break", 15);
+          _context.next = 12;
+          return timeout(75);
         case 12:
+          // Add short delay for effect.
+          placeholder.style.display = 'none';
+          return _context.abrupt("break", 17);
+        case 14:
           placeholder.style.display = 'block';
           almFadeIn(placeholder, 175);
-          return _context.abrupt("break", 15);
-        case 15:
+          return _context.abrupt("break", 17);
+        case 17:
         case "end":
           return _context.stop();
       }
@@ -12205,18 +19702,75 @@ function getPostCount(alm) {
 
   return count;
 }
+// EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
+var injectStylesIntoStyleTag = __webpack_require__(3379);
+var injectStylesIntoStyleTag_default = /*#__PURE__*/__webpack_require__.n(injectStylesIntoStyleTag);
+// EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/styleDomAPI.js
+var styleDomAPI = __webpack_require__(7795);
+var styleDomAPI_default = /*#__PURE__*/__webpack_require__.n(styleDomAPI);
+// EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/insertBySelector.js
+var insertBySelector = __webpack_require__(569);
+var insertBySelector_default = /*#__PURE__*/__webpack_require__.n(insertBySelector);
+// EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js
+var setAttributesWithoutAttributes = __webpack_require__(3565);
+var setAttributesWithoutAttributes_default = /*#__PURE__*/__webpack_require__.n(setAttributesWithoutAttributes);
+// EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/insertStyleElement.js
+var insertStyleElement = __webpack_require__(9216);
+var insertStyleElement_default = /*#__PURE__*/__webpack_require__.n(insertStyleElement);
+// EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/styleTagTransform.js
+var styleTagTransform = __webpack_require__(4589);
+var styleTagTransform_default = /*#__PURE__*/__webpack_require__.n(styleTagTransform);
+// EXTERNAL MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js??ruleSet[1].rules[2].use[1]!./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[2].use[3]!./src/frontend/scss/ajax-load-more.scss
+var ajax_load_more = __webpack_require__(9792);
+var ajax_load_more_default = /*#__PURE__*/__webpack_require__.n(ajax_load_more);
+;// CONCATENATED MODULE: ./src/frontend/scss/ajax-load-more.scss
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var options = {};
+
+options.styleTagTransform = (styleTagTransform_default());
+options.setAttributes = (setAttributesWithoutAttributes_default());
+
+      options.insert = insertBySelector_default().bind(null, "head");
+    
+options.domAPI = (styleDomAPI_default());
+options.insertStyleElement = (insertStyleElement_default());
+
+var update = injectStylesIntoStyleTag_default()((ajax_load_more_default()), options);
+
+
+
+
+       /* harmony default export */ var scss_ajax_load_more = ((ajax_load_more_default()) && (ajax_load_more_default()).locals ? (ajax_load_more_default()).locals : undefined);
+
 ;// CONCATENATED MODULE: ./src/frontend/js/ajax-load-more.js
 function ajax_load_more_typeof(o) { "@babel/helpers - typeof"; return ajax_load_more_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, ajax_load_more_typeof(o); }
 function ajax_load_more_regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ ajax_load_more_regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == ajax_load_more_typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(ajax_load_more_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
-function ajax_load_more_asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-function ajax_load_more_asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { ajax_load_more_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { ajax_load_more_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 function ajax_load_more_toConsumableArray(arr) { return ajax_load_more_arrayWithoutHoles(arr) || ajax_load_more_iterableToArray(arr) || ajax_load_more_unsupportedIterableToArray(arr) || ajax_load_more_nonIterableSpread(); }
 function ajax_load_more_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function ajax_load_more_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return ajax_load_more_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return ajax_load_more_arrayLikeToArray(o, minLen); }
 function ajax_load_more_iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
 function ajax_load_more_arrayWithoutHoles(arr) { if (Array.isArray(arr)) return ajax_load_more_arrayLikeToArray(arr); }
 function ajax_load_more_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function ajax_load_more_asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function ajax_load_more_asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { ajax_load_more_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { ajax_load_more_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 // ALM Modules
+
+
+
+
+
+
+
 
 
 
@@ -12253,13 +19807,12 @@ function ajax_load_more_arrayLikeToArray(arr, len) { if (len == null || len > ar
 
 // External packages.
 var qs = __webpack_require__(129);
-var ajax_load_more_imagesLoaded = __webpack_require__(564);
+var ajax_load_more_imagesLoaded = __webpack_require__(7564);
 
 // Axios Config.
 lib_axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-
-// Axios Interceptor for nested data objects
 lib_axios.interceptors.request.use(function (config) {
+  // Axios Interceptor for nested data objects
   config.paramsSerializer = function (params) {
     // Qs is already included in the Axios package
     return qs.stringify(params, {
@@ -12270,11 +19823,9 @@ lib_axios.interceptors.request.use(function (config) {
   return config;
 });
 
-// Focus Polyfill.
-__webpack_require__(334);
-
 // Global filtering state.
 var alm_is_filtering = false;
+var isBlockEditor = document.body.classList.contains('wp-admin');
 
 // Start ALM
 (function () {
@@ -12286,414 +19837,14 @@ var alm_is_filtering = false;
    * @param {Element} el    The Ajax Load More DOM element/container.
    * @param {number}  index The current index number of the Ajax Load More instance.
    */
-  var ajaxloadmore = function ajaxloadmore(el, index) {
-    var _alm_localize, _el$dataset, _alm, _alm2, _alm3, _alm4, _alm5, _alm6, _alm_localize2, _alm7, _alm8, _alm9, _alm10, _alm11, _alm12, _alm13, _alm14, _alm15, _alm16, _alm_localize3, _alm17, _alm18, _alm19, _alm20, _alm21, _alm22;
-    // Move user to top of page to prevent loading of unnessasry posts
-    if (((_alm_localize = alm_localize) === null || _alm_localize === void 0 ? void 0 : _alm_localize.scrolltop) === 'true') {
-      window.scrollTo(0, 0);
-    }
-
-    // Set ALM Variables
-    var alm = this;
-    alm.AjaxLoadMore = {};
-    alm.addons = {};
-    alm.extensions = {};
-    alm.integration = {};
-    alm.window = window;
-    alm.page = 0;
-    alm.postcount = 0;
-    alm.totalposts = 0;
-    alm.proceed = false;
-    alm.disable_ajax = false;
-    alm.init = true;
-    alm.loading = true;
-    alm.finished = false;
-    alm.timer = null;
-    alm.rel = 'next';
-    alm.ua = window.navigator.userAgent ? window.navigator.userAgent : ''; // Browser User Agent
-    alm.vendor = window.navigator.vendor ? window.navigator.vendor : ''; // Browser Vendor
-
-    el.classList.add('alm-' + index); // Add unique classname.
-    el.setAttribute('data-alm-id', index); // Add unique data id.
-
-    // The defined or generated ID for the ALM instance.
-    alm.master_id = el.dataset.id ? "ajax_load_more_".concat(el.dataset.id) : el.id;
-    alm.master_id = alm.master_id.replace(/-/g, '_');
-
-    // Localized <script/> variables.
-    alm.localized_var = "".concat(alm.master_id, "_vars");
-    alm.localize = window[alm.localized_var];
-    if (!alm.localize) {
-      window[alm.localized_var] = {}; // Create empty object if not defined.
-      alm.localize = window[alm.localized_var];
-    }
-
-    // Add ALM object to the global window scope.
-    window[alm.master_id] = alm; // e.g. window.ajax_load_more or window.ajax_load_more_{id}
-
-    // ALM Element Containers
-    alm.main = el; // Top level DOM element
-    alm.listing = el.querySelector('.alm-listing') || el.querySelector('.alm-comments');
-    alm.content = alm.listing;
-    alm.ajax = el.querySelector('.alm-ajax');
-    alm.container_type = alm.listing.dataset.containerType;
-    alm.loading_style = alm.listing.dataset.loadingStyle;
-
-    // Instance Params
-    alm.canonical_url = el.dataset.canonicalUrl;
-    alm.nested = el.dataset.nested ? el.dataset.nested : false;
-    alm.is_search = (el === null || el === void 0 || (_el$dataset = el.dataset) === null || _el$dataset === void 0 ? void 0 : _el$dataset.search) === 'true' ? 'true' : false;
-    alm.search_value = alm.is_search === 'true' ? alm.slug : ''; // Convert to value of slug for appending to seo url.
-    alm.slug = el.dataset.slug;
-    alm.post_id = parseInt(el.dataset.postId);
-    alm.id = el.dataset.id ? el.dataset.id : '';
-
-    // Shortcode Params
-
-    alm.repeater = ((_alm = alm) === null || _alm === void 0 || (_alm = _alm.listing) === null || _alm === void 0 || (_alm = _alm.dataset) === null || _alm === void 0 ? void 0 : _alm.repeater) || 'default';
-    alm.theme_repeater = ((_alm2 = alm) === null || _alm2 === void 0 || (_alm2 = _alm2.listing) === null || _alm2 === void 0 || (_alm2 = _alm2.dataset) === null || _alm2 === void 0 ? void 0 : _alm2.themeRepeater) || false;
-    alm.post_type = ((_alm3 = alm) === null || _alm3 === void 0 || (_alm3 = _alm3.listing) === null || _alm3 === void 0 || (_alm3 = _alm3.dataset) === null || _alm3 === void 0 ? void 0 : _alm3.postType) || 'post';
-    alm.sticky_posts = ((_alm4 = alm) === null || _alm4 === void 0 || (_alm4 = _alm4.listing) === null || _alm4 === void 0 || (_alm4 = _alm4.dataset) === null || _alm4 === void 0 ? void 0 : _alm4.stickyPosts) || false;
-    alm.btnWrap = el.querySelectorAll('.alm-btn-wrap'); // Get all `.alm-button-wrap` divs
-    alm.btnWrap = ajax_load_more_toConsumableArray(alm.btnWrap); // Convert NodeList to array
-    alm.btnWrap[alm.btnWrap.length - 1].style.visibility = 'visible'; // Get last element (used for nesting)
-    alm.trigger = alm.btnWrap[alm.btnWrap.length - 1];
-    alm.button = ((_alm5 = alm) === null || _alm5 === void 0 || (_alm5 = _alm5.trigger) === null || _alm5 === void 0 ? void 0 : _alm5.querySelector('button.alm-load-more-btn')) || null;
-    alm.button_labels = {
-      "default": ((_alm6 = alm) === null || _alm6 === void 0 || (_alm6 = _alm6.listing) === null || _alm6 === void 0 || (_alm6 = _alm6.dataset) === null || _alm6 === void 0 ? void 0 : _alm6.buttonLabel) || ((_alm_localize2 = alm_localize) === null || _alm_localize2 === void 0 ? void 0 : _alm_localize2.button_label),
-      loading: ((_alm7 = alm) === null || _alm7 === void 0 || (_alm7 = _alm7.listing) === null || _alm7 === void 0 || (_alm7 = _alm7.dataset) === null || _alm7 === void 0 ? void 0 : _alm7.buttonLoadingLabel) || null,
-      done: ((_alm8 = alm) === null || _alm8 === void 0 || (_alm8 = _alm8.listing) === null || _alm8 === void 0 || (_alm8 = _alm8.dataset) === null || _alm8 === void 0 ? void 0 : _alm8.buttonDoneLabel) || null
-    };
-    alm.placeholder = alm.main.querySelector('.alm-placeholder') || false;
-    alm.scroll_distance = ((_alm9 = alm) === null || _alm9 === void 0 || (_alm9 = _alm9.listing) === null || _alm9 === void 0 ? void 0 : _alm9.dataset.scrollDistance) || 100;
-    alm.scroll_container = ((_alm10 = alm) === null || _alm10 === void 0 || (_alm10 = _alm10.listing) === null || _alm10 === void 0 ? void 0 : _alm10.dataset.scrollContainer) || null;
-    alm.scroll_direction = ((_alm11 = alm) === null || _alm11 === void 0 || (_alm11 = _alm11.listing) === null || _alm11 === void 0 || (_alm11 = _alm11.dataset) === null || _alm11 === void 0 ? void 0 : _alm11.scrollDirection) || 'vertical';
-    alm.max_pages = (_alm12 = alm) !== null && _alm12 !== void 0 && (_alm12 = _alm12.listing) !== null && _alm12 !== void 0 && (_alm12 = _alm12.dataset) !== null && _alm12 !== void 0 && _alm12.maxPages ? parseInt(alm.listing.dataset.maxPages) : 0;
-    alm.pause_override = ((_alm13 = alm) === null || _alm13 === void 0 || (_alm13 = _alm13.listing) === null || _alm13 === void 0 || (_alm13 = _alm13.dataset) === null || _alm13 === void 0 ? void 0 : _alm13.pauseOverride) || false; // true | false
-    alm.pause = ((_alm14 = alm) === null || _alm14 === void 0 || (_alm14 = _alm14.listing) === null || _alm14 === void 0 || (_alm14 = _alm14.dataset) === null || _alm14 === void 0 ? void 0 : _alm14.pause) || false; // true | false
-    alm.transition = ((_alm15 = alm) === null || _alm15 === void 0 || (_alm15 = _alm15.listing) === null || _alm15 === void 0 || (_alm15 = _alm15.dataset) === null || _alm15 === void 0 ? void 0 : _alm15.transition) || 'fade'; // Transition
-    alm.transition_delay = ((_alm16 = alm) === null || _alm16 === void 0 || (_alm16 = _alm16.listing) === null || _alm16 === void 0 || (_alm16 = _alm16.dataset) === null || _alm16 === void 0 ? void 0 : _alm16.transitionDelay) || 0;
-    alm.speed = (_alm_localize3 = alm_localize) !== null && _alm_localize3 !== void 0 && _alm_localize3.speed ? parseInt(alm_localize.speed) : 250;
-    alm.images_loaded = ((_alm17 = alm) === null || _alm17 === void 0 || (_alm17 = _alm17.listing) === null || _alm17 === void 0 || (_alm17 = _alm17.dataset) === null || _alm17 === void 0 ? void 0 : _alm17.imagesLoaded) === 'true';
-    alm.destroy_after = (_alm18 = alm) !== null && _alm18 !== void 0 && (_alm18 = _alm18.listing) !== null && _alm18 !== void 0 && (_alm18 = _alm18.dataset) !== null && _alm18 !== void 0 && _alm18.destroyAfter ? parseInt(alm.listing.dataset.destroyAfter) : false;
-    alm.lazy_images = ((_alm19 = alm) === null || _alm19 === void 0 || (_alm19 = _alm19.listing.dataset) === null || _alm19 === void 0 ? void 0 : _alm19.lazyImages) === 'true' ? true : false;
-    alm.integration.woocommerce = ((_alm20 = alm) === null || _alm20 === void 0 || (_alm20 = _alm20.listing) === null || _alm20 === void 0 || (_alm20 = _alm20.dataset) === null || _alm20 === void 0 ? void 0 : _alm20.woocommerce) === 'true' ? true : false;
-    alm.scroll = ((_alm21 = alm) === null || _alm21 === void 0 || (_alm21 = _alm21.listing) === null || _alm21 === void 0 || (_alm21 = _alm21.dataset) === null || _alm21 === void 0 ? void 0 : _alm21.scroll) === 'false' ? false : true;
-    alm.orginal_posts_per_page = parseInt(alm.listing.dataset.postsPerPage); // Used for paging add-on
-    alm.posts_per_page = parseInt(alm.listing.dataset.postsPerPage);
-    alm.offset = (_alm22 = alm) !== null && _alm22 !== void 0 && (_alm22 = _alm22.listing) !== null && _alm22 !== void 0 && (_alm22 = _alm22.dataset) !== null && _alm22 !== void 0 && _alm22.offset ? parseInt(alm.listing.dataset.offset) : 0;
-    alm.paged = false;
-
-    // Add-on Shortcode Params
-
-    alm = queryLoopCreateParams(alm); // Query Loop add-on
-    alm = elementorCreateParams(alm); // Elementor add-on
-    alm = wooCreateParams(alm); // WooCommerce add-on
-    alm = cacheCreateParams(alm); // Cache add-on
-    alm = ctaCreateParams(alm); // CTA add-on
-    alm = nextpageCreateParams(alm); // Nextpage add-on
-    alm = singlepostsCreateParams(alm); // Single Posts add-on
-    alm = commentsCreateParams(alm); // Comments add-on
-    alm = preloadedCreateParams(alm); // Preloaded add-on.
-    alm = pagingCreateParams(alm); // Paging add-on.
-    alm = filtersCreateParams(alm); // Filters add-on.
-    alm = seoCreateParams(alm); // SEO add-on.
-
-    // Extension Shortcode Params
-
-    // Users
-    alm.extensions.users = alm.listing.dataset.users === 'true';
-    if (alm.extensions.users) {
-      // Override paging params for users
-      alm.orginal_posts_per_page = parseInt(alm.listing.dataset.usersPerPage);
-      alm.posts_per_page = parseInt(alm.listing.dataset.usersPerPage);
-    }
-
-    // REST API.
-    alm.extensions.restapi = alm.listing.dataset.restapi === 'true';
-    if (alm.extensions.restapi) {
-      alm.extensions.restapi_base_url = alm.listing.dataset.restapiBaseUrl;
-      alm.extensions.restapi_namespace = alm.listing.dataset.restapiNamespace;
-      alm.extensions.restapi_endpoint = alm.listing.dataset.restapiEndpoint;
-      alm.extensions.restapi_template_id = alm.listing.dataset.restapiTemplateId;
-      alm.extensions.restapi_debug = alm.listing.dataset.restapiDebug;
-      if (alm.extensions.restapi_template_id === '') {
-        alm.extensions.restapi = false;
-      }
-    }
-
-    // ACF.
-    alm.extensions.acf = alm.listing.dataset.acf === 'true' ? true : false;
-    if (alm.extensions.acf) {
-      alm.extensions.acf_field_type = alm.listing.dataset.acfFieldType;
-      alm.extensions.acf_field_name = alm.listing.dataset.acfFieldName;
-      alm.extensions.acf_parent_field_name = alm.listing.dataset.acfParentFieldName;
-      alm.extensions.acf_row_index = alm.listing.dataset.acfRowIndex;
-      alm.extensions.acf_post_id = alm.listing.dataset.acfPostId;
-      // if field type, name or post ID is empty.
-      if (alm.extensions.acf_field_type === undefined || alm.extensions.acf_field_name === undefined || alm.extensions.acf_post_id === undefined) {
-        alm.extensions.acf = false;
-      }
-    }
-
-    // Term Query.
-    alm.extensions.term_query = alm.listing.dataset.termQuery === 'true';
-    if (alm.extensions.term_query) {
-      alm.extensions.term_query_taxonomy = alm.listing.dataset.termQueryTaxonomy;
-      alm.extensions.term_query_hide_empty = alm.listing.dataset.termQueryHideEmpty;
-      alm.extensions.term_query_number = alm.listing.dataset.termQueryNumber;
-    }
-
-    /* Pause */
-    if (alm.pause === undefined || alm.addons.seo && alm.start_page > 1) {
-      // SEO only.
-      alm.pause = false;
-    }
-    if (alm.addons.preloaded && alm.addons.seo && alm.start_page > 0) {
-      // SEO + Preloaded.
-      alm.pause = false;
-    }
-    if (alm.addons.filters && alm.addons.filters_startpage > 0) {
-      // Filters.
-      alm.pause = false;
-    }
-    if (alm.addons.preloaded && alm.addons.paging) {
-      alm.pause = true;
-    }
-
-    /* Max Pages */
-    alm.max_pages = alm.max_pages === undefined || alm.max_pages === 0 ? 9999 : alm.max_pages;
-
-    /* Scroll Distance */
-    alm.scroll_distance = alm.scroll_distance === undefined ? 100 : alm.scroll_distance;
-    alm.scroll_distance_perc = false;
-    if (alm.scroll_distance.toString().indexOf('%') === -1) {
-      // Standard scroll_distance
-      alm.scroll_distance = parseInt(alm.scroll_distance);
-    } else {
-      // Percentage scroll_distance
-      alm.scroll_distance_perc = true;
-      alm.scroll_distance_orig = parseInt(alm.scroll_distance);
-      alm.scroll_distance = getScrollPercentage(alm);
-    }
-
-    /* Masonry */
-    if (alm.transition === 'masonry') {
-      alm = almMasonryConfig(alm);
-    }
-
-    /* Paging */
-    if (alm.addons.paging) {
-      // Add loading class to main container.
-      alm.main.classList.add('alm-loading');
-    } else {
-      var almChildren = el.childNodes; // Get child nodes of instance [nodeList]
-      if (almChildren) {
-        var almChildArray = ajax_load_more_toConsumableArray(almChildren); // Convert nodeList to array
-
-        // Filter array to find the `.alm-btn-wrap` div
-        var btnWrap = almChildArray.filter(function (element) {
-          if (!element.classList) {
-            // If not element (#text node)
-            return false;
-          }
-          return element.classList.contains('alm-btn-wrap');
-        });
-        alm.button = btnWrap ? btnWrap[0].querySelector('.alm-load-more-btn') : container.querySelector('.alm-btn-wrap .alm-load-more-btn');
-      } else {
-        alm.button = container.querySelector('.alm-btn-wrap .alm-load-more-btn');
-      }
-
-      // Reset button state
-      alm.button.disabled = false;
-      alm.button.style.display = '';
-    }
-
-    /**
-     * No Results.
-     * Set template for showing no results HTML.
-     */
-    var alm_no_results = el.querySelector('.alm-no-results');
-    alm.no_results = alm_no_results ? alm_no_results.innerHTML : '';
-
-    /**
-     * Results Text.
-     * Render "Showing x of y results" text.
-     */
-    if (alm.integration.woocommerce) {
-      var _alm23;
-      // If woocommerce, get the default woocommerce results block
-      alm.resultsText = document.querySelectorAll('.woocommerce-result-count');
-      if (((_alm23 = alm) === null || _alm23 === void 0 || (_alm23 = _alm23.resultsText) === null || _alm23 === void 0 ? void 0 : _alm23.length) < 1) {
-        alm.resultsText = document.querySelectorAll('.alm-results-text');
-      }
-    } else {
-      alm.resultsText = document.querySelectorAll('.alm-results-text');
-    }
-    if (alm.resultsText) {
-      alm.resultsText.forEach(function (results) {
-        results.setAttribute('aria-live', 'polite');
-        results.setAttribute('aria-atomic', 'true');
-      });
-    } else {
-      alm.resultsText = false;
-    }
-
-    // Table of Contents: Render 1, 2, 3 etc. when pages are loaded
-    alm.tableofcontents = document.querySelector('.alm-toc') || false;
-    if (alm.tableofcontents) {
-      alm.tableofcontents.setAttribute('aria-live', 'polite');
-      alm.tableofcontents.setAttribute('aria-atomic', 'true');
-    }
-
-    /**
-     * The function to get posts via Ajax/HTTP request.
-     *
-     * @since 2.0.0
-     */
-    alm.AjaxLoadMore.loadPosts = function () {
-      if (alm.disable_ajax) {
-        return;
-      }
-      if (typeof almOnChange === 'function') {
-        window.almOnChange(alm);
-      }
-
-      // Set loading attributes.
-      alm.loading = true;
-      alm.main.classList.add('alm-loading');
-      placeholder('show', alm);
-
-      // Add loading styles to buttons.
-      if (!alm.addons.paging) {
-        if (alm.rel === 'prev') {
-          alm.buttonPrev.classList.add('loading');
-        } else {
-          alm.button.classList.add('loading');
-          if (alm.button_labels.loading) {
-            alm.button.innerHTML = alm.button_labels.loading;
-          }
-        }
-      }
-
-      // Dispatch Ajax request.
-      alm.AjaxLoadMore.ajax();
-    };
-
-    /**
-     * The core Ajax Load More Ajax function.
-     *
-     * @param {string} type The type of Ajax request [standard|totalposts|totalpages].
-     * @since 2.6.0
-     */
-    alm.AjaxLoadMore.ajax = /*#__PURE__*/ajax_load_more_asyncToGenerator( /*#__PURE__*/ajax_load_more_regeneratorRuntime().mark(function _callee() {
-      var type,
-        _alm24,
-        params,
-        cache,
-        _args = arguments;
-      return ajax_load_more_regeneratorRuntime().wrap(function _callee$(_context) {
-        while (1) switch (_context.prev = _context.next) {
+  var ajaxloadmore = /*#__PURE__*/function () {
+    var _ref = ajax_load_more_asyncToGenerator( /*#__PURE__*/ajax_load_more_regeneratorRuntime().mark(function _callee12(el, index) {
+      var _el$dataset, _alm, _alm2, _alm3, _alm4, _alm5, _alm6, _alm_localize, _alm7, _alm8, _alm9, _alm10, _alm11, _alm12, _alm13, _alm14, _alm15, _alm16, _alm17, _alm18, _alm_localize2, _alm19, _alm20, _alm21, _alm22, _alm23, _alm24, _alm_localize5;
+      var alm, almChildren, almChildArray, btnWrap, alm_no_results, _alm25, buildPagination, resize;
+      return ajax_load_more_regeneratorRuntime().wrap(function _callee12$(_context12) {
+        while (1) switch (_context12.prev = _context12.next) {
           case 0:
-            type = _args.length > 0 && _args[0] !== undefined ? _args[0] : 'standard';
-            if (!alm.extensions.restapi) {
-              _context.next = 5;
-              break;
-            }
-            alm.AjaxLoadMore.restapi(alm);
-            _context.next = 14;
-            break;
-          case 5:
-            // Standard ALM.
-            params = getAjaxParams(alm, type); // Cache.
-            if (!((_alm24 = alm) !== null && _alm24 !== void 0 && (_alm24 = _alm24.addons) !== null && _alm24 !== void 0 && _alm24.cache && !['totalposts', 'totalpages'].includes(type))) {
-              _context.next = 13;
-              break;
-            }
-            _context.next = 9;
-            return getCache(alm, Object.assign({}, params));
-          case 9:
-            cache = _context.sent;
-            if (cache) {
-              alm.AjaxLoadMore.render(cache);
-            } else {
-              alm.AjaxLoadMore.adminajax(params, type);
-            }
-            _context.next = 14;
-            break;
-          case 13:
-            alm.AjaxLoadMore.adminajax(params, type);
-          case 14:
-          case "end":
-            return _context.stop();
-        }
-      }, _callee);
-    }));
-
-    /**
-     * Send request to the admin-ajax.php
-     *
-     * @param {Object} params Query params.
-     * @param {string} type   The type of Ajax request [standard|totalposts|totalpages].
-     * @since 5.0.0
-     */
-    alm.AjaxLoadMore.adminajax = /*#__PURE__*/function () {
-      var _ref2 = ajax_load_more_asyncToGenerator( /*#__PURE__*/ajax_load_more_regeneratorRuntime().mark(function _callee2(params, type) {
-        var _alm_localize4, ajaxurl, _params, _params$cache_slug, cache_slug, data;
-        return ajax_load_more_regeneratorRuntime().wrap(function _callee2$(_context2) {
-          while (1) switch (_context2.prev = _context2.next) {
-            case 0:
-              _alm_localize4 = alm_localize, ajaxurl = _alm_localize4.ajaxurl; // Get Ajax URL
-              _params = params, _params$cache_slug = _params.cache_slug, cache_slug = _params$cache_slug === void 0 ? '' : _params$cache_slug; // Deconstruct query params.
-              /**
-               * Single Posts.
-               * If `single_post_target`, adjust the Ajax URL to the post URL.
-               */
-              if (alm.addons.single_post && alm.addons.single_post_target) {
-                ajaxurl = "".concat(alm.addons.single_post_permalink, "?id=").concat(alm.addons.single_post_id, "&alm_page=").concat(parseInt(alm.page) + 1);
-                params = '';
-              }
-
-              // Query Loop || WooCommerce || Elementor.
-              if (alm.addons.queryloop || alm.addons.woocommerce || alm.addons.elementor && alm.addons.elementor_type === 'posts') {
-                ajaxurl = getButtonURL(alm, alm.rel);
-                params = '';
-              }
-
-              // Send HTTP request via axios.
-              _context2.next = 6;
-              return lib_axios.get(ajaxurl, {
-                params: params
-              }).then(function (response) {
-                if (alm.addons.single_post && alm.addons.single_post_target) {
-                  // Single Posts
-                  return singlepostsHTML(alm, response, cache_slug);
-                } else if (alm.addons.woocommerce) {
-                  // WooCommerce.
-                  return wooGetContent(alm, ajaxurl, response, cache_slug);
-                } else if (alm.addons.elementor) {
-                  // Elementor
-                  return elementorGetContent(alm, ajaxurl, response, cache_slug);
-                } else if (alm.addons.queryloop) {
-                  // Query Loop
-                  return queryLoopGetContent(alm, ajaxurl, response, cache_slug);
-                }
-
-                // Standard ALM - Get data from response.
-                return response.data;
-              })["catch"](function (error) {
-                // Error
-                alm.AjaxLoadMore.error(error, 'adminajax');
-              });
-            case 6:
-              data = _context2.sent;
-              _context2.t0 = type;
-              _context2.next = _context2.t0 === 'standard' ? 10 : _context2.t0 === 'totalposts' ? 12 : _context2.t0 === 'totalpages' ? 12 : 14;
-              break;
-            case 10:
-              alm.AjaxLoadMore.render(data);
-              return _context2.abrupt("break", 14);
-            case 12:
+            buildPagination = function _buildPagination(alm, data) {
               if (alm.addons.paging && alm.addons.nextpage && typeof almBuildPagination === 'function') {
                 window.almBuildPagination(data.totalpages, alm);
                 alm.totalpages = data.totalpages;
@@ -12702,1142 +19853,1540 @@ var alm_is_filtering = false;
                   window.almBuildPagination(data.totalposts, alm);
                 }
               }
-              return _context2.abrupt("break", 14);
-            case 14:
-            case "end":
-              return _context2.stop();
-          }
-        }, _callee2);
-      }));
-      return function (_x, _x2) {
-        return _ref2.apply(this, arguments);
-      };
-    }();
+            };
+            // Set ALM Variables
+            alm = this;
+            alm.AjaxLoadMore = {};
+            alm.addons = {};
+            alm.extensions = {};
+            alm.integration = {};
+            alm.window = window;
+            alm.page = 0;
+            alm.postcount = 0;
+            alm.totalposts = 0;
+            alm.proceed = false;
+            alm.disable_ajax = false;
+            alm.init = true;
+            alm.loading = true;
+            alm.finished = false;
+            alm.timer = null;
+            alm.rel = 'next';
+            alm.defaults = {};
+            alm.ua = window.navigator.userAgent ? window.navigator.userAgent : ''; // Browser User Agent
+            alm.vendor = window.navigator.vendor ? window.navigator.vendor : ''; // Browser Vendor
 
-    /**
-     * Send request to the WP REST API
-     *
-     * @param {Object} alm The Ajax Load More object.
-     * @since 5.0.0
-     */
-    alm.AjaxLoadMore.restapi = function (alm) {
-      var _alm_localize5 = alm_localize,
-        rest_api_url = _alm_localize5.rest_api_url; // Get Rest API URL
-      var _alm$extensions = alm.extensions,
-        restapi_base_url = _alm$extensions.restapi_base_url,
-        restapi_namespace = _alm$extensions.restapi_namespace,
-        restapi_endpoint = _alm$extensions.restapi_endpoint,
-        restapi_template_id = _alm$extensions.restapi_template_id;
-      var alm_rest_template = wp.template(restapi_template_id);
-      var alm_rest_url = "".concat(rest_api_url).concat(restapi_base_url, "/").concat(restapi_namespace, "/").concat(restapi_endpoint);
-      var params = getRestAPIParams(alm);
-      lib_axios.get(alm_rest_url, {
-        params: params
-      }).then(function (response) {
-        // Success
-        var results = response.data; // Get data from response
-        var _results$html = results.html,
-          items = _results$html === void 0 ? null : _results$html,
-          _results$meta = results.meta,
-          meta = _results$meta === void 0 ? null : _results$meta;
-        var postcount = meta && meta.postcount ? meta.postcount : 0;
-        var totalposts = meta && meta.totalposts ? meta.totalposts : 0;
+            el.classList.add('alm-' + index); // Add unique classname.
+            el.setAttribute('data-alm-id', index); // Add unique data id.
 
-        // loop results to get data from each.
-        var data = '';
-        for (var i = 0; i < items.length; i++) {
-          var result = items[i];
-          data += alm_rest_template(result);
-        }
+            // The defined or generated ID for the ALM instance.
+            alm.master_id = el.dataset.id ? "ajax_load_more_".concat(el.dataset.id) : el.id;
+            alm.master_id = alm.master_id.replace(/-/g, '_');
 
-        // Rest API debug.
-        if (alm.extensions.restapi_debug === 'true') {
-          console.log('ALM RestAPI Debug:', items); // eslint-disable-line no-console
-        }
+            // Localized <script/> variables.
+            alm.localized_var = "".concat(alm.master_id, "_vars");
+            alm.localize = window[alm.localized_var];
+            if (!alm.localize) {
+              window[alm.localized_var] = {}; // Create empty object if not defined.
+              alm.localize = window[alm.localized_var];
+            }
 
-        // Create results object.
-        var obj = {
-          html: data,
-          meta: {
-            postcount: postcount,
-            totalposts: totalposts
-          }
-        };
-        alm.AjaxLoadMore.render(obj);
-      })["catch"](function (error) {
-        // Error
-        alm.AjaxLoadMore.error(error, 'restapi');
-      });
-    };
+            // Add ALM object to the global window scope.
+            window[alm.master_id] = alm; // e.g. window.ajax_load_more or window.ajax_load_more_{id}
 
-    /**
-     * Display/render results function.
-     *
-     * @param {Object} data The results of the Ajax request.
-     * @since 2.6.0
-     */
-    alm.AjaxLoadMore.render = /*#__PURE__*/function () {
-      var _ref3 = ajax_load_more_asyncToGenerator( /*#__PURE__*/ajax_load_more_regeneratorRuntime().mark(function _callee8(data) {
-        var _alm29;
-        var html, meta, total, totalposts, nodes, temp, paging_container, currentPage;
-        return ajax_load_more_regeneratorRuntime().wrap(function _callee8$(_context8) {
-          while (1) switch (_context8.prev = _context8.next) {
-            case 0:
-              if (alm.addons.single_post) {
-                alm.AjaxLoadMore.getSinglePost(); // Fetch  single post data for next post.
+            // ALM Element Containers
+            alm.main = el; // Top level DOM element
+            alm.listing = el.querySelector('.alm-listing') || el.querySelector('.alm-comments');
+            alm.content = alm.listing;
+            alm.ajax = el.querySelector('.alm-ajax');
+            alm.container_type = alm.listing.dataset.containerType;
+            alm.loading_style = alm.listing.dataset.loadingStyle;
+
+            // Instance Params
+            alm.canonical_url = el.dataset.canonicalUrl;
+            alm.nested = el.dataset.nested ? el.dataset.nested : false;
+            alm.is_search = (el === null || el === void 0 || (_el$dataset = el.dataset) === null || _el$dataset === void 0 ? void 0 : _el$dataset.search) === 'true' ? 'true' : false;
+            alm.search_value = alm.is_search === 'true' ? alm.slug : ''; // Convert to value of slug for appending to seo url.
+            alm.slug = el.dataset.slug;
+            alm.post_id = parseInt(el.dataset.postId);
+            alm.id = el.dataset.id ? el.dataset.id : '';
+
+            // Shortcode Params
+
+            alm.repeater = ((_alm = alm) === null || _alm === void 0 || (_alm = _alm.listing) === null || _alm === void 0 || (_alm = _alm.dataset) === null || _alm === void 0 ? void 0 : _alm.repeater) || 'default';
+            alm.theme_repeater = ((_alm2 = alm) === null || _alm2 === void 0 || (_alm2 = _alm2.listing) === null || _alm2 === void 0 || (_alm2 = _alm2.dataset) === null || _alm2 === void 0 ? void 0 : _alm2.themeRepeater) || false;
+            alm.post_type = ((_alm3 = alm) === null || _alm3 === void 0 || (_alm3 = _alm3.listing) === null || _alm3 === void 0 || (_alm3 = _alm3.dataset) === null || _alm3 === void 0 ? void 0 : _alm3.postType) || 'post';
+            alm.sticky_posts = ((_alm4 = alm) === null || _alm4 === void 0 || (_alm4 = _alm4.listing) === null || _alm4 === void 0 || (_alm4 = _alm4.dataset) === null || _alm4 === void 0 ? void 0 : _alm4.stickyPosts) || false;
+            alm.btnWrap = el.querySelectorAll('.alm-btn-wrap'); // Get all `.alm-button-wrap` divs
+            alm.btnWrap = ajax_load_more_toConsumableArray(alm.btnWrap); // Convert NodeList to array
+            alm.btnWrap[alm.btnWrap.length - 1].style.visibility = 'visible'; // Get last element (used for nesting)
+            alm.trigger = alm.btnWrap[alm.btnWrap.length - 1];
+            alm.button = ((_alm5 = alm) === null || _alm5 === void 0 || (_alm5 = _alm5.trigger) === null || _alm5 === void 0 ? void 0 : _alm5.querySelector('button.alm-load-more-btn')) || null;
+
+            // Button Labels.
+            alm.button_labels = {
+              "default": purify.sanitize((_alm6 = alm) === null || _alm6 === void 0 || (_alm6 = _alm6.listing) === null || _alm6 === void 0 || (_alm6 = _alm6.dataset) === null || _alm6 === void 0 ? void 0 : _alm6.buttonLabel) || purify.sanitize((_alm_localize = alm_localize) === null || _alm_localize === void 0 ? void 0 : _alm_localize.button_label),
+              done: purify.sanitize((_alm7 = alm) === null || _alm7 === void 0 || (_alm7 = _alm7.listing) === null || _alm7 === void 0 || (_alm7 = _alm7.dataset) === null || _alm7 === void 0 ? void 0 : _alm7.buttonDoneLabel) || null
+            };
+            alm.prev_button_labels = {
+              "default": purify.sanitize((_alm8 = alm) === null || _alm8 === void 0 || (_alm8 = _alm8.listing) === null || _alm8 === void 0 || (_alm8 = _alm8.dataset) === null || _alm8 === void 0 ? void 0 : _alm8.prevButtonLabel),
+              done: purify.sanitize((_alm9 = alm) === null || _alm9 === void 0 || (_alm9 = _alm9.listing) === null || _alm9 === void 0 || (_alm9 = _alm9.dataset) === null || _alm9 === void 0 ? void 0 : _alm9.prevButtonDoneLabel) || null
+            };
+            alm.urls = ((_alm10 = alm) === null || _alm10 === void 0 || (_alm10 = _alm10.listing) === null || _alm10 === void 0 || (_alm10 = _alm10.dataset) === null || _alm10 === void 0 ? void 0 : _alm10.urls) === 'false' ? false : true;
+            alm.placeholder = alm.main.querySelector('.alm-placeholder') || false;
+            alm.scroll_distance = ((_alm11 = alm) === null || _alm11 === void 0 || (_alm11 = _alm11.listing) === null || _alm11 === void 0 ? void 0 : _alm11.dataset.scrollDistance) || 100;
+            alm.scroll_container = ((_alm12 = alm) === null || _alm12 === void 0 || (_alm12 = _alm12.listing) === null || _alm12 === void 0 ? void 0 : _alm12.dataset.scrollContainer) || null;
+            alm.scroll_direction = ((_alm13 = alm) === null || _alm13 === void 0 || (_alm13 = _alm13.listing) === null || _alm13 === void 0 || (_alm13 = _alm13.dataset) === null || _alm13 === void 0 ? void 0 : _alm13.scrollDirection) || 'vertical';
+            alm.max_pages = (_alm14 = alm) !== null && _alm14 !== void 0 && (_alm14 = _alm14.listing) !== null && _alm14 !== void 0 && (_alm14 = _alm14.dataset) !== null && _alm14 !== void 0 && _alm14.maxPages ? parseInt(alm.listing.dataset.maxPages) : 0;
+            alm.pause_override = ((_alm15 = alm) === null || _alm15 === void 0 || (_alm15 = _alm15.listing) === null || _alm15 === void 0 || (_alm15 = _alm15.dataset) === null || _alm15 === void 0 ? void 0 : _alm15.pauseOverride) || false; // true | false
+            alm.pause = ((_alm16 = alm) === null || _alm16 === void 0 || (_alm16 = _alm16.listing) === null || _alm16 === void 0 || (_alm16 = _alm16.dataset) === null || _alm16 === void 0 ? void 0 : _alm16.pause) || false; // true | false
+            alm.transition = ((_alm17 = alm) === null || _alm17 === void 0 || (_alm17 = _alm17.listing) === null || _alm17 === void 0 || (_alm17 = _alm17.dataset) === null || _alm17 === void 0 ? void 0 : _alm17.transition) || 'fade'; // Transition
+            alm.transition_delay = ((_alm18 = alm) === null || _alm18 === void 0 || (_alm18 = _alm18.listing) === null || _alm18 === void 0 || (_alm18 = _alm18.dataset) === null || _alm18 === void 0 ? void 0 : _alm18.transitionDelay) || 0;
+            alm.speed = (_alm_localize2 = alm_localize) !== null && _alm_localize2 !== void 0 && _alm_localize2.speed ? parseInt(alm_localize.speed) : 250;
+            alm.images_loaded = ((_alm19 = alm) === null || _alm19 === void 0 || (_alm19 = _alm19.listing) === null || _alm19 === void 0 || (_alm19 = _alm19.dataset) === null || _alm19 === void 0 ? void 0 : _alm19.imagesLoaded) === 'true';
+            alm.destroy_after = (_alm20 = alm) !== null && _alm20 !== void 0 && (_alm20 = _alm20.listing) !== null && _alm20 !== void 0 && (_alm20 = _alm20.dataset) !== null && _alm20 !== void 0 && _alm20.destroyAfter ? parseInt(alm.listing.dataset.destroyAfter) : false;
+            alm.lazy_images = ((_alm21 = alm) === null || _alm21 === void 0 || (_alm21 = _alm21.listing.dataset) === null || _alm21 === void 0 ? void 0 : _alm21.lazyImages) === 'true' ? true : false;
+            alm.integration.woocommerce = ((_alm22 = alm) === null || _alm22 === void 0 || (_alm22 = _alm22.listing) === null || _alm22 === void 0 || (_alm22 = _alm22.dataset) === null || _alm22 === void 0 ? void 0 : _alm22.woocommerce) === 'true' ? true : false;
+            alm.scroll = ((_alm23 = alm) === null || _alm23 === void 0 || (_alm23 = _alm23.listing) === null || _alm23 === void 0 || (_alm23 = _alm23.dataset) === null || _alm23 === void 0 ? void 0 : _alm23.scroll) === 'false' ? false : true;
+            alm.orginal_posts_per_page = parseInt(alm.listing.dataset.postsPerPage); // Used for paging add-on
+            alm.posts_per_page = parseInt(alm.listing.dataset.postsPerPage);
+            alm.offset = (_alm24 = alm) !== null && _alm24 !== void 0 && (_alm24 = _alm24.listing) !== null && _alm24 !== void 0 && (_alm24 = _alm24.dataset) !== null && _alm24 !== void 0 && _alm24.offset ? parseInt(alm.listing.dataset.offset) : 0;
+            alm.paged = false;
+
+            // Add-on Shortcode Params
+
+            alm = queryLoopCreateParams(alm); // Query Loop add-on
+            alm = elementorCreateParams(alm); // Elementor add-on
+            alm = wooCreateParams(alm); // WooCommerce add-on
+            alm = cacheCreateParams(alm); // Cache add-on
+            alm = ctaCreateParams(alm); // CTA add-on
+            alm = nextpageCreateParams(alm); // Nextpage add-on
+            alm = singlepostsCreateParams(alm); // Single Posts add-on
+            alm = commentsCreateParams(alm); // Comments add-on
+            alm = preloadedCreateParams(alm); // Preloaded add-on.
+            alm = pagingCreateParams(alm); // Paging add-on.
+            alm = filtersCreateParams(alm); // Filters add-on.
+            alm = seoCreateParams(alm); // SEO add-on.
+
+            // Extension Shortcode Params
+
+            alm = usersParams(alm); // Users
+            alm = restapiParams(alm); // REST API
+            alm = acfParams(alm); // ACF
+            alm = termsParams(alm); // Terms
+
+            /* Pause */
+            if (alm.pause === undefined || alm.addons.seo && alm.start_page > 1) {
+              alm.pause = false; // SEO only.
+            }
+
+            if (alm.addons.preloaded && alm.addons.seo && alm.start_page > 0) {
+              alm.pause = false; // SEO + Preloaded.
+            }
+
+            if (alm.addons.filters && alm.addons.filters_startpage > 0) {
+              alm.pause = false; // Filters.
+            }
+
+            if (alm.addons.preloaded && alm.addons.paging) {
+              alm.pause = true;
+            }
+
+            /* Max Pages */
+            alm.max_pages = alm.max_pages === undefined || alm.max_pages === 0 ? 9999 : alm.max_pages;
+
+            /* Scroll Distance */
+            alm.scroll_distance = alm.scroll_distance === undefined ? 100 : alm.scroll_distance;
+            alm.scroll_distance_perc = false;
+            if (alm.scroll_distance.toString().indexOf('%') === -1) {
+              // Standard scroll_distance
+              alm.scroll_distance = parseInt(alm.scroll_distance);
+            } else {
+              // Percentage scroll_distance
+              alm.scroll_distance_perc = true;
+              alm.scroll_distance_orig = parseInt(alm.scroll_distance);
+              alm.scroll_distance = getScrollPercentage(alm);
+            }
+
+            /* Masonry */
+            if (alm.transition === 'masonry') {
+              alm = almMasonryConfig(alm);
+            }
+
+            /* Paging */
+            if (alm.addons.paging) {
+              // Add loading class to main container.
+              alm.main.classList.add('alm-loading');
+            } else {
+              almChildren = el.childNodes; // Get child nodes of instance [nodeList]
+              if (almChildren) {
+                almChildArray = ajax_load_more_toConsumableArray(almChildren); // Convert nodeList to array
+                // Filter array to find the `.alm-btn-wrap` div
+                btnWrap = almChildArray.filter(function (element) {
+                  if (!element.classList) {
+                    // If not element (#text node)
+                    return false;
+                  }
+                  return element.classList.contains('alm-btn-wrap');
+                });
+                alm.button = btnWrap ? btnWrap[0].querySelector('.alm-load-more-btn') : container.querySelector('.alm-btn-wrap .alm-load-more-btn');
+              } else {
+                alm.button = container.querySelector('.alm-btn-wrap .alm-load-more-btn');
               }
 
-              // Parse incoming data.
-              html = data.html, meta = data.meta;
-              total = meta ? parseInt(meta.postcount) : parseInt(alm.posts_per_page); // Get current post counts.
-              totalposts = typeof meta !== 'undefined' ? meta.totalposts : alm.posts_per_page * 5;
-              alm.totalposts = totalposts;
-              alm.postcount = alm.addons.paging ? total : alm.postcount + total;
+              // Reset button state
+              alm.button.disabled = false;
+              alm.button.style.display = '';
+            }
 
-              // Set alm.html as plain text return.
-              alm.html = alm.container_type === 'table' ? html : html;
-              if (!meta) {
-                // Display warning if `meta` is missing from response.
-                console.warn('Ajax Load More: Unable to access `meta` object in Ajax response. There may be an issue in your Repeater Template or another theme/plugin hook causing interference with the Ajax request.');
+            /**
+             * No Results.
+             * Set template for showing no results HTML.
+             */
+            alm_no_results = el.querySelector('.alm-no-results');
+            alm.no_results = alm_no_results ? alm_no_results.innerHTML : '';
+
+            /**
+             * Results Text.
+             * Render "Showing x of y results" text.
+             */
+            if (alm.integration.woocommerce) {
+              // If woocommerce, get the default woocommerce results block
+              alm.resultsText = document.querySelectorAll('.woocommerce-result-count');
+              if (((_alm25 = alm) === null || _alm25 === void 0 || (_alm25 = _alm25.resultsText) === null || _alm25 === void 0 ? void 0 : _alm25.length) < 1) {
+                alm.resultsText = document.querySelectorAll('.alm-results-text');
+              }
+            } else {
+              alm.resultsText = document.querySelectorAll('.alm-results-text');
+            }
+            if (alm.resultsText) {
+              alm.resultsText.forEach(function (results) {
+                results.setAttribute('aria-live', 'polite');
+                results.setAttribute('aria-atomic', 'true');
+              });
+            } else {
+              alm.resultsText = false;
+            }
+
+            // Table of Contents: Render 1, 2, 3 etc. when pages are loaded
+            alm.tableofcontents = document.querySelector('.alm-toc') || false;
+            if (alm.tableofcontents) {
+              alm.tableofcontents.setAttribute('aria-live', 'polite');
+              alm.tableofcontents.setAttribute('aria-atomic', 'true');
+            }
+
+            /**
+             * The function to get posts via Ajax/HTTP request.
+             *
+             * @since 2.0.0
+             */
+            alm.AjaxLoadMore.loadPosts = function () {
+              if (alm.disable_ajax) {
+                return;
+              }
+              if (typeof almOnChange === 'function') {
+                window.almOnChange(alm);
               }
 
-              // ALM Init: First run only.
-              if (alm.init) {
-                if (meta) {
-                  alm.main.dataset.totalPosts = meta.totalposts ? meta.totalposts : 0;
-                }
+              // Set loading attributes.
+              alm.loading = true;
+              alm.main.classList.add('alm-loading');
+              placeholder('show', alm);
 
-                // No Results / ALM Empty.
-                if (total === 0) {
-                  if (alm.addons.paging && typeof almPagingEmpty === 'function') {
-                    window.almPagingEmpty(alm);
-                  }
-                  if (typeof almEmpty === 'function') {
-                    window.almEmpty(alm);
-                  }
-                  if (alm.no_results) {
-                    noResults(alm.content, alm.no_results);
-                  }
-                }
-
-                // Paging Add-on.
-                if (alm.addons.paging) {
-                  // Dispatch call to build pagination.
-                  if (typeof almBuildPagination === 'function') {
-                    window.almBuildPagination(totalposts, alm, false);
-                  }
-                  if (total > 0) {
-                    // Reset container opacity.
-                    alm.addons.paging_container.style.opacity = 0;
-
-                    // Start paging functionaity.
-                    alm.AjaxLoadMore.pagingInit();
-                  }
-                }
-
-                // SEO Offset.
-                if (alm.addons.seo && alm.addons.seo_offset && !alm.addons.paging) {
-                  createSEOOffset(alm);
-                }
-
-                /**
-                 * SEO & Filters add-on.
-                 * Handle isPaged results.
-                 */
-                if (alm.paged) {
-                  // Reset the posts_per_page value.
-                  if (alm.addons.seo || alm.addons.filters || alm.extensions.users) {
-                    // Reset posts per page value.
-                    alm.posts_per_page = alm.orginal_posts_per_page;
-                  }
-
-                  // SEO add-on.
-                  if (alm.addons.seo) {
-                    alm.page = alm.start_page ? alm.start_page - 1 : alm.page; // Set new page number.
-                  }
-
-                  // Filters add-on.
-                  if (alm.addons.filters && alm.addons.filters_startpage > 0) {
-                    alm.page = alm.addons.filters_startpage - 1; // Set new page number.
-                  }
-                }
-                // Filters onLoad
-                if (typeof almFiltersOnload === 'function') {
-                  window.almFiltersOnload(alm);
+              // Add loading styles to buttons.
+              if (!alm.addons.paging) {
+                if (alm.rel === 'prev') {
+                  alm.buttonPrev.classList.add('loading');
+                } else {
+                  alm.button.classList.add('loading');
                 }
               }
-              // End ALM Init.
 
-              /**
-               * Set Filter Facets.
-               */
-              if (alm.addons.filters && alm.facets && data.facets && typeof almFiltersFacets === 'function') {
-                window.almFiltersFacets(data.facets);
-              }
+              // Dispatch Ajax request.
+              alm.AjaxLoadMore.ajax();
+            };
 
-              /**
-               * Display alm_debug results.
-               */
-              almDebug(alm);
-
-              /**
-               * Set localized variables and Results Text.
-               */
-              ajax_load_more_asyncToGenerator( /*#__PURE__*/ajax_load_more_regeneratorRuntime().mark(function _callee3() {
-                return ajax_load_more_regeneratorRuntime().wrap(function _callee3$(_context3) {
-                  while (1) switch (_context3.prev = _context3.next) {
-                    case 0:
-                      _context3.next = 2;
-                      return setLocalizedVars(alm);
-                    case 2:
-                    case "end":
-                      return _context3.stop();
-                  }
-                }, _callee3);
-              }))();
-
-              // Get all returned data as an array of DOM nodes.
-              nodes = alm.container_type === 'table' ? tableParser(alm.html) : domParser(alm.html);
-              alm.last_loaded = nodes;
-
-              // Render results.
-              if (!(total > 0)) {
-                _context8.next = 52;
-                break;
-              }
-              if (!(alm.addons.woocommerce || alm.addons.elementor || alm.addons.queryloop)) {
-                _context8.next = 21;
-                break;
-              }
-              temp = document.createElement('div');
-              temp.innerHTML = html;
-              ajax_load_more_asyncToGenerator( /*#__PURE__*/ajax_load_more_regeneratorRuntime().mark(function _callee4() {
-                return ajax_load_more_regeneratorRuntime().wrap(function _callee4$(_context4) {
-                  while (1) switch (_context4.prev = _context4.next) {
-                    case 0:
-                      if (!alm.addons.woocommerce) {
-                        _context4.next = 4;
-                        break;
+            /**
+             * Dispatch HTTP request.
+             *
+             * @param {string} type The type of Ajax request [standard|totalposts|totalpages].
+             * @since 2.6.0
+             */
+            alm.AjaxLoadMore.ajax = /*#__PURE__*/ajax_load_more_asyncToGenerator( /*#__PURE__*/ajax_load_more_regeneratorRuntime().mark(function _callee() {
+              var _alm26;
+              var type,
+                is_restapi,
+                params,
+                cache,
+                _args = arguments;
+              return ajax_load_more_regeneratorRuntime().wrap(function _callee$(_context) {
+                while (1) switch (_context.prev = _context.next) {
+                  case 0:
+                    type = _args.length > 0 && _args[0] !== undefined ? _args[0] : 'standard';
+                    is_restapi = alm.extensions.restapi ? true : false;
+                    params = is_restapi ? getRestParams(alm) : getAjaxParams(alm, type); // Cache.
+                    if (!((_alm26 = alm) !== null && _alm26 !== void 0 && (_alm26 = _alm26.addons) !== null && _alm26 !== void 0 && _alm26.cache)) {
+                      _context.next = 10;
+                      break;
+                    }
+                    _context.next = 6;
+                    return getCache(alm, Object.assign({}, params));
+                  case 6:
+                    cache = _context.sent;
+                    if (cache) {
+                      // Render cache results.
+                      alm.AjaxLoadMore.render(cache, type);
+                    } else {
+                      if (is_restapi) {
+                        // REST API request.
+                        alm.AjaxLoadMore.restapi(params);
+                      } else {
+                        // Standard admin-ajax.php request.
+                        alm.AjaxLoadMore.adminajax(params, type);
                       }
-                      _context4.next = 3;
-                      return woocommerce(temp, alm);
-                    case 3:
-                      woocommerceLoaded(alm);
-                    case 4:
-                      if (!alm.addons.elementor) {
-                        _context4.next = 8;
-                        break;
+                    }
+                    _context.next = 11;
+                    break;
+                  case 10:
+                    if (is_restapi) {
+                      // REST API request.
+                      alm.AjaxLoadMore.restapi(params);
+                    } else {
+                      // Standard admin-ajax.php request.
+                      alm.AjaxLoadMore.adminajax(params, type);
+                    }
+                  case 11:
+                  case "end":
+                    return _context.stop();
+                }
+              }, _callee);
+            }));
+
+            /**
+             * Send request to the admin-ajax.php
+             *
+             * @param {Object} params Query params.
+             * @param {string} type   The type of Ajax request [standard|totalposts|totalpages].
+             * @since 5.0.0
+             */
+            alm.AjaxLoadMore.adminajax = /*#__PURE__*/function () {
+              var _ref3 = ajax_load_more_asyncToGenerator( /*#__PURE__*/ajax_load_more_regeneratorRuntime().mark(function _callee2(params, type) {
+                var _alm_localize3, url, _params, _params$cache_id, cache_id, is_paging_query, data;
+                return ajax_load_more_regeneratorRuntime().wrap(function _callee2$(_context2) {
+                  while (1) switch (_context2.prev = _context2.next) {
+                    case 0:
+                      _alm_localize3 = alm_localize, url = _alm_localize3.ajaxurl; // Get Ajax URL
+                      _params = params, _params$cache_id = _params.cache_id, cache_id = _params$cache_id === void 0 ? '' : _params$cache_id; // Deconstruct query params.
+                      is_paging_query = ['totalposts', 'totalpages'].includes(type);
+                      /**
+                       * Single Posts.
+                       * If `single_post_target`, adjust the Ajax URL to the post URL.
+                       */
+                      if (alm.addons.single_post && alm.addons.single_post_target) {
+                        url = "".concat(alm.addons.single_post_permalink, "?id=").concat(alm.addons.single_post_id, "&alm_page=").concat(parseInt(alm.page) + 1);
+                        params = '';
                       }
-                      _context4.next = 7;
-                      return elementor(temp, alm);
+
+                      // Query Loop || WooCommerce || Elementor.
+                      if (alm.addons.queryloop || alm.addons.woocommerce || alm.addons.elementor && alm.addons.elementor_type === 'posts') {
+                        url = getButtonURL(alm, alm.rel);
+                        params = '';
+                      }
+
+                      // Make API request.
+                      _context2.next = 7;
+                      return lib_axios.get(url, {
+                        params: params
+                      }).then(function (response) {
+                        var _response$data = response.data,
+                          data = _response$data === void 0 ? API_DEFAULT_DATA_SHAPE : _response$data;
+                        if (alm.addons.single_post && alm.addons.single_post_target) {
+                          return singlepostsHTML(alm, data); // Single Posts
+                        } else if (alm.addons.woocommerce) {
+                          return wooGetContent(alm, url, data); // WooCommerce.
+                        } else if (alm.addons.elementor) {
+                          return elementorGetContent(alm, url, data); // Elementor
+                        } else if (alm.addons.queryloop) {
+                          return queryLoopGetContent(alm, url, data); // Query Loop
+                        }
+
+                        return data; // Standard ALM.
+                      })["catch"](function (error) {
+                        alm.AjaxLoadMore.error(error);
+                      });
                     case 7:
-                      elementorLoaded(alm);
-                    case 8:
-                      if (!alm.addons.queryloop) {
-                        _context4.next = 12;
+                      data = _context2.sent;
+                      // Cache.
+                      createCache(alm, data, cache_id, is_paging_query);
+                      alm.AjaxLoadMore.render(data, type); // Render results.
+                    case 10:
+                    case "end":
+                      return _context2.stop();
+                  }
+                }, _callee2);
+              }));
+              return function (_x3, _x4) {
+                return _ref3.apply(this, arguments);
+              };
+            }();
+
+            /**
+             * Display/render results function.
+             *
+             * @param {Object} data The results of the Ajax request.
+             * @param {string} type The type of Ajax request [standard|totalposts|totalpages].
+             * @since 2.6.0
+             */
+            alm.AjaxLoadMore.render = /*#__PURE__*/function () {
+              var _ref4 = ajax_load_more_asyncToGenerator( /*#__PURE__*/ajax_load_more_regeneratorRuntime().mark(function _callee8(data) {
+                var _alm31;
+                var type,
+                  html,
+                  meta,
+                  total,
+                  totalposts,
+                  nodes,
+                  temp,
+                  paging_container,
+                  currentPage,
+                  _args8 = arguments;
+                return ajax_load_more_regeneratorRuntime().wrap(function _callee8$(_context8) {
+                  while (1) switch (_context8.prev = _context8.next) {
+                    case 0:
+                      type = _args8.length > 1 && _args8[1] !== undefined ? _args8[1] : 'standard';
+                      if (!['totalposts', 'totalpages'].includes(type)) {
+                        _context8.next = 4;
                         break;
                       }
-                      _context4.next = 11;
-                      return queryloop(temp, alm);
-                    case 11:
-                      queryloopLoaded(alm);
-                    case 12:
-                    case "end":
-                      return _context4.stop();
-                  }
-                }, _callee4);
-              }))()["catch"](function (e) {
-                if (alm.addons.woocommerce) {
-                  console.warn('Ajax Load More: There was an error loading WooCommerce products.', e);
-                }
-                if (alm.addons.elementor) {
-                  console.warn('Ajax Load More: There was an error loading Clementor items.', e);
-                }
-                if (alm.addons.queryloop) {
-                  console.warn('Ajax Load More: There was an error loading Query Loop items.', e);
-                }
-              });
-              alm.init = false;
-              return _context8.abrupt("return");
-            case 21:
-              if (alm.addons.paging) {
-                _context8.next = 36;
-                break;
-              }
-              /**
-               * Infinite Scroll Results.
-               */
-              nodes = formatHTML(alm, nodes);
-              _context8.t0 = alm.transition;
-              _context8.next = _context8.t0 === 'masonry' ? 26 : 30;
-              break;
-            case 26:
-              _context8.next = 28;
-              return displayResults(alm, nodes);
-            case 28:
-              // Wrap almMasonry in anonymous async/await function
-              ajax_load_more_asyncToGenerator( /*#__PURE__*/ajax_load_more_regeneratorRuntime().mark(function _callee5() {
-                return ajax_load_more_regeneratorRuntime().wrap(function _callee5$(_context5) {
-                  while (1) switch (_context5.prev = _context5.next) {
-                    case 0:
-                      _context5.next = 2;
-                      return almMasonry(alm, alm.init, alm_is_filtering);
-                    case 2:
-                      alm.masonry.init = false;
-                      triggerWindowResize();
-
-                      // Callback: ALM Complete
-                      if (typeof almComplete === 'function') {
-                        window.almComplete(alm);
+                      buildPagination(alm, data);
+                      return _context8.abrupt("return");
+                    case 4:
+                      if (alm.addons.single_post) {
+                        alm.AjaxLoadMore.getSinglePost(); // Fetch the next post for the Single Post add-on.
                       }
-                    case 5:
+
+                      // Deconstruct render data.
+                      html = data.html, meta = data.meta;
+                      total = meta ? parseInt(meta.postcount) : parseInt(alm.posts_per_page); // Get current post counts.
+                      totalposts = typeof meta !== 'undefined' ? meta.totalposts : alm.posts_per_page * 5;
+                      alm.totalposts = totalposts;
+                      alm.postcount = alm.addons.paging ? total : alm.postcount + total;
+
+                      // Set alm.html as plain text return.
+                      alm.html = html;
+                      if (!meta) {
+                        // Display warning if `meta` is missing from response.
+                        console.warn('Ajax Load More: Unable to access `meta` object in Ajax response. There may be an issue in your Repeater Template or another theme/plugin hook causing interference with the Ajax request.');
+                      }
+
+                      // ALM Init: First run only.
+                      if (alm.init) {
+                        if (meta) {
+                          alm.main.dataset.totalPosts = meta.totalposts ? meta.totalposts : 0;
+                        }
+
+                        // No Results / ALM Empty.
+                        if (total === 0) {
+                          if (alm.addons.paging && typeof almPagingEmpty === 'function') {
+                            window.almPagingEmpty(alm);
+                          }
+                          if (typeof almEmpty === 'function') {
+                            window.almEmpty(alm);
+                          }
+                          if (alm.no_results) {
+                            noResults(alm.content, alm.no_results);
+                          }
+                        }
+
+                        // Paging Add-on.
+                        if (alm.addons.paging) {
+                          // Dispatch call to build pagination.
+                          if (typeof almBuildPagination === 'function') {
+                            window.almBuildPagination(totalposts, alm, false);
+                          }
+                          if (total > 0) {
+                            // Reset container opacity.
+                            alm.addons.paging_container.style.opacity = 0;
+
+                            // Start paging functionaity.
+                            alm.AjaxLoadMore.pagingInit();
+                          }
+                        }
+
+                        // SEO Offset.
+                        if (alm.addons.seo && alm.addons.seo_offset && !alm.addons.paging) {
+                          createSEOOffset(alm);
+                        }
+
+                        /**
+                         * SEO & Filters add-on.
+                         * Handle isPaged results.
+                         */
+                        if (alm.paged) {
+                          // Reset the posts_per_page value.
+                          if (alm.addons.seo || alm.addons.filters || alm.extensions.users) {
+                            // Reset posts per page value.
+                            alm.posts_per_page = alm.orginal_posts_per_page;
+                          }
+
+                          // SEO add-on.
+                          if (alm.addons.seo) {
+                            alm.page = alm.start_page ? alm.start_page - 1 : alm.page; // Set new page number.
+                          }
+
+                          // Filters add-on.
+                          if (alm.addons.filters && alm.addons.filters_startpage > 0) {
+                            alm.page = alm.addons.filters_startpage - 1; // Set new page number.
+                          }
+                        }
+
+                        // Filters onLoad
+                        if (alm.addons.filters && typeof almFiltersOnload === 'function') {
+                          window.almFiltersOnload(alm);
+                        }
+                      }
+                      // End ALM Init.
+
+                      /**
+                       * Set Filter Facets.
+                       */
+                      if (alm.addons.filters && alm.facets && data.facets && typeof almFiltersFacets === 'function') {
+                        window.almFiltersFacets(data.facets);
+                      }
+
+                      /**
+                       * Display alm_debug results.
+                       */
+                      almDebug(alm);
+
+                      /**
+                       * Set localized variables and Results Text.
+                       */
+                      ajax_load_more_asyncToGenerator( /*#__PURE__*/ajax_load_more_regeneratorRuntime().mark(function _callee3() {
+                        return ajax_load_more_regeneratorRuntime().wrap(function _callee3$(_context3) {
+                          while (1) switch (_context3.prev = _context3.next) {
+                            case 0:
+                              _context3.next = 2;
+                              return setLocalizedVars(alm);
+                            case 2:
+                            case "end":
+                              return _context3.stop();
+                          }
+                        }, _callee3);
+                      }))();
+
+                      // Get all returned data as an array of DOM nodes.
+                      nodes = alm.container_type === 'table' ? tableParser(alm.html) : domParser(alm.html);
+                      alm.last_loaded = nodes;
+
+                      // Render results.
+                      if (!(total > 0)) {
+                        _context8.next = 56;
+                        break;
+                      }
+                      if (!(alm.addons.woocommerce || alm.addons.elementor || alm.addons.queryloop)) {
+                        _context8.next = 25;
+                        break;
+                      }
+                      temp = document.createElement('div');
+                      temp.innerHTML = html;
+                      ajax_load_more_asyncToGenerator( /*#__PURE__*/ajax_load_more_regeneratorRuntime().mark(function _callee4() {
+                        return ajax_load_more_regeneratorRuntime().wrap(function _callee4$(_context4) {
+                          while (1) switch (_context4.prev = _context4.next) {
+                            case 0:
+                              if (!alm.addons.woocommerce) {
+                                _context4.next = 4;
+                                break;
+                              }
+                              _context4.next = 3;
+                              return woocommerce(temp, alm);
+                            case 3:
+                              woocommerceLoaded(alm);
+                            case 4:
+                              if (!alm.addons.elementor) {
+                                _context4.next = 8;
+                                break;
+                              }
+                              _context4.next = 7;
+                              return elementor(temp, alm);
+                            case 7:
+                              elementorLoaded(alm);
+                            case 8:
+                              if (!alm.addons.queryloop) {
+                                _context4.next = 12;
+                                break;
+                              }
+                              _context4.next = 11;
+                              return queryLoop(temp, alm);
+                            case 11:
+                              queryLoopLoaded(alm);
+                            case 12:
+                            case "end":
+                              return _context4.stop();
+                          }
+                        }, _callee4);
+                      }))()["catch"](function (e) {
+                        if (alm.addons.woocommerce) {
+                          console.warn('Ajax Load More: There was an error loading WooCommerce products.', e);
+                        }
+                        if (alm.addons.elementor) {
+                          console.warn('Ajax Load More: There was an error loading Clementor items.', e);
+                        }
+                        if (alm.addons.queryloop) {
+                          console.warn('Ajax Load More: There was an error loading Query Loop items.', e);
+                        }
+                      });
+                      alm.init = false;
+                      return _context8.abrupt("return");
+                    case 25:
+                      if (alm.addons.paging) {
+                        _context8.next = 40;
+                        break;
+                      }
+                      /**
+                       * Infinite Scroll Results.
+                       */
+                      nodes = formatHTML(alm, nodes);
+                      _context8.t0 = alm.transition;
+                      _context8.next = _context8.t0 === 'masonry' ? 30 : 34;
+                      break;
+                    case 30:
+                      _context8.next = 32;
+                      return displayResults(alm, nodes);
+                    case 32:
+                      // Wrap almMasonry in anonymous async/await function
+                      ajax_load_more_asyncToGenerator( /*#__PURE__*/ajax_load_more_regeneratorRuntime().mark(function _callee5() {
+                        return ajax_load_more_regeneratorRuntime().wrap(function _callee5$(_context5) {
+                          while (1) switch (_context5.prev = _context5.next) {
+                            case 0:
+                              _context5.next = 2;
+                              return almMasonry(alm, alm.init, alm_is_filtering);
+                            case 2:
+                              alm.masonry.init = false;
+                              triggerWindowResize();
+
+                              // Callback: ALM Complete
+                              if (typeof almComplete === 'function') {
+                                window.almComplete(alm);
+                              }
+                            case 5:
+                            case "end":
+                              return _context5.stop();
+                          }
+                        }, _callee5);
+                      }))()["catch"](function () {
+                        console.error('There was an error with ALM Masonry'); //eslint-disable-line no-console
+                      });
+                      return _context8.abrupt("break", 37);
+                    case 34:
+                      _context8.next = 36;
+                      return displayResults(alm, nodes);
+                    case 36:
+                      return _context8.abrupt("break", 37);
+                    case 37:
+                      // Infinite Scroll -> Images Loaded: Run complete callbacks and checks.
+                      ajax_load_more_imagesLoaded(alm.listing, function () {
+                        alm.AjaxLoadMore.nested(); // Nested ALM.
+
+                        if (alm_is_filtering && alm.addons.filters) {
+                          if (typeof almFiltersAddonComplete === 'function') {
+                            window.almFiltersAddonComplete(el); // Callback: Filters Add-on Complete
+                          }
+                        }
+
+                        if (typeof almComplete === 'function' && alm.transition !== 'masonry') {
+                          window.almComplete(alm); // Callback: ALM Complete
+                        }
+
+                        // Trigger <script /> tags in templates.
+                        modules_insertScript.init(alm.last_loaded);
+
+                        // ALM Done.
+                        if (!alm.addons.single_post) {
+                          if (alm.addons.nextpage) {
+                            var _alm27, _alm28;
+                            // Nextpage.
+                            if (((_alm27 = alm) === null || _alm27 === void 0 || (_alm27 = _alm27.localize) === null || _alm27 === void 0 ? void 0 : _alm27.post_count) + (alm.addons.nextpage_startpage - 1) >= ((_alm28 = alm) === null || _alm28 === void 0 || (_alm28 = _alm28.localize) === null || _alm28 === void 0 ? void 0 : _alm28.total_posts)) {
+                              alm.AjaxLoadMore.triggerDone();
+                            }
+                          } else {
+                            var _alm29, _alm30;
+                            if (((_alm29 = alm) === null || _alm29 === void 0 || (_alm29 = _alm29.localize) === null || _alm29 === void 0 ? void 0 : _alm29.post_count) >= ((_alm30 = alm) === null || _alm30 === void 0 || (_alm30 = _alm30.localize) === null || _alm30 === void 0 ? void 0 : _alm30.total_posts)) {
+                              alm.AjaxLoadMore.triggerDone();
+                            }
+                          }
+                        }
+                        alm_is_filtering = false;
+                      });
+                      /**
+                       * End: Infinite Scroll Results.
+                       */
+                      _context8.next = 54;
+                      break;
+                    case 40:
+                      /**
+                       * Paging.
+                       */
+                      paging_container = alm.addons.paging_container;
+                      if (!alm.init) {
+                        _context8.next = 48;
+                        break;
+                      }
+                      if (!paging_container) {
+                        _context8.next = 46;
+                        break;
+                      }
+                      _context8.next = 45;
+                      return displayPagingResults(alm, nodes);
+                    case 45:
+                      // Inject content.
+
+                      // Paging -> Images Loaded: Run complete callbacks and checks.
+                      ajax_load_more_imagesLoaded(paging_container, /*#__PURE__*/ajax_load_more_asyncToGenerator( /*#__PURE__*/ajax_load_more_regeneratorRuntime().mark(function _callee6() {
+                        return ajax_load_more_regeneratorRuntime().wrap(function _callee6$(_context6) {
+                          while (1) switch (_context6.prev = _context6.next) {
+                            case 0:
+                              pagingComplete(alm, alm_is_filtering, true);
+                              alm_is_filtering = false;
+                            case 2:
+                            case "end":
+                              return _context6.stop();
+                          }
+                        }, _callee6);
+                      })));
+                    case 46:
+                      _context8.next = 54;
+                      break;
+                    case 48:
+                      if (!paging_container) {
+                        _context8.next = 54;
+                        break;
+                      }
+                      _context8.next = 51;
+                      return almFadeOut(paging_container, 250);
+                    case 51:
+                      _context8.next = 53;
+                      return displayPagingResults(alm, nodes);
+                    case 53:
+                      // Inject content.
+
+                      // Paging -> Images Loaded: Run complete callbacks and checks.
+                      ajax_load_more_imagesLoaded(paging_container, /*#__PURE__*/ajax_load_more_asyncToGenerator( /*#__PURE__*/ajax_load_more_regeneratorRuntime().mark(function _callee7() {
+                        return ajax_load_more_regeneratorRuntime().wrap(function _callee7$(_context7) {
+                          while (1) switch (_context7.prev = _context7.next) {
+                            case 0:
+                              _context7.next = 2;
+                              return almFadeIn(paging_container, 250);
+                            case 2:
+                              paging_container.style.opacity = '';
+                              pagingComplete(alm, alm_is_filtering);
+                              alm_is_filtering = false;
+                            case 5:
+                            case "end":
+                              return _context7.stop();
+                          }
+                        }, _callee7);
+                      })));
+                    case 54:
+                      _context8.next = 58;
+                      break;
+                    case 56:
+                      /**
+                       * No results from Ajax.
+                       */
+                      alm.AjaxLoadMore.noresults();
+                      alm.AjaxLoadMore.transitionEnd();
+                    case 58:
+                      /**
+                       * Destroy After
+                       */
+                      if (alm.destroy_after) {
+                        currentPage = alm.page + 1; // Add 1 because alm.page starts at 0
+                        currentPage = alm.addons.preloaded ? currentPage++ : currentPage; // Add 1 for preloaded
+                        if (parseInt(currentPage) === parseInt(alm.destroy_after)) {
+                          alm.AjaxLoadMore.destroyed(); // Disable ALM if page = alm.destroy_after value.
+                        }
+                      }
+
+                      /**
+                       * Display Table of Contents
+                       */
+                      tableOfContents(alm, alm.init);
+
+                      /**
+                       * Set Focus for accessibility.
+                       */
+                      if ((_alm31 = alm) !== null && _alm31 !== void 0 && (_alm31 = _alm31.last_loaded) !== null && _alm31 !== void 0 && _alm31.length) {
+                        setFocus(alm, alm.last_loaded[0], total, alm_is_filtering);
+                      }
+                      alm.main.classList.remove('alm-is-filtering'); // Remove filtering class.
+
+                      if (alm.init) {
+                        alm.main.classList.add('alm-is-loaded'); // Add loaded class to main container.
+                      }
+
+                      alm.init = false; // Set init flag.
+                    case 64:
                     case "end":
-                      return _context5.stop();
+                      return _context8.stop();
                   }
-                }, _callee5);
-              }))()["catch"](function () {
-                console.error('There was an error with ALM Masonry'); //eslint-disable-line no-console
+                }, _callee8);
+              }));
+              return function (_x5) {
+                return _ref4.apply(this, arguments);
+              };
+            }();
+
+            /**
+             * Send request to the WP REST API
+             *
+             * @param {Object} params The query parameters object.
+             * @since 5.0.0
+             */
+            alm.AjaxLoadMore.restapi = function (params) {
+              var _params$cache_id2 = params.cache_id,
+                cache_id = _params$cache_id2 === void 0 ? '' : _params$cache_id2; // Deconstruct query params.
+
+              var _alm_localize4 = alm_localize,
+                rest_api_url = _alm_localize4.rest_api_url; // Get Rest API URL
+              var _alm$extensions = alm.extensions,
+                restapi_base_url = _alm$extensions.restapi_base_url,
+                restapi_namespace = _alm$extensions.restapi_namespace,
+                restapi_endpoint = _alm$extensions.restapi_endpoint,
+                restapi_template_id = _alm$extensions.restapi_template_id;
+              var alm_rest_template = wp.template(restapi_template_id);
+              var alm_rest_url = "".concat(rest_api_url).concat(restapi_base_url, "/").concat(restapi_namespace, "/").concat(restapi_endpoint);
+              lib_axios.get(alm_rest_url, {
+                params: params
+              }).then(function (response) {
+                // Success
+                var results = response.data; // Get data from response
+                var _results$html = results.html,
+                  items = _results$html === void 0 ? null : _results$html,
+                  _results$meta = results.meta,
+                  meta = _results$meta === void 0 ? null : _results$meta;
+                var postcount = meta && meta.postcount ? meta.postcount : 0;
+                var totalposts = meta && meta.totalposts ? meta.totalposts : 0;
+
+                // loop results to get data from each.
+                var content = '';
+                for (var i = 0; i < items.length; i++) {
+                  var result = items[i];
+                  content += alm_rest_template(result);
+                }
+
+                // Rest API debug.
+                if (alm.extensions.restapi_debug === 'true') {
+                  console.log('ALM RestAPI Debug:', items); // eslint-disable-line no-console
+                }
+
+                // Create results data object.
+                var data = {
+                  html: content,
+                  meta: {
+                    postcount: postcount,
+                    totalposts: totalposts
+                  }
+                };
+
+                // Cache.
+                createCache(alm, data, cache_id);
+                alm.AjaxLoadMore.render(data);
+              })["catch"](function (error) {
+                alm.AjaxLoadMore.error(error);
               });
-              return _context8.abrupt("break", 33);
-            case 30:
-              _context8.next = 32;
-              return displayResults(alm, nodes);
-            case 32:
-              return _context8.abrupt("break", 33);
-            case 33:
-              // Infinite Scroll -> Images Loaded: Run complete callbacks and checks.
-              ajax_load_more_imagesLoaded(alm.listing, function () {
-                alm.AjaxLoadMore.nested(); // Nested ALM.
+            };
 
-                if (alm_is_filtering && alm.addons.filters) {
-                  if (typeof almFiltersAddonComplete === 'function') {
-                    window.almFiltersAddonComplete(el); // Callback: Filters Add-on Complete
-                  }
-                }
+            /**
+             * Function runs when no results are returned.
+             *
+             * @since 5.3.1
+             */
+            alm.AjaxLoadMore.noresults = function () {
+              if (!alm.addons.paging) {
+                var _alm32, _alm33;
+                // Add .done class, reset btn text
+                (_alm32 = alm) === null || _alm32 === void 0 || (_alm32 = _alm32.button) === null || _alm32 === void 0 || (_alm32 = _alm32.classList) === null || _alm32 === void 0 || _alm32.remove('loading');
+                (_alm33 = alm) === null || _alm33 === void 0 || (_alm33 = _alm33.button) === null || _alm33 === void 0 || (_alm33 = _alm33.classList) === null || _alm33 === void 0 || _alm33.add('done');
+                alm.AjaxLoadMore.resetBtnText();
+              }
 
-                if (typeof almComplete === 'function' && alm.transition !== 'masonry') {
-                  window.almComplete(alm); // Callback: ALM Complete
-                }
+              // Callback: ALM Complete
+              if (typeof almComplete === 'function' && alm.transition !== 'masonry') {
+                window.almComplete(alm);
+              }
 
-                // Trigger <script /> tags in templates.
-                modules_insertScript.init(alm.last_loaded);
-
-                // ALM Done.
-                if (!alm.addons.single_post) {
-                  if (alm.addons.nextpage) {
-                    var _alm25, _alm26;
-                    // Nextpage.
-                    if (((_alm25 = alm) === null || _alm25 === void 0 || (_alm25 = _alm25.localize) === null || _alm25 === void 0 ? void 0 : _alm25.post_count) + (alm.addons.nextpage_startpage - 1) >= ((_alm26 = alm) === null || _alm26 === void 0 || (_alm26 = _alm26.localize) === null || _alm26 === void 0 ? void 0 : _alm26.total_posts)) {
-                      alm.AjaxLoadMore.triggerDone();
-                    }
-                  } else {
-                    var _alm27, _alm28;
-                    if (((_alm27 = alm) === null || _alm27 === void 0 || (_alm27 = _alm27.localize) === null || _alm27 === void 0 ? void 0 : _alm27.post_count) >= ((_alm28 = alm) === null || _alm28 === void 0 || (_alm28 = _alm28.localize) === null || _alm28 === void 0 ? void 0 : _alm28.total_posts)) {
-                      alm.AjaxLoadMore.triggerDone();
-                    }
-                  }
+              // Filters Add-on Complete
+              if (alm_is_filtering && alm.addons.filters) {
+                if (typeof almFiltersAddonComplete === 'function') {
+                  window.almFiltersAddonComplete(el);
                 }
                 alm_is_filtering = false;
-              });
-              /**
-               * End: Infinite Scroll Results.
-               */
-              _context8.next = 50;
-              break;
-            case 36:
-              /**
-               * Paging.
-               */
-              paging_container = alm.addons.paging_container;
-              if (!alm.init) {
-                _context8.next = 44;
-                break;
               }
-              if (!paging_container) {
-                _context8.next = 42;
-                break;
-              }
-              _context8.next = 41;
-              return displayPagingResults(alm, nodes);
-            case 41:
-              // Inject content.
 
-              // Paging -> Images Loaded: Run complete callbacks and checks.
-              ajax_load_more_imagesLoaded(paging_container, /*#__PURE__*/ajax_load_more_asyncToGenerator( /*#__PURE__*/ajax_load_more_regeneratorRuntime().mark(function _callee6() {
-                return ajax_load_more_regeneratorRuntime().wrap(function _callee6$(_context6) {
-                  while (1) switch (_context6.prev = _context6.next) {
-                    case 0:
-                      pagingComplete(alm, alm_is_filtering, true);
-                      alm_is_filtering = false;
-                    case 2:
-                    case "end":
-                      return _context6.stop();
-                  }
-                }, _callee6);
-              })));
-            case 42:
-              _context8.next = 50;
-              break;
-            case 44:
-              if (!paging_container) {
-                _context8.next = 50;
-                break;
+              // Masonry, clear `alm-listing` height.
+              if (alm.transition === 'masonry') {
+                alm.content.style.height = 'auto';
               }
-              _context8.next = 47;
-              return almFadeOut(paging_container, 250);
-            case 47:
-              _context8.next = 49;
-              return displayPagingResults(alm, nodes);
-            case 49:
-              // Inject content.
 
-              // Paging -> Images Loaded: Run complete callbacks and checks.
-              ajax_load_more_imagesLoaded(paging_container, /*#__PURE__*/ajax_load_more_asyncToGenerator( /*#__PURE__*/ajax_load_more_regeneratorRuntime().mark(function _callee7() {
-                return ajax_load_more_regeneratorRuntime().wrap(function _callee7$(_context7) {
-                  while (1) switch (_context7.prev = _context7.next) {
-                    case 0:
-                      _context7.next = 2;
-                      return almFadeIn(paging_container, 250);
-                    case 2:
-                      paging_container.style.opacity = '';
-                      pagingComplete(alm, alm_is_filtering);
-                      alm_is_filtering = false;
-                    case 5:
-                    case "end":
-                      return _context7.stop();
+              // ALM Done
+              alm.AjaxLoadMore.triggerDone();
+            };
+
+            /**
+             * Dispatch almBuildPagination function after Ajax request.
+             * `almBuildPagination` is defined in the Paging add-on.
+             *
+             * @param {Object} alm  The Ajax Load More object.
+             * @param {Object} data The data object from the Ajax response.
+             */
+
+            /**
+             * Init Paging + Preloaded add-ons.
+             *
+             * @param {string} html Results of Ajax request.
+             * @since 2.11.3
+             */
+            alm.AjaxLoadMore.pagingPreloadedInit = function () {
+              var html = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+              alm.AjaxLoadMore.pagingInit(); // Set up paging functionality.
+
+              if (!html) {
+                if (typeof almPagingEmpty === 'function') {
+                  window.almPagingEmpty(alm);
+                }
+                if (typeof almEmpty === 'function') {
+                  window.almEmpty(alm);
+                }
+                if (alm.no_results) {
+                  noResults(alm.content, alm.no_results);
+                }
+              }
+            };
+
+            /**
+             * Init Paging + Next Page add-ons.
+             *
+             * @since 2.14.0
+             */
+            alm.AjaxLoadMore.pagingNextpageInit = function () {
+              alm.AjaxLoadMore.pagingInit(); // Set up paging functionality.
+
+              if (typeof almSetNextPageVars === 'function') {
+                window.almSetNextPageVars(alm); // Set up Nextpage Vars.
+              }
+            };
+
+            /**
+             * Paging add-on initialization to create required containers.
+             *
+             * @since 5.0
+             */
+            alm.AjaxLoadMore.pagingInit = function () {
+              var paging_container = alm.addons.paging_container; // Get content container.
+
+              if (paging_container) {
+                almFadeIn(paging_container, 150); // Fade in paging container.
+
+                // Delay reveal of paging content.
+                setTimeout(function () {
+                  alm.main.classList.remove('alm-loading'); // Remove `alm-loading` class
+                }, 150);
+
+                // Delay initial pagination display to avoid positioning issues.
+                setTimeout(function () {
+                  paging_container.style.removeProperty('opacity'); // Remove initial opacity prop.
+
+                  if (typeof almFadePageControls === 'function') {
+                    window.almFadePageControls(alm.btnWrap); // Fade in paging controls.
                   }
-                }, _callee7);
-              })));
-            case 50:
-              _context8.next = 54;
-              break;
-            case 52:
-              /**
-               * No results from Ajax.
-               */
-              alm.AjaxLoadMore.noresults();
-              alm.AjaxLoadMore.transitionEnd();
-            case 54:
-              /**
-               * Destroy After
-               */
-              if (alm.destroy_after) {
-                currentPage = alm.page + 1; // Add 1 because alm.page starts at 0
-                currentPage = alm.addons.preloaded ? currentPage++ : currentPage; // Add 1 for preloaded
-                if (parseInt(currentPage) === parseInt(alm.destroy_after)) {
-                  alm.AjaxLoadMore.destroyed(); // Disable ALM if page = alm.destroy_after value.
+
+                  if (typeof almPagingSetHeight === 'function') {
+                    window.almPagingSetHeight(paging_container); // Fade in container height.
+                  }
+                }, 250);
+              }
+            };
+
+            /**
+             *	Automatically trigger nested ALM instances.
+             *
+             * @since 5.0
+             */
+            alm.AjaxLoadMore.nested = function () {
+              var nested = alm.listing.querySelectorAll('.ajax-load-more-wrap:not(.alm-is-loaded)'); // Get all new instances
+              if (nested) {
+                ajax_load_more_toConsumableArray(nested).forEach(function (element) {
+                  window.almInit(element);
+                });
+              }
+            };
+
+            /**
+             *  Get the Single Posts post ID via ajax.
+             *
+             *  @since 2.7.4
+             */
+            alm.AjaxLoadMore.getSinglePost = /*#__PURE__*/ajax_load_more_asyncToGenerator( /*#__PURE__*/ajax_load_more_regeneratorRuntime().mark(function _callee9() {
+              var params;
+              return ajax_load_more_regeneratorRuntime().wrap(function _callee9$(_context9) {
+                while (1) switch (_context9.prev = _context9.next) {
+                  case 0:
+                    if (!alm.fetchingPreviousPost) {
+                      _context9.next = 2;
+                      break;
+                    }
+                    return _context9.abrupt("return");
+                  case 2:
+                    alm.fetchingPreviousPost = true; // Set loading flag.
+
+                    // Create data params.
+                    params = singlepostsQueryParams(alm); // Send HTTP request via Axios.
+                    _context9.next = 6;
+                    return lib_axios.get(alm_localize.ajaxurl, {
+                      params: params
+                    }).then(function (response) {
+                      var data = response.data; // Deconstruct data from response.
+
+                      if (data.has_previous_post) {
+                        // Update ALM instance variables.
+                        alm.listing.dataset.singlePostId = data.prev_id; // Update single-post-id on HTML instance.
+                        alm.addons.single_post_id = data.prev_id;
+                        alm.addons.single_post_permalink = data.prev_permalink;
+                        alm.addons.single_post_title = data.prev_title;
+                        alm.addons.single_post_slug = data.prev_slug;
+                        if (typeof window.almSetSinglePost === 'function' && data !== null && data !== void 0 && data.current_id) {
+                          window.almSetSinglePost(alm, data.current_id);
+                        }
+                      } else {
+                        alm.AjaxLoadMore.triggerDone(); // No more posts.
+                      }
+
+                      alm.fetchingPreviousPost = false; // Set loading flag to false.
+                      alm.addons.single_post_init = false; // Reset init flag.
+
+                      return data;
+                    })["catch"](function (error) {
+                      // Handle error.
+                      alm.AjaxLoadMore.error(error);
+                      alm.fetchingPreviousPost = false;
+                    });
+                  case 6:
+                  case "end":
+                    return _context9.stop();
+                }
+              }, _callee9);
+            }));
+
+            // Initialize Single Post add-on variables.
+            if (alm.addons.single_post_id) {
+              alm.fetchingPreviousPost = false;
+              alm.addons.single_post_init = true;
+            }
+
+            /**
+             * Triggers various add-on functions after load complete.
+             *
+             * @param {Object} alm The ALM object.
+             * @since 2.14.0
+             */
+            alm.AjaxLoadMore.triggerAddons = function (alm) {
+              if (typeof almSetNextPage === 'function' && alm.addons.nextpage) {
+                window.almSetNextPage(alm);
+              }
+              if (typeof almSEO === 'function' && alm.addons.seo) {
+                window.almSEO(alm, false);
+              }
+              if (typeof almWooCommerce === 'function' && alm.addons.woocommerce) {
+                window.almWooCommerce(alm);
+              }
+              if (typeof almElementor === 'function' && alm.addons.elementor) {
+                window.almElementor(alm);
+              }
+            };
+
+            /**
+             * Fires a set of actions and functions when ALM has no other posts to load.
+             *
+             * @since 2.11.3
+             */
+            alm.AjaxLoadMore.triggerDone = function () {
+              alm.loading = false;
+              alm.finished = true;
+              placeholder('hide', alm);
+              if (!alm.addons.paging) {
+                if (alm.button_labels.done) {
+                  alm.button.innerHTML = alm.button_labels.done;
+                }
+                alm.button.classList.add('done');
+                alm.button.removeAttribute('rel');
+                alm.button.disabled = true;
+              }
+              if (typeof almDone === 'function') {
+                setTimeout(function () {
+                  window.almDone(alm);
+                }, alm.speed + 10); // Delay done until animations complete
+              }
+            };
+
+            /**
+             * Fires a set of actions once ALm Previous hits the first page.
+             *
+             * @since 5.5.0
+             */
+            alm.AjaxLoadMore.triggerDonePrev = function () {
+              alm.loading = false;
+              placeholder('hide', alm);
+              if (!alm.addons.paging) {
+                var _alm34;
+                alm.buttonPrev.classList.add('done');
+                alm.buttonPrev.style.opacity = '0.5';
+                alm.buttonPrev.disabled = true;
+                if ((_alm34 = alm) !== null && _alm34 !== void 0 && (_alm34 = _alm34.prev_button_labels) !== null && _alm34 !== void 0 && _alm34.done) {
+                  setTimeout(function () {
+                    alm.buttonPrev.innerHTML = alm.prev_button_labels.done;
+                  }, 75);
                 }
               }
 
-              /**
-               * Display Table of Contents
-               */
-              tableOfContents(alm, alm.init);
-
-              /**
-               * Set Focus for accessibility.
-               */
-              if ((_alm29 = alm) !== null && _alm29 !== void 0 && (_alm29 = _alm29.last_loaded) !== null && _alm29 !== void 0 && _alm29.length) {
-                setFocus(alm, alm.last_loaded[0], total, alm_is_filtering);
+              // almDonePrev Callback.
+              if (typeof almDonePrev === 'function') {
+                setTimeout(function () {
+                  window.almDonePrev(alm);
+                }, alm.speed + 10); // Delay done until animations complete
               }
-              alm.main.classList.remove('alm-is-filtering'); // Remove filtering class.
+            };
 
-              if (alm.init) {
-                alm.main.classList.add('alm-is-loaded'); // Add loaded class to main container.
+            /**
+             * Resets the loading button text after loading has completed.
+             *
+             * @since 2.8.4
+             */
+            alm.AjaxLoadMore.resetBtnText = function () {
+              var _alm35, _alm36, _alm37, _alm38;
+              if ((_alm35 = alm) !== null && _alm35 !== void 0 && _alm35.button && (_alm36 = alm) !== null && _alm36 !== void 0 && (_alm36 = _alm36.button_labels) !== null && _alm36 !== void 0 && _alm36.loading) {
+                alm.button.innerHTML = alm.button_labels["default"];
+              }
+              if ((_alm37 = alm) !== null && _alm37 !== void 0 && _alm37.buttonPrev && (_alm38 = alm) !== null && _alm38 !== void 0 && (_alm38 = _alm38.prev_button_labels) !== null && _alm38 !== void 0 && _alm38.loading) {
+                alm.buttonPrev.innerHTML = alm.prev_button_labels["default"];
+              }
+            };
+
+            /**
+             * Button click handler to load posts.
+             *
+             * @param {Object} e The target button element.
+             * @since 4.2.0
+             */
+            alm.AjaxLoadMore.click = function (e) {
+              if (isBlockEditor && alm.addons.queryloop) {
+                return; //
               }
 
-              alm.init = false; // Set init flag.
-            case 60:
-            case "end":
-              return _context8.stop();
-          }
-        }, _callee8);
-      }));
-      return function (_x3) {
-        return _ref3.apply(this, arguments);
-      };
-    }();
-
-    /**
-     * Function runs when no results are returned.
-     *
-     * @since 5.3.1
-     */
-    alm.AjaxLoadMore.noresults = function () {
-      if (!alm.addons.paging) {
-        var _alm30, _alm31;
-        // Add .done class, reset btn text
-        (_alm30 = alm) === null || _alm30 === void 0 || (_alm30 = _alm30.button) === null || _alm30 === void 0 || (_alm30 = _alm30.classList) === null || _alm30 === void 0 || _alm30.remove('loading');
-        (_alm31 = alm) === null || _alm31 === void 0 || (_alm31 = _alm31.button) === null || _alm31 === void 0 || (_alm31 = _alm31.classList) === null || _alm31 === void 0 || _alm31.add('done');
-        alm.AjaxLoadMore.resetBtnText();
-      }
-
-      // Callback: ALM Complete
-      if (typeof almComplete === 'function' && alm.transition !== 'masonry') {
-        window.almComplete(alm);
-      }
-
-      // Filters Add-on Complete
-      if (alm_is_filtering && alm.addons.filters) {
-        if (typeof almFiltersAddonComplete === 'function') {
-          window.almFiltersAddonComplete(el);
-        }
-        alm_is_filtering = false;
-      }
-
-      // Masonry, clear `alm-listing` height.
-      if (alm.transition === 'masonry') {
-        alm.content.style.height = 'auto';
-      }
-
-      // ALM Done
-      alm.AjaxLoadMore.triggerDone();
-    };
-
-    /**
-     * Init Paging + Preloaded add-ons.
-     *
-     * @param {string} html Results of Ajax request.
-     * @since 2.11.3
-     */
-    alm.AjaxLoadMore.pagingPreloadedInit = function () {
-      var html = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-      alm.AjaxLoadMore.pagingInit(); // Set up paging functionality.
-
-      if (!html) {
-        if (typeof almPagingEmpty === 'function') {
-          window.almPagingEmpty(alm);
-        }
-        if (typeof almEmpty === 'function') {
-          window.almEmpty(alm);
-        }
-        if (alm.no_results) {
-          noResults(alm.content, alm.no_results);
-        }
-      }
-    };
-
-    /**
-     * Init Paging + Next Page add-ons.
-     *
-     * @since 2.14.0
-     */
-    alm.AjaxLoadMore.pagingNextpageInit = function () {
-      alm.AjaxLoadMore.pagingInit(); // Set up paging functionality.
-
-      if (typeof almSetNextPageVars === 'function') {
-        window.almSetNextPageVars(alm); // Set up Nextpage Vars.
-      }
-    };
-
-    /**
-     * Paging add-on first to create required containers.
-     *
-     * @since 5.0
-     */
-    alm.AjaxLoadMore.pagingInit = function () {
-      var paging_container = alm.addons.paging_container; // Get content container.
-
-      if (paging_container) {
-        almFadeIn(paging_container, 150); // Fade in paging container.
-
-        // Delay reveal of paging content.
-        setTimeout(function () {
-          alm.main.classList.remove('alm-loading'); // Remove `alm-loading` class
-        }, 150);
-
-        // Delay initial pagination display to avoid positioning issues.
-        setTimeout(function () {
-          paging_container.style.removeProperty('opacity'); // Remove initial opacity prop.
-
-          if (typeof almFadePageControls === 'function') {
-            window.almFadePageControls(alm.btnWrap); // Fade in paging controls.
-          }
-
-          if (typeof almPagingSetHeight === 'function') {
-            window.almPagingSetHeight(paging_container); // Fade in container height.
-          }
-        }, 275);
-      }
-    };
-
-    /**
-     *	Automatically trigger nested ALM instances.
-     *
-     * @since 5.0
-     */
-    alm.AjaxLoadMore.nested = function () {
-      var nested = alm.listing.querySelectorAll('.ajax-load-more-wrap:not(.alm-is-loaded)'); // Get all new instances
-      if (nested) {
-        ajax_load_more_toConsumableArray(nested).forEach(function (element) {
-          window.almInit(element);
-        });
-      }
-    };
-
-    /**
-     *  Get the Single Posts post ID via ajax.
-     *
-     *  @since 2.7.4
-     */
-    alm.AjaxLoadMore.getSinglePost = /*#__PURE__*/ajax_load_more_asyncToGenerator( /*#__PURE__*/ajax_load_more_regeneratorRuntime().mark(function _callee9() {
-      var params, singlePostData;
-      return ajax_load_more_regeneratorRuntime().wrap(function _callee9$(_context9) {
-        while (1) switch (_context9.prev = _context9.next) {
-          case 0:
-            if (!alm.fetchingPreviousPost) {
-              _context9.next = 2;
-              break;
-            }
-            return _context9.abrupt("return");
-          case 2:
-            alm.fetchingPreviousPost = true; // Set loading flag.
-
-            // Create data params.
-            params = {
-              action: 'alm_get_single',
-              id: alm.addons.single_post_id,
-              initial_id: alm.addons.single_post_init_id,
-              order: alm.addons.single_post_order,
-              taxonomy: alm.addons.single_post_taxonomy,
-              excluded_terms: alm.addons.single_post_excluded_terms,
-              post_type: alm.post_type,
-              init: alm.addons.single_post_init
-            }; // Send HTTP request via Axios.
-            _context9.next = 6;
-            return lib_axios.get(alm_localize.ajaxurl, {
-              params: params
-            }).then(function (response) {
-              // Get data from response.
-              var data = response.data;
-              if (data.has_previous_post) {
-                alm.listing.dataset.singlePostId = data.prev_id; // Update single-post-id on instance
-                alm.addons.single_post_id = data.prev_id;
-                alm.addons.single_post_permalink = data.prev_permalink;
-                alm.addons.single_post_title = data.prev_title;
-                alm.addons.single_post_slug = data.prev_slug;
-                alm.addons.single_post_cache = data.cache;
-              } else {
-                alm.addons.single_post_cache = false;
-                if (!data.has_previous_post) {
-                  alm.AjaxLoadMore.triggerDone();
-                }
-              }
-              if (typeof window.almSetSinglePost === 'function') {
-                window.almSetSinglePost(alm, data.current_id, data.permalink, data.title);
-              }
-              alm.fetchingPreviousPost = false;
-              alm.addons.single_post_init = false;
-              return data;
-            })["catch"](function (error) {
-              // Error
-              alm.AjaxLoadMore.error(error, 'getSinglePost');
-              alm.fetchingPreviousPost = false;
-            });
-          case 6:
-            singlePostData = _context9.sent;
-            return _context9.abrupt("return", singlePostData);
-          case 8:
-          case "end":
-            return _context9.stop();
-        }
-      }, _callee9);
-    }));
-    if (alm.addons.single_post_id) {
-      alm.fetchingPreviousPost = false;
-      alm.addons.single_post_init = true;
-    }
-
-    /**
-     * Triggers various add-on functions after load complete.
-     *
-     * @param {Object} alm The ALM object.
-     * @since 2.14.0
-     */
-    alm.AjaxLoadMore.triggerAddons = function (alm) {
-      if (typeof almSetNextPage === 'function' && alm.addons.nextpage) {
-        window.almSetNextPage(alm);
-      }
-      if (typeof almSEO === 'function' && alm.addons.seo) {
-        window.almSEO(alm, false);
-      }
-      if (typeof almWooCommerce === 'function' && alm.addons.woocommerce) {
-        window.almWooCommerce(alm);
-      }
-      if (typeof almElementor === 'function' && alm.addons.elementor) {
-        window.almElementor(alm);
-      }
-    };
-
-    /**
-     * Fires a set of actions and functions when ALM has no other posts to load.
-     *
-     * @since 2.11.3
-     */
-    alm.AjaxLoadMore.triggerDone = function () {
-      alm.loading = false;
-      alm.finished = true;
-      placeholder('hide', alm);
-      if (!alm.addons.paging) {
-        if (alm.button_labels.done) {
-          setTimeout(function () {
-            alm.button.innerHTML = alm.button_labels.done;
-          }, 75);
-        }
-        alm.button.classList.add('done');
-        alm.button.removeAttribute('rel');
-        alm.button.disabled = true;
-      }
-
-      // almDone
-      if (typeof almDone === 'function') {
-        // Delay done until animations complete
-        setTimeout(function () {
-          window.almDone(alm);
-        }, alm.speed + 10);
-      }
-    };
-
-    /**
-     * Fires a set of actions once ALm Previous hits the first page.
-     *
-     * @since 5.5.0
-     */
-    alm.AjaxLoadMore.triggerDonePrev = function () {
-      alm.loading = false;
-      placeholder('hide', alm);
-      if (!alm.addons.paging) {
-        alm.buttonPrev.classList.add('done');
-        alm.buttonPrev.style.opacity = '0.5';
-        alm.buttonPrev.disabled = true;
-      }
-
-      // almDonePrev Callback.
-      if (typeof almDonePrev === 'function') {
-        // Delay done until animations complete
-        setTimeout(function () {
-          window.almDonePrev(alm);
-        }, alm.speed + 10);
-      }
-    };
-
-    /**
-     * Resets the loading button text after loading has completed.
-     *
-     * @since 2.8.4
-     */
-    alm.AjaxLoadMore.resetBtnText = function () {
-      if (alm.button && alm.button_labels.loading) {
-        alm.button.innerHTML = alm.button_labels["default"];
-      }
-    };
-
-    /**
-     * Button click handler to load posts.
-     *
-     * @param {Object} e The target button element.
-     * @since 4.2.0
-     */
-    alm.AjaxLoadMore.click = function (e) {
-      var button = e.currentTarget || e.target;
-      alm.rel = 'next';
-      if (alm.pause === 'true') {
-        alm.pause = false;
-        alm.pause_override = false;
-        alm.AjaxLoadMore.loadPosts();
-      }
-      if (!alm.loading && !alm.finished && !button.classList.contains('done')) {
-        alm.loading = true;
-        alm.page++;
-        alm.AjaxLoadMore.loadPosts();
-      }
-      button.blur(); // Remove button focus
-    };
-
-    /**
-     * Button click handler for previous load more.
-     *
-     * @param {Object} e The target button element.
-     * @since 5.5.0
-     */
-    alm.AjaxLoadMore.prevClick = function (e) {
-      var button = e.currentTarget || e.target;
-      e.preventDefault();
-      if (!alm.loading && !button.classList.contains('done')) {
-        alm.loading = true;
-        alm.pagePrev--;
-        alm.rel = 'prev';
-        alm.AjaxLoadMore.loadPosts();
-        button.blur(); // Remove button focus
-      }
-    };
-
-    /**
-     * Set the Load Previous button to alm object.
-     *
-     * @param {Element} button The button element.
-     * @since 5.5.0
-     */
-    alm.AjaxLoadMore.setPreviousButton = function (button) {
-      alm.pagePrev = alm.page;
-      alm.buttonPrev = button;
-    };
-
-    /**
-     * Load More button click event handler.
-     *
-     * @since 1.0.0
-     */
-    if (!alm.addons.paging && !alm.fetchingPreviousPost) {
-      alm.button.onclick = alm.AjaxLoadMore.click;
-    }
-
-    /**
-     * Window resize functions for Paging, Scroll Distance Percentage etc.
-     *
-     * @since 2.1.2
-     */
-    if (alm.addons.paging || alm.scroll_distance_perc || alm.scroll_direction === 'horizontal') {
-      var resize;
-      alm.window.onresize = function () {
-        clearTimeout(resize);
-        resize = setTimeout(function () {
-          if (alm.addons.paging) {
-            // Paging
-            if (typeof almOnWindowResize === 'function') {
-              window.almOnWindowResize(alm);
-            }
-          }
-          if (alm.scroll_distance_perc) {
-            alm.scroll_distance = getScrollPercentage(alm);
-          }
-          if (alm.scroll_direction === 'horizontal') {
-            alm.AjaxLoadMore.horizontal();
-          }
-        }, alm.speed);
-      };
-    }
-
-    /**
-     * Check to see if element is visible before loading posts.
-     *
-     * @since 2.1.2
-     */
-    alm.AjaxLoadMore.isVisible = function () {
-      // Check for a width and height to determine visibility
-      alm.visible = alm.main.clientWidth > 0 && alm.main.clientHeight > 0 ? true : false;
-      return alm.visible;
-    };
-
-    /**
-     * Load posts as user scrolls the page.
-     *
-     * @since 1.0
-     */
-    alm.AjaxLoadMore.scroll = function () {
-      if (alm.timer) {
-        clearTimeout(alm.timer);
-      }
-      alm.timer = setTimeout(function () {
-        if (alm.AjaxLoadMore.isVisible() && !alm.fetchingPreviousPost) {
-          var trigger = alm.trigger.getBoundingClientRect();
-          var btnPos = Math.round(trigger.top - alm.window.innerHeight) + alm.scroll_distance;
-          var scrollTrigger = btnPos <= 0 ? true : false;
-
-          // Scroll Container
-          if (alm.window !== window) {
-            var scrollHeight = alm.main.offsetHeight; // ALM height
-            var scrollWidth = alm.main.offsetWidth; // ALM Width
-            var scrollPosition = '';
-            if (alm.scroll_direction === 'horizontal') {
-              // Left/Right
-              alm.AjaxLoadMore.horizontal();
-              scrollPosition = Math.round(alm.window.scrollLeft + alm.window.offsetWidth - alm.scroll_distance); // How far user has scrolled
-              scrollTrigger = scrollWidth <= scrollPosition ? true : false;
-            } else {
-              // Up/Down
-              scrollPosition = Math.round(alm.window.scrollTop + alm.window.offsetHeight - alm.scroll_distance); // How far user has scrolled
-              scrollTrigger = scrollHeight <= scrollPosition ? true : false;
-            }
-          }
-
-          // If Pause && Pause Override
-          if (!alm.loading && !alm.finished && scrollTrigger && alm.page < alm.max_pages - 1 && alm.proceed && alm.pause === 'true' && alm.pause_override === 'true') {
-            alm.button.click();
-          }
-
-          // Standard Scroll
-          else {
-            if (!alm.loading && !alm.finished && scrollTrigger && alm.page < alm.max_pages - 1 && alm.proceed && alm.pause !== 'true') {
-              alm.button.click();
-            }
-          }
-        }
-      }, 25);
-    };
-
-    /**
-     * Add scroll eventlisteners, only when needed.
-     *
-     * @since 5.2.0
-     */
-    alm.AjaxLoadMore.scrollSetup = function () {
-      if (alm.scroll && !alm.addons.paging) {
-        if (alm.scroll_container) {
-          // Scroll Container
-          alm.window = document.querySelector(alm.scroll_container) ? document.querySelector(alm.scroll_container) : alm.window;
-          setTimeout(function () {
-            // Delay to allow for ALM container to resize on load.
-            alm.AjaxLoadMore.horizontal();
-          }, 500);
-        }
-        alm.window.addEventListener('scroll', alm.AjaxLoadMore.scroll); // Scroll
-        alm.window.addEventListener('touchstart', alm.AjaxLoadMore.scroll); // Touch Devices
-        alm.window.addEventListener('wheel', function (e) {
-          // Mousewheel
-          var direction = Math.sign(e.deltaY);
-          if (direction > 0) {
-            alm.AjaxLoadMore.scroll();
-          }
-        });
-        alm.window.addEventListener('keyup', function (e) {
-          var key = e.key;
-          switch (key) {
-            case 'End':
-            case 'PageDown':
-              alm.AjaxLoadMore.scroll();
-              break;
-          }
-        });
-      }
-    };
-
-    /**
-     * Configure horizontal scroll settings.
-     *
-     * @since 5.3.6
-     */
-    alm.AjaxLoadMore.horizontal = function () {
-      if (alm.scroll_direction === 'horizontal') {
-        alm.main.style.width = "".concat(alm.listing.offsetWidth, "px");
-      }
-    };
-
-    /**
-     * Destroy Ajax Load More functionality.
-     *
-     * @since 3.4.2
-     */
-    alm.AjaxLoadMore.destroyed = function () {
-      alm.disable_ajax = true;
-      if (!alm.addons.paging) {
-        alm.button.style.display = 'none';
-        alm.AjaxLoadMore.triggerDone();
-        if (typeof almDestroyed === 'function') {
-          window.almDestroyed(alm);
-        }
-      }
-    };
-
-    /**
-     * Set variables after loading transition completes.
-     *
-     * @since 3.5
-     */
-    alm.AjaxLoadMore.transitionEnd = function () {
-      setTimeout(function () {
-        alm.AjaxLoadMore.resetBtnText();
-        alm.main.classList.remove('alm-loading');
-
-        // Loading buttons.
-        if (alm.rel === 'prev') {
-          var _alm32;
-          (_alm32 = alm) === null || _alm32 === void 0 || (_alm32 = _alm32.buttonPrev) === null || _alm32 === void 0 || (_alm32 = _alm32.classList) === null || _alm32 === void 0 || _alm32.remove('loading');
-        } else {
-          var _alm33;
-          (_alm33 = alm) === null || _alm33 === void 0 || (_alm33 = _alm33.button) === null || _alm33 === void 0 || (_alm33 = _alm33.classList) === null || _alm33 === void 0 || _alm33.remove('loading');
-        }
-        alm.AjaxLoadMore.triggerAddons(alm);
-        if (!alm.addons.paging) {
-          setTimeout(function () {
-            alm.loading = false; // Delay to prevent loading to fast
-          }, alm.speed * 2);
-        }
-      }, 25);
-
-      // Hide loading placeholder.
-      placeholder('hide', alm);
-    };
-
-    /**
-     * Set individual localized variable.
-     *
-     * @param {string} name
-     * @param {string} value
-     * @since 4.1
-     */
-    alm.AjaxLoadMore.setLocalizedVar = function () {
-      var _alm34;
-      var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-      var value = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-      if ((_alm34 = alm) !== null && _alm34 !== void 0 && _alm34.localize && name !== '' && value !== '') {
-        alm.localize[name] = value; // Set ALM localize var.
-        window[alm.localized_var][name] = value; // Update vars.
-      }
-    };
-
-    /**
-     * Init Ajax load More functionality and add-ons.
-     *
-     * @since 2.0
-     */
-    alm.AjaxLoadMore.init = /*#__PURE__*/ajax_load_more_asyncToGenerator( /*#__PURE__*/ajax_load_more_regeneratorRuntime().mark(function _callee12() {
-      var nextpage_pages, _alm35, nextpage_first, nextpage_total;
-      return ajax_load_more_regeneratorRuntime().wrap(function _callee12$(_context12) {
-        while (1) switch (_context12.prev = _context12.next) {
-          case 0:
-            // Preloaded and Destroy After is 1.
-            if (alm.addons.preloaded && alm.destroy_after === 1) {
-              alm.AjaxLoadMore.destroyed();
-            }
-
-            // Paging Add-on.
-            if (alm.addons.paging) {
-              if (alm.addons.preloaded) {
-                // Preloaded.
-                alm.AjaxLoadMore.ajax('totalposts');
-              } else if (alm.addons.nextpage) {
-                // Next Page.
-                alm.AjaxLoadMore.ajax('totalpages');
-              } else {
-                // Standard.
+              var button = e.currentTarget || e.target;
+              alm.rel = 'next';
+              if (alm.pause === 'true') {
+                alm.pause = false;
+                alm.pause_override = false;
                 alm.AjaxLoadMore.loadPosts();
               }
+              if (!alm.loading && !alm.finished && !button.classList.contains('done')) {
+                alm.loading = true;
+                alm.page++;
+                alm.AjaxLoadMore.loadPosts();
+              }
+              button.blur(); // Remove button focus
+            };
+
+            /**
+             * Button click handler for previous load more.
+             *
+             * @param {Object} e The target button element.
+             * @since 5.5.0
+             */
+            alm.AjaxLoadMore.prevClick = function (e) {
+              var button = e.currentTarget || e.target;
+              e.preventDefault();
+              if (!alm.loading && !button.classList.contains('done')) {
+                alm.loading = true;
+                alm.pagePrev--;
+                alm.rel = 'prev';
+                alm.AjaxLoadMore.loadPosts();
+                button.blur(); // Remove button focus
+              }
+            };
+
+            /**
+             * Set the Load Previous button to alm object.
+             *
+             * @param {Element} button The button element.
+             * @since 5.5.0
+             */
+            alm.AjaxLoadMore.setPreviousButton = function (button) {
+              alm.pagePrev = alm.page;
+              alm.buttonPrev = button;
+            };
+
+            /**
+             * Load More button click event handler.
+             *
+             * @since 1.0.0
+             */
+            if (!alm.addons.paging && !alm.fetchingPreviousPost) {
+              alm.button.onclick = alm.AjaxLoadMore.click;
             }
 
-            // Not Paging & not Single Post.
-            if (!alm.addons.paging && !alm.addons.single_post) {
-              if (alm.disable_ajax) {
-                alm.finished = true;
-                alm.button.classList.add('done');
+            /**
+             * Window resize functions for Paging, Scroll Distance Percentage etc.
+             *
+             * @since 2.1.2
+             */
+            if (alm.addons.paging || alm.scroll_distance_perc || alm.scroll_direction === 'horizontal') {
+              alm.window.onresize = function () {
+                clearTimeout(resize);
+                resize = setTimeout(function () {
+                  if (alm.addons.paging) {
+                    // Paging
+                    if (typeof almOnWindowResize === 'function') {
+                      window.almOnWindowResize(alm);
+                    }
+                  }
+                  if (alm.scroll_distance_perc) {
+                    alm.scroll_distance = getScrollPercentage(alm);
+                  }
+                  if (alm.scroll_direction === 'horizontal') {
+                    alm.AjaxLoadMore.horizontal();
+                  }
+                }, alm.speed);
+              };
+            }
+
+            /**
+             * Check to see if element is visible before loading posts.
+             *
+             * @since 2.1.2
+             */
+            alm.AjaxLoadMore.isVisible = function () {
+              // Check for a width and height to determine visibility
+              alm.visible = alm.main.clientWidth > 0 && alm.main.clientHeight > 0 ? true : false;
+              return alm.visible;
+            };
+
+            /**
+             * Load posts as user scrolls the page.
+             *
+             * @since 1.0
+             */
+            alm.AjaxLoadMore.scroll = function () {
+              if (alm.timer) {
+                clearTimeout(alm.timer);
+              }
+              alm.timer = setTimeout(function () {
+                if (alm.AjaxLoadMore.isVisible() && !alm.fetchingPreviousPost) {
+                  var trigger = alm.trigger.getBoundingClientRect();
+                  var btnPos = Math.round(trigger.top - alm.window.innerHeight) + alm.scroll_distance;
+                  var scrollTrigger = btnPos <= 0 ? true : false;
+
+                  // Scroll Container
+                  if (alm.window !== window) {
+                    var scrollHeight = alm.main.offsetHeight; // ALM height
+                    var scrollWidth = alm.main.offsetWidth; // ALM Width
+                    var scrollPosition = '';
+                    if (alm.scroll_direction === 'horizontal') {
+                      // Left/Right
+                      alm.AjaxLoadMore.horizontal();
+                      scrollPosition = Math.round(alm.window.scrollLeft + alm.window.offsetWidth - alm.scroll_distance); // How far user has scrolled
+                      scrollTrigger = scrollWidth <= scrollPosition ? true : false;
+                    } else {
+                      // Up/Down
+                      scrollPosition = Math.round(alm.window.scrollTop + alm.window.offsetHeight - alm.scroll_distance); // How far user has scrolled
+                      scrollTrigger = scrollHeight <= scrollPosition ? true : false;
+                    }
+                  }
+
+                  // If Pause && Pause Override
+                  if (!alm.loading && !alm.finished && scrollTrigger && alm.page < alm.max_pages - 1 && alm.proceed && alm.pause === 'true' && alm.pause_override === 'true') {
+                    alm.button.click();
+                  }
+
+                  // Standard Scroll
+                  else {
+                    if (!alm.loading && !alm.finished && scrollTrigger && alm.page < alm.max_pages - 1 && alm.proceed && alm.pause !== 'true') {
+                      alm.button.click();
+                    }
+                  }
+                }
+              }, 25);
+            };
+
+            /**
+             * Add scroll eventlisteners, only when needed.
+             *
+             * @since 5.2.0
+             */
+            alm.AjaxLoadMore.scrollSetup = function () {
+              if (alm.scroll && !alm.addons.paging) {
+                if (alm.scroll_container) {
+                  // Scroll Container
+                  alm.window = document.querySelector(alm.scroll_container) ? document.querySelector(alm.scroll_container) : alm.window;
+                  setTimeout(function () {
+                    // Delay to allow for ALM container to resize on load.
+                    alm.AjaxLoadMore.horizontal();
+                  }, 500);
+                }
+                alm.window.addEventListener('scroll', alm.AjaxLoadMore.scroll); // Scroll
+                alm.window.addEventListener('touchstart', alm.AjaxLoadMore.scroll); // Touch Devices
+                alm.window.addEventListener('wheel', function (e) {
+                  // Mousewheel
+                  var direction = Math.sign(e.deltaY);
+                  if (direction > 0) {
+                    alm.AjaxLoadMore.scroll();
+                  }
+                });
+                alm.window.addEventListener('keyup', function (e) {
+                  var key = e.key;
+                  switch (key) {
+                    case 'End':
+                    case 'PageDown':
+                      alm.AjaxLoadMore.scroll();
+                      break;
+                  }
+                });
+              }
+            };
+
+            /**
+             * Configure horizontal scroll settings.
+             *
+             * @since 5.3.6
+             */
+            alm.AjaxLoadMore.horizontal = function () {
+              if (alm.scroll_direction === 'horizontal') {
+                alm.main.style.width = "".concat(alm.listing.offsetWidth, "px");
+              }
+            };
+
+            /**
+             * Destroy Ajax Load More functionality.
+             *
+             * @since 3.4.2
+             */
+            alm.AjaxLoadMore.destroyed = function () {
+              alm.disable_ajax = true;
+              if (!alm.addons.paging) {
+                alm.button.style.display = 'none';
+                alm.AjaxLoadMore.triggerDone();
+                if (typeof almDestroyed === 'function') {
+                  window.almDestroyed(alm);
+                }
+              }
+            };
+
+            /**
+             * Set variables after loading transition completes.
+             *
+             * @since 3.5
+             */
+            alm.AjaxLoadMore.transitionEnd = function () {
+              alm.main.classList.remove('alm-loading');
+              alm.AjaxLoadMore.resetBtnText();
+
+              // Loading buttons.
+              if (alm.rel === 'prev') {
+                var _alm39;
+                (_alm39 = alm) === null || _alm39 === void 0 || (_alm39 = _alm39.buttonPrev) === null || _alm39 === void 0 || (_alm39 = _alm39.classList) === null || _alm39 === void 0 || _alm39.remove('loading');
               } else {
-                // Set button label.
-                alm.button.innerHTML = alm.button_labels["default"];
-
-                // Check pause.
-                if (alm.pause === 'true') {
-                  alm.loading = false;
-                } else {
-                  alm.AjaxLoadMore.loadPosts();
-                }
+                var _alm40;
+                (_alm40 = alm) === null || _alm40 === void 0 || (_alm40 = _alm40.button) === null || _alm40 === void 0 || (_alm40 = _alm40.classList) === null || _alm40 === void 0 || _alm40.remove('loading');
               }
-            }
+              alm.AjaxLoadMore.triggerAddons(alm);
+              if (!alm.addons.paging) {
+                alm.loading = false;
+              }
 
-            // Single Post Add-on.
-            if (alm.addons.single_post) {
-              // Add delay for setup and scripts to load.
-              setTimeout( /*#__PURE__*/ajax_load_more_asyncToGenerator( /*#__PURE__*/ajax_load_more_regeneratorRuntime().mark(function _callee10() {
-                return ajax_load_more_regeneratorRuntime().wrap(function _callee10$(_context10) {
-                  while (1) switch (_context10.prev = _context10.next) {
-                    case 0:
-                      _context10.next = 2;
-                      return alm.AjaxLoadMore.getSinglePost();
-                    case 2:
-                      // Set next post on load
+              // Hide loading placeholder.
+              placeholder('hide', alm);
+            };
 
-                      // Trigger done if custom query and no posts to render
-                      if (alm.addons.single_post_query && alm.addons.single_post_order === '') {
-                        alm.AjaxLoadMore.triggerDone();
+            /**
+             * Set individual localized variable.
+             *
+             * @param {string} name
+             * @param {string} value
+             * @since 4.1
+             */
+            alm.AjaxLoadMore.setLocalizedVar = function () {
+              var _alm41;
+              var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+              var value = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+              if ((_alm41 = alm) !== null && _alm41 !== void 0 && _alm41.localize && name !== '' && value !== '') {
+                alm.localize[name] = value; // Set ALM localize var.
+                window[alm.localized_var][name] = value; // Update vars.
+              }
+            };
+
+            /**
+             * Init Ajax load More functionality and add-ons.
+             *
+             * @since 2.0
+             */
+            alm.AjaxLoadMore.init = /*#__PURE__*/ajax_load_more_asyncToGenerator( /*#__PURE__*/ajax_load_more_regeneratorRuntime().mark(function _callee10() {
+              var nextpage_pages, _alm42, nextpage_first, nextpage_total;
+              return ajax_load_more_regeneratorRuntime().wrap(function _callee10$(_context10) {
+                while (1) switch (_context10.prev = _context10.next) {
+                  case 0:
+                    // Preloaded and Destroy After is 1.
+                    if (alm.addons.preloaded && alm.destroy_after === 1) {
+                      alm.AjaxLoadMore.destroyed();
+                    }
+
+                    // Paging Add-on.
+                    if (alm.addons.paging) {
+                      if (alm.addons.preloaded) {
+                        // Preloaded.
+                        alm.AjaxLoadMore.ajax('totalposts');
+                      } else if (alm.addons.nextpage) {
+                        // Next Page.
+                        alm.AjaxLoadMore.ajax('totalpages');
+                      } else {
+                        // Standard.
+                        alm.AjaxLoadMore.loadPosts();
                       }
-                      alm.loading = false;
-                      tableOfContents(alm, true, true);
-                    case 5:
-                    case "end":
-                      return _context10.stop();
-                  }
-                }, _callee10);
-              })), 250);
-            }
+                    }
 
-            // Query Loop Add-on.
-            if (alm.addons.queryloop && alm.addons.queryloop_settings) {
-              queryLoopInit(alm);
-            }
+                    // Not Paging & not Single Post.
+                    if (!alm.addons.paging && !alm.addons.single_post) {
+                      if (alm.disable_ajax) {
+                        alm.finished = true;
+                        alm.button.classList.add('done');
+                      } else {
+                        // Set button label.
+                        alm.button.innerHTML = alm.button_labels["default"];
 
-            // Preloaded + SEO && !Paging.
-            if (alm.addons.preloaded && alm.addons.seo && !alm.addons.paging) {
-              // Add delay for setup and scripts to load.
-              setTimeout(function () {
-                if (typeof almSEO === 'function' && alm.start_page < 1) {
-                  window.almSEO(alm, true);
+                        // Check pause.
+                        if (alm.pause === 'true') {
+                          alm.loading = false;
+                        } else {
+                          alm.AjaxLoadMore.loadPosts();
+                        }
+                      }
+                    }
+
+                    // Single Post Add-on.
+                    if (!alm.addons.single_post) {
+                      _context10.next = 11;
+                      break;
+                    }
+                    _context10.next = 6;
+                    return timeout(250);
+                  case 6:
+                    _context10.next = 8;
+                    return alm.AjaxLoadMore.getSinglePost();
+                  case 8:
+                    // Set next post on load.
+
+                    // Trigger done if custom query and no posts to render
+                    if (alm.addons.single_post_query && alm.addons.single_post_order === '') {
+                      alm.AjaxLoadMore.triggerDone();
+                    }
+                    alm.loading = false;
+                    tableOfContents(alm, true, true);
+                  case 11:
+                    // Query Loop Add-on.
+                    if (alm.addons.queryloop && alm.addons.queryloop_settings) {
+                      queryLoopInit(alm);
+                    }
+
+                    // Preloaded + SEO && !Paging.
+                    if (!(alm.addons.preloaded && alm.addons.seo && !alm.addons.paging)) {
+                      _context10.next = 16;
+                      break;
+                    }
+                    _context10.next = 15;
+                    return timeout(250);
+                  case 15:
+                    // Add delay for setup and scripts to load.
+                    if (typeof almSEO === 'function' && alm.start_page < 1) {
+                      window.almSEO(alm, true);
+                    }
+                  case 16:
+                    if (!(alm.addons.preloaded && !alm.addons.paging)) {
+                      _context10.next = 21;
+                      break;
+                    }
+                    _context10.next = 19;
+                    return timeout(250);
+                  case 19:
+                    // Add delay for setup and scripts to load.
+                    if (alm.addons.preloaded_total_posts <= alm.addons.preloaded_amount) {
+                      alm.AjaxLoadMore.triggerDone();
+                    }
+                    // almEmpty callback.
+                    if (alm.addons.preloaded_total_posts === 0) {
+                      if (typeof almEmpty === 'function') {
+                        window.almEmpty(alm);
+                      }
+                      if (alm.no_results) {
+                        noResults(alm.content, alm.no_results);
+                      }
+                    }
+                  case 21:
+                    // Preloaded Add-on ONLY.
+                    if (alm.addons.preloaded) {
+                      if (alm.resultsText) {
+                        almInitResultsText(alm, 'preloaded');
+                      }
+                      tableOfContents(alm, alm.init, true);
+                    }
+
+                    // Next Page Add-on.
+                    if (alm.addons.nextpage) {
+                      // Check that posts remain on load
+                      if (alm.listing.querySelector('.alm-nextpage') && !alm.addons.paging) {
+                        nextpage_pages = alm.listing.querySelectorAll('.alm-nextpage'); // All Next Page Items.
+                        if (nextpage_pages) {
+                          nextpage_first = nextpage_pages[0];
+                          nextpage_total = nextpage_first.dataset.totalPosts ? parseInt(nextpage_first.dataset.totalPosts) : (_alm42 = alm) === null || _alm42 === void 0 || (_alm42 = _alm42.localize) === null || _alm42 === void 0 ? void 0 : _alm42.total_posts; // Disable if last page loaded
+                          if (nextpage_pages.length === nextpage_total || parseInt(nextpage_first.dataset.page) === nextpage_total) {
+                            alm.AjaxLoadMore.triggerDone();
+                          }
+                        }
+                      }
+                      if (alm.resultsText) {
+                        almInitResultsText(alm, 'nextpage');
+                      }
+                      tableOfContents(alm, alm.init, true);
+                    }
+
+                    // WooCommerce Add-on.
+                    if (alm.addons.woocommerce) {
+                      wooInit(alm);
+                      if (alm.addons.woocommerce_settings.paged >= parseInt(alm.addons.woocommerce_settings.pages)) {
+                        alm.AjaxLoadMore.triggerDone(); // Done if `paged is less than `pages`.
+                      }
+                    }
+
+                    // Elementor Add-on.
+                    if (alm.addons.elementor && alm.addons.elementor_type && alm.addons.elementor_type === 'posts') {
+                      elementorInit(alm);
+                      if (!alm.addons.elementor_next_page) {
+                        alm.AjaxLoadMore.triggerDone(); // Done if `elementor_next_page` is false.
+                      }
+                    }
+
+                    setPreloadedParams(alm); // Set preloaded params.
+                  case 26:
+                  case "end":
+                    return _context10.stop();
                 }
-              }, 200);
-            }
+              }, _callee10);
+            }));
 
-            // Preloaded && !Paging.
-            if (alm.addons.preloaded && !alm.addons.paging) {
-              // Add delay for setup and scripts to load.
-              setTimeout(function () {
-                if (alm.addons.preloaded_total_posts <= alm.addons.preloaded_amount) {
-                  alm.AjaxLoadMore.triggerDone();
-                }
-                // almEmpty callback.
-                if (alm.addons.preloaded_total_posts === 0) {
-                  if (typeof almEmpty === 'function') {
-                    window.almEmpty(alm);
-                  }
-                  if (alm.no_results) {
-                    noResults(alm.content, alm.no_results);
-                  }
-                }
-              }, alm.speed);
-            }
-
-            // Preloaded Add-on ONLY.
-            if (alm.addons.preloaded) {
-              if (alm.resultsText) {
-                almInitResultsText(alm, 'preloaded');
+            // DOM Ready Handler.
+            document.addEventListener('DOMContentLoaded', function () {
+              if (!alm) {
+                return;
               }
-              tableOfContents(alm, alm.init, true);
-            }
 
-            // Next Page Add-on.
-            if (alm.addons.nextpage) {
-              // Check that posts remain on load
-              if (alm.listing.querySelector('.alm-nextpage') && !alm.addons.paging) {
-                nextpage_pages = alm.listing.querySelectorAll('.alm-nextpage'); // All Next Page Items.
-                if (nextpage_pages) {
-                  nextpage_first = nextpage_pages[0];
-                  nextpage_total = nextpage_first.dataset.totalPosts ? parseInt(nextpage_first.dataset.totalPosts) : (_alm35 = alm) === null || _alm35 === void 0 || (_alm35 = _alm35.localize) === null || _alm35 === void 0 ? void 0 : _alm35.total_posts; // Disable if last page loaded
-                  if (nextpage_pages.length === nextpage_total || parseInt(nextpage_first.dataset.page) === nextpage_total) {
-                    alm.AjaxLoadMore.triggerDone();
-                  }
-                }
-              }
-              if (alm.resultsText) {
-                almInitResultsText(alm, 'nextpage');
-              }
-              tableOfContents(alm, alm.init, true);
-            }
-
-            // WooCommerce Add-on.
-            if (alm.addons.woocommerce) {
-              wooInit(alm);
-              if (alm.addons.woocommerce_settings.paged >= parseInt(alm.addons.woocommerce_settings.pages)) {
-                alm.AjaxLoadMore.triggerDone(); // Done if `paged is less than `pages`.
-              }
-            }
-
-            // Elementor Add-on.
-            if (alm.addons.elementor && alm.addons.elementor_type && alm.addons.elementor_type === 'posts') {
-              elementorInit(alm);
-              if (!alm.addons.elementor_next_page) {
-                alm.AjaxLoadMore.triggerDone(); // Done if `elementor_next_page` is false.
-              }
-            }
-
-            // Window Load.
-            alm.window.addEventListener('load', function () {
               // Masonry & Preloaded.
               if (alm.transition === 'masonry' && alm.addons.preloaded) {
                 // Wrap almMasonry in anonymous async/await function
@@ -13862,8 +21411,8 @@ var alm_is_filtering = false;
               //  Filters, Facets & Preloaded Facets
               if (alm.addons.preloaded && alm.addons.filters && alm.facets) {
                 if (typeof almFiltersFacets === 'function') {
-                  var _alm36;
-                  var facets = (_alm36 = alm) === null || _alm36 === void 0 || (_alm36 = _alm36.localize) === null || _alm36 === void 0 ? void 0 : _alm36.facets;
+                  var _alm43;
+                  var facets = (_alm43 = alm) === null || _alm43 === void 0 || (_alm43 = _alm43.localize) === null || _alm43 === void 0 ? void 0 : _alm43.facets;
                   if (facets) {
                     window.almFiltersFacets(facets);
                   }
@@ -13876,126 +21425,112 @@ var alm_is_filtering = false;
               }
             });
 
-            setPreloadedParams(alm); // Set preloaded params.
-          case 13:
+            /**
+             * Handle API errors by reseting the loading state and button text.
+             *
+             * @param {string} error The error message.
+             * @since 2.6.0
+             */
+            alm.AjaxLoadMore.error = function (error) {
+              console.error('Ajax Load More: There was an error with the Ajax request.', error); //eslint-disable-line no-console
+              alm.loading = false;
+              if (!alm.addons.paging) {
+                alm.button.classList.remove('loading');
+                alm.AjaxLoadMore.resetBtnText();
+              }
+            };
+
+            /**
+             * Update Current Page.
+             * Note: Callback function triggered from Paging add-on.
+             *
+             * @param {number} current Current page number.
+             * @param {Object} obj     Optional object (Deprecated).
+             * @param {Object} alm     The ALM object.
+             * @since 2.7.0
+             */
+            window.almUpdateCurrentPage = function (current, obj, alm) {
+              // eslint-disable-line
+              alm.page = current;
+              alm.page = alm.addons.nextpage && !alm.addons.paging ? alm.page - 1 : alm.page; // Next Page add-on
+
+              var target = alm.listing;
+              var data = target === null || target === void 0 ? void 0 : target.innerHTML; // Get content
+
+              if (alm.addons.paging_init && alm.addons.preloaded) {
+                // Paging + Preloaded Firstrun.
+                alm.addons.preloaded_amount = 0; // Reset preloaded_amount param.
+                alm.AjaxLoadMore.pagingPreloadedInit(data);
+                alm.addons.paging_init = false;
+                alm.init = false;
+              } else if (alm.addons.paging_init && alm.addons.nextpage) {
+                // Paging + Next Page on firstrun.
+                alm.AjaxLoadMore.pagingNextpageInit();
+                alm.addons.paging_init = false;
+                alm.init = false;
+              } else {
+                // Standard Paging
+                alm.AjaxLoadMore.loadPosts();
+              }
+            };
+
+            /**
+             * Get the parent ALM container.
+             *
+             * @return {HTMLElement} The ALM listing container.
+             * @since 2.7.0
+             */
+            window.almGetParentContainer = function () {
+              var _alm44;
+              return (_alm44 = alm) === null || _alm44 === void 0 ? void 0 : _alm44.listing;
+            };
+
+            /**
+             * Returns the current ALM obj.
+             *
+             * @param {string} obj The ALM object to return.
+             * @return {Object}    The ALM object.
+             * @since 2.7.0
+             */
+            window.almGetObj = function () {
+              var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+              if (obj) {
+                return alm[obj]; // Return specific param.
+              }
+
+              return alm; // Return the entire alm object
+            };
+
+            /**
+             * Trigger ajaxloadmore from any element on page.
+             *
+             * @since 2.12.0
+             */
+            window.almTriggerClick = function () {
+              alm.button.click();
+            };
+
+            // Delay to prevent immediate loading of posts on initial page load via scroll.
+            setTimeout(function () {
+              alm.proceed = true;
+              alm.AjaxLoadMore.scrollSetup();
+            }, 1000);
+
+            // Init Ajax Load More.
+            alm.AjaxLoadMore.init();
+            if (((_alm_localize5 = alm_localize) === null || _alm_localize5 === void 0 ? void 0 : _alm_localize5.scrolltop) === 'true') {
+              window.scrollTo(0, 0); // Move user to top of page to prevent loading on initial page load.
+            }
+          case 142:
           case "end":
             return _context12.stop();
         }
-      }, _callee12);
+      }, _callee12, this);
     }));
-
-    /**
-     * Handle error messages.
-     *
-     * @param {string} error    The error message.
-     * @param {string} location The location the error occured.
-     * @since 2.6.0
-     */
-    alm.AjaxLoadMore.error = function (error) {
-      var location = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-      alm.loading = false;
-      if (!alm.addons.paging) {
-        alm.button.classList.remove('loading');
-        alm.AjaxLoadMore.resetBtnText();
-      }
-      console.warn('Error: ', error);
-      if (error.response) {
-        // The request was made and the server responded with a status code that falls out of the range of 2xx.
-        console.error('Error Msg: ', error.message);
-      } else if (error.request) {
-        // The request was made but no response was received.
-        console.error(error.request);
-      } else {
-        // Something happened in setting up the request that triggered an Error.
-        console.error('Error Msg: ', error.message);
-      }
-      if (location) {
-        console.error('ALM Error started in ' + location);
-      }
-      if (error.config) {
-        console.error('ALM Error Debug: ', error.config);
-      }
+    return function ajaxloadmore(_x, _x2) {
+      return _ref.apply(this, arguments);
     };
-
-    /**
-     * Update Current Page.
-     * Note: Callback function triggered from Paging add-on.
-     *
-     * @param {number} current Current page number.
-     * @param {Object} obj     Optional object (Deprecated).
-     * @param {Object} alm     The ALM object.
-     * @since 2.7.0
-     */
-    window.almUpdateCurrentPage = function (current, obj, alm) {
-      // eslint-disable-line
-      alm.page = current;
-      alm.page = alm.addons.nextpage && !alm.addons.paging ? alm.page - 1 : alm.page; // Next Page add-on
-
-      var target = alm.listing;
-      var data = target === null || target === void 0 ? void 0 : target.innerHTML; // Get content
-
-      if (alm.addons.paging_init && alm.addons.preloaded) {
-        // Paging + Preloaded Firstrun.
-        alm.addons.preloaded_amount = 0; // Reset preloaded_amount param.
-        alm.AjaxLoadMore.pagingPreloadedInit(data);
-        alm.addons.paging_init = false;
-        alm.init = false;
-      } else if (alm.addons.paging_init && alm.addons.nextpage) {
-        // Paging + Next Page on firstrun.
-        alm.AjaxLoadMore.pagingNextpageInit();
-        alm.addons.paging_init = false;
-        alm.init = false;
-      } else {
-        // Standard Paging
-        alm.AjaxLoadMore.loadPosts();
-      }
-    };
-
-    /**
-     * Get the parent ALM container.
-     *
-     * @return {HTMLElement} The ALM listing container.
-     * @since 2.7.0
-     */
-    window.almGetParentContainer = function () {
-      var _alm37;
-      return (_alm37 = alm) === null || _alm37 === void 0 ? void 0 : _alm37.listing;
-    };
-
-    /**
-     * Returns the current ALM obj.
-     *
-     * @param {string} obj The ALM object to return.
-     * @return {Object}    The ALM object.
-     * @since 2.7.0
-     */
-    window.almGetObj = function () {
-      var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-      if (obj) {
-        return alm[obj]; // Return specific param.
-      }
-
-      return alm; // Return the entire alm object
-    };
-
-    /**
-     * Trigger ajaxloadmore from any element on page.
-     *
-     * @since 2.12.0
-     */
-    window.almTriggerClick = function () {
-      alm.button.click();
-    };
-
-    // Delay to prevent immediate loading of posts on initial page load via scroll.
-    setTimeout(function () {
-      alm.proceed = true;
-      alm.AjaxLoadMore.scrollSetup();
-    }, 1000);
-
-    // Init Ajax Load More
-    alm.AjaxLoadMore.init();
-  };
+  }();
 
   // End ajaxloadmore
 
@@ -14034,8 +21569,8 @@ var alm_is_filtering = false;
  */
 var filter = function filter() {
   var transition = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'fade';
-  var speed = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '200';
-  var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+  var speed = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 200;
+  var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
   if (!transition || !speed || !data) {
     return false;
   }
@@ -14085,7 +21620,7 @@ var ajax_load_more_reset = function reset() {
     });
   } else {
     // Standard ALM
-    almFilter('fade', '200', data, 'filter');
+    almFilter('fade', 200, data, 'filter');
   }
 };
 
