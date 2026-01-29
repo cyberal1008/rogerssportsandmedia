@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const toggler = document.querySelector('.navbar-toggler');
   toggler.addEventListener('click', toggleScroll);
 
-  document.querySelectorAll('a').forEach(link => {
+  document.querySelectorAll('.page-template-page_admanager_v3 a').forEach(link => {
     link.addEventListener('click', function(e) {
       const href = link.getAttribute('href');
       if (href.startsWith('#')) {
