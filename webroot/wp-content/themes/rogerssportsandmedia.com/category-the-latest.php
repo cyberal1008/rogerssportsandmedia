@@ -24,16 +24,6 @@
 <!-- MAIN -->
 <main id="content" role="main">
 
-	<!-- HERO -->
-	<?php
-		get_template_part(
-			'template-parts/section-hero', null,
-			array(
-				'title' => 'The Latest',
-			)
-		);
-	?>
-
 	<?php
 	if (isset($_GET["searchterm"])) {
 		$searchterm = $_GET["searchterm"];
@@ -43,48 +33,7 @@
 	$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 	$current_cat_id = get_query_var( 'cat' );
 	$current_cat_link = get_category_link($current_cat_id);
-	$first_query = new WP_Query(
-		array(
-			'post__not_in'   => get_option( 'sticky_posts' ),
-			'post_type'      => 'post',
-			'orderby'        => 'date',
-			'post_date'      => 'DESC',
-			'post_status'    => 'publish',
-			'posts_per_page' => 1,
-			'paged'          => $paged,
-			'category__in'   => $current_cat_id,
-		)
-	);
-	if ( $first_query->have_posts() ) : while ( $first_query->have_posts() ) : $first_query->the_post(); 
-		$link = get_the_permalink();
-		$title = get_the_title();
-		$excerpt = get_the_excerpt();
-		$featured_img_url = get_the_post_thumbnail_url( get_the_ID(), 'medium_large' );
-		$feat_img_id = get_post_thumbnail_id(get_the_ID());
-        $alt = get_post_meta ( $feat_img_id, '_wp_attachment_image_alt', true );
-		$categories = get_the_category();
-		?>
-		<section class="splitblock" style="background-color: var(--light);" style="font-size: 10px; !important">
-			<div class="wrapper grid two">
-				<div class="imgbox">
-					<a href="<?php echo $link; ?>" arai-label=""><img src="<?php echo $featured_img_url; ?>" alt="<?php echo $alt; ?>"></a>
-				</div>
-				<div class="txtbox">
-					<div class="top">
-						<span class="date"><?php echo get_the_date( get_option( 'date_format' ) ); ?> / <?php echo $categories[0]->name; ?></span>
-					</div>
-					<p class="title"><a href="<?php echo $link; ?>" aria-label="<?php echo $title; ?>"><?php echo $title; ?></a></p>
-					<?php if ($excerpt) : ?>
-						<p class="excerpt"><?php echo wp_trim_words( $excerpt, 34); ?></p>
-					<?php endif; ?>
-					<div class="tw-mb-2">&nbsp;</div>
-					<a href="<?php echo $link; ?>" aria-label="Read More about <?php echo $title; ?>" class="tw-bg-white tw-px-6 tw-py-3 tw-text-base tw-font-medium tw-text-black tw-shadow-sm tw-no-underline hover:tw-no-underline focus:tw-no-underline hover:tw-text-black visited:tw-text-black">
-						Learn More
-					</a>
-				</div>
-			</div>
-		</section>
-	<?php endwhile; endif; wp_reset_postdata(); ?>
+	?>
 
 	<!-- FILTERS -->
 	<section class="posts-filters" style="background-color: var(--light-light); font-size: 10px;">
@@ -135,6 +84,62 @@
 				</div>
 		</div>
 	</section>
+
+	<!-- HERO + FEATURED (visible only on All Topics) -->
+	<div id="hero-block">
+		<?php
+			get_template_part(
+				'template-parts/section-hero', null,
+				array(
+					'title' => 'The Latest',
+				)
+			);
+		?>
+
+		<?php
+		$first_query = new WP_Query(
+			array(
+				'post__not_in'   => get_option( 'sticky_posts' ),
+				'post_type'      => 'post',
+				'orderby'        => 'date',
+				'post_date'      => 'DESC',
+				'post_status'    => 'publish',
+				'posts_per_page' => 1,
+				'paged'          => $paged,
+				'category__in'   => $current_cat_id,
+			)
+		);
+		if ( $first_query->have_posts() ) : while ( $first_query->have_posts() ) : $first_query->the_post();
+			$link = get_the_permalink();
+			$title = get_the_title();
+			$excerpt = get_the_excerpt();
+			$featured_img_url = get_the_post_thumbnail_url( get_the_ID(), 'medium_large' );
+			$feat_img_id = get_post_thumbnail_id(get_the_ID());
+			$alt = get_post_meta ( $feat_img_id, '_wp_attachment_image_alt', true );
+			$categories = get_the_category();
+			?>
+			<section class="splitblock" style="background-color: var(--light);">
+				<div class="wrapper grid two">
+					<div class="imgbox">
+						<a href="<?php echo $link; ?>" arai-label=""><img src="<?php echo $featured_img_url; ?>" alt="<?php echo $alt; ?>"></a>
+					</div>
+					<div class="txtbox">
+						<div class="top">
+							<span class="date"><?php echo get_the_date( get_option( 'date_format' ) ); ?> / <?php echo $categories[0]->name; ?></span>
+						</div>
+						<p class="title"><a href="<?php echo $link; ?>" aria-label="<?php echo $title; ?>"><?php echo $title; ?></a></p>
+						<?php if ($excerpt) : ?>
+							<p class="excerpt"><?php echo wp_trim_words( $excerpt, 34); ?></p>
+						<?php endif; ?>
+						<div class="tw-mb-2">&nbsp;</div>
+						<a href="<?php echo $link; ?>" aria-label="Read More about <?php echo $title; ?>" class="tw-bg-white tw-px-6 tw-py-3 tw-text-base tw-font-medium tw-text-black tw-shadow-sm tw-no-underline hover:tw-no-underline focus:tw-no-underline hover:tw-text-black visited:tw-text-black">
+							Learn More
+						</a>
+					</div>
+				</div>
+			</section>
+		<?php endwhile; endif; wp_reset_postdata(); ?>
+	</div>
 
 	<!-- POSTS -->
 	<section class="post-tabs">
@@ -193,6 +198,21 @@
 </main>
 
 <script src="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/main.min.js"></script>
+<script>
+(function() {
+	var heroBlock = document.getElementById('hero-block');
+	if (!heroBlock) return;
+	document.querySelectorAll('.posts-filters .filter-tab').forEach(function(tab) {
+		tab.addEventListener('click', function() {
+			if (this.id === 'tab-all') {
+				heroBlock.style.display = '';
+			} else {
+				heroBlock.style.display = 'none';
+			}
+		});
+	});
+})();
+</script>
 
 <?php
 get_footer();
