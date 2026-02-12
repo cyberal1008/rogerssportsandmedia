@@ -142,3 +142,205 @@ main .lined:hover {
     height: 100%;
     width: 100%;
 }
+
+/** The Latest - Card Redesign */
+.posts-grid .item.test-class {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #e0e0e0;
+    position: relative;
+    cursor: pointer;
+}
+
+.posts-grid .item.test-class:nth-child(odd) {
+    background-color: #fff;
+}
+
+.posts-grid .item.test-class:nth-child(even) {
+    background-color: #000;
+}
+
+.posts-grid .item.test-class:nth-child(even) .meta,
+.posts-grid .item.test-class:nth-child(even) .meta .cat,
+.posts-grid .item.test-class:nth-child(even) .meta .date {
+    color: #ccc;
+}
+
+.posts-grid .item.test-class:nth-child(even) .meta .cat {
+    color: #fff;
+}
+
+.posts-grid .item.test-class:nth-child(even) .title a {
+    color: #fff;
+}
+
+.posts-grid .item.test-class:nth-child(even) .card-share .share-trigger .icon {
+    color: #ccc;
+}
+
+.posts-grid .item.test-class:nth-child(even) .card-share .share-trigger:focus .icon,
+.posts-grid .item.test-class:nth-child(even) .card-share .share-trigger:hover .icon {
+    color: #fff;
+}
+
+.posts-grid .item .title a::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
+
+.posts-grid .item.test-class:hover .title a {
+    text-decoration: underline;
+}
+
+.posts-grid .item.test-class:hover .imglink img {
+    box-shadow: 6px 6px 12px 3px #ccc;
+    transition: all 0.25s;
+}
+
+.posts-grid .item .imglink {
+    display: block;
+    flex: unset;
+    width: 100%;
+}
+
+.posts-grid .item .imglink img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    object-position: center;
+    transition: all 0.25s;
+}
+
+.posts-grid .item .meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 1rem 0;
+    margin-top: 0;
+    margin-bottom: 0.8rem;
+    font-size: 1.4rem;
+    color: #6b6b6b;
+}
+
+.posts-grid .item .meta .cat {
+    font-weight: 600;
+    color: var(--rsm-primary-dark, #333);
+}
+
+.posts-grid .item .meta .date {
+    font-weight: 400;
+    color: #6b6b6b;
+}
+
+.posts-grid .item .title {
+    font-size: clamp(1.6rem, 3vw, 2rem);
+    font-weight: 700;
+    margin: 0 0 1rem;
+    padding: 0 1rem;
+    text-transform: none;
+}
+
+.posts-grid .item .card-share {
+    position: relative;
+    margin-top: auto;
+    padding: 0 1rem 1rem;
+    z-index: 2;
+}
+
+.posts-grid .item .card-share .share-trigger {
+    cursor: pointer;
+    color: var(--dark, #333);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.posts-grid .item .card-share .share-trigger .icon {
+    color: #919191;
+    transition: all 0.25s;
+}
+
+.posts-grid .item .card-share .share-trigger:focus .icon,
+.posts-grid .item .card-share .share-trigger:hover .icon {
+    color: var(--dark, #333);
+}
+
+.posts-grid .item .card-share .sharedrop {
+    background-color: var(--white, #fff);
+    box-shadow: 0 12px 16px -4px rgba(16, 24, 40, 0.25), 0 4px 6px -2px rgba(16, 24, 40, 0.03);
+    display: none;
+    padding: 2rem;
+    position: absolute;
+    left: 0;
+    bottom: 100%;
+    z-index: 9;
+}
+
+.posts-grid .item .card-share .sharedrop.active {
+    display: block;
+}
+
+.posts-grid .item .card-share .sharedrop .close {
+    color: #bbbdc0;
+    position: absolute;
+    right: 0.5rem;
+    top: 0.5rem;
+}
+
+.posts-grid .item .card-share .sharedrop .close:focus,
+.posts-grid .item .card-share .sharedrop .close:hover {
+    color: var(--rsm-primary-dark);
+}
+
+.posts-grid .item .card-share .sharedrop .links.hidden {
+    display: none;
+}
+
+.posts-grid .item .card-share .sharedrop .success,
+.posts-grid .item .card-share .sharedrop a {
+    align-items: center;
+    color: var(--rsm-primary-dark);
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.posts-grid .item .card-share .sharedrop .success:last-child,
+.posts-grid .item .card-share .sharedrop a:last-child {
+    margin-bottom: 0;
+}
+
+.posts-grid .item .card-share .sharedrop .success .icon,
+.posts-grid .item .card-share .sharedrop a .icon {
+    color: var(--rsm-primary-dark);
+    font-size: 3.2rem;
+}
+
+.posts-grid .item .card-share .sharedrop .success {
+    display: none;
+    font-weight: 600;
+}
+
+.posts-grid .item .card-share .sharedrop .success .icon {
+    color: #00a955;
+}
+
+.posts-grid .item .card-share .sharedrop .success.active {
+    display: flex;
+}
+
+.posts-grid .item .card-share .sharedrop .sharecopy {
+    cursor: pointer;
+}
+
+.posts-grid .item .card-share .sharedrop .sharecopy .icon {
+    align-items: center;
+    width: 28px;
+}
+
+@media screen and (max-width: 767px) {
+    .posts-grid .item .imglink img {
+        height: 180px;
+    }
+}
