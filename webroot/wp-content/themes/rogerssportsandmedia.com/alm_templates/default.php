@@ -2,7 +2,7 @@
     <?php
     $link = get_the_permalink();
     $title = get_the_title();
-    $featured_img_url = get_the_post_thumbnail_url( get_the_ID(), 'wide-577' );
+    $featured_img_url = get_the_post_thumbnail_url( get_the_ID(), 'full' );
     $feat_img_id = get_post_thumbnail_id(get_the_ID());
     $alt = get_post_meta ( $feat_img_id, '_wp_attachment_image_alt', true );
     $categories = get_the_category();
