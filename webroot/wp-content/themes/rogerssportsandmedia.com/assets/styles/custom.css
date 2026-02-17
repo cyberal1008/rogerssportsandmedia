@@ -143,6 +143,66 @@ main .lined:hover {
     width: 100%;
 }
 
+/** The Latest - Hero Banner */
+a.splitblock.splitblock--hero {
+    background-color: transparent !important;
+    padding: 0 !important;
+    display: block;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a.splitblock.splitblock--hero:hover {
+    text-decoration: none;
+}
+
+.splitblock.splitblock--hero .wrapper {
+    background-color: #000;
+    max-width: 1110px;
+    padding: 0;
+    gap: 0;
+}
+
+.splitblock.splitblock--hero .imgbox img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.splitblock.splitblock--hero .txtbox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(2rem, 4vw, 3rem);
+}
+
+.splitblock.splitblock--hero .txtbox .meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.splitblock.splitblock--hero .txtbox .meta .cat {
+    color: #fff;
+    font-weight: 600;
+}
+
+.splitblock.splitblock--hero .txtbox .meta .date {
+    color: #ccc;
+}
+
+.splitblock.splitblock--hero .txtbox .title {
+    color: #fff;
+    font-size: 2.8rem;
+    font-weight: 650;
+    line-height: 1.26;
+}
+
+a.splitblock.splitblock--hero:hover .txtbox .title {
+    text-decoration: underline;
+}
+
 /** The Latest - Filter Buttons */
 .posts-filters .inner .tablist .button,
 .posts-filters .inner .tablist .accordion {

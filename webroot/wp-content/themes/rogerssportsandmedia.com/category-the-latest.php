@@ -115,26 +115,22 @@
 			$alt = get_post_meta ( $feat_img_id, '_wp_attachment_image_alt', true );
 			$categories = get_the_category();
 			?>
-			<section class="splitblock" style="background-color: var(--light);">
+			<a href="<?php echo $link; ?>" class="splitblock splitblock--hero" aria-label="<?php echo $title; ?>">
 				<div class="wrapper grid two">
 					<div class="imgbox">
-						<a href="<?php echo $link; ?>" arai-label=""><img src="<?php echo $featured_img_url; ?>" alt="<?php echo $alt; ?>"></a>
+						<img src="<?php echo $featured_img_url; ?>" alt="<?php echo $alt; ?>">
 					</div>
 					<div class="txtbox">
-						<div class="top">
-							<span class="date"><?php echo get_the_date( get_option( 'date_format' ) ); ?> / <?php echo $categories[0]->name; ?></span>
+						<div class="meta">
+							<?php if ( ! empty( $categories ) ) : ?>
+								<span class="cat"><?php echo $categories[0]->name; ?></span>
+							<?php endif; ?>
+							<span class="date"><?php echo get_the_date( get_option( 'date_format' ) ); ?></span>
 						</div>
-						<p class="title"><a href="<?php echo $link; ?>" aria-label="<?php echo $title; ?>"><?php echo $title; ?></a></p>
-						<?php if ($excerpt) : ?>
-							<p class="excerpt"><?php echo wp_trim_words( $excerpt, 34); ?></p>
-						<?php endif; ?>
-						<div class="tw-mb-2">&nbsp;</div>
-						<a href="<?php echo $link; ?>" aria-label="Read More about <?php echo $title; ?>" class="tw-bg-white tw-px-6 tw-py-3 tw-text-base tw-font-medium tw-text-black tw-shadow-sm tw-no-underline hover:tw-no-underline focus:tw-no-underline hover:tw-text-black visited:tw-text-black">
-							Learn More
-						</a>
+						<p class="title"><?php echo $title; ?></p>
 					</div>
 				</div>
-			</section>
+			</a>
 		<?php endwhile; endif; wp_reset_postdata(); ?>
 	</div>
 
