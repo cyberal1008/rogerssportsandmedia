@@ -77,9 +77,6 @@
 								</div>
 							</div>
 						</div>
-						<button class="trigger filter-tab button" role="tab" aria-selected="false" aria-controls="tab-content-cc" id="tab-cc" tabindex="-1">
-							Community & Causes
-						</button>
 					</div>
 				</div>
 		</div>
@@ -118,26 +115,22 @@
 			$alt = get_post_meta ( $feat_img_id, '_wp_attachment_image_alt', true );
 			$categories = get_the_category();
 			?>
-			<section class="splitblock" style="background-color: var(--light);">
+			<a href="<?php echo $link; ?>" class="splitblock splitblock--hero" aria-label="<?php echo $title; ?>">
 				<div class="wrapper grid two">
 					<div class="imgbox">
-						<a href="<?php echo $link; ?>" arai-label=""><img src="<?php echo $featured_img_url; ?>" alt="<?php echo $alt; ?>"></a>
+						<img src="<?php echo $featured_img_url; ?>" alt="<?php echo $alt; ?>">
 					</div>
 					<div class="txtbox">
-						<div class="top">
-							<span class="date"><?php echo get_the_date( get_option( 'date_format' ) ); ?> / <?php echo $categories[0]->name; ?></span>
+						<div class="meta">
+							<?php if ( ! empty( $categories ) ) : ?>
+								<span class="cat"><?php echo $categories[0]->name; ?></span>
+							<?php endif; ?>
+							<span class="date"><?php echo get_the_date( get_option( 'date_format' ) ); ?></span>
 						</div>
-						<p class="title"><a href="<?php echo $link; ?>" aria-label="<?php echo $title; ?>"><?php echo $title; ?></a></p>
-						<?php if ($excerpt) : ?>
-							<p class="excerpt"><?php echo wp_trim_words( $excerpt, 34); ?></p>
-						<?php endif; ?>
-						<div class="tw-mb-2">&nbsp;</div>
-						<a href="<?php echo $link; ?>" aria-label="Read More about <?php echo $title; ?>" class="tw-bg-white tw-px-6 tw-py-3 tw-text-base tw-font-medium tw-text-black tw-shadow-sm tw-no-underline hover:tw-no-underline focus:tw-no-underline hover:tw-text-black visited:tw-text-black">
-							Learn More
-						</a>
+						<p class="title"><?php echo $title; ?></p>
 					</div>
 				</div>
-			</section>
+			</a>
 		<?php endwhile; endif; wp_reset_postdata(); ?>
 	</div>
 
@@ -183,13 +176,6 @@
 			<section class="posts-grid">
 				<?php echo do_shortcode('[ajax_load_more container_type="div" post_type="post" posts_per_page="6" category="the-latest" scroll="false" transition_container="false" css_classes="wrapper grid " tag="other" search="' . $searchterm . '" no_results_text="Sorry, no posts matched your criteria."]'); ?>
 				<?php //  do_shortcode('[ajax_load_more container_type="div" post_type="post" posts_per_page="6" category="whats-happening,community" scroll="false" transition_container="false" css_classes="wrapper grid" search="' . $searchterm . '" no_results_text="Sorry, no posts matched your criteria."]'); ?>
-			</section>
-		</div>
-
-		<!-- TAB - COMMUNITY & CAUSES -->
-		<div class="tabcontent" tabindex="0" role="tabpanel" id="tab-content-cc" aria-labelledby="tab-cc" hidden>
-			<section class="posts-grid">
-				<?php echo do_shortcode('[ajax_load_more container_type="div" post_type="post" posts_per_page="6" category="community" scroll="false" transition_container="false" css_classes="wrapper grid" search="' . $searchterm . '" no_results_text="Sorry, no posts matched your criteria."]'); ?>
 			</section>
 		</div>
 
