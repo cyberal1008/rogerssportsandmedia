@@ -77,9 +77,6 @@
 								</div>
 							</div>
 						</div>
-						<button class="trigger filter-tab button" role="tab" aria-selected="false" aria-controls="tab-content-cc" id="tab-cc" tabindex="-1">
-							Community & Causes
-						</button>
 					</div>
 				</div>
 		</div>
@@ -183,13 +180,6 @@
 			<section class="posts-grid">
 				<?php echo do_shortcode('[ajax_load_more container_type="div" post_type="post" posts_per_page="6" category="the-latest" scroll="false" transition_container="false" css_classes="wrapper grid " tag="other" search="' . $searchterm . '" no_results_text="Sorry, no posts matched your criteria."]'); ?>
 				<?php //  do_shortcode('[ajax_load_more container_type="div" post_type="post" posts_per_page="6" category="whats-happening,community" scroll="false" transition_container="false" css_classes="wrapper grid" search="' . $searchterm . '" no_results_text="Sorry, no posts matched your criteria."]'); ?>
-			</section>
-		</div>
-
-		<!-- TAB - COMMUNITY & CAUSES -->
-		<div class="tabcontent" tabindex="0" role="tabpanel" id="tab-content-cc" aria-labelledby="tab-cc" hidden>
-			<section class="posts-grid">
-				<?php echo do_shortcode('[ajax_load_more container_type="div" post_type="post" posts_per_page="6" category="community" scroll="false" transition_container="false" css_classes="wrapper grid" search="' . $searchterm . '" no_results_text="Sorry, no posts matched your criteria."]'); ?>
 			</section>
 		</div>
 

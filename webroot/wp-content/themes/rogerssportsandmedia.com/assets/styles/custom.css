@@ -143,6 +143,12 @@ main .lined:hover {
     width: 100%;
 }
 
+/** The Latest - Filter Buttons */
+.posts-filters .inner .tablist .button,
+.posts-filters .inner .tablist .accordion {
+    flex: 1;
+}
+
 /** The Latest - Card Redesign */
 .posts-grid .item.test-class {
     display: flex;
