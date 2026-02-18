@@ -115,8 +115,8 @@
 			$alt = get_post_meta ( $feat_img_id, '_wp_attachment_image_alt', true );
 			$categories = get_the_category();
 			?>
-			<a href="<?php echo $link; ?>" class="splitblock splitblock--hero" aria-label="<?php echo $title; ?>">
-				<div class="wrapper grid two">
+			<section class="splitblock splitblock--hero">
+				<a href="<?php echo $link; ?>" class="wrapper grid two" aria-label="<?php echo $title; ?>">
 					<div class="imgbox">
 						<img src="<?php echo $featured_img_url; ?>" alt="<?php echo $alt; ?>">
 					</div>
@@ -129,8 +129,8 @@
 						</div>
 						<p class="title"><?php echo $title; ?></p>
 					</div>
-				</div>
-			</a>
+				</a>
+			</section>
 		<?php endwhile; endif; wp_reset_postdata(); ?>
 	</div>
 

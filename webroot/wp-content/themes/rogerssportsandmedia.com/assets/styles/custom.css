@@ -144,23 +144,18 @@ main .lined:hover {
 }
 
 /** The Latest - Hero Banner */
-a.splitblock.splitblock--hero {
+.splitblock.splitblock--hero {
     background-color: transparent !important;
     padding: 0 !important;
-    display: block;
-    text-decoration: none;
-    cursor: pointer;
 }
 
-a.splitblock.splitblock--hero:hover {
-    text-decoration: none;
-}
-
-.splitblock.splitblock--hero .wrapper {
+.splitblock.splitblock--hero a.wrapper {
     background-color: #000;
     max-width: 1110px;
     padding: 0;
     gap: 0;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 .splitblock.splitblock--hero .imgbox img {
@@ -199,7 +194,7 @@ a.splitblock.splitblock--hero:hover {
     line-height: 1.26;
 }
 
-a.splitblock.splitblock--hero:hover .txtbox .title {
+.splitblock.splitblock--hero a.wrapper:hover .txtbox .title {
     text-decoration: underline;
 }
 
