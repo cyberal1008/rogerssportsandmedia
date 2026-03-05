@@ -30,9 +30,6 @@
             <div class="contactus-form-text">
                 <p>Want to advertise with Rogers Sports & Media?</p>
                 <p>Complete the form below and a sales representative will be in touch.</p>
-                <p>
-                    If you're looking for our self-serve ad buying platform, RSM Ad Manager click <a target="_blank" href="https://www.rogerssportsandmedia.com/ad-manager">here</a>
-                </p>
             </div>
         </div>
     </div>
