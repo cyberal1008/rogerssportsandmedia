@@ -85,7 +85,7 @@
               <br><br>
               If you’d like to be connected with a member of our sales team, please contact us at <a style="color: #007bff" href="mailto:adsupport@rogerssportsandmedia.com">adsupport@rogerssportsandmedia.com</a>
               <br><br>
-              For all general inquiries, please contact us using the form below.
+              For all general inquiries, please contact us using the button below.
             </p>
             <div class="tw:flex tw:gap-x-6">
               <a class="tw:btn-black" target="_blank" href="/contact-us/">Contact us</a>
