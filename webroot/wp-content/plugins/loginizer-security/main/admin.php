@@ -13,6 +13,19 @@ if(current_user_can('activate_plugins')){
 	add_action('loginizer_pro_social_auth_notice', 'loginizer_pro_social_auth_notice');
 	add_action('admin_notices', 'loginizer_pro_social_auth_release_notice');
 
+	
+	add_action('admin_enqueue_scripts', 'loginizer_pro_assets_enqueue');
+
+	// Firewall actions
+	// Download the backup file of the .htaccess or the .user.ini
+	add_action('admin_post_loginizer_download_htaccess_backup', 'loginizer_download_htaccess_backup');
+	
+	global $loginizer;
+	if(!empty($loginizer) && !empty($loginizer['country_blocking']) && !empty($loginizer['country_blocking']['enabled'])){
+		add_action('update_option_loginizer_whitelist', 'loginizer_pro_firewall_update_whitelist', 10, 3);
+		add_action('update_option_loginizer_ip_method', 'loginizer_pro_firewall_update_ip_method', 10, 3);
+		add_action('update_option_loginizer_custom_ip_method', 'loginizer_pro_firewall_update_ip_method', 10, 3);
+	}
 }
 
 function loginizer_pro_free_version_nag(){
@@ -113,7 +126,7 @@ function loginizer_pro_notices(){
 		if(!empty($loginizer['license']['has_plid'])){
 			if(!empty($soft_rebranding['sn']) && $soft_rebranding['sn'] != 'Softaculous'){
 				
-				$msg = sprintf(__('Your SoftWP license has %1$sexpired%2$s. Please contact %3$s to continue receiving uninterrupted updates and support for %4$s.', 'loginizer-security'),
+				$msg = sprintf(__('Your SoftWP license has %1$sexpired%2$s. Please contact %3$s to continue receiving uninterrupted updates and support for %4$s.', 'loginizer'),
 					'<font style="color:red;"><b>',
 					'</b></font>',
 					esc_html($soft_rebranding['sn']),
@@ -121,14 +134,14 @@ function loginizer_pro_notices(){
 				);
 				
 			}else{
-				$msg = sprintf(__('Your SoftWP license has %1$sexpired%2$s. Please contact your hosting provider to continue receiving uninterrupted updates and support for %3$s.', 'loginizer-security'),
+				$msg = sprintf(__('Your SoftWP license has %1$sexpired%2$s. Please contact your hosting provider to continue receiving uninterrupted updates and support for %3$s.', 'loginizer'),
 					'<font style="color:red;"><b>',
 					'</b></font>',
 					esc_html(implode(', ', $expired_plugins))
 				);
 			}
 		}else{
-			$msg = sprintf(__('Your SoftWP license has %1$sexpired%2$s. Please %3$srenew%4$s it to continue receiving uninterrupted updates and support for %5$s.', 'loginizer-security'),
+			$msg = sprintf(__('Your SoftWP license has %1$sexpired%2$s. Please %3$srenew%4$s it to continue receiving uninterrupted updates and support for %5$s.', 'loginizer'),
 				'<font style="color:red;"><b>',
 				'</b></font>',
 				'<a href="'.esc_url($soft_wp_buy.'&license='.$loginizer['license']['license'].'&plan='.$loginizer['license']['plan']).'" target="_blank">',
@@ -189,47 +202,47 @@ function loginizer_pro_ultimate_member_settings(){
 	echo '<form method="POST">
 		<table class="form-table">
 			<tr>
-				<th scope="row"><label for="button_style_full">'.esc_html__('Show buttons', 'loginizer-security').'</label></th>
+				<th scope="row"><label for="button_style_full">'.esc_html__('Show buttons', 'loginizer').'</label></th>
 				<td class="loginizer-general-settings">
 					<label><input type="checkbox" name="enable_buttons" id="enable_buttons" value="yes" '.(!empty($social_settings['ultimate_member']['enable_buttons']) ? 'checked' : '').'/></label>
 					<p>'.esc_html__('Do you want to show social buttons on Ultimate Member forms.', 'loginizer'). '</p>
 				</td>
 			</tr>
 			<tr>
-				<th scope="row"><label for="button_style_full">'.esc_html__('Button Style', 'loginizer-security').'</label></th>
+				<th scope="row"><label for="button_style_full">'.esc_html__('Button Style', 'loginizer').'</label></th>
 				<td class="loginizer-general-settings">
 					<label><input type="radio" name="button_style" id="button_style_full" value="full" '.(empty($social_settings['ultimate_member']['button_style']) ? 'checked' : checked($social_settings['ultimate_member']['button_style'], 'full', false)).'/>'.esc_html__('Full Length', 'loginizer').'</label>
-					<label><input type="radio" name="button_style" value="icon" '.(!empty($social_settings['ultimate_member']['button_style']) ? checked($social_settings['ultimate_member']['button_style'], 'icon', false) : '').'/>'.esc_html__('Icon', 'loginizer-security').'</label>
+					<label><input type="radio" name="button_style" value="icon" '.(!empty($social_settings['ultimate_member']['button_style']) ? checked($social_settings['ultimate_member']['button_style'], 'icon', false) : '').'/>'.esc_html__('Icon', 'loginizer').'</label>
 				</td>
 			</tr>
 			<tr>
-				<th scope="row"><label for="button_shape_square">'.esc_html__('Button Shape', 'loginizer-security').'</label></th>
+				<th scope="row"><label for="button_shape_square">'.esc_html__('Button Shape', 'loginizer').'</label></th>
 				<td class="loginizer-general-settings">
-					<label><input type="radio" name="button_shape" id="button_shape_square" value="square" '.(empty($social_settings['ultimate_member']['button_shape']) ? 'checked' : checked($social_settings['ultimate_member']['button_shape'], 'square', false)).'>'.esc_html__('Square', 'loginizer-security').'</label>
+					<label><input type="radio" name="button_shape" id="button_shape_square" value="square" '.(empty($social_settings['ultimate_member']['button_shape']) ? 'checked' : checked($social_settings['ultimate_member']['button_shape'], 'square', false)).'>'.esc_html__('Square', 'loginizer').'</label>
 					<label><input type="radio" name="button_shape" value="circle" '.(!empty($social_settings['ultimate_member']['button_shape']) ? checked($social_settings['ultimate_member']['button_shape'], 'circle', false) : '').'>'.esc_html__('Pill/Circle', 'loginizer').'</label>
 				</td>
 			</tr>
 			<tr>
-				<th scope="row"><label for="button_position">Button Position</label></th>
+				<th scope="row"><label for="button_position">'.esc_html__('Button Position', 'loginizer').'</label></th>
 				<td class="loginizer-general-settings">
-					<label><input type="radio" name="button_position" id="button_position" value="below" '.(empty($social_settings['ultimate_member']['button_position']) ? 'checked' : checked($social_settings['ultimate_member']['button_position'], 'below', false)).'>Below</label>
-					<label><input type="radio" name="button_position" value="below_plus" '.(!empty($social_settings['ultimate_member']['button_position']) ? checked($social_settings['ultimate_member']['button_position'], 'below_plus', false) : '').'>'.esc_html__('Below with Seperator', 'loginizer-security').'</label>
-					<label><input type="radio" name="button_position" value="above" '.(!empty($social_settings['ultimate_member']['button_position']) ? checked($social_settings['ultimate_member']['button_position'], 'above', false) : '').'>'.esc_html__('Above', 'loginizer-security').'</label>
-					<label><input type="radio" name="button_position" value="above_plus" '.(!empty($social_settings['ultimate_member']['button_position']) ? checked($social_settings['ultimate_member']['button_position'], 'above_plus', false) : '').'>'.esc_html__('Above with Seperator', 'loginizer-security').'</label>
+					<label><input type="radio" name="button_position" id="button_position" value="below" '.(empty($social_settings['ultimate_member']['button_position']) ? 'checked' : checked($social_settings['ultimate_member']['button_position'], 'below', false)).'>'.esc_html__('Below', 'loginizer').'</label>
+					<label><input type="radio" name="button_position" value="below_plus" '.(!empty($social_settings['ultimate_member']['button_position']) ? checked($social_settings['ultimate_member']['button_position'], 'below_plus', false) : '').'>'.esc_html__('Below with Seperator', 'loginizer').'</label>
+					<label><input type="radio" name="button_position" value="above" '.(!empty($social_settings['ultimate_member']['button_position']) ? checked($social_settings['ultimate_member']['button_position'], 'above', false) : '').'>'.esc_html__('Above', 'loginizer').'</label>
+					<label><input type="radio" name="button_position" value="above_plus" '.(!empty($social_settings['ultimate_member']['button_position']) ? checked($social_settings['ultimate_member']['button_position'], 'above_plus', false) : '').'>'.esc_html__('Above with Seperator', 'loginizer').'</label>
 				</td>
 			</tr>
 			<tr>
-				<th scope="row"><label for="social-alignment">'.esc_html__('Container Alignment', 'loginizer-security').'</label></th>
+				<th scope="row"><label for="social-alignment">'.esc_html__('Container Alignment', 'loginizer').'</label></th>
 				<td class="loginizer-general-settings">
-					<label><input type="radio" name="alignment" id="social-alignment" value="left" '.(empty($social_settings['ultimate_member']['alignment']) ? 'checked' : checked($social_settings['ultimate_member']['alignment'], 'left', false)).'>Left</label>
-					<label><input type="radio" name="alignment" value="center" '.(!empty($social_settings['ultimate_member']['alignment']) ? checked($social_settings['ultimate_member']['alignment'], 'center', false) : '').'>'.esc_html__('Center', 'loginizer-security').'</label>
-					<label><input type="radio" name="alignment" value="right" '.(!empty($social_settings['ultimate_member']['alignment']) ? checked($social_settings['ultimate_member']['alignment'], 'right', false) : '').'>'.esc_html__('Right', 'loginizer-security').'</label>
+					<label><input type="radio" name="alignment" id="social-alignment" value="left" '.(empty($social_settings['ultimate_member']['alignment']) ? 'checked' : checked($social_settings['ultimate_member']['alignment'], 'left', false)).'>'.esc_html__('Left', 'loginizer').'</label>
+					<label><input type="radio" name="alignment" value="center" '.(!empty($social_settings['ultimate_member']['alignment']) ? checked($social_settings['ultimate_member']['alignment'], 'center', false) : '').'>'.esc_html__('Center', 'loginizer').'</label>
+					<label><input type="radio" name="alignment" value="right" '.(!empty($social_settings['ultimate_member']['alignment']) ? checked($social_settings['ultimate_member']['alignment'], 'right', false) : '').'>'.esc_html__('Right', 'loginizer').'</label>
 				</td>
 			</tr>
 			<tr>
 			<th scope="row"><label for="social-alignment">'.esc_html__('Button Alignment', 'loginizer').'</label></th>
 				<td class="loginizer-general-settings">
-					<label><input type="radio" name="button_alignment" id="social-alignment" value="left" '.(empty($social_settings['ultimate_member']['button_alignment']) ? 'checked' : checked($social_settings['ultimate_member']['button_alignment'], 'left', false)).'>Left</label>
+					<label><input type="radio" name="button_alignment" id="social-alignment" value="left" '.(empty($social_settings['ultimate_member']['button_alignment']) ? 'checked' : checked($social_settings['ultimate_member']['button_alignment'], 'left', false)).'>'.esc_html('Left', 'loginizer').'</label>
 					<label><input type="radio" name="button_alignment" value="center" '.(!empty($social_settings['ultimate_member']['button_alignment']) ? checked($social_settings['ultimate_member']['button_alignment'], 'center', false) : '').'>'.esc_html__('Center', 'loginizer').'</label>
 					<label><input type="radio" name="button_alignment" value="right" '.(!empty($social_settings['ultimate_member']['button_alignment']) ? checked($social_settings['ultimate_member']['button_alignment'], 'right', false) : '').'>'.esc_html__('Right', 'loginizer').'</label>
 				</td>
@@ -255,13 +268,13 @@ function loginizer_pro_social_api_settings($provider_settings, $provider){
 	}
 
 	echo '<tr>
-		<th scope="row"><label for="loginizer_social_key">'.esc_html__('Use Loginizer\'s Social Auth', 'loginizer-security').'</label></th>
+		<th scope="row"><label for="loginizer_social_key">'.esc_html__('Use Loginizer\'s Social Auth', 'loginizer').'</label></th>
 		<td><input type="checkbox" name="loginizer_social_key" id="loginizer_social_key" '.(!empty($provider_settings['loginizer_social_key']) ? 'checked' : '').' value="1" onChange="loginizer_toggle_social_keys(event)"/>'.((time() < strtotime('31 July 2025')) ? ' <span style="background-color:red; color:white;margin-left:5px; padding:3px; font-size:10px;border-radius:3px;">New</span>' : '').'
 		<p class="description">'.esc_html__('Uses Loginizer\'s keys — no need to add your own.', 'loginizer-security').'</p>';
 		if(defined('SITEPAD')){
-			echo '<p class="description">'.esc_html__('An active license is required.', 'loginizer-security') .'</p>';
+			echo '<p class="description">'.esc_html__('An active license is required.', 'loginizer') .'</p>';
 		}else{
-			echo '<p class="description">'.esc_html__('An active license is required.', 'loginizer-security').(!empty($loginizer['license']) && !empty($loginizer['license']['active']) ? '<span class="dashicons dashicons-yes" style="color:green;"></span>' : ' <a href="'.esc_url(admin_url('admin.php?page=loginizer')).'">Update License</a>').'</p>';
+			echo '<p class="description">'.esc_html__('An active license is required.', 'loginizer').(!empty($loginizer['license']) && !empty($loginizer['license']['active']) ? '<span class="dashicons dashicons-yes" style="color:green;"></span>' : ' <a href="'.esc_url(admin_url('admin.php?page=loginizer')).'">Update License</a>').'</p>';
 		}
 	echo '</td>
 	</tr>';
@@ -297,12 +310,12 @@ function loginizer_pro_social_auth_notice(){
 		}
 
 		echo '<div class="notice inline notice-warning notice-alt" style="margin-left:0; margin-right:0;">
-		<p style="display:flex; align-items:center; gap:5px;">'.esc_html__('Loginizer Social Login is Enabled, to disable it', 'loginizer-security').' <button id="loginizer-pro-disable-social" class="button button-primary">Click Here</button><img src="'.esc_url(admin_url('/images/spinner.gif')).'" style="display:none;"/></p>
+		<p style="display:flex; align-items:center; gap:5px;">'.esc_html__('Loginizer Social Login is Enabled, to disable it', 'loginizer').' <button id="loginizer-pro-disable-social" class="button button-primary">Click Here</button><img src="'.esc_url(admin_url('/images/spinner.gif')).'" style="display:none;"/></p>
 		</div>';
 
 	} else {
 		echo '<div class="notice inline notice-info notice-alt" style="margin-left:0; margin-right:0;">
-	<p style="display:flex; align-items:center; gap:5px;">'.esc_html__('Enable Loginizer Social Auth in a single click. This button will enable Social Auth for Google, GitHub, LinkedIn and X (Twitter).', 'loginizer-security').' <button class="loginizer-pro-quick-social button button-primary">Enable Now</button><img src="'.esc_url(admin_url('/images/spinner.gif')).'" style="display:none;"/></p>
+	<p style="display:flex; align-items:center; gap:5px;">'.esc_html__('Enable Loginizer Social Auth in a single click. This button will enable Social Auth for Google, GitHub, LinkedIn and X (Twitter).', 'loginizer').' <button class="loginizer-pro-quick-social button button-primary">Enable Now</button><img src="'.esc_url(admin_url('/images/spinner.gif')).'" style="display:none;"/></p>
 </div>';
 	}
 
@@ -371,7 +384,7 @@ function loginizer_pro_social_auth_release_notice(){
 	}
 
 	echo '<div class="notice notice-info is-dismissible" id="loginizer-pro-social-auth-notice">
-		<p style="display:flex; align-items:center; gap:5px;">'.sprintf(esc_html__('Loginizer now supports Social Login for Google, GitHub, LinkedIn and X (Twitter) via its own %sAuthentication layer%s requiring %sZero Configuration.%s', 'loginizer-security'), '<a href="'.LOGINIZER_DOCS.'social-login/how-to-setup-social-login-with-loginizer-social-auth/" target="_blank">', '</a>', '<b>', '</b>').' <button class="loginizer-pro-quick-social button button-primary">Enable Now</button><img src="'.esc_url(admin_url('/images/spinner.gif')).'" style="display:none;"/></p> 
+		<p style="display:flex; align-items:center; gap:5px;">'.sprintf(esc_html__('Loginizer now supports Social Login for Google, GitHub, LinkedIn and X (Twitter) via its own %sAuthentication layer%s requiring %sZero Configuration.%s', 'loginizer'), '<a href="'.LOGINIZER_DOCS.'social-login/how-to-setup-social-login-with-loginizer-social-auth/" target="_blank">', '</a>', '<b>', '</b>').' <button class="loginizer-pro-quick-social button button-primary">Enable Now</button><img src="'.esc_url(admin_url('/images/spinner.gif')).'" style="display:none;"/></p> 
 	</div>';
 
 	wp_register_script('loginizer-pro-social-auth', '', ['jquery'], '', true);
@@ -410,7 +423,7 @@ function loginizer_pro_social_auth_release_notice(){
 				},
 				success: function(res){
 					if(res.success){
-						alert('".esc_html__('Loginizer Social Authentication is now enabled !', 'loginizer-security')."');
+						alert('".esc_html__('Loginizer Social Authentication is now enabled !', 'loginizer')."');
 						window.location.reload();
 						return;
 					}
@@ -458,3 +471,107 @@ function logininizer_pro_is_social_icons_visible(){
 	return false;
 }
 
+function loginizer_pro_assets_enqueue(){
+
+	// Scripts here should not load anywhere other than the loginizer settings page.
+	if(empty($_GET['page']) || strpos(sanitize_text_field(wp_unslash($_GET['page'])), 'loginizer') !== 0){
+		return;
+	}
+
+	wp_enqueue_script('loginizer-pro-admin', LOGINIZER_PRO_DIR_URL .'/assets/js/admin.js', ['jquery'], LOGINIZER_PRO_VERSION, ['strategy' => 'defer', 'in_footer' => true]);
+	wp_localize_script('loginizer-pro-admin', 'loginizer_security', ['url' => admin_url('admin-ajax.php'), 'nonce' => wp_create_nonce('loginizer_pro_nonce')]);
+	wp_enqueue_style('loginizer-pro-admin', LOGINIZER_PRO_DIR_URL . 'assets/css/admin.css', [], LOGINIZER_PRO_VERSION);
+	
+	if(isset($_GET['settings']) && $_GET['page'] == 'loginizer_firewall' && $_GET['settings'] == 'firewall_logs'){
+		wp_enqueue_style('loginizer-pro-admin-flags', LOGINIZER_PRO_DIR_URL . 'assets/css/flags.css', [], LOGINIZER_PRO_VERSION);
+	}
+}
+
+// Updates the Firewall config when whitelist is updated in options
+// Triggers on update_option_{$option}
+function loginizer_pro_firewall_update_whitelist($old_value, $value, $option){
+	
+	$country_blocking = get_option('lz_pro_country_block', []);
+	
+	$firewall_settings['country_blocking'] = $country_blocking;
+	$firewall_settings['whitelist'] = get_option('loginizer_whitelist', []);
+	$firewall_settings['ip_method'] = get_option('loginizer_ip_method');
+	$firewall_settings['custom_ip_method'] = get_option('loginizer_custom_ip_method');
+
+	if(!function_exists('loginizer_pro_cb_update_firewall_config')){
+		include_once LOGINIZER_PRO_DIR .'/main/settings/waf.php';
+	}
+
+	if(!loginizer_pro_cb_update_firewall_config($firewall_settings)){
+		// We want to log only in the debug mode.
+		if(defined('WP_DEBUG') && WP_DEBUG){
+			error_log('Unable to save the firewall to the config file.');
+		}
+	}
+}
+
+// Updates the Firewall config when IP method is updated in options
+// Triggers on update_option_{$option}
+function loginizer_pro_firewall_update_ip_method($old_value, $value, $option){
+
+	$country_blocking = get_option('lz_pro_country_block', []);
+	
+	$firewall_settings['country_blocking'] = $country_blocking;
+	$firewall_settings['ip_method'] = get_option('loginizer_ip_method');
+	$firewall_settings['custom_ip_method'] = get_option('loginizer_custom_ip_method');
+	$firewall_settings['whitelist'] = get_option('loginizer_whitelist', []);
+
+	if(!function_exists('loginizer_pro_cb_update_firewall_config')){
+		include_once LOGINIZER_PRO_DIR .'/main/settings/waf.php';
+	}
+
+	if(!loginizer_pro_cb_update_firewall_config($firewall_settings)){
+		// We want to log only in the debug mode.
+		if(defined('WP_DEBUG') && WP_DEBUG){
+			error_log('Unable to save the firewall to the config file.');
+		}
+	}
+}
+
+// Used to allow users to download htaccess or user.ini file to backup on their system
+// before updating the htaccess rules for Firewall.
+function loginizer_download_htaccess_backup(){
+
+	check_admin_referer('loginizer_htaccess_backup');
+	
+	$backup_file = '';
+	if(empty($_GET['backup_file'])){
+		wp_die(__('Empty Filename.', 'loginizer'));
+	}
+
+	$backup_file = sanitize_file_name(wp_unslash($_GET['backup_file']));
+
+	$allowed_files = ['htaccess', 'user.ini'];
+	if(!in_array($backup_file, $allowed_files, true)){
+		wp_die(__('You are not allowed to access this file.', 'loginizer'));
+	}
+
+	$ouput_file_name = ($backup_file == 'htaccess') ? 'htaccess' : 'user.ini';
+
+	if(defined('SITEPAD')){
+		global $sitepad;
+		$base_path = $sitepad['path'] . '/';
+	} else {
+		$base_path = ABSPATH;
+	}
+	$backup_file = wp_normalize_path($base_path) . '.' . $backup_file;
+
+	$site_url = site_url();
+	$site_url = preg_replace('/^https?:\/\//', '', $site_url);
+	$site_url = str_replace('/', '_', $site_url);
+	$download_file_name = sanitize_file_name($ouput_file_name.'-backup-for_'.$site_url.'.txt');
+
+	if(is_readable($backup_file)){
+		header('Content-Type: application/octet-stream');
+		header('Content-Disposition: attachment; filename="'.$download_file_name.'"');
+		header('Content-Length: ' . filesize($backup_file));
+		header('Cache-Control: public, max-age=3600');
+		readfile($backup_file);
+	}
+	exit;
+}

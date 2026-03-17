@@ -121,10 +121,10 @@ function loginizer_pro_free_version_nag(){
 	
 	$ls_version = get_option('loginizer_version');
 	
-	$lower_version = __('You have not installed the free version of Loginizer. Loginizer Pro depends on the free version, so you must install it first in order to use Loginizer Pro.');
+	$lower_version = __('You have not installed the free version of Loginizer. Loginizer Pro depends on the free version, so you must install it first in order to use Loginizer Pro.', 'loginizer');
 	
 	if(!empty($ls_version) && version_compare($ls_version, '1.8.9', '<')){
-		$lower_version = __('You are using an older version of the free version of Loginizer, please update Loginizer to work without any issues');
+		$lower_version = __('You are using an older version of the free version of Loginizer, please update Loginizer to work without any issues', 'loginizer');
 	}
 
 	echo '<div class="notice notice-error">
