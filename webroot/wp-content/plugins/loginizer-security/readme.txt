@@ -2,9 +2,9 @@
 Contributors: softaculous, loginizer, pagelayer
 Tags: security, access, admin, Loginizer, login, logs, ban ip, failed login, ip, whitelist ip, blacklist ip, failed attempts, lockouts, hack, authentication, login, security, rename login url, rename login, rename wp-admin, secure wp-admin, rename admin url, secure admin, brute force protection
 Requires at least: 3.0
-Tested up to: 6.8
+Tested up to: 6.9
 Requires PHP: 5.5
-Stable tag: 2.0.3
+Stable tag: 2.0.6
 License: LGPLv2.1
 License URI: http://www.gnu.org/licenses/lgpl-2.1.html
 
@@ -58,6 +58,7 @@ Pro Features :
 * Limit Concurrent Logins - It prevents user to login from different devices concurrently, you can define how many devices you want to allow, and how you want to restrict the user when concurrent limit is reached.
 * Social Login - Users can login or register with their Google, Github, Facebook, X (Twitter), Discord, Twitch, LinkedIn, Microsoft with support for WooCommerce and Ultimate Member.
 * Key Less Social Login - Use Loginizer's Social Auth for easy key less Social login configuration, now supports Google, GitHub, X, LinkedIn more to be added later
+* Country Blocking - Block IPs from specific countries to restrict access to your website.
 
 Features in Loginizer include:
 
@@ -85,6 +86,22 @@ That's it. You're done!
 3. Loginizer Brute Force Settings page
 
 == Changelog ==
+
+= 2.0.6 =
+* [Bug-Fix] There was an issue with URL decoding, this has been fixed.
+
+= 2.0.5 =
+* [Feature Pro] Country Blocking: Block IPs from specific countries to restrict access to your website.
+* [Improvement Pro] Captcha Compatibility: Added Captcha support for Contact Form 7 and WPForms.
+* [Improvement] Brute Force Optimization: Improved blacklist/whitelist handling for up to 50% better performance.
+* [Bug-Fix] There was an issue with Captcha for WooCommerce Block checkout, that has been fixed.
+
+= 2.0.4 =
+* [Improvement] Loginizer now supports Captcha for Block based WooCommerce checkout.
+* [Improvement] Registration through Social Login now sends registration email, following the WordPress registration flow.
+* [Task] Making Passwordless login compatible with a use case where a CLI request attempts to login.
+* [Task] Tested with WordPress 6.9.
+* [Bug-Fix] There was a minor issue with IP checker that has been fixed.
 
 = 2.0.3 =
 * [Improvement Pro] 2FA via Email now supports HTML content type for the content of the email.
@@ -119,14 +136,13 @@ That's it. You're done!
 * [Bug-Fix Pro] For some page builders, changing the login slug caused the wp-login.php 404 error page to not load shortcodes properly. This issue has now been fixed.
 
 = 1.9.8 =
-* [Feature] Now you can hide the wp-admin totally from non logged in users.
-* [Improvement] Option to Disable Passwordless login for specific login page.
+* [Feature Pro] Now you can hide the wp-admin totally from non logged in users.
+* [Improvement Pro] Option to Disable Passwordless login for specific login page.
 * [Task] There was a Typo in X Social Login button which has been fixed and X buttons won't have Formerly Twitter text.
-* [Bug Fix] There was an issue with Passwordless login for WooCommerce login page, that has been fixed.
-* [Task] The Plugin name has been changed from Loginizer Security to Loginizer Pro.
+* [Bug Fix Pro] There was an issue with Passwordless login for WooCommerce login page, that has been fixed.
 
 = 1.9.7 =
-* [Task] A notice has been tweaked to prevent user confusion among users.
+* [Task] A notice has been tweaked to prevent confusion among users.
 
 = 1.9.6 =
 * [Task] Removed wpCentral Promo from Loginizer.
@@ -135,17 +151,18 @@ That's it. You're done!
 * [Task] A few typos in description of features have been fixed.
 
 = 1.9.4 =
-* [Task] Tested with WordPress 6.7, and fixed the translation load Notice issue.
+* [Task] Tested with WordPress 6.7, fixed translation Notice.
 * [Bug-Fix] HOTP and Base32 caused conflict with some plugins that has been fixed.
 
 = 1.9.3 =
+* [Security] There was a security issue in the Pro version of the plugin which has been fixed, was reported by wesley (wcraft)[Wordfence]
 * [Task] Improved Compatibility with Softaculous Plugin.
 
 = 1.9.2 =
 * [Task] Improved license handling.
 
 = 1.9.1 =
-* [Bug-Fix] Social Login buttons not showing on WooCommerce login page.
+* [Bug-Fix] Social Login was not working on WooCommerce or registration page, that has been fixed.
 * [Bug-Fix] A PHP warning has been fixed.
 
 = 1.9.0 =

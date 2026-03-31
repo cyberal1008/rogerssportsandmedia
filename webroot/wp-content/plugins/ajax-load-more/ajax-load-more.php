@@ -7,15 +7,15 @@
  * Author: Darren Cooney
  * Twitter: @KaptonKaos
  * Author URI: https://connekthq.com
- * Version: 7.7.1
+ * Version: 7.8.3
  * License: GPL
  * Copyright: Darren Cooney & Connekt Media
  *
  * @package AjaxLoadMore
  */
 
-define( 'ALM_VERSION', '7.7.1' );
-define( 'ALM_RELEASE', 'November 26, 2025' );
+define( 'ALM_VERSION', '7.8.3' );
+define( 'ALM_RELEASE', 'February 19, 2026' );
 define( 'ALM_STORE_URL', 'https://connekthq.com' );
 
 require_once plugin_dir_path( __FILE__ ) . 'core/functions/install.php';
@@ -246,8 +246,7 @@ if ( ! class_exists( 'AjaxLoadMore' ) ) :
 			$content = '';
 			$file    = ALM_PATH . 'admin/includes/layout/default.php';
 			if ( file_exists( $file ) ) {
-				// phpcs:ignore
-				$content = file_get_contents( $file );
+				$content = file_get_contents( $file ); // phpcs:ignore
 			}
 			return $content;
 		}
@@ -394,7 +393,7 @@ if ( ! class_exists( 'AjaxLoadMore' ) ) :
 		 * @return array
 		 */
 		public static function alm_get_localized_defaults() {
-			return [
+			$params = [
 				'pluginurl'          => ALM_URL,
 				'version'            => ALM_VERSION,
 				'adminurl'           => get_admin_url(),
@@ -415,6 +414,26 @@ if ( ! class_exists( 'AjaxLoadMore' ) ) :
 				'site_tagline'       => get_bloginfo( 'description' ),
 				'button_label'       => self::alm_default_button_label(),
 			];
+
+			// Single Posts API endpoint.
+			if ( has_action( 'alm_single_post_installed' ) && defined( 'ALM_PREV_POST_VERSION' ) ) {
+				if ( method_exists( 'ALM_Single_Post', 'alm_single_post_get_route' ) && apply_filters( 'alm_single_posts_use_rest_api', true ) ) {
+					$params['single_posts_endpoint'] = ALM_Single_Post::alm_single_post_get_route();
+				} else {
+					$params['single_posts_endpoint'] = $params['ajaxurl'];
+				}
+			}
+
+			// Next Page/Pagebreak API endpoint.
+			if ( has_action( 'alm_nextpage_installed' ) && defined( 'ALM_NEXTPAGE_VERSION' ) ) {
+				if ( method_exists( 'ALM_Nextpage', 'alm_nextpage_get_route' ) && apply_filters( 'alm_nextpage_use_rest_api', true ) ) {
+					$params['nextpage_endpoint'] = ALM_Nextpage::alm_nextpage_get_route();
+				} else {
+					$params['nextpage_endpoint'] = $params['ajaxurl'];
+				}
+			}
+
+			return $params;
 		}
 
 		/**

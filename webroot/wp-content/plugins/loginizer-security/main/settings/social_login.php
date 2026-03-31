@@ -64,25 +64,25 @@ function loginizer_how_to_google(){
 	
 	// NOTE: update the date of last updated of this doc if you make any change.
 	echo '<div>
-		<h2>'.__('Create Google APP', 'loginizer-security').'</h2>
-		<span><b>'.__('Last Updated','loginizer-security').':</b> 26th May 2025</span>
-		<p>'.__('To allow your users to be able to login through their Google Account, you first need to create a Google App. For that follow the App creation steps below.', 'loginizer-security').'</p>
+		<h2>'.__('Create Google APP', 'loginizer').'</h2>
+		<span><b>'.__('Last Updated','loginizer').':</b> 26th May 2025</span>
+		<p>'.__('To allow your users to be able to login through their Google Account, you first need to create a Google App. For that follow the App creation steps below.', 'loginizer').'</p>
 		<ol>
-			<li>'.__('Go to Google Developer Console','loginizer-security').' <a href="https://console.developers.google.com/apis/" target="_blank">https://console.developers.google.com/apis/</a></li>
-			<li>'.__('If you are not logged in then login, and create a project if you don\'t have that already', 'loginizer-security').'</li>
-			<li>'.__('Once you have a project in the Console make sure you are on API and services page and then go to OAuth consent screen in the left navigation', 'loginizer-security').'</li>
-			<li>'.__('In Oauth Consent screen page, go to Branding from the left navigation', 'loginizer-security').'</li>
-			<li>'.__('Under the "Authorized domains" section press the "Add Domain" button and enter your domain name, without subdomains!', 'loginizer-security').'</li>
-			<li>'.__('At the "Developer contact information" section, enter an email address that Google can use to notify you about any changes to your project.', 'loginizer-security').'</li>
-			<li>'.__('Press "Save"', 'loginizer-security').'
-			<li>'.__('After that you will need to create a client. For that in the same left navigation click on Clients.', 'loginizer-security').'</li>
-			<li>'.__('On the Clients page, click on Create Client', 'loginizer-security').'</li>
-			<li>'.__('A select field which is Application Type will appear, in that select web application and then other fields will show up', 'loginizer-security').'</li>
-			<li>'.__('Now set it\'s name to anything you like.', 'loginizer-security').'</li>
-			<li>'.__('After that in Authorize redirect URIs Add URI', 'loginizer-security').'</li>
-			<li>'.__('The URI you need to add is', 'loginizer-security').'<code>'.esc_url(wp_login_url()).'?lz_social_provider=Google</code></li>
-			<li>'.__('Now click on create and you will get your Client ID and secret key', 'loginizer-security').'</li>
-			<li>'.__('Copy those keys in the required field and save settings.', 'loginizer-security').'</li>
+			<li>'.__('Go to Google Developer Console','loginizer').' <a href="https://console.developers.google.com/apis/" target="_blank">https://console.developers.google.com/apis/</a></li>
+			<li>'.__('If you are not logged in then login, and create a project if you don\'t have that already', 'loginizer').'</li>
+			<li>'.__('Once you have a project in the Console make sure you are on API and services page and then go to OAuth consent screen in the left navigation', 'loginizer').'</li>
+			<li>'.__('In Oauth Consent screen page, go to Branding from the left navigation', 'loginizer').'</li>
+			<li>'.__('Under the "Authorized domains" section press the "Add Domain" button and enter your domain name, without subdomains!', 'loginizer').'</li>
+			<li>'.__('At the "Developer contact information" section, enter an email address that Google can use to notify you about any changes to your project.', 'loginizer').'</li>
+			<li>'.__('Press "Save"', 'loginizer').'
+			<li>'.__('After that you will need to create a client. For that in the same left navigation click on Clients.', 'loginizer').'</li>
+			<li>'.__('On the Clients page, click on Create Client', 'loginizer').'</li>
+			<li>'.__('A select field which is Application Type will appear, in that select web application and then other fields will show up', 'loginizer').'</li>
+			<li>'.__('Now set it\'s name to anything you like.', 'loginizer').'</li>
+			<li>'.__('After that in Authorize redirect URIs Add URI', 'loginizer').'</li>
+			<li>'.__('The URI you need to add is', 'loginizer').'<code>'.esc_url(wp_login_url()).'?lz_social_provider=Google</code></li>
+			<li>'.__('Now click on create and you will get your Client ID and secret key', 'loginizer').'</li>
+			<li>'.__('Copy those keys in the required field and save settings.', 'loginizer').'</li>
 		</ol>
 	</div>';
 }
@@ -225,26 +225,26 @@ function loginizer_how_to_microsoftgraph(){
 
 	// NOTE: update the date of last updated of this doc if you make any change.
 	echo '<div>
-		<h2>'.__('Create Microsoft App', 'loginizer-security').'</h2>
-		<span><b>'.__('Last Updated','loginizer-security').':</b> 26th May 2025</span>
-		<p>'.__('To allow your users to be able to login through their Microsoft Account, you first need to create a Microsoft Entra ID. For that follow the steps below.', 'loginizer-security').'</p>
+		<h2>'.__('Create Microsoft App', 'loginizer').'</h2>
+		<span><b>'.__('Last Updated','loginizer').':</b> 26th May 2025</span>
+		<p>'.__('To allow your users to be able to login through their Microsoft Account, you first need to create a Microsoft Entra ID. For that follow the steps below.', 'loginizer').'</p>
 		<ol>
-			<li>'.__('Go to Azure Portal, for that','loginizer-security').' <a href="https://portal.azure.com" target="_blank">Navigate to https://portal.azure.com</a></li>
-			<li>'.__('Once you are logged in the Portal search for Microsoft Entra ID', 'loginizer-security').'</li>
-			<li>'.__('Now click on the Add button and a drop-down will appear', 'loginizer-security').'</li>
-			<li>'.__('In that drop-down click on App registration', 'loginizer-security').'</li>
-			<li>'.__('A form will appear, in that fill the Name as per your choice', 'loginizer-security').'</li>
-			<li>'.__('Second field is about what kind of accounts can access the social login', 'loginizer-security').'</li>
-			<li>'.__('You can choose as per your need, if you are not sure which one to choose you can select Accounts in any organizational directory and Personal Accounts', 'loginizer-security').'</li>
-			<li>'.__('Now add the redirect URI although it is optional but its better to add it.', 'loginizer-security').'</li>
-			<li>'.__('Use this Redirect URI.', 'loginizer-security').'<code>'.esc_url(wp_login_url()).'</code></li>
-			<li>'.__('And in Select platform select Web.', 'loginizer-security').'</li>
-			<li>'.__('Now click register and a application will be created.', 'loginizer-security').'</li>
-			<li>'.__('Copy Application (client)ID, which will be the Client ID.', 'loginizer-security').'</li>
-			<li>'.__('Then below on that page you will find Add a certificate or secret link, click that.', 'loginizer-security').'</li>
-			<li>'.__('A page will open there click on New client secret button, there add description and Expiry as per your choice and click Add.', 'loginizer-security').'</li>
-			<li>'.__('Now in a table row you will see 2 values Value and Secret ID, you need to copy the Value, which will work as the Client Secret.', 'loginizer-security').'</li>
-			<li>'.__('Copy and save both values in Loginizer and that is it.', 'loginizer-security').'</li>
+			<li>'.__('Go to Azure Portal, for that','loginizer').' <a href="https://portal.azure.com" target="_blank">Navigate to https://portal.azure.com</a></li>
+			<li>'.__('Once you are logged in the Portal search for Microsoft Entra ID', 'loginizer').'</li>
+			<li>'.__('Now click on the Add button and a drop-down will appear', 'loginizer').'</li>
+			<li>'.__('In that drop-down click on App registration', 'loginizer').'</li>
+			<li>'.__('A form will appear, in that fill the Name as per your choice', 'loginizer').'</li>
+			<li>'.__('Second field is about what kind of accounts can access the social login', 'loginizer').'</li>
+			<li>'.__('You can choose as per your need, if you are not sure which one to choose you can select Accounts in any organizational directory and Personal Accounts', 'loginizer').'</li>
+			<li>'.__('Now add the redirect URI although it is optional but its better to add it.', 'loginizer').'</li>
+			<li>'.__('Use this Redirect URI.', 'loginizer').'<code>'.esc_url(wp_login_url()).'</code></li>
+			<li>'.__('And in Select platform select Web.', 'loginizer').'</li>
+			<li>'.__('Now click register and a application will be created.', 'loginizer').'</li>
+			<li>'.__('Copy Application (client)ID, which will be the Client ID.', 'loginizer').'</li>
+			<li>'.__('Then below on that page you will find Add a certificate or secret link, click that.', 'loginizer').'</li>
+			<li>'.__('A page will open there click on New client secret button, there add description and Expiry as per your choice and click Add.', 'loginizer').'</li>
+			<li>'.__('Now in a table row you will see 2 values Value and Secret ID, you need to copy the Value, which will work as the Client Secret.', 'loginizer').'</li>
+			<li>'.__('Copy and save both values in Loginizer and that is it.', 'loginizer').'</li>
 		</ol>
 	</div>';
 }

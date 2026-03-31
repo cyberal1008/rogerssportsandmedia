@@ -12,6 +12,8 @@ add_action('wp_ajax_loginizer_pro_dismiss_expired_licenses', 'loginizer_pro_dism
 add_action('wp_ajax_loginizer_pro_quick_social', 'loginizer_pro_quick_social');
 add_action('wp_ajax_loginizer_pro_disable_social', 'loginizer_pro_disable_social');
 add_action('wp_ajax_loginizer_pro_social_auth_notice', 'loginizer_pro_social_auth_notice');
+add_action('wp_ajax_loginizer_pro_enable_auto_prepend', 'loginizer_pro_enable_auto_prepend');
+add_action('wp_ajax_loginizer_pro_cb_download_db', 'loginizer_pro_cb_download_db_ajax');
 
 if(!defined('SITEPAD') && loginizer_is_2fa_enabled() && !defined('XMLRPC_REQUEST')){
 	// Ajax handler
@@ -89,6 +91,10 @@ function loginizer_update_csrf_mod(){
 	
 	check_ajax_referer('loginizer_admin_ajax', 'nonce');
 	
+	if(!current_user_can('manage_options')){
+		wp_die(__('Sorry, but you do not have permissions to change settings.', 'loginizer'));
+	}
+	
 	$home_root = parse_url(home_url());
 
 	if(isset($home_root['path'])){
@@ -140,7 +146,7 @@ function loginizer_pro_dismiss_expired_licenses(){
 	check_admin_referer('loginizer_expiry_notice', 'security');
 
 	if(!current_user_can('activate_plugins')){
-		wp_send_json_error(__('You do not have required access to do this action', 'loginizer-security'));
+		wp_send_json_error(__('You do not have required access to do this action', 'loginizer'));
 	}
 
 	update_option('softaculous_expired_licenses', time());
@@ -151,7 +157,7 @@ function loginizer_pro_quick_social(){
 	check_ajax_referer('loginizer_quick_social', 'security');
 	
 	if(!current_user_can('activate_plugins')){
-		wp_send_json_error(__('You do not have required access to do this action', 'loginizer-security'));
+		wp_send_json_error(__('You do not have required access to do this action', 'loginizer'));
 	}
 	
 	$social_settings = get_option('loginizer_social_settings', []);
@@ -177,7 +183,7 @@ function loginizer_pro_social_auth_notice(){
 	check_ajax_referer('loginizer_social_auth', 'security');
 	
 	if(!current_user_can('activate_plugins')){
-		wp_send_json_error(__('You do not have required access to do this action', 'loginizer-security'));
+		wp_send_json_error(__('You do not have required access to do this action', 'loginizer'));
 	}
 
 	update_option('loginizer_keyless_social_auth_notice', -time());
@@ -188,7 +194,7 @@ function loginizer_pro_disable_social(){
 	check_ajax_referer('loginizer_quick_social', 'security');
 	
 	if(!current_user_can('activate_plugins')){
-		wp_send_json_error(__('You do not have required access to do this action', 'loginizer-security'));
+		wp_send_json_error(__('You do not have required access to do this action', 'loginizer'));
 	}
 
 	// Disabling the view options.
@@ -224,5 +230,73 @@ function loginizer_pro_disable_social(){
 	}
 	
 	
+	wp_send_json_success();
+}
+
+function loginizer_pro_enable_auto_prepend(){
+
+	check_ajax_referer('loginizer_pro_nonce', 'security');
+
+	if(!current_user_can('manage_options')){
+		wp_send_json_error(__('Unauthorized user', 'loginizer'));
+		return;
+	}
+
+	$waf_file = LOGINIZER_PRO_DIR . 'main/settings/waf.php';
+	if(!file_exists($waf_file)){
+		wp_send_json_error(__('Required /settings/waf.php file not found', 'loginizer'));
+		return;
+	}
+	
+	include_once($waf_file);
+
+	if(empty($_POST['task'])){
+		wp_send_json_error(__('Unknow action, please refresh and try again.', 'loginizer'));
+		return;
+	}
+
+	// Whether to include or override the file
+	$include_existing_file = (!empty($_POST['file_action']) && $_POST['file_action'] == 'include') ? true : false;
+
+	if($_POST['task'] == 'add_script'){
+
+		// Add the firewall marker and include the existing auto prepended file
+		if(loginizer_pro_cb_setup_auto_prepend(true, $include_existing_file)){
+			wp_send_json_success();
+			return;
+		}
+	}else{
+		
+		// Remove the firewall marker from htaccess or the user.ini
+		if(loginizer_pro_cb_setup_auto_prepend(false)){
+			wp_send_json_success();
+			return;
+		}
+	}
+
+	wp_send_json_error(__('Error updating .htaccess file', 'loginizer'));
+}
+
+// Download Country DB, the action is only visible when user sees a error
+function loginizer_pro_cb_download_db_ajax(){
+	check_ajax_referer('loginizer_pro_nonce', 'security');
+
+	if(!current_user_can('manage_options')){
+		wp_send_json_error(__('Unauthorized user', 'loginizer'));
+		return;
+	}
+	
+	if(!function_exists('loginizer_pro_cb_download_db')){
+		include_once LOGINIZER_PRO_DIR .'/main/settings/waf.php';
+	}
+
+	loginizer_pro_cb_download_db();
+	
+	$error = get_transient('loginizer_cdb_error_log');
+	
+	if(!empty($error)){
+		wp_send_json_error($error);
+	}
+
 	wp_send_json_success();
 }
