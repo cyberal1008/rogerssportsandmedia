@@ -43,7 +43,7 @@ class LoginizerPro_Social_API extends Loginizer_Social_Base{
 					throw new Exception($lz_error['ip_blocked']);
 				}
 				
-				throw new Exception(__('Your IP is blocked', 'loginizer-security'));
+				throw new Exception(__('Your IP is blocked', 'loginizer'));
 			}
 
 			self::$storage = new Transient();
@@ -63,7 +63,7 @@ class LoginizerPro_Social_API extends Loginizer_Social_Base{
 
 			// Security verification
 			if(!wp_verify_nonce($lz_social_nonce, $nonce_name)){
-				self::$error['security-check'] = __('Security check failed when trying to login', 'loginizer-security');
+				self::$error['security-check'] = __('Security check failed when trying to login', 'loginizer');
 				self::$storage->clear();
 				self::trigger_error();
 				return;
@@ -81,7 +81,7 @@ class LoginizerPro_Social_API extends Loginizer_Social_Base{
 			$provider = sanitize_text_field(wp_unslash($_REQUEST['lz_social_provider']));
 			$providers = get_option('loginizer_provider_settings', []);
 			if(empty($providers) || empty($providers[$provider]) || empty($providers[$provider]['enabled']) && !empty($providers[$provider]['loginizer_social_key'])){
-				self::$error['no-provider'] = esc_html__('Social Provider is either empty or not enabled', 'loginizer-security');
+				self::$error['no-provider'] = esc_html__('Social Provider is either empty or not enabled', 'loginizer');
 				self::$storage->clear();
 				self::trigger_error();
 			}
@@ -113,7 +113,7 @@ class LoginizerPro_Social_API extends Loginizer_Social_Base{
 				]);
 
 				if(empty($res)){
-					throw new Exception(__('Auth token response came empty', 'loginizer-security'));
+					throw new Exception(__('Auth token response came empty', 'loginizer'));
 				}
 
 				if(is_wp_error($res)){
@@ -128,7 +128,7 @@ class LoginizerPro_Social_API extends Loginizer_Social_Base{
 					]);
 					
 					if(empty($res)){
-						throw new Exception(__('Auth token response came empty', 'loginizer-security'));
+						throw new Exception(__('Auth token response came empty', 'loginizer'));
 					}
 					
 					if(is_wp_error($res)){
@@ -149,19 +149,19 @@ class LoginizerPro_Social_API extends Loginizer_Social_Base{
 						}			
 					}
 
-					throw new Exception(__('Unexpected HTTP response ', 'loginizer-security') . esc_html($res_code));
+					throw new Exception(__('Unexpected HTTP response ', 'loginizer') . esc_html($res_code));
 				}
 
 				$request_body = wp_remote_retrieve_body($res);
 
 				if(empty($request_body)){
-					throw new Exception(__('Empty response body received', 'loginizer-security'));
+					throw new Exception(__('Empty response body received', 'loginizer'));
 				}
 
 				$lo_key = json_decode($request_body, true);
 
 				if(empty($lo_key)){
-					throw new Exception(__('Response does not contain required key', 'loginizer-security'));
+					throw new Exception(__('Response does not contain required key', 'loginizer'));
 				}
 
 				$lo_key = sanitize_text_field(wp_unslash($lo_key));
@@ -182,7 +182,7 @@ class LoginizerPro_Social_API extends Loginizer_Social_Base{
 			// Step 2: Getting the access token
 			if($_GET['state'] == 'finish'){
 				if(empty($_POST['access_token'])){
-					throw new Exception(__('Empty access_token was returned!', 'loginizer-security'));
+					throw new Exception(__('Empty access_token was returned!', 'loginizer'));
 				}
 
 				$access_token = sanitize_text_field($_POST['access_token']);
@@ -213,7 +213,7 @@ class LoginizerPro_Social_API extends Loginizer_Social_Base{
 			}
 
 		} catch(\Exception $e){
-			self::$error['login_error'] = __('Something went wrong: ', 'loginizer-security') . $e->getMessage();
+			self::$error['login_error'] = __('Something went wrong: ', 'loginizer') . $e->getMessage();
 
 			if(!empty(self::$storage)){
 				self::$storage->clear();
@@ -230,7 +230,7 @@ class LoginizerPro_Social_API extends Loginizer_Social_Base{
 		global $loginizer;
 
 		if(empty($provider)){
-			throw new Exception(__('Empty Provider.', 'loginizer-security'));
+			throw new Exception(__('Empty Provider.', 'loginizer'));
 		}
 		
 		switch($provider){
@@ -260,7 +260,7 @@ class LoginizerPro_Social_API extends Loginizer_Social_Base{
 		}
 		
 		if(empty($access_url)){
-			throw new Exception(__('Invalid Provider.', 'loginizer-security'));
+			throw new Exception(__('Invalid Provider.', 'loginizer'));
 		}
 
 		$res = wp_remote_get($access_url, [
@@ -270,7 +270,7 @@ class LoginizerPro_Social_API extends Loginizer_Social_Base{
 		]);
 
 		if(empty($res)){
-			throw new Exception(__('Auth token response came empty', 'loginizer-security'));
+			throw new Exception(__('Auth token response came empty', 'loginizer'));
 		}
 		
 		if(is_wp_error($res)){
@@ -292,22 +292,22 @@ class LoginizerPro_Social_API extends Loginizer_Social_Base{
 				}			
 			}
 
-			throw new Exception(__('Unexpected HTTP response from ', 'loginizer-security') . esc_html(ucfirst($provider)) . ': '. esc_html($res_code));
+			throw new Exception(__('Unexpected HTTP response from ', 'loginizer') . esc_html(ucfirst($provider)) . ': '. esc_html($res_code));
 		}
 
 		$user_info = wp_remote_retrieve_body($res);
 
 		if(empty($user_info)){
-			throw new Exception(__('Empty response body received', 'loginizer-security'));
+			throw new Exception(__('Empty response body received', 'loginizer'));
 		}
 
-		$user_info = self::decode_json($user_info, __('Verification Failed', 'loginizer-security'));
+		$user_info = self::decode_json($user_info, __('Verification Failed', 'loginizer'));
 	
 		// GitHub share email on seperate end point than other user data.
 		// And in that email data it share secondary email as well, so primary email is located at 0 index.
 		if($provider == 'GitHub'){
 			if(empty($user_info[0]) || empty($user_info[0]['email'])){
-				throw new Exception(ucfirst($provider) . ' ' . __('response missing required field: email.', 'loginizer-security'));
+				throw new Exception(ucfirst($provider) . ' ' . __('response missing required field: email.', 'loginizer'));
 			}
 
 			$user_info = $user_info[0];
@@ -317,15 +317,15 @@ class LoginizerPro_Social_API extends Loginizer_Social_Base{
 		$user_data = self::parse_data($user_info, $provider);
 
 		if(empty($user_data)){
-			throw new Exception(__('No user info provided by the provider.', 'loginizer-security'));
+			throw new Exception(__('No user info provided by the provider.', 'loginizer'));
 		}
 		
 		if(empty($user_data['email'])){
-			throw new Exception(ucfirst($provider) . ' ' . __('response missing required field: email.', 'loginizer-security'));
+			throw new Exception(ucfirst($provider) . ' ' . __('response missing required field: email.', 'loginizer'));
 		}
 		
 		if(empty($user_data['email_verified'])){
-			throw new Exception(__('Email you are trying to login is not verified.', 'loginizer-security'));
+			throw new Exception(__('Email you are trying to login is not verified.', 'loginizer'));
 		}
 		
 		if(empty(email_exists($user_data['email']))){
@@ -338,17 +338,17 @@ class LoginizerPro_Social_API extends Loginizer_Social_Base{
 				}
 
 				self::register_account($user_data);
-				echo 'Register Acount';
+				echo 'Register Account';
 				return;
 			}
 
-			throw new Exception(__('No user found with this email.', 'loginizer-security'));
+			throw new Exception(__('No user found with this email.', 'loginizer'));
 		}
 
 		$user = get_user_by('email', $user_data['email']);
 		
 		if(empty($user)){
-			throw new Exception(__('No user found with this account.', 'loginizer-security'));
+			throw new Exception(__('No user found with this account.', 'loginizer'));
 		}
 		
 		// Authenticating
@@ -491,7 +491,7 @@ class LoginizerPro_Social_API extends Loginizer_Social_Base{
 		]);
 
 		if(empty($res)){
-			throw new Exception(__('GitHub user data response empty', 'loginizer-security'));
+			throw new Exception(__('GitHub user data response empty', 'loginizer'));
 		}
 		
 		if(is_wp_error($res)){
@@ -511,16 +511,16 @@ class LoginizerPro_Social_API extends Loginizer_Social_Base{
 				}			
 			}
 
-			throw new Exception(__('Unexpected HTTP response from ', 'loginizer-security') . esc_html('GitHub User API') . ': '. esc_html($res_code));
+			throw new Exception(__('Unexpected HTTP response from ', 'loginizer') . esc_html('GitHub User API') . ': '. esc_html($res_code));
 		}
 
 		$user_info = wp_remote_retrieve_body($res);
 
 		if(empty($user_info)){
-			throw new Exception(__('Empty response body received', 'loginizer-security'));
+			throw new Exception(__('Empty response body received', 'loginizer'));
 		}
 
-		$user_info = self::decode_json($user_info, __('User data malformed', 'loginizer-security'));
+		$user_info = self::decode_json($user_info, __('User data malformed', 'loginizer'));
 
 		$user_data = [
 			'email' => $email,

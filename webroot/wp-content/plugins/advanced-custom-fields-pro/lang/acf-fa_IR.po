@@ -12,7 +12,7 @@
 # This file is distributed under the same license as Advanced Custom Fields.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2025-10-28T18:19:16+00:00\n"
+"PO-Revision-Date: 2026-03-02T19:47:34+00:00\n"
 "Report-Msgid-Bugs-To: http://support.advancedcustomfields.com\n"
 "Language: fa_IR\n"
 "MIME-Version: 1.0\n"
@@ -23,27 +23,28 @@ msgstr ""
 
 #: includes/fields/class-acf-field-image.php:144
 msgid "Remove image"
-msgstr ""
+msgstr "حذف تصویر"
 
 #: includes/fields/class-acf-field-image.php:142
 msgid "Edit image"
-msgstr ""
+msgstr "ویرایش تصویر"
 
 #: includes/fields/class-acf-field-image.php:138
 msgid "Selected image. Press tab to access image options."
 msgstr ""
+"تصویر انتخاب شده. برای دسترسی به گزینه‌های تصویر، کلید Tab را فشار دهید."
 
 #: includes/fields/class-acf-field-file.php:161
 msgid "Remove file"
-msgstr ""
+msgstr "حذف فایل"
 
 #: includes/fields/class-acf-field-file.php:159
 msgid "Edit file"
-msgstr ""
+msgstr "ویرایش فایل"
 
 #: includes/fields/class-acf-field-file.php:140
 msgid "Selected file. Press tab to access file options."
-msgstr ""
+msgstr "فایل انتخاب شده. برای دسترسی به گزینه‌های فایل، کلید Tab را فشار دهید."
 
 #: includes/fields/class-acf-field-color_picker.php:306
 msgid "Show Color Wheel"
@@ -53,42 +54,47 @@ msgstr ""
 msgid ""
 "Use a custom color palette by entering comma separated hex or rgba values"
 msgstr ""
+"با وارد کردن مقادیر هگز یا rgba جدا شده با کاما، از یک پالت رنگ سفارشی "
+"استفاده کنید"
 
 #: includes/fields/class-acf-field-color_picker.php:295
 msgid "Custom Palette"
-msgstr ""
+msgstr "پالت سفارشی"
 
 #: includes/fields/class-acf-field-color_picker.php:275
 msgid "Use colors from theme.json"
-msgstr ""
+msgstr "از رنگ‌های theme.json استفاده کنید"
 
 #: includes/fields/class-acf-field-color_picker.php:274
 msgid "Specify custom colors"
-msgstr ""
+msgstr "رنگ‌های سفارشی را مشخص کنید"
 
 #: includes/fields/class-acf-field-color_picker.php:268
 msgid "Custom Palette Source"
-msgstr ""
+msgstr "منبع پالت سفارشی"
 
 #: includes/fields/class-acf-field-color_picker.php:250
 msgid "Show Custom Palette"
-msgstr ""
+msgstr "نمایش پالت سفارشی"
 
 #: includes/admin/views/acf-field-group/options.php:272
 msgid ""
 "Title shown on the edit screen for the field group meta box to use instead "
 "of the field group title"
 msgstr ""
+"عنوانی که در صفحه ویرایش برای متا باکس گروه فیلد نمایش داده می‌شود تا به جای "
+"عنوان گروه فیلد استفاده شود."
 
 #: includes/admin/views/acf-field-group/options.php:271
 msgid "Display Title"
-msgstr ""
+msgstr "نمایش عنوان"
 
 #: includes/admin/tools/class-acf-admin-tool-import.php:70
 msgid ""
 "Import JSON containing field groups, post types, or taxonomies (trusted "
 "sources only)"
 msgstr ""
+"وارد کردن JSON حاوی گروه‌های فیلد، انواع پست یا طبقه‌بندی‌ها (فقط منابع معتبر)"
 
 #: includes/admin/tools/class-acf-admin-tool-import.php:64
 msgid "Select JSON File"
@@ -99,20 +105,22 @@ msgid ""
 "Choose an ACF JSON file to import. Use only files from trusted sources, then "
 "click Import."
 msgstr ""
+"یک فایل ACF JSON برای وارد کردن انتخاب کنید. فقط از فایل‌های منابع معتبر "
+"استفاده کنید، سپس روی وارد کردن کلیک کنید."
 
 #: includes/fields/class-acf-field-date_picker.php:244
 #: includes/fields/class-acf-field-date_time_picker.php:231
 msgid "Use the current date as the default value for this field."
-msgstr ""
+msgstr "از تاریخ فعلی به عنوان مقدار پیش‌فرض برای این فیلد استفاده کنید."
 
 #: includes/fields/class-acf-field-date_picker.php:243
 #: includes/fields/class-acf-field-date_time_picker.php:230
 msgid "Default to the current date"
-msgstr ""
+msgstr "پیش‌فرض روی تاریخ فعلی"
 
 #: includes/assets.php:372
 msgid "Toggle panel"
-msgstr ""
+msgstr "پنل جدا شونده"
 
 #. translators: %1$s - Plugin name, %2$s URL to documentation
 #: includes/admin/admin.php:311
@@ -122,21 +130,28 @@ msgid ""
 "removed in a future version of ACF. <a href=\"%2$s\" target=\"_blank\">Learn "
 "more</a>."
 msgstr ""
+"%1$s ما تشخیص داده‌ایم که این وب‌سایت برای استفاده از نسخه ۳ کتابخانه Select2 "
+"jQuery پیکربندی شده است، که به نفع نسخه ۴ منسوخ شده و در نسخه آینده ACF حذف "
+"خواهد شد. <a href=\"%2$s\" target=\"_blank\">بیشتر بدانید</a>."
 
 #: includes/fields/class-acf-field-select.php:480
 msgid ""
 "Save created options back to the \"Choices\" setting in the field definition."
 msgstr ""
+"گزینه‌های ایجاد شده را دوباره در تنظیمات «انتخاب‌ها» در تعریف فیلد ذخیره کنید."
 
 #: includes/fields/class-acf-field-select.php:479
 msgid "Save Options"
-msgstr ""
+msgstr "ذخیره گزینه‌ها"
 
 #: includes/fields/class-acf-field-select.php:457
 msgid ""
 "Allow content editors to create new options by typing in the Select input. "
 "Multiple options can be created from a comma separated string."
 msgstr ""
+"به ویرایشگران محتوا اجازه دهید با تایپ کردن در ورودی Select، گزینه‌های جدیدی "
+"ایجاد کنند. می‌توان چندین گزینه را از رشته‌ای که با کاما از هم جدا شده‌اند، "
+"ایجاد کرد."
 
 #: includes/fields/class-acf-field-select.php:456
 msgid "Create Options"
@@ -145,67 +160,70 @@ msgstr ""
 #: includes/admin/views/global/navigation.php:189
 #: includes/admin/views/global/navigation.php:193
 msgid "Edit ACF Field Groups"
-msgstr ""
+msgstr "ویرایش گروه‌های فیلد ACF"
 
 #: includes/admin/views/global/navigation.php:110
 msgid "Get 4 months free on any WP Engine plan"
-msgstr ""
+msgstr "با هر پلن WP Engine، ۴ ماه رایگان دریافت کنید"
 
 #: src/Site_Health/Site_Health.php:531
 msgid "Number of Field Groups with Blocks and Other Locations"
-msgstr ""
+msgstr "تعداد گروه های فیلد با بلوک ها و مکان های دیگر"
 
 #: src/Site_Health/Site_Health.php:526
 msgid "Number of Field Groups with Multiple Block Locations"
-msgstr ""
+msgstr "تعداد گروه‌های فیلد با مکان‌های بلوک متعدد"
 
 #: src/Site_Health/Site_Health.php:521
 msgid "Number of Field Groups with a Single Block Location"
-msgstr ""
+msgstr "تعداد گروه‌های فیلد با موقعیت مکانی تک بلوکی"
 
 #: src/Site_Health/Site_Health.php:490
 msgid "All Location Rules"
-msgstr ""
+msgstr "همه قوانین مکان"
 
 #: includes/validation.php:154
 msgid "Learn more"
-msgstr ""
+msgstr "بیشتر بدانید"
 
 #: includes/validation.php:143
 msgid ""
 "ACF was unable to perform validation because the provided nonce failed "
 "verification."
 msgstr ""
+"ACF نتوانست اعتبارسنجی را انجام دهد زیرا تأیید صحت ارائه شده ناموفق بود."
 
 #: includes/validation.php:141
 msgid ""
 "ACF was unable to perform validation because no nonce was received by the "
 "server."
 msgstr ""
+"ACF نتوانست اعتبارسنجی را انجام دهد زیرا هیچ پیامی توسط سرور دریافت نشد."
 
 #. translators: This text is prepended by a link to ACF's website, and appended
 #. by a link to WP Engine's website.
 #: includes/admin/admin.php:357
 msgid "are developed and maintained by"
-msgstr ""
+msgstr "توسعه یافته توسط"
 
 #: src/Site_Health/Site_Health.php:298
 msgid "Update Source"
-msgstr ""
+msgstr "منبع به روز رسانی"
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:859
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:819
 msgid "By default only admin users can edit this setting."
-msgstr ""
+msgstr "به‌طور پیش‌فرض، فقط کاربران سرپرست می‌توانند این تنظیم را ویرایش کنند."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:857
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:817
 msgid "By default only super admin users can edit this setting."
 msgstr ""
+"به‌طور پیش‌فرض، فقط کاربران فوق‌العاده سرپرست می‌توانند این تنظیم را ویرایش کنند."
 
 #: includes/admin/views/acf-field-group/field.php:332
 msgid "Close and Add Field"
-msgstr ""
+msgstr "فیلد را ببندید و اضافه کنید"
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:813
 msgid ""
@@ -213,6 +231,9 @@ msgid ""
 "taxonomy. For security, this callback will be executed in a special context "
 "without access to any superglobals like $_POST or $_GET."
 msgstr ""
+"یک نام تابع PHP که برای مدیریت محتوای متا باکس در طبقه بندی شما فراخوانی می "
+"شود. برای امنیت، این فراخوانی در یک زمینه خاص بدون دسترسی به هیچ ابرجهانی "
+"مانند $_POST یا $_GET اجرا خواهد شد."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:851
 msgid ""
@@ -220,18 +241,21 @@ msgid ""
 "screen. For security, this callback will be executed in a special context "
 "without access to any superglobals like $_POST or $_GET."
 msgstr ""
+"یک نام تابع PHP که هنگام تنظیم جعبه های متا برای صفحه ویرایش فراخوانی می "
+"شود. برای امنیت، این فراخوانی در یک زمینه خاص بدون دسترسی به هیچ ابرجهانی "
+"مانند $_POST یا $_GET اجرا خواهد شد."
 
 #: src/Site_Health/Site_Health.php:299
 msgid "wordpress.org"
-msgstr ""
+msgstr "wordpress.org"
 
 #: includes/fields/class-acf-field.php:373
 msgid "Allow Access to Value in Editor UI"
-msgstr ""
+msgstr "دسترسی به مقدار را در رابط کاربری ویرایشگر فعال کنید."
 
 #: includes/fields/class-acf-field.php:355
 msgid "Learn more."
-msgstr ""
+msgstr "بیشتر بدانید."
 
 #. translators: %s A "Learn More" link to documentation explaining the setting
 #. further.
@@ -240,76 +264,82 @@ msgid ""
 "Allow content editors to access and display the field value in the editor UI "
 "using Block Bindings or the ACF Shortcode. %s"
 msgstr ""
+"به ویراستاران محتوا اجازه دهید که با استفاده از Block Bindings یا شورت‌کد "
+"ACF، به مقدار فیلد در رابط کاربری ویرایشگر دسترسی پیدا کرده و آن را نمایش "
+"دهند. %s"
 
 #: src/Blocks/Bindings.php:70
 msgid ""
 "The requested ACF field type does not support output in Block Bindings or "
 "the ACF shortcode."
 msgstr ""
+"نوع فیلد ACF درخواست‌شده از خروجی در Block Bindings یا شورت‌کد ACF پشتیبانی "
+"نمی‌کند."
 
 #: includes/api/api-template.php:1094 src/Blocks/Bindings.php:78
 msgid ""
 "The requested ACF field is not allowed to be output in bindings or the ACF "
 "Shortcode."
-msgstr ""
+msgstr "فیلد ACF درخواست‌شده مجاز به خروجی در bindings یا شورت‌کد ACF نیست."
 
 #: includes/api/api-template.php:1086
 msgid ""
 "The requested ACF field type does not support output in bindings or the ACF "
 "Shortcode."
 msgstr ""
+"نوع فیلد ACF درخواست‌شده از خروجی در bindings یا شورت‌کد ACF پشتیبانی نمی‌کند."
 
 #: includes/api/api-template.php:1063
 msgid "[The ACF shortcode cannot display fields from non-public posts]"
-msgstr ""
+msgstr "[شورت‌کد ACF نمی‌تواند فیلدها را از پست‌های غیرعمومی نمایش دهد.]"
 
 #: includes/api/api-template.php:1020
 msgid "[The ACF shortcode is disabled on this site]"
-msgstr ""
+msgstr "[شورت‌کد ACF در این سایت غیرفعال است.]"
 
 #: includes/fields/class-acf-field-icon_picker.php:492
 msgid "Businessman Icon"
-msgstr ""
+msgstr "آیکون تاجر"
 
 #: includes/fields/class-acf-field-icon_picker.php:484
 msgid "Forums Icon"
-msgstr ""
+msgstr "آیکون انجمن"
 
 #: includes/fields/class-acf-field-icon_picker.php:763
 msgid "YouTube Icon"
-msgstr ""
+msgstr "آیکون یوتیوب"
 
 #: includes/fields/class-acf-field-icon_picker.php:762
 msgid "Yes (alt) Icon"
-msgstr ""
+msgstr "بله (alt) آیکون"
 
 #: includes/fields/class-acf-field-icon_picker.php:760
 msgid "Xing Icon"
-msgstr ""
+msgstr "آیکون زینگ"
 
 #: includes/fields/class-acf-field-icon_picker.php:759
 msgid "WordPress (alt) Icon"
-msgstr ""
+msgstr "آیکون (جایگزین) وردپرس"
 
 #: includes/fields/class-acf-field-icon_picker.php:757
 msgid "WhatsApp Icon"
-msgstr ""
+msgstr "آیکون واتساپ"
 
 #: includes/fields/class-acf-field-icon_picker.php:756
 msgid "Write Blog Icon"
-msgstr ""
+msgstr "نوشتن آیکون بلاگ"
 
 #: includes/fields/class-acf-field-icon_picker.php:755
 msgid "Widgets Menus Icon"
-msgstr ""
+msgstr "آیکون منوهای ابزارک"
 
 #: includes/fields/class-acf-field-icon_picker.php:754
 msgid "View Site Icon"
-msgstr ""
+msgstr "نمایش آیکون سایت"
 
 #: includes/fields/class-acf-field-icon_picker.php:753
 msgid "Learn More Icon"
-msgstr ""
+msgstr "آیکون بیشتر بدانید"
 
 #: includes/fields/class-acf-field-icon_picker.php:751
 msgid "Add Page Icon"
@@ -333,7 +363,7 @@ msgstr ""
 
 #: includes/fields/class-acf-field-icon_picker.php:740
 msgid "Universal Access (alt) Icon"
-msgstr ""
+msgstr "آیکون دسترسی جهانی (alt)"
 
 #: includes/fields/class-acf-field-icon_picker.php:737
 msgid "Twitter (alt) Icon"
@@ -361,11 +391,11 @@ msgstr ""
 
 #: includes/fields/class-acf-field-icon_picker.php:720
 msgid "Table Row Before Icon"
-msgstr ""
+msgstr "ردیف جدول قبل از آیکون"
 
 #: includes/fields/class-acf-field-icon_picker.php:719
 msgid "Table Row After Icon"
-msgstr ""
+msgstr "ردیف جدول بعد از آیکون"
 
 #: includes/fields/class-acf-field-icon_picker.php:718
 msgid "Table Col Delete Icon"
@@ -373,15 +403,15 @@ msgstr ""
 
 #: includes/fields/class-acf-field-icon_picker.php:717
 msgid "Table Col Before Icon"
-msgstr ""
+msgstr "ستون جدول قبل از آیکون"
 
 #: includes/fields/class-acf-field-icon_picker.php:716
 msgid "Table Col After Icon"
-msgstr ""
+msgstr "ستون جدول بعد از آیکون"
 
 #: includes/fields/class-acf-field-icon_picker.php:715
 msgid "Superhero (alt) Icon"
-msgstr ""
+msgstr "آیکون ابرقهرمان (alt)"
 
 #: includes/fields/class-acf-field-icon_picker.php:714
 msgid "Superhero Icon"
@@ -421,7 +451,7 @@ msgstr ""
 
 #: includes/fields/class-acf-field-icon_picker.php:690
 msgid "Remove Icon"
-msgstr ""
+msgstr "حذف آیکون"
 
 #: includes/fields/class-acf-field-icon_picker.php:688
 msgid "Reddit Icon"
@@ -642,7 +672,7 @@ msgstr ""
 
 #: includes/fields/class-acf-field-icon_picker.php:582
 msgid "Embed Post Icon"
-msgstr ""
+msgstr "قرار دادن آیکون نوشته"
 
 #: includes/fields/class-acf-field-icon_picker.php:581
 msgid "Embed Photo Icon"
@@ -666,27 +696,27 @@ msgstr ""
 
 #: includes/fields/class-acf-field-icon_picker.php:571
 msgid "Unordered List Icon"
-msgstr ""
+msgstr "آیکون لیست نامرتب"
 
 #: includes/fields/class-acf-field-icon_picker.php:566
 msgid "RTL Icon"
-msgstr ""
+msgstr "آیکون راست به چپ"
 
 #: includes/fields/class-acf-field-icon_picker.php:559
 msgid "Ordered List RTL Icon"
-msgstr ""
+msgstr "آیکون RTL لیست مرتب"
 
 #: includes/fields/class-acf-field-icon_picker.php:558
 msgid "Ordered List Icon"
-msgstr ""
+msgstr "آیکون لیست مرتب"
 
 #: includes/fields/class-acf-field-icon_picker.php:557
 msgid "LTR Icon"
-msgstr ""
+msgstr "آیکون چپ به راست"
 
 #: includes/fields/class-acf-field-icon_picker.php:549
 msgid "Custom Character Icon"
-msgstr ""
+msgstr "آیکون شخصیت سفارشی"
 
 #: includes/fields/class-acf-field-icon_picker.php:541
 msgid "Edit Page Icon"
@@ -934,7 +964,7 @@ msgstr ""
 
 #: includes/admin/views/options-page-preview.php:36
 msgid "Upgrade to ACF PRO to create options pages in just a few clicks"
-msgstr ""
+msgstr "به ACF PRO ارتقا دهید تا صفحات گزینه را تنها با چند کلیک ایجاد کنید"
 
 #: includes/ajax/class-acf-ajax-query-users.php:33
 msgid "Invalid request args."
@@ -946,11 +976,11 @@ msgstr ""
 #: includes/ajax/class-acf-ajax-upgrade.php:33
 #: includes/ajax/class-acf-ajax-user-setting.php:47
 msgid "Sorry, you do not have permission to do that."
-msgstr ""
+msgstr "متاسفم، شما اجازه انجام این کار را ندارید."
 
 #: src/Site_Health/Site_Health.php:729
 msgid "Blocks Using Post Meta"
-msgstr ""
+msgstr "بلوک‌ها با استفاده از پست متا"
 
 #: includes/admin/views/acf-field-group/pro-features.php:35
 #: includes/admin/views/acf-field-group/pro-features.php:37
@@ -966,19 +996,21 @@ msgstr ""
 #: includes/fields/class-acf-field-icon_picker.php:829
 msgid "%s requires a valid attachment ID when type is set to media_library."
 msgstr ""
+"%s وقتی نوع روی media_library تنظیم شده باشد، به یک شناسه پیوست معتبر نیاز "
+"دارد."
 
 #. translators: %s - field name
 #: includes/fields/class-acf-field-icon_picker.php:813
 msgid "%s is a required property of acf."
-msgstr ""
+msgstr "%s یک ویژگی الزامی acf است."
 
 #: includes/fields/class-acf-field-icon_picker.php:789
 msgid "The value of icon to save."
-msgstr ""
+msgstr "مقدار آیکونی که قرار است ذخیره شود."
 
 #: includes/fields/class-acf-field-icon_picker.php:783
 msgid "The type of icon to save."
-msgstr ""
+msgstr "نوع آیکونی که قرار است ذخیره شود."
 
 #: includes/fields/class-acf-field-icon_picker.php:761
 msgid "Yes Icon"
@@ -1115,11 +1147,11 @@ msgstr ""
 
 #: includes/fields/class-acf-field-icon_picker.php:696
 msgid "Search Icon"
-msgstr ""
+msgstr "آیکون جستجو"
 
 #: includes/fields/class-acf-field-icon_picker.php:695
 msgid "Screen Options Icon"
-msgstr ""
+msgstr "آیکون گزینه‌های صفحه"
 
 #: includes/fields/class-acf-field-icon_picker.php:694
 msgid "Schedule Icon"
@@ -1143,7 +1175,7 @@ msgstr ""
 
 #: includes/fields/class-acf-field-icon_picker.php:682
 msgid "Post Status Icon"
-msgstr ""
+msgstr "آیکون وضعیت نوشته"
 
 #: includes/fields/class-acf-field-icon_picker.php:681
 msgid "Portfolio Icon"
@@ -1343,7 +1375,7 @@ msgstr ""
 
 #: includes/fields/class-acf-field-icon_picker.php:565
 msgid "Remove Formatting Icon"
-msgstr ""
+msgstr "حذف آیکون قالب‌بندی"
 
 #: includes/fields/class-acf-field-icon_picker.php:564
 #: includes/fields/class-acf-field-icon_picker.php:598
@@ -1526,7 +1558,7 @@ msgstr ""
 #: includes/fields/class-acf-field-icon_picker.php:458
 #: includes/fields/class-acf-field-icon_picker.php:642
 msgid "Archive Icon"
-msgstr ""
+msgstr "آیکون بایگانی"
 
 #: includes/fields/class-acf-field-icon_picker.php:457
 msgid "Analytics Icon"
@@ -1573,7 +1605,7 @@ msgstr ""
 
 #: includes/fields/class-acf-field-icon_picker.php:438
 msgid "Post Icon"
-msgstr ""
+msgstr "آیکون نوشته"
 
 #: includes/fields/class-acf-field-icon_picker.php:437
 msgid "Plugins Icon"
@@ -1626,17 +1658,19 @@ msgstr ""
 
 #: includes/fields/class-acf-field-icon_picker.php:362
 msgid "Icon picker requires a value."
-msgstr ""
+msgstr "انتخابگر آیکون به یک مقدار نیاز دارد."
 
 #: includes/fields/class-acf-field-icon_picker.php:357
 msgid "Icon picker requires an icon type."
-msgstr ""
+msgstr "انتخابگر آیکون به یک نوع آیکون نیاز دارد."
 
 #: includes/fields/class-acf-field-icon_picker.php:321
 msgid ""
 "The available icons matching your search query have been updated in the icon "
 "picker below."
 msgstr ""
+"آیکون‌های موجود مطابق با عبارت جستجوی شما در انتخابگر آیکون زیر به‌روزرسانی "
+"شده‌اند."
 
 #: includes/fields/class-acf-field-icon_picker.php:320
 msgid "No results found for that search term"
@@ -1653,15 +1687,15 @@ msgstr "رشته متن"
 #. translators: %s - link to documentation
 #: includes/fields/class-acf-field-icon_picker.php:289
 msgid "Specify the return format for the icon. %s"
-msgstr ""
+msgstr "قالب بازگشتی برای آیکون را مشخص کنید. %s"
 
 #: includes/fields/class-acf-field-icon_picker.php:274
 msgid "Select where content editors can choose the icon from."
-msgstr ""
+msgstr "انتخاب کنید که ویرایشگران محتوا از کجا می‌توانند نماد را انتخاب کنند."
 
 #: includes/fields/class-acf-field-icon_picker.php:246
 msgid "The URL to the icon you'd like to use, or svg as Data URI"
-msgstr ""
+msgstr "پیوند آیکونی که می‌خواهید استفاده کنید، یا svg به عنوان Data پیوند"
 
 #: includes/fields/class-acf-field-icon_picker.php:229
 msgid "Browse Media Library"
@@ -1692,6 +1726,8 @@ msgid ""
 "An interactive UI for selecting an icon. Select from Dashicons, the media "
 "library, or a standalone URL input."
 msgstr ""
+"یک رابط کاربری تعاملی برای انتخاب یک آیکون. از Dashicons، کتابخانه رسانه یا "
+"یک ورودی پیوند مستقل انتخاب کنید."
 
 #: includes/fields/class-acf-field-icon_picker.php:27
 msgid "Icon Picker"
@@ -1703,11 +1739,11 @@ msgstr ""
 
 #: src/Site_Health/Site_Health.php:784
 msgid "JSON Save Paths"
-msgstr ""
+msgstr "مسیرهای ذخیره JSON"
 
 #: src/Site_Health/Site_Health.php:775
 msgid "Registered ACF Forms"
-msgstr ""
+msgstr "فرم‌های ثبت‌شده ACF"
 
 #: src/Site_Health/Site_Health.php:769
 msgid "Shortcode Enabled"
@@ -1715,31 +1751,31 @@ msgstr ""
 
 #: src/Site_Health/Site_Health.php:761
 msgid "Field Settings Tabs Enabled"
-msgstr ""
+msgstr "زبانه‌های تنظیمات فیلد فعال شدند"
 
 #: src/Site_Health/Site_Health.php:753
 msgid "Field Type Modal Enabled"
-msgstr ""
+msgstr "نوع فیلد مودال فعال شده"
 
 #: src/Site_Health/Site_Health.php:745
 msgid "Admin UI Enabled"
-msgstr ""
+msgstr "رابط کاربری مدیریت فعال شد"
 
 #: src/Site_Health/Site_Health.php:736
 msgid "Block Preloading Enabled"
-msgstr ""
+msgstr "پیش بارگذاری بلوک فعال شد"
 
 #: src/Site_Health/Site_Health.php:724
 msgid "Blocks Per ACF Block Version"
-msgstr ""
+msgstr "بلوک‌ها در هر نسخه بلوک ACF"
 
 #: src/Site_Health/Site_Health.php:719
 msgid "Blocks Per API Version"
-msgstr ""
+msgstr "بلوک‌ها بر اساس نسخه API"
 
 #: src/Site_Health/Site_Health.php:692
 msgid "Registered ACF Blocks"
-msgstr ""
+msgstr "بلوک‌های ACF ثبت‌شده"
 
 #: src/Site_Health/Site_Health.php:686
 msgid "Light"
@@ -1755,67 +1791,67 @@ msgstr ""
 
 #: src/Site_Health/Site_Health.php:677
 msgid "Registered Options Pages (PHP)"
-msgstr ""
+msgstr "صفحات گزینه‌های ثبت‌شده (PHP)"
 
 #: src/Site_Health/Site_Health.php:663
 msgid "Registered Options Pages (JSON)"
-msgstr ""
+msgstr "صفحات گزینه‌های ثبت‌شده (JSON)"
 
 #: src/Site_Health/Site_Health.php:658
 msgid "Registered Options Pages (UI)"
-msgstr ""
+msgstr "صفحات گزینه‌های ثبت‌شده (رابط کاربری)"
 
 #: src/Site_Health/Site_Health.php:628
 msgid "Options Pages UI Enabled"
-msgstr ""
+msgstr "رابط کاربری صفحات گزینه‌ها فعال است"
 
 #: src/Site_Health/Site_Health.php:620
 msgid "Registered Taxonomies (JSON)"
-msgstr ""
+msgstr "طبقه‌بندی‌های ثبت‌شده (JSON)"
 
 #: src/Site_Health/Site_Health.php:608
 msgid "Registered Taxonomies (UI)"
-msgstr ""
+msgstr "طبقه‌بندی‌های ثبت‌شده (UI)"
 
 #: src/Site_Health/Site_Health.php:596
 msgid "Registered Post Types (JSON)"
-msgstr ""
+msgstr "انواع پست‌های ثبت‌شده (JSON)"
 
 #: src/Site_Health/Site_Health.php:584
 msgid "Registered Post Types (UI)"
-msgstr ""
+msgstr "انواع پست‌های ثبت‌شده (UI)"
 
 #: src/Site_Health/Site_Health.php:571
 msgid "Post Types and Taxonomies Enabled"
-msgstr ""
+msgstr "انواع پست‌ها و طبقه‌بندی‌ها فعال شده‌اند"
 
 #: src/Site_Health/Site_Health.php:564
 msgid "Number of Third Party Fields by Field Type"
-msgstr ""
+msgstr "تعداد فیلدهای شخص ثالث بر اساس نوع فیلد"
 
 #: src/Site_Health/Site_Health.php:559
 msgid "Number of Fields by Field Type"
-msgstr ""
+msgstr "تعداد فیلدها بر اساس نوع فیلد"
 
 #: src/Site_Health/Site_Health.php:452
 msgid "Field Groups Enabled for GraphQL"
-msgstr ""
+msgstr "گروه‌های فیلد فعال‌شده برای GraphQL"
 
 #: src/Site_Health/Site_Health.php:439
 msgid "Field Groups Enabled for REST API"
-msgstr ""
+msgstr "گروه‌های فیلد برای REST API فعال شده‌اند"
 
 #: src/Site_Health/Site_Health.php:427
 msgid "Registered Field Groups (JSON)"
-msgstr ""
+msgstr "گروه‌های فیلد ثبت‌شده (JSON)"
 
 #: src/Site_Health/Site_Health.php:415
 msgid "Registered Field Groups (PHP)"
-msgstr ""
+msgstr "گروه‌های فیلد ثبت‌شده (PHP)"
 
 #: src/Site_Health/Site_Health.php:403
 msgid "Registered Field Groups (UI)"
-msgstr ""
+msgstr "گروه‌های فیلد ثبت‌شده (UI)"
 
 #: src/Site_Health/Site_Health.php:391
 msgid "Active Plugins"
@@ -1839,11 +1875,11 @@ msgstr ""
 
 #: src/Site_Health/Site_Health.php:335
 msgid "WordPress Version"
-msgstr ""
+msgstr "نسخه وردپرس"
 
 #: src/Site_Health/Site_Health.php:328
 msgid "Subscription Expiry Date"
-msgstr ""
+msgstr "تاریخ انقضای اشتراک"
 
 #: src/Site_Health/Site_Health.php:320
 msgid "License Status"
@@ -1863,7 +1899,7 @@ msgstr ""
 
 #: src/Site_Health/Site_Health.php:293
 msgid "Free"
-msgstr ""
+msgstr "رایگان"
 
 #: src/Site_Health/Site_Health.php:292
 msgid "Plugin Type"
@@ -1878,10 +1914,13 @@ msgid ""
 "This section contains debug information about your ACF configuration which "
 "can be useful to provide to support."
 msgstr ""
+"این بخش شامل اطلاعات اشکال‌زدایی در مورد پیکربندی ACF شماست که ارائه آن به "
+"پشتیبانی می‌تواند مفید باشد."
 
 #: includes/assets.php:382
 msgid "An ACF Block on this page requires attention before you can save."
 msgstr ""
+"یک بلوک ACF در این صفحه قبل از اینکه بتوانید ذخیره کنید، نیاز به توجه دارد."
 
 #. translators: %s - The clear log button opening HTML tag. %s - The closing
 #. HTML tag.
@@ -1891,26 +1930,31 @@ msgid ""
 "output. %1$sClear log and dismiss%2$s after escaping the values in your "
 "code. The notice will reappear if we detect changed values again."
 msgstr ""
+"این داده‌ها همزمان با تشخیص مقادیری که در طول خروجی تغییر کرده‌اند، ثبت "
+"می‌شوند. %1$s گزارش را پاک کرده و %2$s را پس از escape کردن مقادیر در کد خود، "
+"رد کنید. اگر دوباره مقادیر تغییر یافته را تشخیص دهیم، اعلان دوباره ظاهر "
+"می‌شود."
 
 #: includes/admin/views/escaped-html-notice.php:34
 msgid "Dismiss permanently"
-msgstr ""
+msgstr "رد کردن دائمی"
 
 #: includes/admin/views/acf-field-group/field.php:230
 msgid "Instructions for content editors. Shown when submitting data."
 msgstr ""
+"دستورالعمل‌هایی برای ویراستاران محتوا. هنگام ارسال داده‌ها نمایش داده می‌شود."
 
 #: includes/admin/post-types/admin-field-group.php:143
 msgid "Has no term selected"
-msgstr ""
+msgstr "شرایطی انتخاب نشده است"
 
 #: includes/admin/post-types/admin-field-group.php:142
 msgid "Has any term selected"
-msgstr ""
+msgstr "آیا شرایطی انتخاب شده است"
 
 #: includes/admin/post-types/admin-field-group.php:141
 msgid "Terms do not contain"
-msgstr ""
+msgstr "شرایط شامل نمی‌شود"
 
 #: includes/admin/post-types/admin-field-group.php:140
 msgid "Terms contain"
@@ -1926,15 +1970,15 @@ msgstr ""
 
 #: includes/admin/post-types/admin-field-group.php:137
 msgid "Has no user selected"
-msgstr ""
+msgstr "هیچ کاربری انتخاب نشده است"
 
 #: includes/admin/post-types/admin-field-group.php:136
 msgid "Has any user selected"
-msgstr ""
+msgstr "آیا کاربری انتخاب کرده است"
 
 #: includes/admin/post-types/admin-field-group.php:135
 msgid "Users do not contain"
-msgstr ""
+msgstr "کاربران شامل نمی‌شوند"
 
 #: includes/admin/post-types/admin-field-group.php:134
 msgid "Users contain"
@@ -1942,23 +1986,23 @@ msgstr ""
 
 #: includes/admin/post-types/admin-field-group.php:133
 msgid "User is not equal to"
-msgstr ""
+msgstr "کاربر برابر نیست با"
 
 #: includes/admin/post-types/admin-field-group.php:132
 msgid "User is equal to"
-msgstr ""
+msgstr "کاربر برابر است با"
 
 #: includes/admin/post-types/admin-field-group.php:131
 msgid "Has no page selected"
-msgstr ""
+msgstr "صفحه‌ای انتخاب نشده است"
 
 #: includes/admin/post-types/admin-field-group.php:130
 msgid "Has any page selected"
-msgstr ""
+msgstr "آیا صفحه‌ای انتخاب شده است؟"
 
 #: includes/admin/post-types/admin-field-group.php:129
 msgid "Pages do not contain"
-msgstr ""
+msgstr "صفحات حاوی نیستند"
 
 #: includes/admin/post-types/admin-field-group.php:128
 msgid "Pages contain"
@@ -1966,27 +2010,27 @@ msgstr ""
 
 #: includes/admin/post-types/admin-field-group.php:127
 msgid "Page is not equal to"
-msgstr ""
+msgstr "صفحه برابر نیست با"
 
 #: includes/admin/post-types/admin-field-group.php:126
 msgid "Page is equal to"
-msgstr ""
+msgstr "صفحه برابر است با"
 
 #: includes/admin/post-types/admin-field-group.php:125
 msgid "Has no relationship selected"
-msgstr ""
+msgstr "هیچ رابطه‌ای انتخاب نشده است"
 
 #: includes/admin/post-types/admin-field-group.php:124
 msgid "Has any relationship selected"
-msgstr ""
+msgstr "آیا رابطه‌ای انتخاب شده است"
 
 #: includes/admin/post-types/admin-field-group.php:123
 msgid "Has no post selected"
-msgstr ""
+msgstr "هیچ نوشته ای انتخاب نشده است"
 
 #: includes/admin/post-types/admin-field-group.php:122
 msgid "Has any post selected"
-msgstr ""
+msgstr "آیا نوشته ای انتخاب شده است؟"
 
 #: includes/admin/post-types/admin-field-group.php:121
 msgid "Posts do not contain"
@@ -1998,15 +2042,15 @@ msgstr ""
 
 #: includes/admin/post-types/admin-field-group.php:119
 msgid "Post is not equal to"
-msgstr ""
+msgstr "نوشته مساوی نیست"
 
 #: includes/admin/post-types/admin-field-group.php:118
 msgid "Post is equal to"
-msgstr ""
+msgstr "نوشته برابر است با"
 
 #: includes/admin/post-types/admin-field-group.php:117
 msgid "Relationships do not contain"
-msgstr ""
+msgstr "روابط شامل نمی‌شوند"
 
 #: includes/admin/post-types/admin-field-group.php:116
 msgid "Relationships contain"
@@ -2014,11 +2058,11 @@ msgstr ""
 
 #: includes/admin/post-types/admin-field-group.php:115
 msgid "Relationship is not equal to"
-msgstr ""
+msgstr "رابطه مساوی نیست"
 
 #: includes/admin/post-types/admin-field-group.php:114
 msgid "Relationship is equal to"
-msgstr ""
+msgstr "رابطه برابر است با"
 
 #: src/Blocks/Bindings.php:41
 msgctxt "The core ACF block binding source name for fields on the current page"
@@ -2046,16 +2090,20 @@ msgid ""
 "Please activate your ACF PRO license to edit field groups assigned to an ACF "
 "Block."
 msgstr ""
+"لطفاً مجوز ACF حرفه‌ای خود را برای ویرایش گروه‌های فیلد اختصاص داده شده به یک "
+"بلوک ACF فعال کنید."
 
 #: includes/admin/admin-internal-post-type-list.php:231
 msgid "Please activate your ACF PRO license to edit this options page."
-msgstr ""
+msgstr "لطفا مجوز ACF حرفه‌ای خود را برای ویرایش این صفحه گزینه‌ها فعال کنید."
 
 #: includes/api/api-template.php:394 includes/api/api-template.php:448
 msgid ""
 "Returning escaped HTML values is only possible when format_value is also "
 "true. The field values have not been returned for security."
 msgstr ""
+"برگرداندن مقادیر HTML فرار شده فقط زمانی امکان‌پذیر است که format_value نیز "
+"درست باشد. مقادیر فیلدها به دلایل امنیتی برگردانده نشده‌اند."
 
 #: includes/api/api-template.php:55 includes/api/api-template.php:260
 #: includes/api/api-template.php:956
@@ -2063,6 +2111,8 @@ msgid ""
 "Returning an escaped HTML value is only possible when format_value is also "
 "true. The field value has not been returned for security."
 msgstr ""
+"برگرداندن یک مقدار HTML از نوع escape شده فقط زمانی امکان‌پذیر است که "
+"format_value نیز true باشد. مقدار فیلد به دلایل امنیتی برگردانده نشده است."
 
 #. translators: %1$s - name of the ACF plugin. %2$s - Link to documentation.
 #: includes/admin/views/escaped-html-notice.php:41
@@ -2072,10 +2122,14 @@ msgid ""
 "some of your fields has been modified by this change, but this may not be a "
 "breaking change. %2$s."
 msgstr ""
+"%1$s ACF اکنون به طور خودکار از HTML ناامن هنگام رندر شدن توسط "
+"<code>the_field</code> یا کد کوتاه ACF جلوگیری می‌کند. ما متوجه شده‌ایم که "
+"خروجی برخی از فیلدهای شما با این تغییر تغییر کرده است، اما این ممکن است یک "
+"تغییر اساسی نباشد. %2$s."
 
 #: includes/admin/views/escaped-html-notice.php:36
 msgid "Please contact your site administrator or developer for more details."
-msgstr ""
+msgstr "برای اطلاعات بیشتر لطفا با مدیر سایت یا توسعه‌دهنده خود تماس بگیرید."
 
 #: includes/admin/views/escaped-html-notice.php:14
 msgid "Learn&nbsp;more"
@@ -2093,7 +2147,7 @@ msgstr "نمایش جزئیات"
 #. function name
 #: includes/admin/views/escaped-html-notice.php:58
 msgid "%1$s (%2$s) - rendered via %3$s"
-msgstr ""
+msgstr "%1$s (%2$s) - از طریق %3$s رندر شد"
 
 #: includes/admin/views/global/navigation.php:239
 msgid "Renew ACF PRO License"
@@ -2122,6 +2176,9 @@ msgid ""
 "pages for managing global settings via fields. You can create multiple pages "
 "and sub-pages."
 msgstr ""
+"ACF <a href=\"%s\" target=\"_blank\">صفحات گزینه‌ها</a> صفحات مدیریت سفارشی "
+"برای مدیریت تنظیمات جهانی از طریق فیلدها هستند. می توانید چندین صفحه و صفحات "
+"فرعی ایجاد کنید."
 
 #: includes/admin/views/global/header.php:45
 msgid "Add Options Page"
@@ -2129,7 +2186,7 @@ msgstr "افزودن برگه‌ی گزینه‌ها"
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:717
 msgid "In the editor used as the placeholder of the title."
-msgstr ""
+msgstr "در ویرایشگر به عنوان مکان نگهدار عنوان استفاده می شود."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:716
 msgid "Title Placeholder"
@@ -2201,7 +2258,7 @@ msgstr "توسعه‌داده و نگهداری‌شده توسط"
 #. translators: %s - either "post type" or "taxonomy"
 #: includes/admin/admin-internal-post-type.php:313
 msgid "Add this %s to the location rules of the selected field groups."
-msgstr ""
+msgstr "این %s را به قوانین مکان گروه های فیلد انتخابی اضافه کنید."
 
 #. translators: %s the URL to ACF's bidirectional relationship documentation
 #: includes/acf-bidirectional-functions.php:276
@@ -2212,6 +2269,10 @@ msgid ""
 "information, please read the <a href=\"%s\" target=\"_blank\">documentation</"
 "a>."
 msgstr ""
+"فعال کردن تنظیمات دو جهته به شما امکان می‌دهد برای هر مقدار انتخاب شده برای "
+"این فیلد، مقداری را در فیلدهای هدف به‌روزرسانی کنید و شناسه پست، شناسه "
+"طبقه‌بندی یا شناسه کاربری مورد به‌روزرسانی را اضافه یا حذف کنید. برای اطلاعات "
+"بیشتر، لطفاً <a href=\"%s\" target=\"_blank\">اسناد</a> را مطالعه کنید."
 
 #: includes/acf-bidirectional-functions.php:252
 msgid ""
@@ -2220,14 +2281,18 @@ msgid ""
 "field is being displayed. For example, if this field is displayed on a "
 "Taxonomy, your target field should be of type Taxonomy"
 msgstr ""
+"فیلد(های) را برای ذخیره ارجاع به مورد در حال به روز رسانی انتخاب کنید. می "
+"توانید این فیلد را انتخاب کنید. فیلدهای هدف باید با جایی که این فیلد در حال "
+"نمایش است سازگار باشد. به عنوان مثال، اگر این فیلد در Taxonomy نمایش داده "
+"شود، فیلد مورد نظر شما باید از نوع Taxonomy باشد"
 
 #: includes/acf-bidirectional-functions.php:251
 msgid "Target Field"
-msgstr ""
+msgstr "میدان هدف"
 
 #: includes/acf-bidirectional-functions.php:225
 msgid "Update a field on the selected values, referencing back to this ID"
-msgstr ""
+msgstr "با مراجعه به این شناسه، یک فیلد را در مقادیر انتخاب شده به روز کنید"
 
 #: includes/acf-bidirectional-functions.php:224
 msgid "Bidirectional"
@@ -2279,11 +2344,11 @@ msgstr ""
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:1114
 msgid "The capability name for managing terms of this taxonomy."
-msgstr ""
+msgstr "نام قابلیت مدیریت شرایط این طبقه بندی."
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:1113
 msgid "Manage Terms Capability"
-msgstr ""
+msgstr "قابلیت مدیریت شرایط"
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:938
 msgid ""
@@ -2300,11 +2365,11 @@ msgstr "ابزارهای بیشتر از WP Engine"
 #. translators: %s - WP Engine logo
 #: includes/admin/views/acf-field-group/pro-features.php:83
 msgid "Built for those that build with WordPress, by the team at %s"
-msgstr ""
+msgstr "برای کسانی که با وردپرس می سازند، توسط تیم %s ساخته شده است"
 
 #: includes/admin/views/acf-field-group/pro-features.php:16
 msgid "View Pricing & Upgrade"
-msgstr ""
+msgstr "مشاهده قیمت و ارتقاء"
 
 #: includes/admin/views/acf-field-group/pro-features.php:13
 #: includes/admin/views/options-page-preview.php:39
@@ -2318,10 +2383,13 @@ msgid ""
 "Blocks and Options Pages, and sophisticated field types like Repeater, "
 "Flexible Content, Clone, and Gallery."
 msgstr ""
+"با ویژگی هایی مانند ACF Blocks و Options Pages و انواع فیلدهای پیچیده مانند "
+"Repeater، Flexible Content، Clone و Gallery، گردش کار خود را سرعت دهید و وب "
+"سایت های بهتری را توسعه دهید."
 
 #: includes/admin/views/acf-field-group/pro-features.php:12
 msgid "Unlock Advanced Features and Build Even More with ACF PRO"
-msgstr ""
+msgstr "با ACF PRO ویژگی های پیشرفته را باز کنید و حتی بیشتر بسازید"
 
 #. translators: %s - singular label of post type/taxonomy, i.e. "Movie"/"Genre"
 #: includes/admin/views/global/form-top.php:29
@@ -2439,22 +2507,22 @@ msgstr "مشاهده‌ی نوع نوشته"
 
 #: includes/post-types/class-acf-post-type.php:105
 msgid "New Post Type"
-msgstr "نوع پست جدید"
+msgstr "نوع نوشته جدید"
 
 #: includes/post-types/class-acf-post-type.php:104
 msgid "Edit Post Type"
-msgstr "ویرایش نوع پست"
+msgstr "ویرایش نوع نوشته"
 
 #: includes/post-types/class-acf-post-type.php:103
 msgid "Add New Post Type"
-msgstr "افزودن نوع پست تازه"
+msgstr "افزودن نوع نوشته تازه"
 
 #: includes/post-types/class-acf-post-type.php:375
 msgid ""
 "This post type key is already in use by another post type registered outside "
 "of ACF and cannot be used."
 msgstr ""
-"کلید نوع پست در حال حاضر خارج از ACF ثبت شده است و نمی توان از آن استفاده "
+"کلید نوع نوشته در حال حاضر خارج از ACF ثبت شده است و نمی توان از آن استفاده "
 "کرد."
 
 #: includes/post-types/class-acf-post-type.php:370
@@ -2462,7 +2530,7 @@ msgid ""
 "This post type key is already in use by another post type in ACF and cannot "
 "be used."
 msgstr ""
-"کلید نوع پست در حال حاضر در ACF ثبت شده است و نمی توان از آن استفاده کرد."
+"کلید نوع نوشته در حال حاضر در ACF ثبت شده است و نمی توان از آن استفاده کرد."
 
 #. translators: %s a link to WordPress.org's Reserved Terms page
 #: includes/post-types/class-acf-post-type.php:348
@@ -2479,12 +2547,12 @@ msgid ""
 "The post type key must only contain lower case alphanumeric characters, "
 "underscores or dashes."
 msgstr ""
-"کلید نوع پست فقط باید شامل حذوف کوچک انگلیسی و اعداد و زیر خط (_) و یا خط "
+"کلید نوع نوشته فقط باید شامل حذوف کوچک انگلیسی و اعداد و زیر خط (_) و یا خط "
 "تیره (-) باشد."
 
 #: includes/post-types/class-acf-post-type.php:337
 msgid "The post type key must be under 20 characters."
-msgstr "کلید نوع پست حداکثر باید 20 حرفی باشد."
+msgstr "کلید نوع نوشته حداکثر باید 20 حرفی باشد."
 
 #: includes/fields/class-acf-field-wysiwyg.php:33
 msgid "We do not recommend using this field in ACF Blocks."
@@ -2550,12 +2618,16 @@ msgid ""
 "Allows the selection of one or more taxonomy terms based on the criteria and "
 "options specified in the fields settings."
 msgstr ""
+"به انتخاب یک یا چند عبارت طبقه بندی بر اساس معیارها و گزینه های مشخص شده در "
+"تنظیمات فیلدها اجازه می دهد."
 
 #: includes/fields/class-acf-field-tab.php:34
 msgid ""
 "Allows you to group fields into tabbed sections in the edit screen. Useful "
 "for keeping fields organized and structured."
 msgstr ""
+"به شما امکان می‌دهد فیلدها را در بخش‌های تب‌دار در صفحه ویرایش گروه‌بندی کنید. "
+"برای سازماندهی و ساختاربندی زمینه ها مفید است."
 
 #: includes/fields/class-acf-field-select.php:27
 msgid "A dropdown list with a selection of choices that you specify."
@@ -2567,24 +2639,33 @@ msgid ""
 "type items to create a relationship with the item that you're currently "
 "editing. Includes options to search and filter."
 msgstr ""
+"یک رابط دو ستونی برای انتخاب یک یا چند پست، صفحه یا موارد سفارشی نوع پست "
+"برای ایجاد رابطه با موردی که در حال حاضر در حال ویرایش آن هستید. شامل گزینه "
+"هایی برای جستجو و فیلتر است."
 
 #: includes/fields/class-acf-field-range.php:32
 msgid ""
 "An input for selecting a numerical value within a specified range using a "
 "range slider element."
 msgstr ""
+"ورودی برای انتخاب یک مقدار عددی در یک محدوده مشخص با استفاده از یک عنصر "
+"لغزنده محدوده."
 
 #: includes/fields/class-acf-field-radio.php:33
 msgid ""
 "A group of radio button inputs that allows the user to make a single "
 "selection from values that you specify."
 msgstr ""
+"گروهی از ورودی‌های دکمه رادیویی که به کاربر اجازه می‌دهد از مقادیری که شما "
+"مشخص کرده‌اید، یک انتخاب واحد انجام دهد."
 
 #: includes/fields/class-acf-field-post_object.php:26
 msgid ""
 "An interactive and customizable UI for picking one or many posts, pages or "
 "post type items with the option to search. "
 msgstr ""
+"یک رابط کاربری تعاملی و قابل تنظیم برای انتخاب یک یا چند پست، صفحه یا موارد "
+"نوع پست با گزینه جستجو. "
 
 #: includes/fields/class-acf-field-password.php:32
 msgid "An input for providing a password using a masked field."
@@ -2594,19 +2675,23 @@ msgstr "یک ورودی برای وارد کردن رمزعبور به وسیل�
 #: includes/fields/class-acf-field-post_object.php:375
 #: includes/fields/class-acf-field-relationship.php:574
 msgid "Filter by Post Status"
-msgstr "فیلتر بر اساس وضعیت پست"
+msgstr "فیلتر بر اساس وضعیت نوشته"
 
 #: includes/fields/class-acf-field-page_link.php:33
 msgid ""
 "An interactive dropdown to select one or more posts, pages, custom post type "
 "items or archive URLs, with the option to search."
 msgstr ""
+"یک کشویی تعاملی برای انتخاب یک یا چند پست، صفحه، موارد سفارشی نوع پست یا "
+"نشانی‌های وب بایگانی، با گزینه جستجو."
 
 #: includes/fields/class-acf-field-oembed.php:32
 msgid ""
 "An interactive component for embedding videos, images, tweets, audio and "
 "other content by making use of the native WordPress oEmbed functionality."
 msgstr ""
+"یک مؤلفه تعاملی برای جاسازی فیلم ها، تصاویر، توییت ها، صدا و سایر محتواها با "
+"استفاده از عملکرد بومی وردپرس oEmbed."
 
 #: includes/fields/class-acf-field-number.php:32
 msgid "An input limited to numerical values."
@@ -2617,12 +2702,16 @@ msgid ""
 "Used to display a message to editors alongside other fields. Useful for "
 "providing additional context or instructions around your fields."
 msgstr ""
+"برای نمایش پیام به ویرایشگران در کنار سایر فیلدها استفاده می شود. برای ارائه "
+"متن یا دستورالعمل های اضافی در اطراف زمینه های خود مفید است."
 
 #: includes/fields/class-acf-field-link.php:33
 msgid ""
 "Allows you to specify a link and its properties such as title and target "
 "using the WordPress native link picker."
 msgstr ""
+"به شما امکان می دهد یک پیوند و ویژگی های آن مانند عنوان و هدف را با استفاده "
+"از انتخابگر پیوند بومی وردپرس مشخص کنید."
 
 #: includes/fields/class-acf-field-image.php:33
 msgid "Uses the native WordPress media picker to upload, or choose images."
@@ -2634,12 +2723,16 @@ msgid ""
 "Provides a way to structure fields into groups to better organize the data "
 "and the edit screen."
 msgstr ""
+"راهی برای ساختاربندی فیلدها به گروه ها برای سازماندهی بهتر داده ها و صفحه "
+"ویرایش ارائه می دهد."
 
 #: includes/fields/class-acf-field-google-map.php:32
 msgid ""
 "An interactive UI for selecting a location using Google Maps. Requires a "
 "Google Maps API key and additional configuration to display correctly."
 msgstr ""
+"یک رابط کاربری تعاملی برای انتخاب مکان با استفاده از نقشه های گوگل. برای "
+"نمایش صحیح به کلید Google Maps API و پیکربندی اضافی نیاز دارد."
 
 #: includes/fields/class-acf-field-file.php:33
 msgid "Uses the native WordPress media picker to upload, or choose files."
@@ -2693,6 +2786,9 @@ msgid ""
 "Allows you to group and organize custom fields into collapsable panels that "
 "are shown while editing content. Useful for keeping large datasets tidy."
 msgstr ""
+"به شما امکان می‌دهد تا فیلدهای سفارشی را در پانل‌های جمع‌شونده که هنگام ویرایش "
+"محتوا نشان داده می‌شوند، گروه‌بندی و سازماندهی کنید. برای مرتب نگه داشتن "
+"مجموعه داده های بزرگ مفید است."
 
 #: includes/fields.php:459
 msgid ""
@@ -2700,6 +2796,9 @@ msgid ""
 "and call-to-action tiles, by acting as a parent to a set of subfields which "
 "can be repeated again and again."
 msgstr ""
+"این راه حلی را برای تکرار محتوا مانند اسلایدها، اعضای تیم و کاشی‌های دعوت به "
+"اقدام، با عمل به عنوان والد برای مجموعه‌ای از زیرفیلدها که می‌توانند بارها و "
+"بارها تکرار شوند، فراهم می‌کند."
 
 #: includes/fields.php:449
 msgid ""
@@ -2708,6 +2807,10 @@ msgid ""
 "settings allow you to specify where new attachments are added in the gallery "
 "and the minimum/maximum number of attachments allowed."
 msgstr ""
+"این یک رابط تعاملی برای مدیریت مجموعه ای از پیوست ها فراهم می کند. اکثر "
+"تنظیمات مشابه نوع فیلد عکس هستند. تنظیمات اضافی به شما این امکان را می دهد "
+"که مکان اضافه شدن پیوست های جدید در گالری و حداقل/حداکثر تعداد پیوست های "
+"مجاز را مشخص کنید."
 
 #: includes/fields.php:439
 msgid ""
@@ -2715,6 +2818,9 @@ msgid ""
 "Content field allows you to define, create and manage content with total "
 "control by using layouts and subfields to design the available blocks."
 msgstr ""
+"این یک ویرایشگر ساده، ساختار یافته و مبتنی بر چیدمان را فراهم می کند. قسمت "
+"Flexible Content به شما امکان تعریف، ایجاد و مدیریت محتوا را با کنترل کامل "
+"با استفاده از طرح‌بندی‌ها و فیلدهای فرعی برای طراحی بلوک‌های موجود می‌دهد."
 
 #: includes/fields.php:429
 msgid ""
@@ -2723,6 +2829,10 @@ msgid ""
 "run-time. The Clone field can either replace itself with the selected fields "
 "or display the selected fields as a group of subfields."
 msgstr ""
+"این به شما امکان می دهد فیلدهای موجود را انتخاب و نمایش دهید. هیچ فیلدی را "
+"در پایگاه داده کپی نمی کند، اما فیلدهای انتخاب شده را در زمان اجرا بارگیری و "
+"نمایش می دهد. فیلد Clone می تواند خود را با فیلدهای انتخابی جایگزین کند یا "
+"فیلدهای انتخاب شده را به صورت گروهی از زیرفیلدها نمایش دهد."
 
 #: includes/fields.php:426
 msgctxt "noun"
@@ -2748,11 +2858,11 @@ msgstr "اصلی"
 
 #: includes/ajax/class-acf-ajax-local-json-diff.php:69
 msgid "Invalid post ID."
-msgstr "شناسه پست نامعتبر."
+msgstr "شناسه نوشته نامعتبر."
 
 #: includes/ajax/class-acf-ajax-local-json-diff.php:61
 msgid "Invalid post type selected for review."
-msgstr ""
+msgstr "نوع پست نامعتبر برای بررسی انتخاب شده است."
 
 #: includes/admin/views/global/navigation.php:202
 msgid "More"
@@ -2808,14 +2918,15 @@ msgstr "اولین طبقه‌بندی خود را اضافه کنید"
 #: includes/admin/views/acf-taxonomy/basic-settings.php:131
 msgid "Hierarchical taxonomies can have descendants (like categories)."
 msgstr ""
+"طبقه بندی های سلسله مراتبی می توانند فرزندانی داشته باشند (مانند دسته ها)"
 
 #: includes/admin/views/acf-taxonomy/basic-settings.php:116
 msgid "Makes a taxonomy visible on the frontend and in the admin dashboard."
-msgstr ""
+msgstr "یک طبقه بندی را در قسمت جلویی و در داشبورد مدیریت قابل مشاهده می کند."
 
 #: includes/admin/views/acf-taxonomy/basic-settings.php:100
 msgid "One or many post types that can be classified with this taxonomy."
-msgstr ""
+msgstr "یک یا چند نوع پست که می توان با این طبقه بندی طبقه بندی کرد."
 
 #. translators: example taxonomy
 #: includes/admin/views/acf-taxonomy/basic-settings.php:69
@@ -2835,15 +2946,15 @@ msgstr "ژانرها"
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:1240
 msgid ""
 "Optional custom controller to use instead of `WP_REST_Terms_Controller `."
-msgstr ""
+msgstr "کنترلر سفارشی اختیاری برای استفاده به جای «WP_REST_Terms_Controller»."
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:1184
 msgid "Expose this post type in the REST API."
-msgstr ""
+msgstr "این نوع نوشته را در REST API نمایش دهید."
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:1084
 msgid "Customize the query variable name"
-msgstr ""
+msgstr "نام متغیر کوئری را سفارشی کنید"
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:1057
 msgid ""
@@ -2853,15 +2964,15 @@ msgstr ""
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:1010
 msgid "Parent-child terms in URLs for hierarchical taxonomies."
-msgstr ""
+msgstr "اصطلاحات والد-فرزندی در پیوندها برای طبقه‌بندی‌های سلسله مراتبی."
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:970
 msgid "Customize the slug used in the URL"
-msgstr ""
+msgstr "سفارشی‌سازی اسلاگ مورد استفاده در پیوند"
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:953
 msgid "Permalinks for this taxonomy are disabled."
-msgstr ""
+msgstr "پیوندهای یکتا برای این طبقه‌بندی غیرفعال هستند."
 
 #. translators: this string will be appended with the new permalink structure.
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:950
@@ -2869,28 +2980,30 @@ msgid ""
 "Rewrite the URL using the taxonomy key as the slug. Your permalink structure "
 "will be"
 msgstr ""
+"URL را با استفاده از کلید طبقه بندی به عنوان اسلاگ بازنویسی کنید. ساختار "
+"پیوند ثابت شما خواهد بود"
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:942
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:1059
 #: includes/admin/views/acf-taxonomy/basic-settings.php:66
 msgid "Taxonomy Key"
-msgstr ""
+msgstr "کلید طبقه بندی"
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:940
 msgid "Select the type of permalink to use for this taxonomy."
-msgstr ""
+msgstr "نوع پیوند یکتا را برای استفاده در این طبقه‌بندی انتخاب کنید."
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:925
 msgid "Display a column for the taxonomy on post type listing screens."
-msgstr ""
+msgstr "نمایش یک ستون برای دسته‌بندی در صفحات فهرست انواع نوشته."
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:924
 msgid "Show Admin Column"
-msgstr ""
+msgstr "نمایش ستون مدیریت"
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:911
 msgid "Show the taxonomy in the quick/bulk edit panel."
-msgstr ""
+msgstr "نمایش طبقه‌بندی در پنل ویرایش سریع/دسته جمعی."
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:910
 msgid "Quick Edit"
@@ -2898,7 +3011,7 @@ msgstr "ویرایش سریع"
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:897
 msgid "List the taxonomy in the Tag Cloud Widget controls."
-msgstr ""
+msgstr "طبقه‌بندی را در کنترل‌های ویجت ابر برچسب فهرست کنید."
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:896
 msgid "Tag Cloud"
@@ -2909,14 +3022,16 @@ msgid ""
 "A PHP function name to be called for sanitizing taxonomy data saved from a "
 "meta box."
 msgstr ""
+"نام تابع PHP که برای پاکسازی داده‌های طبقه‌بندی ذخیره شده از یک متا باکس "
+"فراخوانی می‌شود."
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:850
 msgid "Meta Box Sanitization Callback"
-msgstr ""
+msgstr "فراخوانی مجدد پاکسازی متا باکس"
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:830
 msgid "Register Meta Box Callback"
-msgstr ""
+msgstr "ثبت نام متا باکس کال بک"
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:761
 msgid "No Meta Box"
@@ -2924,7 +3039,7 @@ msgstr ""
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:760
 msgid "Custom Meta Box"
-msgstr ""
+msgstr "متا باکس سفارشی"
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:777
 msgid ""
@@ -2932,6 +3047,9 @@ msgid ""
 "Categories meta box is shown for hierarchical taxonomies, and the Tags meta "
 "box is shown for non-hierarchical taxonomies."
 msgstr ""
+"کادر متا را در صفحه ویرایشگر محتوا کنترل می‌کند. به طور پیش‌فرض، کادر متای "
+"دسته‌بندی‌ها برای طبقه‌بندی‌های سلسله مراتبی و کادر متای برچسب‌ها برای "
+"طبقه‌بندی‌های غیر سلسله مراتبی نمایش داده می‌شود."
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:776
 msgid "Meta Box"
@@ -2940,7 +3058,7 @@ msgstr ""
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:755
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:782
 msgid "Categories Meta Box"
-msgstr ""
+msgstr "دسته‌بندی‌ها متا باکس"
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:754
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:781
@@ -2949,25 +3067,29 @@ msgstr ""
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:713
 msgid "A link to a tag"
-msgstr ""
+msgstr "لینک به یک تگ"
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:712
 msgid "Describes a navigation link block variation used in the block editor."
 msgstr ""
+"یک تغییر بلوک پیوند ناوبری را که در ویرایشگر بلوک استفاده می شود، توصیف می "
+"کند."
 
 #. translators: %s Singular form of taxonomy name
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:707
 msgid "A link to a %s"
-msgstr "پیوندی به یک %s"
+msgstr "پیوندی به %s"
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:692
 msgid "Tag Link"
-msgstr ""
+msgstr "لینک را تگ کنید"
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:691
 msgid ""
 "Assigns a title for navigation link block variation used in the block editor."
 msgstr ""
+"عنوانی را برای تغییر بلوک پیوند پیمایش مورد استفاده در ویرایشگر بلوک اختصاص "
+"می دهد."
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:672
 msgid "← Go to tags"
@@ -2977,6 +3099,8 @@ msgstr "→ برو به برچسب‌ها"
 msgid ""
 "Assigns the text used to link back to the main index after updating a term."
 msgstr ""
+"پس از به‌روزرسانی یک عبارت، متن مورد استفاده برای پیوند دادن به فهرست اصلی را "
+"اختصاص می‌دهد."
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:670
 msgid "Back To Items"
@@ -2993,15 +3117,15 @@ msgstr "فهرست برچسب‌ها"
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:650
 msgid "Assigns text to the table hidden heading."
-msgstr ""
+msgstr "متنی را به عنوان پنهان جدول اختصاص می دهد."
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:631
 msgid "Tags list navigation"
-msgstr ""
+msgstr "پیمایش لیست برچسب ها"
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:630
 msgid "Assigns text to the table pagination hidden heading."
-msgstr ""
+msgstr "متن را به عنوان پنهان صفحه بندی جدول اختصاص می دهد."
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:606
 msgid "Filter by category"
@@ -3009,7 +3133,7 @@ msgstr "پالایش بر اساس دسته‌بندی"
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:605
 msgid "Assigns text to the filter button in the posts lists table."
-msgstr ""
+msgstr "متن را به دکمه فیلتر در جدول لیست پست ها اختصاص می دهد."
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:604
 msgid "Filter By Item"
@@ -3026,14 +3150,16 @@ msgid ""
 "The description is not prominent by default; however, some themes may show "
 "it."
 msgstr ""
+"شرح به طور پیش فرض برجسته نیست. با این حال، برخی از موضوعات ممکن است آن را "
+"نشان دهد."
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:583
 msgid "Describes the Description field on the Edit Tags screen."
-msgstr ""
+msgstr "فیلد توضیحات را در صفحه ویرایش برچسب ها توصیف می کند."
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:582
 msgid "Description Field Description"
-msgstr ""
+msgstr "توضیحات فیلد توضیحات"
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:563
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:564
@@ -3041,14 +3167,16 @@ msgid ""
 "Assign a parent term to create a hierarchy. The term Jazz, for example, "
 "would be the parent of Bebop and Big Band"
 msgstr ""
+"برای ایجاد یک سلسله مراتب یک عبارت والد اختصاص دهید. برای مثال، اصطلاح جاز، "
+"والد Bebop و Big Band است"
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:562
 msgid "Describes the Parent field on the Edit Tags screen."
-msgstr ""
+msgstr "فیلد والد را در صفحه ویرایش برچسب ها توصیف می کند."
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:561
 msgid "Parent Field Description"
-msgstr ""
+msgstr "توضیحات فیلد والدین"
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:547
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:548
@@ -3056,27 +3184,29 @@ msgid ""
 "The \"slug\" is the URL-friendly version of the name. It is usually all "
 "lower case and contains only letters, numbers, and hyphens."
 msgstr ""
+"\"Slug\" نسخه URL مناسب این نام است. معمولا تمام حروف کوچک است و فقط شامل "
+"حروف، اعداد و خط فاصله است."
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:546
 msgid "Describes the Slug field on the Edit Tags screen."
-msgstr ""
+msgstr "فیلد Slug را در صفحه ویرایش برچسب ها توصیف می کند."
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:545
 msgid "Slug Field Description"
-msgstr ""
+msgstr "توضیحات فیلد اسلگ"
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:531
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:532
 msgid "The name is how it appears on your site"
-msgstr ""
+msgstr "نام این است که چگونه در سایت شما ظاهر می شود"
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:530
 msgid "Describes the Name field on the Edit Tags screen."
-msgstr ""
+msgstr "فیلد نام را در صفحه ویرایش برچسب ها توصیف می کند."
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:529
 msgid "Name Field Description"
-msgstr ""
+msgstr "شرح فیلد نام"
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:516
 msgid "No tags"
@@ -3087,6 +3217,8 @@ msgid ""
 "Assigns the text displayed in the posts and media list tables when no tags "
 "or categories are available."
 msgstr ""
+"وقتی هیچ برچسب یا دسته‌ای در دسترس نباشد، متن نمایش داده شده در جدول‌های فهرست "
+"رسانه‌ها و پست‌ها را اختصاص می‌دهد."
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:514
 msgid "No Terms"
@@ -3107,6 +3239,10 @@ msgid ""
 "the taxonomy meta box when no tags are available, and assigns the text used "
 "in the terms list table when there are no items for a taxonomy."
 msgstr ""
+"زمانی که هیچ برچسبی در دسترس نباشد، متن نمایش داده شده را هنگام کلیک کردن بر "
+"روی متن «انتخاب از پرکاربردترین» در متا باکس طبقه‌بندی اختصاص می‌دهد، و وقتی "
+"هیچ موردی برای طبقه‌بندی وجود ندارد، متن مورد استفاده در جدول فهرست اصطلاحات "
+"را اختصاص می‌دهد."
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:493
 msgid "Not Found"
@@ -3114,32 +3250,35 @@ msgstr "یافت نشد"
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:472
 msgid "Assigns text to the Title field of the Most Used tab."
-msgstr ""
+msgstr "متن را به فیلد عنوان برگه بیشترین استفاده اختصاص می دهد."
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:471
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:473
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:474
 msgid "Most Used"
-msgstr ""
+msgstr "بیشترین استفاده"
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:453
 msgid "Choose from the most used tags"
-msgstr ""
+msgstr "از بین برچسب های پر استفاده انتخاب کنید"
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:452
 msgid ""
 "Assigns the 'choose from most used' text used in the meta box when "
 "JavaScript is disabled. Only used on non-hierarchical taxonomies."
 msgstr ""
+"وقتی جاوا اسکریپت غیرفعال است، متن «انتخاب از پرکاربردترین» را که در متا "
+"باکس استفاده می‌شود، اختصاص می‌دهد. فقط در طبقه بندی های غیر سلسله مراتبی "
+"استفاده می شود."
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:451
 msgid "Choose From Most Used"
-msgstr ""
+msgstr "از پرکاربردترین ها را انتخاب کنید"
 
 #. translators: %s Plural form of taxonomy name
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:447
 msgid "Choose from the most used %s"
-msgstr ""
+msgstr "از %s بیشترین استفاده را انتخاب کنید"
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:427
 msgid "Add or remove tags"
@@ -3150,6 +3289,8 @@ msgid ""
 "Assigns the add or remove items text used in the meta box when JavaScript is "
 "disabled. Only used on non-hierarchical taxonomies"
 msgstr ""
+"وقتی جاوا اسکریپت غیرفعال است، متن افزودن یا حذف موارد مورد استفاده در جعبه "
+"متا را اختصاص می دهد. فقط در طبقه بندی های غیر سلسله مراتبی استفاده می شود"
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:425
 msgid "Add Or Remove Items"
@@ -3169,6 +3310,8 @@ msgid ""
 "Assigns the separate item with commas text used in the taxonomy meta box. "
 "Only used on non-hierarchical taxonomies."
 msgstr ""
+"آیتم جداگانه را با متن کاما مورد استفاده در جعبه متا طبقه بندی اختصاص می "
+"دهد. فقط در طبقه بندی های غیر سلسله مراتبی استفاده می شود."
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:399
 msgid "Separate Items With Commas"
@@ -3186,6 +3329,8 @@ msgstr "برچسب‌های محبوب"
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:374
 msgid "Assigns popular items text. Only used for non-hierarchical taxonomies."
 msgstr ""
+"متن مربوط به آیتم‌های محبوب را اختصاص می‌دهد. فقط برای طبقه‌بندی‌های غیرسلسله "
+"مراتبی استفاده می‌شود."
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:373
 msgid "Popular Items"
@@ -3235,15 +3380,15 @@ msgstr "والد %s"
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:287
 msgid "New Tag Name"
-msgstr "نام برچسب تازه"
+msgstr "نام برچسب جدید"
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:286
 msgid "Assigns the new item name text."
-msgstr "متن نام مورد تازه را اختصاص می‌دهد."
+msgstr "متن نام مورد جدید را اختصاص می‌دهد."
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:285
 msgid "New Item Name"
-msgstr "نام مورد تازه"
+msgstr "نام مورد جدید"
 
 #. translators: %s Singular form of taxonomy name
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:282
@@ -3252,23 +3397,23 @@ msgstr "نام %s جدید"
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:267
 msgid "Add New Tag"
-msgstr "افزودن برچسب تازه"
+msgstr "افزودن برچسب جدید"
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:266
 msgid "Assigns the add new item text."
-msgstr "متن «افزودن مورد تازه» را اختصاص می‌دهد."
+msgstr "متن «افزودن مورد جدید» را اختصاص می‌دهد."
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:247
 msgid "Update Tag"
-msgstr ""
+msgstr "به روز رسانی برچسب"
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:246
 msgid "Assigns the update item text."
-msgstr ""
+msgstr "متن مورد به‌روزرسانی را اختصاص می‌دهد."
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:245
 msgid "Update Item"
-msgstr ""
+msgstr "به روز رسانی مورد"
 
 #. translators: %s Singular form of taxonomy name
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:242
@@ -3281,7 +3426,7 @@ msgstr "مشاهده‌ی برچسب"
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:226
 msgid "In the admin bar to view term during editing."
-msgstr ""
+msgstr "در نوار مدیریت برای مشاهده عبارت در حین ویرایش."
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:207
 msgid "Edit Tag"
@@ -3289,7 +3434,7 @@ msgstr "ویرایش برچسب"
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:206
 msgid "At the top of the editor screen when editing a term."
-msgstr ""
+msgstr "در بالای صفحه ویرایشگر هنگام ویرایش یک عبارت."
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:187
 msgid "All Tags"
@@ -3297,11 +3442,11 @@ msgstr "همه‌ی برچسب‌ها"
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:186
 msgid "Assigns the all items text."
-msgstr ""
+msgstr "متن همه موارد را اختصاص می دهد."
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:167
 msgid "Assigns the menu name text."
-msgstr ""
+msgstr "متن نام منو را اختصاص می دهد."
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:166
 msgid "Menu Label"
@@ -3309,76 +3454,80 @@ msgstr "برچسب فهرست"
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:140
 msgid "Active taxonomies are enabled and registered with WordPress."
-msgstr ""
+msgstr "طبقه بندی های فعال با وردپرس فعال و ثبت می شوند."
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:124
 msgid "A descriptive summary of the taxonomy."
-msgstr ""
+msgstr "خلاصه ای توصیفی از طبقه بندی."
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:104
 msgid "A descriptive summary of the term."
-msgstr ""
+msgstr "خلاصه توصیفی از اصطلاح."
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:103
 msgid "Term Description"
-msgstr ""
+msgstr "شرح اصطلاح"
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:85
 msgid "Single word, no spaces. Underscores and dashes allowed."
-msgstr ""
+msgstr "تک کلمه، بدون فاصله. زیرخط و خط تیره مجاز است."
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:84
 msgid "Term Slug"
-msgstr ""
+msgstr "بایگانی اصطلاح"
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:65
 msgid "The name of the default term."
-msgstr ""
+msgstr "نام اصطلاح پیش فرض."
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:64
 msgid "Term Name"
-msgstr ""
+msgstr "نام اصطلاح"
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:50
 msgid ""
 "Create a term for the taxonomy that cannot be deleted. It will not be "
 "selected for posts by default."
 msgstr ""
+"یک اصطلاح برای طبقه بندی ایجاد کنید که قابل حذف نباشد. به طور پیش فرض برای "
+"پست ها انتخاب نمی شود."
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:49
 msgid "Default Term"
-msgstr ""
+msgstr "اصطلاح پیش فرض"
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:37
 msgid ""
 "Whether terms in this taxonomy should be sorted in the order they are "
 "provided to `wp_set_object_terms()`."
 msgstr ""
+"اینکه آیا عبارات در این طبقه بندی باید به ترتیبی که در "
+"«wp_set_object_terms()» ارائه شده است مرتب شوند."
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:36
 msgid "Sort Terms"
-msgstr ""
+msgstr "مرتب سازی شرایط"
 
 #: includes/admin/views/acf-post-type/list-empty.php:18
 msgid "Add Post Type"
-msgstr "افزودن نوع پست"
+msgstr "افزودن نوع نوشته"
 
 #: includes/admin/views/acf-post-type/list-empty.php:17
 msgid ""
 "Expand the functionality of WordPress beyond standard posts and pages with "
 "custom post types."
 msgstr ""
-"قابلیت‌های وردپرس را فراتر از نوشته‌ها و برگه‌های استاندارد با انواع پست سفارشی "
-"توسعه دهید."
+"قابلیت‌های وردپرس را فراتر از نوشته‌ها و برگه‌های استاندارد با انواع نوشته "
+"سفارشی توسعه دهید."
 
 #: includes/admin/views/acf-post-type/list-empty.php:16
 msgid "Add Your First Post Type"
-msgstr "اولین نوع پست سفارشی خود را اضافه کنید"
+msgstr "اولین نوع نوشته سفارشی خود را اضافه کنید"
 
 #: includes/admin/views/acf-post-type/basic-settings.php:146
 #: includes/admin/views/acf-taxonomy/basic-settings.php:144
 msgid "I know what I'm doing, show me all the options."
-msgstr ""
+msgstr "من می دانم دارم چه کار می کنم، همه گزینه ها را به من نشان دهید."
 
 #: includes/admin/views/acf-post-type/basic-settings.php:145
 #: includes/admin/views/acf-taxonomy/basic-settings.php:143
@@ -3387,7 +3536,7 @@ msgstr "پیکربندی پیشرفته"
 
 #: includes/admin/views/acf-post-type/basic-settings.php:133
 msgid "Hierarchical post types can have descendants (like pages)."
-msgstr ""
+msgstr "انواع پست سلسله مراتبی می توانند دارای نوادگان (مانند صفحات) باشند."
 
 #: includes/admin/views/acf-post-type/basic-settings.php:132
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:1009
@@ -3397,7 +3546,7 @@ msgstr "سلسله‌مراتبی"
 
 #: includes/admin/views/acf-post-type/basic-settings.php:117
 msgid "Visible on the frontend and in the admin dashboard."
-msgstr ""
+msgstr "در قسمت جلو و در داشبورد مدیریت قابل مشاهده است."
 
 #: includes/admin/views/acf-post-type/basic-settings.php:116
 #: includes/admin/views/acf-taxonomy/basic-settings.php:115
@@ -3411,7 +3560,7 @@ msgstr "movie"
 
 #: includes/admin/views/acf-post-type/basic-settings.php:67
 msgid "Lower case letters, underscores and dashes only, Max 20 characters."
-msgstr ""
+msgstr "فقط حروف کوچک، زیرخط و خط تیره، حداکثر 20 کاراکتر."
 
 #. translators: example post type
 #: includes/admin/views/acf-post-type/basic-settings.php:51
@@ -3456,7 +3605,7 @@ msgstr ""
 #: includes/admin/views/acf-post-type/advanced-settings.php:1284
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:1201
 msgid "The base URL for the post type REST API URLs."
-msgstr ""
+msgstr "آدرس اینترنتی پایه برای آدرس‌های اینترنتی REST API از نوع نوشته."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:1283
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:1200
@@ -3467,6 +3616,8 @@ msgstr ""
 msgid ""
 "Exposes this post type in the REST API. Required to use the block editor."
 msgstr ""
+"این نوع نوشته را در REST API نمایش می‌دهد. برای استفاده از ویرایشگر بلوک لازم "
+"است."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:1268
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:1183
@@ -3535,7 +3686,7 @@ msgstr "بایگانی"
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:1137
 msgid "Pagination support for the items URLs such as the archives."
-msgstr ""
+msgstr "پشتیبانی از صفحه‌بندی برای آدرس‌های اینترنتی اقلام مانند بایگانی‌ها."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:1136
 msgid "Pagination"
@@ -3543,7 +3694,7 @@ msgstr "صفحه‌بندی"
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:1119
 msgid "RSS feed URL for the post type items."
-msgstr ""
+msgstr "آدرس فید RSS برای موارد از نوع نوشته."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:1118
 msgid "Feed URL"
@@ -3572,7 +3723,7 @@ msgstr ""
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:1063
 msgid "Permalinks for this post type are disabled."
-msgstr ""
+msgstr "پیوندهای یکتا برای این نوع نوشته غیرفعال هستند."
 
 #. translators: this string will be appended with the new permalink structure.
 #: includes/admin/views/acf-post-type/advanced-settings.php:1062
@@ -3581,11 +3732,13 @@ msgid ""
 "Rewrite the URL using a custom slug defined in the input below. Your "
 "permalink structure will be"
 msgstr ""
+"آدرس اینترنتی را با استفاده از یک slug سفارشی که در ورودی زیر تعریف شده است، "
+"بازنویسی کنید. ساختار پیوند یکتای شما به صورت زیر خواهد بود:"
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:1054
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:944
 msgid "No Permalink (prevent URL rewriting)"
-msgstr ""
+msgstr "بدون پیوند یکتا (جلوگیری از بازنویسی پیوند)"
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:1053
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:943
@@ -3596,7 +3749,7 @@ msgstr "پیوند یکتای سفارشی"
 #: includes/admin/views/acf-post-type/advanced-settings.php:1222
 #: includes/admin/views/acf-post-type/basic-settings.php:66
 msgid "Post Type Key"
-msgstr "کلید نوع پست"
+msgstr "کلید نوع نوشته"
 
 #. translators: this string will be appended with the new permalink structure.
 #: includes/admin/views/acf-post-type/advanced-settings.php:1050
@@ -3605,43 +3758,45 @@ msgid ""
 "Rewrite the URL using the post type key as the slug. Your permalink "
 "structure will be"
 msgstr ""
+"URL را با استفاده از کلید نوع پست به عنوان اسلاگ بازنویسی کنید. ساختار پیوند "
+"ثابت شما خواهد بود"
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:1048
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:939
 msgid "Permalink Rewrite"
-msgstr ""
+msgstr "بازنویسی پیوند ثابت"
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:1034
 msgid "Delete items by a user when that user is deleted."
-msgstr ""
+msgstr "هنگامی که کاربر حذف می شود، موارد توسط یک کاربر را حذف کنید."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:1033
 msgid "Delete With User"
-msgstr ""
+msgstr "حذف با کاربرحذف با کاربر"
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:1019
 msgid "Allow the post type to be exported from 'Tools' > 'Export'."
-msgstr ""
+msgstr "اجازه دهید نوع پست از «ابزار» > «صادر کردن» صادر شود."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:1018
 msgid "Can Export"
-msgstr ""
+msgstr "می تواند صادر کند"
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:987
 msgid "Optionally provide a plural to be used in capabilities."
-msgstr ""
+msgstr "به صورت اختیاری یک جمع برای استفاده در قابلیت ها ارائه کنید."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:986
 msgid "Plural Capability Name"
-msgstr ""
+msgstr "جمع نام قابلیت"
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:968
 msgid "Choose another post type to base the capabilities for this post type."
-msgstr ""
+msgstr "نوع پست دیگری را برای پایه گذاری قابلیت های این نوع پست انتخاب کنید."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:967
 msgid "Singular Capability Name"
-msgstr ""
+msgstr "نام قابلیت مفرد"
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:953
 msgid ""
@@ -3649,10 +3804,13 @@ msgid ""
 "capability names, eg. edit_post, delete_posts. Enable to use post type "
 "specific capabilities, eg. edit_{singular}, delete_{plural}."
 msgstr ""
+"به‌طور پیش‌فرض، قابلیت‌های نوع پست، نام قابلیت «پست» را به ارث می‌برند، به عنوان "
+"مثال. edit_post، delete_posts. فعال کردن برای استفاده از قابلیت های خاص نوع "
+"پست، به عنوان مثال. edit_{singular}, delete_{plural}."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:952
 msgid "Rename Capabilities"
-msgstr ""
+msgstr "تغییر نام قابلیت ها"
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:937
 msgid "Exclude From Search"
@@ -3664,6 +3822,8 @@ msgid ""
 "Allow items to be added to menus in the 'Appearance' > 'Menus' screen. Must "
 "be turned on in 'Screen options'."
 msgstr ""
+"اجازه دهید موارد در صفحه 'ظاهر' > 'منوها' به منوها اضافه شوند. باید در "
+"'گزینه‌های صفحه' فعال شود."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:923
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:882
@@ -3672,7 +3832,7 @@ msgstr ""
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:905
 msgid "Appears as an item in the 'New' menu in the admin bar."
-msgstr ""
+msgstr "به عنوان یک آیتم در منوی «جدید» در نوار مدیریت نمایش داده می‌شود."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:904
 msgid "Show In Admin Bar"
@@ -3680,7 +3840,7 @@ msgstr "نمایش در نوار مدیریت"
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:870
 msgid "Custom Meta Box Callback"
-msgstr ""
+msgstr "فراخوانی سفارشی متا باکس"
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:831
 #: includes/fields/class-acf-field-icon_picker.php:652
@@ -3689,7 +3849,7 @@ msgstr "آیکون منو"
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:787
 msgid "The position in the sidebar menu in the admin dashboard."
-msgstr ""
+msgstr "موقعیت در منوی کناری در داشبورد مدیریت."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:786
 msgid "Menu Position"
@@ -3701,6 +3861,9 @@ msgid ""
 "an existing top level item is supplied here, the post type will be added as "
 "a submenu item under it."
 msgstr ""
+"به طور پیش‌فرض، این نوع نوشته یک آیتم سطح بالای جدید در منوی مدیریت دریافت "
+"می‌کند. اگر یک آیتم سطح بالای موجود در اینجا ارائه شود، این نوع نوشته به "
+"عنوان یک آیتم زیرمنو در زیر آن اضافه خواهد شد."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:767
 msgid "Admin Menu Parent"
@@ -3709,7 +3872,7 @@ msgstr ""
 #: includes/admin/views/acf-post-type/advanced-settings.php:748
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:743
 msgid "Admin editor navigation in the sidebar menu."
-msgstr ""
+msgstr "ناوبری ویرایشگر مدیریت در منوی نوار کناری."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:747
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:742
@@ -3719,7 +3882,7 @@ msgstr "نمایش در نوار مدیریت"
 #: includes/admin/views/acf-post-type/advanced-settings.php:734
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:728
 msgid "Items can be edited and managed in the admin dashboard."
-msgstr ""
+msgstr "موارد را می‌توان در داشبورد مدیریت ویرایش و مدیریت کرد."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:733
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:727
@@ -3732,7 +3895,7 @@ msgstr "یک پیوند به یک نوشته."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:702
 msgid "Description for a navigation link block variation."
-msgstr ""
+msgstr "توضیحاتی برای تغییر بلوک لینک ناوبری."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:701
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:711
@@ -3750,31 +3913,31 @@ msgstr "پیوند نوشته"
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:681
 msgid "Title for a navigation link block variation."
-msgstr ""
+msgstr "عنوان برای یک بلوک پیوند ناوبری با قابلیت تغییر."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:680
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:690
 msgid "Item Link"
-msgstr ""
+msgstr "لینک آیتم"
 
 #. translators: %s Singular form of post type name
 #. translators: %s Singular form of taxonomy name
 #: includes/admin/views/acf-post-type/advanced-settings.php:677
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:687
 msgid "%s Link"
-msgstr ""
+msgstr "لینک %s"
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:662
 msgid "Post updated."
-msgstr ""
+msgstr "نوشته آپدیت شد."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:661
 msgid "In the editor notice after an item is updated."
-msgstr ""
+msgstr "در اطلاعیه ویرایشگر پس از به‌روزرسانی یک مورد."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:660
 msgid "Item Updated"
-msgstr ""
+msgstr "مورد بروزرسانی شد"
 
 #. translators: %s Singular form of post type name
 #: includes/admin/views/acf-post-type/advanced-settings.php:657
@@ -3787,7 +3950,7 @@ msgstr "نوشته زمان‌بندی شد."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:641
 msgid "In the editor notice after scheduling an item."
-msgstr ""
+msgstr "در اطلاعیه سردبیر پس از زمان‌بندی یک مورد."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:640
 msgid "Item Scheduled"
@@ -3804,11 +3967,11 @@ msgstr "نوشته به پیش‌نویس بازگشت."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:621
 msgid "In the editor notice after reverting an item to draft."
-msgstr ""
+msgstr "در اطلاعیه ویرایشگر پس از بازگرداندن یک مورد به پیش‌نویس."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:620
 msgid "Item Reverted To Draft"
-msgstr ""
+msgstr "آیتم به پیش نویس برگردانده شد"
 
 #. translators: %s Singular form of post type name
 #: includes/admin/views/acf-post-type/advanced-settings.php:617
@@ -3821,7 +3984,7 @@ msgstr "نوشته به صورت خصوصی منتشر شد."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:601
 msgid "In the editor notice after publishing a private item."
-msgstr ""
+msgstr "در اطلاعیه ویرایشگر پس از انتشار یک مورد خصوصی."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:600
 msgid "Item Published Privately"
@@ -3838,7 +4001,7 @@ msgstr "نوشته منتشر شد."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:581
 msgid "In the editor notice after publishing an item."
-msgstr ""
+msgstr "در اطلاعیه ویرایشگر پس از انتشار یک مورد."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:580
 msgid "Item Published"
@@ -3856,6 +4019,7 @@ msgstr "فهرست نوشته‌ها"
 #: includes/admin/views/acf-post-type/advanced-settings.php:561
 msgid "Used by screen readers for the items list on the post type list screen."
 msgstr ""
+"توسط صفحه‌خوان‌ها برای فهرست موارد در صفحه فهرست انواع نوشته استفاده می‌شود."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:560
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:649
@@ -3878,6 +4042,8 @@ msgid ""
 "Used by screen readers for the filter list pagination on the post type list "
 "screen."
 msgstr ""
+"توسط صفحه‌خوان‌ها برای صفحه‌بندی فهرست فیلتر در صفحه فهرست نوع نوشته استفاده "
+"می‌شود."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:540
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:629
@@ -3900,6 +4066,8 @@ msgid ""
 "Used by screen readers for the filter by date heading on the post type list "
 "screen."
 msgstr ""
+"توسط صفحه‌خوان‌ها برای فیلتر کردن بر اساس عنوان تاریخ در صفحه فهرست انواع "
+"نوشته استفاده می‌شود."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:519
 msgid "Filter Items By Date"
@@ -3919,6 +4087,8 @@ msgid ""
 "Used by screen readers for the filter links heading on the post type list "
 "screen."
 msgstr ""
+"توسط خوانندگان صفحه نمایش برای فیلتر کردن عنوان لینک‌ها در صفحه فهرست انواع "
+"نوشته استفاده می‌شود."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:498
 msgid "Filter Items List"
@@ -3932,6 +4102,7 @@ msgstr ""
 #: includes/admin/views/acf-post-type/advanced-settings.php:478
 msgid "In the media modal showing all media uploaded to this item."
 msgstr ""
+"در پنجره‌ی چندرسانه‌ای، تمام رسانه‌های آپلود شده در این مورد نمایش داده می‌شود."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:477
 msgid "Uploaded To This Item"
@@ -3944,20 +4115,20 @@ msgstr "در این %s بارگذاری شد"
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:458
 msgid "Insert into post"
-msgstr "درج در نوشته"
+msgstr "افزودن به نوشته"
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:457
 msgid "As the button label when adding media to content."
-msgstr ""
+msgstr "به عنوان برچسب دکمه هنگام افزودن رسانه به محتوا."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:456
 msgid "Insert Into Media Button"
-msgstr ""
+msgstr "دکمه درج در رسانه"
 
 #. translators: %s Singular form of post type name
 #: includes/admin/views/acf-post-type/advanced-settings.php:452
 msgid "Insert into %s"
-msgstr "درج در %s"
+msgstr "افزودن به %s"
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:437
 msgid "Use as featured image"
@@ -3967,6 +4138,7 @@ msgstr "استفاده به عنوان تصویر شاخص"
 msgid ""
 "As the button label for selecting to use an image as the featured image."
 msgstr ""
+"به عنوان برچسب دکمه برای انتخاب استفاده از یک تصویر به عنوان تصویر شاخص."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:435
 msgid "Use Featured Image"
@@ -3978,7 +4150,7 @@ msgstr "حذف تصویر شاخص"
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:421
 msgid "As the button label when removing the featured image."
-msgstr ""
+msgstr "به عنوان برچسب دکمه هنگام حذف تصویر شاخص."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:420
 msgid "Remove Featured Image"
@@ -3990,7 +4162,7 @@ msgstr "تنظیم تصویر شاخص"
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:406
 msgid "As the button label when setting the featured image."
-msgstr ""
+msgstr "به عنوان برچسب دکمه هنگام تنظیم تصویر شاخص."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:405
 msgid "Set Featured Image"
@@ -4002,19 +4174,19 @@ msgstr "تصویر شاخص"
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:391
 msgid "In the editor used for the title of the featured image meta box."
-msgstr ""
+msgstr "در ویرایشگری که برای عنوان متا باکس تصویر شاخص استفاده می‌شود."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:390
 msgid "Featured Image Meta Box"
-msgstr ""
+msgstr "متا باکس تصویر شاخص"
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:377
 msgid "Post Attributes"
-msgstr ""
+msgstr "ویژگی‌های نوشته"
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:376
 msgid "In the editor used for the title of the post attributes meta box."
-msgstr ""
+msgstr "در ویرایشگری که برای عنوان پست استفاده می‌شود، متا باکس ویژگی‌های نوشته."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:375
 msgid "Attributes Meta Box"
@@ -4036,6 +4208,10 @@ msgid ""
 "appears when editing menus in 'Live Preview' mode and a custom archive slug "
 "has been provided."
 msgstr ""
+"موارد «بایگانی نوع پست» با این برچسب را به لیست پست‌هایی که هنگام افزودن "
+"موارد به منوی موجود در CPT با بایگانی فعال نشان داده می‌شوند، اضافه می‌کند. "
+"فقط هنگام ویرایش منوها در حالت «پیش‌نمایش زنده» ظاهر می‌شود و یک نامک بایگانی "
+"سفارشی ارائه شده است."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:355
 msgid "Archives Nav Menu"
@@ -4054,6 +4230,7 @@ msgstr "هیچ نوشته‌ای در زباله‌دان یافت نشد"
 msgid ""
 "At the top of the post type list screen when there are no posts in the trash."
 msgstr ""
+"در بالای صفحه فهرست انواع پست، زمانی که هیچ نوشته ای در سطل زباله وجود ندارد."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:335
 msgid "No Items Found in Trash"
@@ -4072,6 +4249,7 @@ msgstr "هیچ نوشته‌ای یافت نشد"
 msgid ""
 "At the top of the post type list screen when there are no posts to display."
 msgstr ""
+"در بالای صفحه فهرست انواع پست، زمانی که نوشته ای برای نمایش وجود ندارد."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:314
 msgid "No Items Found"
@@ -4090,7 +4268,7 @@ msgstr "جستجوی نوشته‌ها"
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:294
 msgid "At the top of the items screen when searching for an item."
-msgstr ""
+msgstr "هنگام جستجوی یک مورد، در بالای صفحه نمایش موارد."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:293
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:354
@@ -4110,7 +4288,7 @@ msgstr "برگهٔ والد:"
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:274
 msgid "For hierarchical types in the post type list screen."
-msgstr ""
+msgstr "برای انواع سلسله مراتبی در صفحه فهرست پست نوع."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:273
 msgid "Parent Item Prefix"
@@ -4125,21 +4303,21 @@ msgstr "والد %s:"
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:255
 msgid "New Post"
-msgstr "نوشتهٔ تازه"
+msgstr "نوشتهٔ جدید"
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:253
 msgid "New Item"
-msgstr "مورد تازه"
+msgstr "مورد جدید"
 
 #. translators: %s Singular form of post type name
 #: includes/admin/views/acf-post-type/advanced-settings.php:250
 msgid "New %s"
-msgstr "%s تازه"
+msgstr "%s جدید"
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:215
 #: includes/admin/views/acf-post-type/advanced-settings.php:235
 msgid "Add New Post"
-msgstr "افزودن نوشتۀ تازه"
+msgstr "افزودن نوشتۀ جدید"
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:214
 msgid "At the top of the editor screen when adding a new item."
@@ -4148,7 +4326,7 @@ msgstr "در بالای صفحه‌ی ویرایشگر، در هنگام افز�
 #: includes/admin/views/acf-post-type/advanced-settings.php:213
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:265
 msgid "Add New Item"
-msgstr "افزودن مورد تازه"
+msgstr "افزودن مورد جدید"
 
 #. translators: %s Singular form of post type name
 #. translators: %s Singular form of taxonomy name
@@ -4156,7 +4334,7 @@ msgstr "افزودن مورد تازه"
 #: includes/admin/views/acf-post-type/advanced-settings.php:230
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:262
 msgid "Add New %s"
-msgstr "افزودن %s تازه"
+msgstr "افزودن جدید %s"
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:195
 msgid "View Posts"
@@ -4167,6 +4345,8 @@ msgid ""
 "Appears in the admin bar in the 'All Posts' view, provided the post type "
 "supports archives and the home page is not an archive of that post type."
 msgstr ""
+"در نوار مدیریت در نمای \"همه پست ها\" ظاهر می شود، مشروط بر اینکه نوع پست از "
+"بایگانی ها پشتیبانی می کند و صفحه اصلی بایگانی از آن نوع پست نباشد."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:193
 msgid "View Items"
@@ -4178,7 +4358,7 @@ msgstr "نمایش نوشته"
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:174
 msgid "In the admin bar to view item when editing it."
-msgstr ""
+msgstr "در نوار مدیریت برای مشاهده مورد هنگام ویرایش آن."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:173
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:225
@@ -4200,7 +4380,7 @@ msgstr "ویرایش نوشته"
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:154
 msgid "At the top of the editor screen when editing an item."
-msgstr ""
+msgstr "در بالای صفحه ویرایشگر هنگام ویرایش یک مورد."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:153
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:205
@@ -4222,7 +4402,7 @@ msgstr "همه‌ی نوشته‌ها"
 #: includes/admin/views/acf-post-type/advanced-settings.php:234
 #: includes/admin/views/acf-post-type/advanced-settings.php:254
 msgid "In the post type submenu in the admin dashboard."
-msgstr ""
+msgstr "در پست منوی فرعی را در داشبورد مدیریت تایپ کنید."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:133
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:185
@@ -4238,7 +4418,7 @@ msgstr "همه %s"
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:114
 msgid "Admin menu name for the post type."
-msgstr ""
+msgstr "نام منوی مدیریت برای نوع پست."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:113
 msgid "Menu Name"
@@ -4256,11 +4436,11 @@ msgstr "بازتولید"
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:88
 msgid "Active post types are enabled and registered with WordPress."
-msgstr ""
+msgstr "انواع پست فعال با وردپرس فعال و ثبت می شوند."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:72
 msgid "A descriptive summary of the post type."
-msgstr ""
+msgstr "خلاصه توصیفی از نوع پست."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:57
 msgid "Add Custom"
@@ -4268,11 +4448,11 @@ msgstr "افزودن سفارشی"
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:51
 msgid "Enable various features in the content editor."
-msgstr ""
+msgstr "ویژگی های مختلف را در ویرایشگر محتوا فعال کنید."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:40
 msgid "Post Formats"
-msgstr ""
+msgstr "فرمت های پست"
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:34
 msgid "Editor"
@@ -4284,7 +4464,8 @@ msgstr ""
 
 #: includes/admin/views/acf-post-type/basic-settings.php:97
 msgid "Select existing taxonomies to classify items of the post type."
-msgstr "طبقه‌بندی‌های موجود را برای دسته‌بندی کردن آیتم‌های نوع پست انتخاب نمایید."
+msgstr ""
+"طبقه‌بندی‌های موجود را برای دسته‌بندی کردن آیتم‌های نوع نوشته انتخاب نمایید."
 
 #: includes/admin/views/acf-field-group/field.php:168
 msgid "Browse Fields"
@@ -4296,30 +4477,30 @@ msgstr "چیزی برای درون‌ریزی وجود ندارد"
 
 #: includes/admin/tools/class-acf-admin-tool-import.php:293
 msgid ". The Custom Post Type UI plugin can be deactivated."
-msgstr ""
+msgstr "افزونه‌ی رابط کاربری نوع پست سفارشی را می‌توان غیرفعال کرد."
 
 #. translators: %d - number of items imported from CPTUI
 #: includes/admin/tools/class-acf-admin-tool-import.php:284
 msgid "Imported %d item from Custom Post Type UI -"
 msgid_plural "Imported %d items from Custom Post Type UI -"
-msgstr[0] ""
+msgstr[0] "%d مورد از رابط کاربری نوع نوشته سفارشی درون ریزی شد -"
 
 #: includes/admin/tools/class-acf-admin-tool-import.php:268
 msgid "Failed to import taxonomies."
-msgstr ""
+msgstr "درون ریزی طبقه بندی انجام نشد."
 
 #: includes/admin/tools/class-acf-admin-tool-import.php:250
 msgid "Failed to import post types."
-msgstr ""
+msgstr "درون ریزی انواع پست انجام نشد."
 
 #: includes/admin/tools/class-acf-admin-tool-import.php:239
 msgid "Nothing from Custom Post Type UI plugin selected for import."
-msgstr ""
+msgstr "هیچ چیزی از افزونه UI نوع پست سفارشی برای وارد کردن انتخاب نشده است."
 
 #: includes/admin/tools/class-acf-admin-tool-import.php:215
 msgid "Imported 1 item"
 msgid_plural "Imported %s items"
-msgstr[0] ""
+msgstr[0] "%s مورد درون ریزی شده"
 
 #: includes/admin/tools/class-acf-admin-tool-import.php:130
 msgid ""
@@ -4327,11 +4508,14 @@ msgid ""
 "exists will overwrite the settings for the existing Post Type or Taxonomy "
 "with those of the import."
 msgstr ""
+"وارد کردن یک نوع پست یا طبقه‌بندی با همان کلیدی که از قبل وجود دارد، تنظیمات "
+"مربوط به نوع پست یا طبقه‌بندی موجود را با تنظیمات مربوط به واردات بازنویسی "
+"می‌کند."
 
 #: includes/admin/tools/class-acf-admin-tool-import.php:119
 #: includes/admin/tools/class-acf-admin-tool-import.php:135
 msgid "Import from Custom Post Type UI"
-msgstr ""
+msgstr "وارد کردن از رابط کاربری سفارشی نوع پست"
 
 #: includes/admin/tools/class-acf-admin-tool-export.php:363
 msgid ""
@@ -4342,6 +4526,11 @@ msgid ""
 "functions.php file or include it within an external file, then deactivate or "
 "delete the items from the ACF admin."
 msgstr ""
+"کد زیر را می توان برای ثبت یک نسخه محلی از موارد انتخاب شده استفاده کرد. "
+"ذخیره گروه‌های فیلد، انواع پست یا طبقه‌بندی به صورت محلی می‌تواند مزایای زیادی "
+"مانند زمان بارگذاری سریع‌تر، کنترل نسخه و فیلدها/تنظیمات پویا را ارائه دهد. "
+"به سادگی کد زیر را در فایل functions.php تم خود کپی و جایگذاری کنید یا آن را "
+"در یک فایل خارجی قرار دهید، سپس موارد را از ادمین ACF غیرفعال یا حذف کنید."
 
 #: includes/admin/tools/class-acf-admin-tool-export.php:362
 msgid "Export - Generate PHP"
@@ -4362,7 +4551,7 @@ msgstr "نوع‌های نوشته را انتخاب کنید"
 #: includes/admin/tools/class-acf-admin-tool-export.php:164
 msgid "Exported 1 item."
 msgid_plural "Exported %s items."
-msgstr[0] ""
+msgstr[0] "%s مورد برون ریزی شد."
 
 #: includes/admin/post-types/admin-taxonomy.php:128
 msgid "Category"
@@ -4396,15 +4585,15 @@ msgstr "طبقه‌بندی ثبت شد."
 
 #: includes/admin/post-types/admin-taxonomy.php:54
 msgid "Taxonomy saved."
-msgstr ""
+msgstr "طبقه بندی ذخیره شد."
 
 #: includes/admin/post-types/admin-taxonomy.php:50
 msgid "Taxonomy deleted."
-msgstr ""
+msgstr "طبقه بندی حذف شد."
 
 #: includes/admin/post-types/admin-taxonomy.php:49
 msgid "Taxonomy updated."
-msgstr ""
+msgstr "طبقه بندی به روز شد."
 
 #: includes/admin/post-types/admin-taxonomies.php:356
 #: includes/admin/post-types/admin-taxonomy.php:154
@@ -4412,30 +4601,32 @@ msgid ""
 "This taxonomy could not be registered because its key is in use by another "
 "taxonomy registered by another plugin or theme."
 msgstr ""
+"این طبقه‌بندی نمی‌تواند ثبت شود زیرا کلید آن توسط طبقه‌بندی دیگری که توسط "
+"افزونه یا پوسته دیگری ثبت شده است، استفاده می‌شود."
 
 #. translators: %s number of taxonomies synchronized
 #: includes/admin/post-types/admin-taxonomies.php:338
 msgid "Taxonomy synchronized."
 msgid_plural "%s taxonomies synchronized."
-msgstr[0] ""
+msgstr[0] "%s طبقه‌بندی همگام‌سازی شد."
 
 #. translators: %s number of taxonomies duplicated
 #: includes/admin/post-types/admin-taxonomies.php:331
 msgid "Taxonomy duplicated."
 msgid_plural "%s taxonomies duplicated."
-msgstr[0] ""
+msgstr[0] "%s طبقه‌بندی تکرار شده است."
 
 #. translators: %s number of taxonomies deactivated
 #: includes/admin/post-types/admin-taxonomies.php:324
 msgid "Taxonomy deactivated."
 msgid_plural "%s taxonomies deactivated."
-msgstr[0] ""
+msgstr[0] "%s طبقه‌بندی غیرفعال شد."
 
 #. translators: %s number of taxonomies activated
 #: includes/admin/post-types/admin-taxonomies.php:317
 msgid "Taxonomy activated."
 msgid_plural "%s taxonomies activated."
-msgstr[0] ""
+msgstr[0] "%s طبقه‌بندی فعال شد."
 
 #: includes/admin/post-types/admin-taxonomies.php:118
 msgid "Terms"
@@ -4445,25 +4636,25 @@ msgstr "شرایط"
 #: includes/admin/post-types/admin-post-types.php:332
 msgid "Post type synchronized."
 msgid_plural "%s post types synchronized."
-msgstr[0] ""
+msgstr[0] "%s نوع نوشته همگام‌سازی شد."
 
 #. translators: %s number of post types duplicated
 #: includes/admin/post-types/admin-post-types.php:325
 msgid "Post type duplicated."
 msgid_plural "%s post types duplicated."
-msgstr[0] ""
+msgstr[0] "%s نوع نوشته تکراری است."
 
 #. translators: %s number of post types deactivated
 #: includes/admin/post-types/admin-post-types.php:318
 msgid "Post type deactivated."
 msgid_plural "%s post types deactivated."
-msgstr[0] ""
+msgstr[0] "%s نوع نوشته غیرفعال شد."
 
 #. translators: %s number of post types activated
 #: includes/admin/post-types/admin-post-types.php:311
 msgid "Post type activated."
 msgid_plural "%s post types activated."
-msgstr[0] ""
+msgstr[0] "%s نوع نوشته فعال شد."
 
 #: includes/admin/post-types/admin-post-types.php:93
 #: includes/admin/post-types/admin-taxonomies.php:116
@@ -4489,6 +4680,8 @@ msgid ""
 "This post type could not be registered because its key is in use by another "
 "post type registered by another plugin or theme."
 msgstr ""
+"این نوع پست را نمی توان ثبت کرد زیرا کلید آن توسط نوع پست دیگری که توسط "
+"افزونه یا پوسته دیگری ثبت شده است استفاده می شود."
 
 #: includes/admin/post-types/admin-post-type.php:127
 msgid "Pages"
@@ -4496,7 +4689,7 @@ msgstr "صفحات"
 
 #: includes/admin/admin-internal-post-type.php:347
 msgid "Link Existing Field Groups"
-msgstr ""
+msgstr "پیوند گروه های فیلد موجود"
 
 #. translators: %s post type name
 #: includes/admin/post-types/admin-post-type.php:81
@@ -4519,23 +4712,23 @@ msgstr "پیش‌نویس نوع نوشته بروزرسانی شد."
 
 #: includes/admin/post-types/admin-post-type.php:56
 msgid "Post type scheduled for."
-msgstr ""
+msgstr "نوع نوشته برنامه‌ریزی‌شده برای."
 
 #: includes/admin/post-types/admin-post-type.php:55
 msgid "Post type submitted."
-msgstr "نوع پست ارسال شد"
+msgstr "نوع نوشته ارسال شد."
 
 #: includes/admin/post-types/admin-post-type.php:54
 msgid "Post type saved."
-msgstr "نوع پست ذخیره شد"
+msgstr "نوع پست ذخیره شد."
 
 #: includes/admin/post-types/admin-post-type.php:51
 msgid "Post type updated."
-msgstr "نوع پست به روز شد"
+msgstr "نوع نوشته به روز شد."
 
 #: includes/admin/post-types/admin-post-type.php:50
 msgid "Post type deleted."
-msgstr "نوع پست حذف شد"
+msgstr "نوع پست حذف شد."
 
 #: includes/admin/post-types/admin-field-group.php:146
 msgid "Type to search..."
@@ -4547,7 +4740,7 @@ msgstr "فقط نسخه حرفه ای"
 
 #: includes/admin/post-types/admin-field-group.php:93
 msgid "Field groups linked successfully."
-msgstr ""
+msgstr "گروه های فیلد با موفقیت پیوند داده شدند."
 
 #. translators: %s - URL to ACF tools page.
 #: includes/admin/admin.php:204
@@ -4555,11 +4748,13 @@ msgid ""
 "Import Post Types and Taxonomies registered with Custom Post Type UI and "
 "manage them with ACF. <a href=\"%s\">Get Started</a>."
 msgstr ""
+"انواع پست و طبقه بندی های ثبت شده با Custom Post Type UI را وارد کنید و آنها "
+"را با ACF مدیریت کنید. <a href=\"%s\">شروع به کار</a>."
 
 #: includes/admin/admin.php:56 includes/admin/admin.php:394
 #: src/Site_Health/Site_Health.php:257
 msgid "ACF"
-msgstr "ACF"
+msgstr "فیلدهای سفارشی"
 
 #: includes/admin/admin-internal-post-type.php:314
 msgid "taxonomy"
@@ -4579,16 +4774,16 @@ msgstr "گروه(های) فیلد"
 
 #: includes/admin/admin-internal-post-type.php:323
 msgid "Select one or many field groups..."
-msgstr ""
+msgstr "یک یا چند گروه فیلد را انتخاب کنید..."
 
 #: includes/admin/admin-internal-post-type.php:322
 msgid "Please select the field groups to link."
-msgstr ""
+msgstr "لطفاً گروه های فیلد را برای پیوند انتخاب کنید."
 
 #: includes/admin/admin-internal-post-type.php:280
 msgid "Field group linked successfully."
 msgid_plural "Field groups linked successfully."
-msgstr[0] ""
+msgstr[0] "گروه های فیلد با موفقیت پیوند داده شد."
 
 #: includes/admin/admin-internal-post-type-list.php:277
 #: includes/admin/post-types/admin-post-types.php:351
@@ -4665,7 +4860,7 @@ msgstr "بستن صفحه"
 
 #: includes/fields/class-acf-field-tab.php:131
 msgid "Start a new group of tabs at this tab."
-msgstr "شروع گروه جدید زبانه‌ها در این زبانه"
+msgstr "شروع گروه جدید زبانه‌ها در این زبانه."
 
 #: includes/fields/class-acf-field-tab.php:130
 msgid "New Tab Group"
@@ -4745,6 +4940,8 @@ msgid ""
 "ACF uses <a href=\"%s\" target=\"_blank\">field groups</a> to group custom "
 "fields together, and then attach those fields to edit screens."
 msgstr ""
+"ACF از <a href=\"%s\" target=\"_blank\">گروه‌های فیلد</a> برای گروه‌بندی "
+"فیلدهای سفارشی استفاده می‌کند و سپس آن فیلدها را به صفحات ویرایش پیوست می‌کند."
 
 #: includes/admin/views/acf-field-group/list-empty.php:16
 msgid "Add Your First Field Group"
@@ -4784,7 +4981,7 @@ msgstr "حذف گروه فیلد"
 #. translators: 1: Post creation date 2: Post creation time
 #: includes/admin/views/acf-field-group/options.php:285
 msgid "Created on %1$s at %2$s"
-msgstr ""
+msgstr "ایجاد شده در %1$s ساعت %2$s"
 
 #: includes/acf-field-group-functions.php:506
 msgid "Group Settings"
@@ -4792,7 +4989,7 @@ msgstr "تنظیمات گروه"
 
 #: includes/acf-field-group-functions.php:504
 msgid "Location Rules"
-msgstr ""
+msgstr "قوانین مکان"
 
 #. translators: %s url to field types list
 #: includes/admin/views/acf-field-group/fields.php:83
@@ -4808,6 +5005,8 @@ msgid ""
 "Get started creating new custom fields for your posts, pages, custom post "
 "types and other WordPress content."
 msgstr ""
+"شروع به ایجاد فیلدهای سفارشی جدید برای پست ها، صفحات، انواع پست های سفارشی و "
+"سایر محتوای وردپرس خود کنید."
 
 #: includes/admin/views/acf-field-group/fields.php:74
 msgid "Add Your First Field"
@@ -4857,7 +5056,7 @@ msgstr[0] "%s گروه فیلد غیرفعال شد."
 #: includes/admin/post-types/admin-field-groups.php:358
 msgid "Field group activated."
 msgid_plural "%s field groups activated."
-msgstr[0] ""
+msgstr[0] "گروه های فیلد %s فعال شد."
 
 #: includes/admin/admin-internal-post-type-list.php:470
 #: includes/admin/admin-internal-post-type-list.php:496
@@ -4914,7 +5113,7 @@ msgstr ""
 #: includes/fields/class-acf-field-user.php:587
 msgid "%1$s must have a user with the %2$s role."
 msgid_plural "%1$s must have a user with one of the following roles: %2$s"
-msgstr[0] ""
+msgstr[0] "%1$s باید کاربری با یکی از نقش‌های زیر داشته باشد: %2$s"
 
 #: includes/fields/class-acf-field-user.php:578
 msgid "%1$s must have a valid user ID."
@@ -4931,12 +5130,12 @@ msgstr "%1$s یکی از %2$s نیست"
 #: includes/fields/class-acf-field-post_object.php:669
 msgid "%1$s must have term %2$s."
 msgid_plural "%1$s must have one of the following terms: %2$s"
-msgstr[0] ""
+msgstr[0] "%1$s باید یکی از شرایط زیر را داشته باشد: %2$s"
 
 #: includes/fields/class-acf-field-post_object.php:653
 msgid "%1$s must be of post type %2$s."
 msgid_plural "%1$s must be of one of the following post types: %2$s"
-msgstr[0] ""
+msgstr[0] "%1$s باید از یکی از انواع نوشته زیر باشد: %2$s"
 
 #: includes/fields/class-acf-field-post_object.php:644
 msgid "%1$s must have a valid post ID."
@@ -5045,7 +5244,7 @@ msgstr "متاسفیم، این نوشته برای مقایسه‌ی تفاوت
 
 #: includes/ajax/class-acf-ajax-local-json-diff.php:56
 msgid "Invalid field group parameter(s)."
-msgstr "پارامتر(ها) گروه فیلد نامعتبر است"
+msgstr "پارامتر(ها) گروه فیلد نامعتبر است."
 
 #: includes/admin/admin-internal-post-type-list.php:429
 msgid "Awaiting save"
@@ -5195,11 +5394,11 @@ msgstr "کلاس \"%s\" وجود ندارد."
 #: includes/ajax/class-acf-ajax-query-users.php:52
 #: includes/ajax/class-acf-ajax.php:166
 msgid "Invalid nonce."
-msgstr "کلید نامعتبر است"
+msgstr "کلید نامعتبر است."
 
 #: includes/fields/class-acf-field-user.php:409
 msgid "Error loading field."
-msgstr "خطا در بارگزاری فیلد"
+msgstr "خطا در بارگزاری فیلد."
 
 #: includes/forms/form-user.php:337
 msgid "<strong>Error</strong>: %s"
@@ -5749,6 +5948,10 @@ msgid ""
 "to another ACF installation. Generate PHP to export to PHP code which you "
 "can place in your theme."
 msgstr ""
+"مواردی را که می‌خواهید خروجی بگیرید انتخاب کنید و سپس روش خروجی خود را انتخاب "
+"کنید. برای خروجی گرفتن به یک فایل .json که می‌توانید آن را به یک نصب ACF دیگر "
+"درون ریزی کنید، از Export As JSON استفاده کنید. برای خروجی گرفتن به کد PHP "
+"که می‌توانید در قالب خود قرار دهید، PHP تولید کنید."
 
 #: includes/admin/tools/class-acf-admin-tool-export.php:224
 msgid "Select Field Groups"
@@ -5806,7 +6009,7 @@ msgstr "تکثیر این مورد"
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:50
 msgid "Supports"
-msgstr ""
+msgstr "پشتیبانی‌ها"
 
 #: includes/admin/admin.php:388
 #: includes/admin/views/browse-fields-modal.php:112
@@ -5833,7 +6036,7 @@ msgstr "هماهنگ سازی موجود است"
 #: includes/admin/post-types/admin-field-groups.php:379
 msgid "Field group synchronized."
 msgid_plural "%s field groups synchronized."
-msgstr[0] ""
+msgstr[0] "گروه‌های فیلد %s همگام‌سازی شدند."
 
 #. translators: %s number of field groups duplicated
 #: includes/admin/post-types/admin-field-groups.php:372
@@ -5875,7 +6078,7 @@ msgstr "مقصد انتقال این فیلد را مشخص کنید"
 #. field group.
 #: includes/admin/post-types/admin-field-group.php:568
 msgid "The %1$s field can now be found in the %2$s field group"
-msgstr ""
+msgstr "فیلد %1$s اکنون در گروه فیلد %2$s قابل مشاهده است"
 
 #: includes/admin/post-types/admin-field-group.php:565
 msgid "Move Complete."
@@ -6143,7 +6346,7 @@ msgstr "ویرایش"
 msgid "The changes you made will be lost if you navigate away from this page"
 msgstr "اگر از صفحه جاری خارج شوید ، تغییرات شما ذخیره نخواهند شد"
 
-#: includes/api/api-helpers.php:3009
+#: includes/api/api-helpers.php:3020
 msgid "File type must be %s."
 msgstr "نوع فایل باید %s باشد."
 
@@ -6152,35 +6355,35 @@ msgstr "نوع فایل باید %s باشد."
 #: includes/admin/views/acf-field-group/conditional-logic.php:191
 #: includes/admin/views/acf-field-group/location-group.php:14
 #: includes/admin/views/acf-field-group/locations.php:43
-#: includes/api/api-helpers.php:3006
+#: includes/api/api-helpers.php:3017
 msgid "or"
 msgstr "یا"
 
-#: includes/api/api-helpers.php:2982
+#: includes/api/api-helpers.php:2993
 msgid "File size must not exceed %s."
 msgstr "حجم فایل ها نباید از %s بیشتر باشد."
 
-#: includes/api/api-helpers.php:2978
+#: includes/api/api-helpers.php:2989
 msgid "File size must be at least %s."
 msgstr "حجم فایل باید حداقل %s باشد."
 
-#: includes/api/api-helpers.php:2965
+#: includes/api/api-helpers.php:2976
 msgid "Image height must not exceed %dpx."
 msgstr "ارتفاع تصویر نباید از %d پیکسل بیشتر باشد."
 
-#: includes/api/api-helpers.php:2961
+#: includes/api/api-helpers.php:2972
 msgid "Image height must be at least %dpx."
 msgstr "ارتفاع فایل باید حداقل %d پیکسل باشد."
 
-#: includes/api/api-helpers.php:2949
+#: includes/api/api-helpers.php:2960
 msgid "Image width must not exceed %dpx."
 msgstr "عرض تصویر نباید از %d پیکسل بیشتر باشد."
 
-#: includes/api/api-helpers.php:2945
+#: includes/api/api-helpers.php:2956
 msgid "Image width must be at least %dpx."
 msgstr "عرض تصویر باید حداقل %d پیکسل باشد."
 
-#: includes/api/api-helpers.php:1434 includes/api/api-term.php:149
+#: includes/api/api-helpers.php:1445 includes/api/api-term.php:149
 msgid "(no title)"
 msgstr "(بدون عنوان)"
 
@@ -6387,7 +6590,7 @@ msgstr "اجازه دهید این آکوردئون بدون بستن دیگر �
 
 #: includes/fields/class-acf-field-accordion.php:103
 msgid "Multi-Expand"
-msgstr ""
+msgstr "چند-گسترشی"
 
 #: includes/fields/class-acf-field-accordion.php:93
 msgid "Display this accordion as open on page load."
@@ -6560,7 +6763,7 @@ msgstr "تمام نقش های کاربر"
 
 #: includes/fields/class-acf-field-user.php:89
 msgid "Filter by Role"
-msgstr ""
+msgstr "فیلتر بر اساس نقش"
 
 #: includes/fields/class-acf-field-user.php:24 includes/locations.php:112
 msgid "User"
@@ -6826,11 +7029,11 @@ msgstr "تا زمانی که روی فیلد کلیک نشود TinyMCE اجرا 
 
 #: includes/fields/class-acf-field-wysiwyg.php:375
 msgid "Delay Initialization"
-msgstr ""
+msgstr "مقداردهی اولیه با تأخیر"
 
 #: includes/fields/class-acf-field-wysiwyg.php:364
 msgid "Show Media Upload Buttons"
-msgstr ""
+msgstr "نمایش دکمه‌های آپلود رسانه"
 
 #: includes/fields/class-acf-field-wysiwyg.php:348
 msgid "Toolbar"
@@ -6950,7 +7153,7 @@ msgstr "متن"
 #: includes/fields/class-acf-field-relationship.php:762
 msgid "%1$s requires at least %2$s selection"
 msgid_plural "%1$s requires at least %2$s selections"
-msgstr[0] ""
+msgstr[0] "%1$s حداقل به %2$s انتخاب نیاز دارد"
 
 #: includes/fields/class-acf-field-post_object.php:411
 #: includes/fields/class-acf-field-relationship.php:625
@@ -7301,7 +7504,7 @@ msgstr "با متن"
 #: includes/fields/class-acf-field-select.php:429
 #: includes/fields/class-acf-field-true_false.php:196
 msgid "Stylized UI"
-msgstr ""
+msgstr "رابط کاربری استایل‌دار"
 
 #: includes/fields/class-acf-field-button-group.php:174
 #: includes/fields/class-acf-field-checkbox.php:360
@@ -7377,48 +7580,48 @@ msgstr "فیلدهای زیرمجموعه"
 msgid "Group"
 msgstr "گروه"
 
-#: includes/fields/class-acf-field-google-map.php:230
+#: includes/fields/class-acf-field-google-map.php:231
 msgid "Customize the map height"
 msgstr "سفارشی سازی ارتفاع نقشه"
 
-#: includes/fields/class-acf-field-google-map.php:229
+#: includes/fields/class-acf-field-google-map.php:230
 #: includes/fields/class-acf-field-image.php:258
 #: includes/fields/class-acf-field-image.php:294
 #: includes/fields/class-acf-field-oembed.php:261
 msgid "Height"
 msgstr "ارتفاع"
 
-#: includes/fields/class-acf-field-google-map.php:218
+#: includes/fields/class-acf-field-google-map.php:219
 msgid "Set the initial zoom level"
 msgstr "تعین مقدار بزرگنمایی اولیه"
 
-#: includes/fields/class-acf-field-google-map.php:217
+#: includes/fields/class-acf-field-google-map.php:218
 msgid "Zoom"
 msgstr "بزرگنمایی"
 
-#: includes/fields/class-acf-field-google-map.php:191
-#: includes/fields/class-acf-field-google-map.php:204
+#: includes/fields/class-acf-field-google-map.php:192
+#: includes/fields/class-acf-field-google-map.php:205
 msgid "Center the initial map"
 msgstr "نقشه اولیه را وسط قرار بده"
 
-#: includes/fields/class-acf-field-google-map.php:190
-#: includes/fields/class-acf-field-google-map.php:203
+#: includes/fields/class-acf-field-google-map.php:191
+#: includes/fields/class-acf-field-google-map.php:204
 msgid "Center"
 msgstr "مرکز"
 
-#: includes/fields/class-acf-field-google-map.php:162
+#: includes/fields/class-acf-field-google-map.php:156
 msgid "Search for address..."
 msgstr "جستجو برای آدرس . . ."
 
-#: includes/fields/class-acf-field-google-map.php:159
+#: includes/fields/class-acf-field-google-map.php:161
 msgid "Find current location"
 msgstr "پیدا کردن مکان فعلی"
 
-#: includes/fields/class-acf-field-google-map.php:158
+#: includes/fields/class-acf-field-google-map.php:160
 msgid "Clear location"
 msgstr "حذف مکان"
 
-#: includes/fields/class-acf-field-google-map.php:157
+#: includes/fields/class-acf-field-google-map.php:159
 #: includes/fields/class-acf-field-relationship.php:609
 msgid "Search"
 msgstr "جستجو"
@@ -7479,7 +7682,7 @@ msgstr "انتخاب زمان"
 #: acf.php:577
 msgid "Inactive <span class=\"count\">(%s)</span>"
 msgid_plural "Inactive <span class=\"count\">(%s)</span>"
-msgstr[0] ""
+msgstr[0] "غیرفعال <span class=\"count\">(%s)</span>"
 
 #: acf.php:538
 msgid "No Fields found in Trash"
