@@ -47,9 +47,9 @@
         <?php
             $brands_logos = get_field('brands_logos');
         ?>
-        <section class="our-difference alt nomargin">
-            <div class="wrapper">
-                <?php if ($brands_logos) : ?>
+        <?php if( !empty($brands_logos) ) : ?>
+            <section class="our-difference alt nomargin">
+                <div class="wrapper">
                     <div class="swiper logo-slider-mobile">
                         <div class="swiper-wrapper">
                             <?php foreach ($brands_logos as $logo) : ?>
@@ -60,9 +60,9 @@
                         </div>
                         <div class="swiper-pagination"></div>
                     </div>
-                <?php endif; ?>
-            </div>
-        </section>
+                </div>
+            </section>
+        <?php endif; ?>
 
         <!-- HIGHLIGHTS -->
         <?php get_template_part('template-parts/section-highlights'); ?>
