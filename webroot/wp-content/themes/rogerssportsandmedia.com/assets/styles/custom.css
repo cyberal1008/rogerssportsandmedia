@@ -21,6 +21,26 @@ main h2 {
     text-transform: none;
 }
 
+.swiper.videos-slider,
+.swiper.videos-slider .swiper-slide {
+    overflow: visible;
+}
+
+@media (max-width: 767px) {
+    .swiper.videos-slider .swiper-slide {
+        width: 320px !important;
+    }
+}
+
+.swiper.videos-slider .swiper-slide .imgbox img {
+    transition: all .5s;
+}
+
+.swiper.videos-slider .swiper-slide .imgbox a:hover img {
+    box-shadow: 6px 6px 12px 3px #ccc;
+    transform: translateY(-8px);
+}
+
 .section-title {
     font-size: 36px;
     color: #403e41 !important;
