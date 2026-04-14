@@ -64,9 +64,14 @@ $(document).ready(function () {
         },
         breakpoints: {
             768: {
-            centeredSlides: false,
-            slidesPerView: 3,
-            spaceBetween: 30
+                centeredSlides: false,
+                slidesPerView: 2,
+                spaceBetween: 30
+            },
+            1024: {
+                centeredSlides: false,
+                slidesPerView: 3,
+                spaceBetween: 30
             }
         }
     });

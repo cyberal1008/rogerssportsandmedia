@@ -10,7 +10,7 @@ $slider_name = $args['slider_name'];
 $text_color = empty( $args['text_color'] ) ? '#000' : $args['text_color'];
 ?>
 <div class="slider" style="opacity: 1;">
-	<div class="swiper <?php echo $slider_name; ?>-slider show-slider">
+	<div class="swiper <?php echo $slider_name; ?>-slider show-slider videos-slider">
 		<div class="swiper-wrapper">
 			<?php
 			// js var for programming grid modal
