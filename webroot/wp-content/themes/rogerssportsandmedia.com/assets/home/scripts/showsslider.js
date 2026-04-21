@@ -1,142 +1,146 @@
-$(document).ready(function () {
-    // Initialize the main "hgtv-canadian-originals-slider" Swiper
-    new Swiper(".shows-slider-1-slider", {
-        slidesPerView: "auto",
-        centeredSlides: true,
-        spaceBetween: 10,
-        speed: 500,
-        preventClicks: true,
-        a11y: false,
-        threshold: 20,
-        navigation: {
-            nextEl: ".shows-slider-1-next",
-            prevEl: ".shows-slider-1-prev"
-        },
-        breakpoints: {
-            768: {
-            centeredSlides: false,
-            slidesPerView: 3,
-            spaceBetween: 30
-            },
-            1024: {
-            centeredSlides: false,
-            slidesPerView: 5
-            }
-        }
-    });
-    // Initialize the main "hgtv-shows-slider" Swiper
-    new Swiper(".shows-slider-2-slider", {
-        slidesPerView: "auto",
-        centeredSlides: true,
-        spaceBetween: 10,
-        speed: 500,
-        preventClicks: true,
-        a11y: false,
-        threshold: 20,
-        navigation: {
-            nextEl: ".shows-slider-2-next",
-            prevEl: ".shows-slider-2-prev"
-        },
-        breakpoints: {
-            768: {
-            centeredSlides: false,
-            slidesPerView: 3,
-            spaceBetween: 30
-            },
-            1024: {
-            centeredSlides: false,
-            slidesPerView: 5
-            }
-        }
-    });
-    // Initialize "hgtv-videos-slider" Swiper
-    new Swiper(".videos-slider-1-slider", {
-        slidesPerView: "auto",
-        centeredSlides: true,
-        spaceBetween: 10,
-        speed: 500,
-        preventClicks: true,
-        a11y: false,
-        threshold: 20,
-        navigation: {
-            nextEl: ".videos-slider-1-next",
-            prevEl: ".videos-slider-1-prev"
-        },
-        breakpoints: {
-            768: {
-                centeredSlides: false,
-                slidesPerView: 2,
-                spaceBetween: 30
-            },
-            1024: {
-                centeredSlides: false,
-                slidesPerView: 3,
-                spaceBetween: 30
-            }
-        }
-    });
-    $('.programming').each(function () {
-        var $container = $(this);
-        var $slider = $container.find('.show-slider');
-        var programming_item = $slider.find('.swiper-slide');
+document.addEventListener('DOMContentLoaded', function () {
+    // Dynamically initialize all show/video sliders present on the page
+    document.querySelectorAll('.show-slider').forEach(function (el) {
+        var isVideos = el.classList.contains('videos-slider');
 
-        if (programming_item.length > 0) {
-            var progsubmit = $container.find('.progsubmit');
-            var progsliderWrap = $container.find('.slider');
-            var progSwiper = $slider[0].swiper;
+        // Find the unique per-slider class (e.g. "shows-slider-1-slider")
+        var sliderClass = Array.from(el.classList).find(function (c) {
+            return c.endsWith('-slider') && c !== 'show-slider' && c !== 'videos-slider';
+        });
 
-            progsubmit.on('click', function () {
-                var network_term = $container.find('input[name="networks-category"]:checked').val();
-                var day_term = 'all';
-                var show_term = 'all';
-                var prog_navi = $container.find('.navi')[0];
-                var nextBtn = $container.find('.swiper-button-next')[0];
+        if (!sliderClass) return;
 
-                $container.find('.grid-filters .select').blur();
+        // Derive the base name (e.g. "shows-slider-1") by stripping trailing "-slider"
+        var sliderName = sliderClass.slice(0, -7);
 
-                var filteredSlides = $slider.find('.swiper-slide')
-                    .hide()
-                    .filter(function () {
-                        var $slide = $(this);
-
-                        var network = network_term === 'all' || $slide.data('networks').split('|').includes(network_term);
-                        var day = day_term === 'all' || $slide.data('day').split('|').includes(day_term);
-                        var show = show_term === 'all' || $slide.data('show').split('|').includes(show_term);
-
-                        return network && day && show;
-                    });
-
-                if (filteredSlides.length > 0) {
-                    if (filteredSlides.length <= 5) {
-                        nextBtn.classList.add('swiper-button-disabled');
-                    } else {
-                        nextBtn.classList.remove('swiper-button-disabled');
+        if (isVideos) {
+            new Swiper('.' + sliderClass, {
+                slidesPerView: 'auto',
+                centeredSlides: true,
+                spaceBetween: 10,
+                speed: 500,
+                preventClicks: true,
+                a11y: false,
+                threshold: 20,
+                navigation: {
+                    nextEl: '.' + sliderName + '-next',
+                    prevEl: '.' + sliderName + '-prev'
+                },
+                breakpoints: {
+                    768: {
+                        centeredSlides: false,
+                        slidesPerView: 2,
+                        spaceBetween: 30
+                    },
+                    1024: {
+                        centeredSlides: false,
+                        slidesPerView: 3,
+                        spaceBetween: 30
                     }
-                    $container.find('.no-shows').hide();
-                    prog_navi.style.opacity = 1;
-                    filteredSlides.fadeIn();
-                    progSwiper.update();
-                } else {
-                    $container.find('.no-shows').show();
-                    prog_navi.style.opacity = 0;
                 }
             });
-
-            // Trigger default filtering on load
-            progsubmit.trigger('click');
-            progsliderWrap.addClass('ready');
         } else {
-            $container.find('.no-shows').show();
+            new Swiper('.' + sliderClass, {
+                slidesPerView: 'auto',
+                centeredSlides: true,
+                spaceBetween: 10,
+                speed: 500,
+                preventClicks: true,
+                a11y: false,
+                threshold: 20,
+                navigation: {
+                    nextEl: '.' + sliderName + '-next',
+                    prevEl: '.' + sliderName + '-prev'
+                },
+                breakpoints: {
+                    768: {
+                        centeredSlides: false,
+                        slidesPerView: 3,
+                        spaceBetween: 30
+                    },
+                    1024: {
+                        centeredSlides: false,
+                        slidesPerView: 5
+                    }
+                }
+            });
+        }
+    });
+
+    document.querySelectorAll('.programming').forEach(function (container) {
+        var slider = container.querySelector('.show-slider');
+        if (!slider) return;
+
+        var slides = slider.querySelectorAll('.swiper-slide');
+
+        if (slides.length > 0) {
+            var progsubmit = container.querySelector('.progsubmit');
+            var progsliderWrap = container.querySelector('.slider');
+            var progSwiper = slider.swiper;
+
+            function applyFilter() {
+                var networkInput = container.querySelector('input[name="networks-category"]:checked');
+                var network_term = networkInput ? networkInput.value : 'all';
+                var prog_navi = container.querySelector('.navi');
+                var nextBtn = container.querySelector('.swiper-button-next');
+
+                var selectEl = container.querySelector('.grid-filters .select');
+                if (selectEl) selectEl.blur();
+
+                var visible = [];
+                slides.forEach(function (slide) {
+                    slide.style.display = 'none';
+                    var network = network_term === 'all' || slide.dataset.networks.split('|').includes(network_term);
+                    if (network) {
+                        visible.push(slide);
+                    }
+                });
+
+                if (visible.length > 0) {
+                    if (nextBtn) {
+                        nextBtn.classList.toggle('swiper-button-disabled', visible.length <= 5);
+                    }
+                    var noShows = container.querySelector('.no-shows');
+                    if (noShows) noShows.style.display = 'none';
+                    if (prog_navi) prog_navi.style.opacity = 1;
+                    visible.forEach(function (slide) { slide.style.display = ''; });
+                    if (progSwiper) progSwiper.update();
+                } else {
+                    var noShows = container.querySelector('.no-shows');
+                    if (noShows) noShows.style.display = '';
+                    if (prog_navi) prog_navi.style.opacity = 0;
+                }
+            }
+
+            if (progsubmit) {
+                progsubmit.addEventListener('click', applyFilter);
+                applyFilter();
+            }
+
+            if (progsliderWrap) progsliderWrap.classList.add('ready');
+        } else {
+            var noShows = container.querySelector('.no-shows');
+            if (noShows) noShows.style.display = '';
         }
 
         // Handle custom select dropdowns
-        $container.find('.grid-filters .select').click(function () {
-            $container.find('.select').not(this).removeClass('active').css('z-index', 1);
-            $(this).addClass('active').css('z-index', 99);
-        });
+        container.querySelectorAll('.grid-filters .select').forEach(function (select) {
+            select.addEventListener('click', function () {
+                container.querySelectorAll('.grid-filters .select').forEach(function (s) {
+                    if (s !== select) {
+                        s.classList.remove('active');
+                        s.style.zIndex = 1;
+                    }
+                });
+                select.classList.add('active');
+                select.style.zIndex = 99;
+            });
 
-        $container.find('.grid-filters .select .option').click(function () {
-            $(this).parent('.select').blur();
+            select.querySelectorAll('.option').forEach(function (option) {
+                option.addEventListener('click', function () {
+                    select.blur();
+                });
+            });
         });
     });
 });
