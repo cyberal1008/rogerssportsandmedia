@@ -46,15 +46,16 @@ if ( ! function_exists( 'load_rsm_stylesheet' ) ) {
 			is_page_template( 'page_upfront.php' ) ||
 			is_page_template( 'page_tubi.php' )
 		)) {
-			wp_enqueue_script( 'programslider-js', get_stylesheet_directory_uri() . "/assets/home/scripts/programslider.js", array(), $js_version, true );
+			wp_enqueue_script( 'programslider-js', get_stylesheet_directory_uri() . "/assets/home/scripts/programslider.js", array(), '1.0.4', true );
 		}
 
 		if (
 			is_page_template( 'page_hgtv.php' ) ||
 			is_page_template( 'page_tv.php' ) ||
-			is_page_template( 'page_upfront_2025.php' )
+			is_page_template( 'page_upfront_2025.php' ) ||
+			is_page_template( 'page_flexible.php' )
 		) {
-			wp_enqueue_script( 'showsslider-js', get_stylesheet_directory_uri() . "/assets/home/scripts/showsslider.js", array(), '1.0.3', true );
+			wp_enqueue_script( 'showsslider-js', get_stylesheet_directory_uri() . "/assets/home/scripts/showsslider.js", array(), '1.0.4', true );
 		}
 
 		if (

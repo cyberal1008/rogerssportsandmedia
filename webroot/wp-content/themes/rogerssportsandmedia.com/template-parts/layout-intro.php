@@ -1,0 +1,26 @@
+<?php
+$intro_title     = get_sub_field( 'intro_title' );
+$intro_title_two = get_sub_field( 'intro_title_two' );
+$intro_content   = get_sub_field( 'intro_content' );
+$intro_button    = get_sub_field( 'intro_button' );
+?>
+<section class="intro-section tw-bg-gray">
+	<div class="tw-relative wrapper">
+		<div class="intro-section-text tw-py-6 md:tw-py-10 tw-mb-8">
+			<?php if ( $intro_title ) : ?>
+				<div class="intro-title tw-text-3xl md:tw-text-4xl tw-font-bold <?php echo $intro_title_two ? '' : 'tw-mb-6'; ?>" style="color: #000"><?php echo $intro_title; ?></div>
+			<?php endif; ?>
+			<?php if ( $intro_title_two ) : ?>
+				<div class="tw-text-3xl md:tw-text-4xl tw-font-bold tw-mb-6" style="color: #000"><?php echo $intro_title_two; ?></div>
+			<?php endif; ?>
+			<p class="tw-text-base tw-leading-7">
+				<?php echo $intro_content; ?>
+			</p>
+			<?php if ( $intro_button ) : ?>
+				<div class="tw-mt-12">
+					<a href="<?php echo esc_url( $intro_button['url'] ); ?>" class="button" aria-label="<?php echo esc_attr( $intro_button['title'] ); ?>" target="<?php echo esc_attr( $intro_button['target'] ); ?>"><?php echo $intro_button['title']; ?></a>
+				</div>
+			<?php endif; ?>
+		</div>
+	</div>
+</section>
