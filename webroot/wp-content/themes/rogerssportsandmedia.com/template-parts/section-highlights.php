@@ -13,7 +13,7 @@
                     $text = get_sub_field('text');
                     $circle_color = get_sub_field('circle_color');
                 ?>
-                    <div class="tw-full md:tw-w-1/4">
+                    <div class="tw-full md:tw-w-1/4 tw-text-center">
                     <div class="tw-text-7xl tw-font-bold tw-text-transparent tw-mb-1" style="color: <?php echo $highlights_numbers_text_color ?>;">
                         <?php
                         if ($number) : ?><span class="num scroll-counter" data-counter-time="1200"><?php echo $number; ?></span><?php endif; 
