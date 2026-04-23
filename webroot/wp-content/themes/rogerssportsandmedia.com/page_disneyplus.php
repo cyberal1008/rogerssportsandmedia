@@ -77,7 +77,7 @@
                         $text = get_sub_field('text');
                         $circle_color = get_sub_field('circle_color');
                     ?>
-                        <div class="tw-full md:tw-w-1/<?php echo count(get_field('highlights')); ?>">
+                        <div class="tw-full md:tw-w-1/<?php echo count(get_field('highlights')); ?> tw-text-center">
                             <div class="tw-text-7xl tw-font-bold tw-text-white tw-mb-1">
                                 <span class="num scroll-counter" data-counter-time="1200"><?php echo $number; ?></span><?php if ($number_text) : ?><span class="sign bold"><?php echo $number_text; ?></span><?php endif; ?>
                             </div>
