@@ -69,13 +69,13 @@
 	<?php if( have_rows('highlights') ) : ?>
 		<section id="highlights" class="tw-bg-black tw-px-4 tw-py-12 md:tw-px-16 lg:tw-px-32 xl:tw-px-48 2xl:tw-px-80 md:tw-py-24">
 			<div class="tw-grid tw-grid-cols-1 md:tw-grid-cols-3 tw-text-white tw-gap-y-10 md:tw-gap-x-16">
-				<?php while( have_rows('highlights') ) : the_row(); 
+				<?php while( have_rows('highlights') ) : the_row();
 					$number = get_sub_field('number');
 					$number_text = get_sub_field('number_text');
 					$text = get_sub_field('text');
 					$circle_color = get_sub_field('circle_color');
 				?>
-					<div class="tw-full">
+					<div class="tw-full tw-text-center">
 						<div class="tw-text-red tw-text-7xl tw-font-bold tw-mb-1">
 							<span class="num scroll-counter" data-counter-time="1200"><?php echo $number; ?></span><?php if ($number_text) : ?><span class="sign bold"><?php echo $number_text; ?></span><?php endif; ?>
 						</div>

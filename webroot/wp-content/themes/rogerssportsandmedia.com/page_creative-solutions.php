@@ -50,7 +50,7 @@
 					$number_text = get_sub_field('number_text');
 					$text = get_sub_field('text');
 				?>
-					<div class="tw-full">
+					<div class="tw-full tw-text-center">
 						<div class="tw-text-7xl tw-font-bold tw-text-transparent tw-mb-1" style="-webkit-text-stroke: 2px white;">
 							<span class="num scroll-counter" data-counter-time="1200"><?php echo $number; ?></span><?php if ($number_text) : ?><span class="sign bold"><?php echo $number_text; ?></span><?php endif; ?>
 						</div>
