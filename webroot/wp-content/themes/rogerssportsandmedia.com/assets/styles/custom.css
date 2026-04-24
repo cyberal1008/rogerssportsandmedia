@@ -41,6 +41,19 @@ main h2 {
     transform: translateY(-8px);
 }
 
+.swiper.show-slider,
+.swiper.show-slider .swiper-slide {
+    overflow: visible;
+}
+
+.swiper.show-slider .swiper-slide .inner {
+    transition: transform 0.3s ease;
+}
+
+.swiper.show-slider .swiper-slide:hover .inner {
+    transform: scale(1.06);
+}
+
 .section-title {
     font-size: 36px;
     color: #403e41 !important;
