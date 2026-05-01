@@ -13,6 +13,24 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 ?>
 
 <main id="content" role="main" class="tw-bg-gray">
+	<?php
+	$component_type = get_field( 'component_type' ) ?: 'static';
+	if ( $component_type === 'wipe_slider' ) {
+		$hero_slides = get_field( 'hero_slides' );
+		if ( ! empty( $hero_slides ) ) {
+			$wipe_slides = array_map( function( $slide ) {
+				return array(
+					'hero_image'        => $slide['image'],
+					'hero_mobile_image' => $slide['mobile_image'],
+					'logos'             => $slide['logos'] ?? [],
+					'button'            => $slide['button'] ?? null,
+					'button_arialabel'  => $slide['button_arialabel'] ?? '',
+				);
+			}, $hero_slides );
+			get_template_part( 'template-parts/layout-hero-wipe-slider', null, array( 'slides' => $wipe_slides ) );
+		}
+	}
+	?>
 	<!-- INTRO -->
 	<?php
 	$intro_title = get_field('intro_title');
