@@ -35,6 +35,9 @@ get_header();
 				case 'highlights':
 					get_template_part( 'template-parts/layout-highlights' );
 					break;
+				case 'hero_wipe_slider':
+					get_template_part( 'template-parts/layout-hero-wipe-slider' );
+					break;
 			}
 			$count++;
 		endwhile;

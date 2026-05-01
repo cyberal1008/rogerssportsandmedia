@@ -1,3 +1,5 @@
+<?php $component_type = get_field( 'component_type' ) ?: 'static'; ?>
+<?php if ( $component_type === 'wipe_slider' ) : return; endif; ?>
 <div class="homehero bgimg">
 	<?php if( have_rows('hero_slides') ): ?>
 		<img id="header-slide-prev" class="slide-control" src="<?php echo (get_stylesheet_directory_uri() . "/assets/home/images/slider-prev.svg")?>" alt="prev" />

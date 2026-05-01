@@ -1,14 +1,27 @@
 <?php
+$component_type    = get_sub_field( 'component_type' ) ?: 'static';
 $hero_image        = get_sub_field( 'hero_image' );
 $hero_mobile_image = get_sub_field( 'hero_mobile_image' );
 $hero_title        = get_sub_field( 'hero_title' );
+$slider_images     = get_sub_field( 'slider_images' );
+
+if ( $component_type === 'wipe_slider' ) :
+	if ( ! empty( $slider_images ) ) :
+		get_template_part( 'template-parts/layout-hero-wipe-slider', null, array( 'slides' => $slider_images ) );
+	endif;
+	return;
+endif;
 ?>
 <section class="tw-relative">
 	<?php if ( $hero_image ) : ?>
-		<img src="<?php echo $hero_mobile_image['url']; ?>" alt="<?php echo $hero_image['alt']; ?>" class="md:tw-hidden" style="width: 100%;">
+		<img src="<?php echo esc_url( $hero_mobile_image['url'] ?? $hero_image['url'] ); ?>"
+		     alt="<?php echo esc_attr( $hero_image['alt'] ); ?>"
+		     class="md:tw-hidden" style="width: 100%;">
 	<?php endif; ?>
-	<?php if ( $hero_mobile_image ) : ?>
-		<img src="<?php echo $hero_image['url']; ?>" alt="<?php echo $hero_image['alt']; ?>" class="tw-hidden md:tw-block" style="width: 100%;">
+	<?php if ( $hero_mobile_image || $hero_image ) : ?>
+		<img src="<?php echo esc_url( $hero_image['url'] ); ?>"
+		     alt="<?php echo esc_attr( $hero_image['alt'] ); ?>"
+		     class="tw-hidden md:tw-block" style="width: 100%;">
 	<?php endif; ?>
 	<?php if ( ! empty( $hero_title ) ) : ?>
 		<div class="tw-absolute tw-inset-0 tw-flex tw-items-center tw-justify-center tw-text-center">
