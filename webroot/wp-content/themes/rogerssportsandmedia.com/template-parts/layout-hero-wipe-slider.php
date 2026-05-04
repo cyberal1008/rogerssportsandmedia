@@ -84,7 +84,7 @@ $has_any_mobile = ! empty( array_filter( $slides, fn( $s ) => ! empty( $s['hero_
 
 @keyframes hws-center-zoom {
 	from { transform: scale(1.0); }
-	to   { transform: scale(1.2); }
+	to   { transform: scale(1.05); }
 }
 
 @keyframes hws-black-in {
@@ -161,7 +161,7 @@ $has_any_mobile = ! empty( array_filter( $slides, fn( $s ) => ! empty( $s['hero_
 }
 </style>
 
-<section class="hws<?php echo $has_any_mobile ? ' hws--has-mobile' : ''; ?>" id="<?php echo esc_attr( $uid ); ?>" style="--t-scale: 0.7s; --t-zoom: 2.8s;">
+<section class="hws<?php echo $has_any_mobile ? ' hws--has-mobile' : ''; ?>" id="<?php echo esc_attr( $uid ); ?>" style="--t-scale: 0.7s; --t-zoom: 4.3s;">
 
 	<?php foreach ( $slides as $slide ) :
 		$desktop          = $slide['hero_image']        ?? null;
