@@ -62,6 +62,6 @@ add_action( 'wp_enqueue_scripts', function () {
 //wp enqueue script for homepage
 add_action( 'wp_enqueue_scripts', function () {
 	if (is_home() || is_front_page()){
-		wp_enqueue_script( 'home-js', get_template_directory_uri() . "/assets/scripts/home.js", "parent-scripts", '', true );
+		wp_enqueue_script( 'home-js', get_template_directory_uri() . "/assets/scripts/home.js", "parent-scripts", '1.0.1', true );
 	}
 } );

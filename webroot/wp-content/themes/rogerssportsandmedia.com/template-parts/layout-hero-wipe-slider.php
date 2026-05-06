@@ -93,11 +93,12 @@ $has_any_mobile = ! empty( array_filter( $slides, fn( $s ) => ! empty( $s['hero_
 }
 
 .hws__slide.enter {
-	animation: hws-bl-scale-in var(--t-scale) cubic-bezier(0.2, 0, 0.1, 1) forwards;
+	transform: scale(1);
+	opacity: 1;
 }
 
 .hws__slide.enter .hws__slide-inner {
-	animation: hws-center-zoom var(--t-zoom) var(--t-scale) ease-in-out forwards;
+	animation: hws-center-zoom var(--t-zoom) ease-in-out forwards;
 }
 
 .hws__black.wipe {
@@ -218,8 +219,7 @@ $has_any_mobile = ! empty( array_filter( $slides, fn( $s ) => ! empty( $s['hero_
 	var style      = getComputedStyle(hws);
 	var tScale     = parseFloat(style.getPropertyValue('--t-scale')) * 1000;
 	var tZoom      = parseFloat(style.getPropertyValue('--t-zoom'))  * 1000;
-	var tRaceDelay = 150;
-	var layer      = 10;
+	var layer = 10;
 	var PAD        = 28;
 	var overlayEls = [btnEl, logosEl];
 	var contactBtn = document.getElementById('advertise-btn');
@@ -318,31 +318,34 @@ $has_any_mobile = ! empty( array_filter( $slides, fn( $s ) => ! empty( $s['hero_
 		updateOverlays(slide);
 		positionOverlays();
 
-		// Fade overlays in after scale-in completes
+		// Fade overlays in immediately after slide appears
 		setTimeout(function () {
 			overlayEls.forEach(function (el) { el.classList.add('visible'); });
-		}, tScale + 100);
+		}, 100);
 
 		// Fade overlays out before black wipe starts
 		setTimeout(function () {
 			overlayEls.forEach(function (el) { el.classList.remove('visible'); });
-		}, tScale + tZoom - 350);
+		}, tZoom - 350);
 
+		// Black wipe starts when zoom completes
 		setTimeout(function () {
 			black.style.zIndex = layer + 1;
 			reset(black);
 			black.classList.add('wipe');
 
+			// Next slide appears after black fully covers
 			setTimeout(function () {
 				showSlide((index + 1) % slides.length);
-			}, tRaceDelay);
+			}, tScale);
 
+			// Clean up old slide once black covers it
 			setTimeout(function () {
 				slide.classList.remove('enter');
 				slide.style.zIndex = '';
 			}, tScale + 50);
 
-		}, tScale + tZoom);
+		}, tZoom);
 	}
 
 	showSlide(0);
