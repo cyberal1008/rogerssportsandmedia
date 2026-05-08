@@ -76,6 +76,14 @@ $has_any_mobile = ! empty( array_filter( $slides, fn( $s ) => ! empty( $s['hero_
 	pointer-events: none;
 }
 
+.hws__strip {
+	position: absolute;
+	inset: 0;
+	background: rgba(0, 0, 0, 0.5);
+	pointer-events: none;
+	opacity: 0;
+}
+
 @keyframes hws-bl-scale-in {
 	0%   { transform: scale(0.05); opacity: 0; }
 	10%  { opacity: 1; }
@@ -92,6 +100,17 @@ $has_any_mobile = ! empty( array_filter( $slides, fn( $s ) => ! empty( $s['hero_
 	100% { transform: scale(1.0); }
 }
 
+@property --t-eat {
+	syntax: '<number>';
+	inherits: false;
+	initial-value: 0;
+}
+
+@keyframes hws-black-eat {
+	from { --t-eat: 0; }
+	to   { --t-eat: 1; }
+}
+
 .hws__slide.enter {
 	transform: scale(1);
 	opacity: 1;
@@ -102,7 +121,34 @@ $has_any_mobile = ! empty( array_filter( $slides, fn( $s ) => ! empty( $s['hero_
 }
 
 .hws__black.wipe {
-	animation: hws-black-in var(--t-scale) cubic-bezier(0.2, 0, 0.1, 1) forwards;
+	animation: hws-black-in var(--t-scale) linear forwards;
+}
+
+.hws__black.unwipe {
+	--t-pct: calc(var(--t-eat) * 100%);
+	--inv-pct: calc((1 - var(--t-eat)) * 100%);
+	--fe: min(140px, var(--t-pct), var(--inv-pct));
+	transform: scale(1);
+	clip-path: polygon(
+		0 0, 100% 0, 100% 100%,
+		calc(var(--t-pct) + var(--fe)) 100%,
+		calc(var(--t-pct) + var(--fe)) calc(var(--inv-pct) - var(--fe)),
+		0 calc(var(--inv-pct) - var(--fe))
+	);
+	animation: hws-black-eat var(--t-scale) linear forwards;
+}
+
+.hws__strip.unwipe {
+	--t-pct: calc(var(--t-eat) * 100%);
+	--inv-pct: calc((1 - var(--t-eat)) * 100%);
+	opacity: 1;
+	clip-path: polygon(
+		0 0, 100% 0, 100% 100%,
+		var(--t-pct) 100%,
+		var(--t-pct) var(--inv-pct),
+		0 var(--inv-pct)
+	);
+	animation: hws-black-eat var(--t-scale) linear forwards;
 }
 
 /* Shared overlays — siblings of .hws__black, not inside each slide */
@@ -162,7 +208,7 @@ $has_any_mobile = ! empty( array_filter( $slides, fn( $s ) => ! empty( $s['hero_
 }
 </style>
 
-<section class="hws<?php echo $has_any_mobile ? ' hws--has-mobile' : ''; ?>" id="<?php echo esc_attr( $uid ); ?>" style="--t-scale: 0.7s; --t-zoom: 4.3s;">
+<section class="hws<?php echo $has_any_mobile ? ' hws--has-mobile' : ''; ?>" id="<?php echo esc_attr( $uid ); ?>" style="--t-scale: 1s; --t-zoom: 4.3s;">
 
 	<?php foreach ( $slides as $slide ) :
 		$desktop          = $slide['hero_image']        ?? null;
@@ -200,6 +246,7 @@ $has_any_mobile = ! empty( array_filter( $slides, fn( $s ) => ! empty( $s['hero_
 	<?php endforeach; ?>
 
 	<div class="hws__black"></div>
+	<div class="hws__strip"></div>
 	<div class="hws__button"></div>
 	<div class="hws__logos"></div>
 
@@ -211,6 +258,7 @@ $has_any_mobile = ! empty( array_filter( $slides, fn( $s ) => ! empty( $s['hero_
 	if ( ! hws ) return;
 
 	var black   = hws.querySelector('.hws__black');
+	var strip   = hws.querySelector('.hws__strip');
 	var btnEl   = hws.querySelector('.hws__button');
 	var logosEl = hws.querySelector('.hws__logos');
 	var slides  = Array.from(hws.querySelectorAll('.hws__slide'));
@@ -304,50 +352,84 @@ $has_any_mobile = ! empty( array_filter( $slides, fn( $s ) => ! empty( $s['hero_
 
 	// ── Animation loop ────────────────────────────────────────────────
 	function reset(el) {
-		el.classList.remove('enter', 'wipe');
+		el.classList.remove('enter', 'wipe', 'unwipe');
 		void el.offsetWidth;
 	}
 
-	function showSlide(index) {
+	// One cycle: hold for holdTime (zoom playing), wipe-in over current slide,
+	// place next slide underneath, wipe-out to reveal it, recurse.
+	function runCycle(index, isFirst) {
 		var slide = slides[index];
 
-		layer += 2;
-		slide.style.zIndex = layer;
-		reset(slide);
-		slide.classList.add('enter');
-		updateOverlays(slide);
-		positionOverlays();
+		if (isFirst) {
+			layer += 2;
+			slide.style.zIndex = layer;
+			reset(slide);
+			slide.classList.add('enter');
+			updateOverlays(slide);
+			positionOverlays();
 
-		// Fade overlays in immediately after slide appears
-		setTimeout(function () {
+			setTimeout(function () {
+				overlayEls.forEach(function (el) { el.classList.add('visible'); });
+			}, 100);
+		} else {
+			// Slide was entered tScale ago (when prev wipe-out started); just show overlays
 			overlayEls.forEach(function (el) { el.classList.add('visible'); });
-		}, 100);
+		}
 
-		// Fade overlays out before black wipe starts
+		// Time remaining until zoom completes / wipe-in should start
+		var holdTime = isFirst ? tZoom : tZoom - tScale;
+
 		setTimeout(function () {
 			overlayEls.forEach(function (el) { el.classList.remove('visible'); });
-		}, tZoom - 350);
+		}, Math.max(holdTime - 350, 100));
 
-		// Black wipe starts when zoom completes
+		// Wipe-IN: black scales up from bottom-left to cover current slide
 		setTimeout(function () {
 			black.style.zIndex = layer + 1;
 			reset(black);
 			black.classList.add('wipe');
 
-			// Next slide appears after black fully covers
+			// Once covered, place next slide underneath and wipe-OUT
 			setTimeout(function () {
-				showSlide((index + 1) % slides.length);
+				var nextIndex = (index + 1) % slides.length;
+				var nextSlide = slides[nextIndex];
+
+				layer += 2;
+				nextSlide.style.zIndex = layer;
+				reset(nextSlide);
+				nextSlide.classList.add('enter');
+				updateOverlays(nextSlide);
+				positionOverlays();
+
+				// Keep black above the new slide for the reveal
+				black.style.zIndex = layer + 1;
+				reset(black);
+				// Snap to fully-covering before unwipe so scale animates from 1, not 0
+				black.style.transform = 'scale(1)';
+				void black.offsetWidth;
+				black.style.transform = '';
+				black.classList.add('unwipe');
+
+				// Half-opacity strip ahead of the cut, sibling so it isn't clipped by black's clip-path
+				strip.style.zIndex = layer + 1;
+				reset(strip);
+				strip.classList.add('unwipe');
+
+				// Clean up the old slide while black retreats
+				setTimeout(function () {
+					slide.classList.remove('enter');
+					slide.style.zIndex = '';
+				}, tScale + 50);
+
+				// Continue with the just-revealed slide
+				setTimeout(function () {
+					runCycle(nextIndex, false);
+				}, tScale);
 			}, tScale);
-
-			// Clean up old slide once black covers it
-			setTimeout(function () {
-				slide.classList.remove('enter');
-				slide.style.zIndex = '';
-			}, tScale + 50);
-
-		}, tZoom);
+		}, holdTime);
 	}
 
-	showSlide(0);
+	runCycle(0, true);
 })();
 </script>
