@@ -50,14 +50,8 @@
 				?>
 				<div class="nav-social">
 					<ul class="social-icons">
-						<li><a class="footer-social" target="_blank" href="https://twitter.com/RogersMediaPR" aria-label="View Rogers Sports and Media on Twitter">
-							<i class="icon fa-brands fa-square-twitter"></i>
-						</a></li>
 						<li><a class="footer-social" target="_blank" href="https://ca.linkedin.com/company/rogers-sports-and-media" aria-label="View Rogers Sports and Media on LinkedIn">
 							<i class="icon fa-brands fa-linkedin"></i>
-						</a></li>
-						<li><a class="footer-social" target="_blank" href="https://www.instagram.com/rogerssportsandmedia/" aria-label="View Rogers Sports and Media on Instagram">
-							<i class="icon fa-brands fa-square-instagram"></i>
 						</a></li>
 					</ul>
 				</div>
