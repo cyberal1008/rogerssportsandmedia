@@ -42,7 +42,7 @@ $text_color = empty( $args['text_color'] ) ? '#000' : $args['text_color'];
 
 							<p class="title h2"><?php echo esc_html( $video_title ); ?></p>
 							<p><?php echo esc_html( $video_description ); ?></p>
-							<video style="width:100%; margin-top: 40px;" controls>
+							<video style="display:block; width:auto; height:auto; max-width:100%; max-height:70vh; margin:40px auto 0;" controls>
 								<source src="<?php echo $video_file['url']; ?>" type="video/mp4">
 								Your browser does not support the video tag.
 							</video>
