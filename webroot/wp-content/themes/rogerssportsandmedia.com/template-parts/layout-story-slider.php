@@ -79,7 +79,7 @@ $total = count( $slides );
 	inset: 0;
 	background-image: var(--sts-bg-desktop);
 	background-size: cover;
-	background-position: center center;
+	background-position: center top;
 	background-repeat: no-repeat;
 	z-index: 1;
 }
@@ -123,23 +123,23 @@ $total = count( $slides );
 	transition: opacity 0s;
 }
 
-#<?php echo esc_attr( $uid ); ?> .story-slider__slide.is-revealed .story-slider__eyebrow {
+#<?php echo esc_attr( $uid ); ?> .story-slider__slide.swiper-slide-active .story-slider__eyebrow {
 	opacity: 1;
 	transition: opacity 0.5s ease 0.1s;
 }
-#<?php echo esc_attr( $uid ); ?> .story-slider__slide.is-revealed .story-slider__title {
+#<?php echo esc_attr( $uid ); ?> .story-slider__slide.swiper-slide-active .story-slider__title {
 	opacity: 1;
 	transition: opacity 0.5s ease 0.25s;
 }
-#<?php echo esc_attr( $uid ); ?> .story-slider__slide.is-revealed .story-slider__body {
+#<?php echo esc_attr( $uid ); ?> .story-slider__slide.swiper-slide-active .story-slider__body {
 	opacity: 1;
 	transition: opacity 0.5s ease 0.4s;
 }
-#<?php echo esc_attr( $uid ); ?> .story-slider__slide.is-revealed .story-slider__cta {
+#<?php echo esc_attr( $uid ); ?> .story-slider__slide.swiper-slide-active .story-slider__cta {
 	opacity: 1;
 	transition: opacity 0.5s ease 0.55s;
 }
-#<?php echo esc_attr( $uid ); ?> .story-slider__slide.is-revealed .story-slider__counter {
+#<?php echo esc_attr( $uid ); ?> .story-slider__slide.swiper-slide-active .story-slider__counter {
 	opacity: 1;
 	transition: opacity 0.6s ease 0.7s;
 }
@@ -152,11 +152,11 @@ $total = count( $slides );
 	#<?php echo esc_attr( $uid ); ?> .story-slider__slide .story-slider__counter {
 		transition: none !important;
 	}
-	#<?php echo esc_attr( $uid ); ?> .story-slider__slide.is-revealed .story-slider__eyebrow,
-	#<?php echo esc_attr( $uid ); ?> .story-slider__slide.is-revealed .story-slider__title,
-	#<?php echo esc_attr( $uid ); ?> .story-slider__slide.is-revealed .story-slider__body,
-	#<?php echo esc_attr( $uid ); ?> .story-slider__slide.is-revealed .story-slider__cta,
-	#<?php echo esc_attr( $uid ); ?> .story-slider__slide.is-revealed .story-slider__counter {
+	#<?php echo esc_attr( $uid ); ?> .story-slider__slide.swiper-slide-active .story-slider__eyebrow,
+	#<?php echo esc_attr( $uid ); ?> .story-slider__slide.swiper-slide-active .story-slider__title,
+	#<?php echo esc_attr( $uid ); ?> .story-slider__slide.swiper-slide-active .story-slider__body,
+	#<?php echo esc_attr( $uid ); ?> .story-slider__slide.swiper-slide-active .story-slider__cta,
+	#<?php echo esc_attr( $uid ); ?> .story-slider__slide.swiper-slide-active .story-slider__counter {
 		opacity: 1;
 	}
 }
@@ -646,19 +646,13 @@ $total = count( $slides );
 		on: {
 			init: function () {
 				reveal();
-				var active = this.slides[this.activeIndex];
-				if (active) active.classList.add('is-revealed');
 				announce(this);
 			},
-			slideChangeTransitionStart: function () {
-				this.slides.forEach(function (s) { s.classList.remove('is-revealed'); });
+			slideChange: function () {
 				announce(this);
-			},
-			slideChangeTransitionEnd: function () {
 				var active = this.slides[this.activeIndex];
 				if (active) {
 					resetCountersIn(active);
-					active.classList.add('is-revealed');
 					if (hasBeenVisible) runCounterAfterFade(active);
 				}
 			}
@@ -675,28 +669,40 @@ $total = count( $slides );
 		var op = parseFloat(getComputedStyle(counter).opacity || '0');
 		if (op >= 0.99) { runCounter(slide); return; }
 
-		var handler = function (e) {
-			if (e.propertyName !== 'opacity' || e.target !== counter) return;
+		var done = false;
+		var finish = function () {
+			if (done) return;
+			done = true;
 			counter.removeEventListener('transitionend', handler);
 			runCounter(slide);
 		};
+		var handler = function (e) {
+			if (e.propertyName !== 'opacity' || e.target !== counter) return;
+			finish();
+		};
 		counter.addEventListener('transitionend', handler);
+		// Fallback: CSS fade is delay 0.7s + duration 0.6s = 1.3s; use 1500ms buffer.
+		setTimeout(finish, 1500);
+	}
+
+	function markVisibleAndRun() {
+		if (hasBeenVisible) return;
+		hasBeenVisible = true;
+		runCounterAfterFade(instance.slides[instance.activeIndex]);
 	}
 
 	if ('IntersectionObserver' in window) {
 		var io = new IntersectionObserver(function (entries) {
 			entries.forEach(function (entry) {
-				if (entry.isIntersecting && !hasBeenVisible) {
-					hasBeenVisible = true;
-					runCounterAfterFade(instance.slides[instance.activeIndex]);
+				if (entry.isIntersecting) {
+					markVisibleAndRun();
 					io.disconnect();
 				}
 			});
-		}, { threshold: 0.4 });
+		}, { threshold: 0.1, rootMargin: '0px 0px -10% 0px' });
 		io.observe(root);
 	} else {
-		hasBeenVisible = true;
-		runCounterAfterFade(instance.slides[instance.activeIndex]);
+		markVisibleAndRun();
 	}
 
 	function announce(sw) {
