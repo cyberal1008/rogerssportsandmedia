@@ -446,7 +446,16 @@ $total = count( $slides );
 		background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.6) 60%, rgba(0,0,0,0.85) 100%);
 	}
 	#<?php echo esc_attr( $uid ); ?> .story-slider__arrow { display: none; }
-	#<?php echo esc_attr( $uid ); ?> .story-slider__counter { width: 100%; }
+	#<?php echo esc_attr( $uid ); ?> .story-slider__counter { display: none; }
+	#<?php echo esc_attr( $uid ); ?> .story-slider__inner {
+		align-content: start;
+		align-items: start;
+		justify-items: start;
+		text-align: left;
+	}
+	#<?php echo esc_attr( $uid ); ?> .story-slider__text { align-items: flex-start; }
+	#<?php echo esc_attr( $uid ); ?> .story-slider__body { text-align: center; align-self: stretch; }
+	#<?php echo esc_attr( $uid ); ?> .story-slider__title { text-align: center; align-self: stretch; }
 }
 
 @media (prefers-reduced-motion: reduce) {
