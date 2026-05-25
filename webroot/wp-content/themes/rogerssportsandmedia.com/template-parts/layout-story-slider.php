@@ -88,7 +88,7 @@ $total = count( $slides );
 	position: absolute;
 	inset: 0;
 	background:
-		linear-gradient(90deg, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.78) 22%, rgba(0,0,0,0.4) 52%, rgba(0,0,0,0.05) 82%, rgba(0,0,0,0) 100%),
+		linear-gradient(90deg, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.4) 22%, rgba(0,0,0,0.15) 52%, rgba(0,0,0,0.02) 82%, rgba(0,0,0,0) 100%),
 		linear-gradient(180deg, rgba(0,0,0,0) 55%, rgba(0,0,0,0.55) 100%);
 	z-index: 2;
 }
@@ -443,7 +443,7 @@ $total = count( $slides );
 	}
 	#<?php echo esc_attr( $uid ); ?> .story-slider__bg { background-image: var(--sts-bg-mobile); }
 	#<?php echo esc_attr( $uid ); ?> .story-slider__overlay {
-		background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.6) 60%, rgba(0,0,0,0.85) 100%);
+		background: linear-gradient(180deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.4) 30%, rgba(0,0,0,0) 50%, rgba(0,0,0,0) 100%);
 	}
 	#<?php echo esc_attr( $uid ); ?> .story-slider__arrow { display: none; }
 	#<?php echo esc_attr( $uid ); ?> .story-slider__counter { display: none; }
