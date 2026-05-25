@@ -38,6 +38,9 @@ get_header();
 				case 'hero_wipe_slider':
 					get_template_part( 'template-parts/layout-hero-wipe-slider' );
 					break;
+				case 'story_slider':
+					get_template_part( 'template-parts/layout-story-slider' );
+					break;
 			}
 			$count++;
 		endwhile;
