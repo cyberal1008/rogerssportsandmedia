@@ -101,7 +101,7 @@ $total = count( $slides );
 	gap: clamp(24px, 5vw, 80px);
 	align-items: center;
 	height: 100%;
-	padding: clamp(24px, 5vw, 72px);
+	padding: clamp(24px, 5vw, 72px) clamp(16px, 2.5vw, 36px);
 	max-width: 1600px;
 	margin: 0 auto;
 	opacity: 0;
@@ -496,8 +496,15 @@ $total = count( $slides );
 					continue;
 				}
 
-				$desktop_url = esc_url( $image['url'] );
-				$mobile_url  = ! empty( $mobile['url'] ) ? esc_url( $mobile['url'] ) : $desktop_url;
+				// Prefer the un-scaled original (bypasses WP's 2560px auto-scale cap)
+				// so slider backgrounds stay crisp on Retina displays.
+				$desktop_raw = ! empty( $image['ID'] )  ? wp_get_original_image_url( $image['ID'] )  : '';
+				$mobile_raw  = ! empty( $mobile['ID'] ) ? wp_get_original_image_url( $mobile['ID'] ) : '';
+
+				$desktop_url = esc_url( $desktop_raw ?: $image['url'] );
+				$mobile_url  = ! empty( $mobile['url'] )
+					? esc_url( $mobile_raw ?: $mobile['url'] )
+					: $desktop_url;
 				$alt         = esc_attr( $image['alt'] ?? '' );
 			?>
 			<div
@@ -732,10 +739,17 @@ $total = count( $slides );
 	}
 
 	function formatNum(n, originalStr) {
-		var hasComma = String(originalStr).indexOf(',') !== -1;
-		var rounded  = Math.round(n);
-		if (!hasComma) return String(rounded);
-		return rounded.toLocaleString('en-US');
+		var str      = String(originalStr).trim();
+		var hasComma = str.indexOf(',') !== -1;
+		var dotIdx   = str.indexOf('.');
+		var decimals = dotIdx === -1 ? 0 : str.length - dotIdx - 1;
+		if (hasComma) {
+			return n.toLocaleString('en-US', {
+				minimumFractionDigits: decimals,
+				maximumFractionDigits: decimals
+			});
+		}
+		return decimals > 0 ? n.toFixed(decimals) : String(Math.round(n));
 	}
 
 	function runCounter(slide) {
