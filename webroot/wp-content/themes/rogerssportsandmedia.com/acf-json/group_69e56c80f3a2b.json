@@ -1560,8 +1560,72 @@
                     ],
                     "min": "",
                     "max": ""
+                },
+                {
+                    "key": "layout_video_hero_1",
+                    "name": "video_hero",
+                    "label": "Video Hero",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_vh_video_file",
+                            "label": "Video File",
+                            "name": "video_file",
+                            "aria-label": "",
+                            "type": "file",
+                            "instructions": "Upload an MP4 (H.264, web-optimized). Plays muted, looped, autoplays inline. Recommended: 1920x1080 or 2560x1440.",
+                            "required": 1,
+                            "conditional_logic": 0,
+                            "wrapper": { "width": "", "class": "", "id": "" },
+                            "return_format": "array",
+                            "library": "all",
+                            "min_size": "",
+                            "max_size": "",
+                            "mime_types": "mp4,webm,mov"
+                        },
+                        {
+                            "key": "field_vh_poster",
+                            "label": "Poster Image",
+                            "name": "poster",
+                            "aria-label": "",
+                            "type": "image",
+                            "instructions": "Optional. Shown before the video loads and as a still on devices that block autoplay.",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": { "width": "", "class": "", "id": "" },
+                            "return_format": "array",
+                            "library": "all",
+                            "min_width": "",
+                            "min_height": "",
+                            "min_size": "",
+                            "max_width": "",
+                            "max_height": "",
+                            "max_size": "",
+                            "mime_types": "",
+                            "preview_size": "medium",
+                            "allow_in_bindings": 0
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
                 }
             ]
+        },
+        {
+            "key": "field_disable_section_nav",
+            "label": "Disable Section Dot Nav",
+            "name": "disable_section_nav",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "The fixed dot navigator on the right edge is on by default (desktop only, ≥1024px). Toggle on to hide it on this page.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "", "class": "", "id": "" },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "Hide",
+            "ui_off_text": "Show"
         }
     ],
     "location": [
