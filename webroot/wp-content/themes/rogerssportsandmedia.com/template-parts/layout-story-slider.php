@@ -243,11 +243,12 @@ $total = count( $slides );
 	line-height: 1;
 	letter-spacing: -0.02em;
 	opacity: 1;
-	margin-bottom: clamp(12px, 1.2vw, 22px);
+	margin-bottom: 0;
 }
 
 #<?php echo esc_attr( $uid ); ?> .story-slider__counter-prefix,
-#<?php echo esc_attr( $uid ); ?> .story-slider__counter-num {
+#<?php echo esc_attr( $uid ); ?> .story-slider__counter-num,
+#<?php echo esc_attr( $uid ); ?> .story-slider__counter-suffix {
 	font-size: 1em;
 	line-height: 1;
 	-webkit-text-stroke: 2.2px #fff;
@@ -258,6 +259,12 @@ $total = count( $slides );
 	margin-right: 0.02em;
 }
 
+#<?php echo esc_attr( $uid ); ?> .story-slider__counter-suffix {
+	margin-left: 0.02em;
+	vertical-align: baseline;
+	top: 0;
+}
+
 #<?php echo esc_attr( $uid ); ?> .story-slider__counter-numblock {
 	display: inline-flex;
 	flex-direction: column;
@@ -265,25 +272,17 @@ $total = count( $slides );
 	line-height: 1;
 }
 
-#<?php echo esc_attr( $uid ); ?> .story-slider__counter-suffix {
-	font-size: 0.32em;
-	font-weight: 600;
-	line-height: 1;
-	margin-left: 0.04em;
-	-webkit-text-stroke: 0.7px #fff;
-	paint-order: stroke fill;
-}
 
 #<?php echo esc_attr( $uid ); ?> .story-slider__counter-unit {
-	font-size: 0.26em;
+	font-size: clamp(12px, 1.5vw, 20px);
 	letter-spacing: 0.18em;
 	font-weight: 600;
+	text-transform: uppercase;
 	opacity: 1;
-	white-space: nowrap;
-	line-height: 1.4;
-	text-align: right;
-	margin-top: 0.18em;
-	-webkit-text-stroke: 1.8px #fff;
+	line-height: 1.3;
+	text-align: center;
+	margin-top: -6px;
+	-webkit-text-stroke: 1.2px #fff;
 	paint-order: stroke fill;
 }
 
@@ -544,14 +543,14 @@ $total = count( $slides );
 									class="story-slider__counter-num"
 									data-target="<?php echo esc_attr( $stat_number ); ?>"
 								><?php echo esc_html( $stat_number ); ?></span>
-								<?php if ( $stat_unit !== '' ) : ?>
-									<span class="story-slider__counter-unit"><?php echo esc_html( $stat_unit ); ?></span>
-								<?php endif; ?>
 							</span>
 							<?php if ( $stat_suffix !== '' ) : ?>
-								<sup class="story-slider__counter-suffix"><?php echo esc_html( $stat_suffix ); ?></sup>
+								<span class="story-slider__counter-suffix"><?php echo esc_html( $stat_suffix ); ?></span>
 							<?php endif; ?>
 						</div>
+						<?php if ( $stat_unit !== '' ) : ?>
+							<div class="story-slider__counter-unit"><?php echo esc_html( $stat_unit ); ?></div>
+						<?php endif; ?>
 						<?php if ( $stat_desc !== '' ) : ?>
 							<div class="story-slider__counter-desc"><?php echo wp_kses_post( $stat_desc ); ?></div>
 						<?php endif; ?>
