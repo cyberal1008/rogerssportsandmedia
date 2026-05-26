@@ -10,10 +10,15 @@ get_header();
 <main id="content" role="main" class="tw-bg-gray">
 
 	<?php
+	$show_section_nav = ! (bool) get_field( 'disable_section_nav' );
+	$section_count    = 0;
+
 	if ( have_rows( 'page_sections' ) ) :
 		$count = 1;
 		while ( have_rows( 'page_sections' ) ) : the_row();
-			switch ( get_row_layout() ) {
+			$layout = get_row_layout();
+			echo '<div id="flex-section-' . (int) $count . '" class="flex-section" data-layout="' . esc_attr( $layout ) . '">';
+			switch ( $layout ) {
 				case 'hero':
 					get_template_part( 'template-parts/layout-hero' );
 					break;
@@ -41,10 +46,19 @@ get_header();
 				case 'story_slider':
 					get_template_part( 'template-parts/layout-story-slider' );
 					break;
+				case 'video_hero':
+					get_template_part( 'template-parts/layout-video-hero' );
+					break;
 			}
+			echo '</div>';
 			$count++;
 		endwhile;
+		$section_count = $count - 1;
 	endif;
+
+	if ( $show_section_nav && $section_count > 1 ) {
+		get_template_part( 'template-parts/section-dot-nav', null, array( 'count' => $section_count ) );
+	}
 	?>
 
 </main>
