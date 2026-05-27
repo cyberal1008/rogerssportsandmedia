@@ -381,6 +381,10 @@ $total = count( $slides );
 	#<?php echo esc_attr( $uid ); ?> .story-slider__swiper {
 		aspect-ratio: 3 / 4;
 		min-height: 0;
+		/* Drop the desktop 70vh cap on mobile — iOS Safari's inconsistent
+		   vh handling can clip the slide shorter than the aspect ratio
+		   wants, cropping the bottom of the background image. */
+		max-height: none;
 	}
 	#<?php echo esc_attr( $uid ); ?> .story-slider__bg { background-image: var(--sts-bg-mobile); }
 	#<?php echo esc_attr( $uid ); ?> .story-slider__overlay {
