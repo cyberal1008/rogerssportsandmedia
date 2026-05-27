@@ -13,10 +13,18 @@ document.addEventListener('DOMContentLoaded', function () {
         // Derive the base name (e.g. "shows-slider-1") by stripping trailing "-slider"
         var sliderName = sliderClass.slice(0, -7);
 
+        // Only enable loop when there are clearly more slides than fit
+        // at the largest breakpoint — otherwise looping just shows duplicates.
+        var slideCount = el.querySelectorAll('.swiper-slide').length;
+        var maxPerView = isVideos ? 3 : 5;
+        var enableLoop = slideCount > maxPerView;
+
         if (isVideos) {
             new Swiper('.' + sliderClass, {
                 slidesPerView: 'auto',
                 centeredSlides: true,
+                loop: enableLoop,
+                loopAdditionalSlides: enableLoop ? 2 : 0,
                 spaceBetween: 10,
                 speed: 500,
                 preventClicks: true,
@@ -43,6 +51,8 @@ document.addEventListener('DOMContentLoaded', function () {
             new Swiper('.' + sliderClass, {
                 slidesPerView: 'auto',
                 centeredSlides: true,
+                loop: enableLoop,
+                loopAdditionalSlides: enableLoop ? 2 : 0,
                 spaceBetween: 10,
                 speed: 500,
                 preventClicks: true,

@@ -55,7 +55,7 @@ if ( ! function_exists( 'load_rsm_stylesheet' ) ) {
 			is_page_template( 'page_upfront_2025.php' ) ||
 			is_page_template( 'page_flexible.php' )
 		) {
-			wp_enqueue_script( 'showsslider-js', get_stylesheet_directory_uri() . "/assets/home/scripts/showsslider.js", array(), '1.0.4', true );
+			wp_enqueue_script( 'showsslider-js', get_stylesheet_directory_uri() . "/assets/home/scripts/showsslider.js", array(), '1.0.6', true );
 		}
 
 		if (

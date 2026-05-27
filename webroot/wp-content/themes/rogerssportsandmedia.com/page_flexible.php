@@ -49,6 +49,9 @@ get_header();
 				case 'video_hero':
 					get_template_part( 'template-parts/layout-video-hero' );
 					break;
+				case 'cta':
+					get_template_part( 'template-parts/layout-cta' );
+					break;
 			}
 			echo '</div>';
 			$count++;
