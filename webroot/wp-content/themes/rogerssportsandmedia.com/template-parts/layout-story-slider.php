@@ -4,10 +4,11 @@
  *
  */
 
-$eyebrow_prefix = get_sub_field( 'eyebrow_prefix' ) ?: 'STORY';
-$autoplay_ms    = (int) ( get_sub_field( 'autoplay_ms' ) ?: 6000 );
-$select_label   = get_sub_field( 'select_label' ) ?: 'Select A Story';
-$slides         = get_sub_field( 'slides' );
+$eyebrow_prefix   = get_sub_field( 'eyebrow_prefix' ) ?: 'STORY';
+$autoplay_ms      = (int) ( get_sub_field( 'autoplay_ms' ) ?: 6000 );
+$select_label     = get_sub_field( 'select_label' ) ?: 'Select A Story';
+$background_color = get_sub_field( 'background_color' );
+$slides           = get_sub_field( 'slides' );
 
 if ( empty( $slides ) ) {
 	return;
@@ -34,7 +35,7 @@ $total = count( $slides );
 	font-family: inherit;
 	isolation: isolate;
 	padding-top: calc(var(--sts-nav-h) / 2);
-	padding-bottom: var(--sts-nav-h);
+	padding-bottom: calc(var(--sts-nav-h) / 2);
 	opacity: 0;
 	transition: opacity 0.3s ease;
 }
@@ -165,7 +166,7 @@ $total = count( $slides );
 	max-width: 640px;
 	display: flex;
 	flex-direction: column;
-	gap: clamp(12px, 1.6vw, 24px);
+	gap: clamp(6px, 0.8vw, 12px);
 }
 
 #<?php echo esc_attr( $uid ); ?> .story-slider__eyebrow {
@@ -340,67 +341,6 @@ $total = count( $slides );
 	transform: translate(50%, -50%);
 }
 
-/* Bottom navigation row: "Select A Story" + numbered dots */
-#<?php echo esc_attr( $uid ); ?> .story-slider__nav {
-	position: absolute;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	height: var(--sts-nav-h);
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	gap: clamp(16px, 2vw, 28px);
-	padding: 0 clamp(16px, 3vw, 40px);
-	color: #fff;
-}
-
-#<?php echo esc_attr( $uid ); ?> .story-slider__nav-label {
-	font-size: clamp(11px, 0.85vw, 13px);
-	letter-spacing: 0.22em;
-	text-transform: uppercase;
-	font-weight: 600;
-	opacity: 1;
-	white-space: nowrap;
-}
-
-#<?php echo esc_attr( $uid ); ?> .story-slider__pagination {
-	display: flex;
-	align-items: center;
-	gap: clamp(10px, 1.2vw, 18px);
-	width: auto !important;
-	position: static !important;
-}
-
-#<?php echo esc_attr( $uid ); ?> .story-slider__dot {
-	appearance: none;
-	background: transparent;
-	border: 0;
-	color: rgba(255, 255, 255, 0.55);
-	font: inherit;
-	font-size: 13px;
-	font-weight: 600;
-	letter-spacing: 0.12em;
-	padding: 6px 4px;
-	cursor: pointer;
-	transition: color 0.2s ease, transform 0.2s ease;
-	opacity: 1;
-	width: auto;
-	height: auto;
-	border-radius: 0;
-}
-
-#<?php echo esc_attr( $uid ); ?> .story-slider__dot.swiper-pagination-bullet-active {
-	color: #fff;
-	text-decoration: underline;
-	text-underline-offset: 6px;
-}
-
-#<?php echo esc_attr( $uid ); ?> .story-slider__dot:hover,
-#<?php echo esc_attr( $uid ); ?> .story-slider__dot:focus-visible {
-	color: #fff;
-}
-
 #<?php echo esc_attr( $uid ); ?> .sr-only {
 	position: absolute;
 	width: 1px;
@@ -468,6 +408,7 @@ $total = count( $slides );
 	role="region"
 	aria-roledescription="carousel"
 	aria-label="Story slider"
+	<?php if ( $background_color ) : ?>style="background-color: <?php echo esc_attr( $background_color ); ?>;"<?php endif; ?>
 >
 	<div class="swiper story-slider__swiper">
 		<div class="swiper-wrapper">
@@ -482,6 +423,16 @@ $total = count( $slides );
 				$button      = $slide['button'] ?? null;
 				$image       = $slide['image'] ?? null;
 				$mobile      = $slide['mobile_image'] ?? null;
+
+				$title_size   = isset( $slide['title_size'] ) && $slide['title_size'] !== '' ? (int) $slide['title_size'] : 0;
+				$body_size    = isset( $slide['body_size'] ) && $slide['body_size'] !== '' ? (int) $slide['body_size'] : 0;
+				$eyebrow_size = isset( $slide['eyebrow_size'] ) && $slide['eyebrow_size'] !== '' ? (int) $slide['eyebrow_size'] : 0;
+				$text_width   = isset( $slide['text_max_width'] ) && $slide['text_max_width'] !== '' ? (int) $slide['text_max_width'] : 0;
+
+				$title_style   = $title_size   ? 'font-size:' . $title_size . 'px;' : '';
+				$body_style    = $body_size    ? 'font-size:' . $body_size . 'px;' : '';
+				$eyebrow_style = $eyebrow_size ? 'font-size:' . $eyebrow_size . 'px;' : '';
+				$text_style    = $text_width   ? 'max-width:' . $text_width . 'px;' : '';
 
 				$stat_prefix = $slide['stat_prefix'] ?? '';
 				$stat_number = $slide['stat_number'] ?? '';
@@ -517,10 +468,10 @@ $total = count( $slides );
 				<div class="story-slider__overlay" aria-hidden="true"></div>
 
 				<div class="story-slider__inner">
-					<div class="story-slider__text">
-						<div class="story-slider__eyebrow"><?php echo esc_html( $eyebrow ); ?></div>
-						<h2 class="story-slider__title"><?php echo esc_html( $title ); ?></h2>
-						<div class="story-slider__body"><?php echo wp_kses_post( $body ); ?></div>
+					<div class="story-slider__text"<?php echo $text_style ? ' style="' . esc_attr( $text_style ) . '"' : ''; ?>>
+						<div class="story-slider__eyebrow"<?php echo $eyebrow_style ? ' style="' . esc_attr( $eyebrow_style ) . '"' : ''; ?>><?php echo esc_html( $eyebrow ); ?></div>
+						<h2 class="story-slider__title"<?php echo $title_style ? ' style="' . esc_attr( $title_style ) . '"' : ''; ?>><?php echo esc_html( $title ); ?></h2>
+						<div class="story-slider__body"<?php echo $body_style ? ' style="' . esc_attr( $body_style ) . '"' : ''; ?>><?php echo wp_kses_post( $body ); ?></div>
 
 						<?php if ( ! empty( $button['url'] ) ) : ?>
 							<a
@@ -571,13 +522,6 @@ $total = count( $slides );
 		<?php endif; ?>
 	</div>
 
-	<?php if ( $total > 1 ) : ?>
-		<div class="story-slider__nav">
-			<span class="story-slider__nav-label"><?php echo esc_html( $select_label ); ?></span>
-			<div class="story-slider__pagination" aria-label="Slide navigation"></div>
-		</div>
-	<?php endif; ?>
-
 	<div class="story-slider__live sr-only" aria-live="polite"></div>
 </section>
 
@@ -606,7 +550,6 @@ $total = count( $slides );
 	var swiperEl   = root.querySelector('.story-slider__swiper');
 	var prevBtn    = root.querySelector('.story-slider__arrow--prev');
 	var nextBtn    = root.querySelector('.story-slider__arrow--next');
-	var pagEl      = root.querySelector('.story-slider__pagination');
 	var liveRgn    = root.querySelector('.story-slider__live');
 	var autoplayMs = <?php echo (int) $autoplay_ms; ?>;
 	var total      = <?php echo (int) $total; ?>;
@@ -643,16 +586,7 @@ $total = count( $slides );
 			nextEl: nextBtn,
 			prevEl: prevBtn
 		} : false,
-		pagination: total > 1 ? {
-			el: pagEl,
-			clickable: true,
-			bulletClass: 'story-slider__dot',
-			bulletActiveClass: 'swiper-pagination-bullet-active',
-			renderBullet: function (index, className) {
-				var n = ('0' + (index + 1)).slice(-2);
-				return '<button type="button" class="' + className + '" aria-label="Go to slide ' + (index + 1) + '">' + n + '</button>';
-			}
-		} : false,
+		pagination: false,
 		breakpoints: {
 			0:    { spaceBetween: 14 },
 			768:  { spaceBetween: 14 },
