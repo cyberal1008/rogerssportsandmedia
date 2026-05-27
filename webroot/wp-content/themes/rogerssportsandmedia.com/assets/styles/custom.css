@@ -41,9 +41,16 @@ main h2 {
     transform: translateY(-8px);
 }
 
-.swiper.show-slider,
+.swiper.show-slider {
+    overflow: hidden;
+}
+
 .swiper.show-slider .swiper-slide {
     overflow: visible;
+}
+
+.flex-section {
+    overflow-x: hidden;
 }
 
 .swiper.show-slider .swiper-slide .inner {
