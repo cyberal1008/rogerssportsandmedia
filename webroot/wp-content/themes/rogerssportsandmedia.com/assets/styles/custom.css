@@ -53,6 +53,14 @@ main h2 {
     overflow-x: hidden;
 }
 
+/* Safari iOS can leak horizontal scroll through descendants with negative
+   margins / 100vw even when an ancestor sets overflow-x: hidden. Locking it
+   on html + body is the only fully reliable clip on iOS. */
+html,
+body {
+    overflow-x: hidden;
+}
+
 .swiper.show-slider .swiper-slide .inner {
     transition: transform 0.3s ease;
 }
