@@ -23,17 +23,18 @@ $alt       = $image['alt'] ?? '';
 $target    = $link['target'] ?: '_self';
 ?>
 
-<section class="upfront-cta-section" style="background-color: <?php echo esc_attr( $background_color ); ?>;">
-	<div class="wrapper">
+<section class="upfront-cta-section" style="background-color: <?php echo esc_attr( $background_color ); ?>; text-align: center;">
+	<div class="wrapper" style="text-align: center;">
 		<?php if ( $title ) : ?>
-			<h2 class="upfront-cta-title tw-text-3xl md:tw-text-4xl tw-font-bold" style="color: <?php echo esc_attr( $text_color ); ?>;"><?php echo esc_html( $title ); ?></h2>
+			<h2 class="upfront-cta-title tw-text-3xl md:tw-text-4xl tw-font-bold" style="color: <?php echo esc_attr( $text_color ); ?>; text-align: center;"><?php echo esc_html( $title ); ?></h2>
 		<?php endif; ?>
 		<a
 			href="<?php echo esc_url( $link['url'] ); ?>"
 			target="<?php echo esc_attr( $target ); ?>"
 			<?php echo $target === '_blank' ? 'rel="noopener noreferrer"' : ''; ?>
+			style="display: block; width: fit-content; margin: 0 auto; line-height: 0;"
 		>
-			<img src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr( $alt ); ?>" width="800" />
+			<img src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr( $alt ); ?>" width="800" style="max-width: 100%; height: auto; display: block;" />
 		</a>
 	</div>
 </section>
