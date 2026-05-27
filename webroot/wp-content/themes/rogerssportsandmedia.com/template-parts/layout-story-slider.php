@@ -174,13 +174,14 @@ $total = count( $slides );
 	letter-spacing: 0.18em;
 	font-weight: 600;
 	text-transform: uppercase;
+	line-height: 1.1;
 	opacity: 1;
 }
 
 #<?php echo esc_attr( $uid ); ?> .story-slider__title {
 	font-size: clamp(34px, 4.4vw, 64px);
 	font-weight: 700;
-	line-height: 1.02;
+	line-height: 1.1;
 	letter-spacing: -0.015em;
 	text-transform: uppercase;
 	margin: 0;
@@ -194,7 +195,7 @@ $total = count( $slides );
 #<?php echo esc_attr( $uid ); ?> .story-slider__body {
 	font-size: clamp(15px, 1.1vw, 18px);
 	font-weight: 600;
-	line-height: 1.55;
+	line-height: 1.1;
 	opacity: 1;
 	max-width: 56ch;
 }
@@ -210,6 +211,7 @@ $total = count( $slides );
 	font-size: 14px;
 	font-weight: 600;
 	letter-spacing: 0.04em;
+	line-height: 1.1;
 	white-space: nowrap;
 	transition: background-color 0.2s ease, color 0.2s ease;
 }
@@ -280,7 +282,7 @@ $total = count( $slides );
 	font-weight: 600;
 	text-transform: uppercase;
 	opacity: 1;
-	line-height: 1.3;
+	line-height: 1.1;
 	text-align: center;
 	margin-top: -6px;
 	-webkit-text-stroke: 1.2px #fff;
@@ -290,7 +292,7 @@ $total = count( $slides );
 #<?php echo esc_attr( $uid ); ?> .story-slider__counter-desc {
 	font-size: clamp(13px, 0.95vw, 15px);
 	font-weight: 600;
-	line-height: 1.5;
+	line-height: 1.1;
 	opacity: 1;
 	max-width: 32ch;
 }
