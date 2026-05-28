@@ -14,7 +14,7 @@ if ( ! $featured_video ) {
 >
 	<div class="wrapper">
 		<?php if ( ! empty( $featured_video_title ) ) : ?>
-			<div class="tw-text-3xl md:tw-text-4xl tw-font-bold tw-mb-4 md:tw-mb-4" style="color: <?php echo ! empty( $featured_video_text_color ) ? $featured_video_text_color : '#000'; ?>"><?php echo $featured_video_title; ?></div>
+			<h2 class="flex-section-title" style="color: <?php echo ! empty( $featured_video_text_color ) ? $featured_video_text_color : '#000'; ?>"><?php echo $featured_video_title; ?></h2>
 		<?php endif; ?>
 		<video class="tw:w-full" controls>
 			<source src="<?php echo $featured_video['url']; ?>" type="video/mp4">

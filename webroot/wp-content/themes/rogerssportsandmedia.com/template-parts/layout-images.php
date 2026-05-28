@@ -16,7 +16,7 @@ $inner_style = $max_width ? 'max-width: ' . esc_attr( $max_width ) . '; margin-l
 		<div class="portfolio-page">
 			<div class="inner wrapper">
 				<?php if ( $title ) : ?>
-					<div class="tw-text-3xl md:tw-text-4xl tw-font-bold tw-mb-4 md:tw-mb-4" style="color: <?php echo $text_color; ?>"><?php echo $title; ?></div>
+					<h2 class="flex-section-title" style="color: <?php echo $text_color; ?>"><?php echo $title; ?></h2>
 				<?php endif; ?>
 				<div style="<?php echo $inner_style; ?>">
 					<div class="tw-flex tw-flex-col md:tw-flex-row" style="gap: 32px;">

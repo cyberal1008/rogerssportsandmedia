@@ -8,10 +8,10 @@ $intro_button    = get_sub_field( 'intro_button' );
 	<div class="tw-relative wrapper">
 		<div class="intro-section-text tw-py-6 md:tw-py-10 tw-mb-8">
 			<?php if ( $intro_title ) : ?>
-				<div class="intro-title tw-text-3xl md:tw-text-4xl tw-font-bold <?php echo $intro_title_two ? '' : 'tw-mb-6'; ?>" style="color: #000"><?php echo $intro_title; ?></div>
+				<h2 class="intro-title flex-section-title" style="color: #000"><?php echo $intro_title; ?></h2>
 			<?php endif; ?>
 			<?php if ( $intro_title_two ) : ?>
-				<div class="tw-text-3xl md:tw-text-4xl tw-font-bold tw-mb-6" style="color: #000"><?php echo $intro_title_two; ?></div>
+				<h2 class="flex-section-title" style="color: #000"><?php echo $intro_title_two; ?></h2>
 			<?php endif; ?>
 			<p class="tw-text-base tw-leading-7">
 				<?php echo $intro_content; ?>

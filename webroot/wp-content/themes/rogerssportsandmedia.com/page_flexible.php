@@ -52,6 +52,9 @@ get_header();
 				case 'cta':
 					get_template_part( 'template-parts/layout-cta' );
 					break;
+				case 'spacing':
+					get_template_part( 'template-parts/layout-spacing' );
+					break;
 			}
 			echo '</div>';
 			$count++;
