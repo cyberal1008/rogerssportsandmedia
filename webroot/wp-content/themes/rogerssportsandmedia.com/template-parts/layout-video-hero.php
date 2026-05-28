@@ -36,6 +36,15 @@ if ( ! empty( $poster['ID'] ) ) {
 	display: block;
 }
 
+/* Mobile: match the story slider's portrait aspect (3/4) instead of filling
+   the full viewport height — keeps hero proportional to other cards. */
+@media (max-width: 767px) {
+	#<?php echo esc_attr( $uid ); ?>.video-hero {
+		height: auto;
+		aspect-ratio: 3 / 4;
+	}
+}
+
 #<?php echo esc_attr( $uid ); ?> .video-hero__video {
 	position: absolute;
 	inset: 0;

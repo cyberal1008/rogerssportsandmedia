@@ -14,14 +14,14 @@ if ( empty( $slider_shows ) ) {
 	<div class="portfolio-main">
 		<div class="portfolio-page">
 			<div class="inner wrapper">
-				<div class="top md:tw-space-x-12" style="gap: 10px 30px; justify-content: start;">
-					<?php if ( $slider_title ) : ?>
-						<div class="tw-text-3xl md:tw-text-4xl tw-font-bold tw-mb-4 md:tw-mb-4" style="color: <?php echo $slider_text_color; ?>"><?php echo $slider_title; ?></div>
-					<?php endif; ?>
-					<?php if ( $slider_button_link ) : ?>
+				<?php if ( $slider_title ) : ?>
+					<h2 class="flex-section-title" style="color: <?php echo $slider_text_color; ?>"><?php echo $slider_title; ?></h2>
+				<?php endif; ?>
+				<?php if ( $slider_button_link ) : ?>
+					<div style="text-align: center; margin-bottom: clamp(24px, 3vw, 40px);">
 						<a href="<?php echo $slider_button_link['url']; ?>" class="button" aria-label="<?php echo $slider_button_link['title'] ? $slider_button_link['title'] : 'Download TV Schedule'; ?>" target="<?php echo $slider_button_link['target'] ? $slider_button_link['target'] : '_self'; ?>"><?php echo $slider_button_link['title'] ? $slider_button_link['title'] : 'Download TV Schedule'; ?></a>
-					<?php endif; ?>
-				</div>
+					</div>
+				<?php endif; ?>
 
 				<?php
 				get_template_part(

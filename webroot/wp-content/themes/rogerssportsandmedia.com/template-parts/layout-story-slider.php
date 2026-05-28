@@ -4,11 +4,13 @@
  *
  */
 
-$eyebrow_prefix   = get_sub_field( 'eyebrow_prefix' ) ?: 'STORY';
-$autoplay_ms      = (int) ( get_sub_field( 'autoplay_ms' ) ?: 6000 );
-$select_label     = get_sub_field( 'select_label' ) ?: 'Select A Story';
-$background_color = get_sub_field( 'background_color' );
-$slides           = get_sub_field( 'slides' );
+$eyebrow_prefix       = get_sub_field( 'eyebrow_prefix' ) ?: 'STORY';
+$autoplay_ms          = (int) ( get_sub_field( 'autoplay_ms' ) ?: 6000 );
+$select_label         = get_sub_field( 'select_label' ) ?: 'Select A Story';
+$background_color     = get_sub_field( 'background_color' );
+$section_title        = get_sub_field( 'section_title' );
+$section_title_color  = get_sub_field( 'section_title_color' ) ?: '#ffffff';
+$slides               = get_sub_field( 'slides' );
 
 if ( empty( $slides ) ) {
 	return;
@@ -416,6 +418,9 @@ $total = count( $slides );
 	aria-label="Story slider"
 	<?php if ( $background_color ) : ?>style="background-color: <?php echo esc_attr( $background_color ); ?>;"<?php endif; ?>
 >
+	<?php if ( $section_title ) : ?>
+		<h2 class="flex-section-title" style="color: <?php echo esc_attr( $section_title_color ); ?>;"><?php echo esc_html( $section_title ); ?></h2>
+	<?php endif; ?>
 	<div class="swiper story-slider__swiper">
 		<div class="swiper-wrapper">
 			<?php foreach ( $slides as $i => $slide ) :

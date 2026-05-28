@@ -1359,6 +1359,36 @@
                             "return_format": "string"
                         },
                         {
+                            "key": "field_sts_section_title",
+                            "label": "Section Title",
+                            "name": "section_title",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "Optional heading shown above the slider, centered.",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": { "width": "75", "class": "", "id": "" },
+                            "default_value": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_sts_section_title_color",
+                            "label": "Section Title Color",
+                            "name": "section_title_color",
+                            "aria-label": "",
+                            "type": "color_picker",
+                            "instructions": "Defaults to white.",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": { "width": "25", "class": "", "id": "" },
+                            "default_value": "#ffffff",
+                            "enable_opacity": 0,
+                            "return_format": "string"
+                        },
+                        {
                             "key": "field_sts_slides",
                             "label": "Slides",
                             "name": "slides",
@@ -1731,6 +1761,54 @@
                             "conditional_logic": 0,
                             "wrapper": { "width": "50", "class": "", "id": "" },
                             "default_value": "#ffffff",
+                            "enable_opacity": 0,
+                            "return_format": "string"
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
+                },
+                {
+                    "key": "layout_spacing_1",
+                    "name": "spacing",
+                    "label": "Spacing",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_spacing_size",
+                            "label": "Size",
+                            "name": "size",
+                            "aria-label": "",
+                            "type": "select",
+                            "instructions": "Vertical space added between sections. All values are responsive (scale fluidly between phone and desktop).",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": { "width": "50", "class": "", "id": "" },
+                            "choices": {
+                                "small": "Small (12–24px)",
+                                "medium": "Medium (22–32px)",
+                                "large": "Large (40–60px)",
+                                "xlarge": "Extra Large (60–100px)"
+                            },
+                            "default_value": "medium",
+                            "return_format": "value",
+                            "multiple": 0,
+                            "allow_null": 0,
+                            "ui": 0,
+                            "ajax": 0,
+                            "placeholder": ""
+                        },
+                        {
+                            "key": "field_spacing_background_color",
+                            "label": "Background Color",
+                            "name": "background_color",
+                            "aria-label": "",
+                            "type": "color_picker",
+                            "instructions": "Optional. Leave blank for transparent.",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": { "width": "50", "class": "", "id": "" },
+                            "default_value": "",
                             "enable_opacity": 0,
                             "return_format": "string"
                         }
