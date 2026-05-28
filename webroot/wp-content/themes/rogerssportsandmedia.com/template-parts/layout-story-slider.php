@@ -54,12 +54,14 @@ $total = count( $slides );
 	min-height: 440px;
 	max-height: 70vh;
 	overflow: hidden;
+	background-color: inherit;
 }
 
 #<?php echo esc_attr( $uid ); ?> .story-slider__swiper .swiper-wrapper {
 	align-items: stretch;
 	height: 100%;
 	min-height: inherit;
+	background-color: inherit;
 }
 
 #<?php echo esc_attr( $uid ); ?> .story-slider__slide {
@@ -172,7 +174,7 @@ $total = count( $slides );
 }
 
 #<?php echo esc_attr( $uid ); ?> .story-slider__eyebrow {
-	font-size: clamp(12px, 1vw, 14px);
+	font-size: var(--sts-eyebrow-size, clamp(12px, 1vw, 14px));
 	letter-spacing: 0.18em;
 	font-weight: 600;
 	text-transform: uppercase;
@@ -181,7 +183,7 @@ $total = count( $slides );
 }
 
 #<?php echo esc_attr( $uid ); ?> .story-slider__title {
-	font-size: clamp(34px, 4.4vw, 64px);
+	font-size: var(--sts-title-size, clamp(34px, 4.4vw, 64px));
 	font-weight: 700;
 	line-height: 1.1;
 	letter-spacing: -0.015em;
@@ -195,11 +197,23 @@ $total = count( $slides );
 }
 
 #<?php echo esc_attr( $uid ); ?> .story-slider__body {
-	font-size: clamp(15px, 1.1vw, 18px);
+	font-size: var(--sts-body-size, clamp(15px, 1.1vw, 18px));
 	font-weight: 600;
 	line-height: 1.1;
 	opacity: 1;
 	max-width: 56ch;
+}
+
+@media (max-width: 767px) {
+	#<?php echo esc_attr( $uid ); ?> .story-slider__eyebrow {
+		font-size: var(--sts-eyebrow-size-mobile, var(--sts-eyebrow-size, clamp(12px, 1vw, 14px)));
+	}
+	#<?php echo esc_attr( $uid ); ?> .story-slider__title {
+		font-size: var(--sts-title-size-mobile, var(--sts-title-size, clamp(34px, 4.4vw, 64px)));
+	}
+	#<?php echo esc_attr( $uid ); ?> .story-slider__body {
+		font-size: var(--sts-body-size-mobile, var(--sts-body-size, clamp(15px, 1.1vw, 18px)));
+	}
 }
 
 #<?php echo esc_attr( $uid ); ?> .story-slider__cta {
@@ -435,15 +449,23 @@ $total = count( $slides );
 				$image       = $slide['image'] ?? null;
 				$mobile      = $slide['mobile_image'] ?? null;
 
-				$title_size   = isset( $slide['title_size'] ) && $slide['title_size'] !== '' ? (int) $slide['title_size'] : 0;
-				$body_size    = isset( $slide['body_size'] ) && $slide['body_size'] !== '' ? (int) $slide['body_size'] : 0;
-				$eyebrow_size = isset( $slide['eyebrow_size'] ) && $slide['eyebrow_size'] !== '' ? (int) $slide['eyebrow_size'] : 0;
-				$text_width   = isset( $slide['text_max_width'] ) && $slide['text_max_width'] !== '' ? (int) $slide['text_max_width'] : 0;
+				$title_size          = isset( $slide['title_size'] ) && $slide['title_size'] !== '' ? (int) $slide['title_size'] : 0;
+				$body_size           = isset( $slide['body_size'] ) && $slide['body_size'] !== '' ? (int) $slide['body_size'] : 0;
+				$eyebrow_size        = isset( $slide['eyebrow_size'] ) && $slide['eyebrow_size'] !== '' ? (int) $slide['eyebrow_size'] : 0;
+				$title_size_mobile   = isset( $slide['title_size_mobile'] ) && $slide['title_size_mobile'] !== '' ? (int) $slide['title_size_mobile'] : 0;
+				$body_size_mobile    = isset( $slide['body_size_mobile'] ) && $slide['body_size_mobile'] !== '' ? (int) $slide['body_size_mobile'] : 0;
+				$eyebrow_size_mobile = isset( $slide['eyebrow_size_mobile'] ) && $slide['eyebrow_size_mobile'] !== '' ? (int) $slide['eyebrow_size_mobile'] : 0;
+				$text_width          = isset( $slide['text_max_width'] ) && $slide['text_max_width'] !== '' ? (int) $slide['text_max_width'] : 0;
 
-				$title_style   = $title_size   ? 'font-size:' . $title_size . 'px;' : '';
-				$body_style    = $body_size    ? 'font-size:' . $body_size . 'px;' : '';
-				$eyebrow_style = $eyebrow_size ? 'font-size:' . $eyebrow_size . 'px;' : '';
-				$text_style    = $text_width   ? 'max-width:' . $text_width . 'px;' : '';
+				$slide_vars = '';
+				if ( $title_size )          $slide_vars .= '--sts-title-size:' . $title_size . 'px;';
+				if ( $title_size_mobile )   $slide_vars .= '--sts-title-size-mobile:' . $title_size_mobile . 'px;';
+				if ( $body_size )           $slide_vars .= '--sts-body-size:' . $body_size . 'px;';
+				if ( $body_size_mobile )    $slide_vars .= '--sts-body-size-mobile:' . $body_size_mobile . 'px;';
+				if ( $eyebrow_size )        $slide_vars .= '--sts-eyebrow-size:' . $eyebrow_size . 'px;';
+				if ( $eyebrow_size_mobile ) $slide_vars .= '--sts-eyebrow-size-mobile:' . $eyebrow_size_mobile . 'px;';
+
+				$text_style = $text_width ? 'max-width:' . $text_width . 'px;' : '';
 
 				$stat_prefix = $slide['stat_prefix'] ?? '';
 				$stat_number = $slide['stat_number'] ?? '';
@@ -473,16 +495,16 @@ $total = count( $slides );
 				role="group"
 				aria-roledescription="slide"
 				aria-label="<?php echo esc_attr( sprintf( '%d of %d', $index_human, $total ) ); ?>"
-				style="--sts-bg-desktop: url('<?php echo $desktop_url; ?>'); --sts-bg-mobile: url('<?php echo $mobile_url; ?>');"
+				style="--sts-bg-desktop: url('<?php echo $desktop_url; ?>'); --sts-bg-mobile: url('<?php echo $mobile_url; ?>'); <?php echo $slide_vars; ?>"
 			>
 				<div class="story-slider__bg" role="img" aria-label="<?php echo $alt; ?>"></div>
 				<div class="story-slider__overlay" aria-hidden="true"></div>
 
 				<div class="story-slider__inner">
 					<div class="story-slider__text"<?php echo $text_style ? ' style="' . esc_attr( $text_style ) . '"' : ''; ?>>
-						<div class="story-slider__eyebrow"<?php echo $eyebrow_style ? ' style="' . esc_attr( $eyebrow_style ) . '"' : ''; ?>><?php echo esc_html( $eyebrow ); ?></div>
-						<h2 class="story-slider__title"<?php echo $title_style ? ' style="' . esc_attr( $title_style ) . '"' : ''; ?>><?php echo esc_html( $title ); ?></h2>
-						<div class="story-slider__body"<?php echo $body_style ? ' style="' . esc_attr( $body_style ) . '"' : ''; ?>><?php echo wp_kses_post( $body ); ?></div>
+						<div class="story-slider__eyebrow"><?php echo esc_html( $eyebrow ); ?></div>
+						<h2 class="story-slider__title"><?php echo esc_html( $title ); ?></h2>
+						<div class="story-slider__body"><?php echo wp_kses_post( $body ); ?></div>
 
 						<?php if ( ! empty( $button['url'] ) ) : ?>
 							<a

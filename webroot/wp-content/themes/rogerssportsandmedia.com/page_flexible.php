@@ -10,8 +10,9 @@ get_header();
 <main id="content" role="main" class="tw-bg-gray">
 
 	<?php
-	$show_section_nav = ! (bool) get_field( 'disable_section_nav' );
-	$section_count    = 0;
+	$show_section_nav   = ! (bool) get_field( 'disable_section_nav' );
+	$nav_skip_layouts   = array( 'spacing' );
+	$navigable_sections = array();
 
 	if ( have_rows( 'page_sections' ) ) :
 		$count = 1;
@@ -57,13 +58,15 @@ get_header();
 					break;
 			}
 			echo '</div>';
+			if ( ! in_array( $layout, $nav_skip_layouts, true ) ) {
+				$navigable_sections[] = (int) $count;
+			}
 			$count++;
 		endwhile;
-		$section_count = $count - 1;
 	endif;
 
-	if ( $show_section_nav && $section_count > 1 ) {
-		get_template_part( 'template-parts/section-dot-nav', null, array( 'count' => $section_count ) );
+	if ( $show_section_nav && count( $navigable_sections ) > 1 ) {
+		get_template_part( 'template-parts/section-dot-nav', null, array( 'sections' => $navigable_sections ) );
 	}
 	?>
 
