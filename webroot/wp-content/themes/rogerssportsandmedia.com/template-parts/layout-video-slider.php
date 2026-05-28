@@ -14,7 +14,7 @@ if ( empty( $slider_videos ) ) {
 		<div class="portfolio-page">
 			<div class="inner wrapper">
 				<?php if ( $slider_title ) : ?>
-					<div class="tw-text-3xl md:tw-text-4xl tw-font-bold tw-mb-4 md:tw-mb-4" style="color: <?php echo $slider_text_color; ?>"><?php echo $slider_title; ?></div>
+					<h2 class="flex-section-title" style="color: <?php echo $slider_text_color; ?>"><?php echo $slider_title; ?></h2>
 				<?php endif; ?>
 
 				<?php
