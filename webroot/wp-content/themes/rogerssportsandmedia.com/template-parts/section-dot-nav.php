@@ -5,8 +5,18 @@
  * page_flexible.php.
  */
 
-$count = isset( $args['count'] ) ? (int) $args['count'] : 0;
-if ( $count < 2 ) {
+// Sections is the ordered list of flex-section numbers to render dots for
+// (skips non-navigable layouts like spacing). Falls back to a sequential
+// range if the caller still passes the legacy `count` arg.
+if ( isset( $args['sections'] ) && is_array( $args['sections'] ) ) {
+	$sections = array_values( array_map( 'intval', $args['sections'] ) );
+} elseif ( isset( $args['count'] ) ) {
+	$sections = range( 1, (int) $args['count'] );
+} else {
+	$sections = array();
+}
+
+if ( count( $sections ) < 2 ) {
 	return;
 }
 ?>
@@ -69,14 +79,14 @@ if ( $count < 2 ) {
 </style>
 
 <nav class="flex-section-nav" aria-label="Page sections">
-	<?php for ( $i = 1; $i <= $count; $i++ ) : ?>
+	<?php foreach ( $sections as $index => $section_num ) : $human = $index + 1; ?>
 		<button
 			type="button"
 			class="flex-section-nav__dot"
-			data-target="flex-section-<?php echo (int) $i; ?>"
-			aria-label="Go to section <?php echo (int) $i; ?>"
+			data-target="flex-section-<?php echo (int) $section_num; ?>"
+			aria-label="Go to section <?php echo (int) $human; ?>"
 		></button>
-	<?php endfor; ?>
+	<?php endforeach; ?>
 </nav>
 
 <script>
