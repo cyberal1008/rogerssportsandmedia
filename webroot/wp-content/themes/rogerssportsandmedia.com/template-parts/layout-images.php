@@ -22,8 +22,26 @@ $inner_style = $max_width ? 'max-width: ' . esc_attr( $max_width ) . '; margin-l
 					<div class="tw-flex tw-flex-col md:tw-flex-row" style="gap: 32px;">
 						<?php foreach ( $images as $item ) :
 							$img = $item['image'];
+							if ( empty( $img ) ) {
+								continue;
+							}
+							// Prefer the un-scaled original (bypasses WP's 2560px auto-scale cap)
+							// so images stay crisp on Retina displays.
+							$img_url = ! empty( $img['ID'] )
+								? ( wp_get_original_image_url( $img['ID'] ) ?: $img['url'] )
+								: $img['url'];
 						?>
-							<img src="<?php echo esc_url( $img['url'] ); ?>" alt="<?php echo esc_attr( $img['alt'] ); ?>" style="flex: 1 1 0; min-width: 0; width: 100%; height: auto; display: block;">
+							<img
+								src="<?php echo esc_url( $img_url ); ?>"
+								alt="<?php echo esc_attr( $img['alt'] ); ?>"
+								<?php if ( ! empty( $img['width'] ) && ! empty( $img['height'] ) ) : ?>
+									width="<?php echo (int) $img['width']; ?>"
+									height="<?php echo (int) $img['height']; ?>"
+								<?php endif; ?>
+								loading="lazy"
+								decoding="async"
+								style="flex: 1 1 0; min-width: 0; width: 100%; height: auto; display: block;"
+							>
 						<?php endforeach; ?>
 					</div>
 				</div>
