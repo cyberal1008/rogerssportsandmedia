@@ -85,7 +85,7 @@ $total = count( $slides );
 	position: absolute;
 	inset: 0;
 	background-color: var(--sts-dim-color, #0a0a0a);
-	opacity: 0.78;
+	opacity: 0.95;
 	border-radius: inherit;
 	pointer-events: none;
 	z-index: 10;
