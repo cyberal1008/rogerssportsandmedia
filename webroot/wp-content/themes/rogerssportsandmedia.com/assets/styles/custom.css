@@ -41,22 +41,46 @@ main h2 {
     transform: translateY(-8px);
 }
 
-.swiper.show-slider {
+/* ----- Flex Page Builder only (scoped to .page-template-page_flexible) ----- */
+
+.page-template-page_flexible .swiper.show-slider {
     overflow: hidden;
 }
 
-.swiper.show-slider .swiper-slide {
+.page-template-page_flexible .swiper.show-slider .swiper-slide {
     overflow: visible;
 }
 
-.flex-section {
+.page-template-page_flexible .flex-section {
     overflow-x: hidden;
 }
 
+/* Sub-pixel rendering at section boundaries can expose the page background
+   through a 1px gap on high-DPI screens at certain scroll positions. Pull
+   each subsequent flex-section 1px up so adjacent sections overlap by 1px —
+   invisible when colors match, eliminates the flicker. */
+.page-template-page_flexible .flex-section + .flex-section {
+    margin-top: -1px;
+}
+
+/* Suppress mouse/touch focus outlines on slider internals — they can render
+   as a thin colored line that only appears after interaction. Keyboard focus
+   (:focus-visible) is preserved for accessibility. */
+.page-template-page_flexible .swiper:focus,
+.page-template-page_flexible .swiper-slide:focus,
+.page-template-page_flexible .swiper-wrapper:focus {
+    outline: none;
+}
+.page-template-page_flexible .swiper:focus-visible,
+.page-template-page_flexible .swiper-slide:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: -2px;
+}
+
 /* Shared section-title style for every flex-builder layout. Centered,
-   responsive size, consistent spacing. Inline color: styles from layouts
+   responsive size, consistent spacing. Inline color styles from layouts
    still win because color is set inline. */
-.flex-section-title {
+.page-template-page_flexible .flex-section-title {
     font-size: clamp(28px, 3vw, 40px);
     font-weight: 700;
     line-height: 1.1;
@@ -74,10 +98,12 @@ main h2 {
    misroutes touches on fixed-positioned elements (Contact Us button) into
    the body scroll context and gets stuck. <main> wraps every layout but is
    safely outside the fixed-element scroll calculus. */
-main {
+.page-template-page_flexible main {
     overflow-x: hidden; /* fallback */
     overflow-x: clip;
 }
+
+/* ----- End flex page builder ----- */
 
 .swiper.show-slider .swiper-slide .inner {
     transition: transform 0.3s ease;
