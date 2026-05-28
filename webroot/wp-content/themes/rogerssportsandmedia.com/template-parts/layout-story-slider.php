@@ -12,6 +12,11 @@ $section_title        = get_sub_field( 'section_title' );
 $section_title_color  = get_sub_field( 'section_title_color' ) ?: '#ffffff';
 $slides               = get_sub_field( 'slides' );
 
+// The dim overlay on inactive slides paints the section bg color over the
+// slide so peek slides blend seamlessly with the gap between slides — no
+// visible "white line" sliver. Fallback to near-black if editor didn't set.
+$dim_color = $background_color ?: '#0a0a0a';
+
 if ( empty( $slides ) ) {
 	return;
 }
@@ -71,12 +76,24 @@ $total = count( $slides );
 	align-self: stretch;
 	border-radius: var(--sts-radius);
 	overflow: hidden;
-	transition: filter 0.45s ease;
-	filter: brightness(0.35);
 }
 
-#<?php echo esc_attr( $uid ); ?> .story-slider__slide.swiper-slide-active {
-	filter: brightness(1);
+/* Inactive-slide dim overlay. Uses the section bg color so peek slides
+   blend seamlessly with the gap between slides — no visible line. */
+#<?php echo esc_attr( $uid ); ?> .story-slider__slide::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background-color: var(--sts-dim-color, #0a0a0a);
+	opacity: 0.78;
+	border-radius: inherit;
+	pointer-events: none;
+	z-index: 10;
+	transition: opacity 0.45s ease;
+}
+
+#<?php echo esc_attr( $uid ); ?> .story-slider__slide.swiper-slide-active::after {
+	opacity: 0;
 }
 
 #<?php echo esc_attr( $uid ); ?> .story-slider__bg {
@@ -430,7 +447,7 @@ $total = count( $slides );
 	role="region"
 	aria-roledescription="carousel"
 	aria-label="Story slider"
-	<?php if ( $background_color ) : ?>style="background-color: <?php echo esc_attr( $background_color ); ?>;"<?php endif; ?>
+	style="<?php echo $background_color ? 'background-color: ' . esc_attr( $background_color ) . ';' : ''; ?> --sts-dim-color: <?php echo esc_attr( $dim_color ); ?>;"
 >
 	<?php if ( $section_title ) : ?>
 		<h2 class="flex-section-title" style="color: <?php echo esc_attr( $section_title_color ); ?>;"><?php echo esc_html( $section_title ); ?></h2>
