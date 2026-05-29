@@ -6,6 +6,7 @@
 
 $eyebrow_prefix       = get_sub_field( 'eyebrow_prefix' ) ?: 'STORY';
 $autoplay_ms          = (int) ( get_sub_field( 'autoplay_ms' ) ?: 6000 );
+$disable_autoplay     = (bool) get_sub_field( 'disable_autoplay' );
 $select_label         = get_sub_field( 'select_label' ) ?: 'Select A Story';
 $background_color     = get_sub_field( 'background_color' );
 $section_title        = get_sub_field( 'section_title' );
@@ -76,6 +77,7 @@ $total = count( $slides );
 	align-self: stretch;
 	border-radius: var(--sts-radius);
 	overflow: hidden;
+	color: var(--sts-text-color, #fff);
 }
 
 /* Inactive-slide dim overlay. Uses the section bg color so peek slides
@@ -192,6 +194,7 @@ $total = count( $slides );
 
 #<?php echo esc_attr( $uid ); ?> .story-slider__eyebrow {
 	font-size: var(--sts-eyebrow-size, clamp(12px, 1vw, 14px));
+	color: var(--sts-eyebrow-color, var(--sts-text-color, #fff));
 	letter-spacing: 0.18em;
 	font-weight: 600;
 	text-transform: uppercase;
@@ -206,15 +209,16 @@ $total = count( $slides );
 	letter-spacing: -0.015em;
 	text-transform: uppercase;
 	margin: 0;
-	color: #fff;
+	color: var(--sts-title-color, var(--sts-text-color, #fff));
 	text-shadow: 0 2px 16px rgba(0, 0, 0, 0.5);
-	-webkit-text-stroke: 1.2px #fff;
+	-webkit-text-stroke: 1.2px var(--sts-title-color, var(--sts-text-color, #fff));
 	paint-order: stroke fill;
 	opacity: 1;
 }
 
 #<?php echo esc_attr( $uid ); ?> .story-slider__body {
 	font-size: var(--sts-body-size, clamp(15px, 1.1vw, 18px));
+	color: var(--sts-body-color, var(--sts-text-color, #fff));
 	font-weight: 600;
 	line-height: 1.1;
 	opacity: 1;
@@ -238,8 +242,8 @@ $total = count( $slides );
 	display: inline-block;
 	padding: 12px 28px;
 	margin-top: 4px;
-	border: 2px solid #fff;
-	color: #fff;
+	border: 2px solid var(--sts-text-color, #fff);
+	color: var(--sts-text-color, #fff);
 	text-decoration: none;
 	font-size: 14px;
 	font-weight: 600;
@@ -264,6 +268,7 @@ $total = count( $slides );
 	backdrop-filter: blur(12px);
 	-webkit-backdrop-filter: blur(12px);
 	border: 1px solid rgba(255, 255, 255, 0.08);
+	color: var(--sts-counter-color, var(--sts-text-color, #fff));
 	text-align: center;
 	display: flex;
 	flex-direction: column;
@@ -287,7 +292,7 @@ $total = count( $slides );
 #<?php echo esc_attr( $uid ); ?> .story-slider__counter-suffix {
 	font-size: 1em;
 	line-height: 1;
-	-webkit-text-stroke: 2.2px #fff;
+	-webkit-text-stroke: 2.2px var(--sts-counter-color, var(--sts-text-color, #fff));
 	paint-order: stroke fill;
 }
 
@@ -318,7 +323,7 @@ $total = count( $slides );
 	line-height: 1.1;
 	text-align: center;
 	margin-top: -6px;
-	-webkit-text-stroke: 1.2px #fff;
+	-webkit-text-stroke: 1.2px var(--sts-counter-color, var(--sts-text-color, #fff));
 	paint-order: stroke fill;
 }
 
@@ -421,13 +426,13 @@ $total = count( $slides );
 	}
 	#<?php echo esc_attr( $uid ); ?> .story-slider__bg { background-image: var(--sts-bg-mobile); }
 	#<?php echo esc_attr( $uid ); ?> .story-slider__overlay {
-		background: linear-gradient(180deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.4) 30%, rgba(0,0,0,0) 50%, rgba(0,0,0,0) 100%);
+		background: linear-gradient(0deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.4) 30%, rgba(0,0,0,0) 50%, rgba(0,0,0,0) 100%);
 	}
 	#<?php echo esc_attr( $uid ); ?> .story-slider__arrow { display: none; }
 	#<?php echo esc_attr( $uid ); ?> .story-slider__counter { display: none; }
 	#<?php echo esc_attr( $uid ); ?> .story-slider__inner {
-		align-content: start;
-		align-items: start;
+		align-content: end;
+		align-items: end;
 		justify-items: start;
 		text-align: left;
 	}
@@ -481,6 +486,20 @@ $total = count( $slides );
 				if ( $body_size_mobile )    $slide_vars .= '--sts-body-size-mobile:' . $body_size_mobile . 'px;';
 				if ( $eyebrow_size )        $slide_vars .= '--sts-eyebrow-size:' . $eyebrow_size . 'px;';
 				if ( $eyebrow_size_mobile ) $slide_vars .= '--sts-eyebrow-size-mobile:' . $eyebrow_size_mobile . 'px;';
+
+				// Per-slide text colors. "text_color" applies to every text item on
+				// the slide; per-item colors override it via the CSS cascade
+				// (per-item var → slide var → default white).
+				$text_color    = $slide['text_color'] ?? '';
+				$eyebrow_color = $slide['eyebrow_color'] ?? '';
+				$title_color   = $slide['title_color'] ?? '';
+				$body_color    = $slide['body_color'] ?? '';
+				$counter_color = $slide['counter_color'] ?? '';
+				if ( $text_color )    $slide_vars .= '--sts-text-color:' . esc_attr( $text_color ) . ';';
+				if ( $eyebrow_color ) $slide_vars .= '--sts-eyebrow-color:' . esc_attr( $eyebrow_color ) . ';';
+				if ( $title_color )   $slide_vars .= '--sts-title-color:' . esc_attr( $title_color ) . ';';
+				if ( $body_color )    $slide_vars .= '--sts-body-color:' . esc_attr( $body_color ) . ';';
+				if ( $counter_color ) $slide_vars .= '--sts-counter-color:' . esc_attr( $counter_color ) . ';';
 
 				$text_style = $text_width ? 'max-width:' . $text_width . 'px;' : '';
 
@@ -602,6 +621,7 @@ $total = count( $slides );
 	var nextBtn    = root.querySelector('.story-slider__arrow--next');
 	var liveRgn    = root.querySelector('.story-slider__live');
 	var autoplayMs = <?php echo (int) $autoplay_ms; ?>;
+	var autoplayOn = <?php echo $disable_autoplay ? 'false' : 'true'; ?>;
 	var total      = <?php echo (int) $total; ?>;
 	var reduce     = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 	var hasBeenVisible = false;
@@ -627,7 +647,7 @@ $total = count( $slides );
 		grabCursor: true,
 		a11y: { enabled: true },
 		keyboard: { enabled: true, onlyInViewport: true },
-		autoplay: !reduce && total > 1 ? {
+		autoplay: autoplayOn && !reduce && total > 1 ? {
 			delay: autoplayMs,
 			disableOnInteraction: false,
 			pauseOnMouseEnter: true
