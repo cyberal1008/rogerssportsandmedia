@@ -426,13 +426,13 @@ $total = count( $slides );
 	}
 	#<?php echo esc_attr( $uid ); ?> .story-slider__bg { background-image: var(--sts-bg-mobile); }
 	#<?php echo esc_attr( $uid ); ?> .story-slider__overlay {
-		background: linear-gradient(180deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.4) 30%, rgba(0,0,0,0) 50%, rgba(0,0,0,0) 100%);
+		background: linear-gradient(0deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.4) 30%, rgba(0,0,0,0) 50%, rgba(0,0,0,0) 100%);
 	}
 	#<?php echo esc_attr( $uid ); ?> .story-slider__arrow { display: none; }
 	#<?php echo esc_attr( $uid ); ?> .story-slider__counter { display: none; }
 	#<?php echo esc_attr( $uid ); ?> .story-slider__inner {
-		align-content: start;
-		align-items: start;
+		align-content: end;
+		align-items: end;
 		justify-items: start;
 		text-align: left;
 	}
