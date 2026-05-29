@@ -285,6 +285,7 @@ $total = count( $slides );
 	letter-spacing: -0.02em;
 	opacity: 1;
 	margin-bottom: 0;
+	color: var(--sts-counter-num-color, var(--sts-counter-color, var(--sts-text-color, #fff)));
 }
 
 #<?php echo esc_attr( $uid ); ?> .story-slider__counter-prefix,
@@ -292,7 +293,7 @@ $total = count( $slides );
 #<?php echo esc_attr( $uid ); ?> .story-slider__counter-suffix {
 	font-size: 1em;
 	line-height: 1;
-	-webkit-text-stroke: 2.2px var(--sts-counter-color, var(--sts-text-color, #fff));
+	-webkit-text-stroke: 2.2px var(--sts-counter-num-color, var(--sts-counter-color, var(--sts-text-color, #fff)));
 	paint-order: stroke fill;
 }
 
@@ -323,12 +324,14 @@ $total = count( $slides );
 	line-height: 1.1;
 	text-align: center;
 	margin-top: -6px;
-	-webkit-text-stroke: 1.2px var(--sts-counter-color, var(--sts-text-color, #fff));
+	color: var(--sts-counter-label-color, var(--sts-counter-color, var(--sts-text-color, #fff)));
+	-webkit-text-stroke: 1.2px var(--sts-counter-label-color, var(--sts-counter-color, var(--sts-text-color, #fff)));
 	paint-order: stroke fill;
 }
 
 #<?php echo esc_attr( $uid ); ?> .story-slider__counter-desc {
 	font-size: clamp(13px, 0.95vw, 15px);
+	color: var(--sts-counter-label-color, var(--sts-counter-color, var(--sts-text-color, #fff)));
 	font-weight: 600;
 	line-height: 1.1;
 	opacity: 1;
@@ -426,17 +429,20 @@ $total = count( $slides );
 	}
 	#<?php echo esc_attr( $uid ); ?> .story-slider__bg { background-image: var(--sts-bg-mobile); }
 	#<?php echo esc_attr( $uid ); ?> .story-slider__overlay {
-		background: linear-gradient(0deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.4) 30%, rgba(0,0,0,0) 50%, rgba(0,0,0,0) 100%);
+		background: linear-gradient(0deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.4) 28%, rgba(0,0,0,0) 50%, rgba(0,0,0,0.45) 100%);
 	}
 	#<?php echo esc_attr( $uid ); ?> .story-slider__arrow { display: none; }
 	#<?php echo esc_attr( $uid ); ?> .story-slider__counter { display: none; }
 	#<?php echo esc_attr( $uid ); ?> .story-slider__inner {
-		align-content: end;
-		align-items: end;
+		align-content: stretch;
+		align-items: stretch;
 		justify-items: start;
 		text-align: left;
 	}
-	#<?php echo esc_attr( $uid ); ?> .story-slider__text { align-items: flex-start; }
+	/* Fill the slide so the eyebrow can pin to the top while the rest
+	   (title/body/button) drops to the bottom via the auto margin below. */
+	#<?php echo esc_attr( $uid ); ?> .story-slider__text { align-items: flex-start; height: 100%; }
+	#<?php echo esc_attr( $uid ); ?> .story-slider__eyebrow { margin-bottom: auto; }
 	#<?php echo esc_attr( $uid ); ?> .story-slider__body { text-align: center; align-self: stretch; }
 	#<?php echo esc_attr( $uid ); ?> .story-slider__title { text-align: center; align-self: stretch; }
 }
@@ -495,11 +501,15 @@ $total = count( $slides );
 				$title_color   = $slide['title_color'] ?? '';
 				$body_color    = $slide['body_color'] ?? '';
 				$counter_color = $slide['counter_color'] ?? '';
+				$counter_num_color   = $slide['counter_number_color'] ?? '';
+				$counter_label_color = $slide['counter_label_color'] ?? '';
 				if ( $text_color )    $slide_vars .= '--sts-text-color:' . esc_attr( $text_color ) . ';';
 				if ( $eyebrow_color ) $slide_vars .= '--sts-eyebrow-color:' . esc_attr( $eyebrow_color ) . ';';
 				if ( $title_color )   $slide_vars .= '--sts-title-color:' . esc_attr( $title_color ) . ';';
 				if ( $body_color )    $slide_vars .= '--sts-body-color:' . esc_attr( $body_color ) . ';';
 				if ( $counter_color ) $slide_vars .= '--sts-counter-color:' . esc_attr( $counter_color ) . ';';
+				if ( $counter_num_color )   $slide_vars .= '--sts-counter-num-color:' . esc_attr( $counter_num_color ) . ';';
+				if ( $counter_label_color ) $slide_vars .= '--sts-counter-label-color:' . esc_attr( $counter_label_color ) . ';';
 
 				$text_style = $text_width ? 'max-width:' . $text_width . 'px;' : '';
 
