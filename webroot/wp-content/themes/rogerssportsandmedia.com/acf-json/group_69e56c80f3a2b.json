@@ -549,6 +549,77 @@
                             "allow_in_bindings": 0
                         },
                         {
+                            "key": "field_show_slider_bottom_button_link",
+                            "label": "Bottom Button Link",
+                            "name": "bottom_button_link",
+                            "aria-label": "",
+                            "type": "link",
+                            "instructions": "Optional second button shown below the slider. Uses the default button style unless overridden below.",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": { "width": "", "class": "", "id": "" },
+                            "return_format": "array",
+                            "allow_in_bindings": 0
+                        },
+                        {
+                            "key": "field_show_slider_bottom_button_bg_color",
+                            "label": "Bottom Button — Background Color",
+                            "name": "bottom_button_bg_color",
+                            "aria-label": "",
+                            "type": "color_picker",
+                            "instructions": "Overrides the bottom button background. Leave blank for the default.",
+                            "required": 0,
+                            "conditional_logic": [
+                                [
+                                    { "field": "field_show_slider_bottom_button_link", "operator": "!=empty" }
+                                ]
+                            ],
+                            "wrapper": { "width": "33", "class": "", "id": "" },
+                            "default_value": "",
+                            "enable_opacity": 1,
+                            "return_format": "string"
+                        },
+                        {
+                            "key": "field_show_slider_bottom_button_text_color",
+                            "label": "Bottom Button — Text Color",
+                            "name": "bottom_button_text_color",
+                            "aria-label": "",
+                            "type": "color_picker",
+                            "instructions": "Overrides the bottom button text color. Leave blank for the default.",
+                            "required": 0,
+                            "conditional_logic": [
+                                [
+                                    { "field": "field_show_slider_bottom_button_link", "operator": "!=empty" }
+                                ]
+                            ],
+                            "wrapper": { "width": "33", "class": "", "id": "" },
+                            "default_value": "",
+                            "enable_opacity": 1,
+                            "return_format": "string"
+                        },
+                        {
+                            "key": "field_show_slider_bottom_button_text_size",
+                            "label": "Bottom Button — Text Size (px)",
+                            "name": "bottom_button_text_size",
+                            "aria-label": "",
+                            "type": "number",
+                            "instructions": "Overrides the bottom button text size. Leave blank for the default.",
+                            "required": 0,
+                            "conditional_logic": [
+                                [
+                                    { "field": "field_show_slider_bottom_button_link", "operator": "!=empty" }
+                                ]
+                            ],
+                            "wrapper": { "width": "33", "class": "", "id": "" },
+                            "default_value": "",
+                            "min": 10,
+                            "max": 40,
+                            "step": 1,
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "px"
+                        },
+                        {
                             "key": "field_69e56c93f6d7f",
                             "label": "Background Color",
                             "name": "background_color",
