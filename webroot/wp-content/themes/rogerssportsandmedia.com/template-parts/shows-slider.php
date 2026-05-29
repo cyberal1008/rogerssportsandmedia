@@ -14,6 +14,11 @@ $slider_shows = $args['slider_shows'];
 $slider_name = $args['slider_name'];
 $filter = empty( $args['filter'] ) ? false : $args['filter'];
 $text_color = empty( $args['text_color'] ) ? '#000' : $args['text_color'];
+// Optional per-slider title size overrides. Emitted as a scoped <style> block
+// (below) so the mobile override can use a media query — inline styles can't.
+// Left blank, the default responsive .h4 size applies.
+$text_size        = ( isset( $args['text_size'] ) && $args['text_size'] !== '' ) ? (int) $args['text_size'] : 0;
+$text_size_mobile = ( isset( $args['text_size_mobile'] ) && $args['text_size_mobile'] !== '' ) ? (int) $args['text_size_mobile'] : 0;
 
 // get all the taxonomies for filters
 $days_terms   = get_terms(
@@ -78,6 +83,14 @@ if ( $filter ) {
 }
 ?>
 
+<?php if ( $text_size || $text_size_mobile ) :
+	$title_sel = '.' . esc_attr( $slider_name ) . '-slider .title.h4 a';
+?>
+<style>
+	<?php if ( $text_size ) : ?><?php echo $title_sel; ?> { font-size: <?php echo $text_size; ?>px; }<?php endif; ?>
+	<?php if ( $text_size_mobile ) : ?>@media (max-width: 767px) { <?php echo $title_sel; ?> { font-size: <?php echo $text_size_mobile; ?>px; } }<?php endif; ?>
+</style>
+<?php endif; ?>
 <div class="slider">
 	<div class="swiper <?php echo $slider_name; ?>-slider show-slider">
 		<div class="swiper-wrapper">
@@ -162,7 +175,7 @@ if ( $filter ) {
 								<?php echo $img_tag; ?>
 							</a>
 						</div>
-						<p class="title h4"><a style="color: <?php echo $text_color; ?>" href="#prog-popup-<?php echo $prog_ctr; ?>" aria-label="read about <?php echo esc_html( $post->post_title ); ?>" data-fancybox><?php echo esc_html( $post->post_title ); ?></a></p>
+						<p class="title h4"><a style="color: <?php echo esc_attr( $text_color ); ?>" href="#prog-popup-<?php echo $prog_ctr; ?>" aria-label="read about <?php echo esc_html( $post->post_title ); ?>" data-fancybox><?php echo esc_html( $post->post_title ); ?></a></p>
 					</div>
 					<div id="prog-popup-<?php echo $post->ID; ?>" class="prog-popup popup">
 						<div class="inner">

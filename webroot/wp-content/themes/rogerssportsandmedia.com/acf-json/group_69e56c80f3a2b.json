@@ -549,6 +549,77 @@
                             "allow_in_bindings": 0
                         },
                         {
+                            "key": "field_show_slider_bottom_button_link",
+                            "label": "Bottom Button Link",
+                            "name": "bottom_button_link",
+                            "aria-label": "",
+                            "type": "link",
+                            "instructions": "Optional second button shown below the slider. Uses the default button style unless overridden below.",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": { "width": "", "class": "", "id": "" },
+                            "return_format": "array",
+                            "allow_in_bindings": 0
+                        },
+                        {
+                            "key": "field_show_slider_bottom_button_bg_color",
+                            "label": "Bottom Button — Background Color",
+                            "name": "bottom_button_bg_color",
+                            "aria-label": "",
+                            "type": "color_picker",
+                            "instructions": "Overrides the bottom button background. Leave blank for the default.",
+                            "required": 0,
+                            "conditional_logic": [
+                                [
+                                    { "field": "field_show_slider_bottom_button_link", "operator": "!=empty" }
+                                ]
+                            ],
+                            "wrapper": { "width": "33", "class": "", "id": "" },
+                            "default_value": "",
+                            "enable_opacity": 1,
+                            "return_format": "string"
+                        },
+                        {
+                            "key": "field_show_slider_bottom_button_text_color",
+                            "label": "Bottom Button — Text Color",
+                            "name": "bottom_button_text_color",
+                            "aria-label": "",
+                            "type": "color_picker",
+                            "instructions": "Overrides the bottom button text color. Leave blank for the default.",
+                            "required": 0,
+                            "conditional_logic": [
+                                [
+                                    { "field": "field_show_slider_bottom_button_link", "operator": "!=empty" }
+                                ]
+                            ],
+                            "wrapper": { "width": "33", "class": "", "id": "" },
+                            "default_value": "",
+                            "enable_opacity": 1,
+                            "return_format": "string"
+                        },
+                        {
+                            "key": "field_show_slider_bottom_button_text_size",
+                            "label": "Bottom Button — Text Size (px)",
+                            "name": "bottom_button_text_size",
+                            "aria-label": "",
+                            "type": "number",
+                            "instructions": "Overrides the bottom button text size. Leave blank for the default.",
+                            "required": 0,
+                            "conditional_logic": [
+                                [
+                                    { "field": "field_show_slider_bottom_button_link", "operator": "!=empty" }
+                                ]
+                            ],
+                            "wrapper": { "width": "33", "class": "", "id": "" },
+                            "default_value": "",
+                            "min": 10,
+                            "max": 40,
+                            "step": 1,
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "px"
+                        },
+                        {
                             "key": "field_69e56c93f6d7f",
                             "label": "Background Color",
                             "name": "background_color",
@@ -585,6 +656,42 @@
                             "enable_opacity": 1,
                             "return_format": "string",
                             "allow_in_bindings": 0
+                        },
+                        {
+                            "key": "field_show_slider_text_size",
+                            "label": "Slide Title Size — Desktop (px)",
+                            "name": "text_size",
+                            "aria-label": "",
+                            "type": "number",
+                            "instructions": "Overrides the title size for every show card in this slider. Leave blank for the default (responsive).",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": { "width": "50", "class": "", "id": "" },
+                            "default_value": "",
+                            "min": 10,
+                            "max": 60,
+                            "step": 1,
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "px"
+                        },
+                        {
+                            "key": "field_show_slider_text_size_mobile",
+                            "label": "Slide Title Size — Mobile (px)",
+                            "name": "text_size_mobile",
+                            "aria-label": "",
+                            "type": "number",
+                            "instructions": "Title size for every show card on screens ≤767px. Leave blank to use the desktop value.",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": { "width": "50", "class": "", "id": "" },
+                            "default_value": "",
+                            "min": 10,
+                            "max": 60,
+                            "step": 1,
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "px"
                         },
                         {
                             "key": "field_69e56c9518f91",
@@ -1345,6 +1452,22 @@
                             "append": "ms"
                         },
                         {
+                            "key": "field_sts_disable_autoplay",
+                            "label": "Disable Autoplay",
+                            "name": "disable_autoplay",
+                            "aria-label": "",
+                            "type": "true_false",
+                            "instructions": "Turn on to stop the slider from auto-advancing. Autoplay is enabled by default.",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": { "width": "50", "class": "", "id": "" },
+                            "message": "",
+                            "default_value": 0,
+                            "ui": 1,
+                            "ui_on_text": "",
+                            "ui_off_text": ""
+                        },
+                        {
                             "key": "field_sts_background_color",
                             "label": "Section Background Color",
                             "name": "background_color",
@@ -1601,6 +1724,81 @@
                                     "placeholder": "",
                                     "prepend": "",
                                     "append": "px",
+                                    "parent_repeater": "field_sts_slides"
+                                },
+                                {
+                                    "key": "field_sts_slide_text_color",
+                                    "label": "All Text Color",
+                                    "name": "text_color",
+                                    "aria-label": "",
+                                    "type": "color_picker",
+                                    "instructions": "Sets the color for every text item on this slide (eyebrow, title, body, button, counter). Leave blank for the default white. Per-item colors below override this.",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": { "width": "25", "class": "", "id": "" },
+                                    "default_value": "",
+                                    "enable_opacity": 0,
+                                    "return_format": "string",
+                                    "parent_repeater": "field_sts_slides"
+                                },
+                                {
+                                    "key": "field_sts_slide_eyebrow_color",
+                                    "label": "Eyebrow Color",
+                                    "name": "eyebrow_color",
+                                    "aria-label": "",
+                                    "type": "color_picker",
+                                    "instructions": "Overrides the eyebrow color on this slide. Leave blank to use the All Text Color.",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": { "width": "25", "class": "", "id": "" },
+                                    "default_value": "",
+                                    "enable_opacity": 0,
+                                    "return_format": "string",
+                                    "parent_repeater": "field_sts_slides"
+                                },
+                                {
+                                    "key": "field_sts_slide_title_color",
+                                    "label": "Title Color",
+                                    "name": "title_color",
+                                    "aria-label": "",
+                                    "type": "color_picker",
+                                    "instructions": "Overrides the title color on this slide. Leave blank to use the All Text Color.",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": { "width": "25", "class": "", "id": "" },
+                                    "default_value": "",
+                                    "enable_opacity": 0,
+                                    "return_format": "string",
+                                    "parent_repeater": "field_sts_slides"
+                                },
+                                {
+                                    "key": "field_sts_slide_body_color",
+                                    "label": "Body Color",
+                                    "name": "body_color",
+                                    "aria-label": "",
+                                    "type": "color_picker",
+                                    "instructions": "Overrides the body color on this slide. Leave blank to use the All Text Color.",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": { "width": "25", "class": "", "id": "" },
+                                    "default_value": "",
+                                    "enable_opacity": 0,
+                                    "return_format": "string",
+                                    "parent_repeater": "field_sts_slides"
+                                },
+                                {
+                                    "key": "field_sts_slide_counter_color",
+                                    "label": "Right Card (Counter) Color",
+                                    "name": "counter_color",
+                                    "aria-label": "",
+                                    "type": "color_picker",
+                                    "instructions": "Overrides the text color of the stat / counter card shown on the right on desktop. Leave blank to use the All Text Color.",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": { "width": "25", "class": "", "id": "" },
+                                    "default_value": "",
+                                    "enable_opacity": 0,
+                                    "return_format": "string",
                                     "parent_repeater": "field_sts_slides"
                                 },
                                 {
