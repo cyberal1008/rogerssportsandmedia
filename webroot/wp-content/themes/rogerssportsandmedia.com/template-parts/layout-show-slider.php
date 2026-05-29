@@ -3,6 +3,8 @@ $slider_title            = get_sub_field( 'title' );
 $slider_button_link      = get_sub_field( 'button_link' );
 $slider_background_color = get_sub_field( 'background_color' );
 $slider_text_color       = get_sub_field( 'text_color' );
+$slider_text_size        = get_sub_field( 'text_size' );
+$slider_text_size_mobile = get_sub_field( 'text_size_mobile' );
 $slider_shows            = get_sub_field( 'shows' );
 $count                   = isset( $args['count'] ) ? $args['count'] : 1;
 
@@ -31,7 +33,9 @@ if ( empty( $slider_shows ) ) {
 						'slider_name'  => 'shows-slider-' . $count,
 						'filter'       => false,
 						'slider_shows' => $slider_shows,
-						'text_color'   => $slider_text_color,
+						'text_color'        => $slider_text_color,
+						'text_size'         => $slider_text_size,
+						'text_size_mobile'  => $slider_text_size_mobile,
 					)
 				);
 				?>
