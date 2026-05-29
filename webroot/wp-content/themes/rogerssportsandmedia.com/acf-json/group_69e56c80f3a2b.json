@@ -1452,6 +1452,22 @@
                             "append": "ms"
                         },
                         {
+                            "key": "field_sts_disable_autoplay",
+                            "label": "Disable Autoplay",
+                            "name": "disable_autoplay",
+                            "aria-label": "",
+                            "type": "true_false",
+                            "instructions": "Turn on to stop the slider from auto-advancing. Autoplay is enabled by default.",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": { "width": "50", "class": "", "id": "" },
+                            "message": "",
+                            "default_value": 0,
+                            "ui": 1,
+                            "ui_on_text": "",
+                            "ui_off_text": ""
+                        },
+                        {
                             "key": "field_sts_background_color",
                             "label": "Section Background Color",
                             "name": "background_color",

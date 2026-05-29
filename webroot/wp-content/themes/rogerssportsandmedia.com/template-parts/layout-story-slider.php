@@ -6,6 +6,7 @@
 
 $eyebrow_prefix       = get_sub_field( 'eyebrow_prefix' ) ?: 'STORY';
 $autoplay_ms          = (int) ( get_sub_field( 'autoplay_ms' ) ?: 6000 );
+$disable_autoplay     = (bool) get_sub_field( 'disable_autoplay' );
 $select_label         = get_sub_field( 'select_label' ) ?: 'Select A Story';
 $background_color     = get_sub_field( 'background_color' );
 $section_title        = get_sub_field( 'section_title' );
@@ -620,6 +621,7 @@ $total = count( $slides );
 	var nextBtn    = root.querySelector('.story-slider__arrow--next');
 	var liveRgn    = root.querySelector('.story-slider__live');
 	var autoplayMs = <?php echo (int) $autoplay_ms; ?>;
+	var autoplayOn = <?php echo $disable_autoplay ? 'false' : 'true'; ?>;
 	var total      = <?php echo (int) $total; ?>;
 	var reduce     = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 	var hasBeenVisible = false;
@@ -645,7 +647,7 @@ $total = count( $slides );
 		grabCursor: true,
 		a11y: { enabled: true },
 		keyboard: { enabled: true, onlyInViewport: true },
-		autoplay: !reduce && total > 1 ? {
+		autoplay: autoplayOn && !reduce && total > 1 ? {
 			delay: autoplayMs,
 			disableOnInteraction: false,
 			pauseOnMouseEnter: true
