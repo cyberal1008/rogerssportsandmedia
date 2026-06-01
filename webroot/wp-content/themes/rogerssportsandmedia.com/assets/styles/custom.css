@@ -21,7 +21,18 @@ main h2 {
     text-transform: none;
 }
 
-.swiper.videos-slider,
+/* Contain the videos-slider to its wrapper — clip the left/right peek so
+   slides don't bleed to the screen edge (matches the show-slider). The slide
+   itself stays visible so the hover lift/shadow isn't clipped within it; the
+   vertical padding (cancelled by negative margin) gives that lift room inside
+   the clip box. */
+.swiper.videos-slider {
+    overflow: hidden;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    margin-top: -16px;
+    margin-bottom: -16px;
+}
 .swiper.videos-slider .swiper-slide {
     overflow: visible;
 }
@@ -45,13 +56,6 @@ main h2 {
 
 .page-template-page_flexible .swiper.show-slider {
     overflow: hidden;
-    /* Give the hover scale (.inner scale 1.06) room top/bottom so cards aren't
-       clipped by the horizontal-peek overflow:hidden. Negative margin cancels
-       the padding so surrounding layout/spacing is unchanged. */
-    padding-top: 16px;
-    padding-bottom: 16px;
-    margin-top: -16px;
-    margin-bottom: -16px;
 }
 
 .page-template-page_flexible .swiper.show-slider .swiper-slide {
@@ -118,6 +122,17 @@ main h2 {
 
 .swiper.show-slider .swiper-slide:hover .inner {
     transform: scale(1.06);
+}
+
+/* The hover scale (1.06) grows the card; the swiper clips with overflow:hidden
+   (Swiper default + flex builder), cropping the top/bottom. Give vertical room
+   and cancel it with a negative margin so layout is unchanged. Global so it
+   covers the old hptv template too, not just the flex page builder. */
+.swiper.show-slider {
+    padding-top: 16px;
+    padding-bottom: 16px;
+    margin-top: -16px;
+    margin-bottom: -16px;
 }
 
 .section-title {
