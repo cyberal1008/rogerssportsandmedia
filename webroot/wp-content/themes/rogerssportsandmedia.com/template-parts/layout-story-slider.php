@@ -441,6 +441,7 @@ $total = count( $slides );
 		text-align: left;
 	}
 	#<?php echo esc_attr( $uid ); ?> .story-slider__text { align-items: flex-start; }
+	#<?php echo esc_attr( $uid ); ?> .story-slider__eyebrow { text-align: center; align-self: stretch; }
 	#<?php echo esc_attr( $uid ); ?> .story-slider__body { text-align: center; align-self: stretch; }
 	#<?php echo esc_attr( $uid ); ?> .story-slider__title { text-align: center; align-self: stretch; }
 }
