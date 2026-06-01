@@ -45,6 +45,13 @@ main h2 {
 
 .page-template-page_flexible .swiper.show-slider {
     overflow: hidden;
+    /* Give the hover scale (.inner scale 1.06) room top/bottom so cards aren't
+       clipped by the horizontal-peek overflow:hidden. Negative margin cancels
+       the padding so surrounding layout/spacing is unchanged. */
+    padding-top: 16px;
+    padding-bottom: 16px;
+    margin-top: -16px;
+    margin-bottom: -16px;
 }
 
 .page-template-page_flexible .swiper.show-slider .swiper-slide {
