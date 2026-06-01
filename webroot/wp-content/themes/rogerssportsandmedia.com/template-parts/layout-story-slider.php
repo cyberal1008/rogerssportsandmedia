@@ -431,7 +431,21 @@ $total = count( $slides );
 	#<?php echo esc_attr( $uid ); ?> .story-slider__overlay {
 		background: linear-gradient(0deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.4) 30%, rgba(0,0,0,0) 50%, rgba(0,0,0,0) 100%);
 	}
-	#<?php echo esc_attr( $uid ); ?> .story-slider__arrow { display: none; }
+	/* Keep smaller arrows on mobile, styled like the desktop hover state
+	   (filled background + visible border) instead of hiding them. */
+	#<?php echo esc_attr( $uid ); ?> .story-slider__arrow {
+		width: 34px;
+		height: 34px;
+		background: rgba(0, 0, 0, 0.55);
+		border-color: #fff;
+	}
+	#<?php echo esc_attr( $uid ); ?> .story-slider__arrow svg {
+		width: 16px;
+		height: 16px;
+	}
+	/* Sit the arrows on the active slide's edges so half of each overlaps it. */
+	#<?php echo esc_attr( $uid ); ?> .story-slider__arrow--prev { left: var(--sts-peek-px); }
+	#<?php echo esc_attr( $uid ); ?> .story-slider__arrow--next { right: var(--sts-peek-px); }
 	#<?php echo esc_attr( $uid ); ?> .story-slider__counter { display: none; }
 	/* All text grouped at the bottom; eyebrow sits right above the title. */
 	#<?php echo esc_attr( $uid ); ?> .story-slider__inner {
