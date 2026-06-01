@@ -196,7 +196,7 @@ $total = count( $slides );
 	font-size: var(--sts-eyebrow-size, clamp(12px, 1vw, 14px));
 	color: var(--sts-eyebrow-color, var(--sts-text-color, #fff));
 	letter-spacing: 0.18em;
-	font-weight: 600;
+	font-weight: 700;
 	text-transform: uppercase;
 	line-height: 1.1;
 	opacity: 1;
@@ -279,7 +279,7 @@ $total = count( $slides );
 #<?php echo esc_attr( $uid ); ?> .story-slider__counter-figure {
 	display: inline-flex;
 	align-items: flex-start;
-	font-weight: 600;
+	font-weight: 700;
 	font-size: clamp(48px, 6vw, 84px);
 	line-height: 1;
 	letter-spacing: -0.02em;
@@ -429,20 +429,18 @@ $total = count( $slides );
 	}
 	#<?php echo esc_attr( $uid ); ?> .story-slider__bg { background-image: var(--sts-bg-mobile); }
 	#<?php echo esc_attr( $uid ); ?> .story-slider__overlay {
-		background: linear-gradient(0deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.4) 28%, rgba(0,0,0,0) 50%, rgba(0,0,0,0.45) 100%);
+		background: linear-gradient(0deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.4) 30%, rgba(0,0,0,0) 50%, rgba(0,0,0,0) 100%);
 	}
 	#<?php echo esc_attr( $uid ); ?> .story-slider__arrow { display: none; }
 	#<?php echo esc_attr( $uid ); ?> .story-slider__counter { display: none; }
+	/* All text grouped at the bottom; eyebrow sits right above the title. */
 	#<?php echo esc_attr( $uid ); ?> .story-slider__inner {
-		align-content: stretch;
-		align-items: stretch;
+		align-content: end;
+		align-items: end;
 		justify-items: start;
 		text-align: left;
 	}
-	/* Fill the slide so the eyebrow can pin to the top while the rest
-	   (title/body/button) drops to the bottom via the auto margin below. */
-	#<?php echo esc_attr( $uid ); ?> .story-slider__text { align-items: flex-start; height: 100%; }
-	#<?php echo esc_attr( $uid ); ?> .story-slider__eyebrow { margin-bottom: auto; }
+	#<?php echo esc_attr( $uid ); ?> .story-slider__text { align-items: flex-start; }
 	#<?php echo esc_attr( $uid ); ?> .story-slider__body { text-align: center; align-self: stretch; }
 	#<?php echo esc_attr( $uid ); ?> .story-slider__title { text-align: center; align-self: stretch; }
 }
