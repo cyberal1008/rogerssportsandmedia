@@ -2124,6 +2124,22 @@
                             "mime_types": "mp4,webm,mov"
                         },
                         {
+                            "key": "field_vh_video_file_mobile",
+                            "label": "Mobile Video File",
+                            "name": "video_file_mobile",
+                            "aria-label": "",
+                            "type": "file",
+                            "instructions": "Optional. A smaller, lighter file served on phones (≤767px) so the hero loads fast on mobile data. Recommended: 720p (or portrait), strong compression, ideally under ~8MB. If left blank, the main video is used on mobile too.",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": { "width": "", "class": "", "id": "" },
+                            "return_format": "array",
+                            "library": "all",
+                            "min_size": "",
+                            "max_size": "",
+                            "mime_types": "mp4,webm,mov"
+                        },
+                        {
                             "key": "field_vh_poster",
                             "label": "Poster Image",
                             "name": "poster",
