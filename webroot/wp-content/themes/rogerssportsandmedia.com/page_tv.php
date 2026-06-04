@@ -17,7 +17,7 @@
     <?php wp_head(); ?>
     <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/main.min.css">
 	<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/styles/reskin-alt.css">
-	<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/styles/custom.css?v=1.0.7">
+	<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/styles/custom.css?v=1.0.19">
 </head>
 <?php
 	get_header();
@@ -51,16 +51,7 @@
 	<section class="alt nomargin tw-py-6 tw-bg-gray">
 		<div class="wrapper">
 			<?php if ($brands_logos) : ?>
-				<div class="swiper logo-slider">
-					<div class="swiper-wrapper">
-						<?php foreach ($brands_logos as $logo) : ?>
-							<div class="swiper-slide">
-								<img src="<?php echo $logo['url']; ?>" alt="<?php echo $logo['alt']; ?>">
-							</div>
-						<?php endforeach; ?>
-					</div>
-					<div class="swiper-pagination"></div>
-				</div>
+				<?php get_template_part( 'template-parts/logo-marquee', null, array( 'logos' => $brands_logos, 'class' => 'logo-marquee--gap-bottom' ) ); ?>
 			<?php endif; ?>
 		</div>
 	</section>

@@ -18,12 +18,7 @@
     <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/audio-landing/main.min.css">
 	<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/main.min.css">
 	<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/styles/reskin-alt.css">
-	<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/styles/custom.css?v=1.0.7">
-	<style>
-		.logo-slider {
-			display: block;
-		}
-	</style>
+	<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/styles/custom.css?v=1.0.19">
 </head>
 <?php get_header(); ?>
 
@@ -52,21 +47,7 @@
 			<section class="tw-bg-gray tw-py-12">
 				<div class="wrapper">
 					<?php if ($brands_logos): ?>
-					<div class="swiper logo-slider">
-						<div class="swiper-wrapper">
-							<?php
-								$logo_chunks = array_chunk($brands_logos, 4);
-							?>
-							<?php foreach ($logo_chunks as $logo_chunk): ?>
-								<div class="swiper-slide">
-									<?php foreach ($logo_chunk as $logo): ?>
-										<img src="<?php echo $logo['url']; ?>" alt="<?php echo $logo['alt']; ?>">
-									<?php endforeach; ?>
-								</div>
-							<?php endforeach; ?>
-						</div>
-						<div class="swiper-pagination"></div>
-					</div>
+					<?php get_template_part( 'template-parts/logo-marquee', null, array( 'logos' => $brands_logos, 'class' => 'logo-marquee--gap-bottom' ) ); ?>
 					<?php endif; ?>
 				</div>
 			</section>

@@ -519,3 +519,73 @@ main .lined:hover {
         height: auto;
     }
 }
+
+/* ===== Unified logo marquee =====================================================
+   Single source of styling for the brand/partner logo rows. Replaces the old
+   per-page Swiper carousels (.logo-slider / .logo-slider-mobile) with one
+   continuously scrolling marquee. Markup: template-parts/logo-marquee.php */
+.logo-marquee {
+    width: 100%;
+    overflow: hidden;
+    /* Fade the logos in/out at the edges instead of a hard cut. */
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+            mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+}
+
+.logo-marquee__track {
+    display: flex;
+    width: max-content;
+    align-items: center;
+    /* Reserve the row height so it never collapses (matches the logo max-height). */
+    min-height: 70px;
+    /* ~3s per logo keeps the scroll speed constant no matter how many logos.
+       --logo-marquee-count is set inline by the partial. */
+    animation: logo-marquee-scroll calc(var(--logo-marquee-count, 6) * 3s) linear infinite;
+    will-change: transform;
+}
+
+.logo-marquee:hover .logo-marquee__track {
+    animation-play-state: paused;
+}
+
+.logo-marquee__item {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 clamp(20px, 4vw, 56px);
+}
+
+.logo-marquee__item img {
+    width: auto;
+    height: auto;
+    max-width: 186px;
+    max-height: 70px;
+    object-fit: contain;
+    display: block;
+    filter: grayscale(100%);
+}
+
+@keyframes logo-marquee-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+}
+
+/* Reduced motion: no scroll — show one static, centered, wrapping row. */
+@media (prefers-reduced-motion: reduce) {
+    .logo-marquee__track {
+        animation: none;
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: clamp(20px, 4vw, 48px);
+    }
+    .logo-marquee__item { padding: 0; }
+    .logo-marquee__item[aria-hidden="true"] { display: none; }
+}
+/* Extra bottom space under the marquee on the entertainment/radio/sports
+   templates (their sections have less/inconsistent bottom padding than home). */
+.logo-marquee--gap-bottom {
+    padding-bottom: clamp(2rem, 4vw, 3rem);
+}
+/* ===== End logo marquee ======================================================== */
