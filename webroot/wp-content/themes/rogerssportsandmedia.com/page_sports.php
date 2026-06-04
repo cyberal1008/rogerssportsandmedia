@@ -6,20 +6,9 @@
  * @subpackage rdm-rsm-parent
  * @since Ver 1.0
  */
+
+get_header();
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/landing/images/favicon.png" />
-    <title><?php echo get_the_title(); ?> | Rogers Sports & Media</title>
-    <?php wp_head(); ?>
-    <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/main.min.css">
-	<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/styles/reskin-alt.css">
-	<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/styles/custom.css?v=1.0.7">
-</head>
-<?php get_header(); ?>
 
 <main id="content" role="main">
 
@@ -46,16 +35,7 @@
 	<section class="our-difference alt nomargin">
 		<div class="wrapper">
 			<?php if ($brands_logos) : ?>
-				<div class="swiper logo-slider-mobile">
-					<div class="swiper-wrapper">
-						<?php foreach ($brands_logos as $logo) : ?>
-							<div class="swiper-slide">
-								<img src="<?php echo $logo['url']; ?>" alt="<?php echo $logo['alt']; ?>">
-							</div>
-						<?php endforeach; ?>
-					</div>
-					<div class="swiper-pagination"></div>
-				</div>
+				<?php get_template_part( 'template-parts/logo-marquee', null, array( 'logos' => $brands_logos, 'class' => 'logo-marquee--gap-bottom' ) ); ?>
 			<?php endif; ?>
 		</div>
 	</section>
@@ -105,8 +85,8 @@
 	<?php get_template_part('template-parts/section-highlights'); ?>
 
 	<!-- PLATFORMS -->
-	<?php 
-	if( have_rows('platforms') ) : 
+	<?php
+	if( have_rows('platforms') ) :
 		$plat_section_title = get_field('plat_section_title');
 		$plat_section_button = get_field('plat_section_button');
 		?>
@@ -119,7 +99,7 @@
 				<div class="swiper plat-slider">
 					<div class="swiper-wrapper grid tight">
 
-						<?php while( have_rows('platforms') ) : the_row(); 
+						<?php while( have_rows('platforms') ) : the_row();
 							$title = get_sub_field('title');
 							$description = get_sub_field('description');
 							$link = get_sub_field('link');
@@ -175,6 +155,3 @@
 <script src="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/main.min.js"></script>
 <?php
 get_footer();
-?>
-</html>
-<?php

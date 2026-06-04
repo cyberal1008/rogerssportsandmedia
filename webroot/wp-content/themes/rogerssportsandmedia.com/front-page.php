@@ -167,15 +167,7 @@ $home_hero_btn_text = get_theme_mod( 'desktop_vid_link_button_text' );
 					<?php if ($brands_section_title) : ?>
 						<h2 class="title2"><?php echo $brands_section_title; ?></h2>
 					<?php endif; ?>
-					<div class="swiper logo-slider">
-						<div class="swiper-wrapper">
-							<?php foreach ($brands_logos as $logo) : ?>
-								<div class="swiper-slide">
-									<img style="max-width: 186px;" src="<?php echo $logo['url']; ?>" alt="<?php echo $logo['alt']; ?>">
-								</div>
-							<?php endforeach; ?>
-						</div>
-					</div>
+					<?php get_template_part( 'template-parts/logo-marquee', null, array( 'logos' => $brands_logos ) ); ?>
 				</div>
 			</section>
 		<?php endif; ?>
