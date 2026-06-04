@@ -125,6 +125,18 @@ function config_textbox_callback($args) {
 	echo '<input type="text" id="'. $args[0] .'" name="'. $args[0] .'" value="' . $option . '" />';
 }
 
+/**
+ * Add the `audio-landing` body class on the Audio template so its
+ * wrapper overrides in assets/audio-landing/main.min.css still apply
+ * (the class previously lived on <html> in the template's own <head>).
+ */
+add_filter( 'body_class', function ( $classes ) {
+	if ( is_page_template( 'page_audio.php' ) ) {
+		$classes[] = 'audio-landing';
+	}
+	return $classes;
+} );
+
 add_filter('rest_authentication_errors', function($result) {
     // If a previous authentication check was applied,
     // pass that result along without modification.

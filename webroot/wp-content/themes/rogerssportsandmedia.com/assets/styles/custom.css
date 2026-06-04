@@ -589,3 +589,13 @@ main .lined:hover {
     padding-bottom: clamp(2rem, 4vw, 3rem);
 }
 /* ===== End logo marquee ======================================================== */
+
+/* ===== Audio template ==========================================================
+   The Audio template no longer declares its own <html class="audio-landing">,
+   so the `audio-landing` class now sits on <body> (see body_class filter in
+   functions.php). Re-scope the wrapper overrides from
+   assets/audio-landing/main.min.css (originally `.audio-landing body .wrapper`)
+   to the new body-level class so the layout is unchanged. */
+body.audio-landing .wrapper { width: calc(100% - 10vw); max-width: 1200px; margin: 0 auto; }
+body.audio-landing > .wrapper { margin: auto; max-width: none; width: 100%; }
+/* ===== End audio template ====================================================== */

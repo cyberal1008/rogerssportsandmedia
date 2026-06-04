@@ -6,21 +6,9 @@
  * @subpackage rdm-rsm-parent
  * @since Ver 1.0
  */
+
+get_header();
 ?>
-<!DOCTYPE html>
-<html lang="en" class="audio-landing">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/landing/images/favicon.png" />
-    <title>Rogers Sports & Media</title>
-    <?php wp_head(); ?>
-    <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/audio-landing/main.min.css">
-	<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/home/main.min.css">
-	<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/styles/reskin-alt.css">
-	<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/styles/custom.css?v=1.0.19">
-</head>
-<?php get_header(); ?>
 
 	<div class="portfolio-main">
 
