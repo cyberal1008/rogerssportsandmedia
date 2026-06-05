@@ -47,6 +47,24 @@ main h2 {
     transition: all .5s;
 }
 
+/* Cap the thumbnail height so vertical / mobile-friendly (portrait) videos
+   don't make the slider taller than the screen. Mirrors the story-slider
+   height rules: keep aspect ratio, just clamp the max height — applied on
+   both desktop and mobile so the slider never spills off-screen. */
+.swiper.videos-slider .swiper-slide .imgbox img {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: 55vh;
+    margin: 0 auto;
+}
+
+@media (max-width: 767px) {
+    .swiper.videos-slider .swiper-slide .imgbox img {
+        max-height: 60vh;
+    }
+}
+
 .swiper.videos-slider .swiper-slide .imgbox a:hover img {
     box-shadow: 6px 6px 12px 3px #ccc;
     transform: translateY(-8px);
