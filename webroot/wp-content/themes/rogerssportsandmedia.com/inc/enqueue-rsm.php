@@ -34,7 +34,7 @@ if ( ! function_exists( 'load_rsm_stylesheet' ) ) {
 		}
 		
 		wp_enqueue_style( 'child-styles-4', get_stylesheet_directory_uri() . '/assets/ad-manager-new/main-alt.css', array('parent-styles'), $css_version );
-		wp_enqueue_style( 'child-styles-5', get_stylesheet_directory_uri() . '/assets/styles/custom.css', array('parent-styles'), '1.0.20' );
+		wp_enqueue_style( 'child-styles-5', get_stylesheet_directory_uri() . '/assets/styles/custom.css', array('parent-styles'), '1.0.21' );
 
 		if ( is_page_template('page_audio.php') ) {
 			wp_enqueue_style( 'audio-landing', get_stylesheet_directory_uri() . '/assets/audio-landing/main.min.css', array('parent-styles'), $css_version );

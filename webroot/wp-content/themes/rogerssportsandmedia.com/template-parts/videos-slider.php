@@ -37,12 +37,12 @@ $text_color = empty( $args['text_color'] ) ? '#000' : $args['text_color'];
 						<p class="title h4"><a style="color: <?php echo $text_color; ?>" href="#prog-popup-<?php echo $prog_ctr; ?>" aria-label="read about <?php echo esc_html( $video_title ); ?>" data-fancybox><?php echo esc_html( $video_title ); ?></a></p>
 					</div>
 					<div id="prog-popup-<?php echo $video_id; ?>" class="prog-popup popup">
-						<div class="inner" style="position: relative; top: -70px">
+						<div class="inner" style="position: relative;">
 							<a href="#" class="back" data-fancybox-close aria-label="Back to content">Back</a>
 
 							<p class="title h2"><?php echo esc_html( $video_title ); ?></p>
 							<p><?php echo esc_html( $video_description ); ?></p>
-							<video style="display:block; width:auto; height:auto; max-width:100%; max-height:70vh; margin:40px auto 0;" controls>
+							<video style="display:block; width:auto; height:auto; max-width:100%; max-height:60vh; margin:20px auto 0;" controls>
 								<source src="<?php echo $video_file['url']; ?>" type="video/mp4">
 								Your browser does not support the video tag.
 							</video>
