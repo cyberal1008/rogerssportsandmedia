@@ -4,7 +4,8 @@ define( 'DOMAIN_CURRENT_SITE', 'local-www.rogerssportsandmedia.com' );
 define( 'DB_NAME', 'rogerssportsandmedia' );
 define( 'DB_USER', 'root' );
 define( 'DB_PASSWORD', 'root' );
-define( 'DB_HOST', '127.0.0.1' );
+// Use 'db' when in Docker container, otherwise use 127.0.0.1
+define( 'DB_HOST', getenv( 'WORDPRESS_DB_HOST' ) ?: 'db' );
 define( 'DB_CHARSET', 'utf8' );
 define( 'DB_COLLATE', '' );
 define( 'COOKIE_DOMAIN', $_SERVER['HTTP_HOST'] );
@@ -19,9 +20,10 @@ define( 'WP_SITEURL', 'https://' . DOMAIN_CURRENT_SITE );
 define( 'WP_HOME', 'https://' . DOMAIN_CURRENT_SITE );
 define( 'DISABLE_WP_CRON', true );
 
+// Redis configuration (use container hostname in Docker)
 $redis_server = array(
-	'host'     => '127.0.0.1',
-	'port'     => '6379',
+	'host'     => getenv( 'REDIS_HOST' ) ?: 'redis',
+	'port'     => getenv( 'REDIS_PORT' ) ?: '6379',
 	'database' => '2',
 );
 

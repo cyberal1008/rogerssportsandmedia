@@ -3,3 +3,12 @@ webroot/wp-content/themes/node_modules
 webroot/wp-content/uploads
 webroot/wp-content/themes/package-lock.json
 webroot/wp-content/mu-plugins/rsm-broadcast/node_modules
+
+# Docker SSL certificates (local development only)
+docker/certs/*.crt
+docker/certs/*.key
+docker/certs/*.pem
+
+# Docker volumes
+db_data/
+redis_data/
