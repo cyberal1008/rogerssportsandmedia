@@ -12,3 +12,5 @@ docker/certs/*.pem
 # Docker volumes
 db_data/
 redis_data/
+
+**/.DS_Store
