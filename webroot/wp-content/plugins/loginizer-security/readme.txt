@@ -2,9 +2,9 @@
 Contributors: softaculous, loginizer, pagelayer
 Tags: security, access, admin, Loginizer, login, logs, ban ip, failed login, ip, whitelist ip, blacklist ip, failed attempts, lockouts, hack, authentication, login, security, rename login url, rename login, rename wp-admin, secure wp-admin, rename admin url, secure admin, brute force protection
 Requires at least: 3.0
-Tested up to: 6.9
+Tested up to: 7.0
 Requires PHP: 5.5
-Stable tag: 2.0.6
+Stable tag: 2.0.8
 License: LGPLv2.1
 License URI: http://www.gnu.org/licenses/lgpl-2.1.html
 
@@ -86,6 +86,18 @@ That's it. You're done!
 3. Loginizer Brute Force Settings page
 
 == Changelog ==
+
+= 2.0.8 =
+* [Improvement Pro] Admin slug htaccess rule, now handles the new slug not having / at the end in the URL.
+* [Improvement] When 2FA is enabled, email notifications will be sent only after successful 2FA verification for both Loginizer and Really Simple Security.
+
+= 2.0.7 =
+* [Improvement Pro] Two Factor Authentication : Enforced 2FA option added for new users.
+* [Improvement Pro] Country Block : IP address Information support added for the blocked IP(s).
+* [Improvement] Country Block : Enduser's IP address added on blocked page.
+* [Improvement] Login page detection has been improved.
+* [Bug-Fix] Country Block : blocked page was being cached, that issue has been fixed.
+* [Task] Tested with Wordpress 7.0.
 
 = 2.0.6 =
 * [Bug-Fix] There was an issue with URL decoding, this has been fixed.
