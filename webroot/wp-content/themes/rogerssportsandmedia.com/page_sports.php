@@ -40,25 +40,25 @@ get_header();
 		</div>
 	</section>
 
-	<!-- HIGHLIGHTS -->
-	<?php get_template_part('template-parts/section-highlights'); ?>
-
-
 	<!-- FEATURED VIDEO -->
 	<?php
 		$featured_video = get_field('featured_video');
+		$featured_video_thumbnail = get_field('featured_video_thumbnail');
+		$featured_video_bg_color = get_field('featured_video_bg_color');
 		if ($featured_video) :
 	?>
-	<section>
-		<div class="wrapper">
-			<div class="tw:mb-4">&nbsp;</div>
-			<video class="tw:w-full" controls>
+	<section<?php echo $featured_video_bg_color ? ' style="background-color: ' . esc_attr($featured_video_bg_color) . ';"' : ''; ?>>
+		<div class="wrapper" style="padding: 5rem 0;">
+			<video class="tw:w-full" controls<?php echo $featured_video_thumbnail ? ' poster="' . esc_url($featured_video_thumbnail['url']) . '"' : ''; ?>>
 				<source src="<?php echo $featured_video['url']; ?>" type="video/mp4">
 				Your browser does not support the video tag.
 			</video>
 		</div>
 	</section>
 	<?php endif; ?>
+
+	<!-- HIGHLIGHTS -->
+	<?php get_template_part('template-parts/section-highlights'); ?>
 
 	<!-- PLATFORMS -->
 	<?php 
