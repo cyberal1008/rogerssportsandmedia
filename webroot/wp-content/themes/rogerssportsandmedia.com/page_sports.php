@@ -43,40 +43,16 @@ get_header();
 	<!-- FEATURED VIDEO -->
 	<?php
 		$featured_video = get_field('featured_video');
-		$featured_video_2 = get_field('featured_video_2');
-		$featured_video_title = get_field('featured_video_title');
-		$featured_video_title_2 = get_field('featured_video_title_2');
-
-		if ($featured_video || $featured_video_2) :
+		$featured_video_thumbnail = get_field('featured_video_thumbnail');
+		$featured_video_bg_color = get_field('featured_video_bg_color');
+		if ($featured_video) :
 	?>
-	<section style="background-color: #000;">
-		<div class="wrapper">
-			<div class="tw:mb-4">&nbsp;</div>
-			<div class="tw:grid tw:grid-cols-1 <?php echo ($featured_video && $featured_video_2) ? 'tw:md:grid-cols-2 tw:gap-x-12' : ''; ?> tw:gap-y-12">
-				<?php if ($featured_video) : ?>
-					<div>
-						<?php if ($featured_video_title) : ?>
-							<h2 class="title2 tw:mb-6" style="color: #fff;"><?php echo $featured_video_title; ?></h2>
-						<?php endif; ?>
-						<video class="tw:w-full" controls>
-							<source src="<?php echo $featured_video['url']; ?>" type="video/mp4">
-							Your browser does not support the video tag.
-						</video>
-					</div>
-				<?php endif; ?>
-
-				<?php if ($featured_video_2) : ?>
-					<div>
-						<?php if ($featured_video_title_2) : ?>
-							<h2 class="title2 tw:mb-6" style="color: #fff;"><?php echo $featured_video_title_2; ?></h2>
-						<?php endif; ?>
-						<video class="tw:w-full" controls>
-							<source src="<?php echo $featured_video_2['url']; ?>" type="video/mp4">
-							Your browser does not support the video tag.
-						</video>
-					</div>
-				<?php endif; ?>
-			</div>
+	<section<?php echo $featured_video_bg_color ? ' style="background-color: ' . esc_attr($featured_video_bg_color) . ';"' : ''; ?>>
+		<div class="wrapper" style="padding: 5rem 0;">
+			<video class="tw:w-full" controls<?php echo $featured_video_thumbnail ? ' poster="' . esc_url($featured_video_thumbnail['url']) . '"' : ''; ?>>
+				<source src="<?php echo $featured_video['url']; ?>" type="video/mp4">
+				Your browser does not support the video tag.
+			</video>
 		</div>
 	</section>
 	<?php endif; ?>
