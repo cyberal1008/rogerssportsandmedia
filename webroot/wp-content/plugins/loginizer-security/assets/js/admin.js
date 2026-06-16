@@ -214,4 +214,25 @@ jQuery(document).ready(function($) {
 			spinner.removeClass('is-active');
 		});
 	});
+	
+	// 2FA Enforce admin script
+	$('#lz_2fa_enforce_type').on('change', function(){
+		let obj = $(this);
+		
+		if(obj.val() === 'grace_enforce'){
+			$('.lz_2fa_grace_time').show();
+		}else{
+			$('.lz_2fa_grace_time').hide();
+		}
+	});
+	
+	$('#lz_email_2fa_enforce').on('change', function(){
+		let obj = $(this);
+		
+		if(obj.is(':checked')){
+			$('.lz_2fa_enforce_block').hide();
+		}else{
+			$('.lz_2fa_enforce_block').show();
+		}
+	});
 });

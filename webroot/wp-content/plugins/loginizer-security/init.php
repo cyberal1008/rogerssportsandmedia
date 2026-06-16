@@ -160,7 +160,8 @@ $site_name';
 	$loginizer['question'] = !isset($options['question']) ? 0 : $options['question'];
 	$loginizer['2fa_default'] = empty($options['2fa_default']) ? 'question' : $options['2fa_default'];
 	$loginizer['2fa_roles'] = empty($options['2fa_roles']) ? array() : $options['2fa_roles'];
-
+	$loginizer['2fa_enforce'] = !empty($options['2fa_enforce']) ? $options['2fa_enforce'] : [];
+	
 	// Security Settings
 	$options = get_option('loginizer_security');
 	$loginizer['login_slug'] = empty($options['login_slug']) ? '' : $options['login_slug'];
@@ -526,6 +527,11 @@ $site_name';
 
 	if(!defined('SITEPAD') && loginizer_is_2fa_enabled() && !defined('XMLRPC_REQUEST')){
 
+		// 2FA Setup process for registration
+		if(empty($loginizer['2fa_email_force'])){
+			\LoginizerPro\Enforce2FA::init();
+		}
+		
 		// After username and password check has been verified, are we to redirect ?
 		add_filter('authenticate', 'loginizer_user_redirect', 10003, 3);
 
@@ -1224,13 +1230,12 @@ function loginizer_rl_register($link){
 
 // Shows the Login correctly
 function loginizer_rl_wp_loaded(){
-
-	global $loginizer, $interim_login;
+	global $loginizer, $interim_login, $pagenow;
 
 	$page = loginizer_cur_page();
 
 	// Is it wp-login.php ?
-	if ($page === $loginizer['login_basename']) {
+	if ((!empty($pagenow) && $pagenow === $loginizer['login_basename']) || $page === $loginizer['login_basename']) {
 		loginizer_set_404();
 	}
 
@@ -1259,12 +1264,12 @@ function loginizer_rl_wp_loaded(){
 // Renames the XML-RPC functionality
 function loginizer_xml_rename_wp_loaded(){
 
-	global $loginizer;
+	global $loginizer, $pagenow;
 
 	$page = loginizer_cur_page();
 
 	// Is it xmlrpc.php ?
-	if ($page === 'xmlrpc.php') {
+	if ((!empty($pagenow) && $pagenow === 'xmlrpc.php') || $page === 'xmlrpc.php') {
 		loginizer_set_404();
 	}
 
@@ -1295,12 +1300,12 @@ function loginizer_xmlrpc_null(){
 // Disables the XML-RPC functionality
 function loginizer_xmlrpc_disable(){
 
-	global $loginizer;
+	global $loginizer, $pagenow;
 
 	$page = loginizer_cur_page();
 
 	// Is it xmlrpc.php ?
-	if ($page === 'xmlrpc.php'){
+	if ((!empty($pagenow) && $pagenow === 'xmlrpc.php') || $page === 'xmlrpc.php'){
 		echo 'XML-RPC is disabled';
 		exit();
 	}
@@ -3035,6 +3040,9 @@ function loginizer_user_page_post(&$error = array()){
 
 		// Lets save the settings
 		update_user_meta($uid, 'loginizer_user_settings', $Nsettings);
+		
+		// Delete grace time usermeta when user completes 2FA setup
+		delete_user_meta($uid, 'loginizer_grace_time_expiry');
 
 		return 1;
 
@@ -3159,6 +3167,13 @@ function loginizer_user_page(){
 		lz_report_error($error);
 	}
 
+	// Enforce UM security tab if set to strict enforce or grace time expired for UM plugin
+	if(class_exists('UM') && function_exists('um_is_core_page') && um_is_core_page('account') && empty($loginizer['2fa_email_force'])){
+		if(empty($settings)){
+			\LoginizerPro\Enforce2FA::switch_um_security_tab($user);
+		}
+	}
+	
 	if(is_admin()){
 
 		echo '<p class="">'.__('These are your personal security and login settings and will not affect other users.', 'loginizer').'</p>';

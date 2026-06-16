@@ -409,8 +409,8 @@ function loginizer_pro_cb_error_logs_T(){
 
 						echo '<tr>
 						<td>'.(isset($log['time']) ? esc_html(wp_date('F jS, Y h:i A', (int)$log['time'])) : '-').'</td>
-						<td><span class="lzflag ff-sm lzflag-'.(!empty($log['location']) ? esc_attr($log['location']) : '').'"></span> '.esc_html($country_name).'</td>
-						<td>'.(isset($log['ip']) ? esc_html($log['ip']) : '-').'</td>
+						<td>'.(!empty($log['location']) ? '<span class="lzflag ff-sm lzflag-'.(esc_attr($log['location'])).'"></span>&nbsp;' : '').(!empty($country_name) ? esc_html($country_name) : esc_html__('Unknown', 'loginizer')).'</td>
+						<td><a href="'.esc_url('https://ipinfo.io/'.$log['ip']).'" target="_blank">'.(isset($log['ip']) ? esc_html($log['ip']) : '-').'<span class="dashicons dashicons-external"></span></a></td>
 						<td>'.(isset($log['method']) ? esc_html($log['method']) : '-').'</td>
 						<td>'.(isset($log['uri']) ? esc_html($log['uri']) : '-').'</td>
 						</tr>';

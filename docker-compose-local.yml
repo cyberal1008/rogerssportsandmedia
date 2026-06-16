@@ -1,0 +1,74 @@
+services:
+  php:
+    build:
+      context: ./docker/php
+      dockerfile: Dockerfile
+    container_name: rsm_php
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_NAME: rogerssportsandmedia
+      WORDPRESS_DB_USER: root
+      WORDPRESS_DB_PASSWORD: root
+      REDIS_HOST: redis
+      REDIS_PORT: '6379'
+    volumes:
+      - ./webroot:/var/www/html/webroot
+      - ./config:/var/www/html/config
+    networks:
+      - rsm_network
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:alpine
+    container_name: rsm_nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./webroot:/var/www/html/webroot:ro
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./docker/certs:/etc/nginx/certs:ro
+    environment:
+      - DOMAIN=local-www.rogerssportsandmedia.com
+    networks:
+      - rsm_network
+    depends_on:
+      - php
+    restart: unless-stopped
+
+  db:
+    image: mysql:8.0
+    container_name: rsm_db
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: rogerssportsandmedia
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d
+      - db_data:/var/lib/mysql
+    networks:
+      - rsm_network
+    restart: unless-stopped
+    command: --default-authentication-plugin=mysql_native_password
+
+  redis:
+    image: redis:7-alpine
+    container_name: rsm_redis
+    ports:
+      - "6379:6379"
+    networks:
+      - rsm_network
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+
+networks:
+  rsm_network:
+    driver: bridge
+
+volumes:
+  db_data:
+  redis_data:

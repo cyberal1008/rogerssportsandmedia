@@ -154,18 +154,24 @@ function loginizer_pro_cb_ip2country($ip){
 		$country = $reader->get($ip);
 
 	} catch (\LoginizerMaxMind\Db\Reader\InvalidArgumentException $e){
-		error_log('[Country Block] : ' . $e->getMessage());
+		if(defined('WP_DEBUG') && WP_DEBUG){
+			error_log('[Country Block] : ' . $e->getMessage());
+		}
 		return false;
 
 	} catch (\LoginizerMaxMind\Db\Reader\InvalidDatabaseException $e){
-		error_log('[Country Block] : ' . $e->getMessage());
+		if(defined('WP_DEBUG') && WP_DEBUG){
+			error_log('[Country Block] : ' . $e->getMessage());
+		}
 		return false;
 
 	} catch (\LoginizerMaxMind\Db\Reader\AddressNotFoundException $e){
 		return $country;
 
 	} catch(\Exception $e){
-		error_log('[Country Block] : ' . $e->getMessage());
+		if(defined('WP_DEBUG') && WP_DEBUG){
+			error_log('[Country Block] : ' . $e->getMessage());
+		}
 		return false;
 	} finally {
 		if($reader instanceof \LoginizerMaxMind\Db\Reader){
@@ -252,6 +258,12 @@ function loginizer_pro_cb_block_request($config, $location){
 	// Adding required headers to show HTTP error and prevent cache
 	header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
 	header('Pragma: no-cache');
+	
+	// Some cache plugins checks this constant before storing page cache
+	if(!defined('DONOTCACHEPAGE')){
+		define('DONOTCACHEPAGE', true);
+	}
+
 	http_response_code(403);
 
 	include_once __DIR__ .'/blocked.php';
