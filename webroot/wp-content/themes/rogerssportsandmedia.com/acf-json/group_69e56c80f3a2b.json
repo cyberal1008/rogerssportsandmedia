@@ -499,6 +499,31 @@
                             "max_size": "",
                             "mime_types": "",
                             "allow_in_bindings": 0
+                        },
+                        {
+                            "key": "field_69e57flex_thumb",
+                            "label": "Video Thumbnail",
+                            "name": "featured_video_thumbnail",
+                            "aria-label": "",
+                            "type": "image",
+                            "instructions": "Poster image shown before the featured video plays.",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "return_format": "array",
+                            "library": "all",
+                            "min_width": "",
+                            "min_height": "",
+                            "min_size": "",
+                            "max_width": "",
+                            "max_height": "",
+                            "max_size": "",
+                            "mime_types": "",
+                            "preview_size": "medium"
                         }
                     ],
                     "min": "",
@@ -557,7 +582,11 @@
                             "instructions": "Optional second button shown below the slider. Uses the default button style unless overridden below.",
                             "required": 0,
                             "conditional_logic": 0,
-                            "wrapper": { "width": "", "class": "", "id": "" },
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
                             "return_format": "array",
                             "allow_in_bindings": 0
                         },
@@ -571,10 +600,17 @@
                             "required": 0,
                             "conditional_logic": [
                                 [
-                                    { "field": "field_show_slider_bottom_button_link", "operator": "!=empty" }
+                                    {
+                                        "field": "field_show_slider_bottom_button_link",
+                                        "operator": "!=empty"
+                                    }
                                 ]
                             ],
-                            "wrapper": { "width": "33", "class": "", "id": "" },
+                            "wrapper": {
+                                "width": "33",
+                                "class": "",
+                                "id": ""
+                            },
                             "default_value": "",
                             "enable_opacity": 1,
                             "return_format": "string"
@@ -589,10 +625,17 @@
                             "required": 0,
                             "conditional_logic": [
                                 [
-                                    { "field": "field_show_slider_bottom_button_link", "operator": "!=empty" }
+                                    {
+                                        "field": "field_show_slider_bottom_button_link",
+                                        "operator": "!=empty"
+                                    }
                                 ]
                             ],
-                            "wrapper": { "width": "33", "class": "", "id": "" },
+                            "wrapper": {
+                                "width": "33",
+                                "class": "",
+                                "id": ""
+                            },
                             "default_value": "",
                             "enable_opacity": 1,
                             "return_format": "string"
@@ -607,10 +650,17 @@
                             "required": 0,
                             "conditional_logic": [
                                 [
-                                    { "field": "field_show_slider_bottom_button_link", "operator": "!=empty" }
+                                    {
+                                        "field": "field_show_slider_bottom_button_link",
+                                        "operator": "!=empty"
+                                    }
                                 ]
                             ],
-                            "wrapper": { "width": "33", "class": "", "id": "" },
+                            "wrapper": {
+                                "width": "33",
+                                "class": "",
+                                "id": ""
+                            },
                             "default_value": "",
                             "min": 10,
                             "max": 40,
@@ -666,7 +716,11 @@
                             "instructions": "Overrides the title size for every show card in this slider. Leave blank for the default (responsive).",
                             "required": 0,
                             "conditional_logic": 0,
-                            "wrapper": { "width": "50", "class": "", "id": "" },
+                            "wrapper": {
+                                "width": "50",
+                                "class": "",
+                                "id": ""
+                            },
                             "default_value": "",
                             "min": 10,
                             "max": 60,
@@ -684,7 +738,11 @@
                             "instructions": "Title size for every show card on screens ≤767px. Leave blank to use the desktop value.",
                             "required": 0,
                             "conditional_logic": 0,
-                            "wrapper": { "width": "50", "class": "", "id": "" },
+                            "wrapper": {
+                                "width": "50",
+                                "class": "",
+                                "id": ""
+                            },
                             "default_value": "",
                             "min": 10,
                             "max": 60,
@@ -1426,7 +1484,11 @@
                             "instructions": "Prefix used to auto-build eyebrow labels (e.g. \"STORY\" produces \"STORY 01\", \"STORY 02\" …). Override per slide if needed.",
                             "required": 0,
                             "conditional_logic": 0,
-                            "wrapper": { "width": "50", "class": "", "id": "" },
+                            "wrapper": {
+                                "width": "50",
+                                "class": "",
+                                "id": ""
+                            },
                             "default_value": "STORY",
                             "placeholder": "STORY",
                             "prepend": "",
@@ -1442,7 +1504,11 @@
                             "instructions": "Hold time per slide in milliseconds. Default 6000.",
                             "required": 0,
                             "conditional_logic": 0,
-                            "wrapper": { "width": "50", "class": "", "id": "" },
+                            "wrapper": {
+                                "width": "50",
+                                "class": "",
+                                "id": ""
+                            },
                             "default_value": 6000,
                             "min": 1000,
                             "max": "",
@@ -1460,7 +1526,11 @@
                             "instructions": "Turn on to stop the slider from auto-advancing. Autoplay is enabled by default.",
                             "required": 0,
                             "conditional_logic": 0,
-                            "wrapper": { "width": "50", "class": "", "id": "" },
+                            "wrapper": {
+                                "width": "50",
+                                "class": "",
+                                "id": ""
+                            },
                             "message": "",
                             "default_value": 0,
                             "ui": 1,
@@ -1476,7 +1546,11 @@
                             "instructions": "Optional. Color shown behind the slider section (visible around the rounded card edges).",
                             "required": 0,
                             "conditional_logic": 0,
-                            "wrapper": { "width": "100", "class": "", "id": "" },
+                            "wrapper": {
+                                "width": "100",
+                                "class": "",
+                                "id": ""
+                            },
                             "default_value": "",
                             "enable_opacity": 0,
                             "return_format": "string"
@@ -1490,7 +1564,11 @@
                             "instructions": "Optional heading shown above the slider, centered.",
                             "required": 0,
                             "conditional_logic": 0,
-                            "wrapper": { "width": "75", "class": "", "id": "" },
+                            "wrapper": {
+                                "width": "75",
+                                "class": "",
+                                "id": ""
+                            },
                             "default_value": "",
                             "placeholder": "",
                             "prepend": "",
@@ -1506,7 +1584,11 @@
                             "instructions": "Defaults to white.",
                             "required": 0,
                             "conditional_logic": 0,
-                            "wrapper": { "width": "25", "class": "", "id": "" },
+                            "wrapper": {
+                                "width": "25",
+                                "class": "",
+                                "id": ""
+                            },
                             "default_value": "#ffffff",
                             "enable_opacity": 0,
                             "return_format": "string"
@@ -1520,7 +1602,11 @@
                             "instructions": "Add at least 2 slides.",
                             "required": 1,
                             "conditional_logic": 0,
-                            "wrapper": { "width": "", "class": "", "id": "" },
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
                             "layout": "block",
                             "pagination": 0,
                             "min": 2,
@@ -1538,7 +1624,11 @@
                                     "instructions": "Leave blank to auto-generate (e.g. \"STORY 01\", \"STORY 02\"). The prefix comes from the slider's \"Eyebrow Prefix\" field; the number is the slide position.",
                                     "required": 0,
                                     "conditional_logic": 0,
-                                    "wrapper": { "width": "100", "class": "", "id": "" },
+                                    "wrapper": {
+                                        "width": "100",
+                                        "class": "",
+                                        "id": ""
+                                    },
                                     "default_value": "",
                                     "placeholder": "",
                                     "prepend": "",
@@ -1555,7 +1645,11 @@
                                     "instructions": "",
                                     "required": 1,
                                     "conditional_logic": 0,
-                                    "wrapper": { "width": "100", "class": "", "id": "" },
+                                    "wrapper": {
+                                        "width": "100",
+                                        "class": "",
+                                        "id": ""
+                                    },
                                     "default_value": "",
                                     "placeholder": "",
                                     "prepend": "",
@@ -1572,7 +1666,11 @@
                                     "instructions": "",
                                     "required": 1,
                                     "conditional_logic": 0,
-                                    "wrapper": { "width": "100", "class": "", "id": "" },
+                                    "wrapper": {
+                                        "width": "100",
+                                        "class": "",
+                                        "id": ""
+                                    },
                                     "default_value": "",
                                     "placeholder": "",
                                     "maxlength": "",
@@ -1589,7 +1687,11 @@
                                     "instructions": "Leave empty to hide the CTA on this slide.",
                                     "required": 0,
                                     "conditional_logic": 0,
-                                    "wrapper": { "width": "100", "class": "", "id": "" },
+                                    "wrapper": {
+                                        "width": "100",
+                                        "class": "",
+                                        "id": ""
+                                    },
                                     "return_format": "array",
                                     "parent_repeater": "field_sts_slides"
                                 },
@@ -1602,7 +1704,11 @@
                                     "instructions": "Caps how wide the title/body can grow on desktop. Leave blank for default (640px). Use this instead of manual line breaks so wrapping stays consistent on mobile.",
                                     "required": 0,
                                     "conditional_logic": 0,
-                                    "wrapper": { "width": "25", "class": "", "id": "" },
+                                    "wrapper": {
+                                        "width": "25",
+                                        "class": "",
+                                        "id": ""
+                                    },
                                     "default_value": "",
                                     "min": 200,
                                     "max": 900,
@@ -1621,7 +1727,11 @@
                                     "instructions": "Override eyebrow font size on desktop/tablet. Leave blank for default (responsive 12–14px).",
                                     "required": 0,
                                     "conditional_logic": 0,
-                                    "wrapper": { "width": "25", "class": "", "id": "" },
+                                    "wrapper": {
+                                        "width": "25",
+                                        "class": "",
+                                        "id": ""
+                                    },
                                     "default_value": "",
                                     "min": 8,
                                     "max": 32,
@@ -1640,7 +1750,11 @@
                                     "instructions": "Override eyebrow font size on screens ≤767px. Leave blank to inherit the desktop value (or default if that's blank too).",
                                     "required": 0,
                                     "conditional_logic": 0,
-                                    "wrapper": { "width": "25", "class": "", "id": "" },
+                                    "wrapper": {
+                                        "width": "25",
+                                        "class": "",
+                                        "id": ""
+                                    },
                                     "default_value": "",
                                     "min": 8,
                                     "max": 32,
@@ -1659,7 +1773,11 @@
                                     "instructions": "Override title font size on desktop/tablet. Leave blank for default (responsive 34–64px).",
                                     "required": 0,
                                     "conditional_logic": 0,
-                                    "wrapper": { "width": "25", "class": "", "id": "" },
+                                    "wrapper": {
+                                        "width": "25",
+                                        "class": "",
+                                        "id": ""
+                                    },
                                     "default_value": "",
                                     "min": 18,
                                     "max": 120,
@@ -1678,7 +1796,11 @@
                                     "instructions": "Override title font size on screens ≤767px.",
                                     "required": 0,
                                     "conditional_logic": 0,
-                                    "wrapper": { "width": "25", "class": "", "id": "" },
+                                    "wrapper": {
+                                        "width": "25",
+                                        "class": "",
+                                        "id": ""
+                                    },
                                     "default_value": "",
                                     "min": 18,
                                     "max": 120,
@@ -1697,7 +1819,11 @@
                                     "instructions": "Override body font size on desktop/tablet. Leave blank for default (responsive 15–18px).",
                                     "required": 0,
                                     "conditional_logic": 0,
-                                    "wrapper": { "width": "25", "class": "", "id": "" },
+                                    "wrapper": {
+                                        "width": "25",
+                                        "class": "",
+                                        "id": ""
+                                    },
                                     "default_value": "",
                                     "min": 10,
                                     "max": 36,
@@ -1716,7 +1842,11 @@
                                     "instructions": "Override body font size on screens ≤767px.",
                                     "required": 0,
                                     "conditional_logic": 0,
-                                    "wrapper": { "width": "25", "class": "", "id": "" },
+                                    "wrapper": {
+                                        "width": "25",
+                                        "class": "",
+                                        "id": ""
+                                    },
                                     "default_value": "",
                                     "min": 10,
                                     "max": 36,
@@ -1735,7 +1865,11 @@
                                     "instructions": "Sets the color for every text item on this slide (eyebrow, title, body, button, counter). Leave blank for the default white. Per-item colors below override this.",
                                     "required": 0,
                                     "conditional_logic": 0,
-                                    "wrapper": { "width": "25", "class": "", "id": "" },
+                                    "wrapper": {
+                                        "width": "25",
+                                        "class": "",
+                                        "id": ""
+                                    },
                                     "default_value": "",
                                     "enable_opacity": 0,
                                     "return_format": "string",
@@ -1750,7 +1884,11 @@
                                     "instructions": "Overrides the eyebrow color on this slide. Leave blank to use the All Text Color.",
                                     "required": 0,
                                     "conditional_logic": 0,
-                                    "wrapper": { "width": "25", "class": "", "id": "" },
+                                    "wrapper": {
+                                        "width": "25",
+                                        "class": "",
+                                        "id": ""
+                                    },
                                     "default_value": "",
                                     "enable_opacity": 0,
                                     "return_format": "string",
@@ -1765,7 +1903,11 @@
                                     "instructions": "Overrides the title color on this slide. Leave blank to use the All Text Color.",
                                     "required": 0,
                                     "conditional_logic": 0,
-                                    "wrapper": { "width": "25", "class": "", "id": "" },
+                                    "wrapper": {
+                                        "width": "25",
+                                        "class": "",
+                                        "id": ""
+                                    },
                                     "default_value": "",
                                     "enable_opacity": 0,
                                     "return_format": "string",
@@ -1780,7 +1922,11 @@
                                     "instructions": "Overrides the body color on this slide. Leave blank to use the All Text Color.",
                                     "required": 0,
                                     "conditional_logic": 0,
-                                    "wrapper": { "width": "25", "class": "", "id": "" },
+                                    "wrapper": {
+                                        "width": "25",
+                                        "class": "",
+                                        "id": ""
+                                    },
                                     "default_value": "",
                                     "enable_opacity": 0,
                                     "return_format": "string",
@@ -1795,7 +1941,11 @@
                                     "instructions": "Overrides the whole stat / counter card color (right side, desktop). The two fields below override this for the number and label individually. Leave blank to use the All Text Color.",
                                     "required": 0,
                                     "conditional_logic": 0,
-                                    "wrapper": { "width": "25", "class": "", "id": "" },
+                                    "wrapper": {
+                                        "width": "25",
+                                        "class": "",
+                                        "id": ""
+                                    },
                                     "default_value": "",
                                     "enable_opacity": 0,
                                     "return_format": "string",
@@ -1810,7 +1960,11 @@
                                     "instructions": "Color of the big stat number (e.g. \"3.7B+\"). Leave blank to use the Right Card color.",
                                     "required": 0,
                                     "conditional_logic": 0,
-                                    "wrapper": { "width": "25", "class": "", "id": "" },
+                                    "wrapper": {
+                                        "width": "25",
+                                        "class": "",
+                                        "id": ""
+                                    },
                                     "default_value": "",
                                     "enable_opacity": 0,
                                     "return_format": "string",
@@ -1825,7 +1979,11 @@
                                     "instructions": "Color of the label text under the number (e.g. \"HOURS CONSUMED\") and the description. Leave blank to use the Right Card color.",
                                     "required": 0,
                                     "conditional_logic": 0,
-                                    "wrapper": { "width": "25", "class": "", "id": "" },
+                                    "wrapper": {
+                                        "width": "25",
+                                        "class": "",
+                                        "id": ""
+                                    },
                                     "default_value": "",
                                     "enable_opacity": 0,
                                     "return_format": "string",
@@ -1840,7 +1998,11 @@
                                     "instructions": "Recommended: 2560 x 1200px",
                                     "required": 1,
                                     "conditional_logic": 0,
-                                    "wrapper": { "width": "50", "class": "", "id": "" },
+                                    "wrapper": {
+                                        "width": "50",
+                                        "class": "",
+                                        "id": ""
+                                    },
                                     "return_format": "array",
                                     "library": "all",
                                     "preview_size": "medium",
@@ -1862,7 +2024,11 @@
                                     "instructions": "Recommended: 768 x 900px. Falls back to desktop if empty.",
                                     "required": 0,
                                     "conditional_logic": 0,
-                                    "wrapper": { "width": "50", "class": "", "id": "" },
+                                    "wrapper": {
+                                        "width": "50",
+                                        "class": "",
+                                        "id": ""
+                                    },
                                     "return_format": "array",
                                     "library": "all",
                                     "preview_size": "medium",
@@ -1884,7 +2050,11 @@
                                     "instructions": "Optional, e.g. \"$\".",
                                     "required": 0,
                                     "conditional_logic": 0,
-                                    "wrapper": { "width": "25", "class": "", "id": "" },
+                                    "wrapper": {
+                                        "width": "25",
+                                        "class": "",
+                                        "id": ""
+                                    },
                                     "default_value": "",
                                     "placeholder": "$",
                                     "prepend": "",
@@ -1901,7 +2071,11 @@
                                     "instructions": "Headline number, e.g. \"325\" or \"4,500\". Counter animates 0 → this value. Leave the entire stat block empty to hide the counter card on this slide.",
                                     "required": 0,
                                     "conditional_logic": 0,
-                                    "wrapper": { "width": "25", "class": "", "id": "" },
+                                    "wrapper": {
+                                        "width": "25",
+                                        "class": "",
+                                        "id": ""
+                                    },
                                     "default_value": "",
                                     "placeholder": "325",
                                     "prepend": "",
@@ -1918,7 +2092,11 @@
                                     "instructions": "Optional small superscript, e.g. \"+\" or \"%\".",
                                     "required": 0,
                                     "conditional_logic": 0,
-                                    "wrapper": { "width": "25", "class": "", "id": "" },
+                                    "wrapper": {
+                                        "width": "25",
+                                        "class": "",
+                                        "id": ""
+                                    },
                                     "default_value": "",
                                     "placeholder": "+",
                                     "prepend": "",
@@ -1935,7 +2113,11 @@
                                     "instructions": "Smaller label beneath the number, e.g. \"BILLION\".",
                                     "required": 0,
                                     "conditional_logic": 0,
-                                    "wrapper": { "width": "25", "class": "", "id": "" },
+                                    "wrapper": {
+                                        "width": "25",
+                                        "class": "",
+                                        "id": ""
+                                    },
                                     "default_value": "",
                                     "placeholder": "BILLION",
                                     "prepend": "",
@@ -1952,7 +2134,11 @@
                                     "instructions": "Supporting copy below the counter.",
                                     "required": 0,
                                     "conditional_logic": 0,
-                                    "wrapper": { "width": "100", "class": "", "id": "" },
+                                    "wrapper": {
+                                        "width": "100",
+                                        "class": "",
+                                        "id": ""
+                                    },
                                     "default_value": "",
                                     "placeholder": "",
                                     "maxlength": "",
@@ -1981,7 +2167,11 @@
                             "instructions": "Optional heading shown above the image.",
                             "required": 0,
                             "conditional_logic": 0,
-                            "wrapper": { "width": "100", "class": "", "id": "" },
+                            "wrapper": {
+                                "width": "100",
+                                "class": "",
+                                "id": ""
+                            },
                             "default_value": "",
                             "placeholder": "",
                             "prepend": "",
@@ -1997,7 +2187,11 @@
                             "instructions": "The clickable image. Recommended: 1600x800.",
                             "required": 1,
                             "conditional_logic": 0,
-                            "wrapper": { "width": "100", "class": "", "id": "" },
+                            "wrapper": {
+                                "width": "100",
+                                "class": "",
+                                "id": ""
+                            },
                             "return_format": "array",
                             "library": "all",
                             "preview_size": "medium",
@@ -2018,7 +2212,11 @@
                             "instructions": "Where the image and title link to.",
                             "required": 1,
                             "conditional_logic": 0,
-                            "wrapper": { "width": "100", "class": "", "id": "" },
+                            "wrapper": {
+                                "width": "100",
+                                "class": "",
+                                "id": ""
+                            },
                             "return_format": "array"
                         },
                         {
@@ -2030,7 +2228,11 @@
                             "instructions": "Section background. Defaults to black.",
                             "required": 0,
                             "conditional_logic": 0,
-                            "wrapper": { "width": "50", "class": "", "id": "" },
+                            "wrapper": {
+                                "width": "50",
+                                "class": "",
+                                "id": ""
+                            },
                             "default_value": "#000000",
                             "enable_opacity": 0,
                             "return_format": "string"
@@ -2044,7 +2246,11 @@
                             "instructions": "Title color. Defaults to white.",
                             "required": 0,
                             "conditional_logic": 0,
-                            "wrapper": { "width": "50", "class": "", "id": "" },
+                            "wrapper": {
+                                "width": "50",
+                                "class": "",
+                                "id": ""
+                            },
                             "default_value": "#ffffff",
                             "enable_opacity": 0,
                             "return_format": "string"
@@ -2068,7 +2274,11 @@
                             "instructions": "Vertical space added between sections. All values are responsive (scale fluidly between phone and desktop).",
                             "required": 0,
                             "conditional_logic": 0,
-                            "wrapper": { "width": "50", "class": "", "id": "" },
+                            "wrapper": {
+                                "width": "50",
+                                "class": "",
+                                "id": ""
+                            },
                             "choices": {
                                 "small": "Small (12–24px)",
                                 "medium": "Medium (22–32px)",
@@ -2092,7 +2302,11 @@
                             "instructions": "Optional. Leave blank for transparent.",
                             "required": 0,
                             "conditional_logic": 0,
-                            "wrapper": { "width": "50", "class": "", "id": "" },
+                            "wrapper": {
+                                "width": "50",
+                                "class": "",
+                                "id": ""
+                            },
                             "default_value": "",
                             "enable_opacity": 0,
                             "return_format": "string"
@@ -2116,7 +2330,11 @@
                             "instructions": "Upload an MP4 (H.264, web-optimized). Plays muted, looped, autoplays inline. Recommended: 1920x1080 or 2560x1440.",
                             "required": 1,
                             "conditional_logic": 0,
-                            "wrapper": { "width": "", "class": "", "id": "" },
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
                             "return_format": "array",
                             "library": "all",
                             "min_size": "",
@@ -2132,7 +2350,11 @@
                             "instructions": "Optional. A smaller, lighter file served on phones (≤767px) so the hero loads fast on mobile data. Recommended: 720p (or portrait), strong compression, ideally under ~8MB. If left blank, the main video is used on mobile too.",
                             "required": 0,
                             "conditional_logic": 0,
-                            "wrapper": { "width": "", "class": "", "id": "" },
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
                             "return_format": "array",
                             "library": "all",
                             "min_size": "",
@@ -2148,7 +2370,11 @@
                             "instructions": "Optional. Shown before the video loads and as a still on devices that block autoplay.",
                             "required": 0,
                             "conditional_logic": 0,
-                            "wrapper": { "width": "", "class": "", "id": "" },
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
                             "return_format": "array",
                             "library": "all",
                             "min_width": "",
@@ -2176,7 +2402,11 @@
             "instructions": "The fixed dot navigator on the right edge is on by default (desktop only, ≥1024px). Toggle on to hide it on this page.",
             "required": 0,
             "conditional_logic": 0,
-            "wrapper": { "width": "", "class": "", "id": "" },
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
             "message": "",
             "default_value": 0,
             "ui": 1,
@@ -2202,5 +2432,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1777472782
+    "modified": 1781555400
 }
