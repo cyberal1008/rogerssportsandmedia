@@ -210,6 +210,8 @@ padding-right: 2rem;
 					<div class="info-block">
 						<h2>Block Reason</h2>
 						<div class="info-block-grid">
+							<p>IP Address</p>
+							<p><?php echo !empty($loginizer['current_ip']) ? htmlspecialchars($loginizer['current_ip']) : ''; ?></p>
 							<p>Type</p>
 							<p>Policy Violation</p>
 							<p>Details</p>
