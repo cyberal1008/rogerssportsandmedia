@@ -93,6 +93,7 @@ $lang = 'en';
 							?>
 							<li><a class="tw:text-sm tw:font-semibold" href="/about-us">About Us</a></li>
 							<li><a class="tw:text-sm tw:font-semibold" href="/the-latest">The Latest</a></li>
+							<li><a class="tw:text-sm tw:font-semibold" href="/redi-planner/">Plan Your Campaign</a></li>
 							<li class="tw:hidden tw:md:inline">
 								<a style="border-radius: 0px; padding-top: 8px; padding-bottom: 8px; font-size: 14px" class="tw:btn-primary tw:text-sm" href="/contact-us/">Contact Us</a>
 							</li>

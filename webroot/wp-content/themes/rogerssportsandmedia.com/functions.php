@@ -197,6 +197,13 @@ add_filter('rest_authentication_errors', function($result) {
         return $result;
     }
 
+    // The R.E.D.i Planner submission route is meant to be public. It does its
+    // own nonce, honeypot and rate limit checks (see inc/redi-planner/).
+    $rest_route = $GLOBALS['wp']->query_vars['rest_route'] ?? '';
+    if (strpos($rest_route, '/redi/v1/') === 0) {
+        return $result;
+    }
+
     // No authentication has been performed yet.
     // Return an error if user is not logged in.
     if (!is_user_logged_in()) {
