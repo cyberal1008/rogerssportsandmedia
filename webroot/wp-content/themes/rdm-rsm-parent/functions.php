@@ -13,6 +13,7 @@ $parent_includes = array(
 	'/enqueue.php',                         // Enqueue parent theme scripts and styles.
 	'/class-wp-bootstrap-navwalker.php',    // Load custom WordPress nav walker.
 	'/class-rsm-customizer-settings.php',
+	'/redi-planner/redi-planner.php',       // R.E.D.i Planner REST submission route.
 );
 
 foreach ( $parent_includes as $file ) {

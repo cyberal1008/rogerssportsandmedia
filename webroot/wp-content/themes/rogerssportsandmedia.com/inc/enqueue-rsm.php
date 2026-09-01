@@ -74,6 +74,23 @@ if ( ! function_exists( 'load_rsm_stylesheet' ) ) {
 		) {
 			wp_enqueue_script( 'presentationslider-js', get_stylesheet_directory_uri() . "/assets/home/scripts/presentationslider.js", array(), '1.0.0', true );
 		}
+
+		if ( is_page_template( 'page_redi-planner.php' ) ) {
+			$redi_css_version = $theme_version . '.' . filemtime( get_stylesheet_directory() . '/assets/redi-planner/redi-planner.css' );
+			$redi_js_version  = $theme_version . '.' . filemtime( get_stylesheet_directory() . '/assets/redi-planner/redi-planner.js' );
+			wp_enqueue_style( 'redi-planner', get_stylesheet_directory_uri() . '/assets/redi-planner/redi-planner.css', array( 'parent-styles' ), $redi_css_version );
+			wp_enqueue_script( 'redi-planner-js', get_stylesheet_directory_uri() . '/assets/redi-planner/redi-planner.js', array(), $redi_js_version, true );
+
+			$redi_config = redi_planner_get_config(); // parent theme inc/redi-planner.
+			wp_localize_script( 'redi-planner-js', 'REDI_PLANNER', array(
+				'restUrl'   => esc_url_raw( rest_url( 'redi/v1/submit' ) ),
+				'nonce'     => wp_create_nonce( 'redi_planner_submit' ),
+				// Sent as X-WP-Nonce so REST keeps cookie auth for logged in
+				// users; without it their form nonce fails the user check.
+				'restNonce' => wp_create_nonce( 'wp_rest' ),
+				'budgetMin' => $redi_config['budget_min'],
+			) );
+		}
 	}
 } // endif function_exists( 'load_rsm_stylesheet' ).
 
