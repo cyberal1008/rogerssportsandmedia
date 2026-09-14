@@ -4,10 +4,10 @@
  * Config is injected via wp_localize_script as REDI_PLANNER:
  *   { restUrl, nonce, budgetMin }
  *
- * Every submission requests a detailed plan. We POST to the WP REST route,
- * which emails the submission to the R.E.D.i mailbox. On success we clear
- * and hide the form (a submitted plan can't be re-edited) and show the
- * confirmation. On failure we keep everything so the user can retry.
+ * We POST to the WP REST route, which emails the submission to the R.E.D.i
+ * mailbox. On success we clear and hide the form (a submitted plan can't
+ * be re-edited) and show the confirmation. On failure we keep everything
+ * so the user can retry.
  */
 (function () {
 	'use strict';
@@ -22,7 +22,48 @@
 	var confirmBox = document.getElementById('redi-confirm');
 	var formError = document.getElementById('redi-form-error');
 	var submitBtn = document.getElementById('redi-submit');
+	var planCheckbox = document.getElementById('redi-plan');
 	var budgetMin = parseFloat(REDI_PLANNER.budgetMin) || 0;
+
+	function syncPlanFields() {
+		var wantsPlan = planCheckbox.checked;
+		document.querySelectorAll('.redi-plan-only').forEach(function (el) {
+			el.classList.toggle('is-hidden', !wantsPlan);
+		});
+	}
+
+	planCheckbox.addEventListener('change', syncPlanFields);
+	syncPlanFields();
+
+	function closeTips(except) {
+		document.querySelectorAll('.redi-tip.is-open').forEach(function (tip) {
+			if (tip !== except) {
+				tip.classList.remove('is-open');
+				tip.querySelector('.redi-tip-btn').setAttribute('aria-expanded', 'false');
+			}
+		});
+	}
+
+	document.querySelectorAll('.redi-tip').forEach(function (tip) {
+		var btn = tip.querySelector('.redi-tip-btn');
+		btn.addEventListener('click', function () {
+			var open = tip.classList.toggle('is-open');
+			btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+			closeTips(tip);
+		});
+	});
+
+	document.addEventListener('click', function (e) {
+		if (!e.target.closest('.redi-tip')) {
+			closeTips(null);
+		}
+	});
+
+	document.addEventListener('keydown', function (e) {
+		if (e.key === 'Escape') {
+			closeTips(null);
+		}
+	});
 
 	/* --- field errors --- */
 
@@ -66,8 +107,8 @@
 			startDate: form.startDate.value,
 			durationWeeks: form.durationWeeks.value,
 			advertiserCategory: form.advertiserCategory.value,
-			requestDetailedPlan: true,
-			emailAddress: form.emailAddress.value.trim(),
+			requestDetailedPlan: planCheckbox.checked,
+			emailAddress: planCheckbox.checked ? form.emailAddress.value.trim() : null,
 			website: form.website.value // honeypot
 		};
 	}
@@ -101,7 +142,7 @@
 		}
 
 		var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-		if (!data.emailAddress || !emailPattern.test(data.emailAddress)) {
+		if (data.requestDetailedPlan && (!data.emailAddress || !emailPattern.test(data.emailAddress))) {
 			setError('emailAddress', 'Enter a valid email address.');
 			ok = false;
 		}
@@ -156,6 +197,7 @@
 					confirmBox.classList.add('is-visible');
 					// A submitted plan can't be re-edited, so clear and hide the form.
 					form.reset();
+					syncPlanFields();
 					formCard.style.display = 'none';
 					results.scrollIntoView({ behavior: 'smooth', block: 'start' });
 				} else if (res.status === 400 && res.json && res.json.errors) {
@@ -187,6 +229,7 @@
 			confirmBox.classList.remove('is-visible');
 			formCard.style.display = '';
 			form.reset();
+			syncPlanFields();
 			clearErrors();
 			formCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
 		});

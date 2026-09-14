@@ -5,7 +5,7 @@
  * The market list is the final list from the Excel, deduped. Quebec, Calgary,
  * Edmonton and Montreal appear at both province/region and city level in the
  * sheet, and tier labels for those are still pending. The category list is the
- * WIP sheet. Durations and budget minimum are stubs awaiting confirmation.
+ * WIP sheet.
  *
  * @package rdm-rsm-parent
  */
@@ -54,8 +54,7 @@ return array(
 
 	'media_content' => array( 'Sports', 'News & Entertainment', 'Both' ),
 
-	// Stub values. The increments are still to be confirmed (1 to 12 vs these).
-	'durations' => array( 2, 4, 6, 8, 13, 26, 52 ),
+	'durations' => range( 1, 52 ),
 
 	// From the WIP sheet. Client-facing labels are still pending.
 	'categories' => array(
@@ -67,6 +66,5 @@ return array(
 		'Psychographics', 'Restaurants', 'Retailers', 'Sports & Leisure', 'Travel',
 	),
 
-	// Stub value pending final CPM work.
-	'budget_min' => 5000,
+	'budget_min' => 1000,
 );

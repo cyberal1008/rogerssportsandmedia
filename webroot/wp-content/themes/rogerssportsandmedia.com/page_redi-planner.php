@@ -31,7 +31,7 @@ get_header();
 					src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/redi-planner/redi-planner-logo.png' ); ?>"
 					alt="R.E.D.i Planner" width="1000" height="500" />
 				<h1 class="redi-sr-only">Plan Your Campaign with R.E.D.i</h1>
-				<p>Tell us about your campaign across Rogers Sports &amp; Media platforms and we&rsquo;ll email you a detailed plan.</p>
+				<p>Tell us about your campaign and we&rsquo;ll help you explore estimated reach, platform recommendations, and opportunities to connect with your audience across Rogers Sports &amp; Media.</p>
 			</div>
 
 			<div class="redi-card" id="redi-form-card">
@@ -45,9 +45,12 @@ get_header();
 
 							<div class="redi-field redi-field--full">
 								<label for="redi-name">Campaign Name
-									<span class="redi-tip" tabindex="0" title="Please provide a descriptive campaign name that includes the advertiser/brand, campaign or product name, timing, and market details (e.g., Client Name Special Rewards Membership Q4 2026 English Canada)." aria-label="Please provide a descriptive campaign name that includes the advertiser/brand, campaign or product name, timing, and market details (e.g., Client Name Special Rewards Membership Q4 2026 English Canada).">?</span>
+									<span class="redi-tip">
+										<button type="button" class="redi-tip-btn" aria-expanded="false" aria-describedby="redi-name-tip">?</button>
+										<span class="redi-tip-bubble" id="redi-name-tip" role="tooltip">Please provide a descriptive campaign name that includes the advertiser/brand, campaign or product name, timing, and market details (e.g., Client Name Special Rewards Membership Q4 2026 English Canada).</span>
+									</span>
 								</label>
-								<input type="text" id="redi-name" name="campaignName" maxlength="100" autocomplete="off" />
+								<input type="text" id="redi-name" name="campaignName" maxlength="100" autocomplete="off" aria-describedby="redi-name-tip" />
 								<p class="redi-error" id="redi-error-campaignName"></p>
 							</div>
 
@@ -75,10 +78,15 @@ get_header();
 							</div>
 
 							<div class="redi-field">
-								<label for="redi-budget">Campaign Budget <span class="redi-hint">(min $<?php echo esc_html( number_format( $redi_config['budget_min'] ) ); ?>)</span></label>
+								<label for="redi-budget">Campaign Budget <span class="redi-hint">(min $<?php echo esc_html( number_format( $redi_config['budget_min'] ) ); ?>)</span>
+									<span class="redi-tip">
+										<button type="button" class="redi-tip-btn" aria-expanded="false" aria-describedby="redi-budget-tip">?</button>
+										<span class="redi-tip-bubble" id="redi-budget-tip" role="tooltip">Campaign budget minimums vary by media type, market, and production requirements. Some products have minimum investment thresholds, and our team will review your request to recommend the most appropriate campaign approach.</span>
+									</span>
+								</label>
 								<div class="redi-currency">
 									<span>$</span>
-									<input type="text" id="redi-budget" name="campaignBudget" inputmode="numeric" autocomplete="off" placeholder="25,000" />
+									<input type="text" id="redi-budget" name="campaignBudget" inputmode="numeric" autocomplete="off" placeholder="25,000" aria-describedby="redi-budget-tip" />
 								</div>
 								<p class="redi-error" id="redi-error-campaignBudget"></p>
 							</div>
@@ -94,7 +102,7 @@ get_header();
 								<select id="redi-duration" name="durationWeeks">
 									<option value="">Select duration</option>
 									<?php foreach ( $redi_config['durations'] as $weeks ) : ?>
-										<option value="<?php echo esc_attr( $weeks ); ?>"><?php echo esc_html( $weeks ); ?> weeks</option>
+										<option value="<?php echo esc_attr( $weeks ); ?>"><?php echo esc_html( $weeks ); ?></option>
 									<?php endforeach; ?>
 								</select>
 								<p class="redi-error" id="redi-error-durationWeeks"></p>
@@ -152,8 +160,16 @@ get_header();
 						<legend>Detailed Plan</legend>
 
 						<div class="redi-field">
+							<label class="redi-plan-check" for="redi-plan">
+								<input type="checkbox" id="redi-plan" name="requestDetailedPlan" />
+								<span>Would you like to receive a detailed plan?</span>
+							</label>
+							<p class="redi-error" id="redi-error-requestDetailedPlan"></p>
+						</div>
+
+						<div class="redi-field redi-plan-only" style="margin-top: 20px;">
 							<label for="redi-email">Email Address <span class="redi-hint">(your plan is emailed here)</span></label>
-							<input type="email" id="redi-email" name="emailAddress" autocomplete="email" placeholder="you@company.com" required />
+							<input type="email" id="redi-email" name="emailAddress" autocomplete="email" placeholder="you@company.com" />
 							<p class="redi-error" id="redi-error-emailAddress"></p>
 						</div>
 					</fieldset>
@@ -163,7 +179,7 @@ get_header();
 						<input type="text" id="redi-website" name="website" tabindex="-1" autocomplete="off" />
 					</div>
 
-					<div class="redi-submit-row">
+					<div class="redi-submit-row redi-plan-only">
 						<button type="submit" id="redi-submit" class="button">Get My Plan</button>
 						<p class="redi-disclaimer">By submitting this form you agree to the Rogers <a href="/legal/" target="_blank" rel="noopener noreferrer">Terms &amp; Conditions</a>.</p>
 					</div>
