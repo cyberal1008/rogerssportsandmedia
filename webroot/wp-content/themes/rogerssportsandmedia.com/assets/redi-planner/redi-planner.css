@@ -89,6 +89,27 @@
 	color: var(--gray, #6c757d);
 }
 
+.redi-plan-only.is-hidden {
+	display: none;
+}
+
+.redi-field label.redi-plan-check {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	margin-bottom: 0;
+	cursor: pointer;
+}
+
+.redi-plan-check input {
+	width: 18px;
+	height: 18px;
+	margin: 0;
+	accent-color: var(--alpha, #d9291c);
+	cursor: pointer;
+	flex-shrink: 0;
+}
+
 .redi-field input[type="text"],
 .redi-field input[type="email"],
 .redi-field input[type="date"],
@@ -314,27 +335,62 @@
 
 /* --- campaign name tooltip --- */
 
+.redi-field {
+	position: relative;
+}
+
 .redi-tip {
+	display: inline-flex;
+	margin-left: 6px;
+	vertical-align: middle;
+}
+
+.redi-tip-btn {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
 	width: 18px;
 	height: 18px;
-	margin-left: 6px;
+	padding: 0;
 	border-radius: 50%;
 	border: 1px solid var(--gray, #6c757d);
+	background: none;
 	color: var(--gray, #6c757d);
+	font-family: inherit;
 	font-size: 1.2rem;
 	font-weight: 700;
 	line-height: 1;
 	cursor: help;
-	vertical-align: middle;
 }
 
-.redi-tip:hover,
-.redi-tip:focus {
+.redi-tip-btn:hover,
+.redi-tip-btn:focus,
+.redi-tip.is-open .redi-tip-btn {
 	border-color: var(--alpha, #d9291c);
 	color: var(--alpha, #d9291c);
+}
+
+.redi-tip-bubble {
+	display: none;
+	position: absolute;
+	bottom: calc(100% + 6px);
+	left: 0;
+	width: max-content;
+	max-width: min(360px, 100%);
+	background: var(--rsm-dark, #212529);
+	color: var(--white, #fff);
+	font-size: 1.3rem;
+	font-weight: 400;
+	line-height: 1.5;
+	text-align: left;
+	padding: 10px 14px;
+	z-index: 20;
+}
+
+.redi-tip-btn:hover + .redi-tip-bubble,
+.redi-tip-btn:focus-visible + .redi-tip-bubble,
+.redi-tip.is-open .redi-tip-bubble {
+	display: block;
 }
 
 /* --- coming soon platform box --- */
