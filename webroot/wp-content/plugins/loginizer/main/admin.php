@@ -617,66 +617,58 @@ function loginizer_promo(){
 	
 	echo '
 <style>
-.lz_button {
-background-color: #4CAF50; /* Green */
-border: none;
-color: white;
-padding: 8px 16px;
-text-align: center;
-text-decoration: none;
-display: inline-block;
-font-size: 16px;
-margin: 4px 2px;
--webkit-transition-duration: 0.4s; /* Safari */
-transition-duration: 0.4s;
-cursor: pointer;
-}
-
-.lz_button:focus{
-border: none;
-color: white;
-}
-
-.lz_button1 {
-color: white;
+.wp-core-ui .lz_button1 {
 background-color: #4CAF50;
-border:3px solid #4CAF50;
+border-color: transparent;
+border-radius: 2px;
+color: #fff;
 }
 
-.lz_button1:hover {
-box-shadow: 0 6px 8px 0 rgba(0,0,0,0.24), 0 9px 25px 0 rgba(0,0,0,0.19);
-color: white;
-border:3px solid #4CAF50;
+.wp-core-ui .lz_button1:hover {
+background-color:#3b963f;
+border-color: transparent;
+border-radius: 2px;
+color: #fff;
 }
 
-.lz_button2 {
-color: white;
+.wp-core-ui .lz_button2 {
 background-color: #0085ba;
+border-color: transparent;
+border-radius: 2px;
+color: #fff;
 }
 
-.lz_button2:hover {
-box-shadow: 0 6px 8px 0 rgba(0,0,0,0.24), 0 9px 25px 0 rgba(0,0,0,0.19);
-color: white;
+.wp-core-ui .lz_button2:hover {
+background-color: #0175a3;
+border-color: transparent;
+border-radius: 2px;
+color: #fff;
 }
 
-.lz_button3 {
-color: white;
+.wp-core-ui .lz_button3 {
 background-color: #365899;
+border-color: transparent;
+border-radius: 2px;
+color: #fff;
 }
 
-.lz_button3:hover {
-box-shadow: 0 6px 8px 0 rgba(0,0,0,0.24), 0 9px 25px 0 rgba(0,0,0,0.19);
-color: white;
+.wp-core-ui .lz_button3:hover {
+border-color: transparent;
+background-color: #274785;
+color:#fff;
 }
 
-.lz_button4 {
-color: white;
-background-color: rgb(66, 184, 221);
+.wp-core-ui .lz_button4 {
+background-color: #14171A;
+border-color: transparent;
+border-radius: 2px;
+color: #fff;
 }
 
-.lz_button4:hover {
-box-shadow: 0 6px 8px 0 rgba(0,0,0,0.24), 0 9px 25px 0 rgba(0,0,0,0.19);
-color: white;
+.wp-core-ui .lz_button4:hover {
+background-color: #24292E;
+color: #fff;
+border-color: transparent;
 }
 
 .loginizer_promo-close{
@@ -715,10 +707,10 @@ jQuery(document).ready( function() {
 	<img src="'.LOGINIZER_URL.'/assets/images/loginizer-200.png" style="float:left; margin:10px 20px 10px 10px" width="100" />
 	<p style="font-size:16px">We are glad you like Loginizer and have been using it since the past few days. It is time to take the next step </p>
 	<p>
-		<a class="lz_button lz_button1" target="_blank" href="https://loginizer.com/features">Upgrade to Pro</a>
-		<a class="lz_button lz_button2" target="_blank" href="https://wordpress.org/support/view/plugin-reviews/loginizer">Rate it 5★\'s</a>
-		<a class="lz_button lz_button3" target="_blank" href="https://www.facebook.com/Loginizer-815504798591884/">Like Us on Facebook</a>
-		<a class="lz_button lz_button4" target="_blank" href="https://twitter.com/home?status='.rawurlencode('I use @loginizer to secure my #WordPress site - https://loginizer.com').'">Tweet about Loginizer</a>
+		<a class="button lz_button1" target="_blank" href="https://loginizer.com/features">'.esc_html__('Upgrade to Pro', 'loginizer').'</a>
+		<a class="button lz_button2" target="_blank" href="https://wordpress.org/support/view/plugin-reviews/loginizer">Rate it 5★\'s</a>
+		<a class="button lz_button3" target="_blank" href="https://www.facebook.com/Loginizer-815504798591884/">'.esc_html__('Like Us on Facebook', 'loginizer').'</a>
+		<a class="button lz_button4" target="_blank" href="https://x.com/intent/tweet?text='.rawurlencode('I use @loginizer to secure my #WordPress site - https://loginizer.com').'">'.esc_html__('Post on X about Loginizer', 'loginizer').'</a>
 	</p>
 </div>';
 
