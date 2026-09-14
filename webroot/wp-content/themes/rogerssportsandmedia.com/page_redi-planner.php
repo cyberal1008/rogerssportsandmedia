@@ -179,7 +179,7 @@ get_header();
 						<input type="text" id="redi-website" name="website" tabindex="-1" autocomplete="off" />
 					</div>
 
-					<div class="redi-submit-row redi-plan-only">
+					<div class="redi-submit-row">
 						<button type="submit" id="redi-submit" class="button">Get My Plan</button>
 						<p class="redi-disclaimer">By submitting this form you agree to the Rogers <a href="/legal/" target="_blank" rel="noopener noreferrer">Terms &amp; Conditions</a>.</p>
 					</div>
