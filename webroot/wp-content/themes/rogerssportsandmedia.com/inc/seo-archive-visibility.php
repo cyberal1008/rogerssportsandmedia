@@ -277,6 +277,19 @@ function rsm_seo_request_is_withdrawn() {
 		}
 	}
 
+	/*
+	 * Each post type also registers its own singular query var named after the
+	 * post type key (e.g. ?rsm_show=<slug>). WordPress drops that var once the
+	 * type is publicly_queryable => false, so it must be checked on the raw
+	 * request too. Only 'full' types are withdrawn here: 'archive_only' types
+	 * keep their singles.
+	 */
+	foreach ( $post_types as $post_type => $mode ) {
+		if ( 'full' === $mode && isset( $query[ $post_type ] ) ) {
+			return true;
+		}
+	}
+
 	return false;
 }
 
