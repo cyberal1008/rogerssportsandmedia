@@ -14,6 +14,33 @@ Basic site environment:
 - config folder contains the local, integration, production WP config constants.
 - db folder contains required db dump for local set up.
 - webroot folder contains WP default folder structure.
+- bin folder contains maintenance scripts.
+
+### Technical SEO
+
+Fixes from the RSM Technical SEO Audit live in the child theme under
+`webroot/wp-content/themes/rogerssportsandmedia.com/inc/`:
+
+- `seo-hidden-h1.php` - adds a screen-reader-only `<h1>` to the 46 pages that
+  render without one, and only when the page has no `<h1>` of its own.
+- `seo-archive-visibility.php` - withdraws archive URLs that were never linked
+  or designed (tag, author, and the rsm_* taxonomy/CPT query archives), and
+  marks paginated archives `noindex,follow`. The withdrawn URLs are forced to a
+  real 404 by an explicit `template_redirect` guard: un-registering the query
+  vars alone is not enough, as WordPress would otherwise fall through to the
+  front page with a 200.
+- `seo-redirects.php` - 301s for the 21 pages the audit flagged for removal.
+
+The three files hook `template_redirect` in order - H1 buffer (0), redirects
+(1), then the 404 guard (2) - so a retired page still redirects rather than 404s.
+
+Note: `rsm_show`, `rsm_highlight` and `rsm_solution` lose the editor's Preview
+and View buttons, because core gates those on `is_post_type_viewable()`. These
+types are registered with `rewrite => false` and are only rendered inside
+sliders on other pages, so they had no front-end URL to preview.
+
+**After deploying the SEO changes, flush rewrite rules** (Settings > Permalinks >
+Save, or `wp rewrite flush`) so the withdrawn archives start returning 404.
 
 ## Local Development with Docker
 
