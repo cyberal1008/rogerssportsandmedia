@@ -11,6 +11,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $parent_includes = array(
 	'/enqueue-rsm.php',                         // Enqueue scripts and styles for rogerssportsandmedia.com.
+	'/seo-hidden-h1.php',                       // Screen-reader-only H1s for pages missing one (SEO audit P2-06).
+	'/seo-archive-visibility.php',              // Withdraw accidental archive URLs flagged by the SEO audit.
+	'/seo-redirects.php',                       // Retire pages flagged for removal by the SEO audit (301s).
 );
 
 foreach ( $parent_includes as $file ) {

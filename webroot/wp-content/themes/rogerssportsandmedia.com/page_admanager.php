@@ -19,6 +19,7 @@
 </head>
 
 	<body>
+	<?php wp_body_open(); ?>
 
 	    <!-- SKIP -->
 		<a role="banner" href="#content" class="skip-to-content button">Skip to Content</a>

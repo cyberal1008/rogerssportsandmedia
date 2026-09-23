@@ -68,6 +68,7 @@
 </head>
 
 <body>
+<?php wp_body_open(); ?>
     <nav class="tw:px-4 tw:md:px-32 tw:lg:px-32 tw:xl:px-40 tw:2xl:px-48 tw:py-4 tw:bg-black">
       <div class="tw:flex tw:flex-col tw:ad-nav-custom-width:flex-row tw:ad-nav-custom-width:justify-between">
         <a href="<?php echo esc_url( home_url( '/' ) ); ?>">
