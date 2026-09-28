@@ -19,6 +19,7 @@
 </head>
 
 <body>
+<?php wp_body_open(); ?>
     <?php get_template_part('template-parts/ad-manager-header'); ?>
     <section id="display-advertising" class="tw-py-2 tw-px-4 mb:tw-px-20 tw-mb-20">
         <div class="tw-mb-4 tw-text-center tw-text-2xl tw-font-semibold tw-text-red">

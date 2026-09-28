@@ -19,6 +19,7 @@
 </head>
 
 <body class="tw-relative tw-z-10">
+<?php wp_body_open(); ?>
     <?php get_template_part('template-parts/ad-manager-popup'); ?>
     <?php get_template_part('template-parts/ad-manager-header'); ?>
     <section class="tw-py-10">
