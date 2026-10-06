@@ -36,8 +36,12 @@ if ( ! function_exists( 'load_rsm_stylesheet' ) ) {
 		wp_enqueue_style( 'child-styles-4', get_stylesheet_directory_uri() . '/assets/ad-manager-new/main-alt.css', array('parent-styles'), $css_version );
 		wp_enqueue_style( 'child-styles-5', get_stylesheet_directory_uri() . '/assets/styles/custom.css', array('parent-styles'), '1.0.21' );
 
-		if ( is_page_template('page_audio.php') ) {
+		if ( is_page_template( array( 'page_audio.php', 'page_podcasts.php', 'page_tsc.php' ) ) ) {
 			wp_enqueue_style( 'audio-landing', get_stylesheet_directory_uri() . '/assets/audio-landing/main.min.css', array('parent-styles'), $css_version );
+		}
+
+		if ( is_page_template( array( 'page_advanced-solutions.php', 'page_whatwedo.php' ) ) ) {
+			wp_enqueue_style( 'reskin', get_stylesheet_directory_uri() . '/assets/styles/reskin.css', array('parent-styles'), $css_version );
 		}
 
 		if ( is_page_template('page_upfront_2025.php') ) {
@@ -76,5 +80,72 @@ if ( ! function_exists( 'load_rsm_stylesheet' ) ) {
 		}
 	}
 } // endif function_exists( 'load_rsm_stylesheet' ).
+
+if ( ! function_exists( 'reorder_rsm_stylesheet_deps' ) ) {
+	function reorder_rsm_stylesheet_deps() {
+		if ( empty( $GLOBALS['template'] ) ) {
+			return;
+		}
+
+		$template = basename( $GLOBALS['template'] );
+
+		$late_handles_map = array(
+			'single.php'                      => array( 'child-styles-2', 'child-styles-3' ),
+			'category-the-latest.php'         => array( 'child-styles-2', 'child-styles-3' ),
+			'category-whats-happening.php'    => array( 'child-styles-2', 'child-styles-3' ),
+			'page_whoweare.php'               => array( 'child-styles-2', 'child-styles-3' ),
+			'page_creative-solutions.php'     => array( 'child-styles-2', 'child-styles-3', 'child-styles-5' ),
+			'page_sportsnetplus.php'          => array( 'child-styles-2', 'child-styles-3', 'child-styles-5' ),
+			'page_tubi.php'                   => array( 'child-styles-2', 'child-styles-3', 'child-styles-5' ),
+			'page_upfront.php'                => array( 'child-styles-2', 'child-styles-3', 'child-styles-5' ),
+			'page_podcasts.php'               => array( 'audio-landing', 'child-styles-2', 'child-styles-3', 'child-styles-5' ),
+			'page_tsc.php'                    => array( 'audio-landing', 'child-styles-3', 'child-styles-5' ),
+			'page_advanced-solutions.php'     => array( 'reskin', 'child-styles-5' ),
+			'page_whatwedo.php'               => array( 'reskin' ),
+		);
+
+		if ( ! isset( $late_handles_map[ $template ] ) ) {
+			return;
+		}
+
+		$late = $late_handles_map[ $template ];
+
+		$all = array_filter(
+			array( 'child-styles-2', 'child-styles-3', 'child-styles-4', 'child-styles-5', 'audio-landing', 'reskin' ),
+			function( $handle ) {
+				return wp_style_is( $handle, 'enqueued' );
+			}
+		);
+
+		$early = array_diff( $all, $late );
+
+		$styles   = wp_styles();
+		$previous = null;
+
+		foreach ( $late as $handle ) {
+			if ( ! wp_style_is( $handle, 'enqueued' ) ) {
+				continue;
+			}
+
+			if ( ! isset( $styles->registered[ $handle ] ) ) {
+				$previous = $handle;
+				continue;
+			}
+
+			$extra_deps = $early;
+			if ( $previous ) {
+				$extra_deps[] = $previous;
+			}
+
+			$styles->registered[ $handle ]->deps = array_values(
+				array_unique( array_merge( $styles->registered[ $handle ]->deps, $extra_deps ) )
+			);
+
+			$previous = $handle;
+		}
+	}
+} // endif function_exists( 'reorder_rsm_stylesheet_deps' ).
+
+add_action( 'wp_enqueue_scripts', 'reorder_rsm_stylesheet_deps', 20 );
 
 add_action( 'wp_enqueue_scripts', 'load_rsm_stylesheet' );

@@ -134,7 +134,7 @@ function config_textbox_callback($args) {
  * (the class previously lived on <html> in the template's own <head>).
  */
 add_filter( 'body_class', function ( $classes ) {
-	if ( is_page_template( 'page_audio.php' ) ) {
+	if ( is_page_template( array( 'page_audio.php', 'page_podcasts.php' ) ) ) {
 		$classes[] = 'audio-landing';
 	}
 	return $classes;
