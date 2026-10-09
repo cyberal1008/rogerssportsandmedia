@@ -67,6 +67,11 @@ function rsm_seo_retired_page_map() {
 
 		// Expired event, confirmed for removal by Alex (2026-09-22).
 		'/event/2024-baseballfantasy/'                => '/the-latest/events/',
+
+		// Retired news category archives, consolidated into the main hub.
+		'/the-latest/news/'                           => '/the-latest/',
+		'/the-latest/media-release/'                  => '/the-latest/',
+		'/the-latest/community/'                      => '/the-latest/',
 	);
 
 	/**
@@ -92,8 +97,14 @@ function rsm_seo_redirect_retired_pages() {
 		return;
 	}
 
-	$map    = rsm_seo_retired_page_map();
-	$path   = rsm_seo_current_request_path();
+	$map  = rsm_seo_retired_page_map();
+	$path = rsm_seo_current_request_path();
+
+	// Treat paginated archive pages as their archive root for the lookup.
+	if ( preg_match( '#^/the-latest/(news|media-release|community)/page/[0-9]+/$#', $path, $matches ) ) {
+		$path = '/the-latest/' . $matches[1] . '/';
+	}
+
 	$target = isset( $map[ $path ] ) ? $map[ $path ] : '';
 
 	if ( '' === $target ) {

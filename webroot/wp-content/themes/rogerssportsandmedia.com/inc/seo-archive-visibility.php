@@ -335,6 +335,27 @@ function rsm_seo_exclude_taxonomy_sitemap( $excluded, $taxonomy ) {
 add_filter( 'wpseo_sitemap_exclude_taxonomy', 'rsm_seo_exclude_taxonomy_sitemap', 10, 2 );
 
 /**
+ * Keeps the News, Media Release, and Community category terms out of the Yoast sitemap.
+ *
+ * @param array $term_ids Term IDs already excluded from the sitemap.
+ * @return array Term IDs excluded from the sitemap.
+ */
+function rsm_seo_exclude_category_terms_sitemap( $term_ids ) {
+	$slugs = array( 'news', 'media-release', 'community' );
+
+	foreach ( $slugs as $slug ) {
+		$term = get_term_by( 'slug', $slug, 'category' );
+
+		if ( $term ) {
+			$term_ids[] = $term->term_id;
+		}
+	}
+
+	return $term_ids;
+}
+add_filter( 'wpseo_exclude_from_sitemap_by_term_ids', 'rsm_seo_exclude_category_terms_sitemap' );
+
+/**
  * Whether the current request is a paginated archive page.
  *
  * The audit flagged 64 /the-latest/<category>/page/N/ URLs as duplicates. They

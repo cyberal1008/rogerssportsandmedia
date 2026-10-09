@@ -37,7 +37,7 @@
 			$categories = get_the_category();
 			if ( ! empty( $categories ) ) {
 				$category_name = esc_html( $categories[0]->name );
-				$category_link = get_category_link( $categories[0]->cat_ID );
+				$category_link = home_url( '/the-latest/' );
 			}
 		?>
 
