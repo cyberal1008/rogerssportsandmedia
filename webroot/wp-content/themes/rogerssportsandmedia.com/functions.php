@@ -14,6 +14,7 @@ $parent_includes = array(
 	'/seo-hidden-h1.php',                       // Screen-reader-only H1s for pages missing one (SEO audit P2-06).
 	'/seo-archive-visibility.php',              // Withdraw accidental archive URLs flagged by the SEO audit.
 	'/seo-redirects.php',                       // Retire pages flagged for removal by the SEO audit (301s).
+	'/seo-post-permalinks.php',                 // Route "The Latest" posts under /the-latest/ (overrides Yoast's primary category).
 );
 
 foreach ( $parent_includes as $file ) {
