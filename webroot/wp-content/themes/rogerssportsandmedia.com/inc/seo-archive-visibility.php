@@ -84,8 +84,8 @@ function rsm_seo_private_taxonomies() {
  * 'rewrite' => false, so their entries have no permalink structure and are only
  * ever rendered inside sliders on other pages.
  *
- * 'archive_only' keeps single posts reachable (they have real, linked URLs) and
- * removes just the unlinked archive index.
+ * 'archive_only' removes just the unlinked archive index. Their singles are
+ * now 301-ed to a replacement hub by seo-redirects.php, not kept reachable.
  *
  * @return array<string, string>
  */
