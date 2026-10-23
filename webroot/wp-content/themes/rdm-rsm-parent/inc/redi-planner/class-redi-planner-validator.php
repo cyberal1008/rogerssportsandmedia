@@ -13,6 +13,7 @@
 class Redi_Planner_Validator {
 
 	private $markets;
+	private $platform_restrictions;
 	private $platforms;
 	private $media_content;
 	private $durations;
@@ -21,13 +22,14 @@ class Redi_Planner_Validator {
 	private $today;
 
 	public function __construct( array $config ) {
-		$this->markets       = $config['markets'];
-		$this->platforms     = $config['platforms'];
-		$this->media_content = $config['media_content'];
-		$this->durations     = array_map( 'intval', $config['durations'] );
-		$this->categories    = $config['categories'];
-		$this->budget_min    = (float) $config['budget_min'];
-		$this->today         = isset( $config['today'] ) ? $config['today'] : date( 'Y-m-d' );
+		$this->markets               = $config['markets'];
+		$this->platform_restrictions = $config['platform_restrictions'];
+		$this->platforms             = $config['platforms'];
+		$this->media_content         = $config['media_content'];
+		$this->durations             = array_map( 'intval', $config['durations'] );
+		$this->categories            = $config['categories'];
+		$this->budget_min            = (float) $config['budget_min'];
+		$this->today                 = isset( $config['today'] ) ? $config['today'] : date( 'Y-m-d' );
 	}
 
 	/**
@@ -65,11 +67,13 @@ class Redi_Planner_Validator {
 			$data['campaignBudget'] = (float) $stripped;
 		}
 
-		// campaignPlatforms must be a non-empty array with every entry from the allowed set.
-		$platforms = $input['campaignPlatforms'] ?? null;
+		// campaignPlatforms must be a non-empty array with every entry from the allowed set,
+		// and none of them restricted for the submitted campaignMarket.
+		$platforms  = $input['campaignPlatforms'] ?? null;
+		$restricted = $this->platform_restrictions[ $input['campaignMarket'] ?? '' ] ?? array();
 		if ( ! is_array( $platforms ) || count( $platforms ) === 0 ) {
 			$errors['campaignPlatforms'] = 'Select at least one platform.';
-		} elseif ( count( array_diff( $platforms, $this->platforms ) ) > 0 ) {
+		} elseif ( count( array_diff( $platforms, $this->platforms ) ) > 0 || count( array_intersect( $platforms, $restricted ) ) > 0 ) {
 			$errors['campaignPlatforms'] = 'Invalid platform selection.';
 		} else {
 			$data['campaignPlatforms'] = array_values( array_unique( $platforms ) );

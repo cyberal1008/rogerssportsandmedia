@@ -12,7 +12,7 @@ $redi_config = redi_planner_get_config(); // parent theme inc/redi-planner.
 
 // Split the flat market list into display groups for the dropdown.
 // Tier labels for the duplicated market names are still pending.
-$redi_national  = array( 'Canada', 'Canada Excl. Quebec', 'Atlantic' );
+$redi_national  = array( 'Canada', 'Atlantic', 'Prairies' );
 $redi_provinces = array(
 	'British Columbia', 'Alberta', 'Saskatchewan', 'Manitoba', 'Ontario', 'Quebec',
 	'New Brunswick', 'Nova Scotia', 'Prince Edward Island', 'Newfoundland & Labrador',
@@ -181,7 +181,7 @@ get_header();
 
 					<div class="redi-submit-row">
 						<button type="submit" id="redi-submit" class="button">Get My Plan</button>
-						<p class="redi-disclaimer">By submitting this form you agree to the Rogers <a href="/legal/" target="_blank" rel="noopener noreferrer">Terms &amp; Conditions</a>.</p>
+						<p class="redi-disclaimer">By submitting this form you agree to the Rogers <a href="/redi-planner-terms/" target="_blank" rel="noopener noreferrer">Terms &amp; Conditions</a>.</p>
 					</div>
 
 				</form>

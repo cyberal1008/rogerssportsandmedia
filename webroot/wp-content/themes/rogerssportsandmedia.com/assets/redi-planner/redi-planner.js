@@ -2,7 +2,7 @@
  * R.E.D.i Planner form validation and submission.
  *
  * Config is injected via wp_localize_script as REDI_PLANNER:
- *   { restUrl, nonce, budgetMin }
+ *   { restUrl, nonce, budgetMin, restrictions }
  *
  * We POST to the WP REST route, which emails the submission to the R.E.D.i
  * mailbox. On success we clear and hide the form (a submitted plan can't
@@ -23,7 +23,27 @@
 	var formError = document.getElementById('redi-form-error');
 	var submitBtn = document.getElementById('redi-submit');
 	var planCheckbox = document.getElementById('redi-plan');
+	var marketSelect = document.getElementById('redi-market');
 	var budgetMin = parseFloat(REDI_PLANNER.budgetMin) || 0;
+	var restrictions = REDI_PLANNER.restrictions || {};
+
+	function syncPlatformRestrictions() {
+		var restricted = restrictions[marketSelect.value] || [];
+		form.querySelectorAll('input[name="campaignPlatforms"]').forEach(function (checkbox) {
+			var label = checkbox.closest('.redi-choice');
+			var isRestricted = restricted.indexOf(checkbox.value) !== -1;
+			checkbox.disabled = isRestricted;
+			if (isRestricted) {
+				checkbox.checked = false;
+			}
+			if (label) {
+				label.classList.toggle('redi-choice--unavailable', isRestricted);
+			}
+		});
+	}
+
+	marketSelect.addEventListener('change', syncPlatformRestrictions);
+	syncPlatformRestrictions();
 
 	function syncPlanFields() {
 		var wantsPlan = planCheckbox.checked;
@@ -198,6 +218,7 @@
 					// A submitted plan can't be re-edited, so clear and hide the form.
 					form.reset();
 					syncPlanFields();
+					syncPlatformRestrictions();
 					formCard.style.display = 'none';
 					results.scrollIntoView({ behavior: 'smooth', block: 'start' });
 				} else if (res.status === 400 && res.json && res.json.errors) {
@@ -230,6 +251,7 @@
 			formCard.style.display = '';
 			form.reset();
 			syncPlanFields();
+			syncPlatformRestrictions();
 			clearErrors();
 			formCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
 		});
