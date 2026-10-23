@@ -212,12 +212,11 @@ return array(
 
 	// From the WIP sheet. Client-facing labels are still pending.
 	'categories' => array(
-		'Advertising', 'Alcohol', 'Apparel & Jewellery', 'Automotive - Products',
-		'Automotive - Service', "Children's Products", 'Electronics', 'Finance - Banking',
-		'Finance - Insurance', 'Finance - Investments', 'Food - Beverages',
-		'Food - Snacks & Confectionery', 'Grocery', 'Household - Appliances & Furnishings',
-		'Household - Products', 'Loyalty Programs', 'Personal Care', 'Pets',
-		'Psychographics', 'Restaurants', 'Retailers', 'Sports & Leisure', 'Travel',
+		'Alcohol', 'Apparel & Jewellery', 'Automotive', 'Toys and Games',
+		'Electronics', 'Financial Services', 'Food - Beverages',
+		'Food - Snacks & Confectionery', 'Grocery', 'Home Improvement', 'Pets',
+		'Household - Products / CPG Consumables', 'Personal Care', 'Restaurants',
+		'Retailers', 'Sports & Leisure', 'Travel',
 	),
 
 	'budget_min' => 1000,
