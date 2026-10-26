@@ -87,12 +87,13 @@ if ( ! function_exists( 'load_rsm_stylesheet' ) ) {
 
 			$redi_config = redi_planner_get_config(); // parent theme inc/redi-planner.
 			wp_localize_script( 'redi-planner-js', 'REDI_PLANNER', array(
-				'restUrl'   => esc_url_raw( rest_url( 'redi/v1/submit' ) ),
-				'nonce'     => wp_create_nonce( 'redi_planner_submit' ),
+				'restUrl'      => esc_url_raw( rest_url( 'redi/v1/submit' ) ),
+				'nonce'        => wp_create_nonce( 'redi_planner_submit' ),
 				// Sent as X-WP-Nonce so REST keeps cookie auth for logged in
 				// users; without it their form nonce fails the user check.
-				'restNonce' => wp_create_nonce( 'wp_rest' ),
-				'budgetMin' => $redi_config['budget_min'],
+				'restNonce'    => wp_create_nonce( 'wp_rest' ),
+				'budgetMin'    => $redi_config['budget_min'],
+				'restrictions' => $redi_config['platform_restrictions'],
 			) );
 		}
 	}

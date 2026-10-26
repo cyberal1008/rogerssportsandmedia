@@ -411,6 +411,13 @@
 	line-height: 1;
 }
 
+.redi-choice--unavailable span,
+.redi-choice--unavailable input {
+	border-style: dashed;
+	color: var(--gray, #6c757d);
+	cursor: not-allowed;
+}
+
 /* --- page header logo banner --- */
 
 .redi-logo {
