@@ -90,6 +90,10 @@ function redi_planner_import_csvs( $reach_path, $cpm_path ) {
 	if ( $missing ) {
 		throw new RuntimeException( 'Markets do not match between the CSV files: ' . implode( ', ', $missing ) );
 	}
+	$missing = array_diff( redi_planner_get_config()['markets'], array_keys( $reach ) );
+ 	if ( $missing ) {
+ 		throw new RuntimeException( 'Missing configured markets in CSV files: ' . implode( ', ', $missing ) );
+ 	}
 
 	$table = $wpdb->prefix . 'redi_planner_lookup';
 	$charset = $wpdb->get_charset_collate();
