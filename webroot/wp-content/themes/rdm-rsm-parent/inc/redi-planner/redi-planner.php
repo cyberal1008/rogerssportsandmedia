@@ -20,6 +20,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once __DIR__ . '/class-redi-planner-validator.php';
+require_once __DIR__ . '/class-redi-planner-calculator.php';
+require_once __DIR__ . '/lookup.php';
 require_once __DIR__ . '/admin.php';
 
 const REDI_PLANNER_NONCE_ACTION  = 'redi_planner_submit';
@@ -77,11 +79,23 @@ function redi_planner_handle_submit( WP_REST_Request $request ) {
 	$payload                = $result['data'];
 	$payload['requestId']   = redi_planner_request_id();
 	$payload['requestDate'] = gmdate( 'c' );
+	$estimate = null;
+	if ( get_option( 'redi_planner_lookup_ready' ) ) {
+		try {
+			$calculator = new Redi_Planner_Calculator();
+			$estimate = $calculator->calculate( $payload, redi_planner_get_lookup( $payload['campaignMarket'] ) );
+		} catch ( RuntimeException $error ) {
+			error_log( 'REDI-PLANNER estimate failed: ' . $error->getMessage() );
+			return new WP_REST_Response( array( 'success' => false, 'message' => 'An estimate is not available for this selection. Please try another market or platform.' ), 422 );
+		} catch ( InvalidArgumentException $error ) {
+			error_log( 'REDI-PLANNER invalid estimate input: ' . $error->getMessage() );
+			return new WP_REST_Response( array( 'success' => false, 'message' => 'An estimate could not be calculated for this selection.' ), 400 );
+		}
+	}
 
-	// Instant-only submissions never leave the site. The form doesn't call
-	// this route for them, but enforce it here as well just in case.
+	// Instant-only submissions never leave the site.
 	if ( ! $payload['requestDetailedPlan'] ) {
-		return new WP_REST_Response( array( 'success' => true, 'requestId' => $payload['requestId'], 'forwarded' => false ), 200 );
+		return new WP_REST_Response( array( 'success' => true, 'requestId' => $payload['requestId'], 'forwarded' => false, 'estimate' => $estimate ), 200 );
 	}
 
 	// Where submissions go, set at Settings > R.E.D.i Planner. Refuse the
@@ -110,7 +124,7 @@ function redi_planner_handle_submit( WP_REST_Request $request ) {
 		return new WP_REST_Response( array( 'success' => false, 'message' => 'We couldn\'t submit your plan request. Please try again.' ), 502 );
 	}
 
-	return new WP_REST_Response( array( 'success' => true, 'requestId' => $payload['requestId'], 'forwarded' => true ), 200 );
+	return new WP_REST_Response( array( 'success' => true, 'requestId' => $payload['requestId'], 'forwarded' => true, 'estimate' => $estimate ), 200 );
 }
 
 /**
