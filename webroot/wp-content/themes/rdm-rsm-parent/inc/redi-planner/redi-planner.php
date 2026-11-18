@@ -95,6 +95,9 @@ function redi_planner_handle_submit( WP_REST_Request $request ) {
 
 	// Instant-only submissions never leave the site.
 	if ( ! $payload['requestDetailedPlan'] ) {
+		if ( $estimate === null ) {
+ 			return new WP_REST_Response( array( 'success' => false, 'message' => 'Instant estimates are not available yet. Please try again later.' ), 503 );
+ 		}
 		return new WP_REST_Response( array( 'success' => true, 'requestId' => $payload['requestId'], 'forwarded' => false, 'estimate' => $estimate ), 200 );
 	}
 
