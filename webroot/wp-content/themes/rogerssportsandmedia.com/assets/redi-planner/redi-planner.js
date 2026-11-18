@@ -6,8 +6,8 @@
  *
  * We POST to the WP REST route, which emails the submission to the R.E.D.i
  * mailbox. On success we clear and hide the form (a submitted plan can't
- * be re-edited) and show the confirmation. On failure we keep everything
- * so the user can retry.
+ * be re-edited) and show the detailed-plan confirmation or the instant
+ * estimate, not both. On failure we keep everything so the user can retry.
  */
 (function () {
 	'use strict';
@@ -274,7 +274,7 @@
 					if (data.requestDetailedPlan) {
 						trackCompletion();
 					}
-					showEstimate(res.json.estimate, data);
+					showEstimate(data.requestDetailedPlan ? null : res.json.estimate, data);
 					detailedConfirm.hidden = !data.requestDetailedPlan;
 					document.getElementById('redi-request-id').textContent =
 						res.json.requestId ? 'Reference: ' + res.json.requestId : '';
