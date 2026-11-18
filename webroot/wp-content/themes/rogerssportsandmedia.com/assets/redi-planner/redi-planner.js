@@ -202,7 +202,7 @@
 		var list = document.getElementById('redi-estimate-spend');
 		var chart = document.getElementById('redi-budget-chart');
 		var platforms = Object.keys(estimate.platform_spend);
-		var colors = ['#d9291c', '#176b84', '#ed9e24', '#6a4292', '#178366', '#b04d72', '#3e4a68'];
+		var colors = ['#d9291c', '#4d4d4d', '#999999', '#d9d9d9', '#e3e3e3', '#ebebeb', '#f2f2f2'];
 		var allocated = platforms.filter(function (platform) {
 			return estimate.platform_spend[platform] > 0;
 		}).sort(function (a, b) {
