@@ -80,7 +80,7 @@ function redi_planner_handle_submit( WP_REST_Request $request ) {
 	$payload['requestId']   = redi_planner_request_id();
 	$payload['requestDate'] = gmdate( 'c' );
 	$estimate = null;
-	if ( get_option( 'redi_planner_lookup_ready' ) ) {
+	if ( ! $payload['requestDetailedPlan'] && get_option( 'redi_planner_lookup_ready' ) ) {
 		try {
 			$calculator = new Redi_Planner_Calculator();
 			$estimate = $calculator->calculate( $payload, redi_planner_get_lookup( $payload['campaignMarket'] ) );
