@@ -6,8 +6,8 @@
  *
  * We POST to the WP REST route, which emails the submission to the R.E.D.i
  * mailbox. On success we clear and hide the form (a submitted plan can't
- * be re-edited) and show the confirmation. On failure we keep everything
- * so the user can retry.
+ * be re-edited) and show the detailed-plan confirmation or the instant
+ * estimate, not both. On failure we keep everything so the user can retry.
  */
 (function () {
 	'use strict';
@@ -20,6 +20,8 @@
 	var formCard = document.getElementById('redi-form-card');
 	var results = document.getElementById('redi-results');
 	var confirmBox = document.getElementById('redi-confirm');
+	var estimateBox = document.getElementById('redi-estimate');
+	var detailedConfirm = document.getElementById('redi-detailed-confirm');
 	var formError = document.getElementById('redi-form-error');
 	var submitBtn = document.getElementById('redi-submit');
 	var planCheckbox = document.getElementById('redi-plan');
@@ -176,6 +178,65 @@
 		}
 	}
 
+	function showEstimate(estimate, data) {
+		estimateBox.hidden = !estimate;
+		if (!estimate) {
+			return;
+		}
+		document.getElementById('redi-estimate-reach').textContent = estimate.overall_reach.toLocaleString() + '%';
+		document.getElementById('redi-estimate-population').textContent = estimate.total_population.toLocaleString();
+		document.getElementById('redi-estimate-reached').textContent = estimate.population_reached >= 1000000
+			? (estimate.population_reached / 1000000).toFixed(1) + 'M'
+			: estimate.population_reached.toLocaleString();
+		document.getElementById('redi-estimate-campaign-name').textContent = data.campaignName;
+		document.getElementById('redi-detail-name').textContent = data.campaignName;
+		document.getElementById('redi-detail-market').textContent = data.campaignMarket;
+		document.getElementById('redi-detail-budget').textContent = '$' + Number(String(data.campaignBudget).replace(/[$,\s]/g, '')).toLocaleString();
+		document.getElementById('redi-detail-platforms').textContent = data.campaignPlatforms.join(', ');
+		document.getElementById('redi-detail-content').textContent = data.mediaContent === 'Both'
+			? 'Sports and News & Entertainment'
+			: data.mediaContent;
+		document.getElementById('redi-detail-date').textContent = data.startDate;
+		document.getElementById('redi-detail-duration').textContent = data.durationWeeks + (data.durationWeeks === '1' ? ' week' : ' weeks');
+		document.getElementById('redi-detail-category').textContent = data.advertiserCategory;
+		var list = document.getElementById('redi-estimate-spend');
+		var chart = document.getElementById('redi-budget-chart');
+		var platforms = Object.keys(estimate.platform_spend);
+		var colors = ['#d9291c', '#4d4d4d', '#999999', '#d9d9d9', '#e3e3e3', '#ebebeb', '#f2f2f2'];
+		var allocated = platforms.filter(function (platform) {
+			return estimate.platform_spend[platform] > 0;
+		}).sort(function (a, b) {
+			return estimate.platform_spend[b] - estimate.platform_spend[a];
+		});
+		var total = allocated.reduce(function (sum, platform) {
+			return sum + estimate.platform_spend[platform];
+		}, 0);
+		var segments = [];
+		var start = 0;
+		list.textContent = '';
+		allocated.forEach(function (platform, index) {
+			var amount = estimate.platform_spend[platform];
+			var color = colors[index % colors.length];
+			var percentage = amount / total * 100;
+			var item = document.createElement('li');
+			var swatch = document.createElement('span');
+			swatch.className = 'redi-budget-swatch';
+			swatch.style.backgroundColor = color;
+			swatch.setAttribute('aria-hidden', 'true');
+			item.appendChild(swatch);
+			item.appendChild(document.createTextNode(platform + ' — $' + amount.toLocaleString() + ' (' + percentage.toFixed(1) + '%)'));
+			list.appendChild(item);
+			var end = start + percentage;
+			segments.push(color + ' ' + start + '% ' + end + '%');
+			start = end;
+		});
+		chart.hidden = !segments.length;
+		chart.style.background = segments.length ? 'conic-gradient(' + segments.join(', ') + ')' : '';
+		chart.setAttribute('aria-label', 'Platform spend: ' + allocated.map(function (platform) {
+			return platform + ', ' + (estimate.platform_spend[platform] / total * 100).toFixed(1) + ' percent';
+		}).join('; '));
+	}
+
 	/* --- submit --- */
 
 	form.addEventListener('submit', function (e) {
@@ -210,7 +271,11 @@
 			})
 			.then(function (res) {
 				if (res.json && res.json.success) {
-					trackCompletion();
+					if (data.requestDetailedPlan) {
+						trackCompletion();
+					}
+					showEstimate(data.requestDetailedPlan ? null : res.json.estimate, data);
+					detailedConfirm.hidden = !data.requestDetailedPlan;
 					document.getElementById('redi-request-id').textContent =
 						res.json.requestId ? 'Reference: ' + res.json.requestId : '';
 					results.classList.add('is-visible');

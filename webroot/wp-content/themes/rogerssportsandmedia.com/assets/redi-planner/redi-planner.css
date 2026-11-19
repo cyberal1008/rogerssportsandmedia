@@ -37,9 +37,8 @@
 
 .redi-card {
 	background: var(--white, #fff);
-	max-width: 860px;
 	margin: 0 auto;
-	padding: clamp(24px, 4vw, 48px);
+	padding: clamp(16px, 4vw, 0px);
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
@@ -295,12 +294,147 @@
 
 .redi-results {
 	display: none;
-	max-width: 860px;
+	max-width: 1100px;
 	margin: 0 auto;
 }
 
 .redi-results.is-visible {
 	display: block;
+}
+
+.redi-estimate {
+	padding: clamp(14px, 4vw, 16px);
+}
+
+.redi-estimate-header {
+	margin-bottom: 32px;
+}
+
+.redi-estimate-header h2 {
+	margin: 0 0 4px;
+	font-size: clamp(2.4rem, 3vw, 3.2rem);
+	line-height: 1.2;
+}
+
+.redi-estimate-header p {
+	margin: 0;
+	font-size: 2.8rem;
+}
+
+.redi-estimate-layout {
+	display: grid;
+	grid-template-columns: minmax(0, 1.0fr) minmax(300px, 1.0fr);
+	gap: clamp(6px, 5vw, 6px);
+	align-items: flex-start;
+	padding: 0 20px;
+}
+
+.redi-estimate-summary h3,
+.redi-platform-mix h3 {
+	/* margin: 0 0 12px;
+	font-size: 1.9rem; */
+	margin: 0 0 6px;
+	font-size: 2.5rem;
+}
+
+.redi-estimate-reach h3,
+.redi-submitted-details h3 {
+	color: var(--alpha, #d9291c);
+}
+
+.redi-estimate-value {
+	margin: 0;
+	font-size: clamp(4.8rem, 8vw, 7.2rem);
+	font-weight: 300;
+	line-height: 1.1;
+}
+
+.redi-estimate-reach > p:not(.redi-estimate-value) {
+	margin: 0;
+	font-size: 1.6rem;
+}
+
+.redi-estimate-reach .redi-market-size {
+	margin-top: 8px;
+}
+
+.redi-submitted-details {
+	margin-top: clamp(32px, 5vw, 56px);
+}
+
+.redi-submitted-details dl {
+	margin: 0;
+	font-size: 1.5rem;
+	line-height: 1.5;
+}
+
+.redi-submitted-details dl > div {
+	display: flex;
+	gap: 6px;
+}
+
+.redi-submitted-details dt {
+	font-weight: 600;
+}
+
+.redi-submitted-details dd {
+	margin: 0;
+	overflow-wrap: anywhere;
+}
+
+.redi-platform-mix > h3 {
+	text-align: center;
+	font-weight: 400;
+}
+
+.redi-budget-breakdown {
+	display: grid;
+	justify-items: center;
+	gap: 20px;
+	margin: 16px 0;
+}
+
+.redi-budget-chart {
+	width: min(280px, 100%);
+	aspect-ratio: 1;
+	border-radius: 50%;
+	flex-shrink: 0;
+}
+
+.redi-budget-legend {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	font-size: 1.4rem;
+}
+
+.redi-budget-legend li {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.redi-budget-swatch {
+	width: 12px;
+	height: 12px;
+	flex-shrink: 0;
+}
+
+.redi-estimate-note {
+	margin: 20px 0 0;
+	font-size: 1.2rem;
+	color: var(--gray, #6c757d);
+}
+
+@media (max-width: 760px) {
+	.redi-estimate-layout {
+		grid-template-columns: 1fr;
+	}
+
+	.redi-platform-mix {
+		margin-top: 8px;
+	}
 }
 
 .redi-confirm {

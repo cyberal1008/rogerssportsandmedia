@@ -188,9 +188,50 @@ get_header();
 			</div>
 
 			<div class="redi-results" id="redi-results">
+				<div class="redi-card redi-estimate" id="redi-estimate" hidden>
+					<header class="redi-estimate-header">
+						<h2>Platform Mix &amp; Reach Estimate</h2>
+						<p id="redi-estimate-campaign-name"></p>
+					</header>
+					<div class="redi-estimate-layout">
+						<div class="redi-estimate-summary">
+							<section class="redi-estimate-reach" aria-labelledby="redi-reach-heading">
+								<h3 id="redi-reach-heading">Estimated Reach</h3>
+								<p class="redi-estimate-value" id="redi-estimate-reached"></p>
+								<p><span id="redi-estimate-reach"></span> of the market population</p>
+								<p class="redi-market-size"><strong>Total addressable market:</strong> <span id="redi-estimate-population"></span></p>
+							</section>
+							<section class="redi-submitted-details" aria-labelledby="redi-details-heading">
+								<h3 id="redi-details-heading">Your Submitted Campaign Details</h3>
+								<dl>
+									<div><dt>Campaign Name:</dt><dd id="redi-detail-name"></dd></div>
+									<div><dt>Campaign Market:</dt><dd id="redi-detail-market"></dd></div>
+									<div><dt>Campaign Budget:</dt><dd id="redi-detail-budget"></dd></div>
+									<div><dt>Campaign Platforms:</dt><dd id="redi-detail-platforms"></dd></div>
+									<div><dt>Media Content:</dt><dd id="redi-detail-content"></dd></div>
+									<div><dt>Start Date:</dt><dd id="redi-detail-date"></dd></div>
+									<div><dt>Duration:</dt><dd id="redi-detail-duration"></dd></div>
+									<div><dt>Advertiser Category:</dt><dd id="redi-detail-category"></dd></div>
+								</dl>
+							</section>
+							<p class="redi-estimate-note">Reach is based on modeled estimates using 18+ dataset.<br />
+							    Some markets use proxy data where direct data is unavailable.
+						    </p>
+						</div>
+						<section class="redi-platform-mix" aria-labelledby="redi-mix-heading">
+							<h3 id="redi-mix-heading">Platform Spend</h3>
+							<div class="redi-budget-breakdown">
+								<div class="redi-budget-chart" id="redi-budget-chart" role="img" hidden></div>
+								<ul class="redi-budget-legend" id="redi-estimate-spend"></ul>
+							</div>
+						</section>
+					</div>
+				</div>
 				<div class="redi-confirm" id="redi-confirm">
-					<strong>Your detailed plan is on its way.</strong>
-					Your plan will be emailed to you soon. If you have any questions in the meantime, reach out to <a href="mailto:r.e.d.iplanner@rci.rogers.com">r.e.d.iplanner@rci.rogers.com</a>.
+					<div id="redi-detailed-confirm">
+						<strong>Your detailed plan is on its way.</strong>
+						Your plan will be emailed to you soon. If you have any questions in the meantime, reach out to <a href="mailto:r.e.d.iplanner@rci.rogers.com">r.e.d.iplanner@rci.rogers.com</a>.
+					</div>
 					<p class="redi-request-id" id="redi-request-id"></p>
 				</div>
 				<div class="redi-start-over">
