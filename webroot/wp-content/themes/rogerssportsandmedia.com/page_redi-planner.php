@@ -110,13 +110,12 @@ get_header();
 
 							<div class="redi-field redi-field--full">
 								<label for="redi-category">Advertiser Category</label>
-								<input type="text" id="redi-category" name="advertiserCategory" list="redi-category-list"
-									autocomplete="off" placeholder="Type to search categories" />
-								<datalist id="redi-category-list">
+								<select id="redi-category" name="advertiserCategory">
+									<option value="">Select a category</option>
 									<?php foreach ( $redi_config['categories'] as $category ) : ?>
-										<option value="<?php echo esc_attr( $category ); ?>"></option>
+										<option value="<?php echo esc_attr( $category ); ?>"><?php echo esc_html( $category ); ?></option>
 									<?php endforeach; ?>
-								</datalist>
+								</select>
 								<p class="redi-error" id="redi-error-advertiserCategory"></p>
 							</div>
 

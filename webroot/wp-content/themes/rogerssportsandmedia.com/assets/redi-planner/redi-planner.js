@@ -152,10 +152,8 @@
 		if (!data.startDate) { setError('startDate', 'Enter a valid start date.'); ok = false; }
 		if (!data.durationWeeks) { setError('durationWeeks', 'Select a campaign duration.'); ok = false; }
 
-		// The category field is a searchable text input backed by a datalist,
-		// so typed values must match one of the listed categories exactly.
 		var categories = Array.prototype.map.call(
-			document.querySelectorAll('#redi-category-list option'),
+			document.querySelectorAll('#redi-category option'),
 			function (option) { return option.value; }
 		);
 		if (!data.advertiserCategory || categories.indexOf(data.advertiserCategory) === -1) {
