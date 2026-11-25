@@ -198,7 +198,7 @@ get_header();
 								<h3 id="redi-reach-heading">Estimated Reach</h3>
 								<p class="redi-estimate-value" id="redi-estimate-reached"></p>
 								<p><span id="redi-estimate-reach"></span> of the market population</p>
-								<p class="redi-market-size"><strong>Total addressable market:</strong> <span id="redi-estimate-population"></span></p>
+								<p class="redi-market-size"><strong>Total market size:</strong> <span id="redi-estimate-population"></span></p>
 							</section>
 							<section class="redi-submitted-details" aria-labelledby="redi-details-heading">
 								<h3 id="redi-details-heading">Your Submitted Campaign Details</h3>
